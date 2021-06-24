@@ -11,7 +11,6 @@ export const HeaderWrapper = styled.div`
       border-right: 1.5px solid ${RGB_BLACK("0.07")};
       transition: 0.5s all;
       &:hover {
-        background-color: ${RGB_BLACK("0.07")};
         .anticon {
           transform: scale(1.15);
         }

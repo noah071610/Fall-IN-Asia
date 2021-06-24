@@ -1,4 +1,5 @@
 import RealTimeCard from "@components/RealTimeCard";
+import RealTimeFilter from "@components/RealTimeFilter";
 import { Wrapper } from "@styles/index";
 import React, { FC, useState } from "react";
 
@@ -8,6 +9,9 @@ const index: FC<Props> = () => {
   const [state, setstate] = useState();
   return (
     <Wrapper>
+      <RealTimeFilter />
+      <RealTimeCard />
+      <RealTimeCard />
       <RealTimeCard />
     </Wrapper>
   );

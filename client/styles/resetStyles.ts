@@ -1,3 +1,5 @@
+import { BLUE_COLOR, RGB_BLACK, WHITE_COLOR } from "config";
+
 export const resetStyles = `
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
 
@@ -38,9 +40,29 @@ a {
   color:black;
 }
 
-.tag {
+.info-tag {
   margin-right:0.4rem;
-  padding:0.2rem 0.1rem; 
+  padding:0.2rem 0.4rem;
+  background-color:${BLUE_COLOR};
+  color:${WHITE_COLOR};
+  border-radius : 5px;
+  font-size:0.7rem;
+  cursor:pointer;
+}
+
+.platform-tag{
+  width:90px;
+  margin-right:0.7rem;
+}
+
+button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  cursor:pointer;
+  background-color:inherit;
 }
 
 `;

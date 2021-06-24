@@ -6,8 +6,8 @@ import Header from "@layouts/Header/index";
 const Wrapper = styled.div`
   width: ${MD_SIZE};
   margin: 0 auto;
-  padding: 1rem 1.5rem;
-  box-shadow: 3px 3px 10px ${RGB_BLACK("0.07")};
+  padding: 1rem;
+  box-shadow: 0px 0px 15px ${RGB_BLACK("0.1")};
 `;
 
 interface AppLayoutProps {}
