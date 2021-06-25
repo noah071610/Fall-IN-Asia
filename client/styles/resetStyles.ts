@@ -2,11 +2,13 @@ import { BLUE_COLOR, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const resetStyles = `
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sawarabi+Gothic&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
 
 body,
 html {
   line-height: 1.2;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Sawarabi Gothic', sans-serif;
 }
 html {
   overflow-x: hidden;
@@ -38,6 +40,9 @@ li {
 }
 a {
   color:black;
+}
+p {
+  margin:0;
 }
 
 .info-tag {
