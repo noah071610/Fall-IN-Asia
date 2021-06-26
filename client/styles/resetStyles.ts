@@ -1,10 +1,13 @@
-import { BLUE_COLOR, RGB_BLACK, WHITE_COLOR } from "config";
+import { BLACK_COLOR, BLUE_COLOR, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const resetStyles = `
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sawarabi+Gothic&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
 
+*{
+  box-sizing: border-box;
+}
 body,
 html {
   line-height: 1.2;
@@ -44,15 +47,20 @@ a {
 p {
   margin:0;
 }
-
-.info-tag {
-  margin-right:0.4rem;
-  padding:0.2rem 0.4rem;
-  background-color:${BLUE_COLOR};
-  color:${WHITE_COLOR};
+h1,h2,h3,h4,h5{
+  margin:0;
+}
+.tag {
+  margin:0 0.4rem 0.4rem 0;
+  padding:0.5rem 1rem;
   border-radius : 5px;
+  background-color:${WHITE_COLOR};
+  border:1px solid ${RGB_BLACK("0.1")};
   font-size:0.7rem;
   cursor:pointer;
+  &:hover{
+    border:1px solid ${BLUE_COLOR};
+  }
 }
 
 .platform-tag{

@@ -1,20 +1,22 @@
-import RealTimeCard from "@components/RealTimeCard";
-import RealTimeFilter from "@components/RealTimeFilter";
-import { Wrapper } from "@styles/goods";
 import React, { FC, useState } from "react";
+import GoodsList from "@sections/GoodsPage/GoodsList";
+import GoodsFilter from "@sections/GoodsPage/GoodsFilter";
+import styled from "@emotion/styled";
+
+const GoodsPageWrapper = styled.div`
+  margin-top: 1rem;
+`;
 
 interface Props {}
 
-const index: FC<Props> = () => {
+const goods: FC<Props> = () => {
   const [state, setstate] = useState();
   return (
-    <Wrapper>
-      <RealTimeFilter />
-      <RealTimeCard />
-      <RealTimeCard />
-      <RealTimeCard />
-    </Wrapper>
+    <GoodsPageWrapper>
+      <GoodsFilter />
+      <GoodsList />
+    </GoodsPageWrapper>
   );
 };
 
-export default index;
+export default goods;

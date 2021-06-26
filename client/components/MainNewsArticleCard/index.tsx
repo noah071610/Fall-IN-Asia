@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, memo, useState } from "react";
 import { ArticleWrapper } from "./styles";
 
 interface IProps {}
@@ -16,4 +16,4 @@ const MainNewsArticleCard: FC<IProps> = () => {
   );
 };
 
-export default MainNewsArticleCard;
+export default memo(MainNewsArticleCard);

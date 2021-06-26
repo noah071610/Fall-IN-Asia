@@ -4,7 +4,7 @@ import { FLEX_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
 export const CardWrapper = styled.div`
   display: grid;
   grid-template-columns: 4fr 8fr;
-  padding: 1.5rem 0;
+  padding: 2rem;
   border-bottom: 1px solid ${RGB_BLACK("0.08")};
   transition: 0.3s all;
   over-flow: hidden;
@@ -18,16 +18,25 @@ export const CardWrapper = styled.div`
 `;
 
 export const Icon = styled.div`
+  ${FLEX_STYLE("center", "center")};
   img {
     width: 100%;
-    height: 100%;
+    height: 200px;
     border-radius: 1rem;
   }
 `;
 
 export const Content = styled.div`
-  padding: 1rem 0 1rem 2rem;
+  padding-left: 2rem;
   width: 100%;
+  h1 {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    font-size: 2rem;
+  }
+  h3 {
+    margin-bottom: 1.5rem;
+  }
 `;
 
 export const Title = styled.div`
@@ -45,24 +54,23 @@ export const TagList = styled.ul`
 `;
 
 export const RealTimeTable = styled.div`
-  display: grid;
-  grid-template-columns: 1.8fr 1fr 1fr;
-  gap: 1rem;
+  display: flex;
   .table-column {
+    margin-right: 2rem;
     span {
-      font-size: 2.2rem;
+      font-size: 1.8rem;
       font-weight: bold;
     }
     p {
       margin-top: 0.7rem;
     }
   }
-  margin-bottom: 0.6rem;
+  margin-bottom: 2rem;
 `;
 
 export const RealTimeComment = styled.div`
   h3 {
-    margin-bottom: 0.7rem;
+    margin-bottom: 1rem;
   }
   .anticon {
     margin-right: 0.5rem;

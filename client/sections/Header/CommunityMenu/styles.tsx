@@ -7,13 +7,14 @@ export const CommunityMenuWrapper = styled.ul`
   transition: 0.3s all;
   width: 100%;
   top: 130%;
-  left: -10%;
+  left: -0.5rem;
   background-color: ${WHITE_COLOR};
   border: 1.5px solid ${RGB_BLACK("0.2")};
   box-sizing: content-box;
-  padding: 2rem 1rem;
+  padding: 0.5rem;
   li {
     ${FLEX_STYLE("center", "center")};
+    padding: 1rem;
     &:hover {
       color: blue;
     }

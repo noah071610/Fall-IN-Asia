@@ -5,17 +5,19 @@ import {
   HomeOutlined,
   InboxOutlined,
   CommentOutlined,
-  LoginOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import CommunityMenu from "@layouts/CommunityMenu";
+import CommunityMenu from "sections/Header/CommunityMenu";
+import LoginModal from "sections/Header/LoginModal";
 import useToggle from "@hooks/useToggle";
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
-  const [onCommunityMenu, onClickCommunityMenu] = useToggle(true);
+  const [onCommunityMenu, onClickCommunityMenu] = useToggle(false);
+  const [onLoginModal, onClickLoginModal] = useToggle(false);
   return (
     <HeaderWrapper>
       <div className="header-lgsize">
@@ -44,20 +46,15 @@ const Header: FC<HeaderProps> = () => {
             {onCommunityMenu && <CommunityMenu />}
           </li>
           <li className="nav-list">
-            <Link href="/">
+            <Link href="/goods">
               <a className="nav-list-ancher">
                 <InboxOutlined />
-                <span className="list-text">グッズ</span>
-                <FontAwesomeIcon
-                  style={{ transform: `rotate(${onCommunityMenu ? "180deg" : "0"})` }}
-                  icon={faChevronDown}
-                  className="arrow"
-                />
+                <span className="list-text">グッズ交換</span>
               </a>
             </Link>
           </li>
           <li className="nav-list">
-            <Link href="/">
+            <Link href="/support">
               <a className="nav-list-ancher">
                 <HeartOutlined />
                 <span className="list-text">後援</span>
@@ -65,14 +62,13 @@ const Header: FC<HeaderProps> = () => {
             </Link>
           </li>
           <li className="nav-list">
-            <Link href="/">
-              <a className="nav-list-ancher">
-                <LoginOutlined />
-                <span className="list-text">ログイン</span>
-              </a>
-            </Link>
+            <a onClick={onClickLoginModal} className="nav-list-ancher">
+              <UserOutlined />
+              <span className="list-text">ログイン</span>
+            </a>
           </li>
         </nav>
+        {onLoginModal && <LoginModal />}
       </div>
     </HeaderWrapper>
   );

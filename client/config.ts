@@ -18,3 +18,42 @@ export const FLEX_STYLE = (justify: string, align: string) => `
   justify-content:${justify};
   align-items:${align};
 `;
+
+//JS
+
+export const goodsPosterSettings = {
+  dots: false,
+  infinite: true,
+  slidesToShow: 6,
+  slidesToScroll: 1,
+  autoplay: true,
+  speed: 500,
+  autoplaySpeed: 1500,
+  vertical: true,
+  verticalSwiping: true,
+};
+
+export const goodsFilterList = [
+  "直接交換",
+  "早め",
+  "新しい",
+  "ユニーク",
+  "ポスター",
+  "アルバム",
+  "ぬいぐるみ",
+  "担当じゃない",
+  "卒業",
+  "サイン",
+  "カード",
+  "チケット",
+];
+
+export const NewsMainPostsettings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  autoplay: true,
+  autoplaySpeed: 3000,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};

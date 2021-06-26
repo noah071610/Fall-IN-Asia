@@ -1,12 +1,18 @@
 import styled from "@emotion/styled";
-import { BLACK_COLOR, FLEX_STYLE, LG_SIZE, RGB_BLACK } from "config";
+import { BLACK_COLOR, FLEX_STYLE, LG_SIZE, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const HeaderWrapper = styled.div`
-  padding: 1.3rem 0.7rem 0.7rem 0.7rem;
+  padding: 0.8rem 0 0.5rem 0;
   border-bottom: 1px solid ${RGB_BLACK("0.07")};
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  background-color: ${WHITE_COLOR};
   .header-lgsize {
     width: ${LG_SIZE};
     margin: 0 auto;
+    position: relative;
     ${FLEX_STYLE("space-between", "center")};
     nav {
       ${FLEX_STYLE("center", "center")};

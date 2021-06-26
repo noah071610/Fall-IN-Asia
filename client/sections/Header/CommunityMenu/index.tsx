@@ -11,19 +11,27 @@ const CommunityMenu: FC<IProps> = () => {
       <MenuTail />
       <li>
         <Link href="/b">
-          <a>リアルタイムトーク</a>
+          <a>ファンクラブ</a>
         </Link>
       </li>
-      <Divider />
+      <li>
+        <Link href="/b">
+          <a>グループ人気投票</a>
+        </Link>
+      </li>
       <li>
         <Link href="/a">
           <a>応援メッセージ</a>
         </Link>
       </li>
-      <Divider />
       <li>
         <Link href="/c">
           <a>KPOPニュース</a>
+        </Link>
+      </li>
+      <li>
+        <Link href="/c">
+          <a>おすすめアイドル</a>
         </Link>
       </li>
     </CommunityMenuWrapper>

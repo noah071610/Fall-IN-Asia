@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, memo, useState } from "react";
 import { AlbumCardWrapper, albumTitleCss } from "./styles";
 
 interface IProps {
@@ -19,4 +19,4 @@ const AlbumCard: FC<IProps> = ({ isTop }) => {
   );
 };
 
-export default AlbumCard;
+export default memo(AlbumCard);
