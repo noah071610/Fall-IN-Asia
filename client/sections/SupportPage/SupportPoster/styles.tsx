@@ -23,6 +23,11 @@ export const Wrapper = styled.div`
       font-size: 3rem;
       font-weight: bold;
       margin-right: 0.5rem;
+      display: inline-block;
+      user-select: none;
+      &:hover {
+        animation: rubberBand 0.7s;
+      }
     }
   }
 `;

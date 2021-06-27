@@ -10,27 +10,27 @@ const CommunityMenu: FC<IProps> = () => {
     <CommunityMenuWrapper>
       <MenuTail />
       <li>
-        <Link href="/b">
+        <Link href="/club">
           <a>ファンクラブ</a>
         </Link>
       </li>
       <li>
-        <Link href="/b">
+        <Link href="/vote">
           <a>グループ人気投票</a>
         </Link>
       </li>
       <li>
-        <Link href="/a">
+        <Link href="/message">
           <a>応援メッセージ</a>
         </Link>
       </li>
       <li>
-        <Link href="/c">
+        <Link href="/news">
           <a>KPOPニュース</a>
         </Link>
       </li>
       <li>
-        <Link href="/c">
+        <Link href="/suggest">
           <a>おすすめアイドル</a>
         </Link>
       </li>

@@ -2,8 +2,29 @@ import { BLACK_COLOR, BLUE_COLOR, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const resetStyles = `
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+
 @import url('https://fonts.googleapis.com/css2?family=Sawarabi+Gothic&display=swap');
+
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
+
+*::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+*::-webkit-scrollbar-thumb {
+  background: rgb(185, 185, 185);
+}
+
+/* Handle on hover */
+*::-webkit-scrollbar-thumb:hover {
+  background: rgb(153, 153, 153);
+}
 
 *{
   box-sizing: border-box;
@@ -63,11 +84,6 @@ h1,h2,h3,h4,h5{
   }
 }
 
-.platform-tag{
-  width:90px;
-  margin-right:0.7rem;
-}
-
 button {
   border: none;
   margin: 0;
@@ -76,6 +92,10 @@ button {
   overflow: visible;
   cursor:pointer;
   background-color:inherit;
+}
+
+.ant-divider {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 `;

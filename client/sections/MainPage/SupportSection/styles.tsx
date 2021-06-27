@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE, RED_COLOR, WHITE_COLOR } from "config";
+import { FLEX_STYLE, RED_COLOR, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const Wrapper = styled.div`
   height: 500px;
@@ -10,13 +10,14 @@ export const Wrapper = styled.div`
   ${FLEX_STYLE("center", "center")};
   flex-direction: column;
   position: relative;
+  cursor: pointer;
   .overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 500px;
-    background-color: rgba(0, 0, 0, 0.2);
+    transition: 0.3s all;
   }
   h1 {
     font-size: 2.5rem;
@@ -34,5 +35,10 @@ export const Wrapper = styled.div`
   }
   img {
     width: 100%;
+  }
+  &:hover {
+    .overlay {
+      background-color: ${RGB_BLACK("0.4")};
+    }
   }
 `;

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { FC, useState } from "react";
 import { Wrapper } from "./styles";
 
@@ -7,11 +8,17 @@ const SupportSection: FC<IProps> = () => {
   const [state, setstate] = useState();
   return (
     <Wrapper>
-      <div className="overlay" />
-      <h1>
-        <span>愛</span>を伝える簡単な方法
-      </h1>
-      <h3>たった広告を見ただけで全額を好きなアイドルにドネーション</h3>
+      <Link href="/support">
+        <a>
+          <div className="overlay" />
+        </a>
+      </Link>
+      <div data-aos="zoom-in">
+        <h1>
+          <span>愛</span>を伝える簡単な方法
+        </h1>
+        <h3>たった広告を見ただけで全額を好きなアイドルにドネーション</h3>
+      </div>
     </Wrapper>
   );
 };

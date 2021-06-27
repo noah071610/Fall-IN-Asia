@@ -24,6 +24,7 @@ const NewsSection: FC<IProps> = () => {
           <MainNewsArticleCard />
           <MainNewsArticleCard />
           <MainNewsArticleCard />
+          <MainNewsArticleCard />
         </Scrollbars>
       </div>
     </Wrapper>

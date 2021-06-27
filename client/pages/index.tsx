@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import GoodsExchangeSection from "@sections/MainPage/GoodsExchangeSection";
-import CommunitySection from "@sections/MainPage/CommunitySection";
+import VoteSection from "@sections/MainPage/VoteSection";
 import MusicChartSection from "@sections/MainPage/MusicChartSection";
 import NewsSection from "@sections/MainPage/NewsSection";
 import SupportSection from "@sections/MainPage/SupportSection";
@@ -20,7 +20,7 @@ const index: FC<Props> = () => {
       <NewsSection />
       <MusicChartSection />
       <SupportSection />
-      <CommunitySection />
+      <VoteSection />
     </MainWrapper>
   );
 };

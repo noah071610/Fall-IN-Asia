@@ -3,60 +3,63 @@ import { Wrapper } from "./styles";
 import { ResponsiveRadar } from "@nivo/radar";
 import Link from "next/link";
 
-interface IProps {}
+interface IProps {
+  isOnVotePage?: Boolean;
+}
 
-const CommunitySection: FC<IProps> = () => {
+const VoteSection: FC<IProps> = ({ isOnVotePage }) => {
   const [state, setstate] = useState();
   const chartData = [
     {
       taste: "ダンス上手",
-      chardonay: 78,
-      carmenere: 51,
-      syrah: 95,
+      トタル: 78,
     },
     {
       taste: "カッコいい",
-      chardonay: 46,
-      carmenere: 92,
-      syrah: 117,
+      トタル: 46,
     },
     {
       taste: "憧れ",
-      chardonay: 67,
-      carmenere: 118,
-      syrah: 110,
+      トタル: 67,
     },
     {
       taste: "スタイルいい",
-      chardonay: 120,
-      carmenere: 21,
-      syrah: 48,
+      トタル: 120,
     },
     {
-      taste: "面白い",
-      chardonay: 78,
-      carmenere: 51,
-      syrah: 95,
+      taste: "綺麗",
+      トタル: 78,
     },
     {
       taste: "可愛い",
-      chardonay: 49,
-      carmenere: 21,
-      syrah: 103,
+      トタル: 49,
     },
     {
       taste: "お洒落",
-      chardonay: 78,
-      carmenere: 51,
-      syrah: 95,
+      トタル: 78,
     },
   ];
   return (
     <Wrapper>
       <ul className="community-filter">
-        <li>セブンティーン</li>
-        <li>宇宙少女</li>
-        <li>OH MY GIRL</li>
+        <li>
+          <a>セブンティーン</a>
+        </li>
+        <li>
+          <a>宇宙少女</a>
+        </li>
+        <li>
+          <a>OH MY GIRL</a>
+        </li>
+        {!isOnVotePage && (
+          <Link href="/vote">
+            <a>
+              <li>
+                <a>もっと見る…</a>
+              </li>
+            </a>
+          </Link>
+        )}
       </ul>
       <div className="community-content">
         <div className="community-poster">
@@ -72,7 +75,7 @@ const CommunitySection: FC<IProps> = () => {
             <ResponsiveRadar
               data={chartData}
               margin={{ top: 0, right: 80, bottom: 0, left: 80 }}
-              keys={["chardonay"]}
+              keys={["トタル"]}
               indexBy="taste"
               maxValue="auto"
               curve="linearClosed"
@@ -126,4 +129,4 @@ const CommunitySection: FC<IProps> = () => {
   );
 };
 
-export default CommunitySection;
+export default VoteSection;

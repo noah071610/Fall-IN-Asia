@@ -5,15 +5,21 @@ const { Search } = Input;
 
 export const FilterWrapper = styled.div`
   background-color: ${RGB_BLACK("0.03")};
-  padding: 1rem;
-  border-bottom: 1px solid ${RGB_BLACK("0.1")};
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  padding: 2rem;
+  h2 {
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  .filter-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 export const Fillter = styled.div`
-  padding: 2rem;
+  padding: 1rem 0;
   .filter-title {
     margin: 1rem 0;
     font-size: 0.9rem;
@@ -27,7 +33,7 @@ export const SearchBar = styled(Search)`
   width: 100%;
 `;
 export const JapanMap = styled.div`
-  padding: 2rem;
+  padding: 1rem 0;
   display: flex;
   align-items: flex-end;
   flex-direction: column;
@@ -47,6 +53,7 @@ export const JapanMap = styled.div`
     height: 90px;
     background-color: #ff8585;
     cursor: pointer;
+    margin-top: 0;
     margin-bottom: 1rem;
     &:hover {
       opacity: 0.4;
@@ -95,7 +102,6 @@ export const JapanMap = styled.div`
     padding-bottom: 2rem;
   }
   .kansai {
-    margin-top: 1rem;
     width: 70px;
     height: 80px;
     background-color: #7272ff;
@@ -111,12 +117,11 @@ export const JapanMap = styled.div`
     border: 5px solid ${WHITE_COLOR};
     border-radius: 10px;
     margin: 0.3rem;
-    margin-top: 1rem;
   }
   .chugoku {
     padding: 0.5rem;
     width: 70px;
-    height: 47px;
+    height: 54px;
     background-color: #ff9148;
     cursor: pointer;
     &:hover {
@@ -129,7 +134,7 @@ export const JapanMap = styled.div`
   .shikoku {
     padding: 0.5rem;
     width: 70px;
-    height: 47px;
+    height: 54px;
     background-color: #d16eff;
     cursor: pointer;
     &:hover {
@@ -140,9 +145,8 @@ export const JapanMap = styled.div`
     }
   }
   .kyushu {
-    margin-top: 2rem;
     width: 70px;
-    height: 90px;
+    height: 120px;
     background-color: #c5c5c5;
     cursor: pointer;
     &:hover {
