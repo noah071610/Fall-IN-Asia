@@ -22,6 +22,10 @@ const BattleSection: FC<IProps> = () => {
       </div>
       <div className="battle-vote">
         <img src="https://image.freepik.com/free-vector/character-illustration-people-with-vote-icons_53876-43035.jpg" />
+        <div>
+          <h2>投票は皆様のご参加で作られております。</h2>
+          <button>話題登録</button>
+        </div>
       </div>
     </Wrapper>
   );

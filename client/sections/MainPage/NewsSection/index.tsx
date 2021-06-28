@@ -13,11 +13,7 @@ const NewsSection: FC<IProps> = () => {
   return (
     <Wrapper>
       <div className="slider-box">
-        <Slider {...NewsMainPostsettings}>
-          <MainNewsPosterCard />
-          <MainNewsPosterCard />
-          <MainNewsPosterCard />
-        </Slider>
+        <MainNewsPosterCard />
       </div>
       <div className="article-box">
         <Scrollbars autoHide autoHideTimeout={500} autoHideDuration={200} universal={true}>

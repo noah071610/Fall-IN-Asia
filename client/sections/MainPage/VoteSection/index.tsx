@@ -54,9 +54,7 @@ const VoteSection: FC<IProps> = ({ isOnVotePage }) => {
         {!isOnVotePage && (
           <Link href="/vote">
             <a>
-              <li>
-                <a>もっと見る…</a>
-              </li>
+              <li>もっと見る</li>
             </a>
           </Link>
         )}

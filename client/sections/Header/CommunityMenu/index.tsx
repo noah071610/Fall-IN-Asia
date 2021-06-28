@@ -20,11 +20,6 @@ const CommunityMenu: FC<IProps> = () => {
         </Link>
       </li>
       <li>
-        <Link href="/message">
-          <a>応援メッセージ</a>
-        </Link>
-      </li>
-      <li>
         <Link href="/news">
           <a>KPOPニュース</a>
         </Link>

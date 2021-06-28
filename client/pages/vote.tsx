@@ -2,8 +2,9 @@ import React, { FC, useState } from "react";
 import styled from "@emotion/styled";
 import VoteSection from "@sections/MainPage/VoteSection";
 import BattleSection from "@sections/VotePage/BattleSection";
+import VoteSearchForm from "@sections/VotePage/VoteSearchForm";
 export const Wrapper = styled.div`
-  padding: 2rem;
+  padding-bottom: 3rem;
 `;
 
 interface IProps {}
@@ -13,6 +14,7 @@ const vote: FC<IProps> = () => {
   return (
     <Wrapper>
       <BattleSection />
+      <VoteSearchForm />
       <VoteSection isOnVotePage={true} />
     </Wrapper>
   );

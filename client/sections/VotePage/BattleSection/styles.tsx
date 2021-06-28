@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, WHITE_COLOR } from "config";
+import { BLUE_COLOR, FLEX_STYLE, PINK_COLOR, SKY_COLOR, WHITE_COLOR } from "config";
 
 export const Wrapper = styled.div`
   padding: 1rem;
-  background-color: #f6d6d6;
+  margin-bottom: 2rem;
+  background-color: ${PINK_COLOR};
   h1 {
     text-align: center;
     margin: 2rem;
@@ -34,8 +35,30 @@ export const Wrapper = styled.div`
     }
     &-vote {
       padding-top: 1rem;
+      display: flex;
       img {
-        width: 50%;
+        width: 40%;
+      }
+      div {
+        width: 60%;
+        ${FLEX_STYLE("center", "center")};
+        flex-direction: column;
+        h2 {
+          font-weight: bold;
+        }
+        button {
+          padding: 1rem 3rem;
+          margin-top: 1.5rem;
+          background-color: ${SKY_COLOR};
+          font-size: 1.1rem;
+          color: ${WHITE_COLOR};
+          border-radius: 5px;
+          border: 3px solid ${WHITE_COLOR};
+          transition: 0.3s all;
+          &:hover {
+            background-color: ${BLUE_COLOR};
+          }
+        }
       }
     }
   }
