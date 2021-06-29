@@ -41,35 +41,31 @@ const VoteSection: FC<IProps> = ({ isOnVotePage }) => {
   ];
   return (
     <Wrapper>
-      <ul className="community-filter">
-        <li>
-          <a>セブンティーン</a>
-        </li>
-        <li>
-          <a>宇宙少女</a>
-        </li>
-        <li>
-          <a>OH MY GIRL</a>
-        </li>
-        {!isOnVotePage && (
+      {!isOnVotePage && (
+        <ul className="vote-list">
+          <li>
+            <a>セブンティーン</a>
+          </li>
+          <li>
+            <a>宇宙少女</a>
+          </li>
+          <li>
+            <a>OH MY GIRL</a>
+          </li>
           <Link href="/vote">
             <a>
               <li>もっと見る</li>
             </a>
           </Link>
-        )}
-      </ul>
-      <div className="community-content">
-        <div className="community-poster">
+        </ul>
+      )}
+      <div className="vote-content">
+        <div className="vote-poster">
           <img src="https://coneru-web.com/wp-content/uploads/2018/04/korean-seventeen.jpg" />
-          <h2>
-            <Link href="/">
-              <a>セブンティーン</a>
-            </Link>
-          </h2>
+          <h2>セブンティーン</h2>
         </div>
         <div>
-          <div className="rader">
+          <div className="vote-rader">
             <ResponsiveRadar
               data={chartData}
               margin={{ top: 0, right: 80, bottom: 0, left: 80 }}
@@ -98,7 +94,7 @@ const VoteSection: FC<IProps> = ({ isOnVotePage }) => {
             />
           </div>
           <h3>このグループはどんな感じ？</h3>
-          <ul>
+          <ul className="vote-tag-list">
             <li className="tag">
               <button>😍 可愛い</button>
             </li>

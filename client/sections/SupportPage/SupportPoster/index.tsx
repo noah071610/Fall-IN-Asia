@@ -10,13 +10,11 @@ const SupportPoster: FC<IProps> = () => {
       <img src="https://image.freepik.com/free-vector/friends-exchanging-gift-boxes-with-one-another_53876-43036.jpg" />
       <div>
         <h2>
-          <span>クリック</span>一回で
-          <br />
-          好きなアイドルにプレゼント
+          <span>ドネーション</span>
         </h2>
-        <h4>⭐ 純粋な願いを好きなアイドルに伝えましょう。</h4>
+        <h4>⭐ ドネーションをもっと安全で簡単にしましょう</h4>
         <h4>
-          ⭐ 不便な個人のドネーションではない専門的な
+          ⭐ 不便な個人のドネーションではなく専門的な
           <br />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ドネーション管理サービスを差し上げます
         </h4>

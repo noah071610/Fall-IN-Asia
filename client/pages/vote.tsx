@@ -13,7 +13,6 @@ const vote: FC<IProps> = () => {
   const [state, setstate] = useState();
   return (
     <Wrapper>
-      <BattleSection />
       <VoteSearchForm />
       <VoteSection isOnVotePage={true} />
     </Wrapper>

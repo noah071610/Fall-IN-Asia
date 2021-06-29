@@ -4,11 +4,14 @@ import { Input } from "antd";
 import { FLEX_STYLE } from "config";
 import NewsSection from "@sections/MainPage/NewsSection";
 import NewsArticle from "@components/NewsArticle";
+import CommonTitle from "@components/Common/CommonTitle";
+import CommonSearch from "@components/Common/CommonSearch";
 const { Search } = Input;
 export const Wrapper = styled.div`
   padding: 2rem;
   .news-title {
     width: 100%;
+    padding: 0 1rem;
     margin-bottom: 2rem;
     ${FLEX_STYLE("space-between", "center")};
     h2 {
@@ -29,12 +32,9 @@ const news: FC<IProps> = () => {
   const [state, setstate] = useState();
   return (
     <Wrapper>
-      <div className="news-title">
-        <h2>
-          <span className="point">K-POP</span> ニュース
-        </h2>
-        <Search />
-      </div>
+      <CommonTitle point="KPOP" title="ニュース" />
+      <CommonSearch />
+      <div style={{ marginTop: "2rem" }} />
       <NewsSection />
       <div className="news-articles">
         <NewsArticle />

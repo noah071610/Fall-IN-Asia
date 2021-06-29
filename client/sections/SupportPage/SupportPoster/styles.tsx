@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE } from "config";
+import { BLUE_COLOR, FLEX_STYLE } from "config";
 
 export const Wrapper = styled.div`
   padding: 1rem 2rem;
@@ -12,11 +12,11 @@ export const Wrapper = styled.div`
   div {
     margin: 0 2rem 0 0;
     h2 {
-      color: #6a7ba2;
+      color: ${BLUE_COLOR};
       margin-bottom: 1.5rem;
     }
     h4 {
-      color: #6a7ba2;
+      color: ${BLUE_COLOR};
       margin-bottom: 1rem;
     }
     span {

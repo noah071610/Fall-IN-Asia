@@ -90,6 +90,28 @@ h1,h2,h3,h4,h5{
   color:${BLUE_COLOR};
 }
 
+.margin-div{
+  height:2rem;
+}
+.big-margin-div{
+  height:10rem;
+}
+
+.basic-input {
+  border: none;
+  padding: 0.5rem 0.3rem;
+  width: 100%;
+  border-bottom: 2px solid ${RGB_BLACK("0.2")};
+  transition: 0.3s all;
+  &:focus {
+    outline: none;
+    border-bottom: 2px solid ${BLUE_COLOR};
+  }
+  &:hover {
+    border-bottom: 2px solid ${BLUE_COLOR};
+  }
+}
+
 button {
   border: none;
   margin: 0;
@@ -102,6 +124,18 @@ button {
 
 .ant-divider {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.drop-down {
+  transition: 0.3s all;
+  height:100%;
+  transform:translateY(0);
+}
+
+.roll-up{
+  transition: 0.3s all;
+  height:0px;
+  transform:translateY(-100%);
 }
 
 `;

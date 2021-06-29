@@ -8,7 +8,7 @@ const SupportCard: FC<IProps> = memo(() => {
   return (
     <CardWrapper>
       <Icon>
-        <img src="https://lh3.googleusercontent.com/proxy/y_N3dIG0laW4OFEo1Ab9oWVtcaa1mWcobTtqMCLskyHqgA-QAzikr2R9RNG2PaFcS-qwz8wzlJsBnus7DyFYrs_ARwvCT-MZDkUExtYJ88m2AAGRhDu0i8cJfOSn_2sGgD5Cse3g6ydASn4wKUUmJcyYGBjcZV-Dgk9W7GqKDKfCWGq4fRD5PUzVYhpJ8lw97ssr5r1hYAJnt0mUmBqr" />
+        <img src="https://img3.yna.co.kr/etc/inner/KR/2021/04/29/AKR20210429114751005_02_i_P2.jpg" />
       </Icon>
       <Content>
         <h1>アイピンク</h1>
@@ -16,7 +16,7 @@ const SupportCard: FC<IProps> = memo(() => {
         <RealTimeTable>
           <div className="table-column followers">
             <span>352,540</span>
-            <p>集まってるドネーション</p>
+            <p>集まったドネーション</p>
           </div>
           <div className="table-column platform">
             <span>3</span>

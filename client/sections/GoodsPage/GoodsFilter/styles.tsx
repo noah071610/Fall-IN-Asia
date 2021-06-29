@@ -4,17 +4,19 @@ import { Input } from "antd";
 const { Search } = Input;
 
 export const FilterWrapper = styled.div`
-  background-color: ${RGB_BLACK("0.03")};
-  padding: 2rem;
+  overflow: hidden;
   h2 {
     font-weight: bold;
     font-size: 1.5rem;
+    margin-bottom: 2rem;
   }
   .filter-main {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 4fr;
     gap: 3rem;
+    padding: 2rem;
     margin-bottom: 1rem;
+    border: 1px solid ${RGB_BLACK("0.08")};
   }
 `;
 
@@ -39,7 +41,7 @@ export const JapanMap = styled.div`
   flex-direction: column;
   position: relative;
   .map {
-    border: 5px solid ${WHITE_COLOR};
+    border: 5px solid ${RGB_BLACK("0.08")};
     border-radius: 10px;
     margin: 0.3rem;
     padding: 0.5rem;
@@ -114,7 +116,7 @@ export const JapanMap = styled.div`
     }
   }
   .map-chu-shi {
-    border: 5px solid ${WHITE_COLOR};
+    border: 5px solid ${RGB_BLACK("0.08")};
     border-radius: 10px;
     margin: 0.3rem;
   }

@@ -24,12 +24,12 @@ const LoginModal: FC<IProps> = () => {
           <FontAwesomeIcon icon={faUser} />
           <span>メールアドレス</span>
         </h4>
-        <input type="email" />
+        <input className="basic-input" type="email" />
         <h4>
           <FontAwesomeIcon icon={faKey} />
           <span>パスワード</span>
         </h4>
-        <input type="password" />
+        <input className="basic-input" type="password" />
       </form>
     </ModalWrapper>
   );

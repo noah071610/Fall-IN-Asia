@@ -9,8 +9,8 @@ export const Wrapper = styled.div`
   cursor: pointer;
   transition: 0.4s all;
   &:hover {
-    transform: translate(0, -10px);
-    box-shadow: 0px 20px 30px ${RGB_BLACK("0.5")};
+    transform: translate(0, -3px);
+    box-shadow: 0px 20px 20px ${RGB_BLACK("0.5")};
   }
   img {
     width: 100%;

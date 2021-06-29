@@ -8,7 +8,7 @@ const GroupCard: FC<IProps> = () => {
   return (
     <Wrapper>
       <div className="mask" />
-      <h3>Oh my girl</h3>
+      <h2>Oh my girl</h2>
     </Wrapper>
   );
 };

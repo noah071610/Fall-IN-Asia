@@ -1,20 +1,9 @@
 import React, { FC, useState } from "react";
-import styled from "@emotion/styled";
-import ClubTitleSection from "@sections/ClubPage/ClubTitleSection/index";
-import ClubMainSection from "@sections/ClubPage/ClubMainSection/index";
+import ClubLayout from "@sections/ClubLayout";
 
-const ClubWrapper = styled.div``;
-
-interface IProps {}
-
-const club: FC<IProps> = () => {
+const index = () => {
   const [state, setstate] = useState();
-  return (
-    <ClubWrapper>
-      <ClubTitleSection />
-      <ClubMainSection />
-    </ClubWrapper>
-  );
+  return <ClubLayout />;
 };
 
-export default club;
+export default index;

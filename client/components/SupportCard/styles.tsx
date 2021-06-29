@@ -5,7 +5,8 @@ export const CardWrapper = styled.div`
   display: grid;
   grid-template-columns: 4fr 8fr;
   padding: 2rem;
-  border-bottom: 1px solid ${RGB_BLACK("0.08")};
+  margin: 2rem 0;
+  border: 1px solid ${RGB_BLACK("0.08")};
   transition: 0.3s all;
   over-flow: hidden;
   position: relative;

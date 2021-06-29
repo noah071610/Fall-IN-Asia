@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE, WHITE_COLOR } from "config";
+import { FLEX_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const Wrapper = styled.div`
   background: url(https://image.aladin.co.kr/product/22066/71/cover500/c382831048_1.jpg);
@@ -8,6 +8,11 @@ export const Wrapper = styled.div`
   height: 200px;
   position: relative;
   cursor: pointer;
+  &:hover {
+    .mask {
+      background: ${RGB_BLACK("0.4")};
+    }
+  }
   .mask {
     background: rgb(255, 255, 255);
     background: linear-gradient(
@@ -23,7 +28,7 @@ export const Wrapper = styled.div`
     height: 200px;
   }
   ${FLEX_STYLE("flex-start", "flex-end")};
-  h3 {
+  h2 {
     z-index: 1;
     color: ${WHITE_COLOR};
   }

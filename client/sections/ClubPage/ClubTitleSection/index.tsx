@@ -2,6 +2,8 @@ import React, { FC, useState } from "react";
 import { TitleWrapper, ClubSelectModal } from "./styles";
 import { Input } from "antd";
 import { DownCircleOutlined } from "@ant-design/icons";
+import CommonTitle from "@components/Common/CommonTitle";
+import CommonSearch from "@components/Common/CommonSearch";
 const { Search } = Input;
 
 interface IProps {}
@@ -10,16 +12,9 @@ const ClubTitleSection: FC<IProps> = () => {
   const [state, setstate] = useState();
   return (
     <TitleWrapper>
-      <div className="club-title">
-        <h2>
-          <span className="point">BTS</span> クラブ
-        </h2>
-        <a>
-          <DownCircleOutlined />
-        </a>
-      </div>
+      <CommonTitle point="BTS" title="クラブ" />
       <div className="club-list">
-        <span>おすすめのクラブ</span>
+        <span>訪ねたクラブ</span>
         <ul>
           <li className="tag">
             <a>Oh my girl</a>
@@ -35,7 +30,6 @@ const ClubTitleSection: FC<IProps> = () => {
           </li>
         </ul>
       </div>
-      <ClubSelectModal>하이</ClubSelectModal>
     </TitleWrapper>
   );
 };

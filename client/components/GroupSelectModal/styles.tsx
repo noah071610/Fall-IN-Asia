@@ -3,7 +3,7 @@ import { GRID_STYLE, RGB_BLACK } from "config";
 
 export const GroupSelectModalWrapper = styled.div`
   padding: 1rem;
-  ${GRID_STYLE("1rem", "2fr 2fr")};
+  ${GRID_STYLE("2rem", "2fr 2fr")};
   .group-recommeder {
     ${GRID_STYLE("0", "repeat(2,1fr)")};
   }

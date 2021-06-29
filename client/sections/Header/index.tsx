@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faBookReader, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import CommunityMenu from "sections/Header/CommunityMenu";
 import LoginModal from "sections/Header/LoginModal";
 import useToggle from "@hooks/useToggle";
@@ -49,7 +49,7 @@ const Header: FC<HeaderProps> = () => {
             <Link href="/goods">
               <a className="nav-list-ancher">
                 <InboxOutlined />
-                <span className="list-text">グッズ交換</span>
+                <span className="list-text">グッズ</span>
               </a>
             </Link>
           </li>
@@ -58,6 +58,18 @@ const Header: FC<HeaderProps> = () => {
               <a className="nav-list-ancher">
                 <HeartOutlined />
                 <span className="list-text">後援</span>
+              </a>
+            </Link>
+          </li>
+          <li className="nav-list">
+            <Link href="/korean">
+              <a className="nav-list-ancher">
+                <img
+                  alt="menu-icon"
+                  className="anticon"
+                  src="https://img.icons8.com/ios/26/000000/book-and-pencil.png"
+                />
+                <span className="list-text">韓国語</span>
               </a>
             </Link>
           </li>

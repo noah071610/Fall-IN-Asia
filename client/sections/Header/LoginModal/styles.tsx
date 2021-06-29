@@ -22,21 +22,6 @@ export const ModalWrapper = styled.div`
     }
   }
   form {
-    input {
-      border: none;
-      padding: 0.5rem 0.3rem;
-      width: 100%;
-      border-bottom: 2px solid ${RGB_BLACK("0.2")};
-      margin-bottom: 1.5rem;
-      transition: 0.3s all;
-      &:focus {
-        outline: none;
-        border-bottom: 2px solid ${BLUE_COLOR};
-      }
-      &:hover {
-        border-bottom: 2px solid ${BLUE_COLOR};
-      }
-    }
     h4 {
       margin-bottom: 0.7rem;
       span {

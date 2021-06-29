@@ -24,11 +24,6 @@ const CommunityMenu: FC<IProps> = () => {
           <a>KPOPニュース</a>
         </Link>
       </li>
-      <li>
-        <Link href="/suggest">
-          <a>おすすめアイドル</a>
-        </Link>
-      </li>
     </CommunityMenuWrapper>
   );
 };

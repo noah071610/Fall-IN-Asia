@@ -9,12 +9,18 @@ export const NewsArticleWrapper = styled.div`
   cursor: pointer;
   &:hover {
     background: ${RGB_BLACK("0.03")};
-    h2,
     p {
       text-decoration: underline;
     }
+    img {
+      transform: scale(1.1);
+    }
+  }
+  .news-image-wrapper {
+    overflow: hidden;
   }
   img {
+    transition: 0.3s all;
     width: 100%;
   }
   h2 {
@@ -22,5 +28,6 @@ export const NewsArticleWrapper = styled.div`
   }
   p {
     line-height: 1.8;
+    padding-right: 2rem;
   }
 `;

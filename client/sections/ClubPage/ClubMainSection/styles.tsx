@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, RGB_BLACK } from "config";
+import { BLUE_COLOR, FLEX_STYLE, RGB_BLACK } from "config";
 
 export const MainWrapper = styled.div`
-  padding: 1rem 2rem 2rem 2rem;
+  padding: 0 2rem 2rem 2rem;
   table {
     width: 100%;
     tr {
@@ -20,9 +20,23 @@ export const MainWrapper = styled.div`
       cursor: pointer;
       transition: 0.2s all;
       &:hover {
-        background: ${RGB_BLACK("0.08")};
-        text-decoration: underline;
+        background: ${RGB_BLACK("0.1")};
       }
+    }
+  }
+`;
+
+export const PaginationBar = styled.div`
+  padding: 2rem 0;
+  ${FLEX_STYLE("center", "flex-end")};
+  flex-direction: column;
+  .ant-input-search {
+    width: 50%;
+    margin-bottom: 1rem;
+  }
+  .ant-pagination-options-quick-jumper {
+    input {
+      margin-right: 0;
     }
   }
 `;

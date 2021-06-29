@@ -34,6 +34,9 @@ export const HeaderWrapper = styled.div`
             transition: 0.5s all;
             font-size: 1.5rem;
           }
+          .fontawesome-icon {
+            font-size: 1.5rem;
+          }
           .arrow {
             margin-left: 0.5rem;
             transition: 0.3s all;

@@ -1,25 +1,11 @@
 import styled from "@emotion/styled";
-import { RGB_BLACK } from "config";
+import { WHITE_COLOR } from "config";
 
-export const Wrapper = styled.div`
-  padding: 0 2rem;
-  margin-bottom: 2rem;
-  .search-bar {
-    .ant-input-search {
-      width: 50%;
-    }
-    .hot-group-list {
-      display: flex;
-      margin: 1rem 0;
-      h2 {
-        margin-right: 1rem;
-      }
-      .tag {
-        margin: 0;
-      }
-    }
-  }
+export const VoteSearchWrapper = styled.div`
+  padding: 2rem;
+  margin-bottom: 1rem;
   .slick-slider {
+    margin-top: 1rem;
     .left-arrow {
       display: block;
       z-index: 1;
@@ -27,7 +13,7 @@ export const Wrapper = styled.div`
       position: absolute;
       font-size: 2rem;
       transform: translateY(-50%);
-      color: ${RGB_BLACK("0.8")};
+      color: ${WHITE_COLOR};
       cursor: pointer;
     }
     .right-arrow {
@@ -38,7 +24,7 @@ export const Wrapper = styled.div`
       position: absolute;
       font-size: 2rem;
       transform: translateY(-50%);
-      color: ${RGB_BLACK("0.8")};
+      color: ${WHITE_COLOR};
       cursor: pointer;
     }
   }

@@ -7,7 +7,9 @@ const NewsArticle: FC<IProps> = () => {
   const [state, setstate] = useState();
   return (
     <NewsArticleWrapper>
-      <img src="https://chosunbiz-chosunbiz-prod.cdn.arcpublishing.com/resizer/STPVmV3EHPr6071VSeH8UFXcUWM=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosunbiz/ZD4UFWB3WJCYHPWSMZV6OT5EEY.png" />
+      <div className="news-image-wrapper">
+        <img src="https://chosunbiz-chosunbiz-prod.cdn.arcpublishing.com/resizer/STPVmV3EHPr6071VSeH8UFXcUWM=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosunbiz/ZD4UFWB3WJCYHPWSMZV6OT5EEY.png" />
+      </div>
       <div>
         <h2>BTS ‘버터’, 빌보드 싱글 차트 4주 연속 1위</h2>
         <p>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { FC, useState } from "react";
 import { GruopPreviewWrapper } from "./styles";
 
@@ -7,10 +8,14 @@ const GruopPreview: FC<IProps> = () => {
   const [state, setstate] = useState();
   return (
     <GruopPreviewWrapper>
-      <h2>
-        <span className="point">BTS</span>
-        クラブ
-      </h2>
+      <Link href="club/bts">
+        <a>
+          <h2>
+            <span className="point">BTS</span>
+            クラブ
+          </h2>
+        </a>
+      </Link>
       <table>
         <tr className="table-header">
           <th>タイトル</th>

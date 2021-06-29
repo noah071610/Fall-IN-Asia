@@ -1,10 +1,10 @@
 import React, { FC, useState } from "react";
-import { Wrapper } from "./styles";
-import { Input } from "antd";
+import { VoteSearchWrapper } from "./styles";
 import GroupCard from "@components/GroupCard";
 import Slider from "react-slick";
+import CommonTitle from "@components/Common/CommonTitle";
 import { DoubleLeftOutlined, DoubleRightOutlined } from "@ant-design/icons";
-const { Search } = Input;
+import CommonSearch from "@components/Common/CommonSearch";
 
 interface IProps {}
 
@@ -31,27 +31,20 @@ const VoteSearchForm: FC<IProps> = () => {
     prevArrow: <SamplePrevArrow />,
   };
   return (
-    <Wrapper>
-      <div className="search-bar">
-        <Search />
-        <div className="hot-group-list">
-          <h2>人気</h2>
-          <ul>
-            <li className="tag">
-              <a>Oh my girl</a>
-            </li>
-          </ul>
-        </div>
+    <VoteSearchWrapper>
+      <CommonTitle point="スタイル" title="投票" subtitle="貴方の推しのスタイルは何ですか？" />
+      <CommonSearch />
+      <div className="vote-filter">
+        <Slider {...groupCardSettings}>
+          <GroupCard />
+          <GroupCard />
+          <GroupCard />
+          <GroupCard />
+          <GroupCard />
+          <GroupCard />
+        </Slider>
       </div>
-      <Slider {...groupCardSettings}>
-        <GroupCard />
-        <GroupCard />
-        <GroupCard />
-        <GroupCard />
-        <GroupCard />
-        <GroupCard />
-      </Slider>
-    </Wrapper>
+    </VoteSearchWrapper>
   );
 };
 
