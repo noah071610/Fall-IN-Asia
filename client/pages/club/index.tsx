@@ -21,7 +21,7 @@ const index: FC<IProps> = () => {
   return (
     <ClubMainWrapper>
       <CommonTitle title="ファンクラブ" subtitle="仲間と会える空間" />
-      <div style={{ margin: "2rem" }} />
+      <div className="margin-div" />
       <GroupSelectModal />
       <Divider />
       <div className="club-previews">

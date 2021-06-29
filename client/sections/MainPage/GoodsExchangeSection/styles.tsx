@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, RGB_BLACK } from "config";
+import { BLUE_COLOR, BORDER_THIN, RGB_BLACK } from "config";
 
 export const Wrapper = styled.div`
   height: 500px;
@@ -25,8 +25,8 @@ export const Wrapper = styled.div`
     right: 5%;
     padding: 0 1rem;
     border-radius: 5px;
-    border: 1px solid ${RGB_BLACK("0.1")};
-    box-shadow: 0px 0px 15px ${RGB_BLACK("0.5")};
+    ${BORDER_THIN("border")};
+    box-shadow: 0px 0px 15px ${RGB_BLACK(0.5)};
     transform: translateY(-50%);
     top: 50%;
     background-color: white;
@@ -34,7 +34,7 @@ export const Wrapper = styled.div`
     transition: 0.4s all;
     &:hover {
       transform: translate(0, -51%);
-      box-shadow: 0px 10px 30px ${RGB_BLACK("0.5")};
+      box-shadow: 0px 10px 30px ${RGB_BLACK(0.5)};
     }
     .goods-list {
       padding: 1.5rem 1rem;
@@ -42,7 +42,7 @@ export const Wrapper = styled.div`
         padding-left: 1rem;
         display: inline-block;
       }
-      border-bottom: 1px solid ${RGB_BLACK("0.08")};
+      ${BORDER_THIN("border-bottom")};
     }
   }
 `;

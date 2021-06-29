@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { FLEX_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
+import { BORDER_THIN, FLEX_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const CommunityMenuWrapper = styled.ul`
   position: absolute;
@@ -9,7 +9,7 @@ export const CommunityMenuWrapper = styled.ul`
   top: 130%;
   left: -0.5rem;
   background-color: ${WHITE_COLOR};
-  border: 1.5px solid ${RGB_BLACK("0.2")};
+  ${BORDER_THIN("border", 1.5)};
   box-sizing: content-box;
   padding: 0.5rem;
   li {
@@ -28,7 +28,7 @@ export const MenuTail = styled.div`
   width: 9px;
   height: 9px;
   background-color: ${WHITE_COLOR};
-  border: 1.5px solid ${RGB_BLACK("0.2")};
+  ${BORDER_THIN("border", 1.5)};
   border-bottom: none;
   border-right: none;
   content: "";

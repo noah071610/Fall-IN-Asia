@@ -1,17 +1,17 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
+import { BORDER_THIN, FLEX_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const CardWrapper = styled.div`
   display: grid;
   grid-template-columns: 4fr 8fr;
   padding: 2rem;
   margin: 2rem 0;
-  border: 1px solid ${RGB_BLACK("0.08")};
+  ${BORDER_THIN("border")};
   transition: 0.3s all;
   over-flow: hidden;
   position: relative;
   &:hover {
-    background-color: ${RGB_BLACK("0.03")};
+    background-color: ${RGB_BLACK(0.03)};
     .seemore {
       transform: rotateX(0);
     }

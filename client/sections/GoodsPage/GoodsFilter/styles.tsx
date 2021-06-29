@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BLACK_COLOR, BLUE_COLOR, FLEX_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
+import { BLACK_COLOR, BLUE_COLOR, BORDER_THIN, FLEX_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
 import { Input } from "antd";
 const { Search } = Input;
 
@@ -16,7 +16,7 @@ export const FilterWrapper = styled.div`
     gap: 3rem;
     padding: 2rem;
     margin-bottom: 1rem;
-    border: 1px solid ${RGB_BLACK("0.08")};
+    ${BORDER_THIN("border")};
   }
 `;
 
@@ -41,7 +41,7 @@ export const JapanMap = styled.div`
   flex-direction: column;
   position: relative;
   .map {
-    border: 5px solid ${RGB_BLACK("0.08")};
+    ${BORDER_THIN("border", 5)};
     border-radius: 10px;
     margin: 0.3rem;
     padding: 0.5rem;
@@ -116,7 +116,7 @@ export const JapanMap = styled.div`
     }
   }
   .map-chu-shi {
-    border: 5px solid ${RGB_BLACK("0.08")};
+    ${BORDER_THIN("border", 5)};
     border-radius: 10px;
     margin: 0.3rem;
   }
@@ -163,8 +163,8 @@ export const JapanMap = styled.div`
     top: 2rem;
     left: 2rem;
     padding: 3rem;
-    border-right: 1px solid ${RGB_BLACK("0.2")};
-    border-bottom: 1px solid ${RGB_BLACK("0.2")};
+    ${BORDER_THIN("border-right")};
+    ${BORDER_THIN("border-bottom")};
     &-map {
       border: 5px solid ${WHITE_COLOR};
       border-radius: 10px;

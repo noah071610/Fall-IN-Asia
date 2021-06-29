@@ -76,7 +76,7 @@ h1,h2,h3,h4,h5{
   padding:0.5rem 1rem;
   border-radius : 5px;
   background-color:${WHITE_COLOR};
-  border:1px solid ${RGB_BLACK("0.1")};
+  border:1px solid ${RGB_BLACK(0.15)};
   font-size:0.7rem;
   cursor:pointer;
   &:hover{
@@ -101,11 +101,14 @@ h1,h2,h3,h4,h5{
   border: none;
   padding: 0.5rem 0.3rem;
   width: 100%;
-  border-bottom: 2px solid ${RGB_BLACK("0.2")};
+  border-bottom: 2px solid ${RGB_BLACK(0.1)};
   transition: 0.3s all;
   &:focus {
     outline: none;
     border-bottom: 2px solid ${BLUE_COLOR};
+  }
+  &::placeholder {
+    color: ${RGB_BLACK(0.25)};
   }
   &:hover {
     border-bottom: 2px solid ${BLUE_COLOR};
@@ -123,7 +126,7 @@ button {
 }
 
 .ant-divider {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.15);
 }
 
 .drop-down {

@@ -1,14 +1,14 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, GRID_STYLE, RGB_BLACK } from "config";
+import { BLUE_COLOR, BORDER_THICK, GRID_STYLE, RGB_BLACK } from "config";
 
 export const NewsArticleWrapper = styled.div`
   margin-bottom: 2rem;
   padding: 2rem 1rem;
-  border: 2px solid ${RGB_BLACK("0.08")};
+  ${BORDER_THICK("border")};
   ${GRID_STYLE("3rem", "3fr 6fr")};
   cursor: pointer;
   &:hover {
-    background: ${RGB_BLACK("0.03")};
+    background: ${RGB_BLACK(0.03)};
     p {
       text-decoration: underline;
     }

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, FLEX_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
+import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const ModalWrapper = styled.div`
   position: absolute;
@@ -8,7 +8,7 @@ export const ModalWrapper = styled.div`
   top: 62px;
   right: 0;
   padding: 1rem 2rem;
-  border: 1.5px solid ${RGB_BLACK("0.1")};
+  ${BORDER_THIN("border")};
   background-color: ${WHITE_COLOR};
   .login-title {
     padding: 0.5rem 0;
@@ -38,7 +38,7 @@ export const MenuTail = styled.div`
   width: 9px;
   height: 9px;
   background-color: ${WHITE_COLOR};
-  border: 1.5px solid ${RGB_BLACK("0.2")};
+  ${BORDER_THIN("border")};
   border-bottom: none;
   border-right: none;
   content: "";

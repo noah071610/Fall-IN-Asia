@@ -2,7 +2,7 @@ import React, { FC, useCallback, useState } from "react";
 import GoodsTitle from "@sections/GoodsPage/GoodsTitle";
 import styled from "@emotion/styled";
 import GoodsCard from "@components/GoodsCard";
-import { RGB_BLACK } from "config";
+import { BORDER_THIN, RGB_BLACK } from "config";
 
 const GoodsPageWrapper = styled.div`
   margin-top: 1rem;
@@ -12,7 +12,7 @@ const GoodsPageWrapper = styled.div`
     gap: 2rem;
     margin: 2rem;
     padding: 2rem;
-    border: 1px solid ${RGB_BLACK("0.1")};
+    ${BORDER_THIN("border")};
   }
 `;
 

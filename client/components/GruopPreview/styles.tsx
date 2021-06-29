@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, RGB_BLACK } from "config";
+import { BLUE_COLOR, BORDER_THIN, RGB_BLACK } from "config";
 
 export const GruopPreviewWrapper = styled.div`
-  border: 1px solid ${RGB_BLACK("0.08")};
+  ${BORDER_THIN("border")};
   padding: 1.5rem;
   cursor: pointer;
   &:hover {
-    background: ${RGB_BLACK("0.03")};
+    background: ${RGB_BLACK(0.03)};
   }
   h2 {
     padding-bottom: 0.5rem;
@@ -26,7 +26,7 @@ export const GruopPreviewWrapper = styled.div`
       padding: 1rem 0;
     }
     .table-header {
-      border-bottom: 1px solid ${RGB_BLACK("0.08")};
+      ${BORDER_THIN("border-bottom")};
     }
   }
 `;

@@ -11,8 +11,16 @@ export const MD_SIZE = "768px" as const;
 export const LG_SIZE = "992px" as const;
 export const XLG_SIZE = "1200px" as const;
 
-export const RGB_BLACK = (opacity: string) => `
+export const RGB_BLACK = (opacity: number) => `
   rgba(0,0,0,${opacity})
+`;
+
+export const BORDER_THIN = (border: string, px?: number) => `
+  ${border}:${px ? px : "1"}px solid rgba(0,0,0,0.15)
+`;
+
+export const BORDER_THICK = (border: string, px?: number) => `
+  ${border}:${px ? px : "2"}px solid rgba(0,0,0,0.1)
 `;
 
 export const FLEX_STYLE = (justify: string, align: string) => `

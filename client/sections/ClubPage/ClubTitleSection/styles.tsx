@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE, RGB_BLACK } from "config";
+import { BORDER_THICK, FLEX_STYLE, RGB_BLACK } from "config";
 export const TitleWrapper = styled.div`
   padding: 0 2rem 3rem 2rem;
   .club-title {
@@ -16,8 +16,8 @@ export const TitleWrapper = styled.div`
   }
   .club-list {
     padding: 1rem;
-    border-bottom: 2px solid ${RGB_BLACK("0.1")};
-    background-color: ${RGB_BLACK("0.03")};
+    ${BORDER_THICK("border-bottom")};
+    background-color: ${RGB_BLACK(0.03)};
     span {
       margin-right: 1rem;
     }

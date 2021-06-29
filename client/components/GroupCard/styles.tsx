@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   cursor: pointer;
   &:hover {
     .mask {
-      background: ${RGB_BLACK("0.4")};
+      background: ${RGB_BLACK(0.4)};
     }
   }
   .mask {

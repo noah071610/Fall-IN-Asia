@@ -1,16 +1,16 @@
 import styled from "@emotion/styled";
-import { RGB_BLACK } from "config";
+import { BORDER_THIN, RGB_BLACK } from "config";
 
 export const CardWrapper = styled.div`
   cursor: pointer;
   padding: 1.5rem;
-  border: 1px solid ${RGB_BLACK("0.1")};
+  ${BORDER_THIN("border")};
 
   &:hover {
     h2 {
       text-decoration: underline;
     }
-    background: ${RGB_BLACK("0.03")};
+    background: ${RGB_BLACK(0.03)};
     img {
       transform: scale(1.08);
     }

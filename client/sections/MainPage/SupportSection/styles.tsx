@@ -38,7 +38,7 @@ export const Wrapper = styled.div`
   }
   &:hover {
     .overlay {
-      background-color: ${RGB_BLACK("0.4")};
+      background-color: ${RGB_BLACK(0.4)};
     }
   }
 `;

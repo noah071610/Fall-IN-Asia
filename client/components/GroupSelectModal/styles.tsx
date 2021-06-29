@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { GRID_STYLE, RGB_BLACK } from "config";
+import { BORDER_THICK, GRID_STYLE, RGB_BLACK } from "config";
 
 export const GroupSelectModalWrapper = styled.div`
   padding: 1rem;
@@ -16,9 +16,9 @@ export const GroupSelectModalWrapper = styled.div`
     }
     ul {
       padding: 1rem;
-      border-top: 2px solid ${RGB_BLACK("0.08")};
-      border-bottom: 2px solid ${RGB_BLACK("0.08")};
-      background-color: ${RGB_BLACK("0.03")};
+      ${BORDER_THICK("border-top")};
+      ${BORDER_THICK("border-bottom")};
+      background-color: ${RGB_BLACK(0.03)};
     }
   }
 `;

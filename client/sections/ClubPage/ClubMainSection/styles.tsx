@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, FLEX_STYLE, RGB_BLACK } from "config";
+import { BLUE_COLOR, BORDER_THICK, FLEX_STYLE, RGB_BLACK } from "config";
 
 export const MainWrapper = styled.div`
   padding: 0 2rem 2rem 2rem;
@@ -12,7 +12,7 @@ export const MainWrapper = styled.div`
     .table-header {
       padding: 1rem 0;
       border-top: 3px solid ${BLUE_COLOR};
-      border-bottom: 2px solid ${RGB_BLACK("0.1")};
+      ${BORDER_THICK("border-bottom")};
     }
     .table-post {
       padding: 1rem 0;
@@ -20,7 +20,7 @@ export const MainWrapper = styled.div`
       cursor: pointer;
       transition: 0.2s all;
       &:hover {
-        background: ${RGB_BLACK("0.1")};
+        background: ${RGB_BLACK(0.1)};
       }
     }
   }

@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import { BLACK_COLOR, FLEX_STYLE, LG_SIZE, RGB_BLACK, WHITE_COLOR } from "config";
+import { BLACK_COLOR, BORDER_THIN, FLEX_STYLE, LG_SIZE, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const HeaderWrapper = styled.div`
   padding: 0.8rem 0 0.5rem 0;
-  border-bottom: 1px solid ${RGB_BLACK("0.07")};
+  ${BORDER_THIN("border-bottom")};
   position: fixed;
   top: 0;
   z-index: 10;

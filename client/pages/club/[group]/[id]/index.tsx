@@ -5,12 +5,9 @@ import ClubPostContent from "@sections/ClubPostPage/ClubPostContent";
 import CommentForm from "@components/CommentForm/";
 import Comment from "@components/Comment";
 import styled from "@emotion/styled";
-import { RGB_BLACK } from "config";
 
 const CommentsWrapper = styled.div`
-  padding: 1rem;
-  margin: 0 2rem;
-  border-top: 2px solid ${RGB_BLACK("0.1")};
+  margin: 0 2rem 4rem 2rem;
 `;
 
 interface IProps {}
@@ -23,6 +20,10 @@ const ClubPost: FC<IProps> = () => {
       <ClubPostContent />
       <CommentForm />
       <CommentsWrapper>
+        <Comment />
+        <Comment />
+        <Comment />
+        <Comment />
         <Comment />
       </CommentsWrapper>
     </ClubLayout>

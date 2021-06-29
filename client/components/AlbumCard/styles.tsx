@@ -11,7 +11,7 @@ export const AlbumCardWrapper = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: ${RGB_BLACK("0.3")};
+    background-color: ${RGB_BLACK(0.3)};
     -webkit-mask-image: -webkit-gradient(
       linear,
       left top,

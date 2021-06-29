@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE } from "config";
+import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, RGB_BLACK } from "config";
 
 export const CommentFormWrapper = styled.div`
-  ${FLEX_STYLE("space-between", "center")};
-  padding: 1rem 2rem;
+  padding: 1rem 2rem 0 2rem;
   .name-space {
     ${FLEX_STYLE("flex-start", "center")};
+    margin-bottom: 0.3rem;
     .icon {
       img {
         width: 2.5rem;
@@ -17,7 +17,15 @@ export const CommentFormWrapper = styled.div`
       font-size: 1.2rem;
     }
   }
-  .ant-input {
-    width: 75%;
+  .input-wrapper {
+    display: flex;
+    button {
+      width: 15%;
+      ${BORDER_THIN("border")};
+      transition: 0.3s all;
+      &:hover {
+        border: 1px solid ${BLUE_COLOR};
+      }
+    }
   }
 `;

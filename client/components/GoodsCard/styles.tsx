@@ -1,16 +1,16 @@
 import styled from "@emotion/styled";
-import { RGB_BLACK } from "config";
+import { BORDER_THIN, RGB_BLACK } from "config";
 
 export const Wrapper = styled.div`
   padding: 1rem;
-  border: 1px solid ${RGB_BLACK("0.08")};
+  ${BORDER_THIN("border")};
   border-radius: 5px;
-  box-shadow: 0px 0px 10px ${RGB_BLACK("0.15")};
+  box-shadow: 0px 0px 10px ${RGB_BLACK(0.15)};
   cursor: pointer;
   transition: 0.4s all;
   &:hover {
     transform: translate(0, -3px);
-    box-shadow: 0px 20px 20px ${RGB_BLACK("0.5")};
+    box-shadow: 0px 20px 20px ${RGB_BLACK(0.5)};
   }
   img {
     width: 100%;

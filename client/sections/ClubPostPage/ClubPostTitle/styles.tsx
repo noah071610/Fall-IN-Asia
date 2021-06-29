@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { RGB_BLACK } from "config";
+import { BORDER_THIN } from "config";
 
 export const ClubPostTitleWrapper = styled.div`
   padding: 0 2rem;
@@ -8,7 +8,7 @@ export const ClubPostTitleWrapper = styled.div`
   }
   .post-title-info {
     padding-bottom: 1rem;
-    border-bottom: 1px solid ${RGB_BLACK("0.08")};
+    ${BORDER_THIN("border-bottom")};
     margin-bottom: 1rem;
   }
 `;

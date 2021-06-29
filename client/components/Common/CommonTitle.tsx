@@ -1,11 +1,10 @@
 import React, { FC, useState } from "react";
 import styled from "@emotion/styled";
-import { BLUE_COLOR, FLEX_STYLE, RGB_BLACK } from "config";
-import { Divider } from "antd";
+import { BLUE_COLOR, BORDER_THICK, BORDER_THIN, FLEX_STYLE } from "config";
 
 const CommonTitleWrapper = styled.div`
   ${FLEX_STYLE("space-between", "center")};
-  border-bottom: 2px solid ${RGB_BLACK("0.1")};
+  ${BORDER_THICK("border-bottom")};
   .title-name {
     ${FLEX_STYLE("flex-start", "center")};
     h2 {
@@ -19,7 +18,7 @@ const CommonTitleWrapper = styled.div`
       }
     }
     .title-desc {
-      border-left: 1px solid ${RGB_BLACK("0.1")};
+      ${BORDER_THIN("border-left")};
       padding-left: 1rem;
       margin-bottom: 1rem;
     }
