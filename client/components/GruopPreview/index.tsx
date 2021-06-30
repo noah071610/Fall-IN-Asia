@@ -17,30 +17,34 @@ const GruopPreview: FC<IProps> = () => {
         </a>
       </Link>
       <table>
-        <tr className="table-header">
-          <th>タイトル</th>
-          <th>お名前</th>
-        </tr>
-        <tr>
-          <td>これはプレビューですよ</td>
-          <td>丹野美沙</td>
-        </tr>
-        <tr>
-          <td>これはプレビューですよ</td>
-          <td>丹野美沙</td>
-        </tr>
-        <tr>
-          <td>これはプレビューですよ</td>
-          <td>丹野美沙</td>
-        </tr>
-        <tr>
-          <td>これはプレビューですよ</td>
-          <td>丹野美沙</td>
-        </tr>
-        <tr>
-          <td>これはプレビューですよ</td>
-          <td>丹野美沙</td>
-        </tr>
+        <thead>
+          <tr className="table-header">
+            <th>タイトル</th>
+            <th>お名前</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>これはプレビューですよ</td>
+            <td>丹野美沙</td>
+          </tr>
+          <tr>
+            <td>これはプレビューですよ</td>
+            <td>丹野美沙</td>
+          </tr>
+          <tr>
+            <td>これはプレビューですよ</td>
+            <td>丹野美沙</td>
+          </tr>
+          <tr>
+            <td>これはプレビューですよ</td>
+            <td>丹野美沙</td>
+          </tr>
+          <tr>
+            <td>これはプレビューですよ</td>
+            <td>丹野美沙</td>
+          </tr>
+        </tbody>
       </table>
     </GruopPreviewWrapper>
   );

@@ -12,9 +12,11 @@ const GoodsTitle: FC<IProps> = () => {
   return (
     <GoodsTitleWrapper>
       <CommonTitle title="グッズリスト" subtitle="私達のグッズマーケット">
-        <button onClick={onClickFilter}>フィルター</button>
+        <button className="tag" onClick={onClickFilter}>
+          フィルター
+        </button>
       </CommonTitle>
-      <GoodsFilter onFilter={onFilter} />
+      {onFilter && <GoodsFilter onFilter={onFilter} />}
       <ul>
         <li className="tag">早め</li>
         <li className="tag">直接交換</li>

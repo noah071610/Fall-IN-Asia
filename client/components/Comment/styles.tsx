@@ -2,12 +2,12 @@ import styled from "@emotion/styled";
 import { BORDER_THIN, FLEX_STYLE, RGB_BLACK } from "config";
 
 export const CommentWrapper = styled.div`
-  padding: 1rem 0;
+  padding: 1rem 0.7rem;
   ${BORDER_THIN("border-bottom")};
   transition: 0.3s all;
   cursor: pointer;
   .name-space {
-    ${FLEX_STYLE("flex-start", "center")};
+    ${FLEX_STYLE("space-between", "center")};
     margin-bottom: 0.5rem;
     .icon {
       img {
@@ -17,6 +17,12 @@ export const CommentWrapper = styled.div`
     }
     .name {
       margin-right: 1rem;
+    }
+    .comment-menu {
+      font-size: 0.9rem;
+      a {
+        margin-left: 0.5rem;
+      }
     }
   }
   .comment-wrapper {

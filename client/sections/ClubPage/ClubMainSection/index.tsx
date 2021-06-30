@@ -1,8 +1,6 @@
-import { Input } from "antd";
-import React, { FC, ReactNode, useState } from "react";
-import { MainWrapper, PaginationBar } from "./styles";
-import { Pagination } from "antd";
-const { Search } = Input;
+import CommonPagination from "@components/Common/CommonPagination";
+import React, { FC, useState } from "react";
+import { MainWrapper } from "./styles";
 interface IProps {}
 
 const ClubMainSection: FC<IProps> = () => {
@@ -57,10 +55,7 @@ const ClubMainSection: FC<IProps> = () => {
           </tr>
         </tbody>
       </table>
-      <PaginationBar>
-        <Search />
-        <Pagination showQuickJumper defaultCurrent={1} total={50} />
-      </PaginationBar>
+      <CommonPagination />
       <div className="big-margin-div" />
     </MainWrapper>
   );

@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { ModalWrapper, MenuTail } from "./styles";
+import { ModalWrapper, MenuTail, LoginBtn } from "./styles";
 import { Divider } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faKey, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -30,6 +30,10 @@ const LoginModal: FC<IProps> = () => {
           <span>パスワード</span>
         </h4>
         <input className="basic-input" type="password" />
+        <LoginBtn>
+          <button>ログイン</button>
+          <button>新規登録</button>
+        </LoginBtn>
       </form>
     </ModalWrapper>
   );

@@ -28,4 +28,12 @@ export const CommentFormWrapper = styled.div`
       }
     }
   }
+  h3 {
+    padding: 1rem 0;
+    margin-right: 0.5rem;
+    text-align: end;
+    span {
+      margin-right: 0.5rem;
+    }
+  }
 `;

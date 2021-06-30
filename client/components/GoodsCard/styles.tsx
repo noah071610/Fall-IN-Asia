@@ -1,30 +1,36 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, RGB_BLACK } from "config";
+import { BORDER_THIN, FLEX_STYLE, RGB_BLACK } from "config";
 
 export const Wrapper = styled.div`
-  padding: 1rem;
-  ${BORDER_THIN("border")};
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px ${RGB_BLACK(0.15)};
   cursor: pointer;
   transition: 0.4s all;
-  &:hover {
-    transform: translate(0, -3px);
-    box-shadow: 0px 20px 20px ${RGB_BLACK(0.5)};
-  }
-  img {
-    width: 100%;
-    height: 250px;
+  .image-wrapper {
+    overflow: hidden;
+
+    img {
+      transition: 0.3s all;
+      width: 100%;
+      height: 200px;
+    }
   }
   h3 {
-    margin: 1rem 0;
+    margin: 0.8rem 0 0.6rem 0;
+    font-size: 0.9rem;
     font-weight: bold;
   }
-  p {
-    margin: 1rem 0;
-    span {
-      font-size: 1.1rem;
-      font-weight: bold;
+  .tag {
+    font-size: 0.6rem;
+    padding: 0.3rem 0.5rem;
+  }
+  h5 {
+    margin-bottom: 0.6rem;
+  }
+  &:hover {
+    img {
+      transform: scale(1.05);
+    }
+    h3 {
+      text-decoration: underline;
     }
   }
 `;

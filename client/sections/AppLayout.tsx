@@ -6,7 +6,7 @@ import Footer from "sections/Footer/index";
 const Wrapper = styled.div`
   width: ${LG_SIZE};
   box-shadow: 0px 0px 15px ${RGB_BLACK(0.1)};
-  margin: 70px auto 0 auto;
+  margin: 59px auto 0 auto;
 `;
 
 interface AppLayoutProps {}

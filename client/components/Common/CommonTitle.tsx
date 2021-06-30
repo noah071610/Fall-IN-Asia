@@ -10,7 +10,7 @@ const CommonTitleWrapper = styled.div`
     h2 {
       font-weight: bold;
       font-size: 1.5rem;
-      margin-right: 1rem;
+      padding-right: 1rem;
       padding-bottom: 1rem;
       border-bottom: 5px solid ${BLUE_COLOR};
       .point {
@@ -23,14 +23,8 @@ const CommonTitleWrapper = styled.div`
       margin-bottom: 1rem;
     }
   }
-
-  .title-buttons {
-    button {
-      margin-left: 0.7rem;
-      &:hover {
-        color: ${BLUE_COLOR};
-      }
-    }
+  button {
+    margin-bottom: 1rem;
   }
 `;
 interface IProps {
@@ -50,7 +44,7 @@ const CommonTitle: FC<IProps> = ({ point, title, subtitle, children }) => {
         </h2>
         <span className="title-desc">{subtitle}</span>
       </div>
-      <div className="title-buttons">{children}</div>
+      <div className="title-button">{children}</div>
     </CommonTitleWrapper>
   );
 };

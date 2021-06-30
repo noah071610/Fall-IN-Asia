@@ -21,9 +21,13 @@ const Header: FC<HeaderProps> = () => {
   return (
     <HeaderWrapper>
       <div className="header-lgsize">
-        <Poster>
-          <img src="https://user-images.githubusercontent.com/74864925/123467550-98c64300-d62b-11eb-927e-58e220de0952.png" />
-        </Poster>
+        <Link href="/">
+          <a>
+            <Poster>
+              <img src="https://user-images.githubusercontent.com/74864925/123951789-21ecc980-d9e0-11eb-9f3c-421cbea7d9cf.png" />
+            </Poster>
+          </a>
+        </Link>
         <nav>
           <li className="nav-list">
             <Link href="/">
@@ -46,21 +50,21 @@ const Header: FC<HeaderProps> = () => {
             {onCommunityMenu && <CommunityMenu />}
           </li>
           <li className="nav-list">
-            <Link href="/goods">
+            <Link href="/market">
               <a className="nav-list-ancher">
                 <InboxOutlined />
-                <span className="list-text">グッズ</span>
+                <span className="list-text">マーケット</span>
               </a>
             </Link>
           </li>
-          <li className="nav-list">
+          {/* <li className="nav-list">
             <Link href="/support">
               <a className="nav-list-ancher">
                 <HeartOutlined />
                 <span className="list-text">後援</span>
               </a>
             </Link>
-          </li>
+          </li> */}
           <li className="nav-list">
             <Link href="/korean">
               <a className="nav-list-ancher">
@@ -69,7 +73,7 @@ const Header: FC<HeaderProps> = () => {
                   className="anticon"
                   src="https://img.icons8.com/ios/26/000000/book-and-pencil.png"
                 />
-                <span className="list-text">韓国語</span>
+                <span className="list-text">韓国語レッスン</span>
               </a>
             </Link>
           </li>

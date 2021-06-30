@@ -4,6 +4,7 @@ export const WHITE_COLOR = "white" as const;
 export const BLUE_COLOR = "#1187cf" as const;
 export const RED_COLOR = "#C02E4C" as const;
 export const SKY_COLOR = "#7B9ACC" as const;
+export const DEEP_BLUE_COLOR = "#5A66D7" as const;
 export const PINK_COLOR = "#f6d6d6" as const;
 
 export const SM_SIZE = "576px" as const;
@@ -36,6 +37,29 @@ export const GRID_STYLE = (gap: string, colums: string, row?: string) => `
   gap:${gap};
 `;
 
+export const MODAL_STYLE = (tailRight: string) => `
+  position: absolute;
+  padding: 2rem;
+  ${BORDER_THIN("border")};
+  background-color: ${WHITE_COLOR};
+  box-shadow: 0px 0px 15px ${RGB_BLACK(0.2)};
+  z-index:1;
+  &:before {
+    position: absolute;
+    transform: rotateZ(45deg);
+    z-index: 1;
+    width: 9px;
+    height: 9px;
+    background-color: ${WHITE_COLOR};
+    ${BORDER_THIN("border")};
+    border-bottom: none;
+    border-right: none;
+    content: "";
+    top: -6px;
+    right: ${tailRight};
+  }
+`;
+
 //JS
 
 export const goodsPosterSettings = {
@@ -63,6 +87,18 @@ export const goodsFilterList = [
   "サイン",
   "カード",
   "チケット",
+];
+
+export const japanMapList = [
+  { name: "北海道", eng: "hotkaido" },
+  { name: "東北", eng: "tohoku" },
+  { name: "関東(東京)", eng: "kanto" },
+  { name: "中部", eng: "chubu" },
+  { name: "関西(大阪)", eng: "kansai" },
+  { name: "中国", eng: "chugoku" },
+  { name: "四国", eng: "shikoku" },
+  { name: "九州", eng: "kyushu" },
+  { name: "沖縄", eng: "okinawa" },
 ];
 
 export const NewsMainPostsettings = {

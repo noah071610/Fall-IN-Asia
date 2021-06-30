@@ -25,18 +25,3 @@ export const MainWrapper = styled.div`
     }
   }
 `;
-
-export const PaginationBar = styled.div`
-  padding: 2rem 0;
-  ${FLEX_STYLE("center", "flex-end")};
-  flex-direction: column;
-  .ant-input-search {
-    width: 50%;
-    margin-bottom: 1rem;
-  }
-  .ant-pagination-options-quick-jumper {
-    input {
-      margin-right: 0;
-    }
-  }
-`;

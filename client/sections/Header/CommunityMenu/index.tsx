@@ -24,6 +24,11 @@ const CommunityMenu: FC<IProps> = () => {
           <a>KPOPニュース</a>
         </Link>
       </li>
+      <li>
+        <Link href="/gallery">
+          <a>ギャラリー</a>
+        </Link>
+      </li>
     </CommunityMenuWrapper>
   );
 };

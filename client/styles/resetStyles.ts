@@ -115,6 +115,7 @@ h1,h2,h3,h4,h5{
   }
 }
 
+
 button {
   border: none;
   margin: 0;
@@ -130,15 +131,19 @@ button {
 }
 
 .drop-down {
-  transition: 0.3s all;
+  transition: 0.5s all;
   height:100%;
   transform:translateY(0);
 }
 
 .roll-up{
-  transition: 0.3s all;
+  transition: 0.5s all;
   height:0px;
   transform:translateY(-100%);
+}
+
+.reverse {
+  transform:rotate(180deg);
 }
 
 `;

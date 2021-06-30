@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { BLACK_COLOR, BORDER_THIN, FLEX_STYLE, LG_SIZE, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const HeaderWrapper = styled.div`
-  padding: 0.8rem 0 0.5rem 0;
+  padding: 0.2rem 0 0.3rem 0;
   ${BORDER_THIN("border-bottom")};
   position: fixed;
   top: 0;
@@ -52,7 +52,10 @@ export const HeaderWrapper = styled.div`
 `;
 
 export const Poster = styled.div`
+  padding-left: 1rem;
+  cursor: pointer;
   img {
-    width: 10rem;
+    width: 8.5rem;
+    height: 2.5rem;
   }
 `;

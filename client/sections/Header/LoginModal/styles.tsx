@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
+import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRID_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const ModalWrapper = styled.div`
   position: absolute;
@@ -10,6 +10,7 @@ export const ModalWrapper = styled.div`
   padding: 1rem 2rem;
   ${BORDER_THIN("border")};
   background-color: ${WHITE_COLOR};
+  box-shadow: 2px 2px 10px ${RGB_BLACK(0.2)};
   .login-title {
     padding: 0.5rem 0;
     ${FLEX_STYLE("space-between", "center")};
@@ -23,7 +24,8 @@ export const ModalWrapper = styled.div`
   }
   form {
     h4 {
-      margin-bottom: 0.7rem;
+      margin: 0.7rem 0;
+      font-size: 0.8rem;
       span {
         margin-left: 0.5rem;
       }
@@ -44,4 +46,17 @@ export const MenuTail = styled.div`
   content: "";
   top: -6px;
   right: 10%;
+`;
+
+export const LoginBtn = styled.div`
+  margin-top: 2rem;
+  ${GRID_STYLE("0", "1fr 1fr")};
+  button {
+    padding: 0.8rem 0;
+    ${BORDER_THIN("border")};
+    &:hover {
+      border: 1px solid ${BLUE_COLOR};
+      color: ${BLUE_COLOR};
+    }
+  }
 `;
