@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "aos/dist/aos.css";
 import "animate.css/animate.css";
+import wrapper from "configureStore";
 
 const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
@@ -23,4 +24,4 @@ const App = ({ Component, pageProps }: AppProps) => {
     </>
   );
 };
-export default App;
+export default wrapper.withRedux(App);

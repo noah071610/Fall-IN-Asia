@@ -1,23 +1,34 @@
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useEffect } from "react";
 import { HeaderWrapper, Poster } from "./styles";
-import {
-  HeartOutlined,
-  HomeOutlined,
-  InboxOutlined,
-  CommentOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { HomeOutlined, InboxOutlined, CommentOutlined, UserOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookReader, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import CommunityMenu from "sections/Header/CommunityMenu";
 import LoginModal from "sections/Header/LoginModal";
-import useToggle from "@hooks/useToggle";
+import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import { RootState } from "slices";
+import mainSlice from "slices/main";
+
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
-  const [onCommunityMenu, onClickCommunityMenu] = useToggle(false);
-  const [onLoginModal, onClickLoginModal] = useToggle(false);
+  const { asPath } = useRouter();
+  const dispatch = useDispatch();
+  const { onCommunityModal, onLoginModal } = useSelector((state: RootState) => state.main);
+
+  useEffect(() => {
+    dispatch(mainSlice.actions.closeModal());
+  }, [asPath]);
+
+  const onClickCommunityMenu = useCallback(() => {
+    dispatch(mainSlice.actions.toggleCommunityModal());
+  }, []);
+  const onClickLoginMenu = useCallback(() => {
+    dispatch(mainSlice.actions.toggleLoginModal());
+  }, []);
+
   return (
     <HeaderWrapper>
       <div className="header-lgsize">
@@ -42,12 +53,12 @@ const Header: FC<HeaderProps> = () => {
               <CommentOutlined />
               <span className="list-text">コミュニティ</span>
               <FontAwesomeIcon
-                style={{ transform: `rotate(${onCommunityMenu ? "180deg" : "0"})` }}
+                style={{ transform: `rotate(${onCommunityModal ? "180deg" : "0"})` }}
                 icon={faChevronDown}
                 className="arrow"
               />
             </a>
-            {onCommunityMenu && <CommunityMenu />}
+            {onCommunityModal && <CommunityMenu />}
           </li>
           <li className="nav-list">
             <Link href="/market">
@@ -78,7 +89,7 @@ const Header: FC<HeaderProps> = () => {
             </Link>
           </li>
           <li className="nav-list">
-            <a onClick={onClickLoginModal} className="nav-list-ancher">
+            <a onClick={onClickLoginMenu} className="nav-list-ancher">
               <UserOutlined />
               <span className="list-text">ログイン</span>
             </a>

@@ -11,14 +11,15 @@ const SupportSection: FC<IProps> = () => {
       <Link href="/support">
         <a>
           <div className="overlay" />
+
+          <div data-aos="zoom-in">
+            <h1>
+              <span>愛</span>を伝える簡単な方法
+            </h1>
+            <h3>たった広告を見ただけで全額を好きなアイドルにドネーション</h3>
+          </div>
         </a>
       </Link>
-      <div data-aos="zoom-in">
-        <h1>
-          <span>愛</span>を伝える簡単な方法
-        </h1>
-        <h3>たった広告を見ただけで全額を好きなアイドルにドネーション</h3>
-      </div>
     </Wrapper>
   );
 };
