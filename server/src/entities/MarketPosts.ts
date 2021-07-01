@@ -5,23 +5,46 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Images } from './Images';
 import { Users } from './Users';
 
-@Entity({ schema: 'k-heart', name: 'clubPosts' })
-export class ClubPosts {
+@Entity({ schema: 'k-heart', name: 'marketPosts' })
+export class MarketPosts {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
-  @Column('int', { name: 'hit' })
-  hit: string;
+  @Column('varchar', { name: 'src' })
+  src: string;
 
-  @Column('varchar', { name: 'club', length: 20 })
-  club: string;
+  @Column('varchar', { name: 'tag', length: 20 })
+  tag: string;
+
+  @Column('enum', {
+    name: 'area',
+    enum: [
+      'hotkaido',
+      'tohoku',
+      'kanto',
+      'chubu',
+      'kansai',
+      'chugoku',
+      'shikoku',
+      'kyushu',
+      'okinawa',
+    ],
+  })
+  area:
+    | 'hotkaido'
+    | 'tohoku'
+    | 'kanto'
+    | 'chubu'
+    | 'kansai'
+    | 'chugoku'
+    | 'shikoku'
+    | 'kyushu'
+    | 'okinawa';
 
   @Column('varchar', { name: 'title', length: 50 })
   title: string;
@@ -38,10 +61,7 @@ export class ClubPosts {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  @OneToMany(() => Images, (images) => images.clubposts)
-  images: Images[];
-
-  @ManyToOne(() => Users, (users) => users.clubposts)
+  @ManyToOne(() => Users, (users) => users.marketPosts)
   users: Users[];
   @JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
   userId: Users;

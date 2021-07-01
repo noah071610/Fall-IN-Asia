@@ -4,6 +4,8 @@ import {
   DeleteDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -68,4 +70,18 @@ export class LessonPosts {
   users: Users[];
   @JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
   userId: Users;
+
+  @ManyToMany(() => Users, (users) => users.id)
+  @JoinTable({
+    name: 'lesson_participant',
+    joinColumn: {
+      name: 'LessonId',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'UserId',
+      referencedColumnName: 'id',
+    },
+  })
+  joinUserId: Users[];
 }
