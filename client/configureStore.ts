@@ -1,21 +1,19 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import { createWrapper } from "next-redux-wrapper";
-import rootReducer from "slices";
+import { configureStore, getDefaultMiddleware, ThunkAction } from "@reduxjs/toolkit";
+import { createWrapper, MakeStore, HYDRATE } from "next-redux-wrapper";
+import { Action } from "redux";
+import { reducer } from "slices";
 
-const dev = process.env.NODE_ENV === "development";
-
-const createStore = () => {
-  const middleware = getDefaultMiddleware();
-  const store = configureStore({
-    reducer: rootReducer,
-    middleware,
-    devTools: dev,
+const makeStore = () =>
+  configureStore({
+    reducer,
+    devTools: process.env.NODE_ENV !== "production",
+    middleware: getDefaultMiddleware(),
   });
-  return store;
-};
 
-const wrapper = createWrapper(createStore, {
-  debug: dev,
+export type AppStore = ReturnType<typeof makeStore>;
+export type AppState = ReturnType<AppStore["getState"]>;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppState, unknown, Action>;
+
+export const wrapper = createWrapper<AppStore>(makeStore, {
+  debug: process.env.NODE_ENV !== "production",
 });
-
-export default wrapper;

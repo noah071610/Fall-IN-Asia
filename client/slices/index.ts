@@ -1,11 +1,21 @@
-import { combineReducers } from "redux";
+import { HYDRATE } from "next-redux-wrapper";
+import { combineReducers } from "@reduxjs/toolkit";
 
-import mainSlice from "./main";
+import { mainSlice } from "./main";
+import { userSlice } from "./user";
 
-const rootReducer = combineReducers({
-  main: mainSlice.reducer,
-});
+export const reducer = (state: any = {}, action: any) => {
+  if (action.type === HYDRATE) {
+    console.log("HYDRATE", action);
+    return {
+      ...state,
+      ...action.payload,
+    };
+  }
+  return combineReducers({
+    main: mainSlice.reducer,
+    user: userSlice.reducer,
+  })(state, action);
+};
 
-export type RootState = ReturnType<typeof rootReducer>;
-
-export default rootReducer;
+export type RootState = ReturnType<typeof reducer>;

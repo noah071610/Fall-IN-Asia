@@ -4,11 +4,16 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
+import session from 'express-session';
 import { ValidationPipe } from '@nestjs/common';
 declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors({
+    origin: true,
+    credentials: true,
+  });
   const port = process.env.PORT || 3060;
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
@@ -21,6 +26,16 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
   app.use(cookieParser(process.env.COOKIE_SECRET));
+  app.use(
+    session({
+      resave: false,
+      saveUninitialized: false,
+      secret: process.env.COOKIE_SECRET,
+      cookie: {
+        httpOnly: true,
+      },
+    }),
+  );
   app.use(passport.initialize());
   app.use(passport.session());
   await app.listen(port);

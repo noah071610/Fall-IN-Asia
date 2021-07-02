@@ -1,34 +1,39 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface User {
-  nickname?: string;
-  email: string;
-  password: string;
+export interface MainState {
+  onCommunityModal: boolean;
+  onLoginModal: boolean;
+  onSignupModal: boolean;
 }
 
-const initialState = {
+const mainState: MainState = {
   onCommunityModal: false,
   onLoginModal: false,
+  onSignupModal: false,
 };
 
-const mainSlice = createSlice({
+export const mainSlice = createSlice({
   name: "main",
-  initialState,
+  initialState: mainState,
   reducers: {
     closeModal(state) {
       state.onCommunityModal = false;
       state.onLoginModal = false;
+      state.onSignupModal = false;
     },
     toggleCommunityModal(state) {
       state.onCommunityModal = !state.onCommunityModal;
       state.onLoginModal = false;
+      state.onSignupModal = false;
     },
     toggleLoginModal(state) {
       state.onLoginModal = !state.onLoginModal;
       state.onCommunityModal = false;
     },
+    toggleSignupModal(state) {
+      state.onSignupModal = !state.onSignupModal;
+      state.onCommunityModal = false;
+    },
   },
   extraReducers: (builder) => {},
 });
-
-export default mainSlice;

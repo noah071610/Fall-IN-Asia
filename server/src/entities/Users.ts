@@ -69,7 +69,11 @@ export class Users {
     example: 'https://images.com/324324231',
     description: 'iamge URL',
   })
-  @Column('varchar', { name: 'icon_url', default: 'user url have to input' })
+  @Column('varchar', {
+    name: 'icon',
+    default:
+      'https://user-images.githubusercontent.com/74864925/124331496-460bfe80-dbca-11eb-95dc-a5379a5750a6.png',
+  })
   icon_url: string;
 
   @IsString()

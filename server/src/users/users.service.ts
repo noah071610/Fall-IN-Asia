@@ -14,6 +14,16 @@ export class UsersService {
     @InjectRepository(Users) private userRepository: Repository<Users>,
   ) {}
 
+  async findUserInfoByEmail(email: string) {
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (!user) {
+      throw new UnauthorizedException(
+        'ユーザーの情報がありません、もう一度確認してください。',
+      );
+    }
+    return user;
+  }
+
   async signUp(email: string, name: string, password: string) {
     if (!email) {
       throw new BadRequestException('メールアドレスを書いてください。');

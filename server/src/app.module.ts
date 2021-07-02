@@ -9,9 +9,11 @@ import { UsersService } from './users/users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as ormconfig from './ormconfig';
 import { Users } from './entities/Users';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    AuthModule,
     ConfigModule.forRoot(),
     MorganModule,
     UsersModule,

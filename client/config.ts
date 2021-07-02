@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 // CSS
 export const BLACK_COLOR = "black" as const;
 export const WHITE_COLOR = "white" as const;
@@ -61,6 +63,32 @@ export const MODAL_STYLE = (tailRight: string) => `
 `;
 
 //JS
+
+export const toastErrorMessage = (error: any) => {
+  toast.error(error.response?.data?.data?.message, {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    className: "toast",
+  });
+};
+
+export const toastSuccessMessage = (message: string) => {
+  toast.success(message, {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    className: "toast",
+  });
+};
 
 export const goodsPosterSettings = {
   dots: false,
