@@ -17,11 +17,11 @@ const ClubPostContent: FC<IProps> = () => {
         早朝から夜まで活気あふれる声が飛び交っています。ハンドメイドの材料や衣料から食料品までとにかく何でも揃っちゃう市場です。
       </p>
       <div className="like-section">
-        <button className="like-btn">
+        <button className="basic-btn like-btn">
           <img src="https://image.flaticon.com/icons/png/24/456/456115.png" />
           <span className="like-number">0</span>
         </button>
-        <button className="like-btn">
+        <button className="basic-btn like-btn">
           <span className="like-number">0</span>
           <img className="reverse" src="https://image.flaticon.com/icons/png/24/456/456115.png" />
         </button>

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, FLEX_STYLE, RGB_BLACK } from "config";
+import { BORDER_THIN, FLEX_STYLE, RED_COLOR, RGB_BLACK } from "config";
 
 export const CommentWrapper = styled.div`
   padding: 1rem 0.7rem;
@@ -22,6 +22,11 @@ export const CommentWrapper = styled.div`
       font-size: 0.9rem;
       a {
         margin-left: 0.5rem;
+      }
+      .color-red {
+        &:hover {
+          color: ${RED_COLOR};
+        }
       }
     }
   }

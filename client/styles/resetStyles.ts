@@ -128,6 +128,7 @@ h1,h2,h3,h4,h5{
   border-radius:3px;
   &:hover{
     border:1px solid ${BLUE_COLOR};
+    color:${BLUE_COLOR};
   }
 }
 

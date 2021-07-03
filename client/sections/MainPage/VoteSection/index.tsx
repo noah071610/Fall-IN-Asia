@@ -1,7 +1,10 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import { Wrapper } from "./styles";
 import { ResponsiveRadar } from "@nivo/radar";
 import Link from "next/link";
+import { RootState } from "slices";
+import { useSelector } from "react-redux";
+import router from "next/router";
 
 interface IProps {
   isOnVotePage?: Boolean;
@@ -9,6 +12,10 @@ interface IProps {
 
 const VoteSection: FC<IProps> = ({ isOnVotePage }) => {
   const [state, setstate] = useState();
+  const { selectedGroup } = useSelector((state: RootState) => state.main);
+  const onClickGotoClubBtn = useCallback(() => {
+    router.push(`/club/${selectedGroup.group}`);
+  }, [selectedGroup]);
   const chartData = [
     {
       taste: "ダンス上手",
@@ -60,10 +67,20 @@ const VoteSection: FC<IProps> = ({ isOnVotePage }) => {
         </ul>
       )}
       <div className="vote-content">
-        <div className="vote-poster">
-          <img src="https://coneru-web.com/wp-content/uploads/2018/04/korean-seventeen.jpg" />
-          <h2>セブンティーン</h2>
-        </div>
+        {selectedGroup && (
+          <div className="vote-poster">
+            <img src={selectedGroup?.image} alt={selectedGroup?.name} />
+            <div>
+              <h2>
+                <span>{selectedGroup?.name[0]}</span>
+                {selectedGroup?.name.slice(1)}
+              </h2>
+              <button onClick={onClickGotoClubBtn} className="basic-btn">
+                クラブに行く
+              </button>
+            </div>
+          </div>
+        )}
         <div>
           <div className="vote-rader">
             <ResponsiveRadar
@@ -95,27 +112,13 @@ const VoteSection: FC<IProps> = ({ isOnVotePage }) => {
           </div>
           <h3>このグループはどんな感じ？</h3>
           <ul className="vote-tag-list">
-            <li className="tag">
-              <button>😍 可愛い</button>
-            </li>
-            <li className="tag">
-              <button>😊 カッコいい</button>
-            </li>
-            <li className="tag">
-              <button>😳 憧れ</button>
-            </li>
-            <li className="tag">
-              <button>🥰 スタイルいい</button>
-            </li>
-            <li className="tag">
-              <button>😘 綺麗</button>
-            </li>
-            <li className="tag">
-              <button>💃 ダンス上手</button>
-            </li>
-            <li className="tag">
-              <button>🤩 お洒落</button>
-            </li>
+            <li className="tag">😍 可愛い</li>
+            <li className="tag">😊 カッコいい</li>
+            <li className="tag">😳 憧れ</li>
+            <li className="tag">🥰 スタイルいい</li>
+            <li className="tag">😘 綺麗</li>
+            <li className="tag">💃 ダンス上手</li>
+            <li className="tag">🤩 お洒落</li>
           </ul>
         </div>
       </div>

@@ -10,6 +10,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as ormconfig from './ormconfig';
 import { Users } from './entities/Users';
 import { AuthModule } from './auth/auth.module';
+import { GroupsModule } from './groups/groups.module';
+import { ClubPostsModule } from './clubposts/clubposts.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { AuthModule } from './auth/auth.module';
     UsersModule,
     TypeOrmModule.forRoot(ormconfig),
     TypeOrmModule.forFeature([Users]),
+    GroupsModule,
+    ClubPostsModule,
   ],
   controllers: [AppController],
   providers: [

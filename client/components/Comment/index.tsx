@@ -15,7 +15,7 @@ const Comment: FC<IProps> = () => {
           <a className="name">佐藤真由美</a>
         </div>
         <div className="comment-menu">
-          <a>
+          <a className="color-red">
             <HeartOutlined />
           </a>
           <a>

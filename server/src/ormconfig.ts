@@ -8,6 +8,7 @@ import { LessonPosts } from './entities/LessonPosts';
 import { Images } from './entities/Images';
 import { Comments } from './entities/Comments';
 import { SubComments } from './entities/SubComments';
+import { Groups } from './entities/Groups';
 
 dotenv.config();
 const config: TypeOrmModuleOptions = {
@@ -26,6 +27,7 @@ const config: TypeOrmModuleOptions = {
     Images,
     Comments,
     SubComments,
+    Groups,
   ],
   charset: 'utf8mb4',
   synchronize: false,

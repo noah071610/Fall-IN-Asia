@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BLACK_COLOR, BORDER_THIN, FLEX_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
+import { BLACK_COLOR, BLUE_COLOR, BORDER_THIN, FLEX_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const Wrapper = styled.div`
   padding: 1rem 2rem;
@@ -32,13 +32,27 @@ export const Wrapper = styled.div`
     .vote-poster {
       img {
         width: 100%;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
+        border-radius: 10px;
+        box-shadow: 1px 1px 8px ${RGB_BLACK(0.15)};
       }
-      h2 {
-        font-weight: bold;
-        text-align: center;
-        padding: 1.5rem 0;
-        ${BORDER_THIN("border")};
+      div {
+        padding-top: 0.7rem;
+        ${BORDER_THIN("border-top")};
+        ${FLEX_STYLE("space-between", "flex-end")};
+        h2 {
+          margin-right: 1rem;
+          span {
+            color: ${BLUE_COLOR};
+            font-size: 2rem;
+            font-weight: bold;
+            margin-right: 0.15rem;
+          }
+        }
+        button {
+          padding: 0.5rem 1rem;
+          font-size: 0.75rem;
+        }
       }
     }
     .vote-rader {

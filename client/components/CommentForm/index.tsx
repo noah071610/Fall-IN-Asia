@@ -15,7 +15,7 @@ const CommentForm: FC<IProps> = () => {
       </div>
       <div className="input-wrapper">
         <input placeholder="コメント作成" className="basic-input" />
-        <button>コメント</button>
+        <button className="basic-btn">コメント</button>
       </div>
     </CommentFormWrapper>
   );

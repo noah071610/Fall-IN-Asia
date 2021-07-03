@@ -24,8 +24,8 @@ const LessonCard: FC<IProps> = () => {
         </div>
       </CardMainContent>
       <CardBtn>
-        <button>プロフィール一覧</button>
-        <button>レッスン申込</button>
+        <button className="basic-btn">プロフィール一覧</button>
+        <button className="basic-btn">レッスン申込</button>
       </CardBtn>
     </LessonCardWrapper>
   );

@@ -5,6 +5,9 @@ import Slider from "react-slick";
 import CommonTitle from "@components/Common/CommonTitle";
 import { DoubleLeftOutlined, DoubleRightOutlined } from "@ant-design/icons";
 import CommonSearch from "@components/Common/CommonSearch";
+import useSWR from "swr";
+import fetcher from "utils/fetcher";
+import { IGroup } from "@typings/db";
 
 interface IProps {}
 
@@ -19,7 +22,7 @@ function SamplePrevArrow(props: any) {
 }
 
 const VoteSearchForm: FC<IProps> = () => {
-  const [state, setstate] = useState();
+  const { data, error, revalidate, mutate } = useSWR("/group", fetcher);
   const groupCardSettings = {
     dots: false,
     infinite: false,
@@ -36,12 +39,9 @@ const VoteSearchForm: FC<IProps> = () => {
       <CommonSearch />
       <div className="vote-filter">
         <Slider {...groupCardSettings}>
-          <GroupCard />
-          <GroupCard />
-          <GroupCard />
-          <GroupCard />
-          <GroupCard />
-          <GroupCard />
+          {data?.map((v: IGroup, i: number) => (
+            <GroupCard isVote={true} name={v.name} image={v.image} group={v.group} key={i} />
+          ))}
         </Slider>
       </div>
     </VoteSearchWrapper>

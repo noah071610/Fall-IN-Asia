@@ -21,7 +21,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "schema:drop": "ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.ts schema:drop",
     "schema:sync": "ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.ts schema:sync",
-    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js --configName src/ormconfig.ts seed"
+    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js --configName src/ormconfig.ts seed",
+    "reset": "ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.ts schema:drop && ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.ts schema:sync && ts-node ./node_modules/typeorm-seeding/dist/cli.js --configName src/ormconfig.ts seed"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.15",

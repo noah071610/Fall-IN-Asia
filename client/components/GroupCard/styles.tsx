@@ -1,8 +1,9 @@
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { FLEX_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
 
-export const Wrapper = styled.div`
-  background: url(https://image.aladin.co.kr/product/22066/71/cover500/c382831048_1.jpg);
+export const wrapperCSS = (src: string) => css`
+  background: url(${src});
   background-size: 100% 100%;
   padding: 1rem;
   height: 200px;
@@ -19,7 +20,7 @@ export const Wrapper = styled.div`
       180deg,
       rgba(255, 255, 255, 0) 0%,
       rgba(255, 255, 255, 0) 60%,
-      rgba(0, 0, 0, 0.3) 100%
+      rgba(0, 0, 0, 0.5) 100%
     );
     width: 100%;
     position: absolute;

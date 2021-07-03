@@ -17,10 +17,15 @@ export const MainWrapper = styled.div`
     .table-post {
       padding: 1rem 0;
       text-align: center;
-      cursor: pointer;
       transition: 0.2s all;
+      .title {
+        cursor: pointer;
+      }
       &:hover {
         background: ${RGB_BLACK(0.1)};
+        .title {
+          text-decoration: underline;
+        }
       }
     }
   }

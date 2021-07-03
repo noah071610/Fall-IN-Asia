@@ -21,14 +21,9 @@ export class LocalSerializer extends PassportSerializer {
 
   async deserializeUser(userId: string, done: CallableFunction) {
     return await this.usersRepository
-      .findOneOrFail(
-        {
-          id: +userId,
-        },
-        {
-          select: ['id', 'email', 'name'],
-        },
-      )
+      .findOneOrFail({
+        id: +userId,
+      })
       .then((user) => {
         console.log('deserializeUser', user);
         done(null, user);

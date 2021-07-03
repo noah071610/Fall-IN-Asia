@@ -5,6 +5,6 @@ const fetcher = (url: string) =>
     .get(url, {
       withCredentials: true,
     })
-    .then((response) => response.data);
+    .then((response) => response.data.data);
 
 export default fetcher;

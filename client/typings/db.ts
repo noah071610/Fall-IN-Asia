@@ -14,3 +14,26 @@ export interface IForm {
   name: string;
   password: string;
 }
+
+enum Gender {
+  "male",
+  "female",
+}
+
+export interface IGroup {
+  name: string;
+  group: string;
+  gender: Gender;
+  number: number;
+  image: string;
+  isNew: boolean;
+}
+
+export interface IClubPost {
+  id: number;
+  hit: number;
+  club: string;
+  title: string;
+  content: Gender;
+  userId: number;
+}

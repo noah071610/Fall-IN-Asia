@@ -1,10 +1,17 @@
 import CommonPagination from "@components/Common/CommonPagination";
-import React, { FC, useState } from "react";
+import { IClubPost } from "@typings/db";
+import router from "next/router";
+import React, { FC, useCallback, useState } from "react";
 import { MainWrapper } from "./styles";
-interface IProps {}
+interface IProps {
+  clubPosts: IClubPost[];
+}
 
-const ClubMainSection: FC<IProps> = () => {
+const ClubMainSection: FC<IProps> = ({ clubPosts }) => {
   const [state, setstate] = useState();
+  const onClickPostTitle = useCallback((id, club) => {
+    router.push(`/club/${club}/${id}`);
+  }, []);
   return (
     <MainWrapper>
       <table>
@@ -18,41 +25,17 @@ const ClubMainSection: FC<IProps> = () => {
           </tr>
         </thead>
         <tbody>
-          <tr className="table-post">
-            <td>01</td>
-            <td>BTSのコンサートを行ってきました！！</td>
-            <td>ゆきえ</td>
-            <td>2021/6/29</td>
-            <td>0</td>
-          </tr>
-          <tr className="table-post">
-            <td>01</td>
-            <td>BTSのコンサートを行ってきました！！</td>
-            <td>ゆきえ</td>
-            <td>2021/6/29</td>
-            <td>0</td>
-          </tr>
-          <tr className="table-post">
-            <td>01</td>
-            <td>BTSのコンサートを行ってきました！！</td>
-            <td>ゆきえ</td>
-            <td>2021/6/29</td>
-            <td>0</td>
-          </tr>
-          <tr className="table-post">
-            <td>01</td>
-            <td>BTSのコンサートを行ってきました！！</td>
-            <td>ゆきえ</td>
-            <td>2021/6/29</td>
-            <td>0</td>
-          </tr>
-          <tr className="table-post">
-            <td>01</td>
-            <td>BTSのコンサートを行ってきました！！</td>
-            <td>ゆきえ</td>
-            <td>2021/6/29</td>
-            <td>0</td>
-          </tr>
+          {clubPosts?.map((v, i) => (
+            <tr key={i} className="table-post">
+              <td>{v.id}</td>
+              <td onClick={() => onClickPostTitle(v.id, v.club)} className="title">
+                {v.title}
+              </td>
+              <td>ゆきえ</td>
+              <td>2021/6/29</td>
+              <td>0</td>
+            </tr>
+          ))}
         </tbody>
       </table>
       <CommonPagination />

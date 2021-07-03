@@ -5,7 +5,9 @@ export const GroupSelectModalWrapper = styled.div`
   padding: 1rem;
   ${GRID_STYLE("2rem", "2fr 2fr")};
   .group-recommeder {
-    ${GRID_STYLE("0", "repeat(2,1fr)")};
+    padding: 0.5rem;
+    ${BORDER_THICK("border")};
+    ${GRID_STYLE("0.5rem", "repeat(2,1fr)")};
   }
   .group-search {
     h3 {

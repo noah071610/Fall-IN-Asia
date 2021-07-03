@@ -1,28 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsBoolean,
-  isBoolean,
-  IsNotEmpty,
-  isNotEmpty,
-  IsNumber,
-  isNumber,
-  IsString,
-  isString,
-} from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
   Index,
+  JoinColumn,
   ManyToMany,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { ClubPosts } from './ClubPosts';
 import { Comments } from './Comments';
 import { Gallery } from './Gallery';
+import { Groups } from './Groups';
 import { LessonPosts } from './LessonPosts';
 import { MarketPosts } from './MarketPosts';
 import { SubComments } from './SubComments';
@@ -74,7 +68,7 @@ export class Users {
     default:
       'https://user-images.githubusercontent.com/74864925/124331496-460bfe80-dbca-11eb-95dc-a5379a5750a6.png',
   })
-  icon_url: string;
+  icon: string;
 
   @IsString()
   @ApiProperty({
@@ -121,4 +115,9 @@ export class Users {
 
   @ManyToMany(() => LessonPosts, (lessonPosts) => lessonPosts.id)
   joinLessonId: LessonPosts[];
+
+  @OneToOne(() => Groups, (groups) => groups.users)
+  groups: Groups[];
+  @JoinColumn([{ name: 'fan', referencedColumnName: 'name' }])
+  fan: Groups;
 }

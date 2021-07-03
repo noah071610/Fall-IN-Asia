@@ -12,14 +12,15 @@ import { useRouter } from "next/router";
 import { RootState } from "slices";
 import { ToastContainer } from "react-toastify";
 import { mainSlice } from "slices/main";
+import UserInfoModal from "./UserInfoModal";
 
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
   const { asPath } = useRouter();
-  const { user } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
-  const { onCommunityModal, onLoginModal, onSignupModal } = useSelector(
+  const { user } = useSelector((state: RootState) => state.user);
+  const { onCommunityModal, onLoginModal, onSignupModal, onUserInfoModal } = useSelector(
     (state: RootState) => state.main
   );
 
@@ -30,6 +31,11 @@ const Header: FC<HeaderProps> = () => {
   const onClickCommunityMenu = useCallback(() => {
     dispatch(mainSlice.actions.toggleCommunityModal());
   }, []);
+
+  const onClickUserInfoMenu = useCallback(() => {
+    dispatch(mainSlice.actions.toggleUserInfoModal());
+  }, []);
+
   const onClickLoginMenu = useCallback(() => {
     if (onSignupModal) {
       dispatch(mainSlice.actions.toggleSignupModal());
@@ -99,12 +105,10 @@ const Header: FC<HeaderProps> = () => {
           </li>
           {user ? (
             <li className="nav-list">
-              <Link href="/market">
-                <a className="nav-list-ancher">
-                  <img className="user-icon" src={user.icon} alt={user.name} />
-                  <span className="list-text">{user.name}様</span>
-                </a>
-              </Link>
+              <a onClick={onClickUserInfoMenu} className="nav-list-ancher">
+                <img className="user-icon" src={user?.icon} alt={user?.name} />
+                <span className="list-text">{user?.name} 様</span>
+              </a>
             </li>
           ) : (
             <li className="nav-list">
@@ -117,6 +121,7 @@ const Header: FC<HeaderProps> = () => {
         </nav>
         {onLoginModal && <LoginModal />}
         {onSignupModal && <SignupModal />}
+        {onUserInfoModal && <UserInfoModal />}
       </div>
       <ToastContainer />
     </HeaderWrapper>

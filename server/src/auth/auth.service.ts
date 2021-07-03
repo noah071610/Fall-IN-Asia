@@ -18,7 +18,7 @@ export class AuthService {
     console.log('let finding (auth.service => strategy)');
     const user = await this.usersRepository.findOne({
       where: { email },
-      select: ['id', 'email', 'password'],
+      select: ['id', 'icon', 'email', 'password'],
     });
     if (!user) {
       throw new UnauthorizedException(
