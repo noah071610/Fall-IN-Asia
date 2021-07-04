@@ -79,8 +79,13 @@ h1,h2,h3,h4,h5{
   border:1px solid ${RGB_BLACK(0.15)};
   font-size:0.7rem;
   cursor:pointer;
+  transition:0.3s all;
   &:hover{
     border:1px solid ${BLUE_COLOR};
+    color:${BLUE_COLOR};
+    span,a{
+      color:${BLUE_COLOR}
+    }
   }
 }
 
@@ -115,10 +120,31 @@ h1,h2,h3,h4,h5{
   }
 }
 
+.basic-textarea {
+  border: none;
+  padding: 0.5rem 0.3rem;
+  width: 100%;
+  border-bottom: 2px solid ${RGB_BLACK(0.1)};
+  line-height:1.7;
+  &:focus {
+    outline: none;
+    border-bottom: 2px solid ${BLUE_COLOR};
+  }
+  &::placeholder {
+    color: ${RGB_BLACK(0.25)};
+  }
+  &::-webkit-scrollbar {
+    display: none;
+}
+  &:hover {
+    border-bottom: 2px solid ${BLUE_COLOR};
+  }
+}
+
 .basic-btn {
   border: none;
   margin: 0;
-  padding: 0.6rem 0;
+  padding: 0.6rem 1.5rem;
   width: auto;
   overflow: visible;
   cursor:pointer;

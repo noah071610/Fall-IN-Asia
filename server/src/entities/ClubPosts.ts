@@ -1,3 +1,4 @@
+import { type } from 'src/ormconfig';
 import {
   Column,
   CreateDateColumn,
@@ -41,8 +42,7 @@ export class ClubPosts {
   @OneToMany(() => Images, (images) => images.clubposts)
   images: Images[];
 
-  @ManyToOne(() => Users, (users) => users.clubposts)
-  users: Users[];
-  @JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
-  userId: Users;
+  @ManyToOne((type) => Users, (users) => users.ClubPosts)
+  @JoinColumn([{ name: 'UserId', referencedColumnName: 'id' }])
+  UserId: number;
 }

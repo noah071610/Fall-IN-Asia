@@ -5,6 +5,9 @@ import GroupSelectModal from "@components/GroupSelectModal";
 import { GRID_STYLE } from "config";
 import { Divider } from "antd";
 import GruopPreview from "@components/GruopPreview";
+import { wrapper } from "configureStore";
+import { getUserInfoAction } from "actions/user";
+import axios from "axios";
 
 export const ClubMainWrapper = styled.div`
   padding: 2rem;
@@ -17,7 +20,6 @@ export const ClubMainWrapper = styled.div`
 interface IProps {}
 
 const index: FC<IProps> = () => {
-  const [state, setstate] = useState();
   return (
     <ClubMainWrapper>
       <CommonTitle title="ファンクラブ" subtitle="仲間と会える空間" />
@@ -32,5 +34,20 @@ const index: FC<IProps> = () => {
     </ClubMainWrapper>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req, res, ...etc }) => {
+      const cookie = req ? req.headers.cookie : "";
+      axios.defaults.headers.Cookie = "";
+      if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+      }
+      await store.dispatch(getUserInfoAction());
+      return {
+        props: {},
+      };
+    }
+);
 
 export default index;

@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { BORDER_THIN, FLEX_STYLE, RED_COLOR, RGB_BLACK } from "config";
 
 export const CommentWrapper = styled.div`
-  padding: 1rem 0.7rem;
+  padding: 1rem 0.5rem;
   ${BORDER_THIN("border-bottom")};
   transition: 0.3s all;
   cursor: pointer;
@@ -12,6 +12,7 @@ export const CommentWrapper = styled.div`
     .icon {
       img {
         width: 2rem;
+        border-radius: 50%;
       }
       margin-right: 0.7rem;
     }

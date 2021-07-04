@@ -4,7 +4,7 @@ import { Form, Input, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { mainSlice } from "slices/main";
 import { signupAction } from "actions/user";
-import { IForm } from "@typings/db";
+import { ISignUpForm } from "@typings/db";
 import { RootState } from "slices";
 import { userSlice } from "slices/user";
 import { toastSuccessMessage } from "config";
@@ -30,7 +30,7 @@ const SignupModal: FC<IProps> = () => {
   }, [signupDone]);
 
   const onFinish = useCallback((values: any) => {
-    let form: IForm = {
+    let form: ISignUpForm = {
       email: values.email,
       name: values.first_name + values.last_name,
       password: values.password,

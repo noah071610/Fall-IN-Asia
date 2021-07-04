@@ -9,10 +9,18 @@ export interface IUser {
   admin?: boolean;
 }
 
-export interface IForm {
+export interface ISignUpForm {
   email: string;
   name: string;
   password: string;
+}
+
+export interface IPostForm {
+  title: string;
+  content: string;
+  club: string;
+  userId: number;
+  hit?: number;
 }
 
 enum Gender {
@@ -34,6 +42,7 @@ export interface IClubPost {
   hit: number;
   club: string;
   title: string;
-  content: Gender;
-  userId: number;
+  content: string;
+  UserId: IUser;
+  createdAt: string;
 }

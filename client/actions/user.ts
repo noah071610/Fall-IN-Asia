@@ -1,12 +1,7 @@
-import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
-import { IForm, IUser } from "@typings/db";
-import { message } from "antd";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { ISignUpForm, IUser } from "@typings/db";
 import axios from "axios";
 import { toastErrorMessage } from "config";
-
-axios.defaults.baseURL =
-  process.env.NODE_ENV === "development" ? "http://localhost:3060/api" : process.env.BASE_URL;
-axios.defaults.withCredentials = true;
 
 export const getUserInfoAction = createAsyncThunk("/user/getInfo", async () => {
   try {
@@ -31,7 +26,7 @@ export const logInAction = createAsyncThunk<any, { email: string; password: stri
   }
 );
 
-export const signupAction = createAsyncThunk<IUser, IForm>("user/signup", async (data) => {
+export const signupAction = createAsyncThunk<IUser, ISignUpForm>("user/signup", async (data) => {
   try {
     const response = await axios.post("/user", data);
     return response.data;

@@ -1,16 +1,25 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { CommentWrapper } from "./styles";
 import { HeartOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { DEFAULT_ICON_URL } from "config";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "slices";
 interface IProps {}
 
 const Comment: FC<IProps> = () => {
-  const [state, setstate] = useState();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.user);
+  useEffect(() => {}, []);
   return (
     <CommentWrapper>
       <div className="name-space">
         <div>
           <a className="icon">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" />
+            {user ? (
+              <img src={user.icon} alt="user_icon" />
+            ) : (
+              <img src={DEFAULT_ICON_URL} alt="user_icon" />
+            )}
           </a>
           <a className="name">佐藤真由美</a>
         </div>

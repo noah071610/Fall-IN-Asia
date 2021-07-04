@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { BLUE_COLOR, BORDER_THICK, FLEX_STYLE, RGB_BLACK } from "config";
 
 export const MainWrapper = styled.div`
-  padding: 0 2rem 2rem 2rem;
+  padding-bottom: 2rem;
   table {
     width: 100%;
     tr {

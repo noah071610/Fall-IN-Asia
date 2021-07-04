@@ -1,25 +1,40 @@
-import React, { FC, useState } from "react";
-import { TitleWrapper, ClubSelectModal } from "./styles";
-import { Input } from "antd";
-import { DownCircleOutlined } from "@ant-design/icons";
+import { FC, useCallback, useEffect, useState } from "react";
+import { TitleWrapper } from "./styles";
 import CommonTitle from "@components/Common/CommonTitle";
-import CommonSearch from "@components/Common/CommonSearch";
+import router from "next/dist/client/router";
 import { useRouter } from "next/dist/client/router";
-import fetcher from "utils/fetcher";
-import useSWR from "swr";
-const { Search } = Input;
+import { useSelector } from "react-redux";
+import { RootState } from "slices";
 
-interface IProps {}
+interface IProps {
+  clubName: string;
+}
 
-const ClubTitleSection: FC<IProps> = () => {
-  const { query } = useRouter();
-  const { data, error, revalidate, mutate } = useSWR(`/club/${query.group}`, fetcher);
-  if (data) {
-    console.log(data);
-  }
+const ClubTitleSection: FC<IProps> = ({ clubName }) => {
+  const { query, pathname } = useRouter();
+  const [isPostPath, setIsPostPath] = useState(false);
+  const { user } = useSelector((state: RootState) => state.user);
+  const onClickPosting = useCallback(() => {
+    router.push(`/club/${query.group}/post`);
+  }, []);
+  useEffect(() => {
+    const path = pathname.split("/");
+    if (path[path.length - 1] === "post") {
+      setIsPostPath(true);
+    } else {
+      setIsPostPath(false);
+    }
+  }, [pathname]);
+
   return (
     <TitleWrapper>
-      <CommonTitle point={data?.name} title="クラブ" />
+      <CommonTitle point={clubName} title="クラブ">
+        {!isPostPath && user && (
+          <button onClick={onClickPosting} className="basic-btn">
+            ポスト投稿
+          </button>
+        )}
+      </CommonTitle>
       <div className="club-list">
         <span>訪ねたクラブ</span>
         <ul>

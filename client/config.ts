@@ -14,6 +14,9 @@ export const MD_SIZE = "768px" as const;
 export const LG_SIZE = "992px" as const;
 export const XLG_SIZE = "1200px" as const;
 
+export const DEFAULT_ICON_URL =
+  "https://user-images.githubusercontent.com/74864925/124331496-460bfe80-dbca-11eb-95dc-a5379a5750a6.png" as const;
+
 export const RGB_BLACK = (opacity: number) => `
   rgba(0,0,0,${opacity})
 `;
@@ -62,45 +65,7 @@ export const MODAL_STYLE = (tailRight: string) => `
   }
 `;
 
-//JS
-
-export const toastErrorMessage = (error: any) => {
-  toast.error(error.response?.data?.data?.message, {
-    position: "top-center",
-    autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    className: "toast",
-  });
-};
-
-export const toastSuccessMessage = (message: string) => {
-  toast.success(message, {
-    position: "top-center",
-    autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    className: "toast",
-  });
-};
-
-export const goodsPosterSettings = {
-  dots: false,
-  infinite: true,
-  slidesToShow: 6,
-  slidesToScroll: 1,
-  autoplay: true,
-  speed: 500,
-  autoplaySpeed: 1500,
-  vertical: true,
-  verticalSwiping: true,
-};
+// list
 
 export const goodsFilterList = [
   "直接交換",
@@ -129,6 +94,52 @@ export const japanMapList = [
   { name: "沖縄", eng: "okinawa" },
 ];
 
+// Toast Message
+
+export const toastErrorMessage = (error: any) => {
+  let message = error;
+  if (typeof error !== "string") {
+    message = error.response?.data?.data?.message;
+  }
+  toast.error(message, {
+    position: "top-center",
+    autoClose: 2300,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    className: "toast",
+  });
+};
+
+export const toastSuccessMessage = (message: string) => {
+  toast.success(message, {
+    position: "top-center",
+    autoClose: 2300,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    className: "toast",
+  });
+};
+
+// slick settings
+
+export const goodsPosterSettings = {
+  dots: false,
+  infinite: true,
+  slidesToShow: 6,
+  slidesToScroll: 1,
+  autoplay: true,
+  speed: 500,
+  autoplaySpeed: 1500,
+  vertical: true,
+  verticalSwiping: true,
+};
+
 export const NewsMainPostsettings = {
   dots: false,
   infinite: true,
@@ -138,3 +149,32 @@ export const NewsMainPostsettings = {
   slidesToShow: 1,
   slidesToScroll: 1,
 };
+
+// React quill
+
+export const quillModules = {
+  toolbar: [
+    [{ size: ["small", "normal", "large", "huge"] }],
+    ["bold", "italic", "underline", "strike", "blockquote"],
+    [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
+    ["link", "image"],
+    [{ align: [] }, { color: [] }, { background: [] }],
+  ],
+};
+
+export const qullFormats = [
+  "size",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "bullet",
+  "indent",
+  "link",
+  "image",
+  "align",
+  "color",
+  "background",
+];

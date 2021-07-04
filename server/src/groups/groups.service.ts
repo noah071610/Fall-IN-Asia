@@ -18,4 +18,15 @@ export class GroupsService {
     }
     return groups;
   }
+
+  async getSpecificGroupForClub(group: string) {
+    const specificGroup = await this.groupsRepository.findOne({
+      where: { group },
+      select: ['name'],
+    });
+    if (!specificGroup) {
+      throw new NotFoundException('予想できないエラーが発生しました。');
+    }
+    return specificGroup;
+  }
 }

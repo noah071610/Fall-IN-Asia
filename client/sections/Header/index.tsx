@@ -123,7 +123,6 @@ const Header: FC<HeaderProps> = () => {
         {onSignupModal && <SignupModal />}
         {onUserInfoModal && <UserInfoModal />}
       </div>
-      <ToastContainer />
     </HeaderWrapper>
   );
 };

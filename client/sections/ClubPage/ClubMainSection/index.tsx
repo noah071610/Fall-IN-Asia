@@ -1,5 +1,6 @@
 import CommonPagination from "@components/Common/CommonPagination";
 import { IClubPost } from "@typings/db";
+import dayjs from "dayjs";
 import router from "next/router";
 import React, { FC, useCallback, useState } from "react";
 import { MainWrapper } from "./styles";
@@ -31,8 +32,8 @@ const ClubMainSection: FC<IProps> = ({ clubPosts }) => {
               <td onClick={() => onClickPostTitle(v.id, v.club)} className="title">
                 {v.title}
               </td>
-              <td>ゆきえ</td>
-              <td>2021/6/29</td>
+              <td>{v.UserId?.name}</td>
+              <td>{dayjs(v.createdAt).format("DD/MM/YYYY")}</td>
               <td>0</td>
             </tr>
           ))}

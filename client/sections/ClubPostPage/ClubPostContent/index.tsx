@@ -1,21 +1,17 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { ClubPostContentWrapper } from "./styles";
 import { Divider } from "antd";
-interface IProps {}
+import { IClubPost } from "@typings/db";
+import ReactHtmlParser from "react-html-parser";
 
-const ClubPostContent: FC<IProps> = () => {
-  const [state, setstate] = useState();
+interface IProps {
+  postData: IClubPost;
+}
+
+const ClubPostContent: FC<IProps> = ({ postData }) => {
   return (
     <ClubPostContentWrapper>
-      <p>
-        明洞のすぐお隣で徒歩で移動できます。地下鉄会賢（フェヒョン）駅から四方に広がる南大門市場には、
-        <br />
-        小さな路地から路面店に屋台まで卸売・小売店舗に飲食店等々・・・
-        <br />
-        約１万点ものお店がぎゅっと所狭しと並んでいます。
-        <br />
-        早朝から夜まで活気あふれる声が飛び交っています。ハンドメイドの材料や衣料から食料品までとにかく何でも揃っちゃう市場です。
-      </p>
+      <div className="post-main">{ReactHtmlParser(postData?.content as string)}</div>
       <div className="like-section">
         <button className="basic-btn like-btn">
           <img src="https://image.flaticon.com/icons/png/24/456/456115.png" />

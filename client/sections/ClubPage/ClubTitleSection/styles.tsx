@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { BORDER_THICK, FLEX_STYLE, RGB_BLACK } from "config";
 export const TitleWrapper = styled.div`
-  padding: 0 2rem 3rem 2rem;
+  padding: 0 0 3rem 0;
   .club-title {
     padding: 2rem 0 2rem 3rem;
     h2 {

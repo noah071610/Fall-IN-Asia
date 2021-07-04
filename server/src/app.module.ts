@@ -11,7 +11,9 @@ import * as ormconfig from './ormconfig';
 import { Users } from './entities/Users';
 import { AuthModule } from './auth/auth.module';
 import { GroupsModule } from './groups/groups.module';
-import { ClubPostsModule } from './clubposts/clubposts.module';
+import { ClubsModule } from './clubs/clubs.module';
+import { Groups } from './entities/Groups';
+import { ClubPosts } from './entities/ClubPosts';
 
 @Module({
   imports: [
@@ -20,9 +22,9 @@ import { ClubPostsModule } from './clubposts/clubposts.module';
     MorganModule,
     UsersModule,
     TypeOrmModule.forRoot(ormconfig),
-    TypeOrmModule.forFeature([Users]),
+    TypeOrmModule.forFeature([Users, Groups, ClubPosts]),
     GroupsModule,
-    ClubPostsModule,
+    ClubsModule,
   ],
   controllers: [AppController],
   providers: [

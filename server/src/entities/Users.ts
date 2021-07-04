@@ -95,8 +95,8 @@ export class Users {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  @OneToMany(() => ClubPosts, (clubposts) => clubposts.users)
-  clubposts: ClubPosts[];
+  @OneToMany(() => ClubPosts, (clubposts) => clubposts.UserId)
+  ClubPosts: ClubPosts[];
 
   @OneToMany(() => LessonPosts, (lessonPosts) => lessonPosts.users)
   lessonPosts: LessonPosts[];

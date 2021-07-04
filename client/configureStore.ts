@@ -2,6 +2,11 @@ import { configureStore, getDefaultMiddleware, ThunkAction } from "@reduxjs/tool
 import { createWrapper, MakeStore, HYDRATE } from "next-redux-wrapper";
 import { Action } from "redux";
 import { reducer } from "slices";
+import axios from "axios";
+
+axios.defaults.baseURL =
+  process.env.NODE_ENV === "development" ? "http://localhost:3060/api" : process.env.BASE_URL;
+axios.defaults.withCredentials = true;
 
 const makeStore = () =>
   configureStore({
