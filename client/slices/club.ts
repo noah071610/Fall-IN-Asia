@@ -1,6 +1,11 @@
 import { IPostForm } from "@typings/db";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { clubPostCreateAction, clubPostDeleteAction, clubPostEditAction } from "actions/club";
+import {
+  clubPostCreateAction,
+  clubPostDeleteAction,
+  clubPostEditAction,
+  clubPostEditConfirmAction,
+} from "actions/club";
 
 export interface ClubState {
   clubPost: IPostForm | null;
@@ -11,6 +16,9 @@ export interface ClubState {
   clubPostDeleteLoading: boolean;
   clubPostDeleteDone: boolean;
   clubPostDeleteError: boolean;
+  clubPostEditConfirmLoading: boolean;
+  clubPostEditConfirmDone: boolean;
+  clubPostEditConfirmError: boolean;
   clubPostEditLoading: boolean;
   clubPostEditDone: boolean;
   clubPostEditError: boolean;
@@ -25,6 +33,9 @@ const initialState: ClubState = {
   clubPostDeleteLoading: false,
   clubPostDeleteDone: false,
   clubPostDeleteError: false,
+  clubPostEditConfirmLoading: false,
+  clubPostEditConfirmDone: false,
+  clubPostEditConfirmError: false,
   clubPostEditLoading: false,
   clubPostEditDone: false,
   clubPostEditError: false,
@@ -48,6 +59,11 @@ export const clubSlice = createSlice({
       state.clubPostEditLoading = false;
       state.clubPostEditDone = false;
       state.clubPostEditError = false;
+    },
+    clubPostEditConfirmClear(state) {
+      state.clubPostEditConfirmLoading = false;
+      state.clubPostEditConfirmDone = false;
+      state.clubPostEditConfirmError = false;
     },
   },
   extraReducers: (builder) =>
@@ -74,13 +90,24 @@ export const clubSlice = createSlice({
         state.clubPostDeleteLoading = false;
         state.clubPostDeleteError = true;
       })
+      .addCase(clubPostEditConfirmAction.pending, (state) => {
+        state.clubPostEditConfirmLoading = true;
+      })
+      .addCase(clubPostEditConfirmAction.fulfilled, (state, action) => {
+        state.clubPostEditConfirmLoading = false;
+        state.clubPostEditConfirmDone = true;
+        state.editPost = action.payload.data;
+      })
+      .addCase(clubPostEditConfirmAction.rejected, (state) => {
+        state.clubPostEditConfirmLoading = false;
+        state.clubPostEditConfirmError = true;
+      })
       .addCase(clubPostEditAction.pending, (state) => {
         state.clubPostEditLoading = true;
       })
-      .addCase(clubPostEditAction.fulfilled, (state, action) => {
+      .addCase(clubPostEditAction.fulfilled, (state) => {
         state.clubPostEditLoading = false;
         state.clubPostEditDone = true;
-        state.editPost = action.payload.data;
       })
       .addCase(clubPostEditAction.rejected, (state) => {
         state.clubPostEditLoading = false;

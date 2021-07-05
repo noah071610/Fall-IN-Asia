@@ -1,9 +1,11 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import styled from "@emotion/styled";
 import { LG_SIZE, MD_SIZE, RGB_BLACK } from "config";
 import Header from "sections/Header/index";
 import Footer from "sections/Footer/index";
 import { ToastContainer } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { mainSlice } from "slices/main";
 const Wrapper = styled.div`
   width: ${LG_SIZE};
   box-shadow: 0px 0px 15px ${RGB_BLACK(0.1)};
@@ -13,11 +15,16 @@ const Wrapper = styled.div`
 interface AppLayoutProps {}
 
 const AppLayout: FC<AppLayoutProps> = ({ children }) => {
-  const [state, setstate] = useState();
+  const dispatch = useDispatch();
+  const closeModal = useCallback(() => {
+    dispatch(mainSlice.actions.closeModal());
+  }, []);
   return (
     <>
       <Header />
-      <Wrapper>{children}</Wrapper>
+      <div onClick={closeModal}>
+        <Wrapper>{children}</Wrapper>
+      </div>
       <Footer />
       <ToastContainer />
     </>

@@ -26,21 +26,30 @@ const ClubMainSection: FC<IProps> = ({ clubPosts }) => {
           </tr>
         </thead>
         <tbody>
-          {clubPosts?.map((v, i) => (
-            <tr key={i} className="table-post">
-              <td>{v.id}</td>
-              <td onClick={() => onClickPostTitle(v.id, v.club)} className="title">
-                {v.title}
-              </td>
-              <td>{v.UserId?.name}</td>
-              <td>{dayjs(v.createdAt).format("DD/MM/YYYY")}</td>
-              <td>0</td>
-            </tr>
-          ))}
+          {clubPosts?.length > 0 &&
+            clubPosts.map((v, i) => (
+              <tr key={i} className="table-post">
+                <td>{v.id}</td>
+                <td onClick={() => onClickPostTitle(v.id, v.club)} className="title">
+                  {v.title}
+                </td>
+                <td>{v.UserId?.name}</td>
+                <td>{dayjs(v.createdAt).format("DD/MM/YYYY")}</td>
+                <td>0</td>
+              </tr>
+            ))}
         </tbody>
       </table>
+      {clubPosts?.length === 0 && (
+        <div className="noPost">
+          <img
+            src="https://icons.iconarchive.com/icons/iconsmind/outline/256/Inbox-Empty-icon.png"
+            alt=""
+          />
+          <h2>掲示がありません 😰</h2>
+        </div>
+      )}
       <CommonPagination />
-      <div className="big-margin-div" />
     </MainWrapper>
   );
 };

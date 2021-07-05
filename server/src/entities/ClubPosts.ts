@@ -24,7 +24,7 @@ export class ClubPosts {
   @Column('varchar', { name: 'club', length: 20 })
   club: string;
 
-  @Column('varchar', { name: 'title', length: 50 })
+  @Column('varchar', { name: 'title', length: 100 })
   title: string;
 
   @Column('varchar', { name: 'content' })

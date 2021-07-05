@@ -8,6 +8,9 @@ import GruopPreview from "@components/GruopPreview";
 import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
+import useSWR from "swr";
+import fetcher from "utils/fetcher";
+import { IClubPost, ITopClubPost } from "@typings/db";
 
 export const ClubMainWrapper = styled.div`
   padding: 2rem;
@@ -20,16 +23,20 @@ export const ClubMainWrapper = styled.div`
 interface IProps {}
 
 const index: FC<IProps> = () => {
+  const { data: groups } = useSWR("/group", fetcher);
+  const { data: topClubPostLists } = useSWR("/club/preview", fetcher, {
+    dedupingInterval: 10000,
+  });
   return (
     <ClubMainWrapper>
       <CommonTitle title="ファンクラブ" subtitle="仲間と会える空間" />
       <div className="margin-div" />
-      <GroupSelectModal />
+      <GroupSelectModal groups={groups} />
       <Divider />
       <div className="club-previews">
-        <GruopPreview />
-        <GruopPreview />
-        <GruopPreview />
+        {topClubPostLists?.map((v: ITopClubPost, i: number) => {
+          return <GruopPreview key={i} name={v.name} club={v.club} clubPosts={v.posts} />;
+        })}
       </div>
     </ClubMainWrapper>
   );

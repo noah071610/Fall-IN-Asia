@@ -24,7 +24,7 @@ const CommonTitleWrapper = styled.div`
     }
   }
   button {
-    margin-bottom: 1rem;
+    margin: 0 0 1rem 0.5rem;
   }
 `;
 interface IProps {

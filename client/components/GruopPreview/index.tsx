@@ -1,17 +1,21 @@
+import { IClubPost } from "@typings/db";
 import Link from "next/link";
 import React, { FC, useState } from "react";
 import { GruopPreviewWrapper } from "./styles";
 
-interface IProps {}
+interface IProps {
+  clubPosts: IClubPost[];
+  name: string;
+  club: string;
+}
 
-const GruopPreview: FC<IProps> = () => {
-  const [state, setstate] = useState();
+const GruopPreview: FC<IProps> = ({ name, club, clubPosts }) => {
   return (
     <GruopPreviewWrapper>
-      <Link href="club/bts">
+      <Link href={`club/${club}`}>
         <a>
           <h2>
-            <span className="point">BTS</span>
+            <span className="point">{name}</span>
             クラブ
           </h2>
         </a>
@@ -24,26 +28,19 @@ const GruopPreview: FC<IProps> = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>これはプレビューですよ</td>
-            <td>丹野美沙</td>
-          </tr>
-          <tr>
-            <td>これはプレビューですよ</td>
-            <td>丹野美沙</td>
-          </tr>
-          <tr>
-            <td>これはプレビューですよ</td>
-            <td>丹野美沙</td>
-          </tr>
-          <tr>
-            <td>これはプレビューですよ</td>
-            <td>丹野美沙</td>
-          </tr>
-          <tr>
-            <td>これはプレビューですよ</td>
-            <td>丹野美沙</td>
-          </tr>
+          {clubPosts?.map((v, i) => {
+            return (
+              <tr className="table-row" key={i}>
+                <td className="row-title">
+                  <Link href={`club/${club}/${v.id}`}>
+                    <a>{v.title}</a>
+                  </Link>
+                </td>
+
+                <td className="row-name">{v.UserId.name}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </GruopPreviewWrapper>

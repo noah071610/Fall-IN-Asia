@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { PostingEditorWrapper } from "./styles";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
@@ -9,7 +9,7 @@ import useInput from "@hooks/useInput";
 import { useRouter } from "next/dist/client/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { clubPostCreateAction } from "actions/club";
+import { clubPostCreateAction, clubPostEditAction } from "actions/club";
 import { IPostForm } from "@typings/db";
 
 const QuillEditor = dynamic(import("react-quill"), {
@@ -17,14 +17,25 @@ const QuillEditor = dynamic(import("react-quill"), {
   loading: () => <p>Loading ...</p>,
 });
 
-interface IProps {}
+interface IProps {
+  isEdit: boolean;
+}
 
-const PostingEditor: FC<IProps> = () => {
+const PostingEditor: FC<IProps> = ({ isEdit }) => {
   const { query } = useRouter();
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [title, onChangeTitle, setTitle] = useInput("");
   const { user } = useSelector((state: RootState) => state.user);
+  const { editPost, editPostConfirmDone } = useSelector((state: RootState) => state.club);
+
+  useEffect(() => {
+    if (isEdit) {
+      setTitle(editPost.title);
+      setContent(editPost.content);
+    }
+  }, []);
+
   const onChangeEditor = (content: string) => {
     setContent(content);
   };
@@ -52,10 +63,15 @@ const PostingEditor: FC<IProps> = () => {
       content,
       userId: user.id,
     };
-    dispatch(clubPostCreateAction(form));
-    setTitle("");
-    setContent("");
-  }, [title, content, user, query.group]);
+    if (isEdit) {
+      form.postId = editPost.id;
+      dispatch(clubPostEditAction(form));
+    } else {
+      dispatch(clubPostCreateAction(form));
+      setTitle("");
+      setContent("");
+    }
+  }, [title, content, user, query.group, isEdit]);
   return (
     <PostingEditorWrapper>
       <h2>タイトル</h2>
@@ -72,7 +88,7 @@ const PostingEditor: FC<IProps> = () => {
       <div className="post-submit">
         <Button onClick={onClickGoback}>以前のページ</Button>
         <Button onClick={onClickSubmit} type="primary">
-          投稿
+          {isEdit ? "修正" : "投稿"}
         </Button>
       </div>
     </PostingEditorWrapper>

@@ -12,6 +12,7 @@ import { ClubPostRequestDto } from './dto/clubPost.request.dto';
 import bcrypt from 'bcrypt';
 import { ClubPostConfirmDto } from './dto/clubPost.confirm.dto';
 import { Users } from 'src/entities/Users';
+import { ClubEditRequestDto } from './dto/clubEdit.request.dto';
 @Injectable()
 export class ClubsService {
   constructor(
@@ -32,6 +33,39 @@ export class ClubsService {
       relations: ['UserId'],
     });
     return post;
+  }
+
+  async getPrviewPosts() {
+    const postCount = await this.clubPostsRepository
+      .createQueryBuilder('posts')
+      .select('posts.club')
+      .addSelect('COUNT(*)', 'topPosts')
+      .groupBy('posts.club')
+      .orderBy('topPosts', 'DESC')
+      .limit(4)
+      .getMany();
+    const topClubWithSixPosts = await Promise.all(
+      postCount.map(async (v) => {
+        const posts = await this.clubPostsRepository
+          .createQueryBuilder('posts')
+          .select('posts.id')
+          .addSelect('posts.title')
+          .where('posts.club= :club', { club: v.club })
+          .orderBy('posts.id', 'DESC')
+          .limit(6)
+          .innerJoinAndSelect('posts.UserId', 'users')
+          .getMany();
+
+        const group = await this.GroupsRepository.findOne({
+          where: { group: v.club },
+          select: ['name'],
+        });
+
+        return { club: v.club, name: group.name, posts };
+      }),
+    );
+
+    return topClubWithSixPosts;
   }
 
   async getClubPostsAndNameForClub(club: string) {
@@ -60,6 +94,15 @@ export class ClubsService {
     return newPost;
   }
 
+  async eidtPost(data: ClubEditRequestDto) {
+    const editedPost = await this.clubPostsRepository.update(
+      { id: parseInt(data.postId) },
+      { title: data.title, content: data.content, club: data.club, hit: 0 },
+    );
+
+    return editedPost;
+  }
+
   async comparePasswordForAuth(data: { password: string; userId: string }) {
     const user = await this.UsersRepository.findOne({
       where: { id: parseInt(data.userId) },
@@ -77,15 +120,15 @@ export class ClubsService {
     return true;
   }
 
-  async editPost(data: ClubPostConfirmDto) {
-    const postForEdit = this.clubPostsRepository.findOne({
+  async searchPostByPostId(data: ClubPostConfirmDto) {
+    const post = this.clubPostsRepository.findOne({
       where: { id: parseInt(data.postId) },
     });
-    if (!postForEdit) {
+    if (!post) {
       throw new NotFoundException(
         'ポストがありません、もう一度確認お願い致します。',
       );
     }
-    return postForEdit;
+    return post;
   }
 }

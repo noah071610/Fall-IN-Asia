@@ -21,6 +21,7 @@ export interface IPostForm {
   club: string;
   userId: number;
   hit?: number;
+  postId?: number;
 }
 
 enum Gender {
@@ -45,4 +46,10 @@ export interface IClubPost {
   content: string;
   UserId: IUser;
   createdAt: string;
+}
+
+export interface ITopClubPost {
+  name: string;
+  club: string;
+  posts: IClubPost[];
 }

@@ -14,9 +14,7 @@ const ClubTitleSection: FC<IProps> = ({ clubName }) => {
   const { query, pathname } = useRouter();
   const [isPostPath, setIsPostPath] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
-  const onClickPosting = useCallback(() => {
-    router.push(`/club/${query.group}/post`);
-  }, []);
+
   useEffect(() => {
     const path = pathname.split("/");
     if (path[path.length - 1] === "post") {
@@ -26,13 +24,25 @@ const ClubTitleSection: FC<IProps> = ({ clubName }) => {
     }
   }, [pathname]);
 
+  const onClickPosting = useCallback(() => {
+    router.push(`/club/${query.group}/post`);
+  }, []);
+  const onClickClubMain = useCallback(() => {
+    router.push(`/club`);
+  }, []);
+
   return (
     <TitleWrapper>
       <CommonTitle point={clubName} title="クラブ">
         {!isPostPath && user && (
-          <button onClick={onClickPosting} className="basic-btn">
-            ポスト投稿
-          </button>
+          <>
+            <button onClick={onClickClubMain} className="basic-btn">
+              クラブメイン
+            </button>
+            <button onClick={onClickPosting} className="basic-btn">
+              ポスト投稿
+            </button>
+          </>
         )}
       </CommonTitle>
       <div className="club-list">

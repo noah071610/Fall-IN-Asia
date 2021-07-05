@@ -1,16 +1,13 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, BORDER_THIN, RGB_BLACK } from "config";
+import { BLACK_COLOR, BLUE_COLOR, BORDER_THIN, RGB_BLACK } from "config";
 
 export const GruopPreviewWrapper = styled.div`
   ${BORDER_THIN("border")};
   padding: 1.5rem;
-  cursor: pointer;
-  &:hover {
-    background: ${RGB_BLACK(0.03)};
-  }
   h2 {
-    padding-bottom: 0.5rem;
+    padding: 0 0.5rem 0.5rem 0.5rem;
     border-bottom: 1px solid ${BLUE_COLOR};
+    cursor: pointer;
     span {
       margin-right: 0.7rem;
     }
@@ -20,13 +17,28 @@ export const GruopPreviewWrapper = styled.div`
     margin: 0.5rem 0;
     th {
       text-align: start;
-      padding: 1rem 0;
+      padding: 1rem 0.5rem;
     }
     td {
-      padding: 1rem 0;
+      padding: 1rem 0.5rem;
     }
     .table-header {
       ${BORDER_THIN("border-bottom")};
+    }
+    .table-row {
+      cursor: pointer;
+      &:hover {
+        background: ${RGB_BLACK(0.03)};
+      }
+      .row-title {
+        a {
+          color: ${BLACK_COLOR};
+          display: block;
+        }
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
 `;

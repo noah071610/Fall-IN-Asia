@@ -2,7 +2,6 @@ import ClubLayout from "@sections/ClubLayout";
 import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
-
 const index = () => {
   return <ClubLayout />;
 };

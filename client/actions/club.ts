@@ -26,15 +26,25 @@ export const clubPostDeleteAction = createAsyncThunk<
   }
 });
 
-export const clubPostEditAction = createAsyncThunk<any, { postId: number; password: string }>(
-  "club/edit",
-  async (data) => {
-    try {
-      const response = await axios.post(`/club/edit`, data);
-      return response.data;
-    } catch (error) {
-      toastErrorMessage(error);
-      throw error;
-    }
+export const clubPostEditAction = createAsyncThunk<any, IPostForm>("club/edit", async (form) => {
+  try {
+    const response = await axios.post("/club/edit", form);
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
   }
-);
+});
+
+export const clubPostEditConfirmAction = createAsyncThunk<
+  any,
+  { postId: number; password: string }
+>("club/confirm", async (data) => {
+  try {
+    const response = await axios.post(`/club/confirm`, data);
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
+  }
+});

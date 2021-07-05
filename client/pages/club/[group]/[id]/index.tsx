@@ -25,20 +25,21 @@ interface IProps {}
 const ClubPost: FC<IProps> = () => {
   const { query } = useRouter();
   const dispatch = useDispatch();
-  const { data: postData, error } = useSWR(`/club/post/${query?.group}/${query?.id}`, fetcher);
-  const { clubPostEditDone, clubPostDeleteDone } = useSelector((state: RootState) => state.club);
+  const { data: postData, error } = useSWR(`/club/${query?.group}/${query?.id}`, fetcher);
+  const { clubPostEditConfirmDone, clubPostDeleteDone } = useSelector(
+    (state: RootState) => state.club
+  );
   useEffect(() => {
-    if (clubPostEditDone) {
-      toastSuccessMessage("ポストを成功的に書き直りました。");
-      dispatch(clubSlice.actions.clubPostEditClear);
-      router.push(`/club/${query?.group}`);
+    if (clubPostEditConfirmDone) {
+      router.push(`/club/${query?.group}/edit`);
     }
-  }, [clubPostEditDone]);
+  }, [clubPostEditConfirmDone]);
+
   useEffect(() => {
     if (clubPostDeleteDone) {
+      router.push(`/club/${query?.group}`);
       toastSuccessMessage("ポストを成功的に削除致しました。");
       dispatch(clubSlice.actions.clubPostDeleteClear);
-      router.push(`/club/${query?.group}/edit`);
     }
   }, [clubPostDeleteDone]);
   return (

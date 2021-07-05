@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from "react";
-import ClubLayout from "@sections/ClubLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import styled from "@emotion/styled";
@@ -22,9 +21,8 @@ interface IProps {}
 
 const post: FC<IProps> = () => {
   const { query } = useRouter();
-  const { data: clubData, error, revalidate, mutate } = useSWR(`/club/${query?.group}`, fetcher);
-
   const dispatch = useDispatch();
+  const { data: clubData, error, revalidate, mutate } = useSWR(`/club/${query?.group}`, fetcher);
   const { user } = useSelector((state: RootState) => state.user);
   const { clubPostCreateDone } = useSelector((state: RootState) => state.club);
 
@@ -43,7 +41,7 @@ const post: FC<IProps> = () => {
   return (
     <ClubPostingWrapper>
       <ClubTitleSection clubName={clubData?.name} />
-      <PostingEditor />
+      <PostingEditor isEdit={false} />
     </ClubPostingWrapper>
   );
 };

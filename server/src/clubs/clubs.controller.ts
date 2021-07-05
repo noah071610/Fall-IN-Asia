@@ -15,6 +15,7 @@ import { LoggedInGuard } from 'src/auth/logged-in.guard';
 import { ClubsService } from './clubs.service';
 import { ClubPostRequestDto } from './dto/clubPost.request.dto';
 import { ClubPostConfirmDto } from './dto/clubPost.confirm.dto';
+import { ClubEditRequestDto } from './dto/clubEdit.request.dto';
 
 @UseInterceptors(JsonResponeGenerator)
 @ApiTags('Club')
@@ -22,13 +23,6 @@ import { ClubPostConfirmDto } from './dto/clubPost.confirm.dto';
 @Controller('/api/club/')
 export class ClubsController {
   constructor(private readonly clubsService: ClubsService) {}
-
-  @ApiOperation({ summary: 'Get one post for post page' })
-  @Get('/post/:group/:id')
-  async getOnePost(@Param('group') group: string, @Param('id') id: string) {
-    const post = await this.clubsService.getOnePost(id, group);
-    return post;
-  }
 
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Create post' })
@@ -39,26 +33,48 @@ export class ClubsController {
   }
 
   @UseGuards(new LoggedInGuard())
+  @ApiOperation({ summary: 'Edit post' })
+  @Post('edit')
+  async editPost(@Body() data: ClubEditRequestDto) {
+    const editedPost = await this.clubsService.eidtPost(data);
+    return editedPost;
+  }
+
+  @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Delete post' })
-  @Post('/delete')
+  @Post('delete')
   async deletePost(@Body() data: ClubPostConfirmDto) {
     await this.clubsService.comparePasswordForAuth({
       password: data.password,
       userId: data.userId,
     });
-    return this.clubsService.deletePost(data);
+    this.clubsService.deletePost(data);
   }
 
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Comfirm password to edit post' })
-  @Post('/edit')
-  async editPost(@Body() data: ClubPostConfirmDto) {
+  @Post('confirm')
+  async confirmPasswordForEditPost(@Body() data: ClubPostConfirmDto) {
     await this.clubsService.comparePasswordForAuth({
       password: data.password,
       userId: data.userId,
     });
-    const postForEdit = await this.clubsService.editPost(data);
+    const postForEdit = await this.clubsService.searchPostByPostId(data);
     return postForEdit;
+  }
+
+  @ApiOperation({ summary: 'Get preview posts for club main page' })
+  @Get('preview')
+  async getPreviewPosts() {
+    const previewPosts = await this.clubsService.getPrviewPosts();
+    return previewPosts;
+  }
+
+  @ApiOperation({ summary: 'Get one post for post page' })
+  @Get(':group/:id')
+  async getOnePost(@Param('group') group: string, @Param('id') id: string) {
+    const post = await this.clubsService.getOnePost(id, group);
+    return post;
   }
 
   @ApiOperation({ summary: 'Get posts for specific group' })

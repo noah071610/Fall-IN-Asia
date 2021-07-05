@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { BLUE_COLOR, BORDER_THICK, FLEX_STYLE, RGB_BLACK } from "config";
 
 export const MainWrapper = styled.div`
-  padding-bottom: 2rem;
+  padding-bottom: 10rem;
   table {
     width: 100%;
     tr {
@@ -27,6 +27,18 @@ export const MainWrapper = styled.div`
           text-decoration: underline;
         }
       }
+    }
+  }
+  .noPost {
+    ${FLEX_STYLE("center", "center")};
+    flex-direction: column;
+    padding: 3rem 0;
+    img {
+      opacity: 0.3;
+      width: 15%;
+    }
+    h2 {
+      font-weight: bold;
     }
   }
 `;
