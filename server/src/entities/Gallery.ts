@@ -13,7 +13,7 @@ import {
 import { Images } from './Images';
 import { Users } from './Users';
 
-@Entity({ schema: 'k-heart', name: 'gallery' })
+@Entity({ schema: 'k_heart', name: 'gallery' })
 export class Gallery {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
@@ -31,10 +31,10 @@ export class Gallery {
   deletedAt: Date | null;
 
   @OneToOne(() => Images, (images) => images.gallery)
-  images: Images[];
+  @JoinColumn([{ name: 'image', referencedColumnName: 'id' }])
+  image: Gallery;
 
-  @ManyToOne(() => Users, (users) => users.gallery)
-  users: Users[];
-  @JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
-  userId: Users;
+  @ManyToOne(() => Users, (users) => users.gallerys)
+  @JoinColumn([{ name: 'user', referencedColumnName: 'id' }])
+  user: Users;
 }

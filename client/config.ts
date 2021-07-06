@@ -178,3 +178,10 @@ export const qullFormats = [
   "color",
   "background",
 ];
+
+// swr
+
+export const noRevalidate = {
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false,
+};

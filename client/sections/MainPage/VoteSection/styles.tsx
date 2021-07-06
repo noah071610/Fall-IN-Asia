@@ -66,6 +66,9 @@ export const Wrapper = styled.div`
     .vote-tag-list {
       ${FLEX_STYLE("center", "center")};
       flex-wrap: wrap;
+      button {
+        margin: 0 0.5rem 0.7rem 0;
+      }
     }
   }
 `;

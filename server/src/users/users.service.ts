@@ -15,7 +15,10 @@ export class UsersService {
   ) {}
 
   async findUserInfoByEmail(email: string) {
-    const user = await this.userRepository.findOne({ where: { email } });
+    const user = await this.userRepository.findOne({
+      where: { email },
+      relations: ['clubPosts', 'comments', 'marketPosts', 'fan'],
+    });
     if (!user) {
       throw new UnauthorizedException(
         'ユーザーの情報がありません、もう一度確認してください。',

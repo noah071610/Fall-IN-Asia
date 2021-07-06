@@ -10,19 +10,20 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Groups } from './Groups';
 import { Images } from './Images';
 import { Users } from './Users';
 
-@Entity({ schema: 'k-heart', name: 'clubPosts' })
+@Entity({ schema: 'k_heart', name: 'clubPosts' })
 export class ClubPosts {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
-  @Column('int', { name: 'hit' })
-  hit: number;
+  @Column('int', { name: 'groupId' })
+  groupId: number;
 
-  @Column('varchar', { name: 'club', length: 20 })
-  club: string;
+  @Column('int', { name: 'hit', default: 0 })
+  hit: number;
 
   @Column('varchar', { name: 'title', length: 100 })
   title: string;
@@ -39,10 +40,14 @@ export class ClubPosts {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  @OneToMany(() => Images, (images) => images.clubposts)
+  @OneToMany(() => Images, (images) => images.clubPost)
   images: Images[];
 
-  @ManyToOne((type) => Users, (users) => users.ClubPosts)
-  @JoinColumn([{ name: 'UserId', referencedColumnName: 'id' }])
-  UserId: number;
+  @ManyToOne(() => Groups, (groups) => groups.clubPosts)
+  @JoinColumn({ name: 'group' })
+  group: Groups;
+
+  @ManyToOne(() => Users, (users) => users.clubPosts)
+  @JoinColumn({ name: 'user' })
+  user: Users;
 }

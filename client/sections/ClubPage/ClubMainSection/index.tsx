@@ -1,7 +1,7 @@
 import CommonPagination from "@components/Common/CommonPagination";
 import { IClubPost } from "@typings/db";
 import dayjs from "dayjs";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import React, { FC, useCallback, useState } from "react";
 import { MainWrapper } from "./styles";
 interface IProps {
@@ -9,9 +9,9 @@ interface IProps {
 }
 
 const ClubMainSection: FC<IProps> = ({ clubPosts }) => {
-  const [state, setstate] = useState();
-  const onClickPostTitle = useCallback((id, club) => {
-    router.push(`/club/${club}/${id}`);
+  const { query } = useRouter();
+  const onClickPostTitle = useCallback((id) => {
+    router.push(`/club/${query.group}/${id}`);
   }, []);
   return (
     <MainWrapper>
@@ -30,10 +30,10 @@ const ClubMainSection: FC<IProps> = ({ clubPosts }) => {
             clubPosts.map((v, i) => (
               <tr key={i} className="table-post">
                 <td>{v.id}</td>
-                <td onClick={() => onClickPostTitle(v.id, v.club)} className="title">
+                <td onClick={() => onClickPostTitle(v.id)} className="title">
                   {v.title}
                 </td>
-                <td>{v.UserId?.name}</td>
+                <td>{v.user?.name}</td>
                 <td>{dayjs(v.createdAt).format("DD/MM/YYYY")}</td>
                 <td>0</td>
               </tr>

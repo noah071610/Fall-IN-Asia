@@ -24,25 +24,41 @@ export class ClubsService {
     private UsersRepository: Repository<Users>,
   ) {}
 
-  async getOnePost(id: string, group: string) {
+  async getOnePost(id: number, group: string) {
+    const groupId = await this.GroupsRepository.findOne({
+      where: { key_name: group },
+      select: ['id'],
+    });
     const post = await this.clubPostsRepository.findOne({
       where: {
-        id: parseInt(id),
-        club: group,
+        id,
+        group: groupId.id,
       },
-      relations: ['UserId'],
+      relations: ['user'],
     });
     return post;
   }
 
-  async getPrviewPosts() {
+  async test(data: any) {
+    const post = await this.clubPostsRepository
+      .createQueryBuilder('posts')
+      .leftJoin('posts.group', 'group')
+      .addSelect(['group.name', 'group.key'])
+      .getOne();
+    const user = await this.UsersRepository.createQueryBuilder('users')
+      .leftJoin('users.comments', 'comments')
+      .addSelect(['comments.content'])
+      .getOne();
+    return { post, user };
+  }
+
+  async getPreviewPosts() {
     const postCount = await this.clubPostsRepository
       .createQueryBuilder('posts')
-      .select('posts.club')
-      .addSelect('COUNT(*)', 'topPosts')
-      .groupBy('posts.club')
-      .orderBy('topPosts', 'DESC')
-      .limit(4)
+      .select('posts.groupId')
+      .addSelect('COUNT(*)', 'cnt')
+      .groupBy('posts.groupId')
+      .orderBy('cnt', 'DESC')
       .getMany();
     const topClubWithSixPosts = await Promise.all(
       postCount.map(async (v) => {
@@ -50,62 +66,62 @@ export class ClubsService {
           .createQueryBuilder('posts')
           .select('posts.id')
           .addSelect('posts.title')
-          .where('posts.club= :club', { club: v.club })
+          .where('posts.groupId= :groupId', { groupId: v.groupId })
           .orderBy('posts.id', 'DESC')
           .limit(6)
-          .innerJoinAndSelect('posts.UserId', 'users')
-          .getMany();
-
+          .leftJoin('posts.user', 'users')
+          .addSelect(['users.name'])
+          .getRawMany();
         const group = await this.GroupsRepository.findOne({
-          where: { group: v.club },
-          select: ['name'],
+          where: { id: v.groupId },
+          select: ['group_name', 'key_name'],
         });
 
-        return { club: v.club, name: group.name, posts };
+        return { ...group, posts };
       }),
     );
 
     return topClubWithSixPosts;
   }
 
-  async getClubPostsAndNameForClub(club: string) {
-    const posts = await this.clubPostsRepository.find({
-      where: { club },
-      order: { id: 'DESC' },
-      relations: ['UserId'],
-      take: 10,
+  async getClubPosts(group: string) {
+    const groupName = await this.GroupsRepository.findOne({
+      where: { key_name: group },
+      select: ['group_name', 'id'],
     });
-    const group = await this.GroupsRepository.findOne({
-      where: { group: club },
-      select: ['name'],
-    });
-    return { name: group.name, posts };
+
+    const posts = await this.clubPostsRepository
+      .createQueryBuilder('posts')
+      .where('posts.group= :groupId', { groupId: groupName.id })
+      .leftJoinAndSelect('posts.user', 'user')
+      .limit(10)
+      .orderBy('posts.id', 'DESC')
+      .getMany();
+    return { name: groupName.group_name, posts };
   }
 
   async createPost(data: ClubPostRequestDto) {
-    const newPost = await this.clubPostsRepository.save({
-      title: data.title,
-      content: data.content,
-      club: data.club,
-      hit: 0,
-      UserId: parseInt(data.userId),
-    });
-
-    return newPost;
+    const newPost = new ClubPosts();
+    newPost.groupId = data.groupId;
+    newPost.title = data.title;
+    newPost.content = data.content;
+    newPost.group = <any>{ id: data.groupId };
+    newPost.user = <any>{ id: data.userId };
+    return await this.clubPostsRepository.save(newPost);
   }
 
   async eidtPost(data: ClubEditRequestDto) {
     const editedPost = await this.clubPostsRepository.update(
-      { id: parseInt(data.postId) },
-      { title: data.title, content: data.content, club: data.club, hit: 0 },
+      { id: data.postId },
+      { title: data.title, content: data.content },
     );
 
     return editedPost;
   }
 
-  async comparePasswordForAuth(data: { password: string; userId: string }) {
+  async comparePasswordForAuth(data: { password: string; userId: number }) {
     const user = await this.UsersRepository.findOne({
-      where: { id: parseInt(data.userId) },
+      where: { id: data.userId },
       select: ['password'],
     });
     const conparePassword = await bcrypt.compare(data.password, user.password);
@@ -115,14 +131,14 @@ export class ClubsService {
     return true;
   }
 
-  async deletePost(data: ClubPostConfirmDto) {
-    await this.clubPostsRepository.delete({ id: parseInt(data.postId) });
+  async deletePost(postId: number) {
+    await this.clubPostsRepository.delete({ id: postId });
     return true;
   }
 
-  async searchPostByPostId(data: ClubPostConfirmDto) {
+  async searchPostByPostId(postId: number) {
     const post = this.clubPostsRepository.findOne({
-      where: { id: parseInt(data.postId) },
+      where: { id: postId },
     });
     if (!post) {
       throw new NotFoundException(

@@ -12,7 +12,7 @@ import {
 } from 'typeorm';
 import { Users } from './Users';
 
-@Entity({ schema: 'k-heart', name: 'lessonPosts' })
+@Entity({ schema: 'k_heart', name: 'lessonPosts' })
 export class LessonPosts {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
@@ -66,22 +66,17 @@ export class LessonPosts {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  @ManyToOne(() => Users, (users) => users.lessonPosts)
-  users: Users[];
-  @JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
-  userId: Users;
-
-  @ManyToMany(() => Users, (users) => users.id)
+  @ManyToMany(() => Users, (users) => users.lessonId)
   @JoinTable({
-    name: 'lesson_participant',
+    name: 'Lesson_participant',
     joinColumn: {
-      name: 'LessonId',
+      name: 'lessonId',
       referencedColumnName: 'id',
     },
     inverseJoinColumn: {
-      name: 'UserId',
+      name: 'userId',
       referencedColumnName: 'id',
     },
   })
-  joinUserId: Users[];
+  userId: Users[];
 }

@@ -11,7 +11,7 @@ import fetcher from "utils/fetcher";
 import ClubTitleSection from "@sections/ClubPage/ClubTitleSection";
 import PostingEditor from "@components/PostingEditor";
 import { clubSlice } from "slices/club";
-import { toastSuccessMessage } from "config";
+import { noRevalidate, toastSuccessMessage } from "config";
 
 const ClubPostingWrapper = styled.div`
   padding: 2rem;
@@ -22,7 +22,7 @@ interface IProps {}
 const post: FC<IProps> = () => {
   const { query } = useRouter();
   const dispatch = useDispatch();
-  const { data: clubData, error, revalidate, mutate } = useSWR(`/club/${query?.group}`, fetcher);
+  const { data: clubData } = useSWR(`/group/${query.group}`, fetcher, noRevalidate);
   const { user } = useSelector((state: RootState) => state.user);
   const { clubPostCreateDone } = useSelector((state: RootState) => state.club);
 
@@ -40,8 +40,8 @@ const post: FC<IProps> = () => {
   }, []);
   return (
     <ClubPostingWrapper>
-      <ClubTitleSection clubName={clubData?.name} />
-      <PostingEditor isEdit={false} />
+      <ClubTitleSection clubName={clubData?.group_name} />
+      <PostingEditor groupId={clubData?.id} isEdit={false} />
     </ClubPostingWrapper>
   );
 };

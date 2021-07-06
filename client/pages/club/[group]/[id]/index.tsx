@@ -13,7 +13,7 @@ import fetcher from "utils/fetcher";
 import router, { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { toastSuccessMessage } from "config";
+import { toastErrorMessage, toastSuccessMessage } from "config";
 import { clubSlice } from "slices/club";
 
 const CommentsWrapper = styled.div`
@@ -29,6 +29,10 @@ const ClubPost: FC<IProps> = () => {
   const { clubPostEditConfirmDone, clubPostDeleteDone } = useSelector(
     (state: RootState) => state.club
   );
+  if (error) {
+    toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
+  }
+
   useEffect(() => {
     if (clubPostEditConfirmDone) {
       router.push(`/club/${query?.group}/edit`);

@@ -40,7 +40,13 @@ const VoteSearchForm: FC<IProps> = () => {
       <div className="vote-filter">
         <Slider {...groupCardSettings}>
           {data?.map((v: IGroup, i: number) => (
-            <GroupCard isVote={true} name={v.name} image={v.image} group={v.group} key={i} />
+            <GroupCard
+              isVote={true}
+              name={v.group_name}
+              image={v.image}
+              group={v.key_name}
+              key={i}
+            />
           ))}
         </Slider>
       </div>

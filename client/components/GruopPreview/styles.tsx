@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BLACK_COLOR, BLUE_COLOR, BORDER_THIN, RGB_BLACK } from "config";
+import { BLACK_COLOR, BLUE_COLOR, BORDER_THIN, GRID_STYLE, RGB_BLACK } from "config";
 
 export const GruopPreviewWrapper = styled.div`
   ${BORDER_THIN("border")};
@@ -18,6 +18,9 @@ export const GruopPreviewWrapper = styled.div`
     th {
       text-align: start;
       padding: 1rem 0.5rem;
+    }
+    th:first-of-type {
+      width: 70%;
     }
     td {
       padding: 1rem 0.5rem;

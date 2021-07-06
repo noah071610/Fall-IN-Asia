@@ -1,21 +1,21 @@
-import { IClubPost } from "@typings/db";
+import { IClubPost, ITopClubPost } from "@typings/db";
 import Link from "next/link";
 import React, { FC, useState } from "react";
 import { GruopPreviewWrapper } from "./styles";
 
 interface IProps {
-  clubPosts: IClubPost[];
-  name: string;
-  club: string;
+  posts: ITopClubPost[];
+  groupName: string;
+  keyName: string;
 }
 
-const GruopPreview: FC<IProps> = ({ name, club, clubPosts }) => {
+const GruopPreview: FC<IProps> = ({ groupName, keyName, posts }) => {
   return (
     <GruopPreviewWrapper>
-      <Link href={`club/${club}`}>
+      <Link href={`club/${keyName}`}>
         <a>
           <h2>
-            <span className="point">{name}</span>
+            <span className="point">{groupName}</span>
             クラブ
           </h2>
         </a>
@@ -28,16 +28,15 @@ const GruopPreview: FC<IProps> = ({ name, club, clubPosts }) => {
           </tr>
         </thead>
         <tbody>
-          {clubPosts?.map((v, i) => {
+          {posts?.map((v, i) => {
             return (
               <tr className="table-row" key={i}>
                 <td className="row-title">
-                  <Link href={`club/${club}/${v.id}`}>
-                    <a>{v.title}</a>
+                  <Link href={`club/${keyName}/${v.posts_id}`}>
+                    <a>{v.posts_title}</a>
                   </Link>
                 </td>
-
-                <td className="row-name">{v.UserId.name}</td>
+                <td className="row-name">{v.users_name}</td>
               </tr>
             );
           })}

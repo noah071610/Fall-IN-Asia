@@ -18,7 +18,7 @@ export interface ISignUpForm {
 export interface IPostForm {
   title: string;
   content: string;
-  club: string;
+  groupId: number;
   userId: number;
   hit?: number;
   postId?: number;
@@ -30,12 +30,20 @@ enum Gender {
 }
 
 export interface IGroup {
-  name: string;
-  group: string;
+  group_name: string;
+  key_name: string;
   gender: Gender;
   number: number;
   image: string;
   isNew: boolean;
+}
+
+export interface IGroupScore extends IGroup {
+  goodwell: number;
+  handsome: number;
+  pretty: number;
+  cute: number;
+  beautiful: number;
 }
 
 export interface IClubPost {
@@ -44,12 +52,19 @@ export interface IClubPost {
   club: string;
   title: string;
   content: string;
-  UserId: IUser;
+  user: IUser;
+  group: IGroup;
   createdAt: string;
 }
 
 export interface ITopClubPost {
-  name: string;
-  club: string;
-  posts: IClubPost[];
+  posts_id: number;
+  posts_title: string;
+  users_name: string;
+}
+
+export interface ITopClubPosts {
+  group_name: string;
+  key_name: string;
+  posts: ITopClubPost[];
 }

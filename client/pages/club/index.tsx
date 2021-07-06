@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import styled from "@emotion/styled";
 import CommonTitle from "@components/Common/CommonTitle";
 import GroupSelectModal from "@components/GroupSelectModal";
-import { GRID_STYLE } from "config";
+import { GRID_STYLE, noRevalidate, toastErrorMessage } from "config";
 import { Divider } from "antd";
 import GruopPreview from "@components/GruopPreview";
 import { wrapper } from "configureStore";
@@ -10,7 +10,7 @@ import { getUserInfoAction } from "actions/user";
 import axios from "axios";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
-import { IClubPost, ITopClubPost } from "@typings/db";
+import { IClubPost, ITopClubPost, ITopClubPosts } from "@typings/db";
 
 export const ClubMainWrapper = styled.div`
   padding: 2rem;
@@ -23,10 +23,12 @@ export const ClubMainWrapper = styled.div`
 interface IProps {}
 
 const index: FC<IProps> = () => {
-  const { data: groups } = useSWR("/group", fetcher);
-  const { data: topClubPostLists } = useSWR("/club/preview", fetcher, {
-    dedupingInterval: 10000,
-  });
+  const { data: groups, error } = useSWR("/group", fetcher);
+  const { data: topClubPostLists } = useSWR("/club/preview", fetcher, noRevalidate);
+  if (error) {
+    toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
+  }
+
   return (
     <ClubMainWrapper>
       <CommonTitle title="ファンクラブ" subtitle="仲間と会える空間" />
@@ -34,8 +36,10 @@ const index: FC<IProps> = () => {
       <GroupSelectModal groups={groups} />
       <Divider />
       <div className="club-previews">
-        {topClubPostLists?.map((v: ITopClubPost, i: number) => {
-          return <GruopPreview key={i} name={v.name} club={v.club} clubPosts={v.posts} />;
+        {topClubPostLists?.map((v: ITopClubPosts, i: number) => {
+          return (
+            <GruopPreview key={i} groupName={v.group_name} keyName={v.key_name} posts={v.posts} />
+          );
         })}
       </div>
     </ClubMainWrapper>

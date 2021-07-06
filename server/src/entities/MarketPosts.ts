@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { Users } from './Users';
 
-@Entity({ schema: 'k-heart', name: 'marketPosts' })
+@Entity({ schema: 'k_heart', name: 'marketPosts' })
 export class MarketPosts {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
@@ -62,7 +62,6 @@ export class MarketPosts {
   deletedAt: Date | null;
 
   @ManyToOne(() => Users, (users) => users.marketPosts)
-  users: Users[];
-  @JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
-  userId: Users;
+  @JoinColumn([{ name: 'user', referencedColumnName: 'id' }])
+  user: Users;
 }

@@ -22,7 +22,7 @@ import { MarketPosts } from './MarketPosts';
 import { SubComments } from './SubComments';
 
 @Index('email', ['email'], { unique: true })
-@Entity({ schema: 'k-heart', name: 'users' })
+@Entity({ schema: 'k_heart', name: 'users' })
 export class Users {
   @IsNumber()
   @IsNotEmpty()
@@ -95,29 +95,25 @@ export class Users {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  @OneToMany(() => ClubPosts, (clubposts) => clubposts.UserId)
-  ClubPosts: ClubPosts[];
+  @OneToMany(() => ClubPosts, (clubposts) => clubposts.user)
+  clubPosts: ClubPosts[];
 
-  @OneToMany(() => LessonPosts, (lessonPosts) => lessonPosts.users)
-  lessonPosts: LessonPosts[];
-
-  @OneToMany(() => MarketPosts, (marketPosts) => marketPosts.users)
+  @OneToMany(() => MarketPosts, (marketPosts) => marketPosts.user)
   marketPosts: MarketPosts[];
 
-  @OneToMany(() => Gallery, (gallery) => gallery.users)
-  gallery: Gallery[];
+  @OneToMany(() => Gallery, (gallery) => gallery.user)
+  gallerys: Gallery[];
 
-  @OneToMany(() => Comments, (comments) => comments.users)
+  @OneToMany(() => Comments, (comments) => comments.user)
   comments: Comments[];
 
-  @OneToMany(() => SubComments, (subComments) => subComments.users)
+  @OneToMany(() => SubComments, (subComments) => subComments.user)
   subComments: SubComments[];
 
-  @ManyToMany(() => LessonPosts, (lessonPosts) => lessonPosts.id)
-  joinLessonId: LessonPosts[];
+  @ManyToMany(() => LessonPosts, (lessonPosts) => lessonPosts.userId)
+  lessonId: LessonPosts[];
 
-  @OneToOne(() => Groups, (groups) => groups.users)
-  groups: Groups[];
-  @JoinColumn([{ name: 'fan', referencedColumnName: 'name' }])
+  @OneToOne(() => Groups, (groups) => groups.user)
+  @JoinColumn([{ name: 'fan', referencedColumnName: 'id' }])
   fan: Groups;
 }

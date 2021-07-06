@@ -6,7 +6,6 @@ import { Button, Input } from "antd";
 import { quillModules, qullFormats, toastErrorMessage } from "config";
 import router from "next/router";
 import useInput from "@hooks/useInput";
-import { useRouter } from "next/dist/client/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { clubPostCreateAction, clubPostEditAction } from "actions/club";
@@ -19,17 +18,21 @@ const QuillEditor = dynamic(import("react-quill"), {
 
 interface IProps {
   isEdit: boolean;
+  groupId: number;
 }
 
-const PostingEditor: FC<IProps> = ({ isEdit }) => {
-  const { query } = useRouter();
+const PostingEditor: FC<IProps> = ({ isEdit, groupId }) => {
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [title, onChangeTitle, setTitle] = useInput("");
   const { user } = useSelector((state: RootState) => state.user);
-  const { editPost, editPostConfirmDone } = useSelector((state: RootState) => state.club);
+  const { editPost } = useSelector((state: RootState) => state.club);
 
   useEffect(() => {
+    if (!user) {
+      router.push("/");
+      return;
+    }
     if (isEdit) {
       setTitle(editPost.title);
       setContent(editPost.content);
@@ -59,7 +62,7 @@ const PostingEditor: FC<IProps> = ({ isEdit }) => {
     }
     let form: IPostForm = {
       title,
-      club: query.group as string,
+      groupId,
       content,
       userId: user.id,
     };
@@ -71,7 +74,7 @@ const PostingEditor: FC<IProps> = ({ isEdit }) => {
       setTitle("");
       setContent("");
     }
-  }, [title, content, user, query.group, isEdit]);
+  }, [title, content, user?.id, groupId, isEdit]);
   return (
     <PostingEditorWrapper>
       <h2>タイトル</h2>

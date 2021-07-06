@@ -5,17 +5,18 @@ import ClubMainSection from "@sections/ClubPage/ClubMainSection";
 import useSWR from "swr";
 import { useRouter } from "next/dist/client/router";
 import fetcher from "utils/fetcher";
-import { toastErrorMessage } from "config";
+import { noRevalidate, toastErrorMessage } from "config";
 
 export const ClubWrapper = styled.div`
   padding: 2rem;
 `;
 const ClubLayout: FC = ({ children }) => {
   const { query } = useRouter();
-  const { data: clubData, error, revalidate, mutate } = useSWR(`/club/${query?.group}`, fetcher);
+  const { data: clubData, error } = useSWR(`/club/${query?.group}`, fetcher, noRevalidate);
   if (error) {
-    toastErrorMessage("エラーが発生しました。");
+    toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
   }
+
   return (
     <ClubWrapper>
       <ClubTitleSection clubName={clubData?.name} />

@@ -10,9 +10,7 @@ export class GroupsService {
   ) {}
 
   async getGroups() {
-    const groups = await this.groupsRepository.find({
-      select: ['name', 'group', 'image'],
-    });
+    const groups = await this.groupsRepository.find();
     if (!groups) {
       throw new NotFoundException('予想できないエラーが発生しました。');
     }
@@ -21,8 +19,7 @@ export class GroupsService {
 
   async getSpecificGroupForClub(group: string) {
     const specificGroup = await this.groupsRepository.findOne({
-      where: { group },
-      select: ['name'],
+      where: { key_name: group },
     });
     if (!specificGroup) {
       throw new NotFoundException('予想できないエラーが発生しました。');

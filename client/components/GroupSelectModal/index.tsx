@@ -16,7 +16,13 @@ const GroupSelectModal: FC<IProps> = ({ groups }) => {
     <GroupSelectModalWrapper>
       <div className="group-recommeder">
         {groups?.slice(0, 4).map((v: IGroup, i: number) => (
-          <GroupCard isVote={false} name={v.name} image={v.image} group={v.group} key={i} />
+          <GroupCard
+            isVote={false}
+            name={v.group_name}
+            image={v.image}
+            group={v.key_name}
+            key={i}
+          />
         ))}
       </div>
       <div className="group-search">
@@ -25,10 +31,10 @@ const GroupSelectModal: FC<IProps> = ({ groups }) => {
         <h3>グループ一覧</h3>
         <ul>
           {groups?.map((v: IGroup, i: number) => (
-            <Link key={i} href={`/club/${v.group}`}>
+            <Link key={i} href={`/club/${v.key_name}`}>
               <a>
                 <li className="tag">
-                  <span>{v.name}</span>
+                  <span>{v.group_name}</span>
                 </li>
               </a>
             </Link>

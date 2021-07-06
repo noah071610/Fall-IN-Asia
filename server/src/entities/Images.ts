@@ -12,7 +12,7 @@ import {
 import { ClubPosts } from './ClubPosts';
 import { Gallery } from './Gallery';
 
-@Entity({ schema: 'k-heart', name: 'images' })
+@Entity({ schema: 'k_heart', name: 'images' })
 export class Images {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
@@ -26,16 +26,11 @@ export class Images {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @DeleteDateColumn()
-  deletedAt: Date | null;
-
-  @OneToOne(() => Gallery, (gallery) => gallery.images)
-  gallery: Gallery[];
-  @JoinColumn([{ name: 'galleryId', referencedColumnName: 'id' }])
-  galleryId: Gallery;
+  @OneToOne(() => Gallery, (gallery) => gallery.image)
+  @JoinColumn([{ name: 'gallery', referencedColumnName: 'id' }])
+  gallery: Gallery;
 
   @ManyToOne(() => ClubPosts, (clubposts) => clubposts.images)
-  clubposts: ClubPosts[];
-  @JoinColumn([{ name: 'clubPostId', referencedColumnName: 'id' }])
-  clubPostId: ClubPosts;
+  @JoinColumn([{ name: 'clubPost', referencedColumnName: 'id' }])
+  clubPost: ClubPosts;
 }

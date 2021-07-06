@@ -12,7 +12,7 @@ import {
 import { SubComments } from './SubComments';
 import { Users } from './Users';
 
-@Entity({ schema: 'k-heart', name: 'comments' })
+@Entity({ schema: 'k_heart', name: 'comments' })
 export class Comments {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
@@ -29,11 +29,10 @@ export class Comments {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  @OneToMany(() => SubComments, (subComments) => subComments.comments)
+  @OneToMany(() => SubComments, (subComments) => subComments.comment)
   subComments: SubComments[];
 
   @ManyToOne(() => Users, (users) => users.comments)
-  users: Users[];
-  @JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
-  userId: Users;
+  @JoinColumn([{ name: 'user', referencedColumnName: 'id' }])
+  user: Users;
 }

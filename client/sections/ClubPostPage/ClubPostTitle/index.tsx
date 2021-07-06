@@ -26,7 +26,7 @@ const ClubPostTitle: FC<IProps> = ({ postData }) => {
       <h1>{postData?.title}</h1>
       <div>
         <ul className="post-title-info">
-          <li>{postData?.UserId.name}</li>
+          <li>{postData?.user.name}</li>
           <Divider type="vertical" />
           <li>{dayjs(postData?.createdAt).format("DD/MM/YYYY")}</li>
           <Divider type="vertical" />

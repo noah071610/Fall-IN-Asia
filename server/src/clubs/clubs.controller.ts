@@ -20,7 +20,7 @@ import { ClubEditRequestDto } from './dto/clubEdit.request.dto';
 @UseInterceptors(JsonResponeGenerator)
 @ApiTags('Club')
 @ApiCookieAuth('connect.sid')
-@Controller('/api/club/')
+@Controller('/api/club')
 export class ClubsController {
   constructor(private readonly clubsService: ClubsService) {}
 
@@ -29,6 +29,13 @@ export class ClubsController {
   @Post()
   async createPost(@Body() data: ClubPostRequestDto) {
     const newPost = await this.clubsService.createPost(data);
+    return newPost;
+  }
+
+  @ApiOperation({ summary: 'test post' })
+  @Post('/test')
+  async test(@Body() data?: any) {
+    const newPost = await this.clubsService.test(data);
     return newPost;
   }
 
@@ -48,7 +55,7 @@ export class ClubsController {
       password: data.password,
       userId: data.userId,
     });
-    this.clubsService.deletePost(data);
+    this.clubsService.deletePost(data.postId);
   }
 
   @UseGuards(new LoggedInGuard())
@@ -59,30 +66,31 @@ export class ClubsController {
       password: data.password,
       userId: data.userId,
     });
-    const postForEdit = await this.clubsService.searchPostByPostId(data);
+    const postForEdit = await this.clubsService.searchPostByPostId(data.postId);
     return postForEdit;
   }
 
   @ApiOperation({ summary: 'Get preview posts for club main page' })
   @Get('preview')
   async getPreviewPosts() {
-    const previewPosts = await this.clubsService.getPrviewPosts();
+    const previewPosts = await this.clubsService.getPreviewPosts();
     return previewPosts;
   }
 
   @ApiOperation({ summary: 'Get one post for post page' })
   @Get(':group/:id')
-  async getOnePost(@Param('group') group: string, @Param('id') id: string) {
+  async getOnePost(
+    @Param('group') group: string,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
     const post = await this.clubsService.getOnePost(id, group);
     return post;
   }
 
-  @ApiOperation({ summary: 'Get posts for specific group' })
+  @ApiOperation({ summary: 'Get posts for club-group-page' })
   @Get(':group')
   async getClubPosts(@Param('group') group: string) {
-    const postsAndclubName = await this.clubsService.getClubPostsAndNameForClub(
-      group,
-    );
+    const postsAndclubName = await this.clubsService.getClubPosts(group);
     return postsAndclubName;
   }
 }
