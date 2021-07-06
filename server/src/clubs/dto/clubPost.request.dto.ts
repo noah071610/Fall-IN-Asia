@@ -7,4 +7,5 @@ export class ClubPostRequestDto extends PickType(ClubPosts, [
 ] as const) {
   public groupId: number;
   public userId: number;
+  public key_name: string;
 }

@@ -14,6 +14,7 @@ import { GroupsModule } from './groups/groups.module';
 import { ClubsModule } from './clubs/clubs.module';
 import { Groups } from './entities/Groups';
 import { ClubPosts } from './entities/ClubPosts';
+import { NewsPosts } from './entities/NewsPosts';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { ClubPosts } from './entities/ClubPosts';
     MorganModule,
     UsersModule,
     TypeOrmModule.forRoot(ormconfig),
-    TypeOrmModule.forFeature([Users, Groups, ClubPosts]),
+    TypeOrmModule.forFeature([Users, Groups, ClubPosts, NewsPosts]),
     GroupsModule,
     ClubsModule,
   ],

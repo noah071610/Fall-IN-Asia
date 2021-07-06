@@ -107,9 +107,6 @@ export class Users {
   @OneToMany(() => Comments, (comments) => comments.user)
   comments: Comments[];
 
-  @OneToMany(() => SubComments, (subComments) => subComments.user)
-  subComments: SubComments[];
-
   @ManyToMany(() => LessonPosts, (lessonPosts) => lessonPosts.userId)
   lessonId: LessonPosts[];
 

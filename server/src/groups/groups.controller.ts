@@ -19,10 +19,8 @@ export class GroupsController {
 
   @ApiOperation({ summary: 'get specific group for club-page' })
   @Get('/:group')
-  async getSpecificGroupForClub(@Param('group') group: string) {
-    const SpecitficGroup = await this.groupsService.getSpecificGroupForClub(
-      group,
-    );
+  async getSpecificGroup(@Param('group') group: string) {
+    const SpecitficGroup = await this.groupsService.getSpecificGroup(group);
     return SpecitficGroup;
   }
 }

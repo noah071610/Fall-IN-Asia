@@ -15,8 +15,8 @@ export class MarketPosts {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
-  @Column('varchar', { name: 'src' })
-  src: string;
+  @Column('varchar', { name: 'image' })
+  image: string;
 
   @Column('varchar', { name: 'tag', length: 20 })
   tag: string;
@@ -57,9 +57,6 @@ export class MarketPosts {
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date | null;
 
   @ManyToOne(() => Users, (users) => users.marketPosts)
   @JoinColumn([{ name: 'user', referencedColumnName: 'id' }])

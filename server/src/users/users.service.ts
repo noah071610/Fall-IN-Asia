@@ -15,10 +15,14 @@ export class UsersService {
   ) {}
 
   async findUserInfoByEmail(email: string) {
-    const user = await this.userRepository.findOne({
-      where: { email },
-      relations: ['clubPosts', 'comments', 'marketPosts', 'fan'],
-    });
+    const user = await this.userRepository
+      .createQueryBuilder('users')
+      .where('users.email= :email', { email })
+      .leftJoinAndSelect('users.clubPosts', 'cp')
+      .leftJoinAndSelect('users.marketPosts', 'mp')
+      .leftJoinAndSelect('users.comments', 'com')
+      .leftJoinAndSelect('users.fan', 'fan')
+      .getOne();
     if (!user) {
       throw new UnauthorizedException(
         'ユーザーの情報がありません、もう一度確認してください。',

@@ -18,10 +18,10 @@ const QuillEditor = dynamic(import("react-quill"), {
 
 interface IProps {
   isEdit: boolean;
-  groupId: number;
+  groupData: any;
 }
 
-const PostingEditor: FC<IProps> = ({ isEdit, groupId }) => {
+const PostingEditor: FC<IProps> = ({ isEdit, groupData }) => {
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [title, onChangeTitle, setTitle] = useInput("");
@@ -62,19 +62,20 @@ const PostingEditor: FC<IProps> = ({ isEdit, groupId }) => {
     }
     let form: IPostForm = {
       title,
-      groupId,
+      postId: editPost?.id,
+      groupId: groupData?.id,
+      key_name: groupData?.key_name,
       content,
-      userId: user.id,
+      userId: user?.id,
     };
     if (isEdit) {
-      form.postId = editPost.id;
       dispatch(clubPostEditAction(form));
     } else {
       dispatch(clubPostCreateAction(form));
       setTitle("");
       setContent("");
     }
-  }, [title, content, user?.id, groupId, isEdit]);
+  }, [title, content, user?.id, groupData?.id, isEdit, editPost?.id]);
   return (
     <PostingEditorWrapper>
       <h2>タイトル</h2>

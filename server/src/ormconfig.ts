@@ -5,10 +5,10 @@ import { MarketPosts } from './entities/MarketPosts';
 import { ClubPosts } from './entities/ClubPosts';
 import { Gallery } from './entities/Gallery';
 import { LessonPosts } from './entities/LessonPosts';
-import { Images } from './entities/Images';
 import { Comments } from './entities/Comments';
 import { SubComments } from './entities/SubComments';
 import { Groups } from './entities/Groups';
+import { NewsPosts } from './entities/NewsPosts';
 
 dotenv.config();
 const config: TypeOrmModuleOptions = {
@@ -24,7 +24,7 @@ const config: TypeOrmModuleOptions = {
     ClubPosts,
     Gallery,
     LessonPosts,
-    Images,
+    NewsPosts,
     Comments,
     SubComments,
     Groups,

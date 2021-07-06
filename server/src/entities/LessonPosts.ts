@@ -63,9 +63,6 @@ export class LessonPosts {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @DeleteDateColumn()
-  deletedAt: Date | null;
-
   @ManyToMany(() => Users, (users) => users.lessonId)
   @JoinTable({
     name: 'Lesson_participant',

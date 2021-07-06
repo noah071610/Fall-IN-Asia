@@ -19,6 +19,7 @@ export interface IPostForm {
   title: string;
   content: string;
   groupId: number;
+  key_name: string;
   userId: number;
   hit?: number;
   postId?: number;

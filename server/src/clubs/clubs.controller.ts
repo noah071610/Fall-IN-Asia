@@ -32,13 +32,6 @@ export class ClubsController {
     return newPost;
   }
 
-  @ApiOperation({ summary: 'test post' })
-  @Post('/test')
-  async test(@Body() data?: any) {
-    const newPost = await this.clubsService.test(data);
-    return newPost;
-  }
-
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Edit post' })
   @Post('edit')

@@ -25,13 +25,6 @@ export class SubComments {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @DeleteDateColumn()
-  deletedAt: Date | null;
-
-  @ManyToOne(() => Users, (users) => users.subComments)
-  @JoinColumn([{ name: 'user', referencedColumnName: 'id' }])
-  user: Users;
-
   @ManyToOne(() => Comments, (comments) => comments.subComments)
   @JoinColumn([{ name: 'comment', referencedColumnName: 'id' }])
   comment: Comments;

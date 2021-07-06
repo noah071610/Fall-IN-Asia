@@ -1,7 +1,6 @@
 import {
   Column,
   CreateDateColumn,
-  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -25,9 +24,6 @@ export class Comments {
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date | null;
 
   @OneToMany(() => SubComments, (subComments) => subComments.comment)
   subComments: SubComments[];

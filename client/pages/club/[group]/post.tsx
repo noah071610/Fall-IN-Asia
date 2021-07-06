@@ -22,7 +22,7 @@ interface IProps {}
 const post: FC<IProps> = () => {
   const { query } = useRouter();
   const dispatch = useDispatch();
-  const { data: clubData } = useSWR(`/group/${query.group}`, fetcher, noRevalidate);
+  const { data: groupData } = useSWR(`/group/${query.group}`, fetcher, noRevalidate);
   const { user } = useSelector((state: RootState) => state.user);
   const { clubPostCreateDone } = useSelector((state: RootState) => state.club);
 
@@ -40,8 +40,8 @@ const post: FC<IProps> = () => {
   }, []);
   return (
     <ClubPostingWrapper>
-      <ClubTitleSection clubName={clubData?.group_name} />
-      <PostingEditor groupId={clubData?.id} isEdit={false} />
+      <ClubTitleSection clubName={groupData?.group_name} />
+      <PostingEditor groupData={groupData} isEdit={false} />
     </ClubPostingWrapper>
   );
 };

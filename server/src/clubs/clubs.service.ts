@@ -10,7 +10,6 @@ import { Groups } from 'src/entities/Groups';
 import { Repository } from 'typeorm';
 import { ClubPostRequestDto } from './dto/clubPost.request.dto';
 import bcrypt from 'bcrypt';
-import { ClubPostConfirmDto } from './dto/clubPost.confirm.dto';
 import { Users } from 'src/entities/Users';
 import { ClubEditRequestDto } from './dto/clubEdit.request.dto';
 @Injectable()
@@ -25,39 +24,22 @@ export class ClubsService {
   ) {}
 
   async getOnePost(id: number, group: string) {
-    const groupId = await this.GroupsRepository.findOne({
-      where: { key_name: group },
-      select: ['id'],
-    });
     const post = await this.clubPostsRepository.findOne({
       where: {
         id,
-        group: groupId.id,
+        key_name: group,
       },
       relations: ['user'],
     });
     return post;
   }
 
-  async test(data: any) {
-    const post = await this.clubPostsRepository
-      .createQueryBuilder('posts')
-      .leftJoin('posts.group', 'group')
-      .addSelect(['group.name', 'group.key'])
-      .getOne();
-    const user = await this.UsersRepository.createQueryBuilder('users')
-      .leftJoin('users.comments', 'comments')
-      .addSelect(['comments.content'])
-      .getOne();
-    return { post, user };
-  }
-
   async getPreviewPosts() {
     const postCount = await this.clubPostsRepository
       .createQueryBuilder('posts')
-      .select('posts.groupId')
+      .select('posts.key_name')
       .addSelect('COUNT(*)', 'cnt')
-      .groupBy('posts.groupId')
+      .groupBy('posts.key_name')
       .orderBy('cnt', 'DESC')
       .getMany();
     const topClubWithSixPosts = await Promise.all(
@@ -66,14 +48,14 @@ export class ClubsService {
           .createQueryBuilder('posts')
           .select('posts.id')
           .addSelect('posts.title')
-          .where('posts.groupId= :groupId', { groupId: v.groupId })
+          .where('posts.key_name= :key_name', { key_name: v.key_name })
           .orderBy('posts.id', 'DESC')
           .limit(6)
           .leftJoin('posts.user', 'users')
           .addSelect(['users.name'])
           .getRawMany();
         const group = await this.GroupsRepository.findOne({
-          where: { id: v.groupId },
+          where: { key_name: v.key_name },
           select: ['group_name', 'key_name'],
         });
 
@@ -102,7 +84,7 @@ export class ClubsService {
 
   async createPost(data: ClubPostRequestDto) {
     const newPost = new ClubPosts();
-    newPost.groupId = data.groupId;
+    newPost.key_name = data.key_name;
     newPost.title = data.title;
     newPost.content = data.content;
     newPost.group = <any>{ id: data.groupId };

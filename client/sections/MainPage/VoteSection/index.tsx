@@ -1,6 +1,5 @@
 import React, { FC, useCallback, useState } from "react";
 import { Wrapper } from "./styles";
-import { ResponsiveRadar } from "@nivo/radar";
 import Link from "next/link";
 import { RootState } from "slices";
 import { useSelector } from "react-redux";
@@ -97,34 +96,6 @@ const VoteSection: FC<IProps> = ({ isOnVotePage }) => {
           </div>
         )}
         <div>
-          <div className="vote-rader">
-            <ResponsiveRadar
-              data={chartData}
-              margin={{ top: 0, right: 80, bottom: 0, left: 80 }}
-              keys={["トタル"]}
-              indexBy="taste"
-              maxValue="auto"
-              curve="linearClosed"
-              borderWidth={2}
-              borderColor={{ from: "color" }}
-              gridLevels={5}
-              gridShape="circular"
-              gridLabelOffset={35}
-              enableDots={true}
-              dotSize={10}
-              dotColor={{ theme: "background" }}
-              dotBorderWidth={2}
-              dotBorderColor={{ from: "color" }}
-              enableDotLabel={true}
-              dotLabel="value"
-              dotLabelYOffset={-12}
-              colors={{ scheme: "nivo" }}
-              fillOpacity={0.25}
-              blendMode="multiply"
-              animate={true}
-              isInteractive={true}
-            />
-          </div>
           <h3>このグループはどんな感じ？</h3>
           <ul className="vote-tag-list">
             <li>

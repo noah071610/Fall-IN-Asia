@@ -2,28 +2,27 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Users } from './Users';
 
-@Entity({ schema: 'k_heart', name: 'gallery' })
-export class Gallery {
+@Entity({ schema: 'k_heart', name: 'newsPosts' })
+export class NewsPosts {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
   @Column('varchar', { name: 'image' })
   image: string;
 
+  @Column('varchar', { name: 'title', length: 100 })
+  title: string;
+
+  @Column('varchar', { name: 'content' })
+  content: string;
+
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @ManyToOne(() => Users, (users) => users.gallerys)
-  @JoinColumn([{ name: 'user', referencedColumnName: 'id' }])
-  user: Users;
 }
