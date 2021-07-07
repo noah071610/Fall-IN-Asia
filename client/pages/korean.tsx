@@ -1,5 +1,8 @@
 import React, { FC } from "react";
 import styled from "@emotion/styled";
+import { wrapper } from "configureStore";
+import axios from "axios";
+import { getUserInfoAction } from "actions/user";
 import CommonTitle from "@components/Common/CommonTitle";
 import KoreanPagePoster from "@sections/KoreanPage/KoreanPagePoster";
 import LessonSection from "@sections/KoreanPage/LessonSection";
@@ -18,5 +21,20 @@ const korean: FC<Props> = () => {
     </KoreanPageWrapper>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req, res, ...etc }) => {
+      const cookie = req ? req.headers.cookie : "";
+      axios.defaults.headers.Cookie = "";
+      if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+      }
+      await store.dispatch(getUserInfoAction());
+      return {
+        props: {},
+      };
+    }
+);
 
 export default korean;

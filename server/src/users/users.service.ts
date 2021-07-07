@@ -17,12 +17,23 @@ export class UsersService {
   async findUserInfoByEmail(email: string) {
     const user = await this.userRepository
       .createQueryBuilder('users')
-      .where('users.email= :email', { email })
       .leftJoinAndSelect('users.clubPosts', 'cp')
       .leftJoinAndSelect('users.marketPosts', 'mp')
       .leftJoinAndSelect('users.comments', 'com')
       .leftJoinAndSelect('users.fan', 'fan')
+      .select([
+        'users.id',
+        'users.email',
+        'users.name',
+        'users.icon',
+        'cp.id',
+        'mp.id',
+        'com.id',
+        'fan',
+      ])
+      .where('users.email= :email', { email })
       .getOne();
+
     if (!user) {
       throw new UnauthorizedException(
         'ユーザーの情報がありません、もう一度確認してください。',

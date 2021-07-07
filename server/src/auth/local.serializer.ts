@@ -20,9 +20,23 @@ export class LocalSerializer extends PassportSerializer {
 
   async deserializeUser(userId: string, done: CallableFunction) {
     return await this.usersRepository
-      .findOneOrFail({
-        id: +userId,
-      })
+      .createQueryBuilder('users')
+      .leftJoinAndSelect('users.clubPosts', 'cp')
+      .leftJoinAndSelect('users.marketPosts', 'mp')
+      .leftJoinAndSelect('users.comments', 'com')
+      .leftJoinAndSelect('users.fan', 'fan')
+      .select([
+        'users.id',
+        'users.email',
+        'users.name',
+        'users.icon',
+        'cp.id',
+        'mp.id',
+        'com.id',
+        'fan',
+      ])
+      .where('users.id = :userId', { userId: +userId })
+      .getOne()
       .then((user) => {
         done(null, user);
       })

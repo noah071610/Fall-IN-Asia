@@ -3,6 +3,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 
 import { mainSlice } from "./main";
 import { userSlice } from "./user";
+import { gallerySlice } from "./gallery";
 import { clubSlice } from "./club";
 
 export const reducer = (state: any = {}, action: any) => {
@@ -17,6 +18,7 @@ export const reducer = (state: any = {}, action: any) => {
     main: mainSlice.reducer,
     user: userSlice.reducer,
     club: clubSlice.reducer,
+    gallery: gallerySlice.reducer,
   })(state, action);
 };
 

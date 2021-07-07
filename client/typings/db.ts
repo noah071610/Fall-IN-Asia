@@ -1,9 +1,7 @@
-import { Store } from "@reduxjs/toolkit";
-
 export interface IUser {
-  id: number;
+  id?: number;
   googleId?: number;
-  email: string;
+  email?: string;
   name: string;
   icon?: string;
   admin?: boolean;
@@ -13,6 +11,13 @@ export interface ISignUpForm {
   email: string;
   name: string;
   password: string;
+}
+
+export interface IGalleryPost {
+  id: number;
+  title: string;
+  image: string;
+  user: IUser;
 }
 
 export interface IPostForm {

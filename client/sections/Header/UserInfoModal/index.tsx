@@ -20,17 +20,17 @@ const UserInfoModal: FC<IProps> = () => {
           <img src={user.icon} alt={user.name + "_icon"} />
         </div>
         <div className="interface">
-          <h3>{user.name}様</h3>
+          <h3>{user.name} 様</h3>
           <h4>{user.email}</h4>
           <ul>
             <li>
-              クラブ :<span> 5</span>
+              ファン :<span> {user?.fan}</span>
             </li>
             <li>
-              マーケット :<span>5</span>
+              クラブポスト :<span> {user?.clubPosts?.length}</span>
             </li>
             <li>
-              チャット :<span>5</span>
+              マーケットポスト :<span> {user?.marketPosts?.length}</span>
             </li>
           </ul>
         </div>

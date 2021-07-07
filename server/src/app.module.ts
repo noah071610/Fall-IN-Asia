@@ -15,6 +15,13 @@ import { ClubsModule } from './clubs/clubs.module';
 import { Groups } from './entities/Groups';
 import { ClubPosts } from './entities/ClubPosts';
 import { NewsPosts } from './entities/NewsPosts';
+import { GalleryModule } from './gallery/gallery.module';
+import { Gallery } from './entities/Gallery';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { MarketPostsController } from './marketPosts/marketPosts.controller';
+import { MarketPostsService } from './marketPosts/marketPosts.service';
+import { MarketPostsModule } from './marketPosts/marketPosts.module';
 
 @Module({
   imports: [
@@ -23,11 +30,18 @@ import { NewsPosts } from './entities/NewsPosts';
     MorganModule,
     UsersModule,
     TypeOrmModule.forRoot(ormconfig),
-    TypeOrmModule.forFeature([Users, Groups, ClubPosts, NewsPosts]),
+    TypeOrmModule.forFeature([Users, Groups, ClubPosts, NewsPosts, Gallery]),
     GroupsModule,
     ClubsModule,
+    GalleryModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'),
+      exclude: ['/api*'],
+      serveRoot: '/uploads',
+    }),
+    MarketPostsModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, MarketPostsController],
   providers: [
     AppService,
     UsersService,
@@ -35,6 +49,7 @@ import { NewsPosts } from './entities/NewsPosts';
       provide: APP_INTERCEPTOR,
       useClass: MorganInterceptor('dev'),
     },
+    MarketPostsService,
   ],
 })
 export class AppModule {}

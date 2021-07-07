@@ -1,6 +1,9 @@
 import React, { FC, useCallback, useState } from "react";
 import styled from "@emotion/styled";
 import GoodsCard from "@components/GoodsCard";
+import { wrapper } from "configureStore";
+import axios from "axios";
+import { getUserInfoAction } from "actions/user";
 import { BORDER_THIN, FLEX_STYLE, GRID_STYLE, RGB_BLACK } from "config";
 import { Pagination } from "antd";
 import GoodsTitle from "@sections/GoodsPage/GoodsTitle";
@@ -50,5 +53,20 @@ const market: FC<Props> = () => {
     </MarketWrapper>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req, res, ...etc }) => {
+      const cookie = req ? req.headers.cookie : "";
+      axios.defaults.headers.Cookie = "";
+      if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+      }
+      await store.dispatch(getUserInfoAction());
+      return {
+        props: {},
+      };
+    }
+);
 
 export default market;

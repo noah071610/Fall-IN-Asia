@@ -17,6 +17,9 @@ export const XLG_SIZE = "1200px" as const;
 export const DEFAULT_ICON_URL =
   "https://user-images.githubusercontent.com/74864925/124331496-460bfe80-dbca-11eb-95dc-a5379a5750a6.png" as const;
 
+export const NO_IMAGE_URL =
+  "https://user-images.githubusercontent.com/74864925/124680383-3a3d7680-df01-11eb-9d22-b51a2f42b6d6.gif" as const;
+
 export const RGB_BLACK = (opacity: number) => `
   rgba(0,0,0,${opacity})
 `;

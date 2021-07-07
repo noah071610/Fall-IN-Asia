@@ -10,6 +10,10 @@ declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
+  }
   app.enableCors({
     origin: true,
     credentials: true,
@@ -40,9 +44,5 @@ async function bootstrap() {
   app.use(passport.session());
   await app.listen(port);
   console.log(`Port number ${port}`);
-  if (module.hot) {
-    module.hot.accept();
-    module.hot.dispose(() => app.close());
-  }
 }
 bootstrap();
