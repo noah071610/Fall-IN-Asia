@@ -30,6 +30,15 @@ export interface IPostForm {
   postId?: number;
 }
 
+export interface IMarketPostForm {
+  id: number;
+  image: string;
+  keyword: string;
+  area: number;
+  title: string;
+  content: number;
+}
+
 enum Gender {
   "male",
   "female",

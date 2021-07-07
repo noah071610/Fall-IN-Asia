@@ -7,20 +7,33 @@ import router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import "react-image-crop/dist/ReactCrop.css";
-import { NO_IMAGE_URL, toastErrorMessage, toastSuccessMessage } from "config";
+import {
+  NO_IMAGE_URL,
+  quillModules,
+  qullFormats,
+  toastErrorMessage,
+  toastSuccessMessage,
+} from "config";
 import { galleryPostCreateAction } from "actions/gallery";
+import dynamic from "next/dynamic";
 const { Dragger } = Upload;
 interface IProps {}
 
+const QuillEditor = dynamic(import("react-quill"), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>,
+});
+
 const UploadImageSection: FC<IProps> = () => {
   const [title, onChangeTitle, setTitle] = useInput("");
+  const [content, setContent] = useState("");
   const [url, onChangeUrl, setUrl] = useInput("");
   const [upImg, setUpImg] = useState<ArrayBuffer | string | null>(null);
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
   const [completedCrop, setCompletedCrop] = useState<any>(null);
   const [blob, setBlob] = useState<Blob | null>(null);
-  const [crop, setCrop] = useState<Crop>({ unit: "px" });
+  const [crop, setCrop] = useState<Crop>({ unit: "%", width: 100, height: 100 });
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
   const { galleryPostCreateDone } = useSelector((state: RootState) => state.gallery);
@@ -91,6 +104,10 @@ const UploadImageSection: FC<IProps> = () => {
     });
   }, [completedCrop]);
 
+  const onChangeEditor = (content: string) => {
+    setContent(content);
+  };
+
   const handleChange = (info: any) => {
     if (info.file.status === "done") {
       // Get this url from response in real world.
@@ -116,16 +133,16 @@ const UploadImageSection: FC<IProps> = () => {
   return (
     <UploadImageSectionWrapper>
       <div className="upload-menu">
-        <h3>イメージのタイトル</h3>
+        <h3>1)&nbsp;イメージのタイトル</h3>
         <Input placeholder="タイトル入力" value={title} onChange={onChangeTitle} />
-        <h3>URLからアップロード</h3>
+        <h3>2-1)&nbsp;URLからアップロード</h3>
         <Input
           disabled={upImg ? true : false}
           value={url}
           onChange={onChangeUrl}
           placeholder="https://"
         />
-        <h3>ファイルからアップロード</h3>
+        <h3>2-2)&nbsp;ファイルからアップロード</h3>
         <Dragger
           disabled={url ? true : false}
           showUploadList={false}
@@ -171,6 +188,15 @@ const UploadImageSection: FC<IProps> = () => {
           )}
         </div>
       </div>
+      <h3>3)&nbsp;内容作成</h3>
+      <QuillEditor
+        style={{ height: "400px" }}
+        theme="snow"
+        modules={quillModules}
+        formats={qullFormats}
+        value={content || ""}
+        onChange={(content, delta, source, editor) => onChangeEditor(editor.getHTML())}
+      />
       <div className="submit-menu">
         <Button
           onClick={() => {

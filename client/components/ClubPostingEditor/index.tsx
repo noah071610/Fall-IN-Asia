@@ -18,7 +18,7 @@ const QuillEditor = dynamic(import("react-quill"), {
 
 interface IProps {
   isEdit: boolean;
-  groupData: any;
+  groupData?: any;
 }
 
 const PostingEditor: FC<IProps> = ({ isEdit, groupData }) => {
@@ -29,13 +29,9 @@ const PostingEditor: FC<IProps> = ({ isEdit, groupData }) => {
   const { editPost } = useSelector((state: RootState) => state.club);
 
   useEffect(() => {
-    if (!user) {
-      router.push("/");
-      return;
-    }
     if (isEdit) {
-      setTitle(editPost.title);
-      setContent(editPost.content);
+      setTitle(editPost?.title);
+      setContent(editPost?.content);
     }
   }, []);
 

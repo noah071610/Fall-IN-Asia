@@ -70,30 +70,22 @@ export const MODAL_STYLE = (tailRight: string) => `
 
 // list
 
-export const goodsFilterList = [
-  "直接交換",
-  "早め",
-  "新しい",
-  "ユニーク",
-  "ポスター",
-  "アルバム",
-  "ぬいぐるみ",
-  "担当じゃない",
-  "卒業",
-  "サイン",
-  "カード",
-  "チケット",
+export const marketKeyword = [
+  { name: "直取引", eng: "direct" },
+  { name: "宅配", eng: "package" },
+  { name: "出来れば直取引", eng: "more_direct" },
+  { name: "出来れば宅配", eng: "more_package" },
 ];
 
 export const japanMapList = [
-  { name: "北海道", eng: "hotkaido" },
-  { name: "東北", eng: "tohoku" },
   { name: "関東(東京)", eng: "kanto" },
-  { name: "中部", eng: "chubu" },
   { name: "関西(大阪)", eng: "kansai" },
+  { name: "九州", eng: "kyushu" },
+  { name: "東北", eng: "tohoku" },
+  { name: "中部", eng: "chubu" },
   { name: "中国", eng: "chugoku" },
   { name: "四国", eng: "shikoku" },
-  { name: "九州", eng: "kyushu" },
+  { name: "北海道", eng: "hotkaido" },
   { name: "沖縄", eng: "okinawa" },
 ];
 

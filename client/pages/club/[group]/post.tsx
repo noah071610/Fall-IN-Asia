@@ -9,7 +9,7 @@ import router, { useRouter } from "next/router";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import ClubTitleSection from "@sections/ClubPage/ClubTitleSection";
-import PostingEditor from "@components/PostingEditor";
+import PostingEditor from "@components/ClubPostingEditor";
 import { clubSlice } from "slices/club";
 import { noRevalidate, toastSuccessMessage } from "config";
 

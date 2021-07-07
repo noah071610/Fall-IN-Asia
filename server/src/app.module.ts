@@ -19,9 +19,8 @@ import { GalleryModule } from './gallery/gallery.module';
 import { Gallery } from './entities/Gallery';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { MarketPostsController } from './marketPosts/marketPosts.controller';
-import { MarketPostsService } from './marketPosts/marketPosts.service';
-import { MarketPostsModule } from './marketPosts/marketPosts.module';
+import { MarketController } from './market/market.controller';
+import { MarketModule } from './market/market.module';
 
 @Module({
   imports: [
@@ -39,9 +38,9 @@ import { MarketPostsModule } from './marketPosts/marketPosts.module';
       exclude: ['/api*'],
       serveRoot: '/uploads',
     }),
-    MarketPostsModule,
+    MarketModule,
   ],
-  controllers: [AppController, MarketPostsController],
+  controllers: [AppController],
   providers: [
     AppService,
     UsersService,
@@ -49,7 +48,6 @@ import { MarketPostsModule } from './marketPosts/marketPosts.module';
       provide: APP_INTERCEPTOR,
       useClass: MorganInterceptor('dev'),
     },
-    MarketPostsService,
   ],
 })
 export class AppModule {}

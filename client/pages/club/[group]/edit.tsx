@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import ClubTitleSection from "@sections/ClubPage/ClubTitleSection";
-import PostingEditor from "@components/PostingEditor";
+import PostingEditor from "@components/ClubPostingEditor";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { noRevalidate, toastSuccessMessage } from "config";
@@ -38,7 +38,7 @@ const edit: FC<IProps> = () => {
   return (
     <EditWrapper>
       <ClubTitleSection clubName={clubData?.group_name} />
-      <PostingEditor groupId={clubData?.id} isEdit={true} />
+      <PostingEditor isEdit={true} />
     </EditWrapper>
   );
 };

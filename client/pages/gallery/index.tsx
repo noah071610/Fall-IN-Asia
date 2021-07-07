@@ -73,12 +73,9 @@ interface IProps {}
 
 const gallery: FC<IProps> = () => {
   const { data: galleryPosts, error } = useSWR("/gallery", fetcher, {
-    dedupingInterval: 50000,
+    dedupingInterval: 10000,
   });
   const { user } = useSelector((state: RootState) => state.user);
-  if (galleryPosts) {
-    console.log(galleryPosts);
-  }
   return (
     <GalleryWrapper>
       <CommonTitle title="ギャラリー" subtitle="私だけ見るのが勿体ない">

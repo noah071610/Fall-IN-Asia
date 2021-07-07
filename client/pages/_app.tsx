@@ -10,6 +10,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "aos/dist/aos.css";
 import "react-toastify/dist/ReactToastify.css";
+import "react-quill/dist/quill.snow.css";
 
 const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
