@@ -150,7 +150,7 @@ export const NewsMainPostsettings = {
 
 // React quill
 
-const imageHandler = () => {
+export const imageHandler = (quillInstance: any) => {
   const input = document.createElement("input");
   input.setAttribute("type", "file");
   input.setAttribute("accept", "image/*");
@@ -166,23 +166,34 @@ const imageHandler = () => {
       url: "/club/image",
       data: form,
       headers: { "Content-Type": "multipart/form-data" },
-    }).then((res) => {});
+    }).then((res) => {
+      const range = quillInstance?.current?.getSelection(true);
+      quillInstance?.current?.insertEmbed(range.index, "image", `${res.data.data}`);
+      quillInstance?.current?.setSelection(range.index + 1);
+    });
   };
 };
 
-export const quillModules = {
-  toolbar: {
-    container: [
-      [{ size: ["small", "normal", "large", "huge"] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
-      ["link", "image"],
-      [{ align: [] }, { color: [] }, { background: [] }],
-    ],
-    handlers: {
-      image: imageHandler,
+export const quillModules = (isNoImageModule: boolean) => {
+  return {
+    toolbar: {
+      container: [
+        [{ size: ["small", "normal", "large", "huge"] }],
+        ["bold", "italic", "underline", "strike", "blockquote"],
+        [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
+        ["link", isNoImageModule ? "" : "image"],
+        [{ align: [] }, { color: [] }, { background: [] }],
+      ],
     },
-  },
+  };
+};
+
+export const quillSetting = (isNoImageModule: boolean) => {
+  return {
+    theme: "snow",
+    placeholder: "内容を書いてください。",
+    modules: quillModules(isNoImageModule),
+  };
 };
 
 export const qullFormats = [
@@ -196,7 +207,6 @@ export const qullFormats = [
   "bullet",
   "indent",
   "link",
-  "image",
   "align",
   "color",
   "background",

@@ -1,4 +1,4 @@
-import React, { createRef, FC, memo, useCallback, useEffect, useRef, useState } from "react";
+import React, { FC, memo, useCallback, useEffect, useRef, useState } from "react";
 import { MarketPostingEditorWrapper } from "./styles";
 import { Button, Input, Upload } from "antd";
 import useInput from "@hooks/useInput";
@@ -9,6 +9,7 @@ import {
   japanMapList,
   marketKeyword,
   quillModules,
+  quillSetting,
   qullFormats,
   toastErrorMessage,
   toastSuccessMessage,
@@ -17,8 +18,13 @@ import dynamic from "next/dynamic";
 import { marketPostCreateAction } from "actions/market";
 const { Dragger } = Upload;
 import { Radio } from "antd";
+import axios from "axios";
 interface IProps {}
-import ReactQuill from "react-quill";
+
+const QuillEditor = dynamic(import("react-quill"), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>,
+});
 
 const MarketPostingEditor: FC<IProps> = () => {
   const dispatch = useDispatch();
@@ -77,9 +83,9 @@ const MarketPostingEditor: FC<IProps> = () => {
   return (
     <MarketPostingEditorWrapper>
       <div className="upload-menu">
-        <h3>1)&nbsp;タイトル作成</h3>
+        <h3>タイトル作成</h3>
         <Input placeholder="タイトル入力" value={title} onChange={onChangeTitle} />
-        <h3>2)&nbsp;地域とキーワード選択</h3>
+        <h3>地域とキーワード選択</h3>
         <span className="radio-title">地域 :</span>
         <Radio.Group defaultValue="関東(東京)" onChange={onChangeArea} value={area}>
           {japanMapList.map((v, i: number) => {
@@ -101,7 +107,7 @@ const MarketPostingEditor: FC<IProps> = () => {
             );
           })}
         </Radio.Group>
-        <h3>3)&nbsp;イメージアップロード</h3>
+        <h3>イメージアップロード</h3>
         <Dragger showUploadList={true} multiple={true} className="dragger" onChange={handleChange}>
           <div>
             <img
@@ -113,11 +119,9 @@ const MarketPostingEditor: FC<IProps> = () => {
         </Dragger>
       </div>
       <h3>3)&nbsp;内容作成</h3>
-      <ReactQuill
-        ref={}
+      <QuillEditor
         style={{ height: "350px" }}
-        theme="snow"
-        modules={quillModules}
+        modules={quillModules(true)}
         formats={qullFormats}
         value={content || ""}
         onChange={(content, delta, source, editor) => onChangeEditor(editor.getHTML())}

@@ -8,6 +8,9 @@ export const ClubPostContentWrapper = styled.div`
     font-size: 1rem;
     padding: 0 5rem 3rem 0;
     line-height: 2;
+    img {
+      width: 70%;
+    }
   }
   .like-section {
     padding: 1rem 0.2rem;

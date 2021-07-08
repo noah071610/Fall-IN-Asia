@@ -21,8 +21,10 @@ export const PostingEditorWrapper = styled.div`
     }
   }
   .ql-editor {
-    p {
-      padding: 0.2rem 0;
+    height: 450px;
+    padding: 1rem;
+    img {
+      width: 50%;
     }
   }
 `;
