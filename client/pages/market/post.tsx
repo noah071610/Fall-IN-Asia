@@ -1,18 +1,16 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import MarketPostingEditor from "@components/MarketPostingEditor";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
 import CommonTitle from "@components/Common/CommonTitle";
-
 export const PostWrapper = styled.div`
   padding: 2rem;
 `;
 interface IProps {}
 
 const post: FC<IProps> = () => {
-  const [state, setstate] = useState();
   return (
     <PostWrapper>
       <CommonTitle title="マーケット" subtitle="グッズ投稿" />

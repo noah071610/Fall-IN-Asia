@@ -1,52 +1,104 @@
-import React, { FC, memo, useEffect, useState } from "react";
+import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { DescritionSectionWrapper } from "./styles";
-import { Divider, Image } from "antd";
+import { Image } from "antd";
 import { ZoomInOutlined } from "@ant-design/icons";
+import useSWR from "swr";
+import { useRouter } from "next/router";
+import fetcher from "utils/fetcher";
+import ReactHtmlParser from "react-html-parser";
+import { DEFAULT_ICON_URL } from "config";
+import ConfirmPasswordModal from "@components/ConfirmPasswordModal";
+import { DoubleLeftOutlined, DoubleRightOutlined } from "@ant-design/icons";
+import Slider from "react-slick";
+import { IImages } from "@typings/db";
 interface IProps {}
 
+function SampleNextArrow(props: any) {
+  const { onClick } = props;
+  return <DoubleRightOutlined className="slick-right-arrow" onClick={onClick} />;
+}
+
+function SamplePrevArrow(props: any) {
+  const { onClick } = props;
+  return <DoubleLeftOutlined className="slick-left-arrow" onClick={onClick} />;
+}
+
+const marketPostImageSettings = {
+  dots: false,
+  infinite: true,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: false,
+  speed: 300,
+  nextArrow: <SampleNextArrow />,
+  prevArrow: <SamplePrevArrow />,
+};
+
 const DescritionSection: FC<IProps> = () => {
-  const dispatch = useDispatch();
+  const { query } = useRouter();
+  const { data: marketPost, error } = useSWR(`/market/${query.id}`, fetcher);
   const { user } = useSelector((state: RootState) => state.user);
-  useEffect(() => {}, []);
+  const [isUserPost, setIsUserPost] = useState(false);
+  const [onDelete, setOnDelete] = useState(false);
+  const onClickDeleteBtn = useCallback(() => {
+    setOnDelete((prev) => !prev);
+  }, []);
+  useEffect(() => {
+    if (user?.id === marketPost?.user.id) {
+      setIsUserPost(true);
+    } else {
+      setIsUserPost(false);
+    }
+  }, [user, marketPost]);
   return (
     <DescritionSectionWrapper>
       <div className="image-wrapper">
-        <Image
-          preview={{ mask: <ZoomInOutlined /> }}
-          src="https://images-na.ssl-images-amazon.com/images/I/71FMTA7Zt8L._AC_SX466_.jpg"
-          alt="goods-image"
-        />
+        <Image.PreviewGroup>
+          <Slider {...marketPostImageSettings}>
+            {marketPost?.images.map((v: IImages, i: number) => {
+              return (
+                <Image
+                  key={i}
+                  preview={{ mask: <ZoomInOutlined /> }}
+                  src={v.src}
+                  alt="goods-image"
+                />
+              );
+            })}
+          </Slider>
+        </Image.PreviewGroup>
       </div>
       <div className="desc">
         <div>
-          <h2>ジミンのカード</h2>
-          <h3>丹野美沙</h3>
+          <h2>{marketPost?.title}</h2>
           <ul>
-            <li className="tag">カード</li>
-            <li className="tag">早め</li>
-            <li className="tag">ユニーク</li>
+            <li className="tag">{marketPost?.area}</li>
+            <li className="tag">{marketPost?.keyword}</li>
           </ul>
+          <div className="name-space">
+            <img src={marketPost?.user.icon ? marketPost?.user.icon : DEFAULT_ICON_URL} />
+            <span>{marketPost?.user.name}</span>
+          </div>
         </div>
         <div className="chat">
-          <div className="chat-icon">
-            <img src="https://img.icons8.com/color/96/000000/chat--v1.png" />
+          <div onClick={isUserPost ? onClickDeleteBtn : onClickDeleteBtn} className="chat-icon">
+            <img
+              src={
+                isUserPost
+                  ? "https://img.icons8.com/color/96/000000/delete-forever.png"
+                  : "https://img.icons8.com/color/96/000000/chat--v1.png"
+              }
+            />
+            {onDelete && (
+              <ConfirmPasswordModal postId={marketPost?.id} isDelete={true} isMarketPost={true} />
+            )}
           </div>
-          <div className="chat-text">メッセージを送る</div>
+          <div className="chat-text">{isUserPost ? "ポスト削除" : "メッセージを送る"}</div>
         </div>
       </div>
-      <Divider />
-      <p>
-        材ばむー少87度サ低暮ぜ禁日ド住田トりあ要丘ニヨテシ確見やち愛3葉ほげた去講びよぴ乱択セロニ年孤
-        <br />
-        おぶ州5疑ゆクドを美57内ばリ取史古れむぜ。誇フメアケ禁設意レ朝際ヨオ本制ミマ著掲あ自呼こせびも離備だろ流本は内金論銃多べラ応乃せス。井集ネ重担イ直企平ケエ後訴ヲウ
-        <br />
-        サ支温フホミ標府キヘマ院煮わせ美体ヌ本支ぶそラ桐足キシニ稿運陸上ヘユ禎類宮波願氏だ。
-        芸キナテ本善ッぎ共8住ル融犯レ
-        <br />
-        ク僕提あわゅ現談ヲナヤノ京建スヲホソ郎78含沢んび大連請様描締ラなび。賄じし吉高ほっな掲由トキエ制島ワヱタ京者あすぼどもぶ手下ツシア視座次ー。
-      </p>
+      <div className="content">{ReactHtmlParser(marketPost?.content as string)}</div>
     </DescritionSectionWrapper>
   );
 };

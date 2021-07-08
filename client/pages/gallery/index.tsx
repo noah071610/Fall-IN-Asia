@@ -2,13 +2,16 @@ import React, { FC } from "react";
 import styled from "@emotion/styled";
 import CommonTitle from "@components/Common/CommonTitle";
 import Masonry from "react-masonry-css";
-import { FLEX_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
+import { FLEX_STYLE, RGB_BLACK, toastErrorMessage, WHITE_COLOR } from "config";
 import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import router from "next/router";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { IGalleryPost } from "@typings/db";
+import { wrapper } from "configureStore";
+import { getUserInfoAction } from "actions/user";
+import axios from "axios";
 const GalleryWrapper = styled.div`
   padding: 2rem;
   position: relative;
@@ -75,6 +78,9 @@ const gallery: FC<IProps> = () => {
   const { data: galleryPosts, error } = useSWR("/gallery", fetcher, {
     dedupingInterval: 10000,
   });
+  if (error) {
+    toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
+  }
   const { user } = useSelector((state: RootState) => state.user);
   return (
     <GalleryWrapper>
@@ -98,7 +104,7 @@ const gallery: FC<IProps> = () => {
         {galleryPosts?.map((v: IGalleryPost, i: number) => {
           return (
             <div key={i} className="gallery-card">
-              <img className="gallery-img" src={`http://localhost:3060/${v.image}`} alt={v.title} />
+              <img className="gallery-img" src={v.image} alt={v.title} />
               <div className="overlay">
                 <h3 className="gallery-title">{v.title}</h3>
                 <div className="gallery-user">
@@ -114,5 +120,20 @@ const gallery: FC<IProps> = () => {
     </GalleryWrapper>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req, res, ...etc }) => {
+      const cookie = req ? req.headers.cookie : "";
+      axios.defaults.headers.Cookie = "";
+      if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+      }
+      await store.dispatch(getUserInfoAction());
+      return {
+        props: {},
+      };
+    }
+);
 
 export default gallery;

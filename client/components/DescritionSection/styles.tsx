@@ -28,20 +28,37 @@ export const DescritionSectionWrapper = styled.div`
     }
   }
   .desc {
-    ${FLEX_STYLE("space-between", "center")};
+    ${FLEX_STYLE("space-between", "flex-end")};
+    padding-bottom: 1rem;
+    ${BORDER_THIN("border-bottom")};
     h2 {
       font-size: 1.8rem;
       margin-bottom: 1rem;
       font-weight: bold;
     }
-    h3 {
-      margin-bottom: 1rem;
+    ul {
+      .tag {
+        margin: 0 0.8rem 0 0;
+      }
+    }
+    .name-space {
+      img {
+        display: inline-block;
+        margin-right: 0.7rem;
+        width: 2.5rem;
+        border-radius: 50%;
+      }
+      span {
+        font-size: 1rem;
+      }
+      margin-top: 2rem;
     }
     .chat {
       ${FLEX_STYLE("center", "center")};
       flex-direction: column;
       .chat-icon {
-        background: ${RGB_BLACK(0.15)};
+        position: relative;
+        background: ${RGB_BLACK(0.1)};
         border-radius: 50%;
         margin-bottom: 0.5rem;
         width: 5rem;
@@ -54,16 +71,25 @@ export const DescritionSectionWrapper = styled.div`
           width: 60%;
         }
         &:hover {
-          background: ${RGB_BLACK(0.4)};
+          background: ${RGB_BLACK(0.2)};
           img {
             transform: scale(1.1);
           }
         }
+        .password-modal {
+          top: 8rem;
+        }
       }
     }
   }
-  p {
-    margin-bottom: 3rem;
+  .post-title-menu {
+    li {
+      font-size: 1.5rem;
+      margin: 1rem 0.5rem;
+    }
+  }
+  .content {
+    margin: 3rem 0;
     font-size: 1rem;
     line-height: 2;
   }

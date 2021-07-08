@@ -1,3 +1,8 @@
+enum Gender {
+  "male",
+  "female",
+}
+
 export interface IUser {
   id?: number;
   googleId?: number;
@@ -30,18 +35,19 @@ export interface IPostForm {
   postId?: number;
 }
 
-export interface IMarketPostForm {
+export interface IImages {
+  id?: number;
+  src: string;
+}
+
+export interface IMarketPost {
   id: number;
-  image: string;
+  images?: IImages[];
   keyword: string;
   area: number;
   title: string;
   content: number;
-}
-
-enum Gender {
-  "male",
-  "female",
+  user: IUser;
 }
 
 export interface IGroup {

@@ -1,4 +1,7 @@
+import axios from "axios";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { clubSlice } from "slices/club";
 
 // CSS
 export const BLACK_COLOR = "black" as const;
@@ -147,14 +150,39 @@ export const NewsMainPostsettings = {
 
 // React quill
 
+const imageHandler = () => {
+  const input = document.createElement("input");
+  input.setAttribute("type", "file");
+  input.setAttribute("accept", "image/*");
+  input.click();
+  input.onchange = async (e) => {
+    const file: File | null = input.files ? input.files[0] : null;
+    const form = new FormData();
+    if (file) {
+      form.append("image", file);
+    }
+    axios({
+      method: "post",
+      url: "/club/image",
+      data: form,
+      headers: { "Content-Type": "multipart/form-data" },
+    }).then((res) => {});
+  };
+};
+
 export const quillModules = {
-  toolbar: [
-    [{ size: ["small", "normal", "large", "huge"] }],
-    ["bold", "italic", "underline", "strike", "blockquote"],
-    [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
-    ["link", "image"],
-    [{ align: [] }, { color: [] }, { background: [] }],
-  ],
+  toolbar: {
+    container: [
+      [{ size: ["small", "normal", "large", "huge"] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
+      ["link", "image"],
+      [{ align: [] }, { color: [] }, { background: [] }],
+    ],
+    handlers: {
+      image: imageHandler,
+    },
+  },
 };
 
 export const qullFormats = [

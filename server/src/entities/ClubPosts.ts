@@ -4,10 +4,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Groups } from './Groups';
+import { Images } from './Images';
 import { Users } from './Users';
 
 @Entity({ schema: 'k_heart', name: 'clubPosts' })
@@ -21,7 +23,7 @@ export class ClubPosts {
   @Column('int', { name: 'hit', default: 0 })
   hit: number;
 
-  @Column('varchar', { name: 'title', length: 100 })
+  @Column('varchar', { name: 'title', length: 50 })
   title: string;
 
   @Column('varchar', { name: 'content' })
@@ -32,6 +34,9 @@ export class ClubPosts {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => Images, (images) => images.clubPost)
+  images: Images;
 
   @ManyToOne(() => Groups, (groups) => groups.clubPosts)
   @JoinColumn({ name: 'group' })

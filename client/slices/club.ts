@@ -10,6 +10,7 @@ import {
 export interface ClubState {
   clubPost: IPostForm | null;
   editPost: IPostForm | null;
+  postImage: string | null;
   clubPostCreateLoading: boolean;
   clubPostCreateDone: boolean;
   clubPostCreateError: boolean;
@@ -27,6 +28,7 @@ export interface ClubState {
 const initialState: ClubState = {
   clubPost: null,
   editPost: null,
+  postImage: null,
   clubPostCreateLoading: false,
   clubPostCreateDone: false,
   clubPostCreateError: false,
@@ -64,6 +66,9 @@ export const clubSlice = createSlice({
       state.clubPostEditConfirmLoading = false;
       state.clubPostEditConfirmDone = false;
       state.clubPostEditConfirmError = false;
+    },
+    clubPostAddImage(state, action) {
+      state.postImage = "<br/><p><img src='" + action.payload + "' alt='post_image'/></p>";
     },
   },
   extraReducers: (builder) =>

@@ -5,9 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClubPosts } from 'src/entities/ClubPosts';
 import { Groups } from 'src/entities/Groups';
 import { Users } from 'src/entities/Users';
+import { Images } from 'src/entities/Images';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ClubPosts, Groups, Users])],
+  imports: [TypeOrmModule.forFeature([ClubPosts, Groups, Users, Images])],
   providers: [ClubsService],
   controllers: [ClubsController],
 })

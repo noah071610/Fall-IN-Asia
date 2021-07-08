@@ -6,12 +6,14 @@ import { passwordModalWrapper } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { clubPostDeleteAction, clubPostEditConfirmAction } from "actions/club";
+import { marketPostDeleteAction } from "actions/market";
 interface IProps {
   isDelete: boolean;
   postId: number;
+  isMarketPost?: boolean;
 }
 
-const ConfirmPasswordModal: FC<IProps> = ({ isDelete, postId }) => {
+const ConfirmPasswordModal: FC<IProps> = ({ isDelete, postId, isMarketPost }) => {
   const [password, onChangePassword, setPassword] = useInput("");
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
@@ -34,6 +36,10 @@ const ConfirmPasswordModal: FC<IProps> = ({ isDelete, postId }) => {
         password,
         userId: user.id,
       };
+      if (isMarketPost) {
+        dispatch(marketPostDeleteAction(data));
+        return;
+      }
       if (isDelete) {
         dispatch(clubPostDeleteAction(data));
       } else {
@@ -43,7 +49,7 @@ const ConfirmPasswordModal: FC<IProps> = ({ isDelete, postId }) => {
     [user.id, password]
   );
   return (
-    <div onClick={stopPropagation} css={passwordModalWrapper(isDelete)}>
+    <div className="password-modal" onClick={stopPropagation} css={passwordModalWrapper(isDelete)}>
       <h4>
         <span className="point">パスワード</span>を入力してください。
       </h4>

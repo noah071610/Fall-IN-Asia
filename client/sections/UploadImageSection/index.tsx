@@ -7,26 +7,14 @@ import router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import "react-image-crop/dist/ReactCrop.css";
-import {
-  NO_IMAGE_URL,
-  quillModules,
-  qullFormats,
-  toastErrorMessage,
-  toastSuccessMessage,
-} from "config";
+import { NO_IMAGE_URL, toastErrorMessage, toastSuccessMessage } from "config";
 import { galleryPostCreateAction } from "actions/gallery";
 import dynamic from "next/dynamic";
 const { Dragger } = Upload;
 interface IProps {}
 
-const QuillEditor = dynamic(import("react-quill"), {
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-});
-
 const UploadImageSection: FC<IProps> = () => {
   const [title, onChangeTitle, setTitle] = useInput("");
-  const [content, setContent] = useState("");
   const [url, onChangeUrl, setUrl] = useInput("");
   const [upImg, setUpImg] = useState<ArrayBuffer | string | null>(null);
   const imgRef = useRef(null);
@@ -104,13 +92,8 @@ const UploadImageSection: FC<IProps> = () => {
     });
   }, [completedCrop]);
 
-  const onChangeEditor = (content: string) => {
-    setContent(content);
-  };
-
   const handleChange = (info: any) => {
     if (info.file.status === "done") {
-      // Get this url from response in real world.
       getBase64(info.file.originFileObj, (imageUrl: any) => setUpImg(imageUrl));
     }
   };
@@ -160,11 +143,12 @@ const UploadImageSection: FC<IProps> = () => {
         </Dragger>
       </div>
       <div className="image-crop-section">
-        <div className="crop-part before">
+        <div className="crop-part ">
           <h4>イメージを加工しましょう✂</h4>
           {upImg || url ? (
             <div>
               <ReactCrop
+                className="before"
                 crossorigin="anonymous"
                 src={upImg || url}
                 onImageLoaded={onLoad}
@@ -177,26 +161,17 @@ const UploadImageSection: FC<IProps> = () => {
             <img src={NO_IMAGE_URL} alt="no image" />
           )}
         </div>
-        <div className="crop-part after">
+        <div className="crop-part ">
           <h4>加工結果</h4>
           {upImg || url ? (
             <div>
-              <canvas ref={previewCanvasRef} />
+              <canvas className="after" ref={previewCanvasRef} />
             </div>
           ) : (
             <img src={NO_IMAGE_URL} alt="no image" />
           )}
         </div>
       </div>
-      <h3>3)&nbsp;内容作成</h3>
-      <QuillEditor
-        style={{ height: "400px" }}
-        theme="snow"
-        modules={quillModules}
-        formats={qullFormats}
-        value={content || ""}
-        onChange={(content, delta, source, editor) => onChangeEditor(editor.getHTML())}
-      />
       <div className="submit-menu">
         <Button
           onClick={() => {

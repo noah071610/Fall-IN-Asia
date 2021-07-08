@@ -1,20 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IMarketPostForm, IPostForm } from "@typings/db";
+import { IPostForm } from "@typings/db";
 import axios from "axios";
 import { toastErrorMessage } from "config";
 
-export const marketPostCreateAction = createAsyncThunk<any, IMarketPostForm>(
-  "market/post",
-  async (form) => {
-    try {
-      const response = await axios.post("/market", form);
-      return response.data;
-    } catch (error) {
-      toastErrorMessage(error);
-      throw error;
-    }
+export const marketPostCreateAction = createAsyncThunk<any, any>("market/post", async (form) => {
+  try {
+    const response = await axios.post("/market", form);
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
   }
-);
+});
 
 export const marketPostDeleteAction = createAsyncThunk<
   any,

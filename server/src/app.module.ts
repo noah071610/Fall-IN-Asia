@@ -19,8 +19,8 @@ import { GalleryModule } from './gallery/gallery.module';
 import { Gallery } from './entities/Gallery';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { MarketController } from './market/market.controller';
 import { MarketModule } from './market/market.module';
+import { Images } from './entities/Images';
 
 @Module({
   imports: [
@@ -29,16 +29,23 @@ import { MarketModule } from './market/market.module';
     MorganModule,
     UsersModule,
     TypeOrmModule.forRoot(ormconfig),
-    TypeOrmModule.forFeature([Users, Groups, ClubPosts, NewsPosts, Gallery]),
+    TypeOrmModule.forFeature([
+      Users,
+      Groups,
+      ClubPosts,
+      NewsPosts,
+      Gallery,
+      Images,
+    ]),
     GroupsModule,
     ClubsModule,
     GalleryModule,
+    MarketModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
       exclude: ['/api*'],
       serveRoot: '/uploads',
     }),
-    MarketModule,
   ],
   controllers: [AppController],
   providers: [

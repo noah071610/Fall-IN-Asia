@@ -1,24 +1,33 @@
-import React, { FC, memo, useCallback, useState } from "react";
+import { IMarketPost } from "@typings/db";
+import { DEFAULT_ICON_URL, NO_IMAGE_URL } from "config";
+import router from "next/router";
+import React, { FC, memo, useCallback, useMemo, useState } from "react";
+import { Divider } from "antd";
 import { Wrapper } from "./styles";
-interface IProps {}
+interface IProps {
+  marketPost: IMarketPost;
+}
 
-const GoodsCard: FC<IProps> = () => {
-  const [state, setstate] = useState();
-  const onClickCard = useCallback(() => {}, []);
+const GoodsCard: FC<IProps> = ({ marketPost }) => {
+  const onClickCard = useCallback(() => {
+    router.push(`/market/${marketPost.id}`);
+  }, []);
   return (
     <Wrapper className="goods-card-wrapper" onClick={onClickCard}>
       <div className="image-wrapper">
-        <img src="https://images-na.ssl-images-amazon.com/images/I/71FMTA7Zt8L._AC_SX466_.jpg" />
+        <img src={marketPost.images ? marketPost.images[0].src : NO_IMAGE_URL} alt="goods-image" />
       </div>
       <div className="desc-wrapper">
         <div className="desc">
-          <h3>ジミンのカード</h3>
-          <h5>丹野美沙</h5>
+          <h3>{marketPost.title}</h3>
           <ul>
-            <li className="tag">カード</li>
-            <li className="tag">早め</li>
-            <li className="tag">ユニーク</li>
+            <li className="tag">{marketPost.keyword}</li>
+            <li className="tag">{marketPost.area}</li>
           </ul>
+          <div className="name-space">
+            <img src={marketPost.user.icon ? marketPost.user.icon : DEFAULT_ICON_URL} />
+            <span>{marketPost.user.name}</span>
+          </div>
         </div>
       </div>
     </Wrapper>

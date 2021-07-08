@@ -1,6 +1,5 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC } from "react";
 import { ClubPostContentWrapper } from "./styles";
-import { Divider } from "antd";
 import { IClubPost } from "@typings/db";
 import ReactHtmlParser from "react-html-parser";
 

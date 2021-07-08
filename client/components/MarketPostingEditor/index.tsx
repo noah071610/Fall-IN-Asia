@@ -1,7 +1,6 @@
-import React, { FC, memo, useCallback, useEffect, useRef, useState } from "react";
+import React, { createRef, FC, memo, useCallback, useEffect, useRef, useState } from "react";
 import { MarketPostingEditorWrapper } from "./styles";
 import { Button, Input, Upload } from "antd";
-import ReactCrop, { Crop } from "react-image-crop";
 import useInput from "@hooks/useInput";
 import router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +8,6 @@ import { RootState } from "slices";
 import {
   japanMapList,
   marketKeyword,
-  NO_IMAGE_URL,
   quillModules,
   qullFormats,
   toastErrorMessage,
@@ -20,60 +18,34 @@ import { marketPostCreateAction } from "actions/market";
 const { Dragger } = Upload;
 import { Radio } from "antd";
 interface IProps {}
-
-const QuillEditor = dynamic(import("react-quill"), {
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-});
+import ReactQuill from "react-quill";
 
 const MarketPostingEditor: FC<IProps> = () => {
   const dispatch = useDispatch();
   const [title, onChangeTitle, setTitle] = useInput("");
   const [content, setContent] = useState("");
-  const [upImg, setUpImg] = useState<ArrayBuffer | string | null>(null);
-  const [area, setArea] = useState("kanto");
-  const [keyword, setKeyword] = useState("direct");
-  const [blob, setBlob] = useState<Blob | null>(null);
-  const { user } = useSelector((state: RootState) => state.user);
-  const { galleryPostCreateDone } = useSelector((state: RootState) => state.gallery);
+  const [upImg, setUpImg] = useState<any[]>([]);
+  const [area, setArea] = useState("関東(東京)");
+  const [keyword, setKeyword] = useState("直取引");
+  const { marketPostCreateDone } = useSelector((state: RootState) => state.market);
 
   useEffect(() => {
-    if (!user) {
-      router.back();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (galleryPostCreateDone) {
-      router.push("/gallery");
-      toastSuccessMessage("イメージをアップロード致しました！😆");
-      setUpImg("");
+    if (marketPostCreateDone) {
+      router.push("/market");
+      toastSuccessMessage("ポストを投稿致しました！😆");
+      setUpImg([]);
       setTitle("");
-      setBlob(null);
+      setContent("");
     }
-  }, [galleryPostCreateDone]);
-
-  const getBase64 = (img: any, callback: any) => {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => callback(reader.result));
-    reader.readAsDataURL(img);
-  };
-
-  const onChangeEditor = (content: string) => {
-    setContent(content);
-  };
+  }, [marketPostCreateDone]);
 
   const handleChange = (info: any) => {
     if (info.file.status === "done") {
-      getBase64(info.file.originFileObj, (imageUrl: any) => setUpImg(imageUrl));
+      setUpImg((prev: any) => [...prev, info.file.originFileObj]);
     }
   };
 
   const onSubmitPost = useCallback(() => {
-    if (!blob) {
-      toastErrorMessage("イメージがありません！");
-      return;
-    }
     if (!title) {
       toastErrorMessage("タイトルを作成してください。");
       return;
@@ -82,14 +54,16 @@ const MarketPostingEditor: FC<IProps> = () => {
       toastErrorMessage("ポストの内容を作成してください。");
       return;
     }
-    const form = new FormData();
-    if (blob) {
-      form.append("image", blob);
-    }
+    let form = new FormData();
+    upImg?.forEach((v) => {
+      form.append("image", v);
+    });
     form.append("title", String(title));
     form.append("content", String(content));
+    form.append("area", String(area));
+    form.append("keyword", String(keyword));
     dispatch(marketPostCreateAction(form));
-  }, [blob, title]);
+  }, [upImg, title, content, area, keyword]);
 
   const onChangeArea = useCallback((e) => {
     setArea(e.target.value);
@@ -97,7 +71,9 @@ const MarketPostingEditor: FC<IProps> = () => {
   const onChangeKeyword = useCallback((e) => {
     setKeyword(e.target.value);
   }, []);
-
+  const onChangeEditor = (content: string) => {
+    setContent(content);
+  };
   return (
     <MarketPostingEditorWrapper>
       <div className="upload-menu">
@@ -105,16 +81,24 @@ const MarketPostingEditor: FC<IProps> = () => {
         <Input placeholder="タイトル入力" value={title} onChange={onChangeTitle} />
         <h3>2)&nbsp;地域とキーワード選択</h3>
         <span className="radio-title">地域 :</span>
-        <Radio.Group defaultValue="kanto" onChange={onChangeArea} value={area}>
+        <Radio.Group defaultValue="関東(東京)" onChange={onChangeArea} value={area}>
           {japanMapList.map((v, i: number) => {
-            return <Radio value={v.eng}>{v.name}</Radio>;
+            return (
+              <Radio key={i} value={v.name}>
+                {v.name}
+              </Radio>
+            );
           })}
         </Radio.Group>
         <br />
         <span className="radio-title">キーワード :</span>
-        <Radio.Group defaultValue="direct" onChange={onChangeKeyword} value={keyword}>
+        <Radio.Group defaultValue="直取引" onChange={onChangeKeyword} value={keyword}>
           {marketKeyword.map((v, i: number) => {
-            return <Radio value={v.eng}>{v.name}</Radio>;
+            return (
+              <Radio key={i} value={v.name}>
+                {v.name}
+              </Radio>
+            );
           })}
         </Radio.Group>
         <h3>3)&nbsp;イメージアップロード</h3>
@@ -129,7 +113,8 @@ const MarketPostingEditor: FC<IProps> = () => {
         </Dragger>
       </div>
       <h3>3)&nbsp;内容作成</h3>
-      <QuillEditor
+      <ReactQuill
+        ref={}
         style={{ height: "350px" }}
         theme="snow"
         modules={quillModules}

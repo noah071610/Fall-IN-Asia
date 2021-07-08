@@ -11,7 +11,7 @@ import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
 import { GalleryService } from './gallery.service';
 
 @UseInterceptors(JsonResponeGenerator)
-@ApiTags('Club')
+@ApiTags('Gallery')
 @ApiCookieAuth('connect.sid')
 @Controller('/api/gallery')
 export class GalleryController {
@@ -46,6 +46,8 @@ export class GalleryController {
     @Body() body,
     @UploadedFile() file: Express.Multer.File,
   ) {
+    console.log('##data##', body);
+    console.log('##files##', file);
     const newGalleryPost = this.galleryService.createGalleryPost(
       user.id,
       body.title,

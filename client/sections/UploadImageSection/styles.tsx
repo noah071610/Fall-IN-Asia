@@ -14,15 +14,16 @@ export const UploadImageSectionWrapper = styled.div`
     .crop-part {
       padding: 1rem;
       ${BORDER_THIN("border")};
-    }
-    .after,
-    .before {
       h4 {
         margin-bottom: 1rem;
       }
       div {
         ${FLEX_STYLE("center", "center")};
       }
+    }
+    .after,
+    .before {
+      max-height: 500px;
     }
   }
   .upload-menu {

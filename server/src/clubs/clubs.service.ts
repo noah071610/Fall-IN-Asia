@@ -12,6 +12,7 @@ import { ClubPostRequestDto } from './dto/clubPost.request.dto';
 import bcrypt from 'bcrypt';
 import { Users } from 'src/entities/Users';
 import { ClubEditRequestDto } from './dto/clubEdit.request.dto';
+import { Images } from 'src/entities/Images';
 @Injectable()
 export class ClubsService {
   constructor(
@@ -21,7 +22,15 @@ export class ClubsService {
     private GroupsRepository: Repository<Groups>,
     @InjectRepository(Users)
     private UsersRepository: Repository<Users>,
+    @InjectRepository(Images)
+    private imagesRepository: Repository<Images>,
   ) {}
+
+  async getImageForPost(file: Express.Multer.File) {
+    const image = new Images();
+    image.src = process.env.BACK_URL + file.path;
+    return await this.imagesRepository.save(image);
+  }
 
   async getOnePost(id: number, group: string) {
     const post = await this.clubPostsRepository.findOne({

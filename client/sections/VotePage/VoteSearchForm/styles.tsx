@@ -6,26 +6,5 @@ export const VoteSearchWrapper = styled.div`
   margin-bottom: 1rem;
   .slick-slider {
     margin-top: 1rem;
-    .left-arrow {
-      display: block;
-      z-index: 1;
-      top: 50%;
-      position: absolute;
-      font-size: 2rem;
-      transform: translateY(-50%);
-      color: ${WHITE_COLOR};
-      cursor: pointer;
-    }
-    .right-arrow {
-      display: block;
-      z-index: 1;
-      top: 50%;
-      right: 0;
-      position: absolute;
-      font-size: 2rem;
-      transform: translateY(-50%);
-      color: ${WHITE_COLOR};
-      cursor: pointer;
-    }
   }
 `;

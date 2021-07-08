@@ -182,4 +182,26 @@ h1,h2,h3,h4,h5{
   padding:0.5rem;
 }
 
+.slick-left-arrow {
+  display: block;
+  z-index: 1;
+  top: 50%;
+  position: absolute;
+  font-size: 2rem;
+  transform: translateY(-50%);
+  color: ${WHITE_COLOR};
+  cursor: pointer;
+}
+.slick-right-arrow {
+  display: block;
+  z-index: 1;
+  top: 50%;
+  right: 0;
+  position: absolute;
+  font-size: 2rem;
+  transform: translateY(-50%);
+  color: ${WHITE_COLOR};
+  cursor: pointer;
+}
+
 `;

@@ -22,7 +22,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
   const config = new DocumentBuilder()
-    .setTitle('ケーハート')
+    .setTitle('K Heart')
     .setDescription('君とKPOPの繋がり')
     .setVersion('1.0')
     .addCookieAuth('connect.sid')

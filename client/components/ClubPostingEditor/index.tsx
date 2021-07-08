@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { clubPostCreateAction, clubPostEditAction } from "actions/club";
 import { IPostForm } from "@typings/db";
+import axios from "axios";
+import { clubSlice } from "slices/club";
 
 const QuillEditor = dynamic(import("react-quill"), {
   ssr: false,
@@ -23,10 +25,10 @@ interface IProps {
 
 const PostingEditor: FC<IProps> = ({ isEdit, groupData }) => {
   const dispatch = useDispatch();
-  const [content, setContent] = useState("");
   const [title, onChangeTitle, setTitle] = useInput("");
+  const [content, setContent] = useState("");
   const { user } = useSelector((state: RootState) => state.user);
-  const { editPost } = useSelector((state: RootState) => state.club);
+  const { editPost, postImage } = useSelector((state: RootState) => state.club);
 
   useEffect(() => {
     if (isEdit) {
@@ -34,6 +36,10 @@ const PostingEditor: FC<IProps> = ({ isEdit, groupData }) => {
       setContent(editPost?.content);
     }
   }, []);
+
+  useEffect(() => {
+    setContent((prev) => prev + postImage);
+  }, [postImage]);
 
   const onChangeEditor = (content: string) => {
     setContent(content);
@@ -72,6 +78,7 @@ const PostingEditor: FC<IProps> = ({ isEdit, groupData }) => {
       setContent("");
     }
   }, [title, content, user?.id, groupData?.id, isEdit, editPost?.id]);
+
   return (
     <PostingEditorWrapper>
       <h2>タイトル</h2>

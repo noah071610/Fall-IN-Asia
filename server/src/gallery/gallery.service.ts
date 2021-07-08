@@ -32,7 +32,7 @@ export class GalleryService {
     file: Express.Multer.File,
   ) {
     const newGalleryPost = new Gallery();
-    newGalleryPost.image = file.path;
+    newGalleryPost.image = process.env.BACK_URL + file.path;
     newGalleryPost.title = title;
     newGalleryPost.user = <any>{ id };
     return await this.galleryRepository.save(newGalleryPost);

@@ -10,6 +10,7 @@ import { RootState } from "slices";
 
 import CommonTitle from "@components/Common/CommonTitle";
 import { GRID_STYLE, noRevalidate, toastErrorMessage } from "config";
+import { IMarketPost } from "@typings/db";
 
 export const MarketWrapper = styled.div`
   padding: 2rem;
@@ -19,7 +20,11 @@ export const MarketWrapper = styled.div`
   }
 `;
 const MarketLayout: FC = ({ children }) => {
+  const { data: marketPosts, error } = useSWR("/market", fetcher);
   const { user } = useSelector((state: RootState) => state.user);
+  if (error) {
+    toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
+  }
   const onClickMarketPostBtn = useCallback(() => {
     router.push("/market/post");
   }, []);
@@ -35,14 +40,9 @@ const MarketLayout: FC = ({ children }) => {
       {children}
       <MarketFilter />
       <div className="goods-cards">
-        <GoodsCard />
-        <GoodsCard />
-        <GoodsCard />
-        <GoodsCard />
-        <GoodsCard />
-        <GoodsCard />
-        <GoodsCard />
-        <GoodsCard />
+        {marketPosts?.map((v: IMarketPost, i: number) => {
+          return <GoodsCard key={i} marketPost={v} />;
+        })}
       </div>
     </MarketWrapper>
   );

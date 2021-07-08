@@ -9,6 +9,7 @@ import { Comments } from './entities/Comments';
 import { SubComments } from './entities/SubComments';
 import { Groups } from './entities/Groups';
 import { NewsPosts } from './entities/NewsPosts';
+import { Images } from './entities/Images';
 
 dotenv.config();
 const config: TypeOrmModuleOptions = {
@@ -28,6 +29,7 @@ const config: TypeOrmModuleOptions = {
     Comments,
     SubComments,
     Groups,
+    Images,
   ],
   charset: 'utf8mb4',
   synchronize: false,

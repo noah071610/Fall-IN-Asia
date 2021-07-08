@@ -6,6 +6,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -16,6 +17,9 @@ import { ClubsService } from './clubs.service';
 import { ClubPostRequestDto } from './dto/clubPost.request.dto';
 import { ClubPostConfirmDto } from './dto/clubPost.confirm.dto';
 import { ClubEditRequestDto } from './dto/clubEdit.request.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import multer from 'multer';
+import path from 'path';
 
 @UseInterceptors(JsonResponeGenerator)
 @ApiTags('Club')
@@ -61,6 +65,27 @@ export class ClubsController {
     });
     const postForEdit = await this.clubsService.searchPostByPostId(data.postId);
     return postForEdit;
+  }
+
+  @ApiOperation({ summary: 'Get preview posts for club main page' })
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: multer.diskStorage({
+        destination(req, file, cb) {
+          cb(null, 'uploads/');
+        },
+        filename(req, file, cb) {
+          const ext = path.extname(file.originalname);
+          cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+        },
+      }),
+      limits: { fileSize: 5 * 1024 * 1024 },
+    }),
+  )
+  @Post('image')
+  async getImageForPost(@UploadedFile() file: Express.Multer.File) {
+    const clubPostimage = await this.clubsService.getImageForPost(file);
+    return clubPostimage.src;
   }
 
   @ApiOperation({ summary: 'Get preview posts for club main page' })
