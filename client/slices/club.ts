@@ -1,4 +1,4 @@
-import { IPostForm } from "@typings/db";
+import { IClubPostForm } from "@typings/db";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   clubPostCreateAction,
@@ -8,8 +8,8 @@ import {
 } from "actions/club";
 
 export interface ClubState {
-  clubPost: IPostForm | null;
-  editPost: IPostForm | null;
+  clubPost: IClubPostForm | null;
+  editPost: IClubPostForm | null;
   postImage: string | null;
   clubPostCreateLoading: boolean;
   clubPostCreateDone: boolean;

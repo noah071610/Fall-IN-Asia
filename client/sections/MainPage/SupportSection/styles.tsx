@@ -3,7 +3,7 @@ import { FLEX_STYLE, RED_COLOR, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const Wrapper = styled.div`
   height: 500px;
-  margin: 1rem 2rem;
+  margin: 2rem 0;
   background: url(https://images.unsplash.com/photo-1603292498182-95edce1e705b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80)
     center no-repeat fixed;
   background-size: 100% 100%;

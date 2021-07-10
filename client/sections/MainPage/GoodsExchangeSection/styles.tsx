@@ -3,7 +3,7 @@ import { BLUE_COLOR, BORDER_THIN, RGB_BLACK } from "config";
 
 export const Wrapper = styled.div`
   height: 500px;
-  margin: 0 2rem 1rem 2rem;
+  margin-bottom: 2rem;
   background: url(https://images.unsplash.com/photo-1512418490979-92798cec1380?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80)
     center no-repeat;
   position: relative;

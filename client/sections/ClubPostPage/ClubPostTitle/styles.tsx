@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { BORDER_THIN, FLEX_STYLE, RGB_BLACK } from "config";
 
 export const ClubPostTitleWrapper = styled.div`
-  padding: 0 2rem;
+  padding: 2rem 2rem 0 2rem;
   h1 {
     margin-bottom: 1rem;
   }

@@ -1,16 +1,15 @@
 import React, { FC, useCallback } from "react";
 import styled from "@emotion/styled";
-import MarketFilter from "@sections/MarketFilter";
-import GoodsCard from "@components/GoodsCard";
+import GoodsCard from "@components/Cards/GoodsCard";
 import useSWR from "swr";
-import router, { useRouter } from "next/dist/client/router";
+import router from "next/dist/client/router";
 import fetcher from "utils/fetcher";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "slices";
-
 import CommonTitle from "@components/Common/CommonTitle";
-import { GRID_STYLE, noRevalidate, toastErrorMessage } from "config";
+import { GRID_STYLE, toastErrorMessage } from "config";
 import { IMarketPost } from "@typings/db";
+import MarketFilter from "./MarketPage/MarketFilter";
 
 export const MarketWrapper = styled.div`
   padding: 2rem;
@@ -19,6 +18,7 @@ export const MarketWrapper = styled.div`
     ${GRID_STYLE("1.5rem", "repeat(3,1fr)")};
   }
 `;
+
 const MarketLayout: FC = ({ children }) => {
   const { data: marketPosts, error } = useSWR("/market", fetcher);
   const { user } = useSelector((state: RootState) => state.user);
@@ -28,6 +28,7 @@ const MarketLayout: FC = ({ children }) => {
   const onClickMarketPostBtn = useCallback(() => {
     router.push("/market/post");
   }, []);
+
   return (
     <MarketWrapper>
       <CommonTitle title="マーケット" subtitle="グッズ販売や交換を簡単に">
@@ -37,8 +38,8 @@ const MarketLayout: FC = ({ children }) => {
           </button>
         )}
       </CommonTitle>
-      {children}
       <MarketFilter />
+      {children}
       <div className="goods-cards">
         {marketPosts?.map((v: IMarketPost, i: number) => {
           return <GoodsCard key={i} marketPost={v} />;

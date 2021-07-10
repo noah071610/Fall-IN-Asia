@@ -1,17 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IPostForm } from "@typings/db";
+import { IClubPostForm } from "@typings/db";
 import axios from "axios";
 import { toastErrorMessage } from "config";
 
-export const clubPostCreateAction = createAsyncThunk<any, IPostForm>("club/post", async (form) => {
-  try {
-    const response = await axios.post("/club", form);
-    return response.data;
-  } catch (error) {
-    toastErrorMessage(error);
-    throw error;
+export const clubPostCreateAction = createAsyncThunk<any, IClubPostForm>(
+  "club/post",
+  async (form) => {
+    try {
+      const response = await axios.post("/club", form);
+      return response.data;
+    } catch (error) {
+      toastErrorMessage(error);
+      throw error;
+    }
   }
-});
+);
 
 export const clubPostDeleteAction = createAsyncThunk<
   any,
@@ -26,15 +29,18 @@ export const clubPostDeleteAction = createAsyncThunk<
   }
 });
 
-export const clubPostEditAction = createAsyncThunk<any, IPostForm>("club/edit", async (form) => {
-  try {
-    const response = await axios.post("/club/edit", form);
-    return response.data;
-  } catch (error) {
-    toastErrorMessage(error);
-    throw error;
+export const clubPostEditAction = createAsyncThunk<any, IClubPostForm>(
+  "club/edit",
+  async (form) => {
+    try {
+      const response = await axios.post("/club/edit", form);
+      return response.data;
+    } catch (error) {
+      toastErrorMessage(error);
+      throw error;
+    }
   }
-});
+);
 
 export const clubPostEditConfirmAction = createAsyncThunk<
   any,

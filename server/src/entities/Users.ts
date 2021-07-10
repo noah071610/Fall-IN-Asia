@@ -8,6 +8,7 @@ import {
   Index,
   JoinColumn,
   ManyToMany,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -17,9 +18,9 @@ import { ClubPosts } from './ClubPosts';
 import { Comments } from './Comments';
 import { Gallery } from './Gallery';
 import { Groups } from './Groups';
-import { LessonPosts } from './LessonPosts';
+import { StudyPosts } from './StudyPosts';
 import { MarketPosts } from './MarketPosts';
-import { SubComments } from './SubComments';
+import { Participate } from './Participate';
 
 @Index('email', ['email'], { unique: true })
 @Entity({ schema: 'k_heart', name: 'users' })
@@ -78,6 +79,15 @@ export class Users {
   @Column('varchar', { name: 'password', length: 100, select: false })
   password: string;
 
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: '4',
+    description: 'rate each user',
+  })
+  @Column('float', { name: 'rate', default: 0 })
+  rate: number;
+
   @IsBoolean()
   @ApiProperty({
     example: 1,
@@ -95,6 +105,13 @@ export class Users {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
+  @OneToOne(() => Groups, (groups) => groups.user)
+  @JoinColumn([{ name: 'fan', referencedColumnName: 'id' }])
+  fan: Groups;
+
+  @OneToMany(() => StudyPosts, (studyPosts) => studyPosts.leaderUser)
+  leadPosts: StudyPosts[];
+
   @OneToMany(() => ClubPosts, (clubposts) => clubposts.user)
   clubPosts: ClubPosts[];
 
@@ -107,10 +124,6 @@ export class Users {
   @OneToMany(() => Comments, (comments) => comments.user)
   comments: Comments[];
 
-  @ManyToMany(() => LessonPosts, (lessonPosts) => lessonPosts.userId)
-  lessonId: LessonPosts[];
-
-  @OneToOne(() => Groups, (groups) => groups.user)
-  @JoinColumn([{ name: 'fan', referencedColumnName: 'id' }])
-  fan: Groups;
+  @OneToMany(() => Participate, (participate) => participate.user)
+  participates: Participate[];
 }

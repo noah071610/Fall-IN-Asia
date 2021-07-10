@@ -4,12 +4,14 @@ import { Users } from './entities/Users';
 import { MarketPosts } from './entities/MarketPosts';
 import { ClubPosts } from './entities/ClubPosts';
 import { Gallery } from './entities/Gallery';
-import { LessonPosts } from './entities/LessonPosts';
+import { StudyPosts } from './entities/StudyPosts';
 import { Comments } from './entities/Comments';
 import { SubComments } from './entities/SubComments';
 import { Groups } from './entities/Groups';
 import { NewsPosts } from './entities/NewsPosts';
 import { Images } from './entities/Images';
+import { GroupScores } from './entities/GroupScore';
+import { Participate } from './entities/Participate';
 
 dotenv.config();
 const config: TypeOrmModuleOptions = {
@@ -24,12 +26,14 @@ const config: TypeOrmModuleOptions = {
     MarketPosts,
     ClubPosts,
     Gallery,
-    LessonPosts,
+    StudyPosts,
     NewsPosts,
     Comments,
     SubComments,
     Groups,
+    GroupScores,
     Images,
+    Participate,
   ],
   charset: 'utf8mb4',
   synchronize: false,

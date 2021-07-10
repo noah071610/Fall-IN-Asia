@@ -14,5 +14,5 @@ export class JsonResponeGenerator implements NestInterceptor {
     next: CallHandler<any>,
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(map((data) => ({ data, message: 'success' })));
-  }sdfd11sfsd
+  }
 }

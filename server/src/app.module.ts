@@ -21,6 +21,12 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { MarketModule } from './market/market.module';
 import { Images } from './entities/Images';
+import { StudyController } from './study/study.controller';
+import { StudyService } from './study/study.service';
+import { StudyModule } from './study/study.module';
+import { StudyPosts } from './entities/StudyPosts';
+import { GroupScores } from './entities/GroupScore';
+import { Participate } from './entities/Participate';
 
 @Module({
   imports: [
@@ -35,7 +41,10 @@ import { Images } from './entities/Images';
       ClubPosts,
       NewsPosts,
       Gallery,
+      GroupScores,
       Images,
+      StudyPosts,
+      Participate,
     ]),
     GroupsModule,
     ClubsModule,
@@ -46,8 +55,9 @@ import { Images } from './entities/Images';
       exclude: ['/api*'],
       serveRoot: '/uploads',
     }),
+    StudyModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, StudyController],
   providers: [
     AppService,
     UsersService,
@@ -55,6 +65,7 @@ import { Images } from './entities/Images';
       provide: APP_INTERCEPTOR,
       useClass: MorganInterceptor('dev'),
     },
+    StudyService,
   ],
 })
 export class AppModule {}

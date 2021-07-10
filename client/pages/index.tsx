@@ -3,24 +3,24 @@ import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
 import GoodsExchangeSection from "@sections/MainPage/GoodsExchangeSection";
-import VoteSection from "@sections/MainPage/VoteSection";
 import MusicChartSection from "@sections/MainPage/MusicChartSection";
-import NewsSection from "@sections/MainPage/NewsSection";
 import SupportSection from "@sections/MainPage/SupportSection";
 import styled from "@emotion/styled";
+import GroupVote from "@components/GroupVote";
+import NewsArticle from "@components/NewsArticle";
 
 const MainWrapper = styled.div`
-  padding: 2rem 0;
+  padding: 2rem;
 `;
 
 const index = () => {
   return (
     <MainWrapper>
       <GoodsExchangeSection />
-      <NewsSection />
+      <NewsArticle />
       <MusicChartSection />
       <SupportSection />
-      <VoteSection />
+      <GroupVote />
     </MainWrapper>
   );
 };

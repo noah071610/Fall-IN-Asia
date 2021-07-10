@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styled from "@emotion/styled";
-import ClubTitleSection from "@sections/ClubPage/ClubTitleSection";
-import ClubMainSection from "@sections/ClubPage/ClubMainSection";
+import ClubTitle from "@sections/ClubPage/ClubTitle";
+import ClubPostList from "@sections/ClubPage/ClubPostList";
 import useSWR from "swr";
 import { useRouter } from "next/dist/client/router";
 import fetcher from "utils/fetcher";
@@ -19,9 +19,9 @@ const ClubLayout: FC = ({ children }) => {
 
   return (
     <ClubWrapper>
-      <ClubTitleSection clubName={clubData?.name} />
+      <ClubTitle clubName={clubData?.name} />
       {children}
-      <ClubMainSection clubPosts={clubData?.posts} />
+      <ClubPostList clubPosts={clubData?.posts} />
     </ClubWrapper>
   );
 };

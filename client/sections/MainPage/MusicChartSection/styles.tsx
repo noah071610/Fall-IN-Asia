@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 4fr 6fr;
-  padding: 1rem 2rem;
+  margin-top: 2rem;
   .chart {
     &-another {
       display: grid;

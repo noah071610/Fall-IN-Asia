@@ -1,7 +1,5 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { clubSlice } from "slices/club";
 
 // CSS
 export const BLACK_COLOR = "black" as const;
@@ -21,7 +19,7 @@ export const DEFAULT_ICON_URL =
   "https://user-images.githubusercontent.com/74864925/124331496-460bfe80-dbca-11eb-95dc-a5379a5750a6.png" as const;
 
 export const NO_IMAGE_URL =
-  "https://user-images.githubusercontent.com/74864925/124680383-3a3d7680-df01-11eb-9d22-b51a2f42b6d6.gif" as const;
+  "https://usagi-post.com/wp-content/uploads/2020/05/no-image-found-360x250-1.png" as const;
 
 export const RGB_BLACK = (opacity: number) => `
   rgba(0,0,0,${opacity})
@@ -80,6 +78,11 @@ export const marketKeyword = [
   { name: "出来れば宅配", eng: "more_package" },
 ];
 
+export const studyPostTypeList = [
+  { name: "レッスン", eng: "lesson" },
+  { name: "韓国語勉強俱楽部", eng: "study_club" },
+];
+
 export const japanMapList = [
   { name: "関東(東京)", eng: "kanto" },
   { name: "関西(大阪)", eng: "kansai" },
@@ -90,6 +93,7 @@ export const japanMapList = [
   { name: "四国", eng: "shikoku" },
   { name: "北海道", eng: "hotkaido" },
   { name: "沖縄", eng: "okinawa" },
+  { name: "大韓民国", eng: "korea" },
 ];
 
 // Toast Message
@@ -122,6 +126,12 @@ export const toastSuccessMessage = (message: string) => {
     progress: undefined,
     className: "toast",
   });
+};
+
+// error handler
+
+export const handleImgError = (e: React.SyntheticEvent) => {
+  (e.target as HTMLImageElement).src = NO_IMAGE_URL;
 };
 
 // slick settings

@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { Wrapper } from "./styles";
-import AlbumCard from "@components/AlbumCard";
+import AlbumCard from "@components/Cards/AlbumCard";
 
 interface IProps {}
 

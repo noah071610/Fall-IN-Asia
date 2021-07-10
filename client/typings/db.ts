@@ -25,13 +25,21 @@ export interface IGalleryPost {
   user: IUser;
 }
 
-export interface IPostForm {
+export interface IClubPostForm {
   title: string;
   content: string;
-  groupId: number;
-  key_name: string;
-  userId: number;
-  hit?: number;
+  groupId?: number;
+  key_name?: string;
+  userId?: number;
+  postId?: number;
+}
+
+export interface IStudyPostForm {
+  title: string;
+  content: string;
+  type?: string;
+  area?: string;
+  userId?: number;
   postId?: number;
 }
 
@@ -42,12 +50,22 @@ export interface IImages {
 
 export interface IMarketPost {
   id: number;
-  images?: IImages[];
+  images: IImages[];
   keyword: string;
   area: number;
   title: string;
   content: number;
   user: IUser;
+}
+
+export interface IStudyPost {
+  id: number;
+  images?: IImages[];
+  type: string;
+  area: number;
+  title: string;
+  content: number;
+  leaderUser: IUser;
 }
 
 export interface IGroup {

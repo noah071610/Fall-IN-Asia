@@ -1,9 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import styled from "@emotion/styled";
 import CommonTitle from "@components/Common/CommonTitle";
 import Masonry from "react-masonry-css";
-import { FLEX_STYLE, RGB_BLACK, toastErrorMessage, WHITE_COLOR } from "config";
-import { useSelector } from "react-redux";
+import { FLEX_STYLE, RGB_BLACK, toastErrorMessage, toastSuccessMessage, WHITE_COLOR } from "config";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import router from "next/router";
 import useSWR from "swr";
@@ -12,6 +12,7 @@ import { IGalleryPost } from "@typings/db";
 import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
+import { gallerySlice } from "slices/gallery";
 const GalleryWrapper = styled.div`
   padding: 2rem;
   position: relative;
@@ -75,6 +76,7 @@ const GalleryWrapper = styled.div`
 interface IProps {}
 
 const gallery: FC<IProps> = () => {
+  const dispatch = useDispatch();
   const { data: galleryPosts, error } = useSWR("/gallery", fetcher, {
     dedupingInterval: 10000,
   });
@@ -82,6 +84,14 @@ const gallery: FC<IProps> = () => {
     toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
   }
   const { user } = useSelector((state: RootState) => state.user);
+  const { galleryPostCreateDone } = useSelector((state: RootState) => state.gallery);
+
+  useEffect(() => {
+    if (galleryPostCreateDone) {
+      toastSuccessMessage("ポストを成功的に投稿致しました😊");
+      dispatch(gallerySlice.actions.galleryPostCreateClear());
+    }
+  }, [galleryPostCreateDone]);
   return (
     <GalleryWrapper>
       <CommonTitle title="ギャラリー" subtitle="私だけ見るのが勿体ない">
