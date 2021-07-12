@@ -1,11 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IGroup } from "@typings/db";
+import { groupVoteForStyleAction } from "actions/group";
 
 export interface MainState {
   onCommunityModal: boolean;
   onLoginModal: boolean;
   onSignupModal: boolean;
   onUserInfoModal: boolean;
+  groupVoteLoading: boolean;
+  groupVoteDone: boolean;
+  groupVoteError: boolean;
   selectedGroup: IGroup | null;
 }
 
@@ -15,6 +19,9 @@ const mainState: MainState = {
   onSignupModal: false,
   onUserInfoModal: false,
   selectedGroup: null,
+  groupVoteLoading: false,
+  groupVoteDone: false,
+  groupVoteError: false,
 };
 
 export const mainSlice = createSlice({
@@ -48,6 +55,23 @@ export const mainSlice = createSlice({
     selectGroupForVote(state, action) {
       state.selectedGroup = action.payload;
     },
+    groupVoteClear(state) {
+      state.groupVoteLoading = false;
+      state.groupVoteDone = false;
+      state.groupVoteError = false;
+    },
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) =>
+    builder
+      .addCase(groupVoteForStyleAction.pending, (state) => {
+        state.groupVoteLoading = true;
+      })
+      .addCase(groupVoteForStyleAction.fulfilled, (state) => {
+        state.groupVoteLoading = false;
+        state.groupVoteDone = true;
+      })
+      .addCase(groupVoteForStyleAction.rejected, (state) => {
+        state.groupVoteLoading = false;
+        state.groupVoteError = true;
+      }),
 });

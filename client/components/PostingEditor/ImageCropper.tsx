@@ -24,6 +24,9 @@ const ImageCropWrapper = styled.div`
       div {
         ${FLEX_STYLE("center", "center")};
       }
+      img {
+        width: 100%;
+      }
     }
     .after,
     .before {

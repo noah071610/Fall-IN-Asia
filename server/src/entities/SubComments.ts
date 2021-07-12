@@ -39,7 +39,10 @@ export class SubComments {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Comments, (comments) => comments.subComments)
+  @ManyToOne(() => Comments, (comments) => comments.subComments, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn([{ name: 'comment', referencedColumnName: 'id' }])
   comment: Comments;
 }

@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useMemo, useState } from "react";
 import styled from "@emotion/styled";
 import CommonTitle from "@components/Common/CommonTitle";
 import { BORDER_THICK, GRID_STYLE, noRevalidate, RGB_BLACK, toastErrorMessage } from "config";
@@ -12,7 +12,9 @@ import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import Link from "next/link";
 import { IGroup, ITopClubPosts } from "@typings/db";
-const { Search } = Input;
+import { AutoComplete } from "antd";
+import router from "next/router";
+import AutoCompleteSearch from "@components/AutoCompleteSearch";
 
 export const ClubMainWrapper = styled.div`
   .club-filter {
@@ -43,13 +45,19 @@ export const ClubMainWrapper = styled.div`
     padding: 1rem;
     ${GRID_STYLE("1rem", "repeat(2,1fr)")};
   }
+  .autoComplete-wrapper {
+    img {
+      width: 10%;
+    }
+  }
 `;
 
 interface IProps {}
 
 const index: FC<IProps> = () => {
-  const { data: groups, error } = useSWR("/group", fetcher);
+  const { data: groups, error } = useSWR("/group", fetcher, noRevalidate);
   const { data: topClubPostLists } = useSWR("/club/preview", fetcher, noRevalidate);
+
   if (error) {
     toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
   }
@@ -61,18 +69,12 @@ const index: FC<IProps> = () => {
       <div className="club-filter">
         <div className="club-recommeder">
           {groups?.slice(0, 4).map((v: IGroup, i: number) => (
-            <GroupCard
-              isVote={false}
-              name={v.group_name}
-              image={v.image}
-              group={v.key_name}
-              key={i}
-            />
+            <GroupCard isVote={false} groupData={v} key={i} />
           ))}
         </div>
         <div className="club-search">
-          <h3>検索</h3>
-          <Search />
+          <h3>グループ検索</h3>
+          <AutoCompleteSearch groupsData={groups} />
           <h3>グループ一覧</h3>
           <ul>
             {groups?.map((v: IGroup, i: number) => (

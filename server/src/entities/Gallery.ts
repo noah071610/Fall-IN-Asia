@@ -46,7 +46,10 @@ export class Gallery {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Users, (users) => users.gallerys)
+  @ManyToOne(() => Users, (users) => users.gallerys, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn([{ name: 'user', referencedColumnName: 'id' }])
   user: Users;
 }

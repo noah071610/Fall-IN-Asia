@@ -13,6 +13,7 @@ import bcrypt from 'bcrypt';
 import { Users } from 'src/entities/Users';
 import { ClubEditRequestDto } from './dto/clubEdit.request.dto';
 import { Images } from 'src/entities/Images';
+import { async } from 'rxjs';
 @Injectable()
 export class ClubsService {
   constructor(
@@ -41,6 +42,19 @@ export class ClubsService {
       relations: ['user'],
     });
     return post;
+  }
+
+  async getVisitClubs(data: string[]) {
+    const visitClubs = await Promise.all(
+      data.map(async (v) => {
+        const group = this.GroupsRepository.findOne({
+          where: { key_name: v },
+          select: ['key_name', 'group_name'],
+        });
+        return group;
+      }),
+    );
+    return visitClubs;
   }
 
   async getPreviewPosts() {

@@ -3,6 +3,16 @@ import { IClubPostForm } from "@typings/db";
 import axios from "axios";
 import { toastErrorMessage } from "config";
 
+export const getVisitClubAction = createAsyncThunk<any, string[]>("club/visit", async (form) => {
+  try {
+    const response = await axios.post("/club/visit", form);
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
+  }
+});
+
 export const clubPostCreateAction = createAsyncThunk<any, IClubPostForm>(
   "club/post",
   async (form) => {
@@ -44,7 +54,7 @@ export const clubPostEditAction = createAsyncThunk<any, IClubPostForm>(
 
 export const clubPostEditConfirmAction = createAsyncThunk<
   any,
-  { postId: number; password: string }
+  { postId: number; password: string; userId: number }
 >("club/confirm", async (data) => {
   try {
     const response = await axios.post(`/club/confirm`, data);

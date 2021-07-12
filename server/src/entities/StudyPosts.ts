@@ -97,13 +97,20 @@ export class StudyPosts {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Users, (users) => users.leadPosts)
+  @ManyToOne(() => Users, (users) => users.leadPosts, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn([{ name: 'leaderUser', referencedColumnName: 'id' }])
   leaderUser: Users;
 
-  @OneToMany(() => Images, (images) => images.studyPost)
+  @OneToMany(() => Images, (images) => images.studyPost, {
+    cascade: true,
+  })
   images: Images[];
 
-  @OneToMany(() => Participate, (participate) => participate.studyPost)
+  @OneToMany(() => Participate, (participate) => participate.studyPost, {
+    cascade: true,
+  })
   participates: Participate[];
 }

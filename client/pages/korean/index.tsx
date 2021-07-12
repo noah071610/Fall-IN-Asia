@@ -1,16 +1,20 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { wrapper } from "configureStore";
 import axios from "axios";
-import RecruitCard from "@components/Cards/RecruitCard";
+import RecruitCard from "@components/Cards/RecruitCard/RecruitCardMain";
 import { getUserInfoAction } from "actions/user";
 import CommonTitle from "@components/Common/CommonTitle";
 import KoreanAsideMenu from "@sections/KoreanPage/KoreanAsideMenu/KoreanAsideMenu";
-import { BORDER_THIN, FLEX_STYLE, toastErrorMessage } from "config";
+import { BORDER_THIN, FLEX_STYLE, toastErrorMessage, toastSuccessMessage } from "config";
 import router from "next/router";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { IStudyPost } from "@typings/db";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "slices";
+import { studySlice } from "slices/study";
+
 const KoreanPageWrapper = styled.div`
   padding: 2rem;
   .korean-main {
@@ -27,13 +31,23 @@ const KoreanPageWrapper = styled.div`
 interface Props {}
 
 const korean: FC<Props> = () => {
-  const { data: studyPosts, error } = useSWR("/study", fetcher);
-  if (studyPosts) {
-    console.log(studyPosts);
-  }
+  const dispatch = useDispatch();
+  const [type, setType] = useState("");
+  const { data: studyPosts, error, revalidate } = useSWR(`/study/${encodeURI(type)}`, fetcher);
+  const { user } = useSelector((state: RootState) => state.user);
+  const { studyPostDeleteDone } = useSelector((state: RootState) => state.study);
+
   if (error) {
     toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
   }
+
+  useEffect(() => {
+    if (studyPostDeleteDone) {
+      toastSuccessMessage("募集を成功的に削除致しました。");
+      dispatch(studySlice.actions.studyPostDeleteClear());
+      revalidate();
+    }
+  }, [studyPostDeleteDone]);
 
   const onClickKoreanPostBtn = useCallback(() => {
     router.push("/korean/post");
@@ -41,12 +55,14 @@ const korean: FC<Props> = () => {
   return (
     <KoreanPageWrapper>
       <CommonTitle title="韓国語レッスン" subtitle="レッスンや交流会探し">
-        <button onClick={onClickKoreanPostBtn} className="basic-btn">
-          募集掲示投稿
-        </button>
+        {user && (
+          <button onClick={onClickKoreanPostBtn} className="basic-btn">
+            募集掲示投稿
+          </button>
+        )}
       </CommonTitle>
       <div className="korean-main">
-        <KoreanAsideMenu />
+        <KoreanAsideMenu setType={setType} />
         <div className="korean-card-wrapper">
           {studyPosts?.map((v: IStudyPost, i: number) => {
             return <RecruitCard studyPost={v} key={i} />;

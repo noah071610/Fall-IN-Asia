@@ -3,6 +3,39 @@ import { IPostForm } from "@typings/db";
 import axios from "axios";
 import { toastErrorMessage } from "config";
 
+export const getMarketPostsAction = createAsyncThunk<any>("market/", async () => {
+  try {
+    const response = await axios.get("/market");
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
+  }
+});
+
+export const getMarketTypePostsAction = createAsyncThunk<any, any>("market/type", async (type) => {
+  try {
+    const response = await axios.post("/market/type", type);
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
+  }
+});
+
+export const getMarketSearchPostsAction = createAsyncThunk<any, any>(
+  "market/search",
+  async (searchedWord) => {
+    try {
+      const response = await axios.post("/market/search", { searchedWord });
+      return response.data;
+    } catch (error) {
+      toastErrorMessage(error);
+      throw error;
+    }
+  }
+);
+
 export const marketPostCreateAction = createAsyncThunk<any, any>("market/post", async (form) => {
   try {
     const response = await axios.post("/market", form);

@@ -15,9 +15,10 @@ const EditorWrapper = styled.div`
 interface IProps {
   setContent: (value: string) => void;
   prevContent?: string;
+  isStudyPost?: boolean;
 }
 
-const Editor: FC<IProps> = ({ setContent, prevContent }) => {
+const Editor: FC<IProps> = ({ setContent, prevContent, isStudyPost }) => {
   const Quill = typeof window == "object" ? require("quill") : () => false;
   const quillElement = useRef<any>(null);
   const quillInstance = useRef<any>(null);
@@ -37,7 +38,7 @@ const Editor: FC<IProps> = ({ setContent, prevContent }) => {
     });
 
     const toolbar = quill?.getModule("toolbar");
-    toolbar.addHandler("image", () => imageHandler(quillInstance));
+    toolbar.addHandler("image", () => imageHandler(quillInstance, isStudyPost));
   }, []);
 
   const onChangeEditor = (content: string) => {

@@ -5,12 +5,17 @@ import {
   clubPostDeleteAction,
   clubPostEditAction,
   clubPostEditConfirmAction,
+  getVisitClubAction,
 } from "actions/club";
 
 export interface ClubState {
   clubPost: IClubPostForm | null;
   editPost: IClubPostForm | null;
+  visitClub: any[] | null;
   postImage: string | null;
+  getVisitClubLoading: boolean;
+  getVisitClubDone: boolean;
+  getVisitClubError: boolean;
   clubPostCreateLoading: boolean;
   clubPostCreateDone: boolean;
   clubPostCreateError: boolean;
@@ -29,6 +34,10 @@ const initialState: ClubState = {
   clubPost: null,
   editPost: null,
   postImage: null,
+  visitClub: null,
+  getVisitClubLoading: false,
+  getVisitClubDone: false,
+  getVisitClubError: false,
   clubPostCreateLoading: false,
   clubPostCreateDone: false,
   clubPostCreateError: false,
@@ -73,6 +82,18 @@ export const clubSlice = createSlice({
   },
   extraReducers: (builder) =>
     builder
+      .addCase(getVisitClubAction.pending, (state) => {
+        state.getVisitClubLoading = true;
+      })
+      .addCase(getVisitClubAction.fulfilled, (state, action) => {
+        state.getVisitClubLoading = false;
+        state.getVisitClubDone = true;
+        state.visitClub = action.payload.data;
+      })
+      .addCase(getVisitClubAction.rejected, (state) => {
+        state.getVisitClubLoading = false;
+        state.getVisitClubError = true;
+      })
       .addCase(clubPostCreateAction.pending, (state) => {
         state.clubPostCreateLoading = true;
       })

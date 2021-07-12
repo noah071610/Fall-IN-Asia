@@ -60,7 +60,7 @@ export const GroupVoteWrapper = styled.div`
     }
     h3 {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
     }
     .vote-tag-list {
       ${FLEX_STYLE("center", "center")};

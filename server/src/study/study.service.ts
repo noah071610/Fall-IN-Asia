@@ -20,11 +20,23 @@ export class StudyService {
     private participateRepository: Repository<Participate>,
   ) {}
 
-  async getOnePostById(id: number) {
-    const studyPost = this.studyPostsRepository.findOne({
-      where: { id },
-    });
-    return studyPost;
+  async getTypePosts(type: string) {
+    const typePosts = () => {
+      if (type === 'レッスン' || type === '韓国語勉強俱楽部') {
+        return this.studyPostsRepository.find({
+          where: { type },
+          relations: ['leaderUser'],
+          take: 8,
+        });
+      } else {
+        return this.studyPostsRepository.find({
+          where: { area: type },
+          relations: ['leaderUser'],
+          take: 8,
+        });
+      }
+    };
+    return typePosts();
   }
 
   async getStudyPosts() {
@@ -37,7 +49,13 @@ export class StudyService {
     return studyPosts;
   }
 
-  async createStudyPost(id: number, data: any, files: Express.Multer.File[]) {
+  async getImageForPost(file: Express.Multer.File) {
+    const image = new Images();
+    image.src = process.env.BACK_URL + file.path;
+    return await this.imagesRepository.save(image);
+  }
+
+  async createStudyPost(id: number, data: any) {
     const newPostCreate = new StudyPosts();
     newPostCreate.title = data.title;
     newPostCreate.content = data.content;
@@ -45,12 +63,6 @@ export class StudyService {
     newPostCreate.type = data.type;
     newPostCreate.leaderUser = <any>{ id };
     const newPost = await this.studyPostsRepository.save(newPostCreate);
-    for (let i = 0; i < files.length; i++) {
-      const newImage = new Images();
-      newImage.src = process.env.BACK_URL + files[i].path;
-      newImage.studyPost = <any>newPost.id;
-      await this.imagesRepository.save(newImage);
-    }
     await this.participateRepository.save({
       studyPostId: newPost.id,
       userId: id,
@@ -71,9 +83,6 @@ export class StudyService {
   }
 
   async deletePost(postId: number) {
-    await this.imagesRepository.delete({
-      marketPost: <any>postId,
-    });
     await this.studyPostsRepository.delete({ id: postId });
     return true;
   }

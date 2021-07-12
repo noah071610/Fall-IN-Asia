@@ -109,21 +109,33 @@ export class Users {
   @JoinColumn([{ name: 'fan', referencedColumnName: 'id' }])
   fan: Groups;
 
-  @OneToMany(() => StudyPosts, (studyPosts) => studyPosts.leaderUser)
+  @OneToMany(() => StudyPosts, (studyPosts) => studyPosts.leaderUser, {
+    cascade: true,
+  })
   leadPosts: StudyPosts[];
 
-  @OneToMany(() => ClubPosts, (clubposts) => clubposts.user)
+  @OneToMany(() => ClubPosts, (clubposts) => clubposts.user, {
+    cascade: true,
+  })
   clubPosts: ClubPosts[];
 
-  @OneToMany(() => MarketPosts, (marketPosts) => marketPosts.user)
+  @OneToMany(() => MarketPosts, (marketPosts) => marketPosts.user, {
+    cascade: true,
+  })
   marketPosts: MarketPosts[];
 
-  @OneToMany(() => Gallery, (gallery) => gallery.user)
+  @OneToMany(() => Gallery, (gallery) => gallery.user, {
+    cascade: true,
+  })
   gallerys: Gallery[];
 
-  @OneToMany(() => Comments, (comments) => comments.user)
+  @OneToMany(() => Comments, (comments) => comments.user, {
+    cascade: true,
+  })
   comments: Comments[];
 
-  @OneToMany(() => Participate, (participate) => participate.user)
+  @OneToMany(() => Participate, (participate) => participate.user, {
+    cascade: true,
+  })
   participates: Participate[];
 }

@@ -9,12 +9,13 @@ import router, { useRouter } from "next/router";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import ClubTitle from "@sections/ClubPage/ClubTitle";
-import { noRevalidate, toastErrorMessage } from "config";
+import { noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
 import { clubPostCreateAction } from "actions/club";
 import useInput from "@hooks/useInput";
 import { IClubPostForm } from "@typings/db";
 import PostingLayout from "@components/PostingEditor/PostingLayout";
 import Editor from "@components/PostingEditor/Editor";
+import { clubSlice } from "slices/club";
 
 const ClubPostingWrapper = styled.div`
   padding: 2rem;
@@ -34,6 +35,8 @@ const post: FC<IProps> = () => {
   useEffect(() => {
     if (clubPostCreateDone) {
       router.push(`/club/${query?.group}`);
+      toastSuccessMessage("ポストを成功的に投稿致しました😊");
+      dispatch(clubSlice.actions.clubPostEditClear());
     }
   }, [clubPostCreateDone]);
   useEffect(() => {

@@ -12,9 +12,6 @@ import PostingLayout from "@components/PostingEditor/PostingLayout";
 import useInput from "@hooks/useInput";
 import { IClubPostForm } from "@typings/db";
 import { clubPostEditAction } from "actions/club";
-import { getUserInfoAction } from "actions/user";
-import { wrapper } from "configureStore";
-import axios from "axios";
 import Editor from "@components/PostingEditor/Editor";
 
 export const EditWrapper = styled.div`
@@ -26,9 +23,7 @@ const edit: FC<IProps> = () => {
   const { query } = useRouter();
   const dispatch = useDispatch();
   const { data: clubData } = useSWR(`/group/${query?.group}`, fetcher, noRevalidate);
-  const { clubPostEditConfirmDone, clubPostEditDone, editPost } = useSelector(
-    (state: RootState) => state.club
-  );
+  const { clubPostEditDone, editPost } = useSelector((state: RootState) => state.club);
   const { user } = useSelector((state: RootState) => state.user);
   const [title, onChangeTitle, setTitle] = useInput(editPost?.title);
   const [content, setContent] = useState("");
@@ -36,6 +31,11 @@ const edit: FC<IProps> = () => {
   useEffect(() => {
     if (clubPostEditDone) {
       router.push(`/club/${query?.group}`);
+      toastSuccessMessage("ポストを成功的に書き直りました😊");
+      dispatch(clubSlice.actions.clubPostEditClear());
+      dispatch(clubSlice.actions.clubPostEditConfirmClear());
+      setTitle("");
+      setContent("");
     }
   }, [clubPostEditDone]);
 
@@ -64,8 +64,6 @@ const edit: FC<IProps> = () => {
       postId: editPost.id,
     };
     dispatch(clubPostEditAction(form));
-    setTitle("");
-    setContent("");
   }, [title, content, user?.id, editPost]);
   return (
     <EditWrapper>

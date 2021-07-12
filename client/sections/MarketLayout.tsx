@@ -1,15 +1,18 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import GoodsCard from "@components/Cards/GoodsCard";
-import useSWR from "swr";
 import router from "next/dist/client/router";
-import fetcher from "utils/fetcher";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import CommonTitle from "@components/Common/CommonTitle";
 import { GRID_STYLE, toastErrorMessage } from "config";
 import { IMarketPost } from "@typings/db";
 import MarketFilter from "./MarketPage/MarketFilter";
+import {
+  getMarketPostsAction,
+  getMarketSearchPostsAction,
+  getMarketTypePostsAction,
+} from "actions/market";
 
 export const MarketWrapper = styled.div`
   padding: 2rem;
@@ -19,15 +22,36 @@ export const MarketWrapper = styled.div`
   }
 `;
 
+interface IType {
+  keyword: null | string;
+  area: null | string;
+}
+
 const MarketLayout: FC = ({ children }) => {
-  const { data: marketPosts, error } = useSWR("/market", fetcher);
+  const dispatch = useDispatch();
+  const [keyword, setKeyword] = useState<string>("タイプ全部");
+  const [area, setArea] = useState<string>("全国");
   const { user } = useSelector((state: RootState) => state.user);
-  if (error) {
-    toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
-  }
+  const { marketPosts } = useSelector((state: RootState) => state.market);
   const onClickMarketPostBtn = useCallback(() => {
     router.push("/market/post");
   }, []);
+  const onClickFilterKeyword = useCallback((type: string) => {
+    setKeyword(type);
+  }, []);
+  const onClickFilterArea = useCallback((type: string) => {
+    setArea(type);
+  }, []);
+  const onSearchMarketGoods = useCallback((searchWord: string) => {
+    dispatch(getMarketSearchPostsAction(searchWord));
+  }, []);
+  useEffect(() => {
+    if (keyword === "タイプ全部" && area === "全国") {
+      dispatch(getMarketPostsAction());
+    } else {
+      dispatch(getMarketTypePostsAction({ keyword, area }));
+    }
+  }, [keyword, area]);
 
   return (
     <MarketWrapper>
@@ -38,8 +62,14 @@ const MarketLayout: FC = ({ children }) => {
           </button>
         )}
       </CommonTitle>
-      <MarketFilter />
       {children}
+      <MarketFilter
+        keyword={keyword}
+        area={area}
+        onSearchMarketGoods={onSearchMarketGoods}
+        onClickFilterArea={onClickFilterArea}
+        onClickFilterKeyword={onClickFilterKeyword}
+      />
       <div className="goods-cards">
         {marketPosts?.map((v: IMarketPost, i: number) => {
           return <GoodsCard key={i} marketPost={v} />;

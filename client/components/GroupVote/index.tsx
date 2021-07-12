@@ -1,55 +1,76 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, memo, useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import { RootState } from "slices";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import router from "next/router";
-import useSWR from "swr";
-import fetcher from "utils/fetcher";
-import { noRevalidate } from "config";
+import { raderSettings, toastErrorMessage, voteStyleList } from "config";
 import { GroupVoteWrapper } from "./styles";
-
-interface IProps {
-  isOnVotePage?: Boolean;
-}
-
-const GroupVote: FC<IProps> = ({ isOnVotePage }) => {
-  const { data: initialData } = useSWR(`/group/bts`, fetcher, noRevalidate);
-  const { selectedGroup } = useSelector((state: RootState) => state.main);
-  const chartData = [
+import { ResponsiveRadar } from "@nivo/radar";
+import { IGroup, IGroupScore } from "@typings/db";
+import { mainSlice } from "slices/main";
+import { groupVoteForStyleAction } from "actions/group";
+const chartData = (groupScore: IGroupScore) => {
+  return [
     {
       taste: "実力派",
-      トタル: 78,
+      トタル: groupScore ? groupScore?.talented : 0,
     },
     {
       taste: "カッコいい",
-      トタル: 46,
+      トタル: groupScore ? groupScore?.handsome : 0,
     },
     {
       taste: "綺麗",
-      トタル: 78,
+      トタル: groupScore ? groupScore?.pretty : 0,
     },
     {
       taste: "可愛い",
-      トタル: 49,
+      トタル: groupScore ? groupScore?.cute : 0,
     },
     {
       taste: "お洒落",
-      トタル: 78,
+      トタル: groupScore ? groupScore?.beautiful : 0,
     },
   ];
+};
+interface IProps {
+  groupsData: IGroup[];
+  isOnVotePage?: Boolean;
+}
+
+const GroupVote: FC<IProps> = ({ isOnVotePage, groupsData }) => {
+  const dispatch = useDispatch();
+  const { selectedGroup } = useSelector((state: RootState) => state.main);
+  const { user } = useSelector((state: RootState) => state.user);
+  const onClickVoteStyleBtn = useCallback(
+    (style) => {
+      if (!user) {
+        toastErrorMessage("ログインしてからご利用できます。");
+        return;
+      }
+      let form: any = {
+        style,
+      };
+      if (!selectedGroup) {
+        form.groupId = groupsData[0]?.id;
+      } else {
+        form.groupId = selectedGroup?.id;
+      }
+      dispatch(groupVoteForStyleAction(form));
+    },
+    [groupsData, selectedGroup]
+  );
   return (
     <GroupVoteWrapper>
       {!isOnVotePage && (
         <ul className="vote-list">
-          <li>
-            <a>セブンティーン</a>
-          </li>
-          <li>
-            <a>宇宙少女</a>
-          </li>
-          <li>
-            <a>OH MY GIRL</a>
-          </li>
+          {groupsData?.slice(0, 4).map((v, i) => {
+            return (
+              <li key={i} onClick={() => dispatch(mainSlice.actions.selectGroupForVote(v))}>
+                <a>{v.group_name}</a>
+              </li>
+            );
+          })}
           <Link href="/vote">
             <a>
               <li>もっと見る</li>
@@ -60,15 +81,15 @@ const GroupVote: FC<IProps> = ({ isOnVotePage }) => {
       <div className="vote-content">
         {selectedGroup ? (
           <div className="vote-poster">
-            <img src={selectedGroup?.image} alt={selectedGroup?.name} />
+            <img src={selectedGroup?.image} alt={selectedGroup?.group_name} />
             <div>
               <h2>
-                <span>{selectedGroup?.name[0]}</span>
-                {selectedGroup?.name.slice(1)}
+                <span>{selectedGroup?.group_name[0]}</span>
+                {selectedGroup?.group_name.slice(1)}
               </h2>
               <button
                 onClick={() => {
-                  router.push(`/club/${selectedGroup.group}`);
+                  router.push(`/club/${selectedGroup.key_name}`);
                 }}
                 className="basic-btn"
               >
@@ -77,42 +98,46 @@ const GroupVote: FC<IProps> = ({ isOnVotePage }) => {
             </div>
           </div>
         ) : (
-          <div className="vote-poster">
-            <img src={initialData?.image} alt={initialData?.group_name} />
-            <div>
-              <h2>
-                <span>{initialData?.group_name[0]}</span>
-                {initialData?.group_name.slice(1)}
-              </h2>
-              <button
-                onClick={() => {
-                  router.push(`/club/${initialData.key_name}`);
-                }}
-                className="basic-btn"
-              >
-                クラブに行く
-              </button>
+          groupsData && (
+            <div className="vote-poster">
+              <img src={groupsData[0]?.image} alt={groupsData[0]?.group_name} />
+              <div>
+                <h2>
+                  <span>{groupsData[0]?.group_name[0]}</span>
+                  {groupsData[0]?.group_name.slice(1)}
+                </h2>
+                <button
+                  onClick={() => {
+                    router.push(`/club/${groupsData[0].key_name}`);
+                  }}
+                  className="basic-btn"
+                >
+                  クラブに行く
+                </button>
+              </div>
             </div>
-          </div>
+          )
         )}
         <div>
           <h3>このグループはどんな感じ？</h3>
+          <div className="vote-rader">
+            <ResponsiveRadar
+              data={chartData(
+                selectedGroup ? selectedGroup.groupScore : groupsData && groupsData[0]?.groupScore
+              )}
+              {...raderSettings}
+            />
+          </div>
           <ul className="vote-tag-list">
-            <li>
-              <button className="basic-btn">😳 実力派</button>
-            </li>
-            <li>
-              <button className="basic-btn">😊 カッコいい</button>
-            </li>
-            <li>
-              <button className="basic-btn">😘 綺麗</button>
-            </li>
-            <li>
-              <button className="basic-btn">😍 可愛い</button>
-            </li>
-            <li>
-              <button className="basic-btn">🤩 お洒落</button>
-            </li>
+            {voteStyleList?.map((v, i) => {
+              return (
+                <li key={i}>
+                  <button onClick={() => onClickVoteStyleBtn(v.eng)} className="basic-btn">
+                    {v.name}
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
@@ -120,4 +145,4 @@ const GroupVote: FC<IProps> = ({ isOnVotePage }) => {
   );
 };
 
-export default GroupVote;
+export default memo(GroupVote);

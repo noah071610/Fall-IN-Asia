@@ -1,6 +1,9 @@
-import { IPostForm } from "@typings/db";
+import { IMarketPost } from "@typings/db";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
+  getMarketPostsAction,
+  getMarketSearchPostsAction,
+  getMarketTypePostsAction,
   marketPostCreateAction,
   marketPostDeleteAction,
   marketPostEditAction,
@@ -8,8 +11,18 @@ import {
 } from "actions/market";
 
 export interface ClubState {
-  marketPost: IPostForm | null;
-  editPost: IPostForm | null;
+  marketPosts: IMarketPost[] | null;
+  marketPost: IMarketPost | null;
+  editPost: IMarketPost | null;
+  getMarketPostsLoading: boolean;
+  getMarketPostsDone: boolean;
+  getMarketPostsError: boolean;
+  getMarketTypePostsLoading: boolean;
+  getMarketTypePostsDone: boolean;
+  getMarketTypePostsError: boolean;
+  getMarketSearchPostsLoading: boolean;
+  getMarketSearchPostsDone: boolean;
+  getMarketSearchPostsError: boolean;
   marketPostCreateLoading: boolean;
   marketPostCreateDone: boolean;
   marketPostCreateError: boolean;
@@ -25,8 +38,18 @@ export interface ClubState {
 }
 
 const initialState: ClubState = {
+  marketPosts: null,
   marketPost: null,
   editPost: null,
+  getMarketPostsLoading: false,
+  getMarketPostsDone: false,
+  getMarketPostsError: false,
+  getMarketTypePostsLoading: false,
+  getMarketTypePostsDone: false,
+  getMarketTypePostsError: false,
+  getMarketSearchPostsLoading: false,
+  getMarketSearchPostsDone: false,
+  getMarketSearchPostsError: false,
   marketPostCreateLoading: false,
   marketPostCreateDone: false,
   marketPostCreateError: false,
@@ -68,12 +91,41 @@ export const marketSlice = createSlice({
   },
   extraReducers: (builder) =>
     builder
-      .addCase(marketPostCreateAction.pending, (state) => {
-        state.marketPostCreateLoading = true;
+      .addCase(getMarketPostsAction.pending, (state) => {
+        state.getMarketPostsLoading = true;
       })
-      .addCase(marketPostCreateAction.fulfilled, (state) => {
-        state.marketPostCreateLoading = false;
-        state.marketPostCreateDone = true;
+      .addCase(getMarketPostsAction.fulfilled, (state, action) => {
+        state.getMarketPostsLoading = false;
+        state.getMarketPostsDone = true;
+        state.marketPosts = action.payload.data;
+      })
+      .addCase(getMarketPostsAction.rejected, (state) => {
+        state.getMarketPostsLoading = false;
+        state.getMarketPostsError = true;
+      })
+      .addCase(getMarketTypePostsAction.pending, (state) => {
+        state.getMarketTypePostsLoading = true;
+      })
+      .addCase(getMarketTypePostsAction.fulfilled, (state, action) => {
+        state.getMarketTypePostsLoading = false;
+        state.getMarketTypePostsDone = true;
+        state.marketPosts = action.payload.data;
+      })
+      .addCase(getMarketTypePostsAction.rejected, (state) => {
+        state.getMarketTypePostsLoading = false;
+        state.getMarketTypePostsError = true;
+      })
+      .addCase(getMarketSearchPostsAction.pending, (state) => {
+        state.getMarketSearchPostsLoading = true;
+      })
+      .addCase(getMarketSearchPostsAction.fulfilled, (state, action) => {
+        state.getMarketSearchPostsLoading = false;
+        state.getMarketSearchPostsDone = true;
+        state.marketPosts = action.payload.data;
+      })
+      .addCase(getMarketSearchPostsAction.rejected, (state) => {
+        state.getMarketSearchPostsLoading = false;
+        state.getMarketSearchPostsError = true;
       })
       .addCase(marketPostCreateAction.rejected, (state) => {
         state.marketPostCreateLoading = false;

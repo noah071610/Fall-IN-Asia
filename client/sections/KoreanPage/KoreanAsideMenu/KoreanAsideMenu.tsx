@@ -4,9 +4,11 @@ import { japanMapList } from "config";
 import { DownCircleOutlined } from "@ant-design/icons";
 import useToggle from "@hooks/useToggle";
 
-interface IProps {}
+interface IProps {
+  setType: (e: string) => void;
+}
 
-const KoreanAsideMenu: FC<IProps> = () => {
+const KoreanAsideMenu: FC<IProps> = ({ setType }) => {
   const [onAreaFilter, onClickAreaFilter] = useToggle(true);
   const [onTypeFilter, onClickTypeFilter] = useToggle(true);
   return (
@@ -17,8 +19,11 @@ const KoreanAsideMenu: FC<IProps> = () => {
       </div>
       <div className="korean-list">
         <ul className={onAreaFilter ? "drop-down" : "roll-up"}>
+          <li onClick={() => setType("")}>全国</li>
           {japanMapList.map((v, i) => (
-            <li key={i}>{v.name}</li>
+            <li onClick={() => setType(v.name)} key={i}>
+              {v.name}
+            </li>
           ))}
         </ul>
       </div>
@@ -28,10 +33,9 @@ const KoreanAsideMenu: FC<IProps> = () => {
       </div>
       <div className="korean-list">
         <ul className={onTypeFilter ? "drop-down" : "roll-up"}>
-          <li>TOPIK</li>
-          <li>会話</li>
-          <li>ビジネス</li>
-          <li>趣味</li>
+          <li onClick={() => setType("")}>タイプ全部</li>
+          <li onClick={() => setType("レッスン")}>レッスン</li>
+          <li onClick={() => setType("韓国語勉強俱楽部")}>韓国語勉強俱楽部</li>
         </ul>
       </div>
     </KoreanAsideMenuWrapper>

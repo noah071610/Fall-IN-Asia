@@ -3,17 +3,30 @@ import { TitleWrapper } from "./styles";
 import CommonTitle from "@components/Common/CommonTitle";
 import router from "next/dist/client/router";
 import { useRouter } from "next/dist/client/router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
+import fetcher from "utils/fetcher";
+import { noRevalidate, toastErrorMessage } from "config";
+import { getVisitClubAction } from "actions/club";
+import Link from "next/link";
 
 interface IProps {
   clubName: string;
+  clubHistory: string[];
 }
 
-const ClubTitle: FC<IProps> = ({ clubName }) => {
+const ClubTitle: FC<IProps> = ({ clubName, clubHistory }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.user);
+  const { visitClub } = useSelector((state: RootState) => state.club);
   const { query, pathname } = useRouter();
   const [isPostPath, setIsPostPath] = useState(false);
-  const { user } = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    if (clubHistory) {
+      dispatch(getVisitClubAction(clubHistory));
+    }
+  }, [clubHistory, query]);
 
   useEffect(() => {
     const path = pathname.split("/");
@@ -48,18 +61,16 @@ const ClubTitle: FC<IProps> = ({ clubName }) => {
       <div className="club-list">
         <span>訪ねたクラブ</span>
         <ul>
-          <li className="tag">
-            <a>Oh my girl</a>
-          </li>
-          <li className="tag">
-            <a>Black Pink</a>
-          </li>
-          <li className="tag">
-            <a>モンスターX</a>
-          </li>
-          <li className="tag">
-            <a>セブンティーン</a>
-          </li>
+          {visitClub?.length > 0 &&
+            visitClub.map((v: { key_name: string; group_name: string }, i: number) => {
+              return (
+                <Link key={i} href={v.key_name}>
+                  <a>
+                    <li className="tag">{v.group_name}</li>
+                  </a>
+                </Link>
+              );
+            })}
         </ul>
       </div>
     </TitleWrapper>

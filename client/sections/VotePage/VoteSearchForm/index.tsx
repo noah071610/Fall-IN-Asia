@@ -1,15 +1,14 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useMemo, useState } from "react";
 import { VoteSearchWrapper } from "./styles";
-import GroupCard from "@components/GroupCard";
+import GroupCard from "@components/Cards/GroupCard";
 import Slider from "react-slick";
-import CommonTitle from "@components/Common/CommonTitle";
 import { DoubleLeftOutlined, DoubleRightOutlined } from "@ant-design/icons";
-import CommonSearch from "@components/Common/CommonSearch";
-import useSWR from "swr";
-import fetcher from "utils/fetcher";
 import { IGroup } from "@typings/db";
+import AutoCompleteSearch from "@components/AutoCompleteSearch";
 
-interface IProps {}
+interface IProps {
+  groupsData: IGroup[];
+}
 
 function SampleNextArrow(props: any) {
   const { onClick } = props;
@@ -21,8 +20,7 @@ function SamplePrevArrow(props: any) {
   return <DoubleLeftOutlined className="left-arrow" onClick={onClick} />;
 }
 
-const VoteSearchForm: FC<IProps> = () => {
-  const { data, error, revalidate, mutate } = useSWR("/group", fetcher);
+const VoteSearchForm: FC<IProps> = ({ groupsData }) => {
   const groupCardSettings = {
     dots: false,
     infinite: false,
@@ -33,20 +31,14 @@ const VoteSearchForm: FC<IProps> = () => {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
+
   return (
     <VoteSearchWrapper>
-      <CommonTitle point="スタイル" title="投票" subtitle="貴方の推しのスタイルは何ですか？" />
-      <CommonSearch />
+      <AutoCompleteSearch isVote={true} groupsData={groupsData} />
       <div className="vote-filter">
         <Slider {...groupCardSettings}>
-          {data?.map((v: IGroup, i: number) => (
-            <GroupCard
-              isVote={true}
-              name={v.group_name}
-              image={v.image}
-              group={v.key_name}
-              key={i}
-            />
+          {groupsData?.map((v: IGroup, i: number) => (
+            <GroupCard isVote={true} key={i} groupData={v} />
           ))}
         </Slider>
       </div>

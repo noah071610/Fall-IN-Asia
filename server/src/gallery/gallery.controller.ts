@@ -46,8 +46,6 @@ export class GalleryController {
     @Body() body,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    console.log('##data##', body);
-    console.log('##files##', file);
     const newGalleryPost = this.galleryService.createGalleryPost(
       user.id,
       body.title,

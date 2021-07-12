@@ -1,3 +1,4 @@
+import { IGroup, IGroupScore } from "@typings/db";
 import Link from "next/link";
 import React, { FC, memo, useCallback } from "react";
 import { useDispatch } from "react-redux";
@@ -5,29 +6,27 @@ import { mainSlice } from "slices/main";
 import { wrapperCSS } from "./styles";
 
 interface IProps {
-  name: string;
-  image: string;
-  group: string;
+  groupData: IGroup;
   isVote?: boolean;
 }
 
-const GroupCard: FC<IProps> = ({ name, image, group, isVote }) => {
+const GroupCard: FC<IProps> = ({ groupData, isVote }) => {
   const dispatch = useDispatch();
-  const onClickGruopInVote = useCallback(() => {
-    dispatch(mainSlice.actions.selectGroupForVote({ name, image, group }));
-  }, [name, image]);
+  const onClickGroupCardInVote = useCallback(() => {
+    dispatch(mainSlice.actions.selectGroupForVote(groupData));
+  }, []);
   return (
     <>
       {isVote ? (
-        <div onClick={onClickGruopInVote} css={wrapperCSS(image)}>
+        <div onClick={onClickGroupCardInVote} css={wrapperCSS(groupData.image)}>
           <div className="mask" />
-          <h2>{name}</h2>
+          <h2>{groupData.group_name}</h2>
         </div>
       ) : (
-        <Link href={`/club/${group}`}>
-          <a css={wrapperCSS(image)}>
+        <Link href={`/club/${groupData.key_name}`}>
+          <a css={wrapperCSS(groupData.image)}>
             <div className="mask" />
-            <h2>{name}</h2>
+            <h2>{groupData.group_name}</h2>
           </a>
         </Link>
       )}

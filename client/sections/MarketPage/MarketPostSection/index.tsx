@@ -38,7 +38,7 @@ const marketPostImageSettings = {
 
 const MarketPostSection: FC<IProps> = () => {
   const { query } = useRouter();
-  const { data: marketPost, error } = useSWR(`/market/${query.id}`, fetcher);
+  const { data: marketPost, error } = useSWR(`/market/${query?.id}`, fetcher);
   const { user } = useSelector((state: RootState) => state.user);
   const [isUserPost, setIsUserPost] = useState(false);
   const [onDelete, setOnDelete] = useState(false);

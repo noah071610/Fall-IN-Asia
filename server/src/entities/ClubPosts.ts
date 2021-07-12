@@ -67,14 +67,19 @@ export class ClubPosts {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Images, (images) => images.clubPost)
+  @OneToMany(() => Images, (images) => images.clubPost, {
+    cascade: true,
+  })
   images: Images[];
 
   @ManyToOne(() => Groups, (groups) => groups.clubPosts)
   @JoinColumn({ name: 'group' })
   group: Groups;
 
-  @ManyToOne(() => Users, (users) => users.clubPosts)
+  @ManyToOne(() => Users, (users) => users.clubPosts, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'user' })
   user: Users;
 }

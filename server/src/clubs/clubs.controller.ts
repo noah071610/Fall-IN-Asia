@@ -89,6 +89,13 @@ export class ClubsController {
   }
 
   @ApiOperation({ summary: 'Get preview posts for club main page' })
+  @Post('visit')
+  async getVisitClubs(@Body() body) {
+    const visitedPosts = await this.clubsService.getVisitClubs(body);
+    return visitedPosts;
+  }
+
+  @ApiOperation({ summary: 'Get preview posts for club main page' })
   @Get('preview')
   async getPreviewPosts() {
     const previewPosts = await this.clubsService.getPreviewPosts();

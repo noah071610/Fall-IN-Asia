@@ -78,6 +78,14 @@ export const marketKeyword = [
   { name: "出来れば宅配", eng: "more_package" },
 ];
 
+export const voteStyleList = [
+  { name: "😳 実力派", eng: "talented" },
+  { name: "😊 カッコいい", eng: "handsome" },
+  { name: "😘 綺麗", eng: "pretty" },
+  { name: "😍 可愛い", eng: "cute" },
+  { name: "😎 お洒落", eng: "beautiful" },
+];
+
 export const studyPostTypeList = [
   { name: "レッスン", eng: "lesson" },
   { name: "韓国語勉強俱楽部", eng: "study_club" },
@@ -160,7 +168,7 @@ export const NewsMainPostsettings = {
 
 // React quill
 
-export const imageHandler = (quillInstance: any) => {
+export const imageHandler = (quillInstance: any, isStudyPost?: boolean) => {
   const input = document.createElement("input");
   input.setAttribute("type", "file");
   input.setAttribute("accept", "image/*");
@@ -173,7 +181,7 @@ export const imageHandler = (quillInstance: any) => {
     }
     axios({
       method: "post",
-      url: "/club/image",
+      url: isStudyPost ? "/study/image" : "/club/image",
       data: form,
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
@@ -227,4 +235,32 @@ export const qullFormats = [
 export const noRevalidate = {
   revalidateOnFocus: false,
   revalidateOnReconnect: false,
+};
+
+// rader chart
+
+export const raderSettings = {
+  margin: { top: 70, right: 80, bottom: 40, left: 80 },
+  keys: ["トタル"],
+  indexBy: "taste",
+  maxValue: "auto",
+  curve: "linearClosed",
+  borderWidth: 1,
+  borderColor: { from: "color" },
+  gridLevels: 4,
+  gridShape: "linear",
+  gridLabelOffset: 38,
+  enableDots: true,
+  dotSize: 6,
+  dotColor: { theme: "background" },
+  dotBorderWidth: 2,
+  dotBorderColor: { from: "color", modifiers: [] },
+  enableDotLabel: true,
+  dotLabel: "value",
+  dotLabelYOffset: -12,
+  colors: { scheme: "nivo" },
+  fillOpacity: 0.15,
+  blendMode: "multiply",
+  animate: true,
+  isInteractive: true,
 };

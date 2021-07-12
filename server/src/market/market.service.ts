@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Images } from 'src/entities/Images';
 import { MarketPosts } from 'src/entities/MarketPosts';
@@ -26,6 +30,55 @@ export class MarketService {
 
   async getMarketPosts() {
     const marketPosts = this.marketPostsRepository.find({
+      relations: ['user', 'images'],
+      order: { id: 'DESC' },
+      take: 9,
+    });
+    return marketPosts;
+  }
+
+  async getMarketSearchPosts(searchWord: string) {
+    console.log(searchWord);
+
+    const marketPosts = this.marketPostsRepository
+      .createQueryBuilder('mp')
+      .where('mp.title like :title', { title: '%' + searchWord + '%' })
+      .orWhere('mp.content like :content', { content: '%' + searchWord + '%' })
+      .leftJoinAndSelect('mp.user', 'user')
+      .leftJoinAndSelect('mp.images', 'images')
+      .getMany();
+    return marketPosts;
+  }
+
+  async getMarketTypePosts(keyword: string, area: string) {
+    if (keyword === 'タイプ全部' && area === '全国') {
+      const marketPosts = this.marketPostsRepository.find({
+        relations: ['user', 'images'],
+        order: { id: 'DESC' },
+        take: 9,
+      });
+      return marketPosts;
+    }
+    if (keyword && area === '全国') {
+      const marketPosts = this.marketPostsRepository.find({
+        where: { keyword },
+        relations: ['user', 'images'],
+        order: { id: 'DESC' },
+        take: 9,
+      });
+      return marketPosts;
+    }
+    if (area && keyword === 'タイプ全部') {
+      const marketPosts = this.marketPostsRepository.find({
+        where: { area },
+        relations: ['user', 'images'],
+        order: { id: 'DESC' },
+        take: 9,
+      });
+      return marketPosts;
+    }
+    const marketPosts = this.marketPostsRepository.find({
+      where: { keyword, area },
       relations: ['user', 'images'],
       order: { id: 'DESC' },
       take: 9,
@@ -63,9 +116,6 @@ export class MarketService {
   }
 
   async deletePost(postId: number) {
-    await this.imagesRepository.delete({
-      marketPost: <any>postId,
-    });
     await this.marketPostsRepository.delete({ id: postId });
     return true;
   }

@@ -1,26 +1,25 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
+import styled from "@emotion/styled";
+import CommonTitle from "@components/Common/CommonTitle";
+import GroupVote from "@components/GroupVote";
+import VoteSearchForm from "@sections/VotePage/VoteSearchForm";
+import useSWR from "swr";
+import fetcher from "utils/fetcher";
+import { toastErrorMessage, toastSuccessMessage } from "config";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
-import GoodsExchangeSection from "@sections/MainPage/GoodsExchangeSection";
-import MusicChartSection from "@sections/MainPage/MusicChartSection";
-import SupportSection from "@sections/MainPage/SupportSection";
-import styled from "@emotion/styled";
-import GroupVote from "@components/GroupVote";
-import NewsArticle from "@components/NewsArticle";
-import useSWR from "swr";
-import fetcher from "utils/fetcher";
-import { noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
-import { mainSlice } from "slices/main";
 import { RootState } from "slices";
+import { mainSlice } from "slices/main";
 
-const MainWrapper = styled.div`
+const VoteWrapper = styled.div`
   padding: 2rem;
 `;
+interface IProps {}
 
-const index = () => {
-  const { data: groupsData, error, revalidate } = useSWR("/group/score", fetcher, noRevalidate);
+const vote: FC<IProps> = () => {
+  const { data: groupsData, error, revalidate } = useSWR("/group/score", fetcher);
   const dispatch = useDispatch();
   const { groupVoteDone } = useSelector((state: RootState) => state.main);
   useEffect(() => {
@@ -34,13 +33,11 @@ const index = () => {
     toastErrorMessage("予想できないエラーが発生しました。");
   }
   return (
-    <MainWrapper>
-      <GoodsExchangeSection />
-      <NewsArticle />
-      <MusicChartSection />
-      <SupportSection />
-      <GroupVote groupsData={groupsData} />
-    </MainWrapper>
+    <VoteWrapper>
+      <CommonTitle title="人気投票" subtitle="貴方が好きなグループはどんなスタイル？" />
+      <VoteSearchForm groupsData={groupsData} />
+      <GroupVote groupsData={groupsData} isOnVotePage={true} />
+    </VoteWrapper>
   );
 };
 
@@ -59,4 +56,4 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
 );
 
-export default index;
+export default vote;

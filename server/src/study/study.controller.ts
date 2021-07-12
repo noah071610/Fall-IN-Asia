@@ -5,11 +5,12 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  UploadedFile,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ApiCookieAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import multer from 'multer';
 import path from 'path';
@@ -25,10 +26,9 @@ import { StudyService } from './study.service';
 export class StudyController {
   constructor(private readonly studyService: StudyService) {}
 
-  @ApiOperation({ summary: 'Create Study post' })
-  @UseGuards(new LoggedInGuard())
+  @ApiOperation({ summary: 'Get preview posts for club main page' })
   @UseInterceptors(
-    FilesInterceptor('image', 5, {
+    FileInterceptor('image', {
       storage: multer.diskStorage({
         destination(req, file, cb) {
           cb(null, 'uploads/');
@@ -41,17 +41,17 @@ export class StudyController {
       limits: { fileSize: 5 * 1024 * 1024 },
     }),
   )
+  @Post('image')
+  async getImageForPost(@UploadedFile() file: Express.Multer.File) {
+    const studyPostImage = await this.studyService.getImageForPost(file);
+    return studyPostImage.src;
+  }
+
+  @ApiOperation({ summary: 'Create Study post' })
+  @UseGuards(new LoggedInGuard())
   @Post()
-  async createStudyPost(
-    @User() user,
-    @Body() data,
-    @UploadedFiles() files: Express.Multer.File[],
-  ) {
-    const newPost = await this.studyService.createStudyPost(
-      user.id,
-      data,
-      files,
-    );
+  async createStudyPost(@User() user, @Body() data) {
+    const newPost = await this.studyService.createStudyPost(user.id, data);
     return newPost;
   }
 
@@ -66,11 +66,11 @@ export class StudyController {
     this.studyService.deletePost(data.postId);
   }
 
-  @ApiOperation({ summary: 'Get one post for Study Post' })
-  @Get(':id')
-  async getOnePostById(@Param('id', ParseIntPipe) id: number) {
-    const StudyPost = await this.studyService.getOnePostById(id);
-    return StudyPost;
+  @ApiOperation({ summary: 'Get posts from selected type' })
+  @Get(':type')
+  async getTypePosts(@Param('type') type: string) {
+    const typePosts = await this.studyService.getTypePosts(decodeURI(type));
+    return typePosts;
   }
 
   @ApiOperation({ summary: 'Get Study posts' })

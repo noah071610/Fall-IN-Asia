@@ -94,10 +94,15 @@ export class MarketPosts {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Images, (images) => images.marketPost)
+  @OneToMany(() => Images, (images) => images.marketPost, {
+    cascade: true,
+  })
   images: Images[];
 
-  @ManyToOne(() => Users, (users) => users.marketPosts)
+  @ManyToOne(() => Users, (users) => users.marketPosts, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn([{ name: 'user', referencedColumnName: 'id' }])
   user: Users;
 }

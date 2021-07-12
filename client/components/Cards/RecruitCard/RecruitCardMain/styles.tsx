@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRID_STYLE, RED_COLOR } from "config";
+import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRID_STYLE } from "config";
 
-export const RecruitCardWrapper = styled.div`
+export const RecruitCardMainWrapper = styled.div`
   width: 100%;
   margin: 1rem 0 3rem 0;
 `;

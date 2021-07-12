@@ -15,6 +15,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@loadable/component": "^5.15.0",
+    "@nivo/core": "^0.72.0",
+    "@nivo/radar": "^0.72.0",
     "@reduxjs/toolkit": "^1.6.0",
     "antd": "^4.16.5",
     "aos": "^2.3.4",

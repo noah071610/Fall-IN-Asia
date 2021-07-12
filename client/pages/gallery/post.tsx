@@ -8,11 +8,12 @@ import PostingLayout from "@components/PostingEditor/PostingLayout";
 import ImageCropper from "@components/PostingEditor/ImageCropper";
 import useInput from "@hooks/useInput";
 import { useCallback, useEffect, useState } from "react";
-import { toastErrorMessage } from "config";
+import { toastErrorMessage, toastSuccessMessage } from "config";
 import { galleryPostCreateAction } from "actions/gallery";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import router from "next/router";
+import { gallerySlice } from "slices/gallery";
 
 export const GalleryPostWrapper = styled.div`
   padding: 2rem;
@@ -28,12 +29,14 @@ const post = () => {
   useEffect(() => {
     if (galleryPostCreateDone) {
       router.push("/gallery");
+      toastSuccessMessage("ポストを成功的に投稿致しました😊");
+      dispatch(gallerySlice.actions.galleryPostCreateClear());
       setTitle("");
       setBlob(null);
     }
   }, [galleryPostCreateDone]);
   useEffect(() => {
-    if (user) {
+    if (!user) {
       router.back();
     }
   }, [user]);

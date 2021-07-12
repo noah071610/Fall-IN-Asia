@@ -62,17 +62,38 @@ export class MarketController {
     this.marketService.deletePost(data.postId);
   }
 
-  @ApiOperation({ summary: 'Get one post for market Post' })
-  @Get(':id')
-  async getOnePostById(@Param('id', ParseIntPipe) id: number) {
-    const marketPost = await this.marketService.getOnePostById(id);
-    return marketPost;
-  }
-
   @ApiOperation({ summary: 'Get market posts' })
   @Get()
   async getMarketPosts() {
     const getMarketPosts = await this.marketService.getMarketPosts();
     return getMarketPosts;
+  }
+
+  @ApiOperation({ summary: 'Get market posts with keyword to search' })
+  @Post('type')
+  async getMarketTypePosts(@Body() body) {
+    const getMarketPosts = await this.marketService.getMarketTypePosts(
+      body.keyword,
+      body.area,
+    );
+    return getMarketPosts;
+  }
+
+  @ApiOperation({
+    summary: 'Get market posts with keyword of search-form from user',
+  })
+  @Post('search')
+  async getMarketSearchPosts(@Body() body) {
+    const getMarketPosts = await this.marketService.getMarketSearchPosts(
+      body.searchedWord,
+    );
+    return getMarketPosts;
+  }
+
+  @ApiOperation({ summary: 'Get one post for market Post' })
+  @Get(':id')
+  async getOnePostById(@Param('id', ParseIntPipe) id: number) {
+    const marketPost = await this.marketService.getOnePostById(id);
+    return marketPost;
   }
 }

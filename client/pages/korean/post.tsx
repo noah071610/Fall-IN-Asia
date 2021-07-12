@@ -9,11 +9,11 @@ import useInput from "@hooks/useInput";
 import { useCallback, useEffect, useState } from "react";
 import { RootState } from "slices";
 import router from "next/router";
-import { japanMapList, studyPostTypeList, toastErrorMessage } from "config";
+import { japanMapList, studyPostTypeList, toastErrorMessage, toastSuccessMessage } from "config";
 import { studyPostCreateAction } from "actions/study";
-import ImageDragger from "@components/PostingEditor/ImageDragger";
-import EditorWithoutImage from "@components/PostingEditor/EditorWithoutImage";
 import RadioSelector from "@components/PostingEditor/RadioSelector";
+import Editor from "@components/PostingEditor/Editor";
+import { studySlice } from "slices/study";
 
 export const KoreanPostWrapper = styled.div`
   padding: 2rem;
@@ -32,6 +32,8 @@ const post = () => {
   useEffect(() => {
     if (studyPostCreateDone) {
       router.push(`/korean`);
+      toastSuccessMessage("募集を成功的に投稿致しました😊");
+      dispatch(studySlice.actions.studyPostCreateClear());
       setUpImg([]);
       setTitle("");
       setContent("");
@@ -56,14 +58,12 @@ const post = () => {
       router.back();
       return;
     }
-    let form = new FormData();
-    upImg?.forEach((v) => {
-      form.append("image", v);
-    });
-    form.append("title", String(title));
-    form.append("content", String(content));
-    form.append("area", String(area));
-    form.append("type", String(type));
+    let form = {
+      title,
+      content,
+      area,
+      type,
+    };
     dispatch(studyPostCreateAction(form));
   }, [title, content, type, area]);
   return (
@@ -77,8 +77,7 @@ const post = () => {
           setValue={setType}
           lists={studyPostTypeList}
         />
-        <ImageDragger setUpImg={setUpImg} />
-        <EditorWithoutImage content={content} setContent={setContent} />
+        <Editor setContent={setContent} isStudyPost={true} />
       </PostingLayout>
     </KoreanPostWrapper>
   );

@@ -78,6 +78,7 @@ export const MarketPostSectionWrapper = styled.div`
         }
         .password-modal {
           top: 8rem;
+          right: 1.1rem;
         }
       }
     }

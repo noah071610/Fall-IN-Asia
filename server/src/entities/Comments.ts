@@ -39,7 +39,9 @@ export class Comments {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => SubComments, (subComments) => subComments.comment)
+  @OneToMany(() => SubComments, (subComments) => subComments.comment, {
+    cascade: true,
+  })
   subComments: SubComments[];
 
   @ManyToOne(() => Users, (users) => users.comments)

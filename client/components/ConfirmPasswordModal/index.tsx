@@ -7,13 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { clubPostDeleteAction, clubPostEditConfirmAction } from "actions/club";
 import { marketPostDeleteAction } from "actions/market";
+import { studyPostDeleteAction } from "actions/study";
 interface IProps {
   isDelete: boolean;
   postId: number;
   isMarketPost?: boolean;
+  isStudyPost?: boolean;
 }
 
-const ConfirmPasswordModal: FC<IProps> = ({ isDelete, postId, isMarketPost }) => {
+const ConfirmPasswordModal: FC<IProps> = ({ isDelete, postId, isMarketPost, isStudyPost }) => {
   const [password, onChangePassword, setPassword] = useInput("");
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
@@ -37,16 +39,28 @@ const ConfirmPasswordModal: FC<IProps> = ({ isDelete, postId, isMarketPost }) =>
         userId: user.id,
       };
       if (isMarketPost) {
+        console.log("잉");
+
         dispatch(marketPostDeleteAction(data));
         return;
       }
+      if (isStudyPost) {
+        console.log("잉2");
+
+        dispatch(studyPostDeleteAction(data));
+        return;
+      }
       if (isDelete) {
+        console.log("요기");
+
         dispatch(clubPostDeleteAction(data));
       } else {
+        console.log("요기2");
+
         dispatch(clubPostEditConfirmAction(data));
       }
     },
-    [user.id, password]
+    [postId, user.id, password]
   );
   return (
     <div className="password-modal" onClick={stopPropagation} css={passwordModalWrapper(isDelete)}>

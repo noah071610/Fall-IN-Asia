@@ -39,15 +39,24 @@ export class Images {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => MarketPosts, (marketPosts) => marketPosts.images)
+  @ManyToOne(() => MarketPosts, (marketPosts) => marketPosts.images, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn([{ name: 'marketPost', referencedColumnName: 'id' }])
   marketPost: MarketPosts;
 
-  @ManyToOne(() => ClubPosts, (clubPosts) => clubPosts.images)
+  @ManyToOne(() => ClubPosts, (clubPosts) => clubPosts.images, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn([{ name: 'clubPost', referencedColumnName: 'id' }])
   clubPost: ClubPosts;
 
-  @ManyToOne(() => StudyPosts, (studyPosts) => studyPosts.images)
+  @ManyToOne(() => StudyPosts, (studyPosts) => studyPosts.images, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn([{ name: 'studyPost', referencedColumnName: 'id' }])
   studyPost: StudyPosts;
 }

@@ -5,6 +5,7 @@ enum Gender {
 
 export interface IUser {
   id?: number;
+  rate?: number;
   googleId?: number;
   email?: string;
   name: string;
@@ -64,17 +65,28 @@ export interface IStudyPost {
   type: string;
   area: number;
   title: string;
-  content: number;
+  content: string;
   leaderUser: IUser;
 }
 
+export interface IGroupScore {
+  id: number;
+  talented: number;
+  handsome: number;
+  pretty: number;
+  cute: number;
+  beautiful: number;
+}
+
 export interface IGroup {
+  id: number;
   group_name: string;
   key_name: string;
   gender: Gender;
   number: number;
   image: string;
   isNew: boolean;
+  groupScore?: IGroupScore;
 }
 
 export interface IGroupScore extends IGroup {
