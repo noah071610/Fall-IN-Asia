@@ -28,16 +28,16 @@ const RecruitCardMain: FC<IProps> = ({ studyPost }) => {
     <RecruitCardMainWrapper>
       <CardMainContent>
         <div className="recruit-icon">
-          <img src={studyPost.leaderUser.icon} alt="recruit_icon" />
+          <img src={studyPost?.leaderUser?.icon} alt="recruit_icon" />
         </div>
         <div className="recruit-desc">
           <div>
-            <a className="recruit-name">{studyPost.leaderUser.name}</a>
-            <span className="tag">{studyPost.type}</span>
-            <span className="tag">{studyPost.area}</span>
+            <a className="recruit-name">{studyPost?.leaderUser?.name}</a>
+            <span className="tag">{studyPost?.type}</span>
+            <span className="tag">{studyPost?.area}</span>
           </div>
-          <h4>{studyPost.title}</h4>
-          <Rate disabled defaultValue={studyPost.leaderUser.rate} />
+          <h4>{studyPost?.title}</h4>
+          <Rate disabled defaultValue={studyPost?.leaderUser?.rate} />
           <p>
             <CommentOutlined />
             <span className="name">丹野**</span>

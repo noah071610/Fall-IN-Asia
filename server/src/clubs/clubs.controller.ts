@@ -6,6 +6,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Query,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -114,8 +115,11 @@ export class ClubsController {
 
   @ApiOperation({ summary: 'Get posts for club-group-page' })
   @Get(':group')
-  async getClubPosts(@Param('group') group: string) {
-    const postsAndclubName = await this.clubsService.getClubPosts(group);
+  async getClubPosts(
+    @Param('group') group: string,
+    @Query('page', ParseIntPipe) page: number,
+  ) {
+    const postsAndclubName = await this.clubsService.getClubPosts(group, page);
     return postsAndclubName;
   }
 }

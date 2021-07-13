@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, memo, useCallback, useEffect, useState } from "react";
 import { TitleWrapper } from "./styles";
 import CommonTitle from "@components/Common/CommonTitle";
 import router from "next/dist/client/router";
@@ -77,4 +77,4 @@ const ClubTitle: FC<IProps> = ({ clubName, clubHistory }) => {
   );
 };
 
-export default ClubTitle;
+export default memo(ClubTitle);

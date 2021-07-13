@@ -1,18 +1,26 @@
 import CommonPagination from "@components/Common/CommonPagination";
 import { IClubPost } from "@typings/db";
+import { BLUE_COLOR } from "config";
 import dayjs from "dayjs";
 import router, { useRouter } from "next/router";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { MainWrapper } from "./styles";
 interface IProps {
   clubPosts: IClubPost[];
+  postCnt: number;
 }
 
-const ClubPostList: FC<IProps> = ({ clubPosts }) => {
+const ClubPostList: FC<IProps> = ({ clubPosts, postCnt }) => {
   const { query } = useRouter();
+  const [activePostId, setActivePostId] = useState<number | null>(null);
   const onClickPostTitle = useCallback((id) => {
     router.push(`/club/${query.group}/${id}`);
   }, []);
+  useEffect(() => {
+    if (query?.id) {
+      setActivePostId(parseInt(query?.id as string));
+    }
+  }, [query]);
   return (
     <MainWrapper>
       <table>
@@ -28,13 +36,17 @@ const ClubPostList: FC<IProps> = ({ clubPosts }) => {
         <tbody>
           {clubPosts?.length > 0 &&
             clubPosts.map((v, i) => (
-              <tr key={i} className="table-post">
+              <tr
+                style={activePostId === v.id ? { background: "#F4F6FF", fontWeight: "bold" } : {}}
+                key={i}
+                className="table-post"
+              >
                 <td>{v.id}</td>
                 <td onClick={() => onClickPostTitle(v.id)} className="title">
                   {v.title}
                 </td>
                 <td>{v.user?.name}</td>
-                <td>{dayjs(v.createdAt).format("DD/MM/YYYY")}</td>
+                <td>{dayjs(v.createdAt).format("YYYY/MM/DD")}</td>
                 <td>0</td>
               </tr>
             ))}
@@ -49,7 +61,7 @@ const ClubPostList: FC<IProps> = ({ clubPosts }) => {
           <h2>掲示がありません 😰</h2>
         </div>
       )}
-      <CommonPagination />
+      <CommonPagination postCnt={postCnt} />
     </MainWrapper>
   );
 };

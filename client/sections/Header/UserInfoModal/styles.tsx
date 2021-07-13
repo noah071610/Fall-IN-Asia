@@ -10,20 +10,20 @@ import {
 } from "config";
 
 export const UserInfoModalWrapper = styled.div`
-  width: 45%;
+  width: 50%;
   top: 62px;
   right: 0;
   ${MODAL_STYLE("10%")};
   .info-top {
-    margin-bottom: 1rem;
-    ${GRID_STYLE("1rem", "1fr 2fr")};
+    ${GRID_STYLE("2rem", "1.5fr 2.5fr")};
+    margin-bottom: 2rem;
     .icon {
       img {
         width: 100%;
         border-radius: 50%;
       }
     }
-    .interface {
+    .info-desc {
       h3 {
         font-weight: bold;
         margin-bottom: 0.3rem;
@@ -38,36 +38,38 @@ export const UserInfoModalWrapper = styled.div`
           color: ${BLUE_COLOR};
           font-weight: bold;
         }
+        .tag {
+          margin: 0 0 0 0.8rem;
+        }
       }
     }
   }
-  .announcement {
-    width: 100%;
-    ${BORDER_THIN("border-bottom")};
-    ${FLEX_STYLE("flex-start", "center")};
-    img {
-      width: 3.3rem;
-      padding-left: 0.3rem;
-      margin-right: 0.5rem;
+  .info-bottom {
+    display: flex;
+    &-menu {
+      height: 100%;
+      width: 38%;
+      box-shadow: 1px 1px 8px ${RGB_BLACK(0.08)};
+      li {
+        width: 100%;
+        button {
+          padding: 0.7rem 0;
+          background: none;
+          width: 100%;
+          border: none;
+          cursor: pointer;
+          &:hover {
+            background: ${RGB_BLACK(0.15)};
+          }
+        }
+      }
+      .active {
+        background: ${BLUE_COLOR};
+        color: ${WHITE_COLOR};
+      }
     }
-  }
-  .announce-list {
-    padding-top: 0.5rem;
-    li {
-      display: block;
-      padding: 0.8rem 0.3rem;
-      transition: 0.3s all;
-      cursor: pointer;
-      .category {
-        ${BORDER_THIN("border")};
-        padding: 0.2rem 0.5rem;
-        background: ${WHITE_COLOR};
-        margin-right: 0.4rem;
-        font-size: 0.75rem;
-      }
-      &:hover {
-        background: ${RGB_BLACK(0.03)};
-      }
+    &-desc {
+      width: 100%;
     }
   }
 `;

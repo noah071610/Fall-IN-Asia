@@ -6,16 +6,27 @@ import useSWR from "swr";
 import { useRouter } from "next/dist/client/router";
 import fetcher from "utils/fetcher";
 import { noRevalidate, toastErrorMessage } from "config";
+import { useSelector } from "react-redux";
+import { RootState } from "slices";
 
 export const ClubWrapper = styled.div`
   padding: 2rem;
 `;
 
-const ClubLayout: FC = ({ children }) => {
-  const [clubHistory, setClubHistory] = useState<string[]>([]);
-  const { query } = useRouter();
+interface IProps {}
 
-  const { data: clubData, error } = useSWR(`/club/${query?.group}`, fetcher, noRevalidate);
+const ClubLayout: FC<IProps> = ({ children }) => {
+  const { query } = useRouter();
+  const [clubHistory, setClubHistory] = useState<string[]>([]);
+  const { currentPage } = useSelector((state: RootState) => state.main);
+  const { data: clubData, error } = useSWR(
+    `/club/${query?.group}?page=${currentPage || 1}`,
+    fetcher
+  );
+
+  if (clubData) {
+    console.log(clubData);
+  }
   if (error) {
     toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
   }
@@ -40,7 +51,7 @@ const ClubLayout: FC = ({ children }) => {
     <ClubWrapper>
       <ClubTitle clubHistory={clubHistory} clubName={clubData?.name} />
       {children}
-      <ClubPostList clubPosts={clubData?.posts} />
+      <ClubPostList clubPosts={clubData?.posts[0]} postCnt={clubData?.posts[1]} />
     </ClubWrapper>
   );
 };

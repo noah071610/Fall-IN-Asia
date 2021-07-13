@@ -1,5 +1,5 @@
 import { configureStore, getDefaultMiddleware, ThunkAction } from "@reduxjs/toolkit";
-import { createWrapper, MakeStore, HYDRATE } from "next-redux-wrapper";
+import { createWrapper } from "next-redux-wrapper";
 import { Action } from "redux";
 import { reducer } from "slices";
 import axios from "axios";

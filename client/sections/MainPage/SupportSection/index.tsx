@@ -8,15 +8,14 @@ const SupportSection: FC<IProps> = () => {
   const [state, setstate] = useState();
   return (
     <Wrapper>
-      <Link href="/support">
+      <Link href="/korean">
         <a>
           <div className="overlay" />
-
           <div data-aos="zoom-in">
             <h1>
-              <span>愛</span>を伝える簡単な方法
+              <span>韓</span>国語勉強会とレッスン探し
             </h1>
-            <h3>たった広告を見ただけで全額を好きなアイドルにドネーション</h3>
+            <h3>KPOPが好きな先生か仲間と一緒に韓国語上達しよう</h3>
           </div>
         </a>
       </Link>

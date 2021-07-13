@@ -1,8 +1,11 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import { Input, Pagination } from "antd";
 const { Search } = Input;
 import styled from "@emotion/styled";
 import { FLEX_STYLE } from "config";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "slices";
+import { mainSlice } from "slices/main";
 
 const PaginationWrapper = styled.div`
   padding: 2rem 0;
@@ -18,14 +21,20 @@ const PaginationWrapper = styled.div`
     }
   }
 `;
-interface IProps {}
+interface IProps {
+  postCnt: number;
+}
 
-const CommonPagination: FC<IProps> = () => {
-  const [state, setstate] = useState();
+const CommonPagination: FC<IProps> = ({ postCnt }) => {
+  const dispatch = useDispatch();
+  const { currentPage } = useSelector((state: RootState) => state.main);
+  const onChangePage = useCallback((page: number) => {
+    dispatch(mainSlice.actions.changeCurrentPage(page));
+  }, []);
   return (
     <PaginationWrapper>
       <Search />
-      <Pagination showQuickJumper defaultCurrent={1} total={50} />
+      <Pagination onChange={onChangePage} current={currentPage} total={postCnt} />
     </PaginationWrapper>
   );
 };

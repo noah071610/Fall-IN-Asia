@@ -29,6 +29,7 @@ const ClubPost: FC<IProps> = () => {
   const { clubPostEditConfirmDone, clubPostDeleteDone } = useSelector(
     (state: RootState) => state.club
   );
+  const { currentPage } = useSelector((state: RootState) => state.main);
   if (error) {
     toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
   }

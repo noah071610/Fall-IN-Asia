@@ -7,24 +7,31 @@ import {
   CommentOutlined,
 } from "@ant-design/icons";
 import { RootState } from "slices";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { BLUE_COLOR, DEFAULT_ICON_URL, WHITE_COLOR } from "config";
+import { AnnounceMenu, ChatMenu, FanMenu, SettingMenu, StudyMenu } from "./UserMenuList";
+import { mainSlice } from "slices/main";
 interface IProps {}
 
 const UserInfoModal: FC<IProps> = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
-  const [state, setstate] = useState();
+  const { onAnnounceMenu, onChatMenu, onFanMenu, onStudyMenu, onSettingMenu } = useSelector(
+    (state: RootState) => state.main
+  );
   return (
     <UserInfoModalWrapper>
       <div className="info-top">
         <div className="icon">
           <img src={user.icon} alt={user.name + "_icon"} />
         </div>
-        <div className="interface">
+        <div className="info-desc">
           <h3>{user.name} 様</h3>
           <h4>{user.email}</h4>
           <ul>
             <li>
-              ファン :<span> {user?.fan}</span>
+              ファン :
+              {user?.fan ? <span>{user?.fan}</span> : <button className="tag">ファン登録</button>}
             </li>
             <li>
               クラブポスト :<span> {user?.clubPosts?.length}</span>
@@ -35,24 +42,32 @@ const UserInfoModal: FC<IProps> = () => {
           </ul>
         </div>
       </div>
-      <div className="announcement">
-        <img src="https://img.icons8.com/cotton/64/000000/commercial--v1.png" />
-        <h3>お知らせ</h3>
+      <div className="info-bottom">
+        <ul className="info-bottom-menu">
+          <li className={onAnnounceMenu ? "active" : ""}>
+            <button onClick={() => dispatch(mainSlice.actions.showAnnounceMenu())}>お知らせ</button>
+          </li>
+          <li className={onChatMenu ? "active" : ""}>
+            <button onClick={() => dispatch(mainSlice.actions.showChatMenu())}>チャット</button>
+          </li>
+          <li className={onFanMenu ? "active" : ""}>
+            <button onClick={() => dispatch(mainSlice.actions.showFanMenu())}>ファン</button>
+          </li>
+          <li className={onStudyMenu ? "active" : ""}>
+            <button onClick={() => dispatch(mainSlice.actions.showStudyMenu())}>参加俱楽部</button>
+          </li>
+          <li className={onSettingMenu ? "active" : ""}>
+            <button onClick={() => dispatch(mainSlice.actions.showSettingMenu())}>設定</button>
+          </li>
+        </ul>
+        <div className="info-bottom-desc">
+          {onAnnounceMenu && <AnnounceMenu />}
+          {onChatMenu && <ChatMenu />}
+          {onFanMenu && <FanMenu />}
+          {onStudyMenu && <StudyMenu />}
+          {onSettingMenu && <SettingMenu />}
+        </div>
       </div>
-      <ul className="announce-list">
-        <li>
-          <span className="category">レッスン</span> 新しいレッスンの申込です！
-        </li>
-        <li>
-          <span className="category">レッスン</span> 新しいレッスンの申込です！
-        </li>
-        <li>
-          <span className="category">レッスン</span> 新しいレッスンの申込です！
-        </li>
-        <li>
-          <span className="category">レッスン</span> 新しいレッスンの申込です！
-        </li>
-      </ul>
     </UserInfoModalWrapper>
   );
 };

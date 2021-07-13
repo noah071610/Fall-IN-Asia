@@ -89,19 +89,20 @@ export class ClubsService {
     return topClubWithSixPosts;
   }
 
-  async getClubPosts(group: string) {
+  async getClubPosts(group: string, page: number) {
     const groupName = await this.GroupsRepository.findOne({
       where: { key_name: group },
       select: ['group_name', 'id'],
     });
 
-    const posts = await this.clubPostsRepository
-      .createQueryBuilder('posts')
-      .where('posts.group= :groupId', { groupId: groupName.id })
-      .leftJoinAndSelect('posts.user', 'user')
-      .limit(10)
-      .orderBy('posts.id', 'DESC')
-      .getMany();
+    const posts = await this.clubPostsRepository.findAndCount({
+      where: { key_name: group },
+      relations: ['user'],
+      skip: (page - 1) * 10,
+      take: 10,
+      order: { id: 'DESC' },
+    });
+
     return { name: groupName.group_name, posts };
   }
 

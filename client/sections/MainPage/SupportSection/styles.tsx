@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE, RED_COLOR, RGB_BLACK, WHITE_COLOR } from "config";
+import { BLUE_COLOR, FLEX_STYLE, RED_COLOR, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const Wrapper = styled.div`
   height: 500px;
@@ -25,11 +25,13 @@ export const Wrapper = styled.div`
     text-align: center;
     z-index: 1;
     span {
-      font-size: 4rem;
+      font-size: 3.5rem;
       color: ${RED_COLOR};
     }
   }
   h3 {
+    margin-top: 1rem;
+    text-align: center;
     color: ${WHITE_COLOR};
     z-index: 1;
   }
