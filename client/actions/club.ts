@@ -64,3 +64,29 @@ export const clubPostEditConfirmAction = createAsyncThunk<
     throw error;
   }
 });
+
+export const clubPostLikeAction = createAsyncThunk<any, IClubPostForm>(
+  "club/like",
+  async (form) => {
+    try {
+      const response = await axios.patch("/club/like", form);
+      return response.data;
+    } catch (error) {
+      toastErrorMessage(error);
+      throw error;
+    }
+  }
+);
+
+export const clubPostDislikeAction = createAsyncThunk<any, IClubPostForm>(
+  "club/dislike",
+  async (form) => {
+    try {
+      const response = await axios.patch("/club/dislike", form);
+      return response.data;
+    } catch (error) {
+      toastErrorMessage(error);
+      throw error;
+    }
+  }
+);

@@ -10,8 +10,8 @@ import { SubComments } from './entities/SubComments';
 import { Groups } from './entities/Groups';
 import { NewsPosts } from './entities/NewsPosts';
 import { Images } from './entities/Images';
-import { GroupScores } from './entities/GroupScore';
 import { Participate } from './entities/Participate';
+import { ClubPostLike } from './entities/ClubPostLike';
 
 dotenv.config();
 const config: TypeOrmModuleOptions = {
@@ -31,9 +31,9 @@ const config: TypeOrmModuleOptions = {
     Comments,
     SubComments,
     Groups,
-    GroupScores,
     Images,
     Participate,
+    ClubPostLike,
   ],
   charset: 'utf8mb4',
   synchronize: false,

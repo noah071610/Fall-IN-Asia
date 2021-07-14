@@ -12,7 +12,7 @@ import Link from "next/link";
 
 interface IProps {
   clubName: string;
-  clubHistory: string[];
+  clubHistory?: string[];
 }
 
 const ClubTitle: FC<IProps> = ({ clubName, clubHistory }) => {
@@ -43,36 +43,45 @@ const ClubTitle: FC<IProps> = ({ clubName, clubHistory }) => {
   const onClickClubMain = useCallback(() => {
     router.push(`/club`);
   }, []);
+  const onClickClubByGroup = useCallback(() => {
+    router.push(`/club/${query.group}?page=1`);
+  }, []);
 
   return (
     <TitleWrapper>
       <CommonTitle point={clubName} title="クラブ">
+        {query?.id ? (
+          <button onClick={onClickClubByGroup} className="basic-btn">
+            {clubName}メイン
+          </button>
+        ) : (
+          <button onClick={onClickClubMain} className="basic-btn">
+            クラブメイン
+          </button>
+        )}
         {!isPostPath && user && (
-          <>
-            <button onClick={onClickClubMain} className="basic-btn">
-              クラブメイン
-            </button>
-            <button onClick={onClickPosting} className="basic-btn">
-              ポスト投稿
-            </button>
-          </>
+          <button onClick={onClickPosting} className="basic-btn">
+            ポスト投稿
+          </button>
         )}
       </CommonTitle>
-      <div className="club-list">
-        <span>訪ねたクラブ</span>
-        <ul>
-          {visitClub?.length > 0 &&
-            visitClub.map((v: { key_name: string; group_name: string }, i: number) => {
-              return (
-                <Link key={i} href={v.key_name}>
-                  <a>
-                    <li className="tag">{v.group_name}</li>
-                  </a>
-                </Link>
-              );
-            })}
-        </ul>
-      </div>
+      {clubHistory && (
+        <div className="club-list">
+          <span>訪ねたクラブ</span>
+          <ul>
+            {visitClub?.length > 0 &&
+              visitClub.map((v: { key_name: string; group_name: string }, i: number) => {
+                return (
+                  <Link key={i} href={v.key_name}>
+                    <a>
+                      <li className="tag">{v.group_name}</li>
+                    </a>
+                  </Link>
+                );
+              })}
+          </ul>
+        </div>
+      )}
     </TitleWrapper>
   );
 };

@@ -8,14 +8,22 @@ import { RootState } from "slices";
 import { clubPostDeleteAction, clubPostEditConfirmAction } from "actions/club";
 import { marketPostDeleteAction } from "actions/market";
 import { studyPostDeleteAction } from "actions/study";
+import { commentDeleteAction } from "actions/comment";
 interface IProps {
   isDelete: boolean;
   postId: number;
   isMarketPost?: boolean;
   isStudyPost?: boolean;
+  commentId?: number;
 }
 
-const ConfirmPasswordModal: FC<IProps> = ({ isDelete, postId, isMarketPost, isStudyPost }) => {
+const ConfirmPasswordModal: FC<IProps> = ({
+  isDelete,
+  postId,
+  isMarketPost,
+  isStudyPost,
+  commentId,
+}) => {
   const [password, onChangePassword, setPassword] = useInput("");
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
@@ -38,29 +46,26 @@ const ConfirmPasswordModal: FC<IProps> = ({ isDelete, postId, isMarketPost, isSt
         password,
         userId: user.id,
       };
+      if (commentId) {
+        let commentData = { password: data.password, commentId };
+        dispatch(commentDeleteAction(commentData));
+        return;
+      }
       if (isMarketPost) {
-        console.log("잉");
-
         dispatch(marketPostDeleteAction(data));
         return;
       }
       if (isStudyPost) {
-        console.log("잉2");
-
         dispatch(studyPostDeleteAction(data));
         return;
       }
       if (isDelete) {
-        console.log("요기");
-
         dispatch(clubPostDeleteAction(data));
       } else {
-        console.log("요기2");
-
         dispatch(clubPostEditConfirmAction(data));
       }
     },
-    [postId, user.id, password]
+    [postId, user.id, password, commentId]
   );
   return (
     <div className="password-modal" onClick={stopPropagation} css={passwordModalWrapper(isDelete)}>

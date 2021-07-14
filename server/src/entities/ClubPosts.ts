@@ -10,6 +10,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ClubPostLike } from './ClubPostLike';
+import { Comments } from './Comments';
 import { Groups } from './Groups';
 import { Images } from './Images';
 import { Users } from './Users';
@@ -71,6 +73,16 @@ export class ClubPosts {
     cascade: true,
   })
   images: Images[];
+
+  @OneToMany(() => ClubPostLike, (clubPostLike) => clubPostLike.clubPost, {
+    cascade: true,
+  })
+  liked: ClubPostLike[];
+
+  @OneToMany(() => Comments, (comments) => comments.post, {
+    cascade: true,
+  })
+  comments: Comments[];
 
   @ManyToOne(() => Groups, (groups) => groups.clubPosts)
   @JoinColumn({ name: 'group' })

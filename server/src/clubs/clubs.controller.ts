@@ -118,8 +118,20 @@ export class ClubsController {
   async getClubPosts(
     @Param('group') group: string,
     @Query('page', ParseIntPipe) page: number,
+    @Query('postId', ParseIntPipe) postId: number,
   ) {
-    const postsAndclubName = await this.clubsService.getClubPosts(group, page);
-    return postsAndclubName;
+    if (!postId) {
+      const getClubPagePosts = await this.clubsService.getClubPosts(
+        group,
+        page,
+      );
+      return getClubPagePosts;
+    } else {
+      const getClubPostPagePosts = await this.clubsService.getClubPagePosts(
+        group,
+        postId,
+      );
+      return getClubPostPagePosts;
+    }
   }
 }

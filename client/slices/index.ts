@@ -6,6 +6,7 @@ import { gallerySlice } from "./gallery";
 import { clubSlice } from "./club";
 import { marketSlice } from "./market";
 import { studySlice } from "./study";
+import { commentSlice } from "./comment";
 
 export const reducer = (state: any = {}, action: any) => {
   if (action.type === HYDRATE) {
@@ -21,6 +22,7 @@ export const reducer = (state: any = {}, action: any) => {
     market: marketSlice.reducer,
     gallery: gallerySlice.reducer,
     study: studySlice.reducer,
+    comment: commentSlice.reducer,
   })(state, action);
 };
 

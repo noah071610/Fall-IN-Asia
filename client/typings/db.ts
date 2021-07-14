@@ -49,6 +49,12 @@ export interface IImages {
   src: string;
 }
 
+export interface IComment {
+  id: number;
+  content: string;
+  user: IUser;
+}
+
 export interface IMarketPost {
   id: number;
   images: IImages[];
@@ -86,7 +92,6 @@ export interface IGroup {
   number: number;
   image: string;
   isNew: boolean;
-  groupScore?: IGroupScore;
 }
 
 export interface IGroupScore extends IGroup {

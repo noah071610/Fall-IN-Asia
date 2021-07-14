@@ -34,7 +34,7 @@ const chartData = (groupScore: IGroupScore) => {
   ];
 };
 interface IProps {
-  groupsData: IGroup[];
+  groupsData: IGroupScore[];
   isOnVotePage?: Boolean;
 }
 
@@ -58,7 +58,7 @@ const GroupVote: FC<IProps> = ({ isOnVotePage, groupsData }) => {
       }
       dispatch(groupVoteForStyleAction(form));
     },
-    [groupsData, selectedGroup]
+    [groupsData, selectedGroup, user]
   );
   return (
     <GroupVoteWrapper>
@@ -122,9 +122,7 @@ const GroupVote: FC<IProps> = ({ isOnVotePage, groupsData }) => {
           <h3>このグループはどんな感じ？</h3>
           <div className="vote-rader">
             <ResponsiveRadar
-              data={chartData(
-                selectedGroup ? selectedGroup.groupScore : groupsData && groupsData[0]?.groupScore
-              )}
+              data={chartData(selectedGroup ? selectedGroup : groupsData && groupsData[0])}
               {...raderSettings}
             />
           </div>

@@ -3,8 +3,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   clubPostCreateAction,
   clubPostDeleteAction,
+  clubPostDislikeAction,
   clubPostEditAction,
   clubPostEditConfirmAction,
+  clubPostLikeAction,
   getVisitClubAction,
 } from "actions/club";
 
@@ -28,6 +30,12 @@ export interface ClubState {
   clubPostEditLoading: boolean;
   clubPostEditDone: boolean;
   clubPostEditError: boolean;
+  clubPostLikeLoading: boolean;
+  clubPostLikeDone: boolean;
+  clubPostLikeError: boolean;
+  clubPostDislikeLoading: boolean;
+  clubPostDislikeDone: boolean;
+  clubPostDislikeError: boolean;
 }
 
 const initialState: ClubState = {
@@ -50,6 +58,12 @@ const initialState: ClubState = {
   clubPostEditLoading: false,
   clubPostEditDone: false,
   clubPostEditError: false,
+  clubPostLikeLoading: false,
+  clubPostLikeDone: false,
+  clubPostLikeError: false,
+  clubPostDislikeLoading: false,
+  clubPostDislikeDone: false,
+  clubPostDislikeError: false,
 };
 
 export const clubSlice = createSlice({
@@ -78,6 +92,16 @@ export const clubSlice = createSlice({
     },
     clubPostAddImage(state, action) {
       state.postImage = "<br/><p><img src='" + action.payload + "' alt='post_image'/></p>";
+    },
+    clubPostLikeClear(state) {
+      state.clubPostLikeLoading = false;
+      state.clubPostLikeDone = false;
+      state.clubPostLikeError = false;
+    },
+    clubPostDislikeClear(state) {
+      state.clubPostDislikeLoading = false;
+      state.clubPostDislikeDone = false;
+      state.clubPostDislikeError = false;
     },
   },
   extraReducers: (builder) =>
@@ -138,5 +162,27 @@ export const clubSlice = createSlice({
       .addCase(clubPostEditAction.rejected, (state) => {
         state.clubPostEditLoading = false;
         state.clubPostEditError = true;
+      })
+      .addCase(clubPostLikeAction.pending, (state) => {
+        state.clubPostLikeLoading = true;
+      })
+      .addCase(clubPostLikeAction.fulfilled, (state, action) => {
+        state.clubPostLikeLoading = false;
+        state.clubPostLikeDone = true;
+      })
+      .addCase(clubPostLikeAction.rejected, (state) => {
+        state.clubPostLikeLoading = false;
+        state.clubPostLikeError = true;
+      })
+      .addCase(clubPostDislikeAction.pending, (state) => {
+        state.clubPostDislikeLoading = true;
+      })
+      .addCase(clubPostDislikeAction.fulfilled, (state, action) => {
+        state.clubPostDislikeLoading = false;
+        state.clubPostDislikeDone = true;
+      })
+      .addCase(clubPostDislikeAction.rejected, (state) => {
+        state.clubPostDislikeLoading = false;
+        state.clubPostDislikeError = true;
       }),
 });

@@ -7,7 +7,13 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClubPosts } from 'src/entities/ClubPosts';
 import { Groups } from 'src/entities/Groups';
-import { Repository } from 'typeorm';
+import {
+  LessThan,
+  LessThanOrEqual,
+  MoreThan,
+  MoreThanOrEqual,
+  Repository,
+} from 'typeorm';
 import { ClubPostRequestDto } from './dto/clubPost.request.dto';
 import bcrypt from 'bcrypt';
 import { Users } from 'src/entities/Users';
@@ -39,7 +45,7 @@ export class ClubsService {
         id,
         key_name: group,
       },
-      relations: ['user'],
+      relations: ['user', 'comments', 'comments.user'],
     });
     return post;
   }
@@ -102,8 +108,32 @@ export class ClubsService {
       take: 10,
       order: { id: 'DESC' },
     });
-
     return { name: groupName.group_name, posts };
+  }
+
+  async getClubPagePosts(group: string, postId: number) {
+    const groupName = await this.GroupsRepository.findOne({
+      where: { key_name: group },
+      select: ['group_name', 'id'],
+    });
+
+    const prevPosts = await this.clubPostsRepository.find({
+      where: { key_name: group, id: MoreThan(postId) },
+      relations: ['user'],
+      order: { id: 'DESC' },
+      take: 4,
+    });
+
+    const nextPosts = await this.clubPostsRepository.find({
+      where: { key_name: group, id: LessThanOrEqual(postId) },
+      relations: ['user'],
+      order: { id: 'DESC' },
+      take: 6,
+    });
+    return {
+      name: groupName.group_name,
+      posts: [prevPosts.concat(nextPosts), 10],
+    };
   }
 
   async createPost(data: ClubPostRequestDto) {
@@ -125,6 +155,11 @@ export class ClubsService {
     return editedPost;
   }
 
+  async deletePost(postId: number) {
+    await this.clubPostsRepository.delete({ id: postId });
+    return true;
+  }
+
   async comparePasswordForAuth(data: { password: string; userId: number }) {
     const user = await this.UsersRepository.findOne({
       where: { id: data.userId },
@@ -134,11 +169,6 @@ export class ClubsService {
     if (!conparePassword) {
       throw new UnauthorizedException('パスワードが違います。');
     }
-    return true;
-  }
-
-  async deletePost(postId: number) {
-    await this.clubPostsRepository.delete({ id: postId });
     return true;
   }
 

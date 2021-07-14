@@ -21,6 +21,7 @@ import { Groups } from './Groups';
 import { StudyPosts } from './StudyPosts';
 import { MarketPosts } from './MarketPosts';
 import { Participate } from './Participate';
+import { ClubPostLike } from './ClubPostLike';
 
 @Index('email', ['email'], { unique: true })
 @Entity({ schema: 'k_heart', name: 'users' })
@@ -138,4 +139,9 @@ export class Users {
     cascade: true,
   })
   participates: Participate[];
+
+  @OneToMany(() => ClubPostLike, (clubPostLike) => clubPostLike.user, {
+    cascade: true,
+  })
+  likeClubPost: ClubPostLike[];
 }

@@ -25,8 +25,11 @@ import { StudyController } from './study/study.controller';
 import { StudyService } from './study/study.service';
 import { StudyModule } from './study/study.module';
 import { StudyPosts } from './entities/StudyPosts';
-import { GroupScores } from './entities/GroupScore';
 import { Participate } from './entities/Participate';
+import { CommentsController } from './comments/comments.controller';
+import { CommentsModule } from './comments/comments.module';
+import { Comments } from './entities/Comments';
+import { ClubPostLike } from './entities/ClubPostLike';
 
 @Module({
   imports: [
@@ -41,10 +44,11 @@ import { Participate } from './entities/Participate';
       ClubPosts,
       NewsPosts,
       Gallery,
-      GroupScores,
       Images,
       StudyPosts,
       Participate,
+      Comments,
+      ClubPostLike,
     ]),
     GroupsModule,
     ClubsModule,
@@ -56,16 +60,15 @@ import { Participate } from './entities/Participate';
       serveRoot: '/uploads',
     }),
     StudyModule,
+    CommentsModule,
   ],
-  controllers: [AppController, StudyController],
+  controllers: [AppController],
   providers: [
     AppService,
-    UsersService,
     {
       provide: APP_INTERCEPTOR,
       useClass: MorganInterceptor('dev'),
     },
-    StudyService,
   ],
 })
 export class AppModule {}

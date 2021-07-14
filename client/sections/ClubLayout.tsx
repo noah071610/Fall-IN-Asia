@@ -6,8 +6,9 @@ import useSWR from "swr";
 import { useRouter } from "next/dist/client/router";
 import fetcher from "utils/fetcher";
 import { noRevalidate, toastErrorMessage } from "config";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
+import { mainSlice } from "slices/main";
 
 export const ClubWrapper = styled.div`
   padding: 2rem;
@@ -17,13 +18,13 @@ interface IProps {}
 
 const ClubLayout: FC<IProps> = ({ children }) => {
   const { query } = useRouter();
+  const dispatch = useDispatch();
   const [clubHistory, setClubHistory] = useState<string[]>([]);
   const { currentPage } = useSelector((state: RootState) => state.main);
   const { data: clubData, error } = useSWR(
-    `/club/${query?.group}?page=${currentPage || 1}`,
+    `/club/${query?.group}?page=${query?.page || 1}&postId=${query?.id || 0}`,
     fetcher
   );
-
   if (clubData) {
     console.log(clubData);
   }

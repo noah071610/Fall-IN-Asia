@@ -13,14 +13,16 @@ interface IProps {
 const ClubPostList: FC<IProps> = ({ clubPosts, postCnt }) => {
   const { query } = useRouter();
   const [activePostId, setActivePostId] = useState<number | null>(null);
-  const onClickPostTitle = useCallback((id) => {
-    router.push(`/club/${query.group}/${id}`);
-  }, []);
+
   useEffect(() => {
     if (query?.id) {
       setActivePostId(parseInt(query?.id as string));
     }
   }, [query]);
+
+  const onClickPostTitle = useCallback((id) => {
+    router.push(`/club/${query.group}/${id}`);
+  }, []);
   return (
     <MainWrapper>
       <table>
@@ -37,7 +39,7 @@ const ClubPostList: FC<IProps> = ({ clubPosts, postCnt }) => {
           {clubPosts?.length > 0 &&
             clubPosts.map((v, i) => (
               <tr
-                style={activePostId === v.id ? { background: "#F4F6FF", fontWeight: "bold" } : {}}
+                style={v.id === activePostId ? { background: "#F4F6FF", fontWeight: "bold" } : {}}
                 key={i}
                 className="table-post"
               >

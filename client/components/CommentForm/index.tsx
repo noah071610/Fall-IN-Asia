@@ -1,16 +1,36 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { CommentFormWrapper } from "./styles";
 import { Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { DEFAULT_ICON_URL } from "config";
+import { DEFAULT_ICON_URL, toastErrorMessage } from "config";
 import TextareaAutosize from "react-textarea-autosize";
+import { commentCreateAction } from "actions/comment";
+import useInput from "@hooks/useInput";
+import { useRouter } from "next/router";
 interface IProps {}
 
 const CommentForm: FC<IProps> = () => {
   const dispatch = useDispatch();
+  const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
-  useEffect(() => {}, []);
+  const [content, onChangeContent, setContent] = useInput("");
+  const onSubmitComment = useCallback(() => {
+    if (content === "" || !content?.trim()) {
+      toastErrorMessage("内容を書いてください。");
+      return;
+    }
+    if (!user) {
+      toastErrorMessage("ログインが必要です。");
+      return;
+    }
+    let form = {
+      content,
+      postId: parseInt(query?.id as string),
+    };
+    dispatch(commentCreateAction(form));
+    setContent("");
+  }, [content, query, user]);
   return (
     <CommentFormWrapper>
       <div className="name-space">
@@ -27,9 +47,13 @@ const CommentForm: FC<IProps> = () => {
         <TextareaAutosize
           className="basic-textarea"
           placeholder={user ? "コメント作成" : "ログインしてコメント作成"}
+          value={content}
+          onChange={onChangeContent}
         />
         <div>
-          <button className="basic-btn">コメント</button>
+          <button onClick={onSubmitComment} className="basic-btn">
+            コメント
+          </button>
         </div>
       </div>
     </CommentFormWrapper>

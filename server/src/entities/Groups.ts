@@ -11,7 +11,6 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ClubPosts } from './ClubPosts';
-import { GroupScores } from './GroupScore';
 import { Users } from './Users';
 
 @Entity({ schema: 'k_heart', name: 'groups' })
@@ -52,6 +51,51 @@ export class Groups {
   @Column('varchar', { name: 'image' })
   image: string;
 
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 0,
+    description: 'talented rate for group',
+  })
+  @Column('int', { name: 'talented', default: 0 })
+  talented: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 0,
+    description: 'handsome rate for group',
+  })
+  @Column('int', { name: 'handsome', default: 0 })
+  handsome: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 0,
+    description: 'pretty rate for group',
+  })
+  @Column('int', { name: 'pretty', default: 0 })
+  pretty: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 0,
+    description: 'cute rate for group',
+  })
+  @Column('int', { name: 'cute', default: 0 })
+  cute: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 0,
+    description: 'beautiful rate for group',
+  })
+  @Column('int', { name: 'beautiful', default: 0 })
+  beautiful: number;
+
   @CreateDateColumn()
   createdAt: Date;
 
@@ -60,10 +104,6 @@ export class Groups {
 
   @OneToMany(() => Users, (users) => users.fan)
   user: Users[];
-
-  @OneToOne(() => GroupScores, (groupScores) => groupScores.groupId)
-  @JoinColumn([{ name: 'groupScore', referencedColumnName: 'id' }])
-  groupScore: GroupScores;
 
   @OneToMany(() => ClubPosts, (clubPosts) => clubPosts.group)
   clubPosts: ClubPosts[];
