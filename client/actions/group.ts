@@ -6,7 +6,8 @@ export const groupVoteForStyleAction = createAsyncThunk<any, { style: string; gr
   "/group/vote",
   async (form) => {
     try {
-      await axios.patch("/group/vote", form);
+      const response = await axios.patch("/group/vote", form);
+      return response.data;
     } catch (error) {
       toastErrorMessage(error);
       throw error;

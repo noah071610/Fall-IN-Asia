@@ -25,6 +25,7 @@ export class LocalSerializer extends PassportSerializer {
       .leftJoinAndSelect('users.marketPosts', 'mp')
       .leftJoinAndSelect('users.comments', 'com')
       .leftJoinAndSelect('users.fan', 'fan')
+      .leftJoinAndSelect('users.participates', 'ptcp')
       .select([
         'users.id',
         'users.email',

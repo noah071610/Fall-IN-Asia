@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   Query,
   UploadedFile,
@@ -21,6 +22,7 @@ import { ClubEditRequestDto } from './dto/clubEdit.request.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import multer from 'multer';
 import path from 'path';
+import { User } from 'src/decorators/user.decorator';
 
 @UseInterceptors(JsonResponeGenerator)
 @ApiTags('Club')
@@ -101,6 +103,34 @@ export class ClubsController {
   async getPreviewPosts() {
     const previewPosts = await this.clubsService.getPreviewPosts();
     return previewPosts;
+  }
+
+  @ApiOperation({ summary: 'like post' })
+  @UseGuards(new LoggedInGuard())
+  @Patch('like/:clubPostId')
+  async likeClubPost(
+    @Param('clubPostId', ParseIntPipe) clubPostId: number,
+    @User() user,
+  ) {
+    const likeClubPost = await this.clubsService.likeClubPost(
+      clubPostId,
+      user.id,
+    );
+    return likeClubPost;
+  }
+
+  @ApiOperation({ summary: 'dislike post' })
+  @UseGuards(new LoggedInGuard())
+  @Patch('dislike/:clubPostId')
+  async dislikeClubPost(
+    @Param('clubPostId', ParseIntPipe) clubPostId: number,
+    @User() user,
+  ) {
+    const dislikeClubPost = await this.clubsService.dislikeClubPost(
+      clubPostId,
+      user.id,
+    );
+    return dislikeClubPost;
   }
 
   @ApiOperation({ summary: 'Get one post for post page' })

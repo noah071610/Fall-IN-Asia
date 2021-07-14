@@ -20,6 +20,7 @@ import { Users } from 'src/entities/Users';
 import { ClubEditRequestDto } from './dto/clubEdit.request.dto';
 import { Images } from 'src/entities/Images';
 import { async } from 'rxjs';
+import { ClubPostLike } from 'src/entities/ClubPostLike';
 @Injectable()
 export class ClubsService {
   constructor(
@@ -31,6 +32,8 @@ export class ClubsService {
     private UsersRepository: Repository<Users>,
     @InjectRepository(Images)
     private imagesRepository: Repository<Images>,
+    @InjectRepository(ClubPostLike)
+    private postLikeRepository: Repository<ClubPostLike>,
   ) {}
 
   async getImageForPost(file: Express.Multer.File) {
@@ -45,7 +48,7 @@ export class ClubsService {
         id,
         key_name: group,
       },
-      relations: ['user', 'comments', 'comments.user'],
+      relations: ['user', 'likedUser', 'comments', 'comments.user'],
     });
     return post;
   }
@@ -182,5 +185,16 @@ export class ClubsService {
       );
     }
     return post;
+  }
+
+  async likeClubPost(clubPostId: number, userId: number) {
+    const newPostLike = new ClubPostLike();
+    newPostLike.userId = userId;
+    newPostLike.clubPostId = clubPostId;
+    return await this.postLikeRepository.save(newPostLike);
+  }
+
+  async dislikeClubPost(clubPostId: number, userId: number) {
+    return await this.postLikeRepository.delete({ clubPostId, userId });
   }
 }

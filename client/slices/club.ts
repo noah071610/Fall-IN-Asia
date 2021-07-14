@@ -166,7 +166,7 @@ export const clubSlice = createSlice({
       .addCase(clubPostLikeAction.pending, (state) => {
         state.clubPostLikeLoading = true;
       })
-      .addCase(clubPostLikeAction.fulfilled, (state, action) => {
+      .addCase(clubPostLikeAction.fulfilled, (state) => {
         state.clubPostLikeLoading = false;
         state.clubPostLikeDone = true;
       })
@@ -177,7 +177,7 @@ export const clubSlice = createSlice({
       .addCase(clubPostDislikeAction.pending, (state) => {
         state.clubPostDislikeLoading = true;
       })
-      .addCase(clubPostDislikeAction.fulfilled, (state, action) => {
+      .addCase(clubPostDislikeAction.fulfilled, (state) => {
         state.clubPostDislikeLoading = false;
         state.clubPostDislikeDone = true;
       })

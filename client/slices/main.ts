@@ -116,9 +116,10 @@ export const mainSlice = createSlice({
       .addCase(groupVoteForStyleAction.pending, (state) => {
         state.groupVoteLoading = true;
       })
-      .addCase(groupVoteForStyleAction.fulfilled, (state) => {
+      .addCase(groupVoteForStyleAction.fulfilled, (state, action) => {
         state.groupVoteLoading = false;
         state.groupVoteDone = true;
+        state.selectedGroup = action.payload.data;
       })
       .addCase(groupVoteForStyleAction.rejected, (state) => {
         state.groupVoteLoading = false;

@@ -1,4 +1,3 @@
-import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { BORDER_THIN, FLEX_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
 
@@ -11,6 +10,7 @@ export const CommunityMenuWrapper = styled.ul`
   background-color: ${WHITE_COLOR};
   ${BORDER_THIN("border", 1.5)};
   box-sizing: content-box;
+  box-shadow: 0px 0px 15px ${RGB_BLACK(0.2)};
   padding: 0.5rem;
   li {
     ${FLEX_STYLE("center", "center")};

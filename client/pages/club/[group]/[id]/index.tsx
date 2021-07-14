@@ -13,13 +13,26 @@ import fetcher from "utils/fetcher";
 import router, { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { toastErrorMessage, toastSuccessMessage } from "config";
+import { BLUE_COLOR, BORDER_THIN, RGB_BLACK, toastErrorMessage, toastSuccessMessage } from "config";
 import { clubSlice } from "slices/club";
 import { commentSlice } from "slices/comment";
 import { IComment } from "@typings/db";
 
 const CommentsWrapper = styled.div`
   margin: 0 2rem 4rem 2rem;
+`;
+
+const CommentTitle = styled.div`
+  padding: 1.5rem 2.8rem;
+  background: ${RGB_BLACK(0.03)};
+  ${BORDER_THIN("border-top")};
+  ${BORDER_THIN("border-bottom")};
+  .count-comment {
+    font-size: 1.3rem;
+    color: ${BLUE_COLOR};
+    font-weight: bold;
+    margin-right: 0.3rem;
+  }
 `;
 
 interface IProps {}
@@ -32,9 +45,8 @@ const ClubPost: FC<IProps> = () => {
     error,
     revalidate,
   } = useSWR(`/club/${query?.group}/${query?.id}`, fetcher);
-  const { clubPostEditConfirmDone, clubPostDeleteDone } = useSelector(
-    (state: RootState) => state.club
-  );
+  const { clubPostEditConfirmDone, clubPostDeleteDone, clubPostDislikeDone, clubPostLikeDone } =
+    useSelector((state: RootState) => state.club);
   const { commentCreateDone, commentDeleteDone } = useSelector((state: RootState) => state.comment);
   if (postData) {
     console.log("##", postData);
@@ -73,10 +85,29 @@ const ClubPost: FC<IProps> = () => {
     }
   }, [commentDeleteDone]);
 
+  useEffect(() => {
+    if (clubPostLikeDone) {
+      toastSuccessMessage("いいね！💓");
+      dispatch(clubSlice.actions.clubPostLikeClear());
+      revalidate();
+    }
+  }, [clubPostLikeDone]);
+
+  useEffect(() => {
+    if (clubPostDislikeDone) {
+      toastSuccessMessage("いいね取り消し💔");
+      dispatch(clubSlice.actions.clubPostDislikeClear());
+      revalidate();
+    }
+  }, [clubPostDislikeDone]);
+
   return (
     <ClubLayout>
       <ClubPostTitle postData={postData} />
       <ClubPostContent postData={postData} />
+      <CommentTitle>
+        <span className="count-comment">{postData?.comments?.length}</span>件のコメント
+      </CommentTitle>
       <CommentForm />
       <CommentsWrapper>
         {postData?.comments?.map((v: IComment, i: number) => {

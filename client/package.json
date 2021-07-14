@@ -18,6 +18,7 @@
     "@nivo/core": "^0.72.0",
     "@nivo/radar": "^0.72.0",
     "@reduxjs/toolkit": "^1.6.0",
+    "animate.css": "^4.1.1",
     "antd": "^4.16.5",
     "aos": "^2.3.4",
     "axios": "^0.21.1",

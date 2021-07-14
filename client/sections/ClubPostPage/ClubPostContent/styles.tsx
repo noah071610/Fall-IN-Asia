@@ -12,29 +12,4 @@ export const ClubPostContentWrapper = styled.div`
       width: 70%;
     }
   }
-  .like-section {
-    padding: 1rem 0.2rem;
-    ${BORDER_THICK("border-bottom")};
-    ${FLEX_STYLE("center", "center")};
-    .like-btn {
-      font-size: 1rem;
-      ${BORDER_THIN("border")};
-      ${FLEX_STYLE("center", "center")};
-      padding: 0.5rem 3rem;
-      transition: 0.3s all;
-      &:first-of-type {
-        margin-right: 0.8rem;
-      }
-      .like-number {
-        font-size: 1.5rem;
-        padding: 0.5rem 0.8rem;
-      }
-      &:hover {
-        border: 1px solid ${BLUE_COLOR};
-      }
-    }
-    .reverse {
-      transform: rotate(180deg);
-    }
-  }
 `;

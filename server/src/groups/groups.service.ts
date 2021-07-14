@@ -49,7 +49,7 @@ export class GroupsService {
     if (!groupScore) {
       throw new NotFoundException('予想できないエラーが発生しました。');
     }
-    return true;
+    return groupScore;
   }
 
   async getGroupsWithScore() {

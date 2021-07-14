@@ -3,7 +3,7 @@ import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, RGB_BLACK } from "config";
 
 export const CommentFormWrapper = styled.div`
   padding: 1rem 2rem 0 2.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   .name-space {
     ${FLEX_STYLE("flex-start", "center")};
     margin-bottom: 0.6rem;

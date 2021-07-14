@@ -76,7 +76,6 @@ export interface IStudyPost {
 }
 
 export interface IGroupScore {
-  id: number;
   talented: number;
   handsome: number;
   pretty: number;
@@ -111,6 +110,7 @@ export interface IClubPost {
   user: IUser;
   group: IGroup;
   createdAt: string;
+  likedUser?: any[];
 }
 
 export interface ITopClubPost {

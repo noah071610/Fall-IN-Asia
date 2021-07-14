@@ -65,24 +65,21 @@ export const clubPostEditConfirmAction = createAsyncThunk<
   }
 });
 
-export const clubPostLikeAction = createAsyncThunk<any, IClubPostForm>(
-  "club/like",
-  async (form) => {
-    try {
-      const response = await axios.patch("/club/like", form);
-      return response.data;
-    } catch (error) {
-      toastErrorMessage(error);
-      throw error;
-    }
+export const clubPostLikeAction = createAsyncThunk<any, number>("club/like", async (clubPostId) => {
+  try {
+    const response = await axios.patch(`/club/like/${clubPostId}`);
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
   }
-);
+});
 
-export const clubPostDislikeAction = createAsyncThunk<any, IClubPostForm>(
+export const clubPostDislikeAction = createAsyncThunk<any, number>(
   "club/dislike",
-  async (form) => {
+  async (clubPostId) => {
     try {
-      const response = await axios.patch("/club/dislike", form);
+      const response = await axios.patch(`/club/dislike/${clubPostId}`);
       return response.data;
     } catch (error) {
       toastErrorMessage(error);

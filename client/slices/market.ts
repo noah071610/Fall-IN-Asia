@@ -127,6 +127,13 @@ export const marketSlice = createSlice({
         state.getMarketSearchPostsLoading = false;
         state.getMarketSearchPostsError = true;
       })
+      .addCase(marketPostCreateAction.pending, (state) => {
+        state.marketPostCreateLoading = true;
+      })
+      .addCase(marketPostCreateAction.fulfilled, (state) => {
+        state.marketPostCreateLoading = false;
+        state.marketPostCreateDone = true;
+      })
       .addCase(marketPostCreateAction.rejected, (state) => {
         state.marketPostCreateLoading = false;
         state.marketPostCreateError = true;

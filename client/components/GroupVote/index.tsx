@@ -9,30 +9,7 @@ import { ResponsiveRadar } from "@nivo/radar";
 import { IGroup, IGroupScore } from "@typings/db";
 import { mainSlice } from "slices/main";
 import { groupVoteForStyleAction } from "actions/group";
-const chartData = (groupScore: IGroupScore) => {
-  return [
-    {
-      taste: "実力派",
-      トタル: groupScore ? groupScore?.talented : 0,
-    },
-    {
-      taste: "カッコいい",
-      トタル: groupScore ? groupScore?.handsome : 0,
-    },
-    {
-      taste: "綺麗",
-      トタル: groupScore ? groupScore?.pretty : 0,
-    },
-    {
-      taste: "可愛い",
-      トタル: groupScore ? groupScore?.cute : 0,
-    },
-    {
-      taste: "お洒落",
-      トタル: groupScore ? groupScore?.beautiful : 0,
-    },
-  ];
-};
+
 interface IProps {
   groupsData: IGroupScore[];
   isOnVotePage?: Boolean;
@@ -50,16 +27,35 @@ const GroupVote: FC<IProps> = ({ isOnVotePage, groupsData }) => {
       }
       let form: any = {
         style,
+        groupId: selectedGroup.id,
       };
-      if (!selectedGroup) {
-        form.groupId = groupsData[0]?.id;
-      } else {
-        form.groupId = selectedGroup?.id;
-      }
       dispatch(groupVoteForStyleAction(form));
     },
-    [groupsData, selectedGroup, user]
+    [selectedGroup, user]
   );
+
+  const chartData = (selectedGroup: IGroupScore) => [
+    {
+      taste: "実力派",
+      トタル: selectedGroup?.talented || 0,
+    },
+    {
+      taste: "カッコいい",
+      トタル: selectedGroup?.handsome || 0,
+    },
+    {
+      taste: "綺麗",
+      トタル: selectedGroup?.pretty || 0,
+    },
+    {
+      taste: "可愛い",
+      トタル: selectedGroup?.cute || 0,
+    },
+    {
+      taste: "お洒落",
+      トタル: selectedGroup?.beautiful || 0,
+    },
+  ];
   return (
     <GroupVoteWrapper>
       {!isOnVotePage && (
@@ -79,52 +75,27 @@ const GroupVote: FC<IProps> = ({ isOnVotePage, groupsData }) => {
         </ul>
       )}
       <div className="vote-content">
-        {selectedGroup ? (
-          <div className="vote-poster">
-            <img src={selectedGroup?.image} alt={selectedGroup?.group_name} />
-            <div>
-              <h2>
-                <span>{selectedGroup?.group_name[0]}</span>
-                {selectedGroup?.group_name.slice(1)}
-              </h2>
-              <button
-                onClick={() => {
-                  router.push(`/club/${selectedGroup.key_name}`);
-                }}
-                className="basic-btn"
-              >
-                クラブに行く
-              </button>
-            </div>
+        <div className="vote-poster">
+          <img src={selectedGroup?.image} alt={selectedGroup?.group_name} />
+          <div>
+            <h2>
+              <span>{selectedGroup?.group_name[0]}</span>
+              {selectedGroup?.group_name.slice(1)}
+            </h2>
+            <button
+              onClick={() => {
+                router.push(`/club/${selectedGroup.key_name}`);
+              }}
+              className="basic-btn"
+            >
+              クラブに行く
+            </button>
           </div>
-        ) : (
-          groupsData && (
-            <div className="vote-poster">
-              <img src={groupsData[0]?.image} alt={groupsData[0]?.group_name} />
-              <div>
-                <h2>
-                  <span>{groupsData[0]?.group_name[0]}</span>
-                  {groupsData[0]?.group_name.slice(1)}
-                </h2>
-                <button
-                  onClick={() => {
-                    router.push(`/club/${groupsData[0].key_name}`);
-                  }}
-                  className="basic-btn"
-                >
-                  クラブに行く
-                </button>
-              </div>
-            </div>
-          )
-        )}
+        </div>
         <div>
           <h3>このグループはどんな感じ？</h3>
           <div className="vote-rader">
-            <ResponsiveRadar
-              data={chartData(selectedGroup ? selectedGroup : groupsData && groupsData[0])}
-              {...raderSettings}
-            />
+            <ResponsiveRadar data={chartData(selectedGroup)} {...raderSettings} />
           </div>
           <ul className="vote-tag-list">
             {voteStyleList?.map((v, i) => {

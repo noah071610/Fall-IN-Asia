@@ -77,7 +77,7 @@ export class ClubPosts {
   @OneToMany(() => ClubPostLike, (clubPostLike) => clubPostLike.clubPost, {
     cascade: true,
   })
-  liked: ClubPostLike[];
+  likedUser: ClubPostLike[];
 
   @OneToMany(() => Comments, (comments) => comments.post, {
     cascade: true,

@@ -9,6 +9,7 @@ import { marketSlice } from "slices/market";
 import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
+import { getMarketPostsAction } from "actions/market";
 interface IProps {}
 
 const index: FC<IProps> = () => {
@@ -37,6 +38,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         axios.defaults.headers.Cookie = cookie;
       }
       await store.dispatch(getUserInfoAction());
+      await store.dispatch(getMarketPostsAction());
       return {
         props: {},
       };

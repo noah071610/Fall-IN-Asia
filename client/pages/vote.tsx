@@ -21,7 +21,7 @@ interface IProps {}
 const vote: FC<IProps> = () => {
   const { data: groupsData, error, revalidate } = useSWR("/group/score", fetcher);
   const dispatch = useDispatch();
-  const { groupVoteDone } = useSelector((state: RootState) => state.main);
+  const { groupVoteDone, selectedGroup } = useSelector((state: RootState) => state.main);
   useEffect(() => {
     if (groupVoteDone) {
       toastSuccessMessage("投票ありがとうございます🥰");
@@ -29,6 +29,11 @@ const vote: FC<IProps> = () => {
       dispatch(mainSlice.actions.groupVoteClear());
     }
   }, [groupVoteDone]);
+  useEffect(() => {
+    if (groupsData && !selectedGroup) {
+      dispatch(mainSlice.actions.selectGroupForVote(groupsData[0]));
+    }
+  }, [groupsData]);
   if (error) {
     toastErrorMessage("予想できないエラーが発生しました。");
   }

@@ -6,9 +6,12 @@ import { ClubPosts } from 'src/entities/ClubPosts';
 import { Groups } from 'src/entities/Groups';
 import { Users } from 'src/entities/Users';
 import { Images } from 'src/entities/Images';
+import { ClubPostLike } from 'src/entities/ClubPostLike';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ClubPosts, Groups, Users, Images])],
+  imports: [
+    TypeOrmModule.forFeature([ClubPosts, Groups, Users, Images, ClubPostLike]),
+  ],
   providers: [ClubsService],
   controllers: [ClubsController],
 })

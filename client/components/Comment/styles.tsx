@@ -40,7 +40,6 @@ export const CommentWrapper = styled.div`
       padding-left: 0.2rem;
     }
   }
-
   &:hover {
     .comment-main {
       background: ${RGB_BLACK(0.03)};

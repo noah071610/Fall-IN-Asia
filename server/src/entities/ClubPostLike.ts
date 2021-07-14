@@ -32,10 +32,10 @@ export class ClubPostLike {
   @IsNotEmpty()
   @ApiProperty({
     example: 1,
-    description: 'postId (Liked)',
+    description: 'clubPostId (Liked)',
   })
   @Column()
-  postId: number;
+  clubPostId: number;
 
   @ManyToOne(() => Users, (users) => users.likeClubPost, {
     onDelete: 'CASCADE',
@@ -44,7 +44,7 @@ export class ClubPostLike {
   @JoinColumn({ name: 'userId' })
   user: Users;
 
-  @ManyToOne(() => ClubPosts, (clubPosts) => clubPosts.liked, {
+  @ManyToOne(() => ClubPosts, (clubPosts) => clubPosts.likedUser, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
