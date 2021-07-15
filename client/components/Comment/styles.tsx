@@ -1,12 +1,11 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, FLEX_STYLE, RED_COLOR, RGB_BLACK } from "config";
+import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, RED_COLOR, RGB_BLACK } from "config";
 
 export const CommentWrapper = styled.div`
+  padding-bottom: 2rem;
   .comment-main {
     padding: 1rem 0.5rem;
-    ${BORDER_THIN("border-bottom")};
     transition: 0.3s all;
-    cursor: pointer;
     .name-space {
       ${FLEX_STYLE("space-between", "center")};
       margin-bottom: 0.5rem;
@@ -29,10 +28,8 @@ export const CommentWrapper = styled.div`
         a {
           margin-left: 0.5rem;
         }
-        .color-red {
-          &:hover {
-            color: ${RED_COLOR};
-          }
+        .anticon {
+          font-size: 1.1rem;
         }
       }
     }
@@ -40,9 +37,25 @@ export const CommentWrapper = styled.div`
       padding-left: 0.2rem;
     }
   }
-  &:hover {
-    .comment-main {
-      background: ${RGB_BLACK(0.03)};
+  .subComment-toggle-div {
+    padding: 0 0.5rem;
+    ${FLEX_STYLE("flex-end", "center")};
+    .count {
+      font-size: 1rem;
+      margin-right: 0.2rem;
+      font-weight: bold;
+      color: ${BLUE_COLOR};
     }
+    a {
+      ${FLEX_STYLE("center", "center")};
+      .anticon {
+        font-size: 1.1rem;
+        margin-left: 0.5rem;
+      }
+    }
+  }
+  .comment-bottom {
+    ${BORDER_THIN("border-bottom")};
+    padding-bottom: 1rem;
   }
 `;

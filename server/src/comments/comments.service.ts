@@ -6,12 +6,15 @@ import { Groups } from 'src/entities/Groups';
 import { Users } from 'src/entities/Users';
 import { Repository } from 'typeorm';
 import bcrypt from 'bcrypt';
+import { SubComments } from 'src/entities/SubComments';
 
 @Injectable()
 export class CommentsService {
   constructor(
     @InjectRepository(Comments)
     private commentsRepository: Repository<Comments>,
+    @InjectRepository(SubComments)
+    private subCommentsRepository: Repository<SubComments>,
     @InjectRepository(ClubPosts)
     private clubPostsRepository: Repository<ClubPosts>,
     @InjectRepository(Groups)
@@ -19,21 +22,6 @@ export class CommentsService {
     @InjectRepository(Users)
     private usersRepository: Repository<Users>,
   ) {}
-
-  async getcomments(group: string) {
-    // const groupName = await this.groupsRepository.findOne({
-    //   where: { key_name: group },
-    //   select: ['group_name', 'id'],
-    // });
-    // const posts = await this.commentsRepository.findAndCount({
-    //   where: { key_name: group },
-    //   relations: ['user'],
-    //   skip: (page - 1) * 10,
-    //   take: 10,
-    //   order: { id: 'DESC' },
-    // });
-    // return { name: groupName.group_name, posts };
-  }
 
   async createComment(content: string, userId: number, postId: number) {
     const newComment = new Comments();
@@ -57,6 +45,19 @@ export class CommentsService {
     if (!conparePassword) {
       throw new UnauthorizedException('パスワードが違います。');
     }
+    return true;
+  }
+
+  async createSubComment(content: string, userId: number, commentId: number) {
+    const newSubComment = new SubComments();
+    newSubComment.content = content;
+    newSubComment.user = <any>{ id: userId };
+    newSubComment.comment = <any>{ id: commentId };
+    return await this.subCommentsRepository.save(newSubComment);
+  }
+
+  async deleteSubComment(subCommentId: number) {
+    await this.subCommentsRepository.delete({ id: subCommentId });
     return true;
   }
 }

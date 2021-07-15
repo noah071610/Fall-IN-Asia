@@ -45,4 +45,11 @@ export class SubComments {
   })
   @JoinColumn([{ name: 'comment', referencedColumnName: 'id' }])
   comment: Comments;
+
+  @ManyToOne(() => Users, (users) => users.subComments, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'user', referencedColumnName: 'id' }])
+  user: Users;
 }

@@ -31,7 +31,7 @@ export class CommentsController {
   // }
 
   @UseGuards(new LoggedInGuard())
-  @ApiOperation({ summary: 'Edit post' })
+  @ApiOperation({ summary: 'Create Comment' })
   @Post()
   async createComment(@Body() data: any, @User() user) {
     const createdComment = await this.commentService.createComment(
@@ -43,11 +43,32 @@ export class CommentsController {
   }
 
   @UseGuards(new LoggedInGuard())
-  @ApiOperation({ summary: 'Delete Comments' })
+  @ApiOperation({ summary: 'Delete Comment' })
   @Post('delete')
   async deleteComment(@Body() data: any, @User() user) {
     await this.commentService.comparePasswordForAuth(data.password, user.id);
     await this.commentService.deleteComment(data.commentId);
+    return true;
+  }
+
+  @UseGuards(new LoggedInGuard())
+  @ApiOperation({ summary: 'Create SubComment' })
+  @Post('/subComment')
+  async createSubComment(@Body() data: any, @User() user) {
+    const createdSubComment = await this.commentService.createSubComment(
+      data.content,
+      user.id,
+      data.commentId,
+    );
+    return createdSubComment;
+  }
+
+  @UseGuards(new LoggedInGuard())
+  @ApiOperation({ summary: 'Delete SubComment' })
+  @Post('/subComment/delete')
+  async deleteSubComment(@Body() data: any, @User() user) {
+    await this.commentService.comparePasswordForAuth(data.password, user.id);
+    await this.commentService.deleteSubComment(data.subCommentId);
     return true;
   }
 }

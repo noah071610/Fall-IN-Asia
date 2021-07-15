@@ -47,7 +47,8 @@ const ClubPost: FC<IProps> = () => {
   } = useSWR(`/club/${query?.group}/${query?.id}`, fetcher);
   const { clubPostEditConfirmDone, clubPostDeleteDone, clubPostDislikeDone, clubPostLikeDone } =
     useSelector((state: RootState) => state.club);
-  const { commentCreateDone, commentDeleteDone } = useSelector((state: RootState) => state.comment);
+  const { commentCreateDone, commentDeleteDone, subCommentCreateDone, subCommentDeleteDone } =
+    useSelector((state: RootState) => state.comment);
   if (error) {
     toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
   }
@@ -81,6 +82,22 @@ const ClubPost: FC<IProps> = () => {
       revalidate();
     }
   }, [commentDeleteDone]);
+
+  useEffect(() => {
+    if (subCommentCreateDone) {
+      toastSuccessMessage("返事を成功的に作成致しました。");
+      dispatch(commentSlice.actions.subCommentCreateClear());
+      revalidate();
+    }
+  }, [subCommentCreateDone]);
+
+  useEffect(() => {
+    if (subCommentDeleteDone) {
+      toastSuccessMessage("返事を成功的に削除致しました。");
+      dispatch(commentSlice.actions.subCommentDeleteClear());
+      revalidate();
+    }
+  }, [subCommentDeleteDone]);
 
   useEffect(() => {
     if (clubPostLikeDone) {

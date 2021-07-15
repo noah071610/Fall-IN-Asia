@@ -15,7 +15,7 @@ const SubCommentForm: FC<IProps> = ({ commentId }) => {
   const [content, onChangeContent, setContent] = useInput("");
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
-  const onSubmitComment = useCallback(() => {
+  const onSubmitSubComment = useCallback(() => {
     if (content === "" || !content?.trim()) {
       toastErrorMessage("内容を書いてください。");
       return;
@@ -33,26 +33,25 @@ const SubCommentForm: FC<IProps> = ({ commentId }) => {
   }, [commentId, content]);
   return (
     <SubCommentFormWrapper>
-      <div className="name-space">
-        <div className="icon">
-          {user ? (
-            <img src={user.icon} alt="user_icon" />
-          ) : (
-            <img src={DEFAULT_ICON_URL} alt="user_icon" />
-          )}
-        </div>
-        <span className="name">{user ? user.name : "ユーザー"}</span>
+      <div className="icon">
+        {user ? (
+          <img src={user.icon} alt="user_icon" />
+        ) : (
+          <img src={DEFAULT_ICON_URL} alt="user_icon" />
+        )}
       </div>
       <div className="subComment-input">
-        <TextareaAutosize
-          className="basic-textarea"
+        <input
+          className="basic-input"
           placeholder={user ? "コメント作成" : "ログインしてコメント作成"}
           value={content}
           onChange={onChangeContent}
         />
-        <button onClick={onSubmitComment} className="basic-btn">
-          コメント
-        </button>
+        <div>
+          <button onClick={onSubmitSubComment} className="basic-btn">
+            コメント
+          </button>
+        </div>
       </div>
     </SubCommentFormWrapper>
   );

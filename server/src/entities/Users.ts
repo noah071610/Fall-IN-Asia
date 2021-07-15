@@ -25,6 +25,7 @@ import { ClubPostLike } from './ClubPostLike';
 import { GroupVote } from './GroupVote';
 import { Chats } from './Chats';
 import { Announcements } from './Announces';
+import { SubComments } from './SubComments';
 
 @Index('email', ['email'], { unique: true })
 @Entity({ schema: 'k_heart', name: 'users' })
@@ -138,6 +139,11 @@ export class Users {
     cascade: true,
   })
   comments: Comments[];
+
+  @OneToMany(() => SubComments, (subComments) => subComments.user, {
+    cascade: true,
+  })
+  subComments: SubComments[];
 
   @OneToMany(() => Participate, (participate) => participate.user, {
     cascade: true,

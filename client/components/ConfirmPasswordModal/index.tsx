@@ -8,13 +8,14 @@ import { RootState } from "slices";
 import { clubPostDeleteAction, clubPostEditConfirmAction } from "actions/club";
 import { marketPostDeleteAction } from "actions/market";
 import { studyPostDeleteAction } from "actions/study";
-import { commentDeleteAction } from "actions/comment";
+import { commentDeleteAction, subCommentDeleteAction } from "actions/comment";
 interface IProps {
   isDelete: boolean;
   postId: number;
   isMarketPost?: boolean;
   isStudyPost?: boolean;
   commentId?: number;
+  subCommentId?: number;
 }
 
 const ConfirmPasswordModal: FC<IProps> = ({
@@ -23,6 +24,7 @@ const ConfirmPasswordModal: FC<IProps> = ({
   isMarketPost,
   isStudyPost,
   commentId,
+  subCommentId,
 }) => {
   const [password, onChangePassword, setPassword] = useInput("");
   const dispatch = useDispatch();
@@ -49,6 +51,11 @@ const ConfirmPasswordModal: FC<IProps> = ({
       if (commentId) {
         let commentData = { password: data.password, commentId };
         dispatch(commentDeleteAction(commentData));
+        return;
+      }
+      if (subCommentId) {
+        let commentData = { password: data.password, subCommentId };
+        dispatch(subCommentDeleteAction(commentData));
         return;
       }
       if (isMarketPost) {

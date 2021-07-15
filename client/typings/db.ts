@@ -53,6 +53,14 @@ export interface IComment {
   id: number;
   content: string;
   user: IUser;
+  subComments: ISubComment[];
+}
+
+export interface ISubComment {
+  id: number;
+  content: string;
+  user: IUser;
+  comment: IComment;
 }
 
 export interface IMarketPost {

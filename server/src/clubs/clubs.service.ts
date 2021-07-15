@@ -48,7 +48,14 @@ export class ClubsService {
         id,
         key_name: group,
       },
-      relations: ['user', 'likedUser', 'comments', 'comments.user'],
+      relations: [
+        'user',
+        'likedUser',
+        'comments',
+        'comments.user',
+        'comments.subComments',
+        'comments.subComments.user',
+      ],
     });
     return post;
   }

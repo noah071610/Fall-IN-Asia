@@ -12,6 +12,16 @@ export const commentCreateAction = createAsyncThunk<any, any>("comment/create", 
   }
 });
 
+export const commentDeleteAction = createAsyncThunk<any, any>("comment/delete", async (data) => {
+  try {
+    await axios.post(`/comment/delete`, data);
+    return;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
+  }
+});
+
 export const subCommentCreateAction = createAsyncThunk<any, any>(
   "comment/subComment/create",
   async (data) => {
@@ -25,21 +35,11 @@ export const subCommentCreateAction = createAsyncThunk<any, any>(
   }
 );
 
-export const commentDeleteAction = createAsyncThunk<any, any>("comment/delete", async (data) => {
-  try {
-    await axios.post(`/comment/delete`, data);
-    return;
-  } catch (error) {
-    toastErrorMessage(error);
-    throw error;
-  }
-});
-
 export const subCommentDeleteAction = createAsyncThunk<any, any>(
-  "comment/subComment",
+  "comment/subComment/delete",
   async (data) => {
     try {
-      await axios.delete(`/comment/subComment/${data.postId}/${data.commentId}`);
+      await axios.post(`/comment/subComment/delete`, data);
       return;
     } catch (error) {
       toastErrorMessage(error);
