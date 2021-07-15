@@ -68,6 +68,20 @@ export const GroupVoteWrapper = styled.div`
       button {
         margin: 0 0.5rem 0.7rem 0;
       }
+      .voted {
+        background: ${BLUE_COLOR};
+        border: none;
+        color: ${WHITE_COLOR};
+      }
+      .unvoted {
+        background: ${RGB_BLACK(0.1)};
+        border: none;
+        cursor: unset;
+        &:hover {
+          color: ${BLACK_COLOR};
+          border: none;
+        }
+      }
     }
   }
 `;

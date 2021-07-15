@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   JoinColumn,
   OneToMany,
   OneToOne,
@@ -11,6 +12,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ClubPosts } from './ClubPosts';
+import { GroupVote } from './GroupVote';
 import { Users } from './Users';
 
 @Entity({ schema: 'k_heart', name: 'groups' })
@@ -33,6 +35,7 @@ export class Groups {
   @Column('varchar', { name: 'group_name', length: 20 })
   group_name: string;
 
+  @Index()
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -107,4 +110,9 @@ export class Groups {
 
   @OneToMany(() => ClubPosts, (clubPosts) => clubPosts.group)
   clubPosts: ClubPosts[];
+
+  @OneToMany(() => GroupVote, (groupVote) => groupVote.group, {
+    cascade: true,
+  })
+  votedUser: GroupVote[];
 }

@@ -12,6 +12,9 @@ import { NewsPosts } from './entities/NewsPosts';
 import { Images } from './entities/Images';
 import { Participate } from './entities/Participate';
 import { ClubPostLike } from './entities/ClubPostLike';
+import { GroupVote } from './entities/GroupVote';
+import { Announcements } from './entities/Announces';
+import { Chats } from './entities/Chats';
 
 dotenv.config();
 const config: TypeOrmModuleOptions = {
@@ -32,6 +35,9 @@ const config: TypeOrmModuleOptions = {
     SubComments,
     Groups,
     Images,
+    GroupVote,
+    Announcements,
+    Chats,
     Participate,
     ClubPostLike,
   ],

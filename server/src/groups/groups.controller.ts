@@ -1,15 +1,19 @@
 import { GroupsService } from './groups.service';
 import {
   Body,
+  Delete,
   Get,
   Param,
   Patch,
   Query,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { Controller } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
+import { User } from 'src/decorators/user.decorator';
+import { LoggedInGuard } from 'src/auth/logged-in.guard';
 
 @UseInterceptors(JsonResponeGenerator)
 @ApiTags('Groups')
@@ -31,11 +35,32 @@ export class GroupsController {
     return groupsWithScore;
   }
 
+  @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'get groups with score' })
   @Patch('vote')
-  async patchScore(@Body() form) {
-    const voteScore = await this.groupsService.patchScore(form);
+  async patchScore(@Body() data, @User() user) {
+    const voteScore = await this.groupsService.patchScore(
+      data.style,
+      data.groupId,
+      user.id,
+    );
     return voteScore;
+  }
+
+  @UseGuards(new LoggedInGuard())
+  @ApiOperation({ summary: 'get groups with score' })
+  @Delete('vote/:style/:groupId')
+  async undoScore(
+    @Param('style') style,
+    @Param('groupId') groupId,
+    @User() user,
+  ) {
+    const undoScore = await this.groupsService.undoScore(
+      style,
+      groupId,
+      user.id,
+    );
+    return undoScore;
   }
 
   @ApiOperation({ summary: 'get specific group with score for vote' })

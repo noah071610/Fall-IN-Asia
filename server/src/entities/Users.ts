@@ -22,10 +22,14 @@ import { StudyPosts } from './StudyPosts';
 import { MarketPosts } from './MarketPosts';
 import { Participate } from './Participate';
 import { ClubPostLike } from './ClubPostLike';
+import { GroupVote } from './GroupVote';
+import { Chats } from './Chats';
+import { Announcements } from './Announces';
 
 @Index('email', ['email'], { unique: true })
 @Entity({ schema: 'k_heart', name: 'users' })
 export class Users {
+  @Index()
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty({
@@ -144,4 +148,19 @@ export class Users {
     cascade: true,
   })
   likeClubPost: ClubPostLike[];
+
+  @OneToMany(() => GroupVote, (groupVote) => groupVote.user, {
+    cascade: true,
+  })
+  voteGroups: GroupVote[];
+
+  @OneToMany(() => Chats, (chats) => chats.chatToUser, {
+    cascade: true,
+  })
+  chatToUser: Chats[];
+
+  @OneToMany(() => Announcements, (announcements) => announcements.user, {
+    cascade: true,
+  })
+  announcements: Announcements[];
 }

@@ -75,12 +75,19 @@ export interface IStudyPost {
   leaderUser: IUser;
 }
 
+export interface IGroupVote {
+  userId: number;
+  groupId: number;
+  votedStyle: string;
+}
+
 export interface IGroupScore {
   talented: number;
   handsome: number;
   pretty: number;
   cute: number;
   beautiful: number;
+  votedUser?: IGroupVote;
 }
 
 export interface IGroup {

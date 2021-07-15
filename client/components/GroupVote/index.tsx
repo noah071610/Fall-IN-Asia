@@ -1,4 +1,4 @@
-import React, { FC, memo, useCallback, useMemo, useState } from "react";
+import React, { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { RootState } from "slices";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,33 +6,19 @@ import router from "next/router";
 import { raderSettings, toastErrorMessage, voteStyleList } from "config";
 import { GroupVoteWrapper } from "./styles";
 import { ResponsiveRadar } from "@nivo/radar";
-import { IGroup, IGroupScore } from "@typings/db";
+import { IGroup, IGroupScore, IGroupVote } from "@typings/db";
 import { mainSlice } from "slices/main";
-import { groupVoteForStyleAction } from "actions/group";
+import { groupVoteForStyleAction, groupVoteUndoAction } from "actions/group";
 
 interface IProps {
-  groupsData: IGroupScore[];
   isOnVotePage?: Boolean;
 }
 
-const GroupVote: FC<IProps> = ({ isOnVotePage, groupsData }) => {
+const GroupVote: FC<IProps> = ({ isOnVotePage }) => {
   const dispatch = useDispatch();
-  const { selectedGroup } = useSelector((state: RootState) => state.main);
+  const [isVoted, setIsVoted] = useState<string | false>(false);
+  const { selectedGroup, voteGroups } = useSelector((state: RootState) => state.main);
   const { user } = useSelector((state: RootState) => state.user);
-  const onClickVoteStyleBtn = useCallback(
-    (style) => {
-      if (!user) {
-        toastErrorMessage("ログインしてからご利用できます。");
-        return;
-      }
-      let form: any = {
-        style,
-        groupId: selectedGroup.id,
-      };
-      dispatch(groupVoteForStyleAction(form));
-    },
-    [selectedGroup, user]
-  );
 
   const chartData = (selectedGroup: IGroupScore) => [
     {
@@ -56,11 +42,54 @@ const GroupVote: FC<IProps> = ({ isOnVotePage, groupsData }) => {
       トタル: selectedGroup?.beautiful || 0,
     },
   ];
+
+  useEffect(() => {
+    const votedStyle: IGroupVote = selectedGroup?.votedUser?.find(
+      (v: IGroupVote) => v.userId === user.id
+    );
+    if (user && votedStyle) {
+      setIsVoted(votedStyle.votedStyle);
+    } else {
+      setIsVoted(false);
+    }
+  }, [user, selectedGroup, voteGroups]);
+
+  const onClickVoteStyleBtn = useCallback(
+    (style) => {
+      if (!user) {
+        toastErrorMessage("ログインしてからご利用できます。");
+        return;
+      }
+      let form: any = {
+        style,
+        groupId: selectedGroup.id,
+      };
+      dispatch(groupVoteForStyleAction(form));
+      setIsVoted(style);
+    },
+    [selectedGroup?.id, user]
+  );
+  const onClickVoteStyleUndo = useCallback(
+    (style) => {
+      if (!user) {
+        toastErrorMessage("ログインしてからご利用できます。");
+        return;
+      }
+      let form: any = {
+        style,
+        groupId: selectedGroup.id,
+      };
+      dispatch(groupVoteUndoAction(form));
+      setIsVoted(false);
+    },
+    [selectedGroup?.id, user]
+  );
+
   return (
     <GroupVoteWrapper>
       {!isOnVotePage && (
         <ul className="vote-list">
-          {groupsData?.slice(0, 4).map((v, i) => {
+          {voteGroups?.slice(0, 4).map((v: IGroupScore, i: number) => {
             return (
               <li key={i} onClick={() => dispatch(mainSlice.actions.selectGroupForVote(v))}>
                 <a>{v.group_name}</a>
@@ -99,13 +128,27 @@ const GroupVote: FC<IProps> = ({ isOnVotePage, groupsData }) => {
           </div>
           <ul className="vote-tag-list">
             {voteStyleList?.map((v, i) => {
-              return (
-                <li key={i}>
-                  <button onClick={() => onClickVoteStyleBtn(v.eng)} className="basic-btn">
-                    {v.name}
-                  </button>
-                </li>
-              );
+              if (isVoted) {
+                return (
+                  <li key={i}>
+                    <button
+                      className={v.eng === isVoted ? "voted basic-btn" : "unvoted basic-btn"}
+                      disabled={v.eng !== isVoted ? true : false}
+                      onClick={() => onClickVoteStyleUndo(v.eng)}
+                    >
+                      {v.name}
+                    </button>
+                  </li>
+                );
+              } else {
+                return (
+                  <li key={i}>
+                    <button onClick={() => onClickVoteStyleBtn(v.eng)} className="basic-btn">
+                      {v.name}
+                    </button>
+                  </li>
+                );
+              }
             })}
           </ul>
         </div>

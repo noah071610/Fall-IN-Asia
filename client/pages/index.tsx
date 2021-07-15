@@ -8,38 +8,41 @@ import SupportSection from "@sections/MainPage/SupportSection";
 import styled from "@emotion/styled";
 import GroupVote from "@components/GroupVote";
 import NewsArticle from "@components/NewsArticle";
-import useSWR from "swr";
-import fetcher from "utils/fetcher";
-import { noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
+import { toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { mainSlice } from "slices/main";
 import { RootState } from "slices";
+import { getGroupsWithScoreAction } from "actions/group";
 
 const MainWrapper = styled.div`
   padding: 2rem;
 `;
 
 const index = () => {
-  const { data: groupsData, error, revalidate } = useSWR("/group/score", fetcher, noRevalidate);
   const dispatch = useDispatch();
-  const { groupVoteDone } = useSelector((state: RootState) => state.main);
+  const { groupVoteDone, groupVoteUndoDone } = useSelector((state: RootState) => state.main);
   useEffect(() => {
     if (groupVoteDone) {
       toastSuccessMessage("投票ありがとうございます🥰");
-      revalidate();
+      dispatch(getGroupsWithScoreAction(true));
       dispatch(mainSlice.actions.groupVoteClear());
     }
   }, [groupVoteDone]);
-  if (error) {
-    toastErrorMessage("予想できないエラーが発生しました。");
-  }
+
+  useEffect(() => {
+    if (groupVoteUndoDone) {
+      toastSuccessMessage("投票を取り消しました。");
+      dispatch(getGroupsWithScoreAction(true));
+      dispatch(mainSlice.actions.groupVoteUndoClear());
+    }
+  }, [groupVoteUndoDone]);
   return (
     <MainWrapper>
       <GoodsExchangeSection />
       <NewsArticle />
       <MusicChartSection />
       <SupportSection />
-      <GroupVote groupsData={groupsData} />
+      <GroupVote />
     </MainWrapper>
   );
 };
@@ -53,6 +56,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         axios.defaults.headers.Cookie = cookie;
       }
       await store.dispatch(getUserInfoAction());
+      await store.dispatch(getGroupsWithScoreAction(false));
       return {
         props: {},
       };

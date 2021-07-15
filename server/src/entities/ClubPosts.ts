@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
@@ -18,6 +19,7 @@ import { Users } from './Users';
 
 @Entity({ schema: 'k_heart', name: 'clubPosts' })
 export class ClubPosts {
+  @Index()
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty({
@@ -27,6 +29,7 @@ export class ClubPosts {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
+  @Index()
   @IsString()
   @IsNotEmpty()
   @ApiProperty({

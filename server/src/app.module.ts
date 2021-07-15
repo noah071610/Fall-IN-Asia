@@ -5,7 +5,6 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { MorganModule, MorganInterceptor } from 'nest-morgan';
 import { UsersModule } from './users/users.module';
-import { UsersService } from './users/users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as ormconfig from './ormconfig';
 import { Users } from './entities/Users';
@@ -21,15 +20,15 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { MarketModule } from './market/market.module';
 import { Images } from './entities/Images';
-import { StudyController } from './study/study.controller';
-import { StudyService } from './study/study.service';
 import { StudyModule } from './study/study.module';
 import { StudyPosts } from './entities/StudyPosts';
 import { Participate } from './entities/Participate';
-import { CommentsController } from './comments/comments.controller';
 import { CommentsModule } from './comments/comments.module';
 import { Comments } from './entities/Comments';
 import { ClubPostLike } from './entities/ClubPostLike';
+import { GroupVote } from './entities/GroupVote';
+import { Announcements } from './entities/Announces';
+import { Chats } from './entities/Chats';
 
 @Module({
   imports: [
@@ -49,6 +48,9 @@ import { ClubPostLike } from './entities/ClubPostLike';
       Participate,
       Comments,
       ClubPostLike,
+      GroupVote,
+      Announcements,
+      Chats,
     ]),
     GroupsModule,
     ClubsModule,

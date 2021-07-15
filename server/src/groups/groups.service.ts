@@ -1,12 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Groups } from 'src/entities/Groups';
+import { GroupVote } from 'src/entities/GroupVote';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class GroupsService {
   constructor(
     @InjectRepository(Groups) private groupsRepository: Repository<Groups>,
+    @InjectRepository(GroupVote)
+    private groupVoteRepository: Repository<GroupVote>,
   ) {}
 
   async getGroups() {
@@ -19,11 +22,12 @@ export class GroupsService {
     return groups;
   }
 
-  async patchScore(form: { style: string; groupId: number }) {
+  async patchScore(style: string, groupId: number, userId: number) {
     const groupScore = await this.groupsRepository.findOne({
-      where: { id: form.groupId },
+      where: { id: groupId },
+      relations: ['votedUser'],
     });
-    switch (form.style) {
+    switch (style) {
       case 'handsome':
         groupScore.handsome++;
         break;
@@ -45,16 +49,60 @@ export class GroupsService {
       default:
         break;
     }
-    await this.groupsRepository.save(groupScore);
     if (!groupScore) {
       throw new NotFoundException('予想できないエラーが発生しました。');
     }
+    const newGroupVote = new GroupVote();
+    newGroupVote.userId = userId;
+    newGroupVote.groupId = groupId;
+    newGroupVote.votedStyle = style as any;
+    await this.groupsRepository.save(groupScore);
+    await this.groupVoteRepository.save(newGroupVote);
+    return groupScore;
+  }
+
+  async undoScore(style: string, groupId: number, userId: number) {
+    const deleteGroupScore = await this.groupVoteRepository.delete({
+      userId,
+      groupId,
+    });
+    if (!deleteGroupScore) {
+      throw new NotFoundException('予想できないエラーが発生しました。');
+    }
+    const groupScore = await this.groupsRepository.findOne({
+      where: { id: groupId },
+      relations: ['votedUser'],
+    });
+    switch (style) {
+      case 'handsome':
+        groupScore.handsome--;
+        break;
+
+      case 'pretty':
+        groupScore.pretty--;
+        break;
+
+      case 'beautiful':
+        groupScore.beautiful--;
+        break;
+
+      case 'talented':
+        groupScore.talented--;
+        break;
+      case 'cute':
+        groupScore.cute--;
+        break;
+      default:
+        break;
+    }
+    await this.groupsRepository.save(groupScore);
     return groupScore;
   }
 
   async getGroupsWithScore() {
     const groupsWithScore = await this.groupsRepository.find({
       take: 5,
+      relations: ['votedUser'],
     });
     if (!groupsWithScore) {
       throw new NotFoundException('予想できないエラーが発生しました。');
@@ -77,7 +125,6 @@ export class GroupsService {
     const groupWithScore = await this.groupsRepository.findOne({
       where: { key_name: group },
       select: ['id', 'group_name', 'key_name', 'image'],
-      relations: ['groupScore'],
     });
     if (!groupWithScore) {
       throw new NotFoundException('予想できないエラーが発生しました。');

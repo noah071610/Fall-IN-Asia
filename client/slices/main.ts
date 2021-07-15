@@ -1,8 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IGroup } from "@typings/db";
-import { groupVoteForStyleAction } from "actions/group";
+import {
+  getGroupsWithScoreAction,
+  groupVoteForStyleAction,
+  groupVoteUndoAction,
+} from "actions/group";
 
 export interface MainState {
+  voteGroups: IGroup | null;
+  selectedGroup: IGroup | null;
   currentPage: number;
   onCommunityModal: boolean;
   onLoginModal: boolean;
@@ -13,13 +19,20 @@ export interface MainState {
   onStudyMenu: boolean;
   onSettingMenu: boolean;
   onUserInfoModal: boolean;
+  getGroupsWithScoreLoading: boolean;
+  getGroupsWithScoreDone: boolean;
+  getGroupsWithScoreError: boolean;
   groupVoteLoading: boolean;
   groupVoteDone: boolean;
   groupVoteError: boolean;
-  selectedGroup: IGroup | null;
+  groupVoteUndoLoading: boolean;
+  groupVoteUndoDone: boolean;
+  groupVoteUndoError: boolean;
 }
 
 const mainState: MainState = {
+  voteGroups: null,
+  selectedGroup: null,
   currentPage: 1,
   onCommunityModal: false,
   onLoginModal: false,
@@ -30,10 +43,15 @@ const mainState: MainState = {
   onFanMenu: false,
   onStudyMenu: false,
   onSettingMenu: false,
-  selectedGroup: null,
+  getGroupsWithScoreLoading: false,
+  getGroupsWithScoreDone: false,
+  getGroupsWithScoreError: false,
   groupVoteLoading: false,
   groupVoteDone: false,
   groupVoteError: false,
+  groupVoteUndoLoading: false,
+  groupVoteUndoDone: false,
+  groupVoteUndoError: false,
 };
 
 export const mainSlice = createSlice({
@@ -110,9 +128,29 @@ export const mainSlice = createSlice({
       state.groupVoteDone = false;
       state.groupVoteError = false;
     },
+    groupVoteUndoClear(state) {
+      state.groupVoteUndoLoading = false;
+      state.groupVoteUndoDone = false;
+      state.groupVoteUndoError = false;
+    },
   },
   extraReducers: (builder) =>
     builder
+      .addCase(getGroupsWithScoreAction.pending, (state) => {
+        state.getGroupsWithScoreLoading = true;
+      })
+      .addCase(getGroupsWithScoreAction.fulfilled, (state, action) => {
+        state.getGroupsWithScoreLoading = false;
+        state.getGroupsWithScoreDone = true;
+        state.voteGroups = action.payload.data.data;
+        if (!action.payload.isRefresh) {
+          state.selectedGroup = action.payload.data.data[0];
+        }
+      })
+      .addCase(getGroupsWithScoreAction.rejected, (state) => {
+        state.getGroupsWithScoreLoading = false;
+        state.getGroupsWithScoreError = true;
+      })
       .addCase(groupVoteForStyleAction.pending, (state) => {
         state.groupVoteLoading = true;
       })
@@ -124,5 +162,17 @@ export const mainSlice = createSlice({
       .addCase(groupVoteForStyleAction.rejected, (state) => {
         state.groupVoteLoading = false;
         state.groupVoteError = true;
+      })
+      .addCase(groupVoteUndoAction.pending, (state) => {
+        state.groupVoteUndoLoading = true;
+      })
+      .addCase(groupVoteUndoAction.fulfilled, (state, action) => {
+        state.groupVoteUndoLoading = false;
+        state.groupVoteUndoDone = true;
+        state.selectedGroup = action.payload.data;
+      })
+      .addCase(groupVoteUndoAction.rejected, (state) => {
+        state.groupVoteUndoLoading = false;
+        state.groupVoteUndoError = true;
       }),
 });

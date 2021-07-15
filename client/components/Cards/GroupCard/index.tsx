@@ -14,7 +14,7 @@ const GroupCard: FC<IProps> = ({ groupData, isVote }) => {
   const dispatch = useDispatch();
   const onClickGroupCardInVote = useCallback(() => {
     dispatch(mainSlice.actions.selectGroupForVote(groupData));
-  }, []);
+  }, [groupData]);
   return (
     <>
       {isVote ? (
