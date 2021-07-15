@@ -46,6 +46,7 @@ const ClubTitle: FC<IProps> = ({ clubName, clubHistory }) => {
   const onClickClubByGroup = useCallback(() => {
     router.push(`/club/${query.group}?page=1`);
   }, []);
+  console.log(visitClub);
 
   return (
     <TitleWrapper>
@@ -70,7 +71,7 @@ const ClubTitle: FC<IProps> = ({ clubName, clubHistory }) => {
           <span>訪ねたクラブ</span>
           <ul>
             {visitClub?.length > 0 &&
-              visitClub.map((v: { key_name: string; group_name: string }, i: number) => {
+              visitClub?.map((v: { key_name: string; group_name: string }, i: number) => {
                 return (
                   <Link key={i} href={v.key_name}>
                     <a>

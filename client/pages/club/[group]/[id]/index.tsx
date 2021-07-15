@@ -23,10 +23,10 @@ const CommentsWrapper = styled.div`
 `;
 
 const CommentTitle = styled.div`
-  padding: 1.5rem 2.8rem;
+  padding: 1rem 2rem 1rem 2.5rem;
   background: ${RGB_BLACK(0.03)};
-  ${BORDER_THIN("border-top")};
-  ${BORDER_THIN("border-bottom")};
+  ${BORDER_THIN("border")};
+  margin-bottom: 1rem;
   .count-comment {
     font-size: 1.3rem;
     color: ${BLUE_COLOR};
@@ -48,9 +48,6 @@ const ClubPost: FC<IProps> = () => {
   const { clubPostEditConfirmDone, clubPostDeleteDone, clubPostDislikeDone, clubPostLikeDone } =
     useSelector((state: RootState) => state.club);
   const { commentCreateDone, commentDeleteDone } = useSelector((state: RootState) => state.comment);
-  if (postData) {
-    console.log("##", postData);
-  }
   if (error) {
     toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
   }

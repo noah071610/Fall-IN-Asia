@@ -2,14 +2,13 @@ import ClubLayout from "@sections/ClubLayout";
 import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
-
 const index = () => {
   return <ClubLayout />;
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, res, ...etc }) => {
+    async ({ req, res, query }) => {
       const cookie = req ? req.headers.cookie : "";
       axios.defaults.headers.Cookie = "";
       if (req && cookie) {

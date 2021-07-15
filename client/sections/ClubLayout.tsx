@@ -3,12 +3,13 @@ import styled from "@emotion/styled";
 import ClubTitle from "@sections/ClubPage/ClubTitle";
 import ClubPostList from "@sections/ClubPage/ClubPostList";
 import useSWR from "swr";
-import { useRouter } from "next/dist/client/router";
+import router, { useRouter } from "next/dist/client/router";
 import fetcher from "utils/fetcher";
 import { noRevalidate, toastErrorMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { mainSlice } from "slices/main";
+import { IGroup } from "@typings/db";
 
 export const ClubWrapper = styled.div`
   padding: 2rem;
@@ -18,35 +19,46 @@ interface IProps {}
 
 const ClubLayout: FC<IProps> = ({ children }) => {
   const { query } = useRouter();
-  const dispatch = useDispatch();
+  const [isPossibleRoute, setIsPossibleRoute] = useState(false);
   const [clubHistory, setClubHistory] = useState<string[]>([]);
-  const { currentPage } = useSelector((state: RootState) => state.main);
-  const { data: clubData, error } = useSWR(
+  const { data: possibleGroups } = useSWR(`/group`, fetcher, noRevalidate);
+  const { data: clubData } = useSWR(
     `/club/${query?.group}?page=${query?.page || 1}&postId=${query?.id || 0}`,
     fetcher
   );
-  if (clubData) {
-    console.log(clubData);
-  }
-  if (error) {
-    toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
-  }
+
+  // if (error) {
+  //   toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
+  // }
+
   useEffect(() => {
-    if (localStorage.getItem("visited_club")) {
-      setClubHistory([query?.group, ...JSON.parse(localStorage.getItem("visited_club")!)]);
-    } else {
-      setClubHistory([query?.group as string]);
+    if (possibleGroups) {
+      if (!possibleGroups.find((v: IGroup) => v.key_name === query.group)) {
+        router.push("/");
+      } else {
+        setIsPossibleRoute(true);
+      }
     }
-    setClubHistory((prev) => [...new Set(prev)]);
-  }, []);
+  }, [query]);
+
+  useEffect(() => {
+    if (isPossibleRoute) {
+      if (localStorage.getItem("visited_club")) {
+        setClubHistory([query?.group, ...JSON.parse(localStorage.getItem("visited_club")!)]);
+      } else {
+        setClubHistory([query?.group as string]);
+      }
+      setClubHistory((prev) => [...new Set(prev)]);
+    }
+  }, [query, isPossibleRoute]);
 
   useEffect(() => {
     return () => {
-      if (0 < clubHistory.length && clubHistory.length < 6) {
+      if (0 < clubHistory.length && clubHistory.length < 6 && isPossibleRoute) {
         localStorage.setItem("visited_club", JSON.stringify(clubHistory));
       }
     };
-  }, [clubHistory]);
+  }, [clubHistory, isPossibleRoute]);
 
   return (
     <ClubWrapper>
