@@ -24,7 +24,7 @@ import { Participate } from './Participate';
 import { ClubPostLike } from './ClubPostLike';
 import { GroupVote } from './GroupVote';
 import { Chats } from './Chats';
-import { Announcements } from './Announces';
+import { Announcements } from './Announcements';
 import { SubComments } from './SubComments';
 
 @Index('email', ['email'], { unique: true })
@@ -118,7 +118,7 @@ export class Users {
   @OneToMany(() => StudyPosts, (studyPosts) => studyPosts.leaderUser, {
     cascade: true,
   })
-  leadPosts: StudyPosts[];
+  studyPosts: StudyPosts[];
 
   @OneToMany(() => ClubPosts, (clubposts) => clubposts.user, {
     cascade: true,

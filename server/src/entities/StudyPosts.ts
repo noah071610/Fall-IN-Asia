@@ -13,6 +13,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Announcements } from './Announcements';
 import { Images } from './Images';
 import { Participate } from './Participate';
 import { Users } from './Users';
@@ -97,12 +98,17 @@ export class StudyPosts {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Users, (users) => users.leadPosts, {
+  @ManyToOne(() => Users, (users) => users.studyPosts, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn([{ name: 'leaderUser', referencedColumnName: 'id' }])
   leaderUser: Users;
+
+  @OneToMany(() => Announcements, (announcements) => announcements.studyPost, {
+    cascade: true,
+  })
+  announcements: Announcements[];
 
   @OneToMany(() => Images, (images) => images.studyPost, {
     cascade: true,

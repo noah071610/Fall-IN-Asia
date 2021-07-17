@@ -1,6 +1,6 @@
 import { AlertOutlined, EditOutlined, PoweroffOutlined, RetweetOutlined } from "@ant-design/icons";
-import { DEFAULT_ICON_URL } from "config";
-import React, { FC, useState } from "react";
+import { DEFAULT_ICON_URL, noRevalidate, NO_POST_URL } from "config";
+import React, { FC, useEffect, useState } from "react";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import {
@@ -10,63 +10,139 @@ import {
   StudyMenuWrapper,
   SettingMenuWrapper,
 } from "./styles";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "slices";
+import dayjs from "dayjs";
+import GroupCard from "@components/Cards/GroupCard";
+import { IClubPost, IGroup } from "@typings/db";
+import AutoCompleteSearch from "@components/AutoCompleteSearch";
+import Link from "next/link";
 
 interface IProps {}
 
 export const AnnounceMenu: FC<IProps> = () => {
-  const [state, setstate] = useState();
+  const dispatch = useDispatch();
+  const [announcements, setAnnouncements] = useState<any[]>([]);
+  const { user } = useSelector((state: RootState) => state.user);
+  useEffect(() => {
+    if (user) {
+      console.log(user);
+
+      const marketPostsAnnouncements =
+        user?.marketPosts.length > 0
+          ? user?.marketPosts?.map((v: any) => {
+              return v.announcements;
+            })
+          : [];
+      const clubPostsAnnouncements =
+        user?.clubPosts.length > 0
+          ? user?.clubPosts?.map((v: any) => {
+              return v.announcements;
+            })
+          : [];
+      const studyPostsAnnouncements =
+        user?.studyPosts.length > 0
+          ? user?.studyPosts?.map((v: any) => {
+              return v.announcements;
+            })
+          : [];
+      const announcements = marketPostsAnnouncements
+        .concat(clubPostsAnnouncements)
+        .concat(studyPostsAnnouncements);
+      setAnnouncements(
+        announcements
+          .map((v: any) => {
+            return v[0];
+          })
+          ?.sort((a: any, b: any) => {
+            return dayjs(b.updatedAt).format("MDDHHmmss") - dayjs(a.updatedAt).format("MDDHHmmss");
+          })
+      );
+    }
+  }, []);
+  console.log(announcements);
+
   return (
     <AnnounceMenuWrapper>
-      <li>
-        <span className="category">レッスン</span> 新しいレッスンの申込です
-      </li>
-      <li>
-        <span className="category">レッスン</span> 新しいレッスンの申込です
-      </li>
+      {announcements?.map((v, i) => {
+        return (
+          <li key={i}>
+            <span className="category">
+              {v.clubPostId ? "クラブ" : v.marketPostId ? "マーケット" : "スタディー"}
+            </span>{" "}
+            {v.content}
+          </li>
+        );
+      })}
     </AnnounceMenuWrapper>
   );
 };
 
 export const ChatMenu: FC<IProps> = () => {
-  const [state, setstate] = useState();
+  const { user } = useSelector((state: RootState) => state.user);
   return (
     <ChatMenuWrapper>
-      <li>
-        <div className="name-space">
-          <img src={DEFAULT_ICON_URL} />
-          <span>長谷川拓也</span>
-        </div>
-        <div className="recent-message">あら！あれはいいですね！</div>
-      </li>
-      <li>
-        <div className="name-space">
-          <img src={DEFAULT_ICON_URL} />
-          <span>長谷川拓也</span>
-        </div>
-        <div className="recent-message">あら！あれはいいですね！</div>
-      </li>
+      {user?.chatToUser?.map((v: any) => {
+        <li>
+          <div className="name-space">
+            <img src={v.icon} />
+            <span>{v.name}</span>
+          </div>
+          <div className="recent-message">あら！あれはいいですね！</div>
+        </li>;
+      })}
     </ChatMenuWrapper>
   );
 };
 
 export const FanMenu: FC<IProps> = () => {
-  const [state, setstate] = useState();
+  const { user } = useSelector((state: RootState) => state.user);
+  const [fanClubPostLength, setFanClubPostLength] = useState(0);
+  const [fanClubCommentLength, setFanClubCommentLength] = useState(0);
+  const { data: groups, error } = useSWR("/group", fetcher, noRevalidate);
+  useEffect(() => {
+    if (user?.fan) {
+      const postForFanGroup = user.clubPosts.filter(
+        (v: any) => v.key_name === user.fan.key_name
+      ).length;
+      const commentForFanGroup = user.comments.filter(
+        (v: any) => v.post.key_name === user.fan.key_name
+      ).length;
+      setFanClubPostLength(postForFanGroup);
+      setFanClubCommentLength(commentForFanGroup);
+    }
+  }, [user]);
+
   return (
     <FanMenuWrapper>
-      <img src="https://w.namu.la/s/22604da874e610bf4e43bc86a621ac33be87ae51904b5810b7f15ebb85e758d7c50371d35a9481ff2e62f3b99db21a7d2a269ff3ac3c5f09d6eb452184cfdbaf488efd304c4a37925b219b458810f5ddb41d418b0e029dce8890c5f3047feeb9" />
-      <div>
-        <h2>
-          ONCE <button className="tag">ファンクラブ移動</button>
-        </h2>
-        <h4>
-          <span className="group-name">トワイス</span>クラブポスト :
-          <span className="count"> 0</span>
-        </h4>
-        <h4>
-          <span className="group-name">トワイス</span>クラブコメント :
-          <span className="count"> 0</span>
-        </h4>
-      </div>
+      {user?.fan ? (
+        <>
+          <img src={user?.fan.fanClub_image} />
+          <div>
+            <h2>
+              {user?.fan.fanClub_name}
+              <Link href={`/club/${user.fan.key_name}`}>
+                <a>
+                  <button className="tag">ファンクラブ移動</button>
+                </a>
+              </Link>
+            </h2>
+            <h4>
+              <span className="group-name">{user.fan.group_name}</span>クラブポスト :
+              <span className="count">{fanClubPostLength}</span>
+            </h4>
+            <h4>
+              <span className="group-name">{user.fan.group_name}</span>クラブコメント :
+              <span className="count">{fanClubCommentLength}</span>
+            </h4>
+          </div>
+        </>
+      ) : (
+        <>
+          <h3 style={{ marginBottom: "1rem" }}>ファンのクラブを検索して登録しましょう😍。</h3>
+          <AutoCompleteSearch isOnFanRegister={true} groupsData={groups} />
+        </>
+      )}
     </FanMenuWrapper>
   );
 };

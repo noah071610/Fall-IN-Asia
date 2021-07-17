@@ -47,6 +47,8 @@ const GroupVote: FC<IProps> = ({ isOnVotePage }) => {
     const votedStyle: IGroupVote = selectedGroup?.votedUser?.find(
       (v: IGroupVote) => v.userId === user.id
     );
+    console.log(votedStyle);
+
     if (user && votedStyle) {
       setIsVoted(votedStyle.votedStyle);
     } else {
@@ -65,9 +67,8 @@ const GroupVote: FC<IProps> = ({ isOnVotePage }) => {
         groupId: selectedGroup.id,
       };
       dispatch(groupVoteForStyleAction(form));
-      setIsVoted(style);
     },
-    [selectedGroup?.id, user]
+    [selectedGroup, user]
   );
   const onClickVoteStyleUndo = useCallback(
     (style) => {
@@ -80,10 +81,11 @@ const GroupVote: FC<IProps> = ({ isOnVotePage }) => {
         groupId: selectedGroup.id,
       };
       dispatch(groupVoteUndoAction(form));
-      setIsVoted(false);
     },
-    [selectedGroup?.id, user]
+    [selectedGroup, user]
   );
+
+  console.log(isVoted);
 
   return (
     <GroupVoteWrapper>

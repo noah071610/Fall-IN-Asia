@@ -49,10 +49,28 @@ export class Groups {
   @IsNotEmpty()
   @ApiProperty({
     example: 'http://domain.com/uploads/239483294.jpg',
-    description: 'image src',
+    description: 'image src for group introduce',
   })
   @Column('varchar', { name: 'image' })
   image: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 'Army , ONCE ...',
+    description: 'fan club name',
+  })
+  @Column('varchar', { name: 'fanClub_name' })
+  fanClub_name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 'http://domain.com/uploads/239483294.jpg',
+    description: 'image src for fanclub',
+  })
+  @Column('varchar', { name: 'fanClub_image' })
+  fanClub_image: string;
 
   @IsNumber()
   @IsNotEmpty()

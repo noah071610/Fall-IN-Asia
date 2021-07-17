@@ -1,6 +1,6 @@
 import CommonPagination from "@components/Common/CommonPagination";
 import { IClubPost } from "@typings/db";
-import { BLUE_COLOR } from "config";
+import { BLUE_COLOR, NO_POST_URL } from "config";
 import dayjs from "dayjs";
 import router, { useRouter } from "next/router";
 import React, { FC, useCallback, useEffect, useState } from "react";
@@ -56,10 +56,7 @@ const ClubPostList: FC<IProps> = ({ clubPosts, postCnt }) => {
       </table>
       {clubPosts?.length === 0 && (
         <div className="noPost">
-          <img
-            src="https://icons.iconarchive.com/icons/iconsmind/outline/256/Inbox-Empty-icon.png"
-            alt=""
-          />
+          <img src={NO_POST_URL} alt="noPost_image" />
           <h2>掲示がありません 😰</h2>
         </div>
       )}

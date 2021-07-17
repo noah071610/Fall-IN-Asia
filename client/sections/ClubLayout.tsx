@@ -27,10 +27,6 @@ const ClubLayout: FC<IProps> = ({ children }) => {
     fetcher
   );
 
-  // if (error) {
-  //   toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
-  // }
-
   useEffect(() => {
     if (possibleGroups) {
       if (!possibleGroups.find((v: IGroup) => v.key_name === query.group)) {

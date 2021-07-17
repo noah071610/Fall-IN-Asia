@@ -13,7 +13,7 @@ import { Images } from './entities/Images';
 import { Participate } from './entities/Participate';
 import { ClubPostLike } from './entities/ClubPostLike';
 import { GroupVote } from './entities/GroupVote';
-import { Announcements } from './entities/Announces';
+import { Announcements } from './entities/Announcements';
 import { Chats } from './entities/Chats';
 
 dotenv.config();

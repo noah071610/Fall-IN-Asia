@@ -21,6 +21,9 @@ export const DEFAULT_ICON_URL =
 export const NO_IMAGE_URL =
   "https://usagi-post.com/wp-content/uploads/2020/05/no-image-found-360x250-1.png" as const;
 
+export const NO_POST_URL =
+  "https://icons.iconarchive.com/icons/iconsmind/outline/256/Inbox-Empty-icon.png" as const;
+
 export const RGB_BLACK = (opacity: number) => `
   rgba(0,0,0,${opacity})
 `;

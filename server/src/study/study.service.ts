@@ -7,6 +7,7 @@ import bcrypt from 'bcrypt';
 import { Users } from 'src/entities/Users';
 import { StudyPosts } from 'src/entities/StudyPosts';
 import { Participate } from 'src/entities/Participate';
+import { Announcements } from 'src/entities/Announcements';
 @Injectable()
 export class StudyService {
   constructor(
@@ -18,6 +19,8 @@ export class StudyService {
     private usersRepository: Repository<Users>,
     @InjectRepository(Participate)
     private participateRepository: Repository<Participate>,
+    @InjectRepository(Announcements)
+    private announcementsRepository: Repository<Announcements>,
   ) {}
 
   async getTypePosts(type: string) {
@@ -63,6 +66,11 @@ export class StudyService {
     newPostCreate.type = data.type;
     newPostCreate.leaderUser = <any>{ id };
     const newPost = await this.studyPostsRepository.save(newPostCreate);
+    await this.announcementsRepository.save({
+      userId: id,
+      studyPostId: newPost.id,
+      content: `${data.title}...を登録致しました。`,
+    });
     await this.participateRepository.save({
       studyPostId: newPost.id,
       userId: id,

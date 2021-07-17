@@ -1,3 +1,4 @@
+import { Announcements } from './../entities/Announcements';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Images } from 'src/entities/Images';
@@ -8,7 +9,15 @@ import { StudyController } from './study.controller';
 import { StudyService } from './study.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([StudyPosts, Users, Images, Participate])],
+  imports: [
+    TypeOrmModule.forFeature([
+      StudyPosts,
+      Users,
+      Images,
+      Participate,
+      Announcements,
+    ]),
+  ],
   providers: [StudyService],
   controllers: [StudyController],
 })

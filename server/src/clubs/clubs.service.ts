@@ -19,8 +19,8 @@ import bcrypt from 'bcrypt';
 import { Users } from 'src/entities/Users';
 import { ClubEditRequestDto } from './dto/clubEdit.request.dto';
 import { Images } from 'src/entities/Images';
-import { async } from 'rxjs';
 import { ClubPostLike } from 'src/entities/ClubPostLike';
+import { Announcements } from 'src/entities/Announcements';
 @Injectable()
 export class ClubsService {
   constructor(
@@ -34,6 +34,8 @@ export class ClubsService {
     private imagesRepository: Repository<Images>,
     @InjectRepository(ClubPostLike)
     private postLikeRepository: Repository<ClubPostLike>,
+    @InjectRepository(Announcements)
+    private announcementsRepository: Repository<Announcements>,
   ) {}
 
   async getImageForPost(file: Express.Multer.File) {
@@ -147,13 +149,19 @@ export class ClubsService {
   }
 
   async createPost(data: ClubPostRequestDto) {
-    const newPost = new ClubPosts();
-    newPost.key_name = data.key_name;
-    newPost.title = data.title;
-    newPost.content = data.content;
-    newPost.group = <any>{ id: data.groupId };
-    newPost.user = <any>{ id: data.userId };
-    return await this.clubPostsRepository.save(newPost);
+    const newPostCreate = new ClubPosts();
+    newPostCreate.key_name = data.key_name;
+    newPostCreate.title = data.title;
+    newPostCreate.content = data.content;
+    newPostCreate.group = <any>{ id: data.groupId };
+    newPostCreate.user = <any>{ id: data.userId };
+    const newPost = await this.clubPostsRepository.save(newPostCreate);
+    await this.announcementsRepository.save({
+      userId: data.userId,
+      clubPostId: newPost.id,
+      content: `${data.title}...を登録致しました。`,
+    });
+    return newPost;
   }
 
   async eidtPost(data: ClubEditRequestDto) {

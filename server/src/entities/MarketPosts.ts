@@ -11,6 +11,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Announcements } from './Announcements';
 import { Images } from './Images';
 import { Users } from './Users';
 
@@ -93,6 +94,11 @@ export class MarketPosts {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => Announcements, (announcements) => announcements.marketPost, {
+    cascade: true,
+  })
+  announcements: Announcements[];
 
   @OneToMany(() => Images, (images) => images.marketPost, {
     cascade: true,

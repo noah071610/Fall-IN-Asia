@@ -89,7 +89,7 @@ export interface IGroupVote {
   votedStyle: string;
 }
 
-export interface IGroupScore {
+export interface IGroupScore extends IGroup {
   talented: number;
   handsome: number;
   pretty: number;
@@ -106,14 +106,6 @@ export interface IGroup {
   number: number;
   image: string;
   isNew: boolean;
-}
-
-export interface IGroupScore extends IGroup {
-  goodwell: number;
-  handsome: number;
-  pretty: number;
-  cute: number;
-  beautiful: number;
 }
 
 export interface IClubPost {

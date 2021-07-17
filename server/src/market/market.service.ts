@@ -9,6 +9,7 @@ import { MarketPosts } from 'src/entities/MarketPosts';
 import { Repository } from 'typeorm';
 import bcrypt from 'bcrypt';
 import { Users } from 'src/entities/Users';
+import { Announcements } from 'src/entities/Announcements';
 @Injectable()
 export class MarketService {
   constructor(
@@ -18,6 +19,8 @@ export class MarketService {
     private imagesRepository: Repository<Images>,
     @InjectRepository(Users)
     private usersRepository: Repository<Users>,
+    @InjectRepository(Announcements)
+    private announcementsRepository: Repository<Announcements>,
   ) {}
 
   async getOnePostById(id: number) {
@@ -38,8 +41,6 @@ export class MarketService {
   }
 
   async getMarketSearchPosts(searchWord: string) {
-    console.log(searchWord);
-
     const marketPosts = this.marketPostsRepository
       .createQueryBuilder('mp')
       .where('mp.title like :title', { title: '%' + searchWord + '%' })
@@ -100,6 +101,11 @@ export class MarketService {
       newImage.marketPost = <any>newPost.id;
       await this.imagesRepository.save(newImage);
     }
+    await this.announcementsRepository.save({
+      userId: id,
+      marketPostId: newPost.id,
+      content: `${data.title}...を登録致しました。`,
+    });
     return true;
   }
 

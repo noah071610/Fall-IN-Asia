@@ -2,12 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toastErrorMessage } from "config";
 
-export const getGroupsWithScoreAction = createAsyncThunk<any, boolean>(
+export const getGroupsWithScoreAction = createAsyncThunk<any, number>(
   "/group/score",
-  async (isRefresh) => {
+  async (groupId) => {
     try {
       const response = await axios.get("/group/score");
-      return { data: response.data, isRefresh };
+      return { data: response.data, groupId };
     } catch (error) {
       toastErrorMessage(error);
       throw error;

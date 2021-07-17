@@ -26,7 +26,6 @@ export const ChatMenuWrapper = styled.ul`
     cursor: pointer;
     padding: 0.5rem 0 0.5rem 1rem;
     transition: 0.3s all;
-    ${BORDER_THIN("border-bottom")};
     .name-space {
       ${FLEX_STYLE("flex-start", "center")};
       img {

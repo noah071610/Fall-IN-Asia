@@ -18,19 +18,17 @@ export class UsersService {
     const user = await this.userRepository
       .createQueryBuilder('users')
       .leftJoinAndSelect('users.clubPosts', 'cp')
+      .leftJoinAndSelect('cp.announcements', 'cpance')
       .leftJoinAndSelect('users.marketPosts', 'mp')
+      .leftJoinAndSelect('mp.announcements', 'mpance')
+      .leftJoinAndSelect('users.studyPosts', 'sp')
+      .leftJoinAndSelect('sp.announcements', 'spance')
       .leftJoinAndSelect('users.comments', 'com')
+      .leftJoinAndSelect('com.post', 'cmInpost')
       .leftJoinAndSelect('users.fan', 'fan')
-      .select([
-        'users.id',
-        'users.email',
-        'users.name',
-        'users.icon',
-        'cp.id',
-        'mp.id',
-        'com.id',
-        'fan',
-      ])
+      .leftJoinAndSelect('users.participates', 'ptcp')
+      .leftJoinAndSelect('users.announcements', 'anuc')
+      .leftJoinAndSelect('users.chatToUser', 'ctu')
       .where('users.email= :email', { email })
       .getOne();
 
@@ -62,5 +60,16 @@ export class UsersService {
       name,
       password: hashedPassword,
     });
+  }
+
+  async registerFan(userId: number, group: any) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+    console.log(group);
+
+    user.fan = group.id;
+    await this.userRepository.save(user);
+    return true;
   }
 }

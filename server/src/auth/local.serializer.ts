@@ -22,20 +22,17 @@ export class LocalSerializer extends PassportSerializer {
     return await this.usersRepository
       .createQueryBuilder('users')
       .leftJoinAndSelect('users.clubPosts', 'cp')
+      .leftJoinAndSelect('cp.announcements', 'cpance')
       .leftJoinAndSelect('users.marketPosts', 'mp')
+      .leftJoinAndSelect('mp.announcements', 'mpance')
+      .leftJoinAndSelect('users.studyPosts', 'sp')
+      .leftJoinAndSelect('sp.announcements', 'spance')
       .leftJoinAndSelect('users.comments', 'com')
+      .leftJoinAndSelect('com.post', 'cmInpost')
       .leftJoinAndSelect('users.fan', 'fan')
       .leftJoinAndSelect('users.participates', 'ptcp')
-      .select([
-        'users.id',
-        'users.email',
-        'users.name',
-        'users.icon',
-        'cp.id',
-        'mp.id',
-        'com.id',
-        'fan',
-      ])
+      .leftJoinAndSelect('users.announcements', 'anuc')
+      .leftJoinAndSelect('users.chatToUser', 'ctu')
       .where('users.id = :userId', { userId: +userId })
       .getOne()
       .then((user) => {

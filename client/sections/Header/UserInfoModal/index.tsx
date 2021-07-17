@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BLUE_COLOR, DEFAULT_ICON_URL, WHITE_COLOR } from "config";
 import { AnnounceMenu, ChatMenu, FanMenu, SettingMenu, StudyMenu } from "./UserMenuList";
 import { mainSlice } from "slices/main";
+import Link from "next/link";
 interface IProps {}
 
 const UserInfoModal: FC<IProps> = () => {
@@ -31,7 +32,17 @@ const UserInfoModal: FC<IProps> = () => {
           <ul>
             <li>
               ファン :
-              {user?.fan ? <span>{user?.fan}</span> : <button className="tag">ファン登録</button>}
+              {user?.fan ? (
+                <Link href={`/club/${user.fan.key_name}`}>
+                  <a>
+                    <span>{user?.fan?.group_name}</span>
+                  </a>
+                </Link>
+              ) : (
+                <button onClick={() => dispatch(mainSlice.actions.showFanMenu())} className="tag">
+                  ファン登録
+                </button>
+              )}
             </li>
             <li>
               クラブポスト :<span> {user?.clubPosts?.length}</span>

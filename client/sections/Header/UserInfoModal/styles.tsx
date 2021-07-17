@@ -37,6 +37,7 @@ export const UserInfoModalWrapper = styled.div`
         span {
           color: ${BLUE_COLOR};
           font-weight: bold;
+          margin-left: 0.3rem;
         }
         .tag {
           margin: 0 0 0 0.8rem;

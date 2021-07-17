@@ -11,6 +11,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Announcements } from './Announcements';
 import { ClubPostLike } from './ClubPostLike';
 import { Comments } from './Comments';
 import { Groups } from './Groups';
@@ -71,6 +72,11 @@ export class ClubPosts {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => Announcements, (announcements) => announcements.clubPost, {
+    cascade: true,
+  })
+  announcements: Announcements[];
 
   @OneToMany(() => Images, (images) => images.clubPost, {
     cascade: true,

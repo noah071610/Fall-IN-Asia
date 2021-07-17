@@ -19,22 +19,24 @@ interface IProps {}
 
 const vote: FC<IProps> = () => {
   const dispatch = useDispatch();
-  const { groupVoteDone, groupVoteUndoDone } = useSelector((state: RootState) => state.main);
+  const { groupVoteDone, groupVoteUndoDone, selectedGroup } = useSelector(
+    (state: RootState) => state.main
+  );
   useEffect(() => {
     if (groupVoteDone) {
       toastSuccessMessage("投票ありがとうございます🥰");
-      dispatch(getGroupsWithScoreAction(true));
+      dispatch(getGroupsWithScoreAction(selectedGroup?.id));
       dispatch(mainSlice.actions.groupVoteClear());
     }
-  }, [groupVoteDone]);
+  }, [groupVoteDone, selectedGroup]);
 
   useEffect(() => {
     if (groupVoteUndoDone) {
       toastSuccessMessage("投票を取り消しました。");
-      dispatch(getGroupsWithScoreAction(true));
+      dispatch(getGroupsWithScoreAction(selectedGroup?.id));
       dispatch(mainSlice.actions.groupVoteUndoClear());
     }
-  }, [groupVoteUndoDone]);
+  }, [groupVoteUndoDone, selectedGroup]);
 
   return (
     <VoteWrapper>
@@ -54,7 +56,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         axios.defaults.headers.Cookie = cookie;
       }
       await store.dispatch(getUserInfoAction());
-      await store.dispatch(getGroupsWithScoreAction(false));
+      await store.dispatch(getGroupsWithScoreAction(1));
       return {
         props: {},
       };

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IGroup } from "@typings/db";
+import { IGroup, IGroupScore } from "@typings/db";
 import {
   getGroupsWithScoreAction,
   groupVoteForStyleAction,
@@ -143,9 +143,9 @@ export const mainSlice = createSlice({
         state.getGroupsWithScoreLoading = false;
         state.getGroupsWithScoreDone = true;
         state.voteGroups = action.payload.data.data;
-        if (!action.payload.isRefresh) {
-          state.selectedGroup = action.payload.data.data[0];
-        }
+        state.selectedGroup = action.payload.data.data.find(
+          (v: IGroupScore) => v.id === action.payload.groupId
+        );
       })
       .addCase(getGroupsWithScoreAction.rejected, (state) => {
         state.getGroupsWithScoreLoading = false;

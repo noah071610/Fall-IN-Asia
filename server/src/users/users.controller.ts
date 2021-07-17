@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { LoggedInGuard } from 'src/auth/logged-in.guard';
 import { NotLoggedInGuard } from 'src/auth/not-logged-in.guard';
 import { User } from 'src/decorators/user.decorator';
 import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
@@ -52,5 +53,12 @@ export class UsersController {
     req.logOut();
     res.clearCookie('connect.sid', { httpOnly: true });
     res.send('ok');
+  }
+
+  @UseGuards(new LoggedInGuard())
+  @ApiOperation({ summary: 'Register fan' })
+  @Post('fan')
+  async registerFan(@Body() data: any, @User() user) {
+    await this.usersService.registerFan(user.id, data);
   }
 }

@@ -27,7 +27,7 @@ import { CommentsModule } from './comments/comments.module';
 import { Comments } from './entities/Comments';
 import { ClubPostLike } from './entities/ClubPostLike';
 import { GroupVote } from './entities/GroupVote';
-import { Announcements } from './entities/Announces';
+import { Announcements } from './entities/Announcements';
 import { Chats } from './entities/Chats';
 
 @Module({

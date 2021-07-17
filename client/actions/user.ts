@@ -35,3 +35,13 @@ export const signupAction = createAsyncThunk<IUser, ISignUpForm>("user/signup", 
     throw error;
   }
 });
+
+export const fanRegisterAction = createAsyncThunk<any, any>("user/fan", async (data) => {
+  try {
+    const response = await axios.post("/user/fan", data);
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
+  }
+});
