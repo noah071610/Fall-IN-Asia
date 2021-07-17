@@ -10,20 +10,43 @@ import {
 } from "config";
 
 export const UserInfoModalWrapper = styled.div`
-  width: 50%;
+  width: 55%;
   top: 62px;
   right: 0;
   ${MODAL_STYLE("10%")};
   .info-top {
-    ${GRID_STYLE("2rem", "1.5fr 2.5fr")};
+    ${FLEX_STYLE("flex-start", "center")};
     margin-bottom: 2rem;
     .icon {
+      position: relative;
       img {
-        width: 100%;
+        width: 130px;
+        height: 130px;
         border-radius: 50%;
+      }
+      .add-icon {
+        width: 130px;
+        height: 130px;
+        ${FLEX_STYLE("center", "center")};
+        position: absolute;
+        transition: 0.3s all;
+        top: 0;
+        left: 0;
+        color: ${WHITE_COLOR};
+        cursor: pointer;
+        opacity: 0;
+        font-size: 2rem;
+      }
+      &:hover {
+        .add-icon {
+          opacity: 1;
+          background: ${RGB_BLACK(0.3)};
+          border-radius: 50%;
+        }
       }
     }
     .info-desc {
+      padding-left: 1rem;
       h3 {
         font-weight: bold;
         margin-bottom: 0.3rem;
@@ -71,6 +94,29 @@ export const UserInfoModalWrapper = styled.div`
     }
     &-desc {
       width: 100%;
+    }
+  }
+
+  .icon-cropper {
+    height: 80vh;
+    padding-right: 1rem;
+    overflow-y: auto;
+    h3 {
+      margin: 0.7rem 0;
+      font-weight: bold;
+    }
+    h3:first-of-type {
+      margin-top: 1.5rem;
+    }
+    .dragger {
+      height: 100%;
+      div {
+        padding: 0;
+      }
+    }
+    .submit-btn-wrapper {
+      margin: 1rem 0;
+      ${FLEX_STYLE("flex-end", "center")};
     }
   }
 `;

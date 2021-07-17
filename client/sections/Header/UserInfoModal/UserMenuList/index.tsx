@@ -1,6 +1,6 @@
 import { AlertOutlined, EditOutlined, PoweroffOutlined, RetweetOutlined } from "@ant-design/icons";
 import { DEFAULT_ICON_URL, noRevalidate, NO_POST_URL } from "config";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import {
@@ -17,6 +17,10 @@ import GroupCard from "@components/Cards/GroupCard";
 import { IClubPost, IGroup } from "@typings/db";
 import AutoCompleteSearch from "@components/AutoCompleteSearch";
 import Link from "next/link";
+import { Divider } from "antd";
+import { studySlice } from "slices/study";
+import router from "next/router";
+import { mainSlice } from "slices/main";
 
 interface IProps {}
 
@@ -60,20 +64,27 @@ export const AnnounceMenu: FC<IProps> = () => {
       );
     }
   }, []);
-  console.log(announcements);
-
   return (
     <AnnounceMenuWrapper>
-      {announcements?.map((v, i) => {
-        return (
-          <li key={i}>
-            <span className="category">
-              {v.clubPostId ? "クラブ" : v.marketPostId ? "マーケット" : "スタディー"}
-            </span>{" "}
-            {v.content}
-          </li>
-        );
-      })}
+      {announcements?.length > 0 ? (
+        announcements.map((v, i) => {
+          return (
+            <li key={i}>
+              <span className="category">
+                {v.clubPostId ? "クラブ📢" : v.marketPostId ? "マーケット📢" : "スタディー📢"}
+              </span>
+              <h4>{v.content}</h4>
+            </li>
+          );
+        })
+      ) : (
+        <li className="no-chat-box">
+          <img src={NO_POST_URL} alt="noPost" />
+          <h3>
+            <span>お知らせ</span>がありません😥
+          </h3>
+        </li>
+      )}
     </AnnounceMenuWrapper>
   );
 };
@@ -82,15 +93,24 @@ export const ChatMenu: FC<IProps> = () => {
   const { user } = useSelector((state: RootState) => state.user);
   return (
     <ChatMenuWrapper>
-      {user?.chatToUser?.map((v: any) => {
-        <li>
-          <div className="name-space">
-            <img src={v.icon} />
-            <span>{v.name}</span>
-          </div>
-          <div className="recent-message">あら！あれはいいですね！</div>
-        </li>;
-      })}
+      {user?.chatToUser?.length > 0 ? (
+        user?.chatToUser?.map((v: any) => {
+          <li>
+            <div className="name-space">
+              <img src={v.icon} />
+              <span>{v.name}</span>
+            </div>
+            <div className="recent-message">あら！あれはいいですね！</div>
+          </li>;
+        })
+      ) : (
+        <li className="no-chat-box">
+          <img src={NO_POST_URL} alt="noPost" />
+          <h3>
+            <span>チャット</span>がありません😥
+          </h3>
+        </li>
+      )}
     </ChatMenuWrapper>
   );
 };
@@ -148,24 +168,30 @@ export const FanMenu: FC<IProps> = () => {
 };
 
 export const StudyMenu: FC<IProps> = () => {
-  const { data: studyPosts, error, revalidate } = useSWR(`/study`, fetcher);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.user);
+  const onClickStudyPost = useCallback((postId: number) => {
+    router.push(`/korean?postId=${postId}`);
+    dispatch(mainSlice.actions.closeModal());
+    dispatch(studySlice.actions.selectStudyPost(postId));
+  }, []);
   return (
     <StudyMenuWrapper>
-      <li>
-        {studyPosts && (
-          <>
+      {user?.participates?.map((v: any, i: number) => {
+        return (
+          <li onClick={() => onClickStudyPost(v.studyPost.id)} key={i}>
             <div className="leaderUser-info">
-              <img src={studyPosts[0]?.leaderUser.icon} alt="" />
+              <img src={v.studyPost?.leaderUser?.icon} alt="" />
               <div>
-                <h3>{studyPosts[0]?.leaderUser.name}</h3>
-                <h4>{studyPosts[0]?.area}</h4>
-                <h4>{studyPosts[0]?.type}</h4>
+                <h3>{v.studyPost?.leaderUser?.name}</h3>
+                <span className="tag">{v.studyPost?.area}</span>
+                <span className="tag">{v.studyPost?.type}</span>
               </div>
             </div>
-            <h3 className="title">{studyPosts[0]?.title} 잘부탁드려요 저희는...</h3>
-          </>
-        )}
-      </li>
+            <h3 className="title">{v.studyPost?.title}...</h3>
+          </li>
+        );
+      })}
     </StudyMenuWrapper>
   );
 };

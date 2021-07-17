@@ -31,6 +31,8 @@ export class LocalSerializer extends PassportSerializer {
       .leftJoinAndSelect('com.post', 'cmInpost')
       .leftJoinAndSelect('users.fan', 'fan')
       .leftJoinAndSelect('users.participates', 'ptcp')
+      .leftJoinAndSelect('ptcp.studyPost', 'ptcpsp')
+      .leftJoinAndSelect('ptcpsp.leaderUser', 'leader')
       .leftJoinAndSelect('users.announcements', 'anuc')
       .leftJoinAndSelect('users.chatToUser', 'ctu')
       .where('users.id = :userId', { userId: +userId })

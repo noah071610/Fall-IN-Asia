@@ -13,6 +13,16 @@ export const studyPostCreateAction = createAsyncThunk<any, any>("study/post", as
   }
 });
 
+export const studyPostSearchAction = createAsyncThunk<any, any>("study/search", async (postId) => {
+  try {
+    const response = await axios.post(`/study?type=&postId=${postId}`);
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
+  }
+});
+
 export const studyPostDeleteAction = createAsyncThunk<
   any,
   { postId: number; password: string; userId: number }

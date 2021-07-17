@@ -5,6 +5,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Query,
   UploadedFile,
   UploadedFiles,
   UseGuards,
@@ -67,16 +68,21 @@ export class StudyController {
   }
 
   @ApiOperation({ summary: 'Get posts from selected type' })
-  @Get(':type')
-  async getTypePosts(@Param('type') type: string) {
-    const typePosts = await this.studyService.getTypePosts(decodeURI(type));
-    return typePosts;
+  @Get('search/:postId')
+  async searchPostByPostId(@Param('postId', ParseIntPipe) postId: number) {
+    const studyPost = await this.studyService.searchPostByPostId(postId);
+    return studyPost;
   }
 
   @ApiOperation({ summary: 'Get Study posts' })
   @Get()
-  async getStudyPosts() {
-    const StudyPosts = await this.studyService.getStudyPosts();
+  async getStudyPosts(
+    @Query('type') type: string,
+    @Query('postId', ParseIntPipe) postId: number,
+  ) {
+    console.log('####', type, postId);
+
+    const StudyPosts = await this.studyService.getStudyPosts(type, postId);
     return StudyPosts;
   }
 }

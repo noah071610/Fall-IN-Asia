@@ -27,6 +27,8 @@ export class UsersService {
       .leftJoinAndSelect('com.post', 'cmInpost')
       .leftJoinAndSelect('users.fan', 'fan')
       .leftJoinAndSelect('users.participates', 'ptcp')
+      .leftJoinAndSelect('ptcp.studyPost', 'ptcpsp')
+      .leftJoinAndSelect('ptcpsp.leaderUser', 'leader')
       .leftJoinAndSelect('users.announcements', 'anuc')
       .leftJoinAndSelect('users.chatToUser', 'ctu')
       .where('users.email= :email', { email })
@@ -71,5 +73,22 @@ export class UsersService {
     user.fan = group.id;
     await this.userRepository.save(user);
     return true;
+  }
+
+  async addUserIcon(userId: number, file: Express.Multer.File) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+    user.icon = process.env.BACK_URL + file.path;
+    return await this.userRepository.save(user);
+  }
+
+  async deleteUserIcon(userId: number) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+    user.icon =
+      'https://user-images.githubusercontent.com/74864925/124331496-460bfe80-dbca-11eb-95dc-a5379a5750a6.png';
+    return await this.userRepository.save(user);
   }
 }

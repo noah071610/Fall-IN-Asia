@@ -33,10 +33,17 @@ interface Props {}
 const korean: FC<Props> = () => {
   const dispatch = useDispatch();
   const [type, setType] = useState("");
-  const { data: studyPosts, error, revalidate } = useSWR(`/study/${encodeURI(type)}`, fetcher);
   const { user } = useSelector((state: RootState) => state.user);
-  const { studyPostDeleteDone } = useSelector((state: RootState) => state.study);
+  const { studyPostDeleteDone, searchStudyPostId } = useSelector((state: RootState) => state.study);
+  const {
+    data: studyPosts,
+    error,
+    revalidate,
+  } = useSWR(`/study?type=${encodeURI(type)}&postId=${searchStudyPostId || 0}`, fetcher);
 
+  if (studyPosts) {
+    console.log(studyPosts);
+  }
   if (error) {
     toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
   }
@@ -65,7 +72,7 @@ const korean: FC<Props> = () => {
         <KoreanAsideMenu setType={setType} />
         <div className="korean-card-wrapper">
           {studyPosts?.map((v: IStudyPost, i: number) => {
-            return <RecruitCard studyPost={v} key={i} />;
+            return <RecruitCard setType={setType} studyPost={v} key={i} />;
           })}
         </div>
       </div>
@@ -75,13 +82,14 @@ const korean: FC<Props> = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, res, ...etc }) => {
+    async ({ req, res, query }) => {
       const cookie = req ? req.headers.cookie : "";
       axios.defaults.headers.Cookie = "";
       if (req && cookie) {
         axios.defaults.headers.Cookie = cookie;
       }
       await store.dispatch(getUserInfoAction());
+      await store.dispatch(studySlice.actions.selectStudyPost(query.postId || 0));
       return {
         props: {},
       };

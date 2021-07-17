@@ -44,9 +44,10 @@ const ImageCropWrapper = styled.div`
 `;
 interface IProps {
   setBlob: (blob: Blob | null) => void;
+  isIconModal?: boolean;
 }
 
-const ImageCropper: FC<IProps> = ({ setBlob }) => {
+const ImageCropper: FC<IProps> = ({ isIconModal, setBlob }) => {
   const [url, onChangeUrl, setUrl] = useInput("");
   const [upImg, setUpImg] = useState<ArrayBuffer | string | null>(null);
   const imgRef = useRef(null);
@@ -82,10 +83,10 @@ const ImageCropper: FC<IProps> = ({ setBlob }) => {
     const scaleY = image.naturalHeight / image.height;
     const ctx = canvas.getContext("2d");
     const pixelRatio = window.devicePixelRatio;
-
     canvas.width = crop.width * pixelRatio;
     canvas.height = crop.height * pixelRatio;
 
+    canvas.toDataURL("image/png");
     ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     ctx.imageSmoothingQuality = "high";
 
@@ -100,16 +101,17 @@ const ImageCropper: FC<IProps> = ({ setBlob }) => {
       crop.width,
       crop.height
     );
-    new Promise(() => {
-      canvas.toBlob(
-        (blob: Blob) => {
-          setBlob(blob);
-        },
-        "image/png",
-        1
-      );
-    });
-  }, [completedCrop]);
+    new Promise((resolve, reject) => {
+      canvas.toBlob((blob: Blob) => {
+        if (!blob) {
+          console.error("Canvas is empty");
+          return;
+        }
+        resolve(setBlob(blob));
+      }, "image/jpeg");
+    }),
+      [completedCrop];
+  });
 
   const handleChange = (info: any) => {
     if (info.file.status === "done") {
@@ -134,7 +136,7 @@ const ImageCropper: FC<IProps> = ({ setBlob }) => {
         className="dragger"
         onChange={handleChange}
       >
-        <div>
+        <div className="dragger-inside-image">
           <img
             src="https://user-images.githubusercontent.com/74864925/124657825-f38a5500-dedd-11eb-8de9-6ed70a512f24.png"
             alt="drag"
@@ -146,17 +148,15 @@ const ImageCropper: FC<IProps> = ({ setBlob }) => {
         <div className="crop-part ">
           <h4>イメージを加工しましょう✂</h4>
           {upImg || url ? (
-            <div>
-              <ReactCrop
-                className="before"
-                crossorigin="anonymous"
-                src={upImg || url}
-                onImageLoaded={onLoad}
-                crop={crop}
-                onChange={(c) => setCrop(c)}
-                onComplete={(c) => setCompletedCrop(c)}
-              />
-            </div>
+            <ReactCrop
+              crossorigin="anonymous"
+              className="before"
+              src={upImg || url}
+              onImageLoaded={onLoad}
+              crop={crop}
+              onChange={(c) => setCrop(c)}
+              onComplete={(c) => setCompletedCrop(c)}
+            />
           ) : (
             <img src={NO_IMAGE_URL} alt="no image" />
           )}
@@ -164,9 +164,7 @@ const ImageCropper: FC<IProps> = ({ setBlob }) => {
         <div className="crop-part ">
           <h4>加工結果</h4>
           {upImg || url ? (
-            <div>
-              <canvas className="after" ref={previewCanvasRef} />
-            </div>
+            <canvas className="after" ref={previewCanvasRef} />
           ) : (
             <img src={NO_IMAGE_URL} alt="no image" />
           )}

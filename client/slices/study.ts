@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { studyPostCreateAction, studyPostDeleteAction, studyPostEditAction } from "actions/study";
+import {
+  studyPostCreateAction,
+  studyPostDeleteAction,
+  studyPostEditAction,
+  studyPostSearchAction,
+} from "actions/study";
 
 export interface StudyState {
+  searchStudyPostId: number | null;
   studyPostCreateLoading: boolean;
   studyPostCreateDone: boolean;
   studyPostCreateError: boolean;
@@ -11,9 +17,13 @@ export interface StudyState {
   studyPostEditLoading: boolean;
   studyPostEditDone: boolean;
   studyPostEditError: boolean;
+  studyPostSearchLoading: boolean;
+  studyPostSearchDone: boolean;
+  studyPostSearchError: boolean;
 }
 
 const initialState: StudyState = {
+  searchStudyPostId: null,
   studyPostCreateLoading: false,
   studyPostCreateDone: false,
   studyPostCreateError: false,
@@ -23,12 +33,18 @@ const initialState: StudyState = {
   studyPostEditLoading: false,
   studyPostEditDone: false,
   studyPostEditError: false,
+  studyPostSearchLoading: false,
+  studyPostSearchDone: false,
+  studyPostSearchError: false,
 };
 
 export const studySlice = createSlice({
   name: "study",
   initialState,
   reducers: {
+    selectStudyPost(state, action) {
+      state.searchStudyPostId = action.payload;
+    },
     studyPostCreateClear(state) {
       state.studyPostCreateLoading = false;
       state.studyPostCreateDone = false;
@@ -43,6 +59,11 @@ export const studySlice = createSlice({
       state.studyPostEditLoading = false;
       state.studyPostEditDone = false;
       state.studyPostEditError = false;
+    },
+    studyPostSearchClear(state) {
+      state.studyPostSearchLoading = false;
+      state.studyPostSearchDone = false;
+      state.studyPostSearchError = false;
     },
   },
   extraReducers: (builder) =>

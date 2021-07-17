@@ -9,13 +9,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { toastSuccessMessage } from "config";
 import { studySlice } from "slices/study";
+import router from "next/router";
 interface IProps {
   studyPost: IStudyPost;
+  setType: (type: string) => void;
 }
 
 interface IProps {}
 
-const RecruitCardMain: FC<IProps> = ({ studyPost }) => {
+const RecruitCardMain: FC<IProps> = ({ studyPost, setType }) => {
   const [onProfile, onChangeProfileBtn, setOnProfile] = useToggle(false);
   const { studyPostDeleteDone } = useSelector((state: RootState) => state.study);
 
@@ -24,6 +26,10 @@ const RecruitCardMain: FC<IProps> = ({ studyPost }) => {
       setOnProfile(false);
     }
   }, [studyPostDeleteDone]);
+
+  useEffect(() => {
+    setOnProfile(false);
+  }, [setType]);
   return (
     <RecruitCardMainWrapper>
       <CardMainContent>
@@ -33,8 +39,24 @@ const RecruitCardMain: FC<IProps> = ({ studyPost }) => {
         <div className="recruit-desc">
           <div>
             <a className="recruit-name">{studyPost?.leaderUser?.name}</a>
-            <span className="tag">{studyPost?.type}</span>
-            <span className="tag">{studyPost?.area}</span>
+            <span
+              onClick={() => {
+                setType(studyPost?.type);
+                router.push("korean");
+              }}
+              className="tag"
+            >
+              {studyPost?.type}
+            </span>
+            <span
+              onClick={() => {
+                setType(studyPost?.area);
+                router.push("korean");
+              }}
+              className="tag"
+            >
+              {studyPost?.area}
+            </span>
           </div>
           <h4>{studyPost?.title}</h4>
           <Rate disabled defaultValue={studyPost?.leaderUser?.rate} />

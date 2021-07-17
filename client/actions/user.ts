@@ -45,3 +45,23 @@ export const fanRegisterAction = createAsyncThunk<any, any>("user/fan", async (d
     throw error;
   }
 });
+
+export const addUserIconAction = createAsyncThunk<any, any>("user/icon", async (data) => {
+  try {
+    const response = await axios.post("/user/icon", data);
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
+  }
+});
+
+export const deleteUserIconAction = createAsyncThunk<any>("user/icon/delete", async () => {
+  try {
+    const response = await axios.delete("/user/icon");
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
+  }
+});

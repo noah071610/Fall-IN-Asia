@@ -77,7 +77,7 @@ export interface IStudyPost {
   id: number;
   images?: IImages[];
   type: string;
-  area: number;
+  area: string;
   title: string;
   content: string;
   leaderUser: IUser;

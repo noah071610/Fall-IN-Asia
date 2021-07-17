@@ -23,8 +23,8 @@ export class StudyService {
     private announcementsRepository: Repository<Announcements>,
   ) {}
 
-  async getTypePosts(type: string) {
-    const typePosts = () => {
+  async getStudyPosts(type: string, postId: number) {
+    if (type) {
       if (type === 'レッスン' || type === '韓国語勉強俱楽部') {
         return this.studyPostsRepository.find({
           where: { type },
@@ -38,11 +38,14 @@ export class StudyService {
           take: 8,
         });
       }
-    };
-    return typePosts();
-  }
-
-  async getStudyPosts() {
+    }
+    if (postId) {
+      const postByPostId = await this.studyPostsRepository.findOne({
+        where: { id: postId },
+        relations: ['leaderUser'],
+      });
+      return [postByPostId];
+    }
     const studyPosts = await this.studyPostsRepository.find({
       order: { id: 'DESC' },
       relations: ['leaderUser'],
@@ -95,5 +98,11 @@ export class StudyService {
     return true;
   }
 
-  async searchPostByPostId(postId: number) {}
+  async searchPostByPostId(postId: number) {
+    const studyPost = await this.studyPostsRepository.findOne({
+      where: { id: postId },
+      relations: ['leaderUser'],
+    });
+    return studyPost;
+  }
 }

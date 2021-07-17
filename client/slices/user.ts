@@ -1,6 +1,12 @@
 import { IUser } from "@typings/db";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getUserInfoAction, logInAction, signupAction } from "actions/user";
+import {
+  addUserIconAction,
+  deleteUserIconAction,
+  getUserInfoAction,
+  logInAction,
+  signupAction,
+} from "actions/user";
 
 export interface UserState {
   user: IUser | null;
@@ -13,6 +19,12 @@ export interface UserState {
   signupLoading: boolean;
   signupDone: boolean;
   signupError: boolean;
+  addUserIconLoading: boolean;
+  addUserIconDone: boolean;
+  addUserIconError: boolean;
+  deleteUserIconLoading: boolean;
+  deleteUserIconDone: boolean;
+  deleteUserIconError: boolean;
 }
 
 const initialState: UserState = {
@@ -26,6 +38,12 @@ const initialState: UserState = {
   signupLoading: false,
   signupDone: false,
   signupError: false,
+  addUserIconLoading: false,
+  addUserIconDone: false,
+  addUserIconError: false,
+  deleteUserIconLoading: false,
+  deleteUserIconDone: false,
+  deleteUserIconError: false,
 };
 
 export const userSlice = createSlice({
@@ -41,6 +59,16 @@ export const userSlice = createSlice({
       state.signupLoading = false;
       state.signupDone = false;
       state.signupError = false;
+    },
+    addUserIconClear(state) {
+      state.addUserIconLoading = false;
+      state.addUserIconDone = false;
+      state.addUserIconError = false;
+    },
+    deleteUserIconClear(state) {
+      state.deleteUserIconLoading = false;
+      state.deleteUserIconDone = false;
+      state.deleteUserIconError = false;
     },
   },
   extraReducers: (builder) =>
@@ -79,5 +107,27 @@ export const userSlice = createSlice({
       .addCase(signupAction.rejected, (state) => {
         state.signupLoading = false;
         state.signupError = true;
+      })
+      .addCase(addUserIconAction.pending, (state) => {
+        state.addUserIconLoading = true;
+      })
+      .addCase(addUserIconAction.fulfilled, (state) => {
+        state.addUserIconLoading = false;
+        state.addUserIconDone = true;
+      })
+      .addCase(addUserIconAction.rejected, (state) => {
+        state.addUserIconLoading = false;
+        state.addUserIconError = true;
+      })
+      .addCase(deleteUserIconAction.pending, (state) => {
+        state.deleteUserIconLoading = true;
+      })
+      .addCase(deleteUserIconAction.fulfilled, (state) => {
+        state.deleteUserIconLoading = false;
+        state.deleteUserIconDone = true;
+      })
+      .addCase(deleteUserIconAction.rejected, (state) => {
+        state.deleteUserIconLoading = false;
+        state.deleteUserIconError = true;
       }),
 });

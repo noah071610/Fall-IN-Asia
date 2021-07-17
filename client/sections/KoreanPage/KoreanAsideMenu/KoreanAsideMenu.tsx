@@ -3,12 +3,15 @@ import { KoreanAsideMenuWrapper } from "./styles";
 import { japanMapList } from "config";
 import { DownCircleOutlined } from "@ant-design/icons";
 import useToggle from "@hooks/useToggle";
+import { useDispatch } from "react-redux";
+import router from "next/router";
 
 interface IProps {
   setType: (e: string) => void;
 }
 
 const KoreanAsideMenu: FC<IProps> = ({ setType }) => {
+  const dispatch = useDispatch();
   const [onAreaFilter, onClickAreaFilter] = useToggle(true);
   const [onTypeFilter, onClickTypeFilter] = useToggle(true);
   return (
@@ -19,9 +22,22 @@ const KoreanAsideMenu: FC<IProps> = ({ setType }) => {
       </div>
       <div className="korean-list">
         <ul className={onAreaFilter ? "drop-down" : "roll-up"}>
-          <li onClick={() => setType("")}>全国</li>
+          <li
+            onClick={() => {
+              setType("");
+              router.push("korean");
+            }}
+          >
+            全国
+          </li>
           {japanMapList.map((v, i) => (
-            <li onClick={() => setType(v.name)} key={i}>
+            <li
+              onClick={() => {
+                setType(v.name);
+                router.push("korean");
+              }}
+              key={i}
+            >
               {v.name}
             </li>
           ))}
@@ -33,9 +49,30 @@ const KoreanAsideMenu: FC<IProps> = ({ setType }) => {
       </div>
       <div className="korean-list">
         <ul className={onTypeFilter ? "drop-down" : "roll-up"}>
-          <li onClick={() => setType("")}>タイプ全部</li>
-          <li onClick={() => setType("レッスン")}>レッスン</li>
-          <li onClick={() => setType("韓国語勉強俱楽部")}>韓国語勉強俱楽部</li>
+          <li
+            onClick={() => {
+              setType("");
+              router.push("korean");
+            }}
+          >
+            タイプ全部
+          </li>
+          <li
+            onClick={() => {
+              setType("レッスン");
+              router.push("korean");
+            }}
+          >
+            レッスン
+          </li>
+          <li
+            onClick={() => {
+              setType("韓国語勉強俱楽部");
+              router.push("korean");
+            }}
+          >
+            韓国語勉強俱楽部
+          </li>
         </ul>
       </div>
     </KoreanAsideMenuWrapper>
