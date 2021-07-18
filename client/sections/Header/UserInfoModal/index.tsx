@@ -10,7 +10,13 @@ import {
 } from "@ant-design/icons";
 import { RootState } from "slices";
 import { useDispatch, useSelector } from "react-redux";
-import { BLUE_COLOR, DEFAULT_ICON_URL, toastErrorMessage, WHITE_COLOR } from "config";
+import {
+  BLUE_COLOR,
+  DEFAULT_ICON_URL,
+  toastErrorMessage,
+  toastSuccessMessage,
+  WHITE_COLOR,
+} from "config";
 import { AnnounceMenu, ChatMenu, FanMenu, SettingMenu, StudyMenu } from "./UserMenuList";
 import { mainSlice } from "slices/main";
 import Link from "next/link";
@@ -49,12 +55,14 @@ const UserInfoModal: FC<IProps> = () => {
   }, [blob, user]);
   useEffect(() => {
     if (addUserIconDone) {
+      toastSuccessMessage("アイコンを変更致しました。");
       dispatch(getUserInfoAction());
       dispatch(userSlice.actions.addUserIconClear());
     }
   }, [addUserIconDone]);
   useEffect(() => {
     if (deleteUserIconDone) {
+      toastSuccessMessage("アイコンを削除致しました。");
       dispatch(getUserInfoAction());
       dispatch(userSlice.actions.deleteUserIconClear());
     }
@@ -65,7 +73,7 @@ const UserInfoModal: FC<IProps> = () => {
         <>
           <div className="info-top">
             <div className="icon">
-              <img src={user.icon} alt={user.name + "_icon"} />
+              <img src={user?.icon} alt={user?.name + "_icon"} />
               <div
                 onClick={
                   user?.icon === DEFAULT_ICON_URL
@@ -78,13 +86,13 @@ const UserInfoModal: FC<IProps> = () => {
               </div>
             </div>
             <div className="info-desc">
-              <h3>{user.name} 様</h3>
-              <h4>{user.email}</h4>
+              <h3>{user?.name} 様</h3>
+              <h4>{user?.email}</h4>
               <ul>
                 <li>
                   ファン :
                   {user?.fan ? (
-                    <Link href={`/club/${user.fan.key_name}`}>
+                    <Link href={`/club/${user?.fan.key_name}`}>
                       <a>
                         <span>{user?.fan?.group_name}</span>
                       </a>

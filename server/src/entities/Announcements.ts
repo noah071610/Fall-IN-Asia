@@ -27,6 +27,16 @@ export class Announcements {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 'bts',
+    description: 'club key name for finding club as fast as possible',
+    nullable: true,
+  })
+  @Column('varchar', { name: 'club', nullable: true })
+  club: string;
+
   @IsNotEmpty()
   @ApiProperty({
     example: 1,

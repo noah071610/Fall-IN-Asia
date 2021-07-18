@@ -1,5 +1,5 @@
 import React, { FC, memo, useCallback, useEffect, useRef, useState } from "react";
-import { Input, Upload } from "antd";
+import { Button, Input, Upload } from "antd";
 import ReactCrop, { Crop } from "react-image-crop";
 import useInput from "@hooks/useInput";
 import router from "next/router";
@@ -41,6 +41,10 @@ const ImageCropWrapper = styled.div`
       }
     }
   }
+  .remove-btn {
+    margin-top: 1rem;
+    ${FLEX_STYLE("flex-end", "center")};
+  }
 `;
 interface IProps {
   setBlob: (blob: Blob | null) => void;
@@ -48,7 +52,6 @@ interface IProps {
 }
 
 const ImageCropper: FC<IProps> = ({ isIconModal, setBlob }) => {
-  const [url, onChangeUrl, setUrl] = useInput("");
   const [upImg, setUpImg] = useState<ArrayBuffer | string | null>(null);
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
@@ -86,10 +89,8 @@ const ImageCropper: FC<IProps> = ({ isIconModal, setBlob }) => {
     canvas.width = crop.width * pixelRatio;
     canvas.height = crop.height * pixelRatio;
 
-    canvas.toDataURL("image/png");
     ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     ctx.imageSmoothingQuality = "high";
-
     ctx.drawImage(
       image,
       crop.x * scaleX,
@@ -101,6 +102,7 @@ const ImageCropper: FC<IProps> = ({ isIconModal, setBlob }) => {
       crop.width,
       crop.height
     );
+
     new Promise((resolve, reject) => {
       canvas.toBlob((blob: Blob) => {
         if (!blob) {
@@ -109,8 +111,8 @@ const ImageCropper: FC<IProps> = ({ isIconModal, setBlob }) => {
         }
         resolve(setBlob(blob));
       }, "image/jpeg");
-    }),
-      [completedCrop];
+    });
+    [completedCrop];
   });
 
   const handleChange = (info: any) => {
@@ -121,21 +123,8 @@ const ImageCropper: FC<IProps> = ({ isIconModal, setBlob }) => {
 
   return (
     <ImageCropWrapper>
-      <h3>URLからアップロード</h3>
-      <Input
-        disabled={upImg ? true : false}
-        value={url}
-        onChange={onChangeUrl}
-        placeholder="https://"
-      />
-      <h3>ファイルからアップロード</h3>
-      <Dragger
-        disabled={url ? true : false}
-        showUploadList={false}
-        multiple={false}
-        className="dragger"
-        onChange={handleChange}
-      >
+      <h3>イメージアップロード</h3>
+      <Dragger showUploadList={false} multiple={false} className="dragger" onChange={handleChange}>
         <div className="dragger-inside-image">
           <img
             src="https://user-images.githubusercontent.com/74864925/124657825-f38a5500-dedd-11eb-8de9-6ed70a512f24.png"
@@ -144,14 +133,25 @@ const ImageCropper: FC<IProps> = ({ isIconModal, setBlob }) => {
           <p>ここにイメージドロップ</p>
         </div>
       </Dragger>
+      {upImg && (
+        <div className="remove-btn">
+          <Button
+            onClick={() => {
+              setUpImg(null);
+              setBlob(null);
+            }}
+          >
+            他の写真を選ぶ
+          </Button>
+        </div>
+      )}
       <div className="image-crop-section">
         <div className="crop-part ">
           <h4>イメージを加工しましょう✂</h4>
-          {upImg || url ? (
+          {upImg ? (
             <ReactCrop
-              crossorigin="anonymous"
               className="before"
-              src={upImg || url}
+              src={upImg as string}
               onImageLoaded={onLoad}
               crop={crop}
               onChange={(c) => setCrop(c)}
@@ -163,7 +163,7 @@ const ImageCropper: FC<IProps> = ({ isIconModal, setBlob }) => {
         </div>
         <div className="crop-part ">
           <h4>加工結果</h4>
-          {upImg || url ? (
+          {upImg ? (
             <canvas className="after" ref={previewCanvasRef} />
           ) : (
             <img src={NO_IMAGE_URL} alt="no image" />

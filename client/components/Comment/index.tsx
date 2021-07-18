@@ -12,16 +12,18 @@ import SubComment from "@components/SubComment";
 import { Divider } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReply } from "@fortawesome/free-solid-svg-icons";
+import { commentSlice } from "slices/comment";
 interface IProps {
   commentData: IComment;
 }
 
 const Comment: FC<IProps> = ({ commentData }) => {
+  const dispatch = useDispatch();
   const [onDelete, onClickDeleteBtn, setOnDelete] = useToggle(false);
   const [onSubCommentForm, onChangeSubCommentForm, setSubCommentForm] = useToggle(false);
-  const [onSubCommentList, onChangeSubCommentList, setSubCommentList] = useToggle(false);
+  const [onSubCommentList, onChangeSubCommentList, setSubCommentList] = useToggle(true);
   const { user } = useSelector((state: RootState) => state.user);
-  const { commentDeleteDone } = useSelector((state: RootState) => state.comment);
+  const { commentDeleteDone, commentCreateDone } = useSelector((state: RootState) => state.comment);
   const [isOwner, setIsOwner] = useState(false);
   useEffect(() => {
     if (user?.id === commentData?.user.id) {
@@ -29,15 +31,25 @@ const Comment: FC<IProps> = ({ commentData }) => {
     }
   }, [user, commentData]);
   useEffect(() => {
+    if (commentData?.subComments?.length > 2) {
+      setSubCommentList(false);
+    }
+  }, []);
+  useEffect(() => {
+    if (commentCreateDone) {
+      dispatch(commentSlice.actions.commentCreateClear());
+    }
+  }, [commentCreateDone]);
+  useEffect(() => {
     if (commentDeleteDone) {
       setOnDelete(false);
+      setSubCommentForm(false);
+      dispatch(commentSlice.actions.commentDeleteClear());
     }
   }, [commentDeleteDone]);
-  console.log("commm", commentData);
-
   return (
     <CommentWrapper>
-      <div className="comment-main">
+      <div onClick={onChangeSubCommentForm} className="comment-main">
         <div className="name-space">
           <div>
             <a className="icon">
@@ -50,7 +62,12 @@ const Comment: FC<IProps> = ({ commentData }) => {
           </div>
           {isOwner && (
             <div className="comment-menu">
-              <a onClick={onClickDeleteBtn}>
+              <a
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onClickDeleteBtn();
+                }}
+              >
                 <DeleteOutlined />
               </a>
               {onDelete && (
@@ -61,24 +78,16 @@ const Comment: FC<IProps> = ({ commentData }) => {
         </div>
         <p className="comment-wrapper">{commentData?.content}</p>
       </div>
-      <div className="subComment-toggle-div">
-        <a onClick={onChangeSubCommentForm}>
-          {" "}
-          リプライ作成
-          <DownCircleOutlined rotate={onSubCommentForm ? 180 : 0} />
-        </a>
-        {commentData?.subComments?.length > 0 && (
-          <>
-            <Divider type="vertical" />
-            <a onClick={onChangeSubCommentList}>
-              <span className="count">{commentData?.subComments?.length}</span>
-              件のリプライ
-              <DownCircleOutlined rotate={onSubCommentList ? 180 : 0} />
-            </a>
-          </>
-        )}
-      </div>
-      {onSubCommentForm && user && <SubCommentForm commentId={commentData?.id} />}
+      {onSubCommentForm && <SubCommentForm commentId={commentData?.id} />}
+      {commentData?.subComments?.length > 2 && (
+        <div onClick={onChangeSubCommentList} className="subComment-toggle-div">
+          <span>
+            <span className="count">{commentData?.subComments?.length}</span>
+            件のリプライ
+            <DownCircleOutlined rotate={onSubCommentList ? 180 : 0} />
+          </span>
+        </div>
+      )}
       {onSubCommentList &&
         commentData?.subComments?.map((v, i) => {
           return <SubComment subCommentData={v} key={i} />;

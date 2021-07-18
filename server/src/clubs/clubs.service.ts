@@ -159,7 +159,8 @@ export class ClubsService {
     await this.announcementsRepository.save({
       userId: data.userId,
       clubPostId: newPost.id,
-      content: `${data.title}...を登録致しました。`,
+      club: newPost.key_name,
+      content: `${data.title.slice(10)}...を登録致しました。`,
     });
     return newPost;
   }

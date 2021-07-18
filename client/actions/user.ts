@@ -26,6 +26,16 @@ export const logInAction = createAsyncThunk<any, { email: string; password: stri
   }
 );
 
+export const logoutAction = createAsyncThunk<any>("user/logout", async () => {
+  try {
+    const response = await axios.post("/user/logout");
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
+  }
+});
+
 export const signupAction = createAsyncThunk<IUser, ISignUpForm>("user/signup", async (data) => {
   try {
     const response = await axios.post("/user", data);
@@ -39,6 +49,16 @@ export const signupAction = createAsyncThunk<IUser, ISignUpForm>("user/signup", 
 export const fanRegisterAction = createAsyncThunk<any, any>("user/fan", async (data) => {
   try {
     const response = await axios.post("/user/fan", data);
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
+  }
+});
+
+export const fanWithdrawalAction = createAsyncThunk<any>("user/fan/withdrawal", async () => {
+  try {
+    const response = await axios.delete(`/user/fan`);
     return response.data;
   } catch (error) {
     toastErrorMessage(error);

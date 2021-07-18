@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRID_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const AnnounceMenuWrapper = styled.ul`
-  padding-left: 1rem;
-  li {
+  .announce-list {
+    padding-left: 1rem;
     box-shadow: 2px 2px 8px ${RGB_BLACK(0.15)};
     margin-bottom: 0.3rem;
     width: 100%;
@@ -28,7 +28,7 @@ export const AnnounceMenuWrapper = styled.ul`
   .no-chat-box {
     ${FLEX_STYLE("center", "center")};
     flex-direction: column;
-    padding: 1rem 1rem 1rem 2rem;
+    padding: 0 1rem 0 2rem;
     img {
       width: 50%;
       opacity: 0.3;
@@ -41,7 +41,7 @@ export const AnnounceMenuWrapper = styled.ul`
 `;
 
 export const ChatMenuWrapper = styled.ul`
-  li {
+  .chat-list {
     width: 100%;
     cursor: pointer;
     padding: 0.5rem 0 0.5rem 1rem;
@@ -70,7 +70,7 @@ export const ChatMenuWrapper = styled.ul`
   .no-chat-box {
     ${FLEX_STYLE("center", "center")};
     flex-direction: column;
-    padding: 1rem 1rem 1rem 2rem;
+    padding: 0 1rem 0 2rem;
     img {
       width: 50%;
       opacity: 0.3;
@@ -84,34 +84,49 @@ export const ChatMenuWrapper = styled.ul`
 
 export const FanMenuWrapper = styled.div`
   padding-left: 1rem;
-  img {
-    width: 100%;
-  }
-  h2 {
-    margin: 1rem 0;
-    ${FLEX_STYLE("flex-start", "center")};
-    button {
-      margin: 0 0 0 1rem;
+  .fan-desc {
+    padding: 1rem;
+    box-shadow: 2px 2px 8px ${RGB_BLACK(0.15)};
+    .tag {
+      margin: 0.5rem 0.5rem 1rem 0;
     }
-  }
-  h4 {
-    margin-bottom: 0.5rem;
-    font-size: 0.8rem;
-    .group-name {
-      font-size: 0.9rem;
+    img {
+      width: 100%;
+      height: 140px;
+    }
+    h2 {
+      margin: 1rem 0;
       font-weight: bold;
-      margin-right: 0.3rem;
+      ${FLEX_STYLE("flex-start", "center")};
+      button {
+        margin: 0 0 0 1rem;
+      }
     }
-    .count {
-      color: ${BLUE_COLOR};
-      font-weight: bold;
+    h4 {
+      margin-bottom: 0.5rem;
+      font-size: 0.8rem;
+      .group-name {
+        font-size: 0.9rem;
+        font-weight: bold;
+        margin-right: 0.3rem;
+      }
+      .count {
+        color: ${BLUE_COLOR};
+        font-weight: bold;
+      }
     }
+  }
+  h3 {
+    font-weight: bold;
+    font-size: 1.05rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid ${BLUE_COLOR};
   }
 `;
 
 export const StudyMenuWrapper = styled.ul`
-  padding-left: 1rem;
-  li {
+  .study-list {
+    padding-left: 1rem;
     box-shadow: 2px 2px 8px ${RGB_BLACK(0.15)};
     margin-bottom: 0.3rem;
     padding: 1rem;
@@ -141,6 +156,19 @@ export const StudyMenuWrapper = styled.ul`
       background: ${RGB_BLACK(0.15)};
     }
   }
+  .no-chat-box {
+    ${FLEX_STYLE("center", "center")};
+    flex-direction: column;
+    padding: 0 1rem 0 2rem;
+    img {
+      width: 50%;
+      opacity: 0.3;
+    }
+    span {
+      font-weight: bold;
+      color: ${BLUE_COLOR};
+    }
+  }
 `;
 
 export const SettingMenuWrapper = styled.ul`
@@ -149,7 +177,8 @@ export const SettingMenuWrapper = styled.ul`
     cursor: pointer;
     display: block;
     transition: 0.3s all;
-    ${BORDER_THIN("border")};
+    box-shadow: 2px 2px 8px ${RGB_BLACK(0.15)};
+    margin-bottom: 0.3rem;
     padding: 1rem;
     .anticon {
       margin-right: 1rem;

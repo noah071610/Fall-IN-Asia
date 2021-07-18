@@ -11,6 +11,7 @@ import {
 
 export const UserInfoModalWrapper = styled.div`
   width: 55%;
+  transition: 0.2s all;
   top: 62px;
   right: 0;
   ${MODAL_STYLE("10%")};

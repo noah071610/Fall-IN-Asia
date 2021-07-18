@@ -17,20 +17,20 @@ export class UsersService {
   async findUserInfoByEmail(email: string) {
     const user = await this.userRepository
       .createQueryBuilder('users')
-      .leftJoinAndSelect('users.clubPosts', 'cp')
-      .leftJoinAndSelect('cp.announcements', 'cpance')
-      .leftJoinAndSelect('users.marketPosts', 'mp')
-      .leftJoinAndSelect('mp.announcements', 'mpance')
-      .leftJoinAndSelect('users.studyPosts', 'sp')
-      .leftJoinAndSelect('sp.announcements', 'spance')
+      .leftJoinAndSelect('users.clubPosts', 'clubPost')
+      .leftJoinAndSelect('clubPost.announcements', 'c_announce')
+      .leftJoinAndSelect('users.marketPosts', 'marketPost')
+      .leftJoinAndSelect('marketPost.announcements', 'm_announce')
+      .leftJoinAndSelect('users.studyPosts', 'studyPost')
+      .leftJoinAndSelect('studyPost.announcements', 's_announce')
       .leftJoinAndSelect('users.comments', 'com')
-      .leftJoinAndSelect('com.post', 'cmInpost')
+      .leftJoinAndSelect('com.post', 'cm_post')
       .leftJoinAndSelect('users.fan', 'fan')
       .leftJoinAndSelect('users.participates', 'ptcp')
-      .leftJoinAndSelect('ptcp.studyPost', 'ptcpsp')
-      .leftJoinAndSelect('ptcpsp.leaderUser', 'leader')
-      .leftJoinAndSelect('users.announcements', 'anuc')
-      .leftJoinAndSelect('users.chatToUser', 'ctu')
+      .leftJoinAndSelect('ptcp.studyPost', 'ptcp_studyPost')
+      .leftJoinAndSelect('ptcp_studyPost.leaderUser', 'leader')
+      .leftJoinAndSelect('users.announcements', 'announce')
+      .leftJoinAndSelect('users.chatToUser', 'chat')
       .where('users.email= :email', { email })
       .getOne();
 
@@ -68,9 +68,16 @@ export class UsersService {
     const user = await this.userRepository.findOne({
       where: { id: userId },
     });
-    console.log(group);
-
     user.fan = group.id;
+    await this.userRepository.save(user);
+    return true;
+  }
+
+  async withdrawalFan(userId: number) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+    user.fan = null;
     await this.userRepository.save(user);
     return true;
   }

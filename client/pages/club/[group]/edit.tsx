@@ -13,6 +13,9 @@ import useInput from "@hooks/useInput";
 import { IClubPostForm } from "@typings/db";
 import { clubPostEditAction } from "actions/club";
 import Editor from "@components/PostingEditor/Editor";
+import { wrapper } from "configureStore";
+import axios from "axios";
+import { getUserInfoAction } from "actions/user";
 
 export const EditWrapper = styled.div`
   padding: 2rem;
@@ -40,10 +43,12 @@ const edit: FC<IProps> = () => {
   }, [clubPostEditDone]);
 
   useEffect(() => {
-    if (!user) {
-      router.back();
+    if (editPost) {
+      if (!user) {
+        router.back();
+      }
     }
-  }, []);
+  }, [editPost]);
 
   const onClickSubmit = useCallback(() => {
     if (title === "" || !title?.trim()) {

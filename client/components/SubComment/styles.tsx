@@ -4,6 +4,12 @@ import { BORDER_THIN, FLEX_STYLE, RED_COLOR, RGB_BLACK } from "config";
 export const SubCommentWrapper = styled.div`
   padding: 1rem 0.5rem 1rem 2.8rem;
   transition: 0.3s all;
+  h4 {
+    font-size: 1rem;
+  }
+  &:hover {
+    background: ${RGB_BLACK(0.08)};
+  }
   .name-space {
     ${FLEX_STYLE("space-between", "center")};
     margin-bottom: 0.5rem;
@@ -19,7 +25,7 @@ export const SubCommentWrapper = styled.div`
     }
     .comment-menu {
       position: relative;
-      font-size: 0.9rem;
+      font-size: 1.1rem;
       .password-modal {
         right: -0.8rem;
       }
@@ -34,6 +40,6 @@ export const SubCommentWrapper = styled.div`
     }
   }
   .comment-wrapper {
-    padding-left: 0.2rem;
+    padding-left: 3rem;
   }
 `;

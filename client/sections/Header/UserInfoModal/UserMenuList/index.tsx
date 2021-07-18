@@ -1,5 +1,11 @@
-import { AlertOutlined, EditOutlined, PoweroffOutlined, RetweetOutlined } from "@ant-design/icons";
-import { DEFAULT_ICON_URL, noRevalidate, NO_POST_URL } from "config";
+import {
+  AlertOutlined,
+  EditOutlined,
+  PoweroffOutlined,
+  RetweetOutlined,
+  UserDeleteOutlined,
+} from "@ant-design/icons";
+import { DEFAULT_ICON_URL, noRevalidate, NO_POST_URL, toastSuccessMessage } from "config";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
@@ -21,6 +27,9 @@ import { Divider } from "antd";
 import { studySlice } from "slices/study";
 import router from "next/router";
 import { mainSlice } from "slices/main";
+import { fanWithdrawalAction, getUserInfoAction, logoutAction } from "actions/user";
+import { userSlice } from "slices/user";
+import CommonTitle from "@components/Common/CommonTitle";
 
 interface IProps {}
 
@@ -64,12 +73,34 @@ export const AnnounceMenu: FC<IProps> = () => {
       );
     }
   }, []);
+  const onClickAnnouncement = useCallback((clubPostId, marketPostId, studyPostId, club) => {
+    if (clubPostId) {
+      router.push(`/club/${club}/${clubPostId}`);
+      return;
+    }
+    if (marketPostId) {
+      router.push(`/market/${marketPostId}`);
+      return;
+    }
+    if (studyPostId) {
+      router.push(`/korean?postId=${studyPostId}`);
+      return;
+    }
+  }, []);
+  console.log(announcements);
+
   return (
     <AnnounceMenuWrapper>
       {announcements?.length > 0 ? (
         announcements.map((v, i) => {
           return (
-            <li key={i}>
+            <li
+              className="announce-list"
+              onClick={() =>
+                onClickAnnouncement(v.clubPostId, v.marketPostId, v.studyPostId, v.club)
+              }
+              key={i}
+            >
               <span className="category">
                 {v.clubPostId ? "クラブ📢" : v.marketPostId ? "マーケット📢" : "スタディー📢"}
               </span>
@@ -95,7 +126,7 @@ export const ChatMenu: FC<IProps> = () => {
     <ChatMenuWrapper>
       {user?.chatToUser?.length > 0 ? (
         user?.chatToUser?.map((v: any) => {
-          <li>
+          <li className="chat-list">
             <div className="name-space">
               <img src={v.icon} />
               <span>{v.name}</span>
@@ -116,10 +147,26 @@ export const ChatMenu: FC<IProps> = () => {
 };
 
 export const FanMenu: FC<IProps> = () => {
-  const { user } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
+
+  const { user, userFanWithdrawalDone, userFanRegisterDone } = useSelector(
+    (state: RootState) => state.user
+  );
   const [fanClubPostLength, setFanClubPostLength] = useState(0);
   const [fanClubCommentLength, setFanClubCommentLength] = useState(0);
   const { data: groups, error } = useSWR("/group", fetcher, noRevalidate);
+  useEffect(() => {
+    if (userFanRegisterDone) {
+      dispatch(userSlice.actions.userFanRegisterClear());
+      dispatch(getUserInfoAction());
+    }
+  }, [userFanRegisterDone]);
+  useEffect(() => {
+    if (userFanWithdrawalDone) {
+      dispatch(getUserInfoAction());
+      dispatch(userSlice.actions.userFanWithdrawalClear());
+    }
+  }, [userFanWithdrawalDone]);
   useEffect(() => {
     if (user?.fan) {
       const postForFanGroup = user.clubPosts.filter(
@@ -133,20 +180,16 @@ export const FanMenu: FC<IProps> = () => {
     }
   }, [user]);
 
+  const onClickWithdrawalFan = useCallback(() => {
+    dispatch(fanWithdrawalAction());
+  }, []);
   return (
     <FanMenuWrapper>
       {user?.fan ? (
-        <>
+        <div className="fan-desc">
           <img src={user?.fan.fanClub_image} />
           <div>
-            <h2>
-              {user?.fan.fanClub_name}
-              <Link href={`/club/${user.fan.key_name}`}>
-                <a>
-                  <button className="tag">ファンクラブ移動</button>
-                </a>
-              </Link>
-            </h2>
+            <h2>{user?.fan.fanClub_name}</h2>
             <h4>
               <span className="group-name">{user.fan.group_name}</span>クラブポスト :
               <span className="count">{fanClubPostLength}</span>
@@ -155,11 +198,19 @@ export const FanMenu: FC<IProps> = () => {
               <span className="group-name">{user.fan.group_name}</span>クラブコメント :
               <span className="count">{fanClubCommentLength}</span>
             </h4>
+            <Link href={`/club/${user.fan.key_name}`}>
+              <a>
+                <button className="tag">クラブ移動</button>
+              </a>
+            </Link>
+            <button onClick={onClickWithdrawalFan} className="tag">
+              ファン変更
+            </button>
           </div>
-        </>
+        </div>
       ) : (
         <>
-          <h3 style={{ marginBottom: "1rem" }}>ファンのクラブを検索して登録しましょう😍。</h3>
+          <h3>ファン登録</h3>
           <AutoCompleteSearch isOnFanRegister={true} groupsData={groups} />
         </>
       )}
@@ -177,42 +228,61 @@ export const StudyMenu: FC<IProps> = () => {
   }, []);
   return (
     <StudyMenuWrapper>
-      {user?.participates?.map((v: any, i: number) => {
-        return (
-          <li onClick={() => onClickStudyPost(v.studyPost.id)} key={i}>
-            <div className="leaderUser-info">
-              <img src={v.studyPost?.leaderUser?.icon} alt="" />
-              <div>
-                <h3>{v.studyPost?.leaderUser?.name}</h3>
-                <span className="tag">{v.studyPost?.area}</span>
-                <span className="tag">{v.studyPost?.type}</span>
+      {user?.participates?.length > 0 ? (
+        user?.participates?.map((v: any, i: number) => {
+          return (
+            <li className="study-list" onClick={() => onClickStudyPost(v.studyPost.id)} key={i}>
+              <div className="leaderUser-info">
+                <img src={v.studyPost?.leaderUser?.icon} alt="" />
+                <div>
+                  <h3>{v.studyPost?.leaderUser?.name}</h3>
+                  <span className="tag">{v.studyPost?.area}</span>
+                  <span className="tag">{v.studyPost?.type}</span>
+                </div>
               </div>
-            </div>
-            <h3 className="title">{v.studyPost?.title}...</h3>
-          </li>
-        );
-      })}
+              <h3 className="title">{v.studyPost?.title}...</h3>
+            </li>
+          );
+        })
+      ) : (
+        <li className="no-chat-box">
+          <img src={NO_POST_URL} alt="noPost" />
+          <h3>とこでも参加してないです。😥</h3>
+        </li>
+      )}
     </StudyMenuWrapper>
   );
 };
 
 export const SettingMenu: FC<IProps> = () => {
+  const dispatch = useDispatch();
+  const { user, logoutDone } = useSelector((state: RootState) => state.user);
+  useEffect(() => {
+    if (logoutDone) {
+      dispatch(mainSlice.actions.closeModal());
+      dispatch(userSlice.actions.logoutClear());
+      toastSuccessMessage("ログアウトしました。");
+    }
+  }, [logoutDone]);
+  const onClickLogout = useCallback(() => {
+    dispatch(logoutAction());
+  }, []);
   return (
     <SettingMenuWrapper>
-      <li>
-        <EditOutlined />
-        名前変更
+      <li onClick={onClickLogout}>
+        <PoweroffOutlined />
+        ログアウト
       </li>
       <li>
-        <RetweetOutlined />
-        パスワード変更
+        <EditOutlined />
+        個人情報変更
       </li>
       <li>
         <AlertOutlined />
         通報
       </li>
       <li>
-        <PoweroffOutlined />
+        <UserDeleteOutlined />
         脱退
       </li>
     </SettingMenuWrapper>

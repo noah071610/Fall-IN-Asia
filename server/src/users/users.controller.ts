@@ -56,7 +56,7 @@ export class UsersController {
   logOut(@Req() req, @Res() res) {
     req.logOut();
     res.clearCookie('connect.sid', { httpOnly: true });
-    res.send('ok');
+    return true;
   }
 
   @UseGuards(new LoggedInGuard())
@@ -64,6 +64,13 @@ export class UsersController {
   @Post('fan')
   async registerFan(@Body() data: any, @User() user) {
     await this.usersService.registerFan(user.id, data);
+  }
+
+  @UseGuards(new LoggedInGuard())
+  @ApiOperation({ summary: 'Withdrawal fan' })
+  @Delete('fan')
+  async withdrawalFan(@User() user) {
+    await this.usersService.withdrawalFan(user.id);
   }
 
   @ApiOperation({ summary: 'change user icon' })

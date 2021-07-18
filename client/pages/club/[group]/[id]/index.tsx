@@ -17,6 +17,7 @@ import { BLUE_COLOR, BORDER_THIN, RGB_BLACK, toastErrorMessage, toastSuccessMess
 import { clubSlice } from "slices/club";
 import { commentSlice } from "slices/comment";
 import { IComment } from "@typings/db";
+import { CommentOutlined } from "@ant-design/icons";
 
 const CommentsWrapper = styled.div`
   margin: 0 2rem 4rem 2rem;
@@ -27,6 +28,10 @@ const CommentTitle = styled.div`
   background: ${RGB_BLACK(0.03)};
   ${BORDER_THIN("border")};
   margin-bottom: 1rem;
+  .anticon {
+    font-size: 1.3rem;
+    margin-right: 0.5rem;
+  }
   .count-comment {
     font-size: 1.3rem;
     color: ${BLUE_COLOR};
@@ -70,7 +75,6 @@ const ClubPost: FC<IProps> = () => {
   useEffect(() => {
     if (commentCreateDone) {
       toastSuccessMessage("コメントを成功的に作成致しました。");
-      dispatch(commentSlice.actions.commentCreateClear());
       revalidate();
     }
   }, [commentCreateDone]);
@@ -78,7 +82,6 @@ const ClubPost: FC<IProps> = () => {
   useEffect(() => {
     if (commentDeleteDone) {
       toastSuccessMessage("コメントを成功的に削除致しました。");
-      dispatch(commentSlice.actions.commentDeleteClear());
       revalidate();
     }
   }, [commentDeleteDone]);
@@ -94,7 +97,6 @@ const ClubPost: FC<IProps> = () => {
   useEffect(() => {
     if (subCommentDeleteDone) {
       toastSuccessMessage("返事を成功的に削除致しました。");
-      dispatch(commentSlice.actions.subCommentDeleteClear());
       revalidate();
     }
   }, [subCommentDeleteDone]);
@@ -120,7 +122,9 @@ const ClubPost: FC<IProps> = () => {
       <ClubPostTitle postData={postData} />
       <ClubPostContent postData={postData} />
       <CommentTitle>
-        <span className="count-comment">{postData?.comments?.length}</span>件のコメント
+        <CommentOutlined />
+        <span className="count-comment">{postData?.comments?.length}</span>
+        件のコメント
       </CommentTitle>
       <CommentForm />
       <CommentsWrapper>

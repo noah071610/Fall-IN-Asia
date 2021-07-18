@@ -7,7 +7,7 @@ import { RootState } from "slices";
 import { IComment, ISubComment } from "@typings/db";
 import useToggle from "@hooks/useToggle";
 import ConfirmPasswordModal from "@components/ConfirmPasswordModal";
-import SubCommentForm from "@components/SubCommentForm";
+import { commentSlice } from "slices/comment";
 interface IProps {
   subCommentData: ISubComment;
 }
@@ -15,21 +15,23 @@ interface IProps {
 interface IProps {}
 
 const SubComment: FC<IProps> = ({ subCommentData }) => {
+  const dispatch = useDispatch();
   const [onDelete, onClickDeleteBtn, setOnDelete] = useToggle(false);
-  const [onSubCommentForm, onChangeSubCommentForm, setOnSubCommentForm] = useToggle(false);
   const { user } = useSelector((state: RootState) => state.user);
-  const { commentDeleteDone } = useSelector((state: RootState) => state.comment);
+  const { subCommentDeleteDone } = useSelector((state: RootState) => state.comment);
   const [isOwner, setIsOwner] = useState(false);
   useEffect(() => {
     if (user?.id === subCommentData?.user.id) {
       setIsOwner(true);
     }
   }, [user, subCommentData]);
+
   useEffect(() => {
-    if (commentDeleteDone) {
+    if (subCommentDeleteDone) {
       setOnDelete(false);
+      dispatch(commentSlice.actions.subCommentDeleteClear());
     }
-  }, [commentDeleteDone]);
+  }, [subCommentDeleteDone]);
 
   return (
     <SubCommentWrapper>
