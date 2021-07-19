@@ -47,56 +47,37 @@ const Header: FC<HeaderProps> = () => {
   return (
     <HeaderWrapper>
       <HeaderLeft>
+        <Link href="/">
+          <a>
+            <img src="https://user-images.githubusercontent.com/74864925/123951789-21ecc980-d9e0-11eb-9f3c-421cbea7d9cf.png" />
+          </a>
+        </Link>
         <li>
           <Link href="/">
-            <a>
-              <img src="https://user-images.githubusercontent.com/74864925/123951789-21ecc980-d9e0-11eb-9f3c-421cbea7d9cf.png" />
-            </a>
+            <a>홈</a>
           </Link>
         </li>
-        <li className="nav-list">
-          <Link href="/">
-            <a className="nav-list-ancher">
-              <HomeOutlined />
-              <span className="list-text">홈</span>
-            </a>
-          </Link>
-        </li>
-        <li className="nav-list">
-          <a className="nav-list-ancher" onClick={onClickCommunityMenu}>
-            <CommentOutlined />
-            <span className="list-text">연대기</span>
-            <FontAwesomeIcon
-              style={{ transform: `rotate(${onCommunityModal ? "180deg" : "0"})` }}
-              icon={faChevronDown}
-              className="arrow"
-            />
-          </a>
+        <li>
+          <a onClick={onClickCommunityMenu}>연대기</a>
           {onCommunityModal && <CommunityMenu />}
         </li>
-        <li className="nav-list">
+        <li>
           <Link href="/market">
-            <a className="nav-list-ancher">
-              <InboxOutlined />
-              <span className="list-text">마켓</span>
-            </a>
+            <a>마켓</a>
           </Link>
         </li>
       </HeaderLeft>
       <HeaderRight>
         {user ? (
-          <li className="nav-list">
-            <a onClick={onClickUserInfoMenu} className="nav-list-ancher">
+          <li>
+            <a onClick={onClickUserInfoMenu}>
               <img className="user-icon" src={user?.icon} alt={user?.name} />
               <span className="list-text">{user?.name} 様</span>
             </a>
           </li>
         ) : (
-          <li className="nav-list">
-            <a onClick={onClickLoginMenu} className="nav-list-ancher">
-              <UserOutlined />
-              <span className="list-text">ログイン</span>
-            </a>
+          <li>
+            <a onClick={onClickLoginMenu}>로그인</a>
           </li>
         )}
       </HeaderRight>

@@ -1,15 +1,15 @@
 import React, { FC, useCallback, useState } from "react";
 import styled from "@emotion/styled";
-import { LG_SIZE, MD_SIZE, RGB_BLACK } from "config";
+import { LG_SIZE, MD_SIZE, RGB_BLACK, XLG_SIZE } from "config";
 import Header from "sections/Header/index";
 import Footer from "sections/Footer/index";
 import { ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { mainSlice } from "slices/main";
+import Navigation from "./Navigation";
 const Wrapper = styled.div`
-  width: ${LG_SIZE};
-  box-shadow: 0px 0px 15px ${RGB_BLACK(0.1)};
-  margin: 59px auto 0 auto;
+  width: ${XLG_SIZE};
+  margin: 0 auto;
 `;
 
 interface AppLayoutProps {}

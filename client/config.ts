@@ -7,6 +7,7 @@ export const WHITE_COLOR = "white" as const;
 export const BLUE_COLOR = "#1187cf" as const;
 export const RED_COLOR = "#C02E4C" as const;
 export const SKY_COLOR = "#7B9ACC" as const;
+export const GRAY_COLOR = "#f6f6f9" as const;
 export const DEEP_BLUE_COLOR = "#5A66D7" as const;
 export const PINK_COLOR = "#f6d6d6" as const;
 
@@ -36,10 +37,25 @@ export const BORDER_THICK = (border: string, px?: number) => `
   ${border}:${px ? px : "2"}px solid rgba(0,0,0,0.1)
 `;
 
+export const FONT_STYLE = (size: number, weight?: boolean, color?: string) => `
+font-size:${size}rem;
+font-weight:${weight && "bold"};
+color:${!color && "black"};
+`;
+
 export const FLEX_STYLE = (justify: string, align: string) => `
   display:flex;
   justify-content:${justify};
   align-items:${align};
+`;
+
+export const HOVER_GRAY = (borderRadius?: number, transition?: boolean) => `
+  border-radius:${borderRadius ? borderRadius + "px" : 0};
+  transition:${transition ? "0.3s all" : ""};
+  cursor:pointer;
+  &:hover{
+    background:${GRAY_COLOR};
+  }
 `;
 
 export const GRID_STYLE = (gap: string, colums: string, row?: string) => `

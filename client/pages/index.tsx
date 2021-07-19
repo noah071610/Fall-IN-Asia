@@ -2,21 +2,19 @@ import React, { useEffect } from "react";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
-import GoodsExchangeSection from "@sections/MainPage/GoodsExchangeSection";
-import MusicChartSection from "@sections/MainPage/MusicChartSection";
-import SupportSection from "@sections/MainPage/SupportSection";
-import styled from "@emotion/styled";
-import GroupVote from "@components/GroupVote";
-import NewsArticle from "@components/NewsArticle";
-import { toastSuccessMessage } from "config";
+import { FLEX_STYLE, GRID_STYLE, LG_SIZE, toastSuccessMessage, XLG_SIZE } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { mainSlice } from "slices/main";
 import { RootState } from "slices";
 import { getGroupsWithScoreAction } from "actions/group";
-
-const MainWrapper = styled.div`
-  padding: 2rem;
-`;
+import { MainWrapper } from "@styles/index";
+import { EditFilled, EditOutlined } from "@ant-design/icons";
+import ArticleCard from "@components/Cards/ArticleCard";
+import ClubPostTitle from "@sections/ClubPostPage/ClubPostTitle";
+import MainContent from "@sections/MainPage/MainContent";
+import MainCountryMenu from "@sections/MainPage/MainCountryMenu";
+import MainPostingForm from "@sections/MainPage/MainPostingForm";
+import CountryImage from "@sections/MainPage/CountryImage";
 
 const index = () => {
   const dispatch = useDispatch();
@@ -40,11 +38,16 @@ const index = () => {
   }, [groupVoteUndoDone, selectedGroup]);
   return (
     <MainWrapper>
-      <GoodsExchangeSection />
-      <NewsArticle />
-      <MusicChartSection />
-      <SupportSection />
-      <GroupVote />
+      <div className="layout" style={{ width: LG_SIZE }}>
+        <CountryImage />
+        <div className="layout_main">
+          <h2 className="main-title">인기여행지</h2>
+          <MainCountryMenu />
+          <h2 className="main-title">포스팅</h2>
+          <MainPostingForm />
+          <MainContent />
+        </div>
+      </div>
     </MainWrapper>
   );
 };

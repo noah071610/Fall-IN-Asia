@@ -1,4 +1,4 @@
-import { BLACK_COLOR, BLUE_COLOR, BORDER_THIN, RGB_BLACK, WHITE_COLOR } from "config";
+import { BLACK_COLOR, BLUE_COLOR, BORDER_THIN, HOVER_GRAY, RGB_BLACK, WHITE_COLOR } from "config";
 
 export const resetStyles = `
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
@@ -64,6 +64,24 @@ li {
 }
 a {
   color:black;
+  &:hover{
+    color:black;
+  }
+}
+button{
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+input {
+  border: none;
+  width: 100%;
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: ${RGB_BLACK(0.3)};
+  }
 }
 p {
   margin:0;
@@ -72,21 +90,11 @@ h1,h2,h3,h4,h5{
   margin:0;
 }
 .tag {
-  margin:0 0.4rem 0.4rem 0;
-  padding:0.5rem 1rem;
-  border-radius : 5px;
-  background-color:${WHITE_COLOR};
+  padding:0.5rem .7rem;
+  border-radius : 10px;
   border:1px solid ${RGB_BLACK(0.15)};
   font-size:0.7rem;
   cursor:pointer;
-  transition:0.3s all;
-  &:hover{
-    border:1px solid ${BLUE_COLOR};
-    color:${BLUE_COLOR};
-    span,a{
-      color:${BLUE_COLOR}
-    }
-  }
 }
 
 .point {

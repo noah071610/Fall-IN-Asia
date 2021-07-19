@@ -11,6 +11,9 @@ import "slick-carousel/slick/slick-theme.css";
 import "aos/dist/aos.css";
 import "react-toastify/dist/ReactToastify.css";
 import "react-quill/dist/quill.snow.css";
+import { ToastContainer } from "react-toastify";
+import Header from "@sections/Header";
+import Footer from "@sections/Footer";
 
 const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
@@ -18,10 +21,11 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, []);
   return (
     <>
+      <Header />
       <Global styles={resetStyles} />
-      <AppLayout>
-        <Component {...pageProps} />
-      </AppLayout>
+      <Component {...pageProps} />
+      <Footer />
+      <ToastContainer />
     </>
   );
 };
