@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect } from "react";
-import { HeaderWrapper, Poster } from "./styles";
+import { HeaderWrapper, HeaderLeft, HeaderRight } from "./styles";
 import { HomeOutlined, InboxOutlined, CommentOutlined, UserOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -46,83 +46,63 @@ const Header: FC<HeaderProps> = () => {
 
   return (
     <HeaderWrapper>
-      <div className="header-lgsize">
-        <Link href="/">
-          <a>
-            <Poster>
+      <HeaderLeft>
+        <li>
+          <Link href="/">
+            <a>
               <img src="https://user-images.githubusercontent.com/74864925/123951789-21ecc980-d9e0-11eb-9f3c-421cbea7d9cf.png" />
-            </Poster>
-          </a>
-        </Link>
-        <nav>
-          <li className="nav-list">
-            <Link href="/">
-              <a className="nav-list-ancher">
-                <HomeOutlined />
-                <span className="list-text">ホーム</span>
-              </a>
-            </Link>
-          </li>
-          <li className="nav-list">
-            <a className="nav-list-ancher" onClick={onClickCommunityMenu}>
-              <CommentOutlined />
-              <span className="list-text">コミュニティ</span>
-              <FontAwesomeIcon
-                style={{ transform: `rotate(${onCommunityModal ? "180deg" : "0"})` }}
-                icon={faChevronDown}
-                className="arrow"
-              />
             </a>
-            {onCommunityModal && <CommunityMenu />}
-          </li>
+          </Link>
+        </li>
+        <li className="nav-list">
+          <Link href="/">
+            <a className="nav-list-ancher">
+              <HomeOutlined />
+              <span className="list-text">홈</span>
+            </a>
+          </Link>
+        </li>
+        <li className="nav-list">
+          <a className="nav-list-ancher" onClick={onClickCommunityMenu}>
+            <CommentOutlined />
+            <span className="list-text">연대기</span>
+            <FontAwesomeIcon
+              style={{ transform: `rotate(${onCommunityModal ? "180deg" : "0"})` }}
+              icon={faChevronDown}
+              className="arrow"
+            />
+          </a>
+          {onCommunityModal && <CommunityMenu />}
+        </li>
+        <li className="nav-list">
+          <Link href="/market">
+            <a className="nav-list-ancher">
+              <InboxOutlined />
+              <span className="list-text">마켓</span>
+            </a>
+          </Link>
+        </li>
+      </HeaderLeft>
+      <HeaderRight>
+        {user ? (
           <li className="nav-list">
-            <Link href="/market">
-              <a className="nav-list-ancher">
-                <InboxOutlined />
-                <span className="list-text">マーケット</span>
-              </a>
-            </Link>
+            <a onClick={onClickUserInfoMenu} className="nav-list-ancher">
+              <img className="user-icon" src={user?.icon} alt={user?.name} />
+              <span className="list-text">{user?.name} 様</span>
+            </a>
           </li>
-          {/* <li className="nav-list">
-            <Link href="/support">
-              <a className="nav-list-ancher">
-                <HeartOutlined />
-                <span className="list-text">後援</span>
-              </a>
-            </Link>
-          </li> */}
+        ) : (
           <li className="nav-list">
-            <Link href="/korean">
-              <a className="nav-list-ancher">
-                <img
-                  alt="menu-icon"
-                  className="anticon"
-                  src="https://img.icons8.com/ios/26/000000/book-and-pencil.png"
-                />
-                <span className="list-text">韓国語レッスン</span>
-              </a>
-            </Link>
+            <a onClick={onClickLoginMenu} className="nav-list-ancher">
+              <UserOutlined />
+              <span className="list-text">ログイン</span>
+            </a>
           </li>
-          {user ? (
-            <li className="nav-list">
-              <a onClick={onClickUserInfoMenu} className="nav-list-ancher">
-                <img className="user-icon" src={user?.icon} alt={user?.name} />
-                <span className="list-text">{user?.name} 様</span>
-              </a>
-            </li>
-          ) : (
-            <li className="nav-list">
-              <a onClick={onClickLoginMenu} className="nav-list-ancher">
-                <UserOutlined />
-                <span className="list-text">ログイン</span>
-              </a>
-            </li>
-          )}
-        </nav>
-        {onLoginModal && <LoginModal />}
-        {onSignupModal && <SignupModal />}
-        {onUserInfoModal && <UserInfoModal />}
-      </div>
+        )}
+      </HeaderRight>
+      {onLoginModal && <LoginModal />}
+      {onSignupModal && <SignupModal />}
+      {onUserInfoModal && <UserInfoModal />}
     </HeaderWrapper>
   );
 };
