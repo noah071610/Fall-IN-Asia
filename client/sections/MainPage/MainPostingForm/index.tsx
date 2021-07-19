@@ -20,7 +20,7 @@ const MainPostingForm: FC<IProps> = () => {
   return (
     <MainPostingFormWrapper>
       {!onPostingForm && (
-        <div onClick={onClickOpenPostingForm} className="search">
+        <div onClick={onClickOpenPostingForm} className="posting-form-preview">
           <span className="placeholder">당신의 여행은 어땠나요?</span>
           <a>
             <EditOutlined />

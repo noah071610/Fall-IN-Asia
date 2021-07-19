@@ -1,45 +1,41 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, RGB_BLACK } from "config";
+import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, HOVER_GRAY, RGB_BLACK } from "config";
 
 export const CommentFormWrapper = styled.div`
-  padding: 1rem 2rem 0 2.5rem;
-  margin-bottom: 1rem;
-  .name-space {
-    ${FLEX_STYLE("flex-start", "center")};
-    margin-bottom: 0.6rem;
+  padding: 1rem;
+  .comment-wrapper{
+    transition:0.25s all;
+    border-radius: 15px;
+    padding:0.3rem 0.5rem;
+    background:${GRAY_COLOR};
+  }
+  .comment-input{
+    display:flex;
     .icon {
+      margin-right:.7rem;
       img {
         width: 2.5rem;
-        border-radius: 50%;
-      }
-      margin-right: 0.7rem;
-    }
-    .name {
-      margin-right: 1rem;
-      font-size: 1rem;
-    }
-  }
-  .input-wrapper {
-    display: flex;
-    div {
-      width: 15%;
-      ${FLEX_STYLE("center", "flex-end")};
-      button {
-        width: 100%;
-        ${BORDER_THIN("border")};
-        transition: 0.3s all;
-        &:hover {
-          border: 1px solid ${BLUE_COLOR};
-        }
+        height 2.5rem;
+        border-radius:50%;
       }
     }
+    textarea{
+      cursor:pointer;
+      &:focus{
+      cursor:inherit;
+      }
+    }
+    
   }
-  h3 {
-    padding: 1rem 0;
-    margin-right: 0.5rem;
-    text-align: end;
-    span {
-      margin-right: 0.5rem;
+  .comment-submit-wrapper{
+    overflow:hidden;
+    div{
+      ${FLEX_STYLE("flex-end", "center")};
+      button{
+        padding:0.5rem 0.8rem;
+        ${HOVER_GRAY(5)};
+        margin-left:0.5rem;
+      }
     }
   }
 `;

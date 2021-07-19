@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { CommentWrapper } from "./styles";
-import { DeleteOutlined, DownCircleOutlined } from "@ant-design/icons";
+import { DeleteOutlined, DownCircleOutlined, MoreOutlined } from "@ant-design/icons";
 import { DEFAULT_ICON_URL, toastErrorMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
@@ -13,6 +13,7 @@ import { Divider } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReply } from "@fortawesome/free-solid-svg-icons";
 import { commentSlice } from "slices/comment";
+import NameSpace from "@components/NameSpace";
 interface IProps {
   commentData: IComment;
 }
@@ -50,33 +51,20 @@ const Comment: FC<IProps> = ({ commentData }) => {
   return (
     <CommentWrapper>
       <div onClick={onChangeSubCommentForm} className="comment-main">
-        <div className="name-space">
-          <div>
-            <a className="icon">
-              <img
-                src={commentData?.user.icon ? commentData?.user.icon : DEFAULT_ICON_URL}
-                alt="user_icon"
-              />
-            </a>
-            <a className="name">{commentData?.user.name}</a>
-          </div>
+        <div className="comment-top">
+          <NameSpace />
           {isOwner && (
-            <div className="comment-menu">
-              <a
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onClickDeleteBtn();
-                }}
-              >
-                <DeleteOutlined />
-              </a>
-              {onDelete && (
-                <ConfirmPasswordModal isDelete={true} postId={0} commentId={commentData?.id} />
-              )}
-            </div>
+            <a
+              onClick={(e) => {
+                e.stopPropagation();
+                onClickDeleteBtn();
+              }}
+            >
+              <MoreOutlined />
+            </a>
           )}
         </div>
-        <p className="comment-wrapper">{commentData?.content}</p>
+        <p className="comment-wrapper">안녕하새우</p>
       </div>
       {onSubCommentForm && <SubCommentForm commentId={commentData?.id} />}
       {commentData?.subComments?.length > 2 && (

@@ -15,6 +15,7 @@ import MainContent from "@sections/MainPage/MainContent";
 import MainCountryMenu from "@sections/MainPage/MainCountryMenu";
 import MainPostingForm from "@sections/MainPage/MainPostingForm";
 import CountryImage from "@sections/MainPage/CountryImage";
+import MainPost from "@sections/MainPage/MainPost";
 
 const index = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,8 @@ const index = () => {
       <div className="layout" style={{ width: LG_SIZE }}>
         <CountryImage />
         <div className="layout_main">
+          {/* <h2 className="main-title">15번째 메아리</h2>
+          <MainPost /> */}
           <h2 className="main-title">인기여행지</h2>
           <MainCountryMenu />
           <h2 className="main-title">포스팅</h2>

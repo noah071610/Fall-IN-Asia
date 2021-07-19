@@ -6,20 +6,22 @@ export const MainPostingFormWrapper = styled.div`
   background-color: white;
   padding: 0.4rem;
   width: 100%;
-  transition: 0.3s all;
-  .search {
+  .posting-form-preview {
+    transition: 0.3s all;
     border-radius: 15px;
     cursor: pointer;
     ${FLEX_STYLE("space-between", "center")}
     padding: 0.4rem 1rem;
     .anticon {
+      transition: 0.3s all;
       font-size: 1.4rem;
-      border-radius: 15px;
       padding: 0.5rem;
-      background: ${GRAY_COLOR};
     }
     &:hover {
       background: ${GRAY_COLOR};
+      .anticon {
+        transform: scale(1.15);
+      }
     }
   }
   .title-wrapper {

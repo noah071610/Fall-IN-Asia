@@ -3,11 +3,13 @@ import { CommentFormWrapper } from "./styles";
 import { Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { DEFAULT_ICON_URL, toastErrorMessage } from "config";
+import { DEFAULT_ICON_URL, toastErrorMessage, WHITE_COLOR } from "config";
 import TextareaAutosize from "react-textarea-autosize";
 import { commentCreateAction } from "actions/comment";
 import useInput from "@hooks/useInput";
 import { useRouter } from "next/router";
+import NameSpace from "@components/NameSpace";
+import { EnterOutlined } from "@ant-design/icons";
 interface IProps {}
 
 const CommentForm: FC<IProps> = () => {
@@ -15,6 +17,14 @@ const CommentForm: FC<IProps> = () => {
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
   const [content, onChangeContent, setContent] = useInput("");
+  const [onCommentForm, setOnCommentForm] = useState(false);
+  const onClickCommentForm = useCallback(() => {
+    setOnCommentForm(true);
+  }, []);
+  const onClickCommentCancle = useCallback(() => {
+    setOnCommentForm(false);
+    setContent("");
+  }, []);
   const onSubmitComment = useCallback(() => {
     if (content === "" || !content?.trim()) {
       toastErrorMessage("内容を書いてください。");
@@ -33,27 +43,33 @@ const CommentForm: FC<IProps> = () => {
   }, [content, query, user]);
   return (
     <CommentFormWrapper>
-      <div className="name-space">
-        <a className="icon">
-          {user ? (
-            <img src={user.icon} alt="user_icon" />
-          ) : (
-            <img src={DEFAULT_ICON_URL} alt="user_icon" />
-          )}
-        </a>
-        <a className="name">{user ? user.name : "ユーザー"}</a>
-      </div>
-      <div className="input-wrapper">
-        <TextareaAutosize
-          className="basic-textarea"
-          placeholder={user ? "コメント作成" : "ログインしてコメント作成"}
-          value={content}
-          onChange={onChangeContent}
-        />
-        <div>
-          <button onClick={onSubmitComment} className="basic-btn">
-            コメント
-          </button>
+      <div
+        style={
+          onCommentForm
+            ? { background: WHITE_COLOR, boxShadow: "0px 0px 5px rgba(0,0,0,0.15)" }
+            : {}
+        }
+        className="comment-wrapper"
+      >
+        <div
+          style={onCommentForm ? { marginBottom: ".5rem" } : {}}
+          onClick={onClickCommentForm}
+          className="comment-input"
+        >
+          <div className="icon">
+            <img src={DEFAULT_ICON_URL} alt="" />
+          </div>
+          <TextareaAutosize
+            placeholder={user ? "コメント作成" : "댓글을 입력해주세요."}
+            value={content}
+            onChange={onChangeContent}
+          />
+        </div>
+        <div className="comment-submit-wrapper">
+          <div className={onCommentForm ? "drop-down" : "roll-up"}>
+            <button onClick={onSubmitComment}>코멘트</button>
+            <button onClick={onClickCommentCancle}>취소</button>
+          </div>
         </div>
       </div>
     </CommentFormWrapper>

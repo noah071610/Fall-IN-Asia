@@ -1,4 +1,5 @@
 import { CommentOutlined, LikeOutlined } from "@ant-design/icons";
+import NameSpace from "@components/NameSpace";
 import { DEFAULT_ICON_URL } from "config";
 import React, { FC, useState } from "react";
 import { ArticleCardWrapper } from "./styles";
@@ -10,15 +11,7 @@ const ArticleCard: FC<IProps> = () => {
   return (
     <ArticleCardWrapper>
       <div className="article-top">
-        <div className="name-space">
-          <div className="icon">
-            <img src={DEFAULT_ICON_URL} alt="" />
-          </div>
-          <div>
-            <h3>장현수마마</h3>
-            <span className="date">2021/07/19</span>
-          </div>
-        </div>
+        <NameSpace />
         <div>
           <button className="tag">놀거리</button>
         </div>

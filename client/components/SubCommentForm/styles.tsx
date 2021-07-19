@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE } from "config";
+import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, HOVER_GRAY } from "config";
 
 export const SubCommentFormWrapper = styled.div`
-  padding: 0.5rem 0 0.5rem 2.8rem;
+  padding: 1rem 0 0.5rem 3.7rem;
   transition: 0.3s all;
   ${FLEX_STYLE("flex-start", "center")};
   .icon {
@@ -12,16 +12,9 @@ export const SubCommentFormWrapper = styled.div`
       margin-right: 0.5rem;
     }
   }
-  .subComment-input {
-    width: 100%;
-    display: flex;
-    div {
-      button {
-        font-size: 0.8rem;
-        width: 100px;
-        padding: 0.5rem 0.7rem;
-      }
-      ${FLEX_STYLE("center", "flex-end")};
-    }
+  button {
+    width: 100px;
+    padding: 0.5rem 0.8rem;
+    ${HOVER_GRAY(5)};
   }
 `;

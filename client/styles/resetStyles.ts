@@ -128,15 +128,14 @@ h1,h2,h3,h4,h5{
   }
 }
 
-.basic-textarea {
+textarea {
   border: none;
   padding: 0.5rem 0.3rem;
   width: 100%;
-  border-bottom: 2px solid ${RGB_BLACK(0.1)};
+  background:none;
   line-height:1.7;
   &:focus {
     outline: none;
-    border-bottom: 2px solid ${BLUE_COLOR};
   }
   &::placeholder {
     color: ${RGB_BLACK(0.25)};
@@ -144,9 +143,6 @@ h1,h2,h3,h4,h5{
   &::-webkit-scrollbar {
     display: none;
 }
-  &:hover {
-    border-bottom: 2px solid ${BLUE_COLOR};
-  }
 }
 
 .basic-btn {
@@ -171,13 +167,13 @@ h1,h2,h3,h4,h5{
 }
 
 .drop-down {
-  transition: 0.5s all;
+  transition: 0.25s all;
   height:100%;
   transform:translateY(0);
 }
 
 .roll-up{
-  transition: 0.5s all;
+  transition: 0.25s all;
   height:0px;
   transform:translateY(-100%);
 }

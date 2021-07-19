@@ -9,9 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import "animate.css/animate.css";
 import { clubPostDislikeAction, clubPostLikeAction } from "actions/club";
+import NameSpace from "@components/NameSpace";
 
 interface IProps {
-  postData: IClubPost;
+  postData?: IClubPost;
 }
 
 const ClubPostTitle: FC<IProps> = ({ postData }) => {
@@ -50,43 +51,33 @@ const ClubPostTitle: FC<IProps> = ({ postData }) => {
   }, [postData]);
   return (
     <ClubPostTitleWrapper>
-      <div>
-        <h1>{postData?.title}</h1>
-        <div className="post-title-desc">
-          <ul className="post-title-info">
-            <li>{postData?.user?.name}</li>
-            <Divider type="vertical" />
-            <li>{dayjs(postData?.createdAt).format("YYYY/MM/DD")}</li>
-            <Divider type="vertical" />
-            <li>{postData?.hit} views</li>
-            {isOwner && (
-              <>
-                <Divider type="vertical" />
-                <li className="edit-btn">
-                  <a onClick={onClickEditBtn}>
-                    <EditOutlined />
-                  </a>
-                  {onEdit && <ConfirmPasswordModal postId={postData?.id} isDelete={false} />}
-                </li>
-                <Divider type="vertical" />
-                <li className="delete-btn">
-                  <a onClick={onClickDeleteBtn}>
-                    <DeleteOutlined />
-                  </a>
-                  {onDelete && <ConfirmPasswordModal postId={postData?.id} isDelete={true} />}
-                </li>
-              </>
-            )}
-          </ul>
-        </div>
-      </div>
+      <NameSpace />
       <div className="right-menu">
-        {liked ? (
+        <li>{dayjs(postData?.createdAt).format("YYYY/MM/DD")}</li>
+        {isOwner && (
+          <>
+            <Divider type="vertical" />
+            <li className="edit-btn">
+              <a onClick={onClickEditBtn}>
+                <EditOutlined />
+              </a>
+              {/* {onEdit && <ConfirmPasswordModal postId={postData?.id} isDelete={false} />} */}
+            </li>
+            <Divider type="vertical" />
+            <li className="delete-btn">
+              <a onClick={onClickDeleteBtn}>
+                <DeleteOutlined />
+              </a>
+              {/* {onDelete && <ConfirmPasswordModal postId={postData?.id} isDelete={true} />} */}
+            </li>
+          </>
+        )}
+        {/* {liked ? (
           <HeartFilled onClick={onClickDislikeBtn} className="dislike-btn" />
         ) : (
           <HeartOutlined onClick={onClickLikeBtn} className="like-btn" />
         )}
-        <span className="like-number">{postData?.likedUser?.length}</span>
+        <span className="like-number">{postData?.likedUser?.length}</span> */}
       </div>
     </ClubPostTitleWrapper>
   );

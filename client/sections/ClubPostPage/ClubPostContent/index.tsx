@@ -4,7 +4,7 @@ import { IClubPost } from "@typings/db";
 import ReactHtmlParser from "react-html-parser";
 
 interface IProps {
-  postData: IClubPost;
+  postData?: IClubPost;
 }
 
 const ClubPostContent: FC<IProps> = ({ postData }) => {

@@ -20,10 +20,11 @@ export const MainWrapper = styled.div`
       width: 75%;
       .main-title {
         ${FONT_STYLE(1, true)}
-      }
-      .main-title:last-of-type {
         margin-top: 1.8rem;
         margin-bottom: 1rem;
+      }
+      .main-title:first-of-type {
+        margin: 0;
       }
     }
   }

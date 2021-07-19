@@ -40,19 +40,12 @@ const SubCommentForm: FC<IProps> = ({ commentId }) => {
           <img src={DEFAULT_ICON_URL} alt="user_icon" />
         )}
       </div>
-      <div className="subComment-input">
-        <input
-          className="basic-input"
-          placeholder={user ? "コメント作成" : "ログインしてコメント作成"}
-          value={content}
-          onChange={onChangeContent}
-        />
-        <div>
-          <button onClick={onSubmitSubComment} className="basic-btn">
-            コメント
-          </button>
-        </div>
-      </div>
+      <input
+        placeholder={user ? "コメント作成" : "답글을 입력해주세요."}
+        value={content}
+        onChange={onChangeContent}
+      />
+      <button onClick={onSubmitSubComment}>답장</button>
     </SubCommentFormWrapper>
   );
 };
