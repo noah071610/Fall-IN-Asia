@@ -21,12 +21,9 @@ const AppLayout: FC<AppLayoutProps> = ({ children }) => {
   }, []);
   return (
     <>
-      <Header />
       <div onClick={closeModal}>
         <Wrapper>{children}</Wrapper>
       </div>
-      <Footer />
-      <ToastContainer />
     </>
   );
 };

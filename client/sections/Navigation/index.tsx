@@ -5,7 +5,7 @@ interface IProps {}
 
 const Navigation: FC<IProps> = () => {
   const [state, setstate] = useState();
-  return <NavigationWrapper>안녕</NavigationWrapper>;
+  return <NavigationWrapper></NavigationWrapper>;
 };
 
 export default Navigation;

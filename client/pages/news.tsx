@@ -5,7 +5,7 @@ import { FLEX_STYLE } from "config";
 import NewsArticle from "@components/NewsArticle";
 import CommonTitle from "@components/Common/CommonTitle";
 import CommonSearch from "@components/Common/CommonSearch";
-import NewsArticleCard from "@components/Cards/NewsArticleCard";
+import NewsArticleCard from "@components/Cards/ArticleCard";
 const { Search } = Input;
 export const Wrapper = styled.div`
   padding: 2rem;

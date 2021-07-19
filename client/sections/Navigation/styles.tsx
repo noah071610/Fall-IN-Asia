@@ -1,3 +1,3 @@
 import styled from "@emotion/styled";
 
-export const NavigationWrapper = styled.div``;
+export const NavigationWrapper = styled.nav``;
