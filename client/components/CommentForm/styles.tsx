@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, HOVER_GRAY, RGB_BLACK } from "config";
 
 export const CommentFormWrapper = styled.div`
-  padding: 1rem;
+  padding: 1rem 2rem;
   .comment-wrapper{
     transition:0.25s all;
     border-radius: 15px;

@@ -1,18 +1,15 @@
 import { FC, useCallback, useEffect } from "react";
 import { HeaderWrapper, HeaderLeft, HeaderRight } from "./styles";
-import { HomeOutlined, InboxOutlined, CommentOutlined, UserOutlined } from "@ant-design/icons";
-import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import CommunityMenu from "sections/Header/CommunityMenu";
-import LoginModal from "sections/Header/LoginModal";
-import SignupModal from "sections/Header/SignupModal";
+import SignupModal from "@components/Modal/SignupModal";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { RootState } from "slices";
 import { ToastContainer } from "react-toastify";
 import { mainSlice } from "slices/main";
 import UserInfoModal from "./UserInfoModal";
+import LoginModal from "@components/Modal/LoginModal";
+import Link from "next/link";
+import { BellOutlined, SettingOutlined } from "@ant-design/icons";
 
 interface HeaderProps {}
 
@@ -37,12 +34,8 @@ const Header: FC<HeaderProps> = () => {
   }, []);
 
   const onClickLoginMenu = useCallback(() => {
-    if (onSignupModal) {
-      dispatch(mainSlice.actions.toggleSignupModal());
-    } else {
-      dispatch(mainSlice.actions.toggleLoginModal());
-    }
-  }, [onSignupModal]);
+    dispatch(mainSlice.actions.toggleLoginModal());
+  }, []);
 
   return (
     <HeaderWrapper>
@@ -58,8 +51,9 @@ const Header: FC<HeaderProps> = () => {
           </Link>
         </li>
         <li>
-          <a onClick={onClickCommunityMenu}>연대기</a>
-          {onCommunityModal && <CommunityMenu />}
+          <Link href="/story">
+            <a>연대기</a>
+          </Link>
         </li>
         <li>
           <Link href="/market">
@@ -69,12 +63,14 @@ const Header: FC<HeaderProps> = () => {
       </HeaderLeft>
       <HeaderRight>
         {user ? (
-          <li>
-            <a onClick={onClickUserInfoMenu}>
-              <img className="user-icon" src={user?.icon} alt={user?.name} />
-              <span className="list-text">{user?.name} 様</span>
-            </a>
-          </li>
+          <>
+            <li>
+              <a onClick={onClickUserInfoMenu}>
+                <img className="icon" src={user?.icon} alt={user?.name} />
+                {user?.name}
+              </a>
+            </li>
+          </>
         ) : (
           <li>
             <a onClick={onClickLoginMenu}>로그인</a>
@@ -83,7 +79,6 @@ const Header: FC<HeaderProps> = () => {
       </HeaderRight>
       {onLoginModal && <LoginModal />}
       {onSignupModal && <SignupModal />}
-      {onUserInfoModal && <UserInfoModal />}
     </HeaderWrapper>
   );
 };

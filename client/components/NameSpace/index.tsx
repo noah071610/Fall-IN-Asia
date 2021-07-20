@@ -1,19 +1,27 @@
-import { DEFAULT_ICON_URL } from "config";
+import { IUser } from "@typings/db";
 import React, { FC, useState } from "react";
+import dayjs from "dayjs";
 import { NameSpaceWrapper } from "./styles";
 
-interface IProps {}
+interface IProps {
+  user: IUser;
+  date: Date;
+  comment?: string;
+}
 
-const NameSpace: FC<IProps> = () => {
-  const [state, setstate] = useState();
+const NameSpace: FC<IProps> = ({ user, date, comment }) => {
   return (
     <NameSpaceWrapper>
       <div className="icon">
-        <img src={DEFAULT_ICON_URL} alt="" />
+        <img src={user?.icon} alt="" />
       </div>
-      <div className="name">
-        <span>장현수마마</span>
-        <span className="date">2021/07/19</span>
+      <div className="user-info">
+        <span className="name">{user?.name}</span>
+        {comment ? (
+          <p>{comment}</p>
+        ) : (
+          <span className="date">{dayjs(date).format("YYYY/MM/DD")}</span>
+        )}
       </div>
     </NameSpaceWrapper>
   );

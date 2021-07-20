@@ -2,9 +2,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toastErrorMessage } from "config";
 
-export const commentCreateAction = createAsyncThunk<any, any>("comment/create", async (data) => {
+export const commentCreateAction = createAsyncThunk<any, any>("comment/create", async (form) => {
   try {
-    await axios.post(`/comment`, data);
+    await axios.post(`/comment`, form);
     return;
   } catch (error) {
     toastErrorMessage(error);
@@ -24,9 +24,9 @@ export const commentDeleteAction = createAsyncThunk<any, any>("comment/delete", 
 
 export const subCommentCreateAction = createAsyncThunk<any, any>(
   "comment/subComment/create",
-  async (data) => {
+  async (form) => {
     try {
-      await axios.post(`/comment/subComment`, data);
+      await axios.post(`/comment/subComment`, form);
       return;
     } catch (error) {
       toastErrorMessage(error);

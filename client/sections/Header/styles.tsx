@@ -30,12 +30,26 @@ export const HeaderLeft = styled.ul`
   }
   li {
     margin-right: 1.3rem;
-    &:hover {
-      border-bottom: 3px solid ${BLACK_COLOR};
+    .icon {
+      width: 2.5rem;
+      height 2.5rem;
+      border-radius:50%;
     }
   }
 `;
 
 export const HeaderRight = styled.ul`
   ${FLEX_STYLE("", "center")};
+  li {
+    margin-left: 1.3rem;
+    .icon {
+      width: 2.5rem;
+      height 2.5rem;
+      border-radius:50%;
+      margin-right:0.5rem;
+    }
+    .anticon {
+      font-size : 1.3rem;
+    }
+  }
 `;

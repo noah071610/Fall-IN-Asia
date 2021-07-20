@@ -13,16 +13,19 @@ export const ArticleCardWrapper = styled.div`
   margin: 0 1.5rem;
   padding: 1.5rem 0;
   ${BORDER_THIN("border-bottom")};
+  .article-header {
+  }
   .article-top {
     ${FLEX_STYLE("space-between", "flex-start")};
     padding-bottom: 1rem;
   }
   .article {
-    p {
+    .content {
       cursor: pointer;
       line-height: 1.8;
       font-weight: bold;
-      margin-bottom: 1rem;
+      padding-left: 0.3rem;
+      padding-bottom: 1rem;
       &:hover {
         text-decoration: underline;
       }

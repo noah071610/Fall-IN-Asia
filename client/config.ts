@@ -29,6 +29,20 @@ export const RGB_BLACK = (opacity: number) => `
   rgba(0,0,0,${opacity})
 `;
 
+export const CENTER_POSITION = () => `
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  z-index:10;
+`;
+
+export const WHITE_STYLE = (border?: boolean, width?: string, radius?: number) => `
+border:${border && "1px solid rgba(0,0,0,0.15)"};
+width:${width ? width : "100%"};
+background: ${WHITE_COLOR};
+border-radius: ${radius ? radius : "15"}px;
+`;
+
 export const BORDER_THIN = (border: string, px?: number) => `
   ${border}:${px ? px : "1"}px solid rgba(0,0,0,0.15)
 `;

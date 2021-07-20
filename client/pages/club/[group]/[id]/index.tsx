@@ -14,7 +14,7 @@ import router, { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { BLUE_COLOR, BORDER_THIN, RGB_BLACK, toastErrorMessage, toastSuccessMessage } from "config";
-import { clubSlice } from "slices/club";
+import { clubSlice } from "slices/mainPost";
 import { commentSlice } from "slices/comment";
 import { IComment } from "@typings/db";
 import { CommentOutlined } from "@ant-design/icons";

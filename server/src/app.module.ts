@@ -9,11 +9,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as ormconfig from './ormconfig';
 import { Users } from './entities/Users';
 import { AuthModule } from './auth/auth.module';
-import { GroupsModule } from './groups/groups.module';
-import { ClubsModule } from './clubs/clubs.module';
-import { Groups } from './entities/Groups';
-import { ClubPosts } from './entities/ClubPosts';
-import { NewsPosts } from './entities/NewsPosts';
+import { CountriesModule } from './@countries/countries.module';
+import { MainPostsModule } from './@mainPosts/mainPosts.module';
+import { Countries } from './entities/Countries';
+import { MainPosts } from './entities/MainPosts';
 import { GalleryModule } from './gallery/gallery.module';
 import { Gallery } from './entities/Gallery';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -23,10 +22,9 @@ import { Images } from './entities/Images';
 import { StudyModule } from './study/study.module';
 import { StudyPosts } from './entities/StudyPosts';
 import { Participate } from './entities/Participate';
-import { CommentsModule } from './comments/comments.module';
+import { CommentsModule } from './@comments/comments.module';
 import { Comments } from './entities/Comments';
-import { ClubPostLike } from './entities/ClubPostLike';
-import { GroupVote } from './entities/GroupVote';
+import { MainPostLike } from './entities/MainPostsLike';
 import { Announcements } from './entities/Announcements';
 import { Chats } from './entities/Chats';
 
@@ -39,21 +37,19 @@ import { Chats } from './entities/Chats';
     TypeOrmModule.forRoot(ormconfig),
     TypeOrmModule.forFeature([
       Users,
-      Groups,
-      ClubPosts,
-      NewsPosts,
+      Countries,
+      MainPosts,
       Gallery,
       Images,
       StudyPosts,
       Participate,
       Comments,
-      ClubPostLike,
-      GroupVote,
+      MainPostLike,
       Announcements,
       Chats,
     ]),
-    GroupsModule,
-    ClubsModule,
+    CountriesModule,
+    MainPostsModule,
     GalleryModule,
     MarketModule,
     ServeStaticModule.forRoot({

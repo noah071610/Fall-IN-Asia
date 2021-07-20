@@ -42,8 +42,4 @@ export class Chats {
   @ManyToOne(() => Users, (users) => users.id)
   @JoinColumn([{ name: 'fromUserId', referencedColumnName: 'id' }])
   fromUser: Users;
-
-  @ManyToOne(() => Users, (users) => users.chatToUser)
-  @JoinColumn([{ name: 'chatToUser', referencedColumnName: 'id' }])
-  chatToUser: Users;
 }

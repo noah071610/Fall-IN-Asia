@@ -9,7 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ClubPosts } from './ClubPosts';
+import { MainPosts } from './MainPosts';
 import { MarketPosts } from './MarketPosts';
 import { StudyPosts } from './StudyPosts';
 
@@ -46,12 +46,12 @@ export class Images {
   @JoinColumn([{ name: 'marketPost', referencedColumnName: 'id' }])
   marketPost: MarketPosts;
 
-  @ManyToOne(() => ClubPosts, (clubPosts) => clubPosts.images, {
+  @ManyToOne(() => MainPosts, (mainPosts) => mainPosts.images, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn([{ name: 'clubPost', referencedColumnName: 'id' }])
-  clubPost: ClubPosts;
+  mainPost: MainPosts;
 
   @ManyToOne(() => StudyPosts, (studyPosts) => studyPosts.images, {
     onDelete: 'CASCADE',

@@ -1,11 +1,11 @@
 import type { AppProps } from "next/app";
-import AppLayout from "sections/AppLayout";
 import { Global } from "@emotion/react";
 import { resetStyles } from "@styles/resetStyles";
 import AOS from "aos";
 import { useEffect } from "react";
 import { wrapper } from "configureStore";
 import "antd/dist/antd.css";
+import "swiper/swiper.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "aos/dist/aos.css";
@@ -21,8 +21,8 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, []);
   return (
     <>
-      <Header />
       <Global styles={resetStyles} />
+      <Header />
       <Component {...pageProps} />
       <Footer />
       <ToastContainer />

@@ -14,15 +14,14 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ClubPosts } from './ClubPosts';
+import { MainPosts } from './MainPosts';
 import { Comments } from './Comments';
 import { Gallery } from './Gallery';
-import { Groups } from './Groups';
+import { Countries } from './Countries';
 import { StudyPosts } from './StudyPosts';
 import { MarketPosts } from './MarketPosts';
 import { Participate } from './Participate';
-import { ClubPostLike } from './ClubPostLike';
-import { GroupVote } from './GroupVote';
+import { MainPostLike } from './MainPostsLike';
 import { Chats } from './Chats';
 import { Announcements } from './Announcements';
 import { SubComments } from './SubComments';
@@ -85,15 +84,6 @@ export class Users {
   @Column('varchar', { name: 'password', length: 100, select: false })
   password: string;
 
-  @IsNumber()
-  @IsNotEmpty()
-  @ApiProperty({
-    example: '4',
-    description: 'rate each user',
-  })
-  @Column('float', { name: 'rate', default: 0 })
-  rate: number;
-
   @IsBoolean()
   @ApiProperty({
     example: 1,
@@ -111,19 +101,15 @@ export class Users {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  @OneToOne(() => Groups, (groups) => groups.user)
-  @JoinColumn([{ name: 'fan', referencedColumnName: 'id' }])
-  fan: Groups;
-
   @OneToMany(() => StudyPosts, (studyPosts) => studyPosts.leaderUser, {
     cascade: true,
   })
   studyPosts: StudyPosts[];
 
-  @OneToMany(() => ClubPosts, (clubposts) => clubposts.user, {
+  @OneToMany(() => MainPosts, (mainposts) => mainposts.user, {
     cascade: true,
   })
-  clubPosts: ClubPosts[];
+  mainPosts: MainPosts[];
 
   @OneToMany(() => MarketPosts, (marketPosts) => marketPosts.user, {
     cascade: true,
@@ -145,25 +131,10 @@ export class Users {
   })
   subComments: SubComments[];
 
-  @OneToMany(() => Participate, (participate) => participate.user, {
+  @OneToMany(() => MainPostLike, (mainPostLike) => mainPostLike.user, {
     cascade: true,
   })
-  participates: Participate[];
-
-  @OneToMany(() => ClubPostLike, (clubPostLike) => clubPostLike.user, {
-    cascade: true,
-  })
-  likeClubPost: ClubPostLike[];
-
-  @OneToMany(() => GroupVote, (groupVote) => groupVote.user, {
-    cascade: true,
-  })
-  voteGroups: GroupVote[];
-
-  @OneToMany(() => Chats, (chats) => chats.chatToUser, {
-    cascade: true,
-  })
-  chatToUser: Chats[];
+  likeMainPost: MainPostLike[];
 
   @OneToMany(() => Announcements, (announcements) => announcements.user, {
     cascade: true,

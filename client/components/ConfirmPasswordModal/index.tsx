@@ -5,7 +5,6 @@ import React, { FC, FormEvent, useCallback, useEffect, useState } from "react";
 import { passwordModalWrapper } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { clubPostDeleteAction, clubPostEditConfirmAction } from "actions/club";
 import { marketPostDeleteAction } from "actions/market";
 import { studyPostDeleteAction } from "actions/study";
 import { commentDeleteAction, subCommentDeleteAction } from "actions/comment";

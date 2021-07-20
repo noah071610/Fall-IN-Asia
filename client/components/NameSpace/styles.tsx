@@ -11,8 +11,14 @@ export const NameSpaceWrapper = styled.div`
       border-radius:50%;
     }
   }
+  p{
+    margin-top:0.5rem;
+  }
   span{
     display:block;
+  }
+  .name{
+    font-size:0.75rem;
   }
   .date{
     padding-top:0.3rem;

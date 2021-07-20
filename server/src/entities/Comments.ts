@@ -10,7 +10,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ClubPosts } from './ClubPosts';
+import { MainPosts } from './MainPosts';
 import { SubComments } from './SubComments';
 import { Users } from './Users';
 
@@ -49,7 +49,7 @@ export class Comments {
   @JoinColumn([{ name: 'user', referencedColumnName: 'id' }])
   user: Users;
 
-  @ManyToOne(() => ClubPosts, (clubPosts) => clubPosts.comments)
+  @ManyToOne(() => MainPosts, (mainPosts) => mainPosts.comments)
   @JoinColumn([{ name: 'post', referencedColumnName: 'id' }])
-  post: ClubPosts;
+  mainPost: MainPosts;
 }

@@ -21,20 +21,11 @@ export class LocalSerializer extends PassportSerializer {
   async deserializeUser(userId: string, done: CallableFunction) {
     return await this.usersRepository
       .createQueryBuilder('users')
-      .leftJoinAndSelect('users.clubPosts', 'clubPost')
-      .leftJoinAndSelect('clubPost.announcements', 'c_announce')
-      .leftJoinAndSelect('users.marketPosts', 'marketPost')
-      .leftJoinAndSelect('marketPost.announcements', 'm_announce')
-      .leftJoinAndSelect('users.studyPosts', 'studyPost')
-      .leftJoinAndSelect('studyPost.announcements', 's_announce')
+      .leftJoinAndSelect('users.mainPosts', 'mainPost')
+      .leftJoinAndSelect('mainPost.announcements', 'c_announce')
       .leftJoinAndSelect('users.comments', 'com')
-      .leftJoinAndSelect('com.post', 'cm_post')
-      .leftJoinAndSelect('users.fan', 'fan')
-      .leftJoinAndSelect('users.participates', 'ptcp')
-      .leftJoinAndSelect('ptcp.studyPost', 'ptcp_studyPost')
-      .leftJoinAndSelect('ptcp_studyPost.leaderUser', 'leader')
+      .leftJoinAndSelect('com.mainPost', 'cm_mainPost')
       .leftJoinAndSelect('users.announcements', 'announce')
-      .leftJoinAndSelect('users.chatToUser', 'chat')
       .where('users.id = :userId', { userId: +userId })
       .getOne()
       .then((user) => {

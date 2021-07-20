@@ -1,4 +1,12 @@
-import { BLACK_COLOR, BLUE_COLOR, BORDER_THIN, HOVER_GRAY, RGB_BLACK, WHITE_COLOR } from "config";
+import {
+  BLACK_COLOR,
+  BLUE_COLOR,
+  BORDER_THIN,
+  HOVER_GRAY,
+  RGB_BLACK,
+  WHITE_COLOR,
+  WHITE_STYLE,
+} from "config";
 
 export const resetStyles = `
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
@@ -111,21 +119,21 @@ h1,h2,h3,h4,h5{
 }
 
 .basic-input {
-  border: none;
-  padding: 0.5rem 0.3rem;
-  width: 100%;
-  border-bottom: 2px solid ${RGB_BLACK(0.1)};
-  transition: 0.3s all;
-  &:focus {
-    outline: none;
-    border-bottom: 2px solid ${BLUE_COLOR};
-  }
+  background: ${WHITE_COLOR};
+  ${WHITE_STYLE(false)};
   &::placeholder {
     color: ${RGB_BLACK(0.25)};
   }
-  &:hover {
-    border-bottom: 2px solid ${BLUE_COLOR};
-  }
+  padding: 0.5rem 1rem;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+input:-internal-autofill-selected,
+input:-internal-autofill-previewed {
+  background-color: white !important;
+  -webkit-box-shadow: 0 0 0 30px white inset, 0px 0px 5px ${RGB_BLACK(0.15)} !important;
 }
 
 textarea {
@@ -143,6 +151,10 @@ textarea {
   &::-webkit-scrollbar {
     display: none;
 }
+}
+
+.basic-input {
+
 }
 
 .basic-btn {
@@ -173,9 +185,20 @@ textarea {
 }
 
 .roll-up{
-  transition: 0.25s all;
+  transition: 0.1s all;
   height:0px;
   transform:translateY(-100%);
+}
+
+@keyframes modalIn {
+  from {
+    transform-origin: top right;
+    transform: scale(0.3);
+  }
+  to {
+    transform-origin: top right;
+    transform: scale(1);
+  }
 }
 
 .reverse {

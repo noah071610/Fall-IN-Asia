@@ -11,7 +11,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ClubPosts } from './ClubPosts';
+import { MainPosts } from './MainPosts';
 import { MarketPosts } from './MarketPosts';
 import { StudyPosts } from './StudyPosts';
 import { Users } from './Users';
@@ -27,16 +27,6 @@ export class Announcements {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty({
-    example: 'bts',
-    description: 'club key name for finding club as fast as possible',
-    nullable: true,
-  })
-  @Column('varchar', { name: 'club', nullable: true })
-  club: string;
-
   @IsNotEmpty()
   @ApiProperty({
     example: 1,
@@ -48,11 +38,11 @@ export class Announcements {
   @IsNumber()
   @ApiProperty({
     example: 1,
-    description: 'clubPost announcements',
+    description: 'mainPost announcements',
     nullable: true,
   })
-  @Column('int', { name: 'clubPostId', nullable: true })
-  clubPostId: number;
+  @Column('int', { name: 'mainPostId', nullable: true })
+  mainPostId: number;
 
   @IsNumber()
   @ApiProperty({
@@ -91,13 +81,13 @@ export class Announcements {
   @JoinColumn([{ name: 'user', referencedColumnName: 'id' }])
   user: Users;
 
-  @ManyToOne(() => ClubPosts, (clubPosts) => clubPosts.announcements, {
+  @ManyToOne(() => MainPosts, (mainPosts) => mainPosts.announcements, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: true,
   })
-  @JoinColumn({ name: 'clubPostId' })
-  clubPost: ClubPosts;
+  @JoinColumn({ name: 'mainPostId' })
+  mainPost: MainPosts;
 
   @ManyToOne(() => MarketPosts, (marketPosts) => marketPosts.announcements, {
     onDelete: 'CASCADE',

@@ -3,7 +3,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import { mainSlice } from "./main";
 import { userSlice } from "./user";
 import { gallerySlice } from "./gallery";
-import { clubSlice } from "./club";
+import { mainPostSlice } from "./mainPost";
 import { marketSlice } from "./market";
 import { studySlice } from "./study";
 import { commentSlice } from "./comment";
@@ -18,7 +18,7 @@ export const reducer = (state: any = {}, action: any) => {
   return combineReducers({
     main: mainSlice.reducer,
     user: userSlice.reducer,
-    club: clubSlice.reducer,
+    mainPost: mainPostSlice.reducer,
     market: marketSlice.reducer,
     gallery: gallerySlice.reducer,
     study: studySlice.reducer,

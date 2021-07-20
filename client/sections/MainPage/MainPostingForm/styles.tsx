@@ -1,11 +1,26 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, HOVER_GRAY, RGB_BLACK } from "config";
+import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, HOVER_GRAY, RGB_BLACK, WHITE_STYLE } from "config";
 
 export const MainPostingFormWrapper = styled.div`
   border-radius: 15px;
   background-color: white;
   padding: 0.4rem;
   width: 100%;
+  .type-selector {
+    ${FLEX_STYLE("flex-end", "center")};
+    margin-bottom: 1rem;
+  }
+  .ant-select-selector {
+    border-radius: 10px !important;
+    &:focus {
+      border: 1px solid ${RGB_BLACK(0.08)} !important;
+      box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
+    }
+    &:hover {
+      border: 1px solid ${RGB_BLACK(0.08)} !important;
+      box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
+    }
+  }
   .posting-form-preview {
     transition: 0.3s all;
     border-radius: 15px;

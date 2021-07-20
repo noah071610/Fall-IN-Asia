@@ -40,13 +40,6 @@ export class Participate {
   @Column()
   studyPostId: number;
 
-  @ManyToOne(() => Users, (users) => users.participates, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  @JoinColumn({ name: 'userId' })
-  user: Users;
-
   @ManyToOne(() => StudyPosts, (studyPosts) => studyPosts.participates, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',

@@ -1,38 +1,53 @@
 import { CommentOutlined, LikeOutlined } from "@ant-design/icons";
 import NameSpace from "@components/NameSpace";
+import { ICountry, IMainPost } from "@typings/db";
 import { DEFAULT_ICON_URL } from "config";
 import React, { FC, useState } from "react";
 import { ArticleCardWrapper } from "./styles";
+import useSWR from "swr";
+import fetcher from "utils/fetcher";
+import ReactHtmlParser from "react-html-parser";
+import { toastErrorMessage } from "config";
+import router from "next/router";
 
-interface IProps {}
+interface IProps {
+  mainPost: IMainPost;
+}
 
-const ArticleCard: FC<IProps> = () => {
-  const [state, setstate] = useState();
+const ArticleCard: FC<IProps> = ({ mainPost }) => {
+  const {
+    data: country,
+    error,
+    revalidate,
+  } = useSWR<ICountry, any>(`/country/${mainPost?.code}`, fetcher);
+  if (error) {
+    toastErrorMessage("가져오지 못했습니다.");
+  }
   return (
     <ArticleCardWrapper>
       <div className="article-top">
-        <NameSpace />
-        <div>
-          <button className="tag">놀거리</button>
-        </div>
+        <NameSpace user={mainPost?.user} date={mainPost?.createdAt} />
+        <h4 className="article-header">
+          {country?.name}/{mainPost?.type}/{mainPost?.id}번째메아리
+        </h4>
       </div>
       <div className="article">
-        <p>
-          방탄소년단(BTS)의 신곡 ’버터'가 미국 빌보드 메인 싱글 차트 핫 100에서 4주 연속 1위를
-          차지하며 한국 대중음악의 새 기록을 썼다. 핫 100은 스트리밍(온라인 실시간 재생 실적)과 음원
-          판매량, 라디오 방송 횟수 등을 종합해 매주 미국에서 가장 인기 있는 노래 순위를 집계하는
-          차트다.
-        </p>
+        <div
+          onClick={() => router.push(`/post/${country?.code}/${mainPost?.id}`)}
+          className="content"
+        >
+          {ReactHtmlParser(mainPost?.content as string)}
+        </div>
         <div className="image-list"></div>
         <ul className="article-footer">
           <li>
             <CommentOutlined />
-            <span className="count">0</span>
+            <span className="count">{mainPost?.comments?.length}</span>
             <span>댓글</span>
           </li>
           <li>
             <LikeOutlined />
-            <span className="count">0</span>
+            <span className="count">{mainPost?.likedUser?.length}</span>
             <span>좋아요</span>
           </li>
         </ul>

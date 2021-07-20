@@ -3,16 +3,16 @@ import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, RED_COLOR, RGB_BLACK } from "confi
 
 export const CommentWrapper = styled.div`
   padding: 1rem 0;
-  margin: 0 1rem;
+  margin: 0 2rem;
   .comment-main {
     cursor: pointer;
-    padding: 0 0.5rem;
+    padding: 0 2rem 0 0.5rem;
     transition: 0.3s all;
-    .comment-top {
-      ${FLEX_STYLE("space-between", "center")};
-    }
-    .comment-wrapper {
-      padding: 0.8rem 0 0 3.2rem;
+    position: relative;
+    .more-btn {
+      position: absolute;
+      top: 0;
+      right: 0.5rem;
     }
   }
   .subComment-toggle-div {

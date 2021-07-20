@@ -8,8 +8,8 @@ import TextareaAutosize from "react-textarea-autosize";
 import { commentCreateAction } from "actions/comment";
 import useInput from "@hooks/useInput";
 import { useRouter } from "next/router";
-import NameSpace from "@components/NameSpace";
-import { EnterOutlined } from "@ant-design/icons";
+import { IMainPost } from "@typings/db";
+
 interface IProps {}
 
 const CommentForm: FC<IProps> = () => {
@@ -27,16 +27,16 @@ const CommentForm: FC<IProps> = () => {
   }, []);
   const onSubmitComment = useCallback(() => {
     if (content === "" || !content?.trim()) {
-      toastErrorMessage("内容を書いてください。");
+      toastErrorMessage("댓글을 입력해주세요.");
       return;
     }
     if (!user) {
-      toastErrorMessage("ログインが必要です。");
+      toastErrorMessage("로그인이 필요합니다.");
       return;
     }
     let form = {
       content,
-      postId: parseInt(query?.id as string),
+      mainPostId: parseInt(query?.mainPostId as string),
     };
     dispatch(commentCreateAction(form));
     setContent("");
@@ -57,10 +57,11 @@ const CommentForm: FC<IProps> = () => {
           className="comment-input"
         >
           <div className="icon">
-            <img src={DEFAULT_ICON_URL} alt="" />
+            <img src={user ? user.icon : DEFAULT_ICON_URL} alt="" />
           </div>
           <TextareaAutosize
-            placeholder={user ? "コメント作成" : "댓글을 입력해주세요."}
+            placeholder={user ? "댓글 작성하기." : "로그인이 필요합니다."}
+            disabled={user ? false : true}
             value={content}
             onChange={onChangeContent}
           />
