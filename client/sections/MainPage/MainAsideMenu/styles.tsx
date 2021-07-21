@@ -7,16 +7,33 @@ export const MainAsideMenuWrapper = styled.div`
   border-radius: 15px;
   height: 100%;
   padding: 1rem;
+  position: sticky;
+  top: 2rem;
   .country {
-    .world-img {
+    .country-img {
+      cursor: pointer;
       display: inline-block;
-      padding: 0.5rem;
-      box-shadow: 0px 0px 3px ${RGB_BLACK(0.08)};
+      width: 100%;
       border-radius: 15px;
+      img {
+        width: 100%;
+        height: 120px;
+        box-shadow: 0px 0px 3px ${RGB_BLACK(0.3)};
+        border-radius: 15px;
+      }
     }
-    h2 {
+    .country-desc {
       margin: 1rem 0;
-      ${FONT_STYLE(1.4, true)}
+      a {
+        ${FONT_STYLE(1.4, true)}
+      }
+      div {
+        margin-top: 0.5rem;
+        span {
+          display: block;
+          margin-bottom: 0.3rem;
+        }
+      }
     }
   }
   ul {

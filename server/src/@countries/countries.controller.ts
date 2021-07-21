@@ -23,19 +23,3 @@ export class CountriesController {
     return country;
   }
 }
-
-// @UseGuards(new LoggedInGuard())
-// @ApiOperation({ summary: 'get Countries with score' })
-// @Delete('vote/:style/:groupId')
-// async undoScore(
-//   @Param('style') style,
-//   @Param('groupId') groupId,
-//   @User() user,
-// ) {
-//   const undoScore = await this.CountriesService.undoScore(
-//     style,
-//     groupId,
-//     user.id,
-//   );
-//   return undoScore;
-// }

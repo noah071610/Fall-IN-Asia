@@ -19,9 +19,6 @@ const Comment: FC<IProps> = ({ comment }) => {
   const [onSubCommentForm, onChangeSubCommentForm, setSubCommentForm] = useToggle(false);
   const [onSubCommentList, onChangeSubCommentList, setSubCommentList] = useToggle(true);
   const { user } = useSelector((state: RootState) => state.user);
-  if (comment) {
-    console.log(comment);
-  }
   const [isOwner, setIsOwner] = useState(false);
   useEffect(() => {
     if (user?.id === comment?.user.id) {
@@ -51,12 +48,12 @@ const Comment: FC<IProps> = ({ comment }) => {
       </div>
       {onSubCommentForm && <SubCommentForm commentId={comment?.id} />}
       {comment?.subComments?.length > 2 && (
-        <div onClick={onChangeSubCommentList} className="subComment-toggle-div">
-          <span>
+        <div onClick={onChangeSubCommentList} className="more-subComment">
+          <button className="more-subComment-btn">
             <span className="count">{comment?.subComments?.length}</span>
-            件のリプライ
+            개의 답글
             <DownCircleOutlined rotate={onSubCommentList ? 180 : 0} />
-          </span>
+          </button>
         </div>
       )}
       {onSubCommentList &&

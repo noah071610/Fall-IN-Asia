@@ -10,12 +10,12 @@ import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import ClubTitle from "@sections/ClubPage/ClubTitle";
 import { noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
-import { clubPostCreateAction } from "actions/club";
+import { clubPostCreateAction } from "actions/mainPost";
 import useInput from "@hooks/useInput";
 import { IClubPostForm } from "@typings/db";
 import PostingLayout from "@components/PostingEditor/PostingLayout";
 import Editor from "@components/PostingEditor/Editor";
-import { clubSlice } from "slices/club";
+import { clubSlice } from "slices/mainPost";
 
 const ClubPostingWrapper = styled.div`
   padding: 2rem;

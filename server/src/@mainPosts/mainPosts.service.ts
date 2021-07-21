@@ -43,6 +43,7 @@ export class MainPostsService {
     const newPostCreate = new MainPosts();
     newPostCreate.code = form.code;
     newPostCreate.content = form.content;
+    newPostCreate.type = form.type;
     newPostCreate.country = <any>{ id: country.id };
     newPostCreate.user = <any>{ id: userId };
     const newPost = await this.MainPostsRepository.save(newPostCreate);
@@ -92,27 +93,11 @@ export class MainPostsService {
     return post;
   }
 
-  async getPosts(code?: string, page?: number) {
-    if (code) {
-      const countryPosts = await this.MainPostsRepository.find({
-        where: { code },
-        relations: ['user', 'country', 'likedUser', 'comments'],
-        order: { id: 'DESC' },
-      });
-      if (!countryPosts) {
-        throw new NotFoundException('가져올 게시물이 없습니다.');
-      }
-      return countryPosts;
-    } else {
-      const allPosts = await this.MainPostsRepository.find({
-        relations: ['user', 'country', 'likedUser', 'comments'],
-        order: { id: 'DESC' },
-      });
-      if (!allPosts) {
-        throw new NotFoundException('가져올 게시물이 없습니다.');
-      }
-      return allPosts;
-    }
+  async getPosts(code?: string, page?: number,type?:string) {
+    const posts = await this.MainPostsRepository.createQueryBuilder('mainPosts')
+    .where(code ? `mainPosts.code = :code` : '1=1' { code })
+    .andWhere(type ? `mainPosts.type = :type` : '1=1' { type }).leftJoinAndSelect('mainPosts.country','country').leftJoinAndSelect('mainPosts.user','user').leftJoinAndSelect('mainPosts.likedUser','likedUser').leftJoinAndSelect('mainPosts.comments','comments').orderBy('mainPosts.id',"DESC").skip((page-1)*10).take(10).getMany()
+      return posts;
   }
 
   async eidtPost(data: any) {

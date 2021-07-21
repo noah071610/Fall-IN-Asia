@@ -1,5 +1,5 @@
 import { PickType } from '@nestjs/swagger';
-import { ClubPosts } from 'src/entities/ClubPosts';
+import { ClubPosts } from 'src/entities/MainPosts';
 
 export class ClubPostRequestDto extends PickType(ClubPosts, [
   'title',

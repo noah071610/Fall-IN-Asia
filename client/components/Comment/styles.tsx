@@ -15,9 +15,8 @@ export const CommentWrapper = styled.div`
       right: 0.5rem;
     }
   }
-  .subComment-toggle-div {
-    padding: 0.5rem 0.5rem 0.5rem 3.3rem;
-    cursor: pointer;
+  .more-subComment {
+    padding: 1rem 0.5rem 0 3.7rem;
     ${FLEX_STYLE("flex-start", "center")};
     .count {
       font-size: 0.8rem;
@@ -25,11 +24,12 @@ export const CommentWrapper = styled.div`
       font-weight: bold;
       color: ${BLUE_COLOR};
     }
-    span {
-      ${FLEX_STYLE("center", "center")};
+    .more-subComment-btn {
+      cursor: pointer;
       font-size: 0.8rem;
+      padding: 0;
       .anticon {
-        font-size: 1rem;
+        font-size: 0.9rem;
         margin-left: 0.5rem;
       }
     }

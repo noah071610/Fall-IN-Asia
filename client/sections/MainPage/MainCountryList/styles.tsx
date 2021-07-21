@@ -8,7 +8,7 @@ export const MainCountryListWrapper = styled.div`
   margin-top: 1rem;
   padding: 1rem;
   .country-card-wrapper {
-    ${GRID_STYLE("", "repeat(4,1fr)")};
+    ${GRID_STYLE("", "repeat(5,1fr)")};
     margin-bottom: 1rem;
     img {
       width: 3rem;

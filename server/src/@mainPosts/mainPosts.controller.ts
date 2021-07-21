@@ -126,7 +126,8 @@ export class MainPostsController {
   async getPosts(
     @Query('code') code: string,
     @Query('page', ParseIntPipe) page: number,
+    @Query('type') type: string,
   ) {
-    return await this.MainPostsService.getPosts(code, page);
+    return await this.MainPostsService.getPosts(code, page, type);
   }
 }

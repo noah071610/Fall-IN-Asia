@@ -31,7 +31,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     <Wrapper>
       <div className="layout">
         <MainAsideMenu />
-        {children}
+        <div className="layout_main">{children}</div>
       </div>
     </Wrapper>
   );

@@ -18,13 +18,7 @@ const CommentForm: FC<IProps> = () => {
   const { user } = useSelector((state: RootState) => state.user);
   const [content, onChangeContent, setContent] = useInput("");
   const [onCommentForm, setOnCommentForm] = useState(false);
-  const onClickCommentForm = useCallback(() => {
-    setOnCommentForm(true);
-  }, []);
-  const onClickCommentCancle = useCallback(() => {
-    setOnCommentForm(false);
-    setContent("");
-  }, []);
+
   const onSubmitComment = useCallback(() => {
     if (content === "" || !content?.trim()) {
       toastErrorMessage("댓글을 입력해주세요.");
@@ -41,6 +35,18 @@ const CommentForm: FC<IProps> = () => {
     dispatch(commentCreateAction(form));
     setContent("");
   }, [content, query, user]);
+
+  const onClickCommentCancle = useCallback(() => {
+    setOnCommentForm(false);
+    setContent("");
+  }, []);
+
+  const onClickCommentForm = useCallback(() => {
+    if (!user) {
+      return;
+    }
+    setOnCommentForm(true);
+  }, [user]);
   return (
     <CommentFormWrapper>
       <div

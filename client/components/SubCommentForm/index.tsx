@@ -41,11 +41,13 @@ const SubCommentForm: FC<IProps> = ({ commentId }) => {
         )}
       </div>
       <input
-        placeholder={user ? "コメント作成" : "답글을 입력해주세요."}
+        placeholder={user ? "답글 작성하기." : "로그인이 필요합니다."}
         value={content}
         onChange={onChangeContent}
       />
-      <button onClick={onSubmitSubComment}>답장</button>
+      <button disabled={user ? false : true} onClick={onSubmitSubComment}>
+        답장
+      </button>
     </SubCommentFormWrapper>
   );
 };

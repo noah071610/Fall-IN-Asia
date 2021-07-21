@@ -67,7 +67,6 @@ const Header: FC<HeaderProps> = () => {
             <li>
               <a onClick={onClickUserInfoMenu}>
                 <img className="icon" src={user?.icon} alt={user?.name} />
-                {user?.name}
               </a>
             </li>
           </>

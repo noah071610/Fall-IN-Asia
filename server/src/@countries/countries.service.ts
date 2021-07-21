@@ -11,7 +11,11 @@ export class CountriesService {
   ) {}
 
   async getCountries() {
-    const countries = await this.CountriesRepository.find();
+    const countries = await this.CountriesRepository.createQueryBuilder(
+      'country',
+    )
+      .leftJoinAndSelect('country.mainPosts', 'mainPost')
+      .getMany();
     if (!countries) {
       throw new NotFoundException('예상치못한 에러가 발생했습니다.');
     }
@@ -19,9 +23,11 @@ export class CountriesService {
   }
 
   async getCountry(code: string) {
-    const country = await this.CountriesRepository.findOne({
-      where: { code },
-    });
+    const country = await this.CountriesRepository.createQueryBuilder('country')
+      .where('country.code = :code', { code })
+      .leftJoinAndSelect('country.mainPosts', 'mp')
+      .addSelect(['mp.id'])
+      .getOne();
     if (!country) {
       throw new NotFoundException('예상치못한 에러가 발생했습니다.');
     }

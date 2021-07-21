@@ -11,25 +11,47 @@ import MainPostingForm from "@sections/MainPage/MainPostingForm";
 import MainPost from "@sections/MainPage/MainPost";
 import MainLayout from "@layout/MainLayout";
 import MainTopContent from "@sections/MainPage/MainTopContent";
-import useSWR from "swr";
+import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
 import router, { useRouter } from "next/router";
 import { mainPostSlice } from "slices/mainPost";
 import { commentSlice } from "slices/comment";
+import { IMainPost } from "@typings/db";
 
 const index = () => {
   const dispatch = useDispatch();
   const { query } = useRouter();
-  const { data: mainPosts } = useSWR("/mainPost?code=&page=0", fetcher);
+  const { data: mainPost, revalidate: revalidateMainPost } = useSWR(
+    `/mainPost/${query?.code}/${query?.mainPostId}`,
+    fetcher
+  );
   const {
-    data: mainPost,
-    error,
-    revalidate,
-  } = useSWR(`/mainPost/${query?.code}/${query?.mainPostId}`, fetcher);
-  const { mainPostEditConfirmDone, mainPostDeleteDone, mainPostDislikeDone, mainPostLikeDone } =
-    useSelector((state: RootState) => state.mainPost);
+    data: mainPosts,
+    size,
+    revalidate: revalidateMainPosts,
+    setSize,
+  } = useSWRInfinite<IMainPost[]>(
+    (index) => `/mainPost?code=${query?.code || ""}&page=${index + 1}`,
+    fetcher
+  );
+
+  const {
+    mainPostCreateDone,
+    mainPostEditConfirmDone,
+    mainPostDeleteDone,
+    mainPostDislikeDone,
+    mainPostLikeDone,
+  } = useSelector((state: RootState) => state.mainPost);
   const { commentCreateDone, commentDeleteDone, subCommentCreateDone, subCommentDeleteDone } =
     useSelector((state: RootState) => state.comment);
+
+  useEffect(() => {
+    if (mainPostCreateDone) {
+      toastSuccessMessage("게시물을 성공적으로 작성했습니다.");
+      dispatch(mainPostSlice.actions.mainPostCreateClear());
+      revalidateMainPosts();
+    }
+  }, [mainPostCreateDone]);
 
   useEffect(() => {
     if (mainPostEditConfirmDone) {
@@ -47,14 +69,14 @@ const index = () => {
   useEffect(() => {
     if (commentCreateDone) {
       toastSuccessMessage("댓글을 성공적으로 작성했습니다.");
-      revalidate();
+      revalidateMainPost();
     }
   }, [commentCreateDone]);
 
   useEffect(() => {
     if (commentDeleteDone) {
       toastSuccessMessage("댓글을 성공적으로 삭제했습니다.");
-      revalidate();
+      revalidateMainPost();
     }
   }, [commentDeleteDone]);
 
@@ -62,14 +84,14 @@ const index = () => {
     if (subCommentCreateDone) {
       toastSuccessMessage("답글을 성공적으로 작성했습니다.");
       dispatch(commentSlice.actions.subCommentCreateClear());
-      revalidate();
+      revalidateMainPost();
     }
   }, [subCommentCreateDone]);
 
   useEffect(() => {
     if (subCommentDeleteDone) {
       toastSuccessMessage("답글을 성공적으로 삭제했습니다.");
-      revalidate();
+      revalidateMainPost();
     }
   }, [subCommentDeleteDone]);
 
@@ -77,7 +99,7 @@ const index = () => {
     if (mainPostLikeDone) {
       toastSuccessMessage("좋아요!💓");
       dispatch(mainPostSlice.actions.mainPostLikeClear());
-      revalidate();
+      revalidateMainPost();
     }
   }, [mainPostLikeDone]);
 
@@ -85,20 +107,18 @@ const index = () => {
     if (mainPostDislikeDone) {
       toastSuccessMessage("좋아요 취소💔");
       dispatch(mainPostSlice.actions.mainPostDislikeClear());
-      revalidate();
+      revalidateMainPost();
     }
   }, [mainPostDislikeDone]);
   return (
     <MainLayout>
-      <div className="layout_main">
-        <h2 className="main-title">15번째 메아리</h2>
-        <MainPost mainPost={mainPost} />
-        <h2 className="main-title">인기급상승</h2>
-        <MainTopContent />
-        <h2 className="main-title">포스팅</h2>
-        <MainPostingForm />
-        <MainArticleList mainPosts={mainPosts} />
-      </div>
+      <h2 className="main-title">15번째 메아리</h2>
+      <MainPost mainPost={mainPost} />
+      <h2 className="main-title">인기급상승</h2>
+      <MainTopContent />
+      <h2 className="main-title">포스팅</h2>
+      <MainPostingForm />
+      <MainArticleList setSize={setSize} size={size} mainPosts={mainPosts} />
     </MainLayout>
   );
 };

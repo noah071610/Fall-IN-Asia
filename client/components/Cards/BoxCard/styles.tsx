@@ -9,7 +9,7 @@ export const BoxCardWrapper = styled.div`
   &:hover {
     .image-wrapper {
       img {
-        transform: scale(1.2);
+        transform: scale(1.05);
       }
     }
   }

@@ -2,7 +2,7 @@ import { CommentOutlined, LikeOutlined } from "@ant-design/icons";
 import NameSpace from "@components/NameSpace";
 import { ICountry, IMainPost } from "@typings/db";
 import { DEFAULT_ICON_URL } from "config";
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import { ArticleCardWrapper } from "./styles";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
@@ -15,25 +15,28 @@ interface IProps {
 }
 
 const ArticleCard: FC<IProps> = ({ mainPost }) => {
-  const {
-    data: country,
-    error,
-    revalidate,
-  } = useSWR<ICountry, any>(`/country/${mainPost?.code}`, fetcher);
-  if (error) {
-    toastErrorMessage("가져오지 못했습니다.");
-  }
+  const onClickCountryTag = useCallback(() => {
+    router.push(`/country/${mainPost.code}`);
+  }, []);
+  const onClickTypeTag = useCallback(() => {
+    router.push(`/country/${mainPost.code}`);
+  }, []);
+  const onClickPostIdTag = useCallback(() => {
+    router.push(`/country/${mainPost.code}/${mainPost.id}`);
+  }, []);
   return (
-    <ArticleCardWrapper>
+    <ArticleCardWrapper className="article-card-wrapper">
       <div className="article-top">
         <NameSpace user={mainPost?.user} date={mainPost?.createdAt} />
-        <h4 className="article-header">
-          {country?.name}/{mainPost?.type}/{mainPost?.id}번째메아리
-        </h4>
+        <div className="article-header">
+          <a onClick={onClickCountryTag}>{mainPost?.country?.name}</a>/
+          <a onClick={onClickTypeTag}>{mainPost?.type}</a>/
+          <a onClick={onClickPostIdTag}>{mainPost?.id}번째메아리</a>
+        </div>
       </div>
       <div className="article">
         <div
-          onClick={() => router.push(`/post/${country?.code}/${mainPost?.id}`)}
+          onClick={() => router.push(`/country/${mainPost?.country?.code}/${mainPost?.id}`)}
           className="content"
         >
           {ReactHtmlParser(mainPost?.content as string)}

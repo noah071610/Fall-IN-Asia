@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import ClubLayout from "@sections/ClubLayout";
-import ClubPostTitle from "@sections/ClubPostPage/ClubPostTitle";
+import ClubPostTitle from "@sections/MainPage/MainPostTitle";
 import ClubPostContent from "@sections/ClubPostPage/ClubPostContent";
 import CommentForm from "@components/CommentForm/";
 import Comment from "@components/Comment";
@@ -50,72 +50,10 @@ const ClubPost: FC<IProps> = () => {
     error,
     revalidate,
   } = useSWR(`/club/${query?.group}/${query?.id}`, fetcher);
-  const { clubPostEditConfirmDone, clubPostDeleteDone, clubPostDislikeDone, clubPostLikeDone } =
-    useSelector((state: RootState) => state.club);
-  const { commentCreateDone, commentDeleteDone, subCommentCreateDone, subCommentDeleteDone } =
-    useSelector((state: RootState) => state.comment);
+
   if (error) {
     toastErrorMessage("予想できないエラーが発生しました。もう一度接続してください。");
   }
-
-  useEffect(() => {
-    if (clubPostEditConfirmDone) {
-      router.push(`/club/${query?.group}/edit`);
-    }
-  }, [clubPostEditConfirmDone]);
-
-  useEffect(() => {
-    if (clubPostDeleteDone) {
-      router.push(`/club/${query?.group}`);
-      toastSuccessMessage("ポストを成功的に削除致しました。");
-      dispatch(clubSlice.actions.clubPostDeleteClear());
-    }
-  }, [clubPostDeleteDone]);
-
-  useEffect(() => {
-    if (commentCreateDone) {
-      toastSuccessMessage("コメントを成功的に作成致しました。");
-      revalidate();
-    }
-  }, [commentCreateDone]);
-
-  useEffect(() => {
-    if (commentDeleteDone) {
-      toastSuccessMessage("コメントを成功的に削除致しました。");
-      revalidate();
-    }
-  }, [commentDeleteDone]);
-
-  useEffect(() => {
-    if (subCommentCreateDone) {
-      toastSuccessMessage("返事を成功的に作成致しました。");
-      dispatch(commentSlice.actions.subCommentCreateClear());
-      revalidate();
-    }
-  }, [subCommentCreateDone]);
-
-  useEffect(() => {
-    if (subCommentDeleteDone) {
-      toastSuccessMessage("返事を成功的に削除致しました。");
-      revalidate();
-    }
-  }, [subCommentDeleteDone]);
-
-  useEffect(() => {
-    if (clubPostLikeDone) {
-      toastSuccessMessage("いいね！💓");
-      dispatch(clubSlice.actions.clubPostLikeClear());
-      revalidate();
-    }
-  }, [clubPostLikeDone]);
-
-  useEffect(() => {
-    if (clubPostDislikeDone) {
-      toastSuccessMessage("いいね取り消し💔");
-      dispatch(clubSlice.actions.clubPostDislikeClear());
-      revalidate();
-    }
-  }, [clubPostDislikeDone]);
 
   return (
     <ClubLayout>

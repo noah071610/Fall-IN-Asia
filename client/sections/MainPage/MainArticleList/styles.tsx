@@ -18,4 +18,7 @@ export const MainArticleListWrapper = styled.div`
       }
     }
   }
+  .article-card-wrapper:last-of-type {
+    border-bottom: none;
+  }
 `;

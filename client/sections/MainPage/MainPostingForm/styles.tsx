@@ -6,20 +6,16 @@ export const MainPostingFormWrapper = styled.div`
   background-color: white;
   padding: 0.4rem;
   width: 100%;
-  .type-selector {
-    ${FLEX_STYLE("flex-end", "center")};
+  .selector-wrapper {
+    ${FLEX_STYLE("flex-start", "center")};
     margin-bottom: 1rem;
   }
-  .ant-select-selector {
-    border-radius: 10px !important;
-    &:focus {
-      border: 1px solid ${RGB_BLACK(0.08)} !important;
-      box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
-    }
-    &:hover {
-      border: 1px solid ${RGB_BLACK(0.08)} !important;
-      box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
-    }
+  .autoComplete-form {
+    margin-right: 1rem;
+    width: 200px;
+  }
+  .country-selector {
+    margin-right: 1rem;
   }
   .posting-form-preview {
     transition: 0.3s all;

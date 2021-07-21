@@ -231,4 +231,17 @@ textarea {
   cursor: pointer;
 }
 
+
+.ant-select-selector {
+  border-radius: 10px !important;
+  &:focus {
+    border: 1px solid ${RGB_BLACK(0.08)} !important;
+    box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
+  }
+  &:hover {
+    border: 1px solid ${RGB_BLACK(0.08)} !important;
+    box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
+  }
+}
+
 `;

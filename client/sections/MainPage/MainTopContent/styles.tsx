@@ -4,7 +4,7 @@ import { FLEX_STYLE, RGB_BLACK } from "config";
 export const MainTopContentWrapper = styled.div`
   .more-card {
     cursor: pointer;
-    height: 340px;
+    height: 300px;
     ${FLEX_STYLE("center", "center")};
     div {
       ${FLEX_STYLE("center", "center")};

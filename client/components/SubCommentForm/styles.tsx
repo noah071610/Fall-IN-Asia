@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, HOVER_GRAY, RGB_BLACK } from "config";
 
 export const SubCommentFormWrapper = styled.div`
-  padding: 1rem 0 0.5rem 3.7rem;
+  padding: 1rem 0 0 3.7rem;
   transition: 0.3s all;
   ${FLEX_STYLE("flex-start", "center")};
   .icon {

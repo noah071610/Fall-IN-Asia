@@ -14,6 +14,11 @@ export const ArticleCardWrapper = styled.div`
   padding: 1.5rem 0;
   ${BORDER_THIN("border-bottom")};
   .article-header {
+    a {
+      &:hover {
+        font-weight: bold;
+      }
+    }
   }
   .article-top {
     ${FLEX_STYLE("space-between", "flex-start")};

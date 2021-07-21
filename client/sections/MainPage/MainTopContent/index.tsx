@@ -34,7 +34,7 @@ const MainTopContent: FC<IProps> = () => {
           <div className="more-card">
             <div>
               <PlusCircleOutlined />
-              <span>일대기 더보기</span>
+              <span>더보기</span>
             </div>
           </div>
         </SwiperSlide>

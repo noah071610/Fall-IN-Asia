@@ -12,15 +12,14 @@ import MainPostingForm from "@sections/MainPage/MainPostingForm";
 import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
 import MainLayout from "@layout/MainLayout";
-import CountryCardSilde from "@components/CountryCardSilde";
 import MainTopContent from "@sections/MainPage/MainTopContent";
 import { mainPostSlice } from "slices/mainPost";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import { ICountry, IMainPost } from "@typings/db";
 
 const index = () => {
-  const [type, setFilterType] = useState("");
   const dispatch = useDispatch();
+  const [filterType, setFilterType] = useState("");
   const { query } = useRouter();
   const {
     data: mainPosts,
@@ -28,10 +27,20 @@ const index = () => {
     revalidate,
     setSize,
   } = useSWRInfinite<IMainPost[]>(
-    (index) => `/mainPost?code=${query?.code || ""}&page=${index + 1}&type=${type}`,
+    (index) =>
+      filterType
+        ? `/mainPost/${filterType}`
+        : `/mainPost?code=${query?.code || ""}&page=${index + 1}`,
     fetcher
   );
-
+  const { data: country, error } = useSWR<ICountry>(
+    query?.code ? `/country/${query?.code}` : null,
+    fetcher,
+    noRevalidate
+  );
+  if (error) {
+    router.push("/");
+  }
   const { mainPostCreateDone } = useSelector((state: RootState) => state.mainPost);
   useEffect(() => {
     if (mainPostCreateDone) {
@@ -42,9 +51,9 @@ const index = () => {
   }, [mainPostCreateDone]);
   return (
     <MainLayout>
-      <h2 className="main-title">인기여행지</h2>
-      <CountryCardSilde slidesPerView={3.5} />
-      <h2 className="main-title">전세계 인기글</h2>
+      <h2 className="main-title">{country?.name + "에서 인기폭발 🥰"}</h2>
+      <div />
+      <h2 className="main-title">{country?.name + " 인기일대기"}</h2>
       <MainTopContent />
       <h2 className="main-title">포스팅</h2>
       <MainPostingForm />

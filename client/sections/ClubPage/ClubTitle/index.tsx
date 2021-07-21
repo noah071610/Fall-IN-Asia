@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import fetcher from "utils/fetcher";
 import { noRevalidate, toastErrorMessage } from "config";
-import { getVisitClubAction } from "actions/club";
+import { getVisitClubAction } from "actions/mainPost";
 import Link from "next/link";
 
 interface IProps {

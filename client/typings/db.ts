@@ -40,7 +40,7 @@ export interface IMainPost {
   content: string;
   createdAt: Date;
   user: IUser;
-  coutnry?: ICountry;
+  country: ICountry;
   comments?: IComment[];
   announcements?: IAnnouncement[];
   likedUser?: IUser[];
