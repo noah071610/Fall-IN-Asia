@@ -8,7 +8,7 @@ export const MainArticleListWrapper = styled.div`
     border-radius: 15px;
     background-color: white;
     .content-filter {
-      padding: 1rem 1rem 0 1rem;
+      padding: 1rem;
       ${FLEX_STYLE("flex-end", "center")}
       button {
         ${FLEX_STYLE("center", "center")}
@@ -17,8 +17,5 @@ export const MainArticleListWrapper = styled.div`
         }
       }
     }
-  }
-  .article-card-wrapper:last-of-type {
-    border-bottom: none;
   }
 `;

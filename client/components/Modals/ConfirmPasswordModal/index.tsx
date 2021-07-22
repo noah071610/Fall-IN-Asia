@@ -8,6 +8,7 @@ import { RootState } from "slices";
 import { marketPostDeleteAction } from "actions/market";
 import { studyPostDeleteAction } from "actions/study";
 import { commentDeleteAction, subCommentDeleteAction } from "actions/comment";
+import { mainPostDeleteAction } from "actions/mainPost";
 interface IProps {
   isDelete: boolean;
   postId: number;
@@ -66,9 +67,9 @@ const ConfirmPasswordModal: FC<IProps> = ({
         return;
       }
       if (isDelete) {
-        dispatch(clubPostDeleteAction(data));
+        dispatch(mainPostDeleteAction(data));
       } else {
-        dispatch(clubPostEditConfirmAction(data));
+        dispatch(mainPostEditConfirmAction(data));
       }
     },
     [postId, user.id, password, commentId]

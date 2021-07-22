@@ -21,18 +21,14 @@ export class AuthService {
       select: ['id', 'icon', 'email', 'password'],
     });
     if (!user) {
-      throw new UnauthorizedException(
-        'メールアドレスが違います。もう一度確認してください。',
-      );
+      throw new UnauthorizedException('유효하지 않은 이메일입니다.');
     }
     const result = await bcrypt.compare(password, user.password);
     if (result) {
       const { password, ...userWithoutPassword } = user;
       return userWithoutPassword;
     } else {
-      throw new UnauthorizedException(
-        'パスワードが違います。もう一度確認してください。',
-      );
+      throw new UnauthorizedException('비밀번호가 틀렸습니다.');
     }
   }
 }

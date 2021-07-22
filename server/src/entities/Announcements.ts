@@ -13,10 +13,9 @@ import {
 } from 'typeorm';
 import { MainPosts } from './MainPosts';
 import { MarketPosts } from './MarketPosts';
-import { StudyPosts } from './StudyPosts';
 import { Users } from './Users';
 
-@Entity({ schema: 'k_heart', name: 'announcements' })
+@Entity({ schema: 'travelover', name: 'announcements' })
 export class Announcements {
   @IsNumber()
   @IsNotEmpty()
@@ -53,15 +52,6 @@ export class Announcements {
   @Column('int', { name: 'marketPostId', nullable: true })
   marketPostId: number;
 
-  @IsNumber()
-  @ApiProperty({
-    example: 1,
-    description: 'studyPost announcements',
-    nullable: true,
-  })
-  @Column('int', { name: 'studyPostId', nullable: true })
-  studyPostId: number;
-
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -96,12 +86,4 @@ export class Announcements {
   })
   @JoinColumn({ name: 'marketPostId' })
   marketPost: MarketPosts;
-
-  @ManyToOne(() => StudyPosts, (studyPosts) => studyPosts.announcements, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-    nullable: true,
-  })
-  @JoinColumn({ name: 'studyPostId' })
-  studyPost: StudyPosts;
 }

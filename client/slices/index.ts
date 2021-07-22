@@ -2,7 +2,6 @@ import { HYDRATE } from "next-redux-wrapper";
 import { combineReducers } from "@reduxjs/toolkit";
 import { mainSlice } from "./main";
 import { userSlice } from "./user";
-import { gallerySlice } from "./gallery";
 import { mainPostSlice } from "./mainPost";
 import { marketSlice } from "./market";
 import { studySlice } from "./study";
@@ -20,7 +19,6 @@ export const reducer = (state: any = {}, action: any) => {
     user: userSlice.reducer,
     mainPost: mainPostSlice.reducer,
     market: marketSlice.reducer,
-    gallery: gallerySlice.reducer,
     study: studySlice.reducer,
     comment: commentSlice.reducer,
   })(state, action);

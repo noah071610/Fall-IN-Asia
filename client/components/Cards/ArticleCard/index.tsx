@@ -1,18 +1,8 @@
-import {
-  CommentOutlined,
-  HeartFilled,
-  HeartOutlined,
-  LikeOutlined,
-  MoreOutlined,
-  PlusCircleOutlined,
-} from "@ant-design/icons";
+import { CommentOutlined, HeartFilled, HeartOutlined } from "@ant-design/icons";
 import NameSpace from "@components/NameSpace";
-import { ICountry, IMainPost } from "@typings/db";
-import { DEFAULT_ICON_URL } from "config";
-import React, { FC, useCallback, useEffect, useState } from "react";
+import { IMainPost } from "@typings/db";
+import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import { ArticleCardWrapper } from "./styles";
-import useSWR from "swr";
-import fetcher from "utils/fetcher";
 import ReactHtmlParser from "react-html-parser";
 import { toastErrorMessage } from "config";
 import router from "next/router";
@@ -72,7 +62,7 @@ const ArticleCard: FC<IProps> = ({ mainPost }) => {
     router.push(`/country/${mainPost.code}`);
   }, []);
   const onClickTypeTag = useCallback(() => {
-    router.push(`/country/${mainPost.code}`);
+    router.push(`/country/${mainPost.code}/?type=${mainPost.type}`);
   }, []);
   const onClickPostIdTag = useCallback(() => {
     router.push(`/country/${mainPost.code}/${mainPost.id}`);
@@ -97,7 +87,7 @@ const ArticleCard: FC<IProps> = ({ mainPost }) => {
           className={imageLayout}
         >
           {mainPost?.images?.slice(0, 2).map((v, i) => {
-            return <img key={i} src={v.src} />;
+            return <img key={i} src={v.image_src} />;
           })}
         </div>
         <div
@@ -131,4 +121,4 @@ const ArticleCard: FC<IProps> = ({ mainPost }) => {
   );
 };
 
-export default ArticleCard;
+export default memo(ArticleCard);

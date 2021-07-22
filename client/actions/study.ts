@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IStudyPostForm } from "@typings/db";
 import axios from "axios";
 import { toastErrorMessage } from "config";
 
@@ -36,15 +35,12 @@ export const studyPostDeleteAction = createAsyncThunk<
   }
 });
 
-export const studyPostEditAction = createAsyncThunk<any, IStudyPostForm>(
-  "study/edit",
-  async (form) => {
-    try {
-      const response = await axios.post("/study/edit", form);
-      return response.data;
-    } catch (error) {
-      toastErrorMessage(error);
-      throw error;
-    }
+export const studyPostEditAction = createAsyncThunk<any, any>("study/edit", async (form) => {
+  try {
+    const response = await axios.post("/study/edit", form);
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
   }
-);
+});

@@ -4,7 +4,7 @@ import { RecruitCradProfileWrapper } from "./styles";
 import ReactHtmlParser from "react-html-parser";
 import { Divider } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
-import ConfirmPasswordModal from "@components/ConfirmPasswordModal";
+import ConfirmPasswordModal from "@components/Modals/ConfirmPasswordModal";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 

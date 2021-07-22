@@ -1,7 +1,6 @@
-import NameSpace from "@components/NameSpace";
 import { ICountry } from "@typings/db";
 import router from "next/router";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, memo, useCallback, useState } from "react";
 import { CountryCardWrapper } from "./styles";
 
 interface IProps {
@@ -17,10 +16,10 @@ const CountryCard: FC<IProps> = ({ country }) => {
       <img src={country?.image_src} alt="country_image" />
       <div className="country-desc">
         <h4>{country?.name}</h4>
-        <span className="count">포스팅: 0</span>
+        <span className="count">포스팅: {country.mainPosts?.length}</span>
       </div>
     </CountryCardWrapper>
   );
 };
 
-export default CountryCard;
+export default memo(CountryCard);

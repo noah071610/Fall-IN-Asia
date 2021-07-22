@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ISignUpForm, IUser } from "@typings/db";
+import { IUserRequestForm, IUser } from "@typings/db";
 import axios from "axios";
 import { toastErrorMessage } from "config";
 
@@ -13,18 +13,15 @@ export const getUserInfoAction = createAsyncThunk("/user/getInfo", async () => {
   }
 });
 
-export const logInAction = createAsyncThunk<any, { email: string; password: string }>(
-  "user/login",
-  async (data) => {
-    try {
-      const response = await axios.post("/user/login", data);
-      return response.data;
-    } catch (error) {
-      toastErrorMessage(error);
-      throw error;
-    }
+export const logInAction = createAsyncThunk<any, IUserRequestForm>("user/login", async (data) => {
+  try {
+    const response = await axios.post("/user/login", data);
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
   }
-);
+});
 
 export const logoutAction = createAsyncThunk<any>("user/logout", async () => {
   try {
@@ -36,35 +33,18 @@ export const logoutAction = createAsyncThunk<any>("user/logout", async () => {
   }
 });
 
-export const signupAction = createAsyncThunk<IUser, ISignUpForm>("user/signup", async (data) => {
-  try {
-    const response = await axios.post("/user", data);
-    return response.data;
-  } catch (error) {
-    toastErrorMessage(error);
-    throw error;
+export const signupAction = createAsyncThunk<IUser, IUserRequestForm>(
+  "user/signup",
+  async (data) => {
+    try {
+      const response = await axios.post("/user", data);
+      return response.data;
+    } catch (error) {
+      toastErrorMessage(error);
+      throw error;
+    }
   }
-});
-
-export const fanRegisterAction = createAsyncThunk<any, any>("user/fan", async (data) => {
-  try {
-    const response = await axios.post("/user/fan", data);
-    return response.data;
-  } catch (error) {
-    toastErrorMessage(error);
-    throw error;
-  }
-});
-
-export const fanWithdrawalAction = createAsyncThunk<any>("user/fan/withdrawal", async () => {
-  try {
-    const response = await axios.delete(`/user/fan`);
-    return response.data;
-  } catch (error) {
-    toastErrorMessage(error);
-    throw error;
-  }
-});
+);
 
 export const addUserIconAction = createAsyncThunk<any, any>("user/icon", async (data) => {
   try {

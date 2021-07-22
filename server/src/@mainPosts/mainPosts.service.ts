@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LessThanOrEqual, MoreThan, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import bcrypt from 'bcrypt';
 import { Users } from 'src/entities/Users';
 import { Images } from 'src/entities/Images';
@@ -49,7 +49,7 @@ export class MainPostsService {
     const newPost = await this.MainPostsRepository.save(newPostCreate);
     for (let i = 0; i < files.length; i++) {
       const newImage = new Images();
-      newImage.src = process.env.BACK_URL + files[i].path;
+      newImage.image_src = process.env.BACK_URL + files[i].path;
       newImage.mainPost = <any>newPost.id;
       await this.ImagesRepository.save(newImage);
     }
@@ -66,7 +66,7 @@ export class MainPostsService {
       throw new NotFoundException('사용 할 이미지가 없습니다.');
     }
     const newImage = new Images();
-    newImage.src = process.env.BACK_URL + file.path;
+    newImage.image_src = process.env.BACK_URL + file.path;
     await this.ImagesRepository.save(newImage);
     return true;
   }
@@ -94,34 +94,36 @@ export class MainPostsService {
     return post;
   }
 
-  async getPopularPosts(code: string) {
-    const popularPosts = await this.MainPostsRepository.createQueryBuilder(
+  async getCommentPosts(
+    filter: string,
+    code?: string,
+    type?: string,
+    page?: number,
+  ) {
+    const filterPosts = await this.MainPostsRepository.createQueryBuilder(
       'mainPosts',
     )
-      .leftJoin('mainPosts.likedUser', 'likedUser')
-      .orderBy('likedUser');
-    return popularPosts;
+      .where(code ? `mainPosts.code = :code` : '1=1', { code })
+      .andWhere(type ? `mainPosts.type = :type` : '1=1', { type })
+      .leftJoinAndSelect('mainPosts.country', 'country')
+      .leftJoinAndSelect('mainPosts.user', 'user')
+      .leftJoinAndSelect('mainPosts.likedUser', 'likedUser')
+      .leftJoinAndSelect('mainPosts.comments', 'comments')
+      .leftJoinAndSelect('mainPosts.images', 'images')
+      .getMany();
+    switch (filter) {
+      case 'popular':
+        return filterPosts
+          .sort((a, b) => b.likedUser.length - a.likedUser.length)
+          .slice((page - 1) * 10, page * 10);
+      case 'comment':
+        return filterPosts
+          .sort((a, b) => b.comments.length - a.comments.length)
+          .slice((page - 1) * 10, page * 10);
+    }
   }
 
   async getPosts(code?: string, page?: number, type?: string) {
-    if (type) {
-      switch (type) {
-        case 'attractions':
-          type = '관광지';
-          break;
-        case 'accommodations':
-          type = '숙박';
-          break;
-        case 'food':
-          type = '음식';
-          break;
-        case 'alert':
-          type = '사기경보';
-          break;
-        default:
-          break;
-      }
-    }
     const posts = await this.MainPostsRepository.createQueryBuilder('mainPosts')
       .where(code ? `mainPosts.code = :code` : '1=1', { code })
       .andWhere(type ? `mainPosts.type = :type` : '1=1', { type })
@@ -134,6 +136,7 @@ export class MainPostsService {
       .skip((page - 1) * 10)
       .take(10)
       .getMany();
+
     return posts;
   }
 

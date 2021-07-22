@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { IMainPost } from "@typings/db";
 import {
   mainPostCreateAction,
@@ -7,8 +7,6 @@ import {
   mainPostEditAction,
   mainPostLikeAction,
 } from "actions/mainPost";
-import { toastSuccessMessage } from "config";
-
 export interface MainPostState {
   mainPost: IMainPost | null;
   editPost: IMainPost | null;

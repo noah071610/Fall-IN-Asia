@@ -3,7 +3,6 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import {
   Column,
   CreateDateColumn,
-  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -15,7 +14,7 @@ import { Announcements } from './Announcements';
 import { Images } from './Images';
 import { Users } from './Users';
 
-@Entity({ schema: 'k_heart', name: 'marketPosts' })
+@Entity({ schema: 'travelover', name: 'marketPosts' })
 export class MarketPosts {
   @IsNumber()
   @IsNotEmpty()

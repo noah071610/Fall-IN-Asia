@@ -14,7 +14,7 @@ import Link from "next/link";
 import { IGroup, ITopClubPosts } from "@typings/db";
 import { AutoComplete } from "antd";
 import router from "next/router";
-import AutoCompleteSearch from "@components/AutoCompleteSearch";
+import AutoCompleteSearch from "@components/AutoCompleteForm";
 
 export const ClubMainWrapper = styled.div`
   .club-filter {

@@ -1,18 +1,10 @@
 import React, { FC, useCallback, useMemo, useState } from "react";
-import MainLayout from "@layout/MainLayout";
-import AutoCompleteSearch from "@components/AutoCompleteSearch";
+import AutoCompleteSearch from "@components/AutoCompleteForm";
 import MainCountryList from "@sections/MainPage/MainCountryList";
 import CountryCardSilde from "@components/CountryCardSilde";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
-import {
-  FLEX_STYLE,
-  GRAY_COLOR,
-  HOVER_GRAY,
-  toastErrorMessage,
-  toastSuccessMessage,
-  WHITE_STYLE,
-} from "config";
+import { FLEX_STYLE, GRAY_COLOR, toastErrorMessage, WHITE_STYLE } from "config";
 import { ICountry } from "@typings/db";
 import styled from "@emotion/styled";
 import router from "next/router";

@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import { CommentWrapper } from "./styles";
 import { DeleteOutlined, DownCircleOutlined, MoreOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -64,4 +64,4 @@ const Comment: FC<IProps> = ({ comment }) => {
   );
 };
 
-export default Comment;
+export default memo(Comment);

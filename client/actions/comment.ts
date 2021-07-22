@@ -1,16 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { ICommentRequestForm } from "@typings/db";
 import axios from "axios";
 import { toastErrorMessage } from "config";
 
-export const commentCreateAction = createAsyncThunk<any, any>("comment/create", async (form) => {
-  try {
-    await axios.post(`/comment`, form);
-    return;
-  } catch (error) {
-    toastErrorMessage(error);
-    throw error;
+export const commentCreateAction = createAsyncThunk<any, ICommentRequestForm>(
+  "comment/create",
+  async (form) => {
+    try {
+      await axios.post(`/comment`, form);
+      return;
+    } catch (error) {
+      toastErrorMessage(error);
+      throw error;
+    }
   }
-});
+);
 
 export const commentDeleteAction = createAsyncThunk<any, any>("comment/delete", async (data) => {
   try {
@@ -22,7 +26,7 @@ export const commentDeleteAction = createAsyncThunk<any, any>("comment/delete", 
   }
 });
 
-export const subCommentCreateAction = createAsyncThunk<any, any>(
+export const subCommentCreateAction = createAsyncThunk<any, ICommentRequestForm>(
   "comment/subComment/create",
   async (form) => {
     try {

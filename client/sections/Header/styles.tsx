@@ -1,15 +1,5 @@
 import styled from "@emotion/styled";
-import {
-  BLACK_COLOR,
-  BLUE_COLOR,
-  BORDER_THICK,
-  BORDER_THIN,
-  FLEX_STYLE,
-  FONT_STYLE,
-  LG_SIZE,
-  RGB_BLACK,
-  WHITE_COLOR,
-} from "config";
+import { BORDER_THIN, FLEX_STYLE, FONT_STYLE, WHITE_COLOR } from "config";
 
 export const HeaderWrapper = styled.header`
   padding: 0.7rem 1.2rem;

@@ -12,7 +12,7 @@ import router, { useRouter } from "next/router";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { ICountry, IMainPost } from "@typings/db";
-import AutoCompleteSearch from "@components/AutoCompleteSearch";
+import AutoCompleteSearch from "@components/AutoCompleteForm";
 import { RootState } from "slices";
 const { Option, OptGroup } = Select;
 interface IProps {

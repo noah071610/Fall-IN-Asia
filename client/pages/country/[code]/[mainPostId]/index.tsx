@@ -5,7 +5,6 @@ import { getUserInfoAction } from "actions/user";
 import { toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { getGroupsWithScoreAction } from "actions/group";
 import MainArticleList from "@sections/MainPage/MainArticleList";
 import MainPostingForm from "@sections/MainPage/MainPostingForm";
 import MainPost from "@sections/MainPage/MainPost";
@@ -126,7 +125,7 @@ const index = () => {
       <MainTopContent />
       <h2 className="main-title">포스팅</h2>
       <MainPostingForm />
-      <MainArticleList setFilter={setFilter} setSize={setSize} mainPosts={mainPosts} />
+      <MainArticleList setSize={setSize} mainPosts={mainPosts} />
     </MainLayout>
   );
 };
@@ -140,7 +139,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         axios.defaults.headers.Cookie = cookie;
       }
       await store.dispatch(getUserInfoAction());
-      await store.dispatch(getGroupsWithScoreAction(1));
       return {
         props: {},
       };

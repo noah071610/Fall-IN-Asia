@@ -21,6 +21,7 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import multer from 'multer';
 import path from 'path';
 import { User } from 'src/decorators/user.decorator';
+import { MainPostRequestDto } from 'src/dto/mainPost.request.dto';
 
 @UseInterceptors(JsonResponeGenerator)
 @ApiTags('MainPosts')
@@ -47,7 +48,7 @@ export class MainPostsController {
   )
   @Post()
   async createPost(
-    @Body() form: any,
+    @Body() form: MainPostRequestDto,
     @User() user,
     @UploadedFiles() files: Express.Multer.File[],
   ) {
@@ -72,7 +73,7 @@ export class MainPostsController {
   )
   @Post('edit')
   async editPost(
-    @Body() form: any,
+    @Body() form: MainPostRequestDto,
     @UploadedFiles() files: Express.Multer.File[],
   ) {
     await this.MainPostsService.editPost(form, files);
@@ -126,24 +127,6 @@ export class MainPostsController {
     await this.MainPostsService.dislikePost(mainPostId, user.id);
   }
 
-  @ApiOperation({ summary: 'Get popular post' })
-  @Get('/popular/:code')
-  async getPopularPosts(@Param('code') code: string) {
-    return await this.MainPostsService.getPopularPosts(code);
-  }
-
-  @ApiOperation({ summary: 'Get topView post' })
-  @Get('/topView/:code')
-  async getTopViewPosts(@Param('code') code: string) {
-    return await this.MainPostsService.getTopViewPosts(code);
-  }
-
-  @ApiOperation({ summary: 'Get topComment post' })
-  @Get('/topComment/:code')
-  async getTopCommentPosts(@Param('code') code: string) {
-    return await this.MainPostsService.getTopCommentPosts(code);
-  }
-
   @ApiOperation({ summary: 'Get one post for post page' })
   @Get(':code/:mainPostId')
   async getOnePost(
@@ -160,7 +143,34 @@ export class MainPostsController {
     @Query('code') code: string,
     @Query('page', ParseIntPipe) page: number,
     @Query('type') type: string,
+    @Query('filter') filter: string,
   ) {
+    if (type) {
+      switch (type) {
+        case 'attractions':
+          type = '관광지';
+          break;
+        case 'accommodations':
+          type = '숙박';
+          break;
+        case 'food':
+          type = '음식';
+          break;
+        case 'alert':
+          type = '사기경보';
+          break;
+        default:
+          break;
+      }
+    }
+    if (filter) {
+      return await this.MainPostsService.getCommentPosts(
+        filter,
+        code,
+        type,
+        page,
+      );
+    }
     return await this.MainPostsService.getPosts(code, page, type);
   }
 }

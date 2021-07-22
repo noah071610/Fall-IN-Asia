@@ -21,12 +21,13 @@ const MainCountryList: FC<IProps> = ({ countries }) => {
           return <CountryCard country={v} key={i} />;
         })}
       </div>
-      <h3>아메리카</h3>
-      <h3>아프리카</h3>
-      <h3>오세아니아</h3>
-      <h3>유럽</h3>
-      <h3>중동</h3>
       <h3>유라시아</h3>
+      <h3>중동</h3>
+      <h3>아프리카</h3>
+      <h3>북아메리카</h3>
+      <h3>남아메리카</h3>
+      <h3>유럽</h3>
+      <h3>오세아니아</h3>
     </MainCountryListWrapper>
   );
 };

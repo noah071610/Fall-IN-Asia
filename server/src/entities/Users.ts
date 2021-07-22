@@ -6,28 +6,19 @@ import {
   DeleteDateColumn,
   Entity,
   Index,
-  JoinColumn,
-  ManyToMany,
-  ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { MainPosts } from './MainPosts';
 import { Comments } from './Comments';
-import { Gallery } from './Gallery';
-import { Countries } from './Countries';
-import { StudyPosts } from './StudyPosts';
 import { MarketPosts } from './MarketPosts';
-import { Participate } from './Participate';
 import { MainPostLike } from './MainPostsLike';
-import { Chats } from './Chats';
 import { Announcements } from './Announcements';
 import { SubComments } from './SubComments';
 
 @Index('email', ['email'], { unique: true })
-@Entity({ schema: 'k_heart', name: 'users' })
+@Entity({ schema: 'travelover', name: 'users' })
 export class Users {
   @Index()
   @IsNumber()
@@ -78,7 +69,7 @@ export class Users {
 
   @IsString()
   @ApiProperty({
-    example: '320sd8f78f2300dsa',
+    example: '320sd8f78f2300dsa (hash key)',
     description: 'Password',
   })
   @Column('varchar', { name: 'password', length: 100, select: false })
@@ -98,13 +89,8 @@ export class Users {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @DeleteDateColumn()
+  @DeleteDateColumn({ select: false })
   deletedAt: Date | null;
-
-  @OneToMany(() => StudyPosts, (studyPosts) => studyPosts.leaderUser, {
-    cascade: true,
-  })
-  studyPosts: StudyPosts[];
 
   @OneToMany(() => MainPosts, (mainposts) => mainposts.user, {
     cascade: true,
@@ -115,11 +101,6 @@ export class Users {
     cascade: true,
   })
   marketPosts: MarketPosts[];
-
-  @OneToMany(() => Gallery, (gallery) => gallery.user, {
-    cascade: true,
-  })
-  gallerys: Gallery[];
 
   @OneToMany(() => Comments, (comments) => comments.user, {
     cascade: true,

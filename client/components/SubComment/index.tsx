@@ -8,6 +8,7 @@ import { ISubComment } from "@typings/db";
 import useToggle from "@hooks/useToggle";
 import { commentSlice } from "slices/comment";
 import NameSpace from "@components/NameSpace";
+import { memo } from "react";
 interface IProps {
   subComment: ISubComment;
 }
@@ -53,4 +54,4 @@ const SubComment: FC<IProps> = ({ subComment }) => {
   );
 };
 
-export default SubComment;
+export default memo(SubComment);

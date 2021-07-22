@@ -1,38 +1,40 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
-import { noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
+import { noRevalidate, toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
-import { mainSlice } from "slices/main";
 import { RootState } from "slices";
-import { getGroupsWithScoreAction } from "actions/group";
 import MainArticleList from "@sections/MainPage/MainArticleList";
 import MainPostingForm from "@sections/MainPage/MainPostingForm";
-import useSWR, { useSWRInfinite } from "swr";
+import { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
 import MainLayout from "@layout/MainLayout";
 import CountryCardSilde from "@components/CountryCardSilde";
 import MainTopContent from "@sections/MainPage/MainTopContent";
 import { mainPostSlice } from "slices/mainPost";
 import { useRouter } from "next/router";
-import { ICountry, IMainPost } from "@typings/db";
+import { IMainPost } from "@typings/db";
 
 const index = () => {
-  const [type, setFilterType] = useState("");
   const dispatch = useDispatch();
   const { query } = useRouter();
   const {
     data: mainPosts,
-    size,
     revalidate,
     setSize,
   } = useSWRInfinite<IMainPost[]>(
-    (index) => `/mainPost?code=${query?.code || ""}&page=${index + 1}&type=${type}`,
-    fetcher
+    (index) =>
+      `/mainPost?code=${query?.code || ""}&page=${index + 1}&filter=${query?.filter || ""}&type=${
+        query?.type || ""
+      }`,
+    fetcher,
+    noRevalidate
   );
 
-  const { mainPostCreateDone } = useSelector((state: RootState) => state.mainPost);
+  const { mainPostCreateDone, mainPostLikeDone, mainPostDislikeDone } = useSelector(
+    (state: RootState) => state.mainPost
+  );
   useEffect(() => {
     if (mainPostCreateDone) {
       toastSuccessMessage("게시물을 성공적으로 작성했습니다.");
@@ -40,6 +42,23 @@ const index = () => {
       revalidate();
     }
   }, [mainPostCreateDone]);
+  useEffect(() => {
+    if (mainPostLikeDone) {
+      toastSuccessMessage("좋아요!💓");
+      dispatch(mainPostSlice.actions.mainPostLikeClear());
+      dispatch(getUserInfoAction());
+      revalidate();
+    }
+  }, [mainPostLikeDone]);
+
+  useEffect(() => {
+    if (mainPostDislikeDone) {
+      toastSuccessMessage("좋아요 취소💔");
+      dispatch(mainPostSlice.actions.mainPostDislikeClear());
+      dispatch(getUserInfoAction());
+      revalidate();
+    }
+  }, [mainPostDislikeDone]);
   return (
     <MainLayout>
       <h2 className="main-title">인기여행지</h2>
@@ -48,7 +67,7 @@ const index = () => {
       <MainTopContent />
       <h2 className="main-title">포스팅</h2>
       <MainPostingForm />
-      <MainArticleList setSize={setSize} setFilterType={setFilterType} mainPosts={mainPosts} />
+      <MainArticleList setSize={setSize} mainPosts={mainPosts} />
     </MainLayout>
   );
 };
@@ -62,7 +81,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         axios.defaults.headers.Cookie = cookie;
       }
       await store.dispatch(getUserInfoAction());
-      await store.dispatch(getGroupsWithScoreAction(1));
       return {
         props: {},
       };

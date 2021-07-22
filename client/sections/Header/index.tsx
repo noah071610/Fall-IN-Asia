@@ -1,37 +1,19 @@
 import { FC, useCallback, useEffect } from "react";
 import { HeaderWrapper, HeaderLeft, HeaderRight } from "./styles";
-import SignupModal from "@components/Modal/SignupModal";
+import SignupModal from "@components/Modals/SignupModal";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { RootState } from "slices";
-import { ToastContainer } from "react-toastify";
-import { mainSlice } from "slices/main";
-import UserInfoModal from "./UserInfoModal";
-import LoginModal from "@components/Modal/LoginModal";
+import LoginModal from "@components/Modals/LoginModal";
 import Link from "next/link";
-import { BellOutlined, SettingOutlined } from "@ant-design/icons";
+import { mainSlice } from "slices/main";
 
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
-  const { asPath } = useRouter();
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
-  const { onCommunityModal, onLoginModal, onSignupModal, onUserInfoModal } = useSelector(
-    (state: RootState) => state.main
-  );
-
-  useEffect(() => {
-    dispatch(mainSlice.actions.closeModal());
-  }, [asPath]);
-
-  const onClickCommunityMenu = useCallback(() => {
-    dispatch(mainSlice.actions.toggleCommunityModal());
-  }, []);
-
-  const onClickUserInfoMenu = useCallback(() => {
-    dispatch(mainSlice.actions.toggleUserInfoModal());
-  }, []);
+  const { onLoginModal, onSignupModal } = useSelector((state: RootState) => state.main);
 
   const onClickLoginMenu = useCallback(() => {
     dispatch(mainSlice.actions.toggleLoginModal());
@@ -47,7 +29,7 @@ const Header: FC<HeaderProps> = () => {
         </Link>
         <li>
           <Link href="/">
-            <a>홈</a>
+            <a>전세계</a>
           </Link>
         </li>
         <li>
@@ -65,7 +47,7 @@ const Header: FC<HeaderProps> = () => {
         {user ? (
           <>
             <li>
-              <a onClick={onClickUserInfoMenu}>
+              <a>
                 <img className="icon" src={user?.icon} alt={user?.name} />
               </a>
             </li>

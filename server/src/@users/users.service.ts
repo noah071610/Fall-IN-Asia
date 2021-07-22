@@ -28,7 +28,7 @@ export class UsersService {
 
     if (!user) {
       throw new UnauthorizedException(
-        'ユーザーの情報がありません、もう一度確認してください。',
+        '유저정보가 없습니다. 다시한번 확인해주세요.',
       );
     }
     return user;
@@ -36,17 +36,17 @@ export class UsersService {
 
   async signUp(email: string, name: string, password: string) {
     if (!email) {
-      throw new BadRequestException('メールアドレスを書いてください。');
+      throw new BadRequestException('이메일을 작성해주세요.');
     }
     if (!name) {
-      throw new BadRequestException('名前を書いてください。');
+      throw new BadRequestException('이름을 입력해주세요.');
     }
     if (!password) {
-      throw new BadRequestException('暗証番号を書いてください。');
+      throw new BadRequestException('비밀번호를 작성해주세요.');
     }
     const user = await this.userRepository.findOne({ where: { email } });
     if (user) {
-      throw new UnauthorizedException('誰かが使っているメールアドレスです。');
+      throw new UnauthorizedException('누군가 사용하고있는 이메일입니다.');
     }
     const hashedPassword = await bcrypt.hash(password, 12);
     await this.userRepository.save({

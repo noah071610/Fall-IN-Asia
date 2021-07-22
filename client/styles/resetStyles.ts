@@ -1,12 +1,4 @@
-import {
-  BLACK_COLOR,
-  BLUE_COLOR,
-  BORDER_THIN,
-  HOVER_GRAY,
-  RGB_BLACK,
-  WHITE_COLOR,
-  WHITE_STYLE,
-} from "config";
+import { BLUE_COLOR, BORDER_THIN, RGB_BLACK, WHITE_COLOR, WHITE_STYLE } from "config";
 
 export const resetStyles = `
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
@@ -97,26 +89,6 @@ p {
 h1,h2,h3,h4,h5{
   margin:0;
 }
-.tag {
-  padding:0.5rem .7rem;
-  border-radius : 10px;
-  border:1px solid ${RGB_BLACK(0.15)};
-  font-size:0.7rem;
-  cursor:pointer;
-}
-
-.point {
-  font-size:1.8rem;
-  font-weight:bold;
-  color:${BLUE_COLOR};
-}
-
-.margin-div{
-  height:2rem;
-}
-.big-margin-div{
-  height:10rem;
-}
 
 .basic-input {
   background: ${WHITE_COLOR};
@@ -151,10 +123,6 @@ textarea {
   &::-webkit-scrollbar {
     display: none;
 }
-}
-
-.basic-input {
-
 }
 
 .basic-btn {

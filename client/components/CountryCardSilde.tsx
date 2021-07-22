@@ -1,10 +1,18 @@
-import React, { FC, useCallback, useState } from "react";
-import { CountryCardSildeWrapper } from "./styles";
+import React, { FC, memo } from "react";
 import { SwiperSlide, Swiper } from "swiper/react";
 import CountryCard from "@components/Cards/CountryCard";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { ICountry } from "@typings/db";
+import styled from "@emotion/styled";
+
+const CountryCardSildeWrapper = styled.div`
+  width: 100%;
+  border-radius: 15px;
+  background-color: white;
+  padding: 0.5rem;
+  margin-top: 1rem;
+`;
 
 interface IProps {
   slidesPerView: number;
@@ -27,4 +35,4 @@ const CountryCardSilde: FC<IProps> = ({ slidesPerView }) => {
   );
 };
 
-export default CountryCardSilde;
+export default memo(CountryCardSilde);

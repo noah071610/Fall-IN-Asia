@@ -97,7 +97,7 @@ export class MarketService {
     const newPost = await this.marketPostsRepository.save(newPostCreate);
     for (let i = 0; i < files.length; i++) {
       const newImage = new Images();
-      newImage.src = process.env.BACK_URL + files[i].path;
+      newImage.image_src = process.env.BACK_URL + files[i].path;
       newImage.marketPost = <any>newPost.id;
       await this.imagesRepository.save(newImage);
     }
@@ -116,7 +116,7 @@ export class MarketService {
     });
     const conparePassword = await bcrypt.compare(data.password, user.password);
     if (!conparePassword) {
-      throw new UnauthorizedException('パスワードが違います。');
+      throw new UnauthorizedException('비밀번호가 일치하지 않습니다.');
     }
     return true;
   }

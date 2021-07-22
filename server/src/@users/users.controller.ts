@@ -18,8 +18,8 @@ import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { LoggedInGuard } from 'src/auth/logged-in.guard';
 import { NotLoggedInGuard } from 'src/auth/not-logged-in.guard';
 import { User } from 'src/decorators/user.decorator';
+import { UserRequestDto } from 'src/dto/user.request.dto';
 import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
-import { JoinRequestDto } from './dto/join.request.dto';
 import { UsersService } from './users.service';
 
 @UseInterceptors(JsonResponeGenerator)
@@ -37,7 +37,7 @@ export class UsersController {
   @UseGuards(new NotLoggedInGuard())
   @ApiOperation({ summary: 'Sign up' })
   @Post()
-  async signUp(@Body() data: JoinRequestDto) {
+  async signUp(@Body() data: UserRequestDto) {
     await this.usersService.signUp(data.email, data.name, data.password);
   }
 
@@ -57,20 +57,6 @@ export class UsersController {
     req.logOut();
     res.clearCookie('connect.sid', { httpOnly: true });
     return true;
-  }
-
-  @UseGuards(new LoggedInGuard())
-  @ApiOperation({ summary: 'Register fan' })
-  @Post('fan')
-  async registerFan(@Body() data: any, @User() user) {
-    await this.usersService.registerFan(user.id, data);
-  }
-
-  @UseGuards(new LoggedInGuard())
-  @ApiOperation({ summary: 'Withdrawal fan' })
-  @Delete('fan')
-  async withdrawalFan(@User() user) {
-    await this.usersService.withdrawalFan(user.id);
   }
 
   @ApiOperation({ summary: 'change user icon' })

@@ -3,8 +3,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   addUserIconAction,
   deleteUserIconAction,
-  fanRegisterAction,
-  fanWithdrawalAction,
   getUserInfoAction,
   logInAction,
   logoutAction,
@@ -31,12 +29,6 @@ export interface UserState {
   deleteUserIconLoading: boolean;
   deleteUserIconDone: boolean;
   deleteUserIconError: boolean;
-  userFanRegisterLoading: boolean;
-  userFanRegisterDone: boolean;
-  userFanRegisterError: boolean;
-  userFanWithdrawalLoading: boolean;
-  userFanWithdrawalDone: boolean;
-  userFanWithdrawalError: boolean;
 }
 
 const initialState: UserState = {
@@ -59,12 +51,6 @@ const initialState: UserState = {
   deleteUserIconLoading: false,
   deleteUserIconDone: false,
   deleteUserIconError: false,
-  userFanRegisterLoading: false,
-  userFanRegisterDone: false,
-  userFanRegisterError: false,
-  userFanWithdrawalLoading: false,
-  userFanWithdrawalDone: false,
-  userFanWithdrawalError: false,
 };
 
 export const userSlice = createSlice({
@@ -95,16 +81,6 @@ export const userSlice = createSlice({
       state.deleteUserIconLoading = false;
       state.deleteUserIconDone = false;
       state.deleteUserIconError = false;
-    },
-    userFanRegisterClear(state) {
-      state.userFanRegisterLoading = false;
-      state.userFanRegisterDone = false;
-      state.userFanRegisterError = false;
-    },
-    userFanWithdrawalClear(state) {
-      state.userFanWithdrawalLoading = false;
-      state.userFanWithdrawalDone = false;
-      state.userFanWithdrawalError = false;
     },
   },
   extraReducers: (builder) =>
@@ -177,27 +153,5 @@ export const userSlice = createSlice({
       .addCase(deleteUserIconAction.rejected, (state) => {
         state.deleteUserIconLoading = false;
         state.deleteUserIconError = true;
-      })
-      .addCase(fanRegisterAction.pending, (state) => {
-        state.userFanRegisterLoading = true;
-      })
-      .addCase(fanRegisterAction.fulfilled, (state) => {
-        state.userFanRegisterLoading = false;
-        state.userFanRegisterDone = true;
-      })
-      .addCase(fanRegisterAction.rejected, (state) => {
-        state.userFanRegisterLoading = false;
-        state.userFanRegisterError = true;
-      })
-      .addCase(fanWithdrawalAction.pending, (state) => {
-        state.userFanWithdrawalLoading = true;
-      })
-      .addCase(fanWithdrawalAction.fulfilled, (state) => {
-        state.userFanWithdrawalLoading = false;
-        state.userFanWithdrawalDone = true;
-      })
-      .addCase(fanWithdrawalAction.rejected, (state) => {
-        state.userFanWithdrawalLoading = false;
-        state.userFanWithdrawalError = true;
       }),
 });

@@ -1,14 +1,5 @@
 import styled from "@emotion/styled";
-import {
-  BLUE_COLOR,
-  BORDER_THICK,
-  BORDER_THIN,
-  FLEX_STYLE,
-  GRAY_COLOR,
-  GRID_STYLE,
-  RED_COLOR,
-  RGB_BLACK,
-} from "config";
+import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RED_COLOR } from "config";
 
 export const ArticleCardWrapper = styled.div`
   margin: 0 1.5rem;

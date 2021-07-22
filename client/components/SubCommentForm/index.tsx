@@ -6,6 +6,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import { DEFAULT_ICON_URL, toastErrorMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
+import { memo } from "react";
 
 interface IProps {
   commentId: number;
@@ -52,4 +53,4 @@ const SubCommentForm: FC<IProps> = ({ commentId }) => {
   );
 };
 
-export default SubCommentForm;
+export default memo(SubCommentForm);

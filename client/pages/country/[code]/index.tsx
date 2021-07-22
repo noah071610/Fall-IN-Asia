@@ -2,11 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
-import { noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
+import { noRevalidate, toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
-import { mainSlice } from "slices/main";
 import { RootState } from "slices";
-import { getGroupsWithScoreAction } from "actions/group";
 import MainArticleList from "@sections/MainPage/MainArticleList";
 import MainPostingForm from "@sections/MainPage/MainPostingForm";
 import useSWR, { useSWRInfinite } from "swr";
@@ -19,7 +17,6 @@ import { ICountry, IMainPost } from "@typings/db";
 
 const index = () => {
   const dispatch = useDispatch();
-  const [filter, setFilter] = useState("");
   const { query } = useRouter();
   const {
     data: mainPosts,
@@ -28,9 +25,9 @@ const index = () => {
     setSize,
   } = useSWRInfinite<IMainPost[]>(
     (index) =>
-      filter
-        ? `/mainPost/${filter}`
-        : `/mainPost?code=${query?.code || ""}&page=${index + 1}&type=${query?.type || ""}`,
+      `/mainPost?code=${query?.code || ""}&page=${index + 1}&filter=${query?.filter || ""}&type=${
+        query?.type || ""
+      }`,
     fetcher
   );
   const { data: country, error } = useSWR<ICountry>(
@@ -76,7 +73,7 @@ const index = () => {
       <MainTopContent />
       <h2 className="main-title">포스팅</h2>
       <MainPostingForm />
-      <MainArticleList setSize={setSize} setFilter={setFilter} mainPosts={mainPosts} />
+      <MainArticleList setSize={setSize} mainPosts={mainPosts} />
     </MainLayout>
   );
 };
@@ -90,7 +87,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         axios.defaults.headers.Cookie = cookie;
       }
       await store.dispatch(getUserInfoAction());
-      await store.dispatch(getGroupsWithScoreAction(1));
       return {
         props: {},
       };

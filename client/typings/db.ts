@@ -1,17 +1,11 @@
-enum Gender {
-  "male",
-  "female",
-}
 const continent = {
-  동북아시아: "동북아시아",
-  동남아시아: "동남아시아",
+  아시아: "아시아",
   유라시아: "유라시아",
-  서아시아: "서아시아",
   중동: "중동",
-  북미: "북미",
-  남미: "남미",
-  유럽: "유럽",
   아프리카: "아프리카",
+  북아메리카: "북아메리카",
+  남아메리카: "남아메리카",
+  유럽: "유럽",
   오세아니아: "오세아니아",
 } as const;
 type EContinent = typeof continent[keyof typeof continent];
@@ -40,9 +34,9 @@ export interface IMainPost {
   content: string;
   createdAt: Date;
   user: IUser;
-  images: IImages[];
+  images: IImage[];
   country: ICountry;
-  comments?: IComment[];
+  comments: IComment[];
   announcements?: IAnnouncement[];
   likedUser?: IUser[];
 }
@@ -64,9 +58,9 @@ export interface ICountry {
   mainPosts?: IMainPost[];
 }
 
-export interface IImages {
+export interface IImage {
   id: number;
-  src: string;
+  image_src: string;
 }
 
 export interface IComment {
@@ -86,93 +80,30 @@ export interface ISubComment {
   comment?: IComment;
 }
 
-export interface ISignUpForm {
+export interface IUserRequestForm {
   email: string;
   name: string;
   password: string;
 }
 
-export interface IGalleryPost {
-  id: number;
-  title: string;
-  image: string;
-  user: IUser;
+export interface IMainPostRequestForm {
+  code: string;
+  content: string;
+  type: EMainPostType;
 }
 
-export interface IStudyPostForm {
-  title: string;
+export interface ICommentRequestForm {
   content: string;
-  type?: string;
-  area?: string;
-  userId?: number;
-  postId?: number;
+  mainPostId?: number;
+  commentId?: number;
 }
 
 export interface IMarketPost {
   id: number;
-  images: IImages[];
+  images: IImage[];
   keyword: string;
   area: number;
   title: string;
   content: number;
   user: IUser;
-}
-
-export interface IStudyPost {
-  id: number;
-  images?: IImages[];
-  type: string;
-  area: string;
-  title: string;
-  content: string;
-  leaderUser: IUser;
-}
-
-export interface IGroupVote {
-  userId: number;
-  groupId: number;
-  votedStyle: string;
-}
-
-export interface IGroupScore extends IGroup {
-  talented: number;
-  handsome: number;
-  pretty: number;
-  cute: number;
-  beautiful: number;
-  votedUser?: IGroupVote;
-}
-
-export interface IGroup {
-  id: number;
-  group_name: string;
-  key_name: string;
-  gender: Gender;
-  number: number;
-  image: string;
-  isNew: boolean;
-}
-
-export interface IClubPost {
-  id: number;
-  hit: number;
-  club: string;
-  title: string;
-  content: string;
-  user: IUser;
-  group: IGroup;
-  createdAt: string;
-  likedUser?: any[];
-}
-
-export interface ITopClubPost {
-  posts_id: number;
-  posts_title: string;
-  users_name: string;
-}
-
-export interface ITopClubPosts {
-  group_name: string;
-  key_name: string;
-  posts: ITopClubPost[];
 }

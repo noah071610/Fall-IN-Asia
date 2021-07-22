@@ -11,9 +11,8 @@ import {
 } from 'typeorm';
 import { MainPosts } from './MainPosts';
 import { MarketPosts } from './MarketPosts';
-import { StudyPosts } from './StudyPosts';
 
-@Entity({ schema: 'k_heart', name: 'images' })
+@Entity({ schema: 'travelover', name: 'images' })
 export class Images {
   @IsNumber()
   @IsNotEmpty()
@@ -30,8 +29,8 @@ export class Images {
     example: 'http://domain.com/uploads/239483294.jpg',
     description: 'image src',
   })
-  @Column('varchar', { name: 'src' })
-  src: string;
+  @Column('varchar', { name: 'image_src' })
+  image_src: string;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -50,13 +49,6 @@ export class Images {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'clubPost', referencedColumnName: 'id' }])
+  @JoinColumn([{ name: 'mainPost', referencedColumnName: 'id' }])
   mainPost: MainPosts;
-
-  @ManyToOne(() => StudyPosts, (studyPosts) => studyPosts.images, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  @JoinColumn([{ name: 'studyPost', referencedColumnName: 'id' }])
-  studyPost: StudyPosts;
 }

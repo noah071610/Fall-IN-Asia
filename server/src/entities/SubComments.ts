@@ -3,7 +3,6 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import {
   Column,
   CreateDateColumn,
-  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -13,7 +12,7 @@ import {
 import { Comments } from './Comments';
 import { Users } from './Users';
 
-@Entity({ schema: 'k_heart', name: 'subComments' })
+@Entity({ schema: 'travelover', name: 'subComments' })
 export class SubComments {
   @IsNumber()
   @IsNotEmpty()

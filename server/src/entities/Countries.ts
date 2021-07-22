@@ -5,16 +5,13 @@ import {
   CreateDateColumn,
   Entity,
   Index,
-  JoinColumn,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { MainPosts } from './MainPosts';
-import { Users } from './Users';
 
-@Entity({ schema: 'k_heart', name: 'countries' })
+@Entity({ schema: 'travelover', name: 'countries' })
 export class Countries {
   @IsNumber()
   @IsNotEmpty()
@@ -53,28 +50,24 @@ export class Countries {
   @Column('enum', {
     name: 'continent',
     enum: [
-      '동북아시아',
-      '동남아시아',
+      '아시아',
       '유라시아',
-      '서아시아',
       '중동',
-      '북미',
-      '남미',
-      '유럽',
       '아프리카',
+      '북아메리카',
+      '남아메리카',
+      '유럽',
       '오세아니아',
     ],
   })
   continent:
-    | '동북아시아'
-    | '동남아시아'
+    | '아시아'
     | '유라시아'
-    | '서아시아'
     | '중동'
-    | '북미'
-    | '남미'
-    | '유럽'
     | '아프리카'
+    | '북아메리카'
+    | '남아메리카'
+    | '유럽'
     | '오세아니아';
 
   @IsString()

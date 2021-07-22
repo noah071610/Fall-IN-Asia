@@ -8,7 +8,6 @@ import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
 @Controller('/api/country')
 export class CountriesController {
   constructor(private readonly CountriesService: CountriesService) {}
-
   @ApiOperation({ summary: 'get Countries' })
   @Get()
   async getCountries() {

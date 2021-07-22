@@ -3,7 +3,7 @@ import { MainPostWrapper } from "./styles";
 import CommentForm from "@components/CommentForm";
 import MainPostTitle from "@sections/MainPage/MainPostTitle";
 import Comment from "@components/Comment";
-import { IImages, IMainPost } from "@typings/db";
+import { IImage, IMainPost } from "@typings/db";
 import ReactHtmlParser from "react-html-parser";
 import {
   CommentOutlined,
@@ -81,12 +81,12 @@ const MainPost: FC<IProps> = ({ mainPost }) => {
       <div className="image-wrapper">
         <Image.PreviewGroup>
           <Slider {...mainPostImageSettings}>
-            {mainPost?.images.map((v: IImages, i: number) => {
+            {mainPost?.images.map((v: IImage, i: number) => {
               return (
                 <Image
                   key={i}
                   preview={{ mask: <ZoomInOutlined /> }}
-                  src={v.src}
+                  src={v.image_src}
                   alt="goods-image"
                 />
               );

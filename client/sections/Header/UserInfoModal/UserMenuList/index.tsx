@@ -21,7 +21,7 @@ import { RootState } from "slices";
 import dayjs from "dayjs";
 import GroupCard from "@components/Cards/GroupCard";
 import { IClubPost, IGroup } from "@typings/db";
-import AutoCompleteSearch from "@components/AutoCompleteSearch";
+import AutoCompleteSearch from "@components/AutoCompleteForm";
 import Link from "next/link";
 import { Divider } from "antd";
 import { studySlice } from "slices/study";

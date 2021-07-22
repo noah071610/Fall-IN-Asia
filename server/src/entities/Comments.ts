@@ -14,7 +14,7 @@ import { MainPosts } from './MainPosts';
 import { SubComments } from './SubComments';
 import { Users } from './Users';
 
-@Entity({ schema: 'k_heart', name: 'comments' })
+@Entity({ schema: 'travelover', name: 'comments' })
 export class Comments {
   @IsNumber()
   @IsNotEmpty()
@@ -28,7 +28,7 @@ export class Comments {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    example: 'コメントありがとう！',
+    example: '코멘트 감사합니다~ ',
     description: 'subcomment on the comment',
   })
   @Column('varchar', { name: 'content' })

@@ -47,10 +47,6 @@ export const BORDER_THIN = (border: string, px?: number) => `
   ${border}:${px ? px : "1"}px solid rgba(0,0,0,0.15)
 `;
 
-export const BORDER_THICK = (border: string, px?: number) => `
-  ${border}:${px ? px : "2"}px solid rgba(0,0,0,0.1)
-`;
-
 export const FONT_STYLE = (size: number, weight?: boolean, color?: string) => `
 font-size:${size}rem;
 font-weight:${weight && "bold"};
@@ -79,50 +75,7 @@ export const GRID_STYLE = (gap: string, colums: string, row?: string) => `
   gap:${gap};
 `;
 
-export const MODAL_STYLE = (tailRight: string) => `
-  position: absolute;
-  padding: 2rem;
-  ${BORDER_THIN("border")};
-  background-color: ${WHITE_COLOR};
-  box-shadow: 0px 0px 15px ${RGB_BLACK(0.2)};
-  z-index:1;
-  &:before {
-    position: absolute;
-    transform: rotateZ(45deg);
-    z-index: 1;
-    width: 9px;
-    height: 9px;
-    background-color: ${WHITE_COLOR};
-    ${BORDER_THIN("border")};
-    border-bottom: none;
-    border-right: none;
-    content: "";
-    top: -6px;
-    right: ${tailRight};
-  }
-`;
-
 // list
-
-export const marketKeyword = [
-  { name: "直取引", eng: "direct" },
-  { name: "宅配", eng: "package" },
-  { name: "出来れば直取引", eng: "more_direct" },
-  { name: "出来れば宅配", eng: "more_package" },
-];
-
-export const voteStyleList = [
-  { name: "😳 実力派", eng: "talented" },
-  { name: "😊 カッコいい", eng: "handsome" },
-  { name: "😘 綺麗", eng: "pretty" },
-  { name: "😍 可愛い", eng: "cute" },
-  { name: "😎 お洒落", eng: "beautiful" },
-];
-
-export const studyPostTypeList = [
-  { name: "レッスン", eng: "lesson" },
-  { name: "韓国語勉強俱楽部", eng: "study_club" },
-];
 
 export const japanMapList = [
   { name: "関東(東京)", eng: "kanto" },
@@ -173,29 +126,6 @@ export const toastSuccessMessage = (message: string) => {
 
 export const handleImgError = (e: React.SyntheticEvent) => {
   (e.target as HTMLImageElement).src = NO_IMAGE_URL;
-};
-
-// slick settings
-
-export const goodsPosterSettings = {
-  dots: false,
-  infinite: true,
-  slidesToShow: 6,
-  slidesToScroll: 1,
-  autoplay: true,
-  speed: 500,
-  autoplaySpeed: 1500,
-  vertical: true,
-  verticalSwiping: true,
-};
-
-export const mainPostImageSettings = {
-  dots: false,
-  infinite: true,
-  speed: 500,
-  autoplay: false,
-  slidesToShow: 1,
-  slidesToScroll: 1,
 };
 
 // React quill
@@ -267,32 +197,4 @@ export const qullFormats = [
 export const noRevalidate = {
   revalidateOnFocus: false,
   revalidateOnReconnect: false,
-};
-
-// rader chart
-
-export const raderSettings = {
-  margin: { top: 70, right: 80, bottom: 40, left: 80 },
-  keys: ["トタル"],
-  indexBy: "taste",
-  maxValue: "auto",
-  curve: "linearClosed",
-  borderWidth: 1,
-  borderColor: { from: "color" },
-  gridLevels: 4,
-  gridShape: "linear",
-  gridLabelOffset: 38,
-  enableDots: true,
-  dotSize: 6,
-  dotColor: { theme: "background" },
-  dotBorderWidth: 2,
-  dotBorderColor: { from: "color", modifiers: [] },
-  enableDotLabel: true,
-  dotLabel: "value",
-  dotLabelYOffset: -12,
-  colors: { scheme: "nivo" },
-  fillOpacity: 0.15,
-  blendMode: "multiply",
-  animate: true,
-  isInteractive: true,
 };
