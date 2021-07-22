@@ -55,4 +55,7 @@ export const MainAsideMenuWrapper = styled.div`
       }
     }
   }
+  .menu-active {
+    background: ${GRAY_COLOR};
+  }
 `;

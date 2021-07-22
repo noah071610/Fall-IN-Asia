@@ -8,9 +8,15 @@ interface IProps {
   countryOptions: { value: string; code: string }[] | undefined;
   selectedCountry: string;
   setCountry: (value: string) => void;
+  disabled?: boolean;
 }
 
-const AutoCompleteSearch: FC<IProps> = ({ countryOptions, selectedCountry, setCountry }) => {
+const AutoCompleteSearch: FC<IProps> = ({
+  countryOptions,
+  selectedCountry,
+  setCountry,
+  disabled,
+}) => {
   const onChangeCountry = useCallback((value: string) => {
     setCountry(value);
   }, []);
@@ -18,6 +24,7 @@ const AutoCompleteSearch: FC<IProps> = ({ countryOptions, selectedCountry, setCo
     <AutoCompleteSearchWrapper>
       <AutoComplete
         allowClear={true}
+        disabled={disabled}
         className="autoComplete-form"
         options={
           selectedCountry !== ""

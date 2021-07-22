@@ -55,22 +55,40 @@ const MainAsideMenu: FC<IProps> = () => {
         </div>
       </div>
       <ul>
-        <li>
-          <FontAwesomeIcon className="icon" icon={faHiking} />
-          놀거리
-        </li>
-        <li>
-          <FontAwesomeIcon className="icon" icon={faBell} />
-          사기경보
-        </li>
-        <li>
-          <FontAwesomeIcon className="icon" icon={faUtensils} />
-          음식
-        </li>
-        <li>
-          <FontAwesomeIcon className="icon" icon={faHotel} />
-          숙박
-        </li>
+        <Link href={country ? `/country/${country.code}?type=attractions` : "/?type=attractions"}>
+          <a>
+            <li className={query?.type === "attractions" ? "menu-active" : ""}>
+              <FontAwesomeIcon className="icon" icon={faHiking} />
+              관광지
+            </li>
+          </a>
+        </Link>
+        <Link href={country ? `/country/${country.code}?type=alert` : "/?type=alert"}>
+          <a>
+            <li className={query?.type === "alert" ? "menu-active" : ""}>
+              <FontAwesomeIcon className="icon" icon={faBell} />
+              사기경보
+            </li>
+          </a>
+        </Link>
+        <Link href={country ? `/country/${country.code}?type=food` : "/?type=food"}>
+          <a>
+            <li className={query?.type === "food" ? "menu-active" : ""}>
+              <FontAwesomeIcon className="icon" icon={faUtensils} />
+              음식
+            </li>
+          </a>
+        </Link>
+        <Link
+          href={country ? `/country/${country.code}?type=accommodations` : "/?type=accommodations"}
+        >
+          <a>
+            <li className={query?.type === "accommodations" ? "menu-active" : ""}>
+              <FontAwesomeIcon className="icon" icon={faHotel} />
+              숙박
+            </li>
+          </a>
+        </Link>
         {country ? (
           <Link href="/">
             <a>

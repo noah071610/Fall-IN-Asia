@@ -8,6 +8,8 @@ import { RootState } from "slices";
 import "animate.css/animate.css";
 import { mainPostDislikeAction, mainPostLikeAction } from "actions/mainPost";
 import NameSpace from "@components/NameSpace";
+import { mainPostSlice } from "slices/mainPost";
+import router from "next/router";
 
 interface IProps {
   mainPost: IMainPost;
@@ -34,19 +36,15 @@ const MainPostTitle: FC<IProps> = ({ mainPost }) => {
   }, [user, mainPost]);
 
   const onClickEditBtn = useCallback(() => {
-    setOnEdit((prev) => !prev);
-    setOnDelete(false);
-  }, []);
+    if (user && isOwner) {
+      dispatch(mainPostSlice.actions.mainPostEditSet({ mainPost }));
+      router.push("/country/edit");
+    }
+  }, [user, isOwner]);
   const onClickDeleteBtn = useCallback(() => {
     setOnDelete((prev) => !prev);
     setOnEdit(false);
   }, []);
-  const onClickLikeBtn = useCallback(() => {
-    dispatch(mainPostLikeAction(1));
-  }, [mainPost]);
-  const onClickDislikeBtn = useCallback(() => {
-    dispatch(mainPostDislikeAction(1));
-  }, [mainPost]);
   return (
     <MainPostTitleWrapper>
       <NameSpace user={mainPost?.user} date={mainPost?.createdAt} />
@@ -66,12 +64,6 @@ const MainPostTitle: FC<IProps> = ({ mainPost }) => {
             </li>
           </>
         )}
-        {/* {liked ? (
-          <HeartFilled onClick={onClickDislikeBtn} className="dislike-btn" />
-        ) : (
-          <HeartOutlined onClick={onClickLikeBtn} className="like-btn" />
-        )}
-        <span className="like-number">{postData?.likedUser?.length}</span> */}
       </div>
     </MainPostTitleWrapper>
   );

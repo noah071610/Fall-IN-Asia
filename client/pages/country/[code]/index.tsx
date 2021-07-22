@@ -19,7 +19,7 @@ import { ICountry, IMainPost } from "@typings/db";
 
 const index = () => {
   const dispatch = useDispatch();
-  const [filterType, setFilterType] = useState("");
+  const [filter, setFilter] = useState("");
   const { query } = useRouter();
   const {
     data: mainPosts,
@@ -28,9 +28,9 @@ const index = () => {
     setSize,
   } = useSWRInfinite<IMainPost[]>(
     (index) =>
-      filterType
-        ? `/mainPost/${filterType}`
-        : `/mainPost?code=${query?.code || ""}&page=${index + 1}`,
+      filter
+        ? `/mainPost/${filter}`
+        : `/mainPost?code=${query?.code || ""}&page=${index + 1}&type=${query?.type || ""}`,
     fetcher
   );
   const { data: country, error } = useSWR<ICountry>(
@@ -41,7 +41,9 @@ const index = () => {
   if (error) {
     router.push("/");
   }
-  const { mainPostCreateDone } = useSelector((state: RootState) => state.mainPost);
+  const { mainPostCreateDone, mainPostLikeDone, mainPostDislikeDone } = useSelector(
+    (state: RootState) => state.mainPost
+  );
   useEffect(() => {
     if (mainPostCreateDone) {
       toastSuccessMessage("게시물을 성공적으로 작성했습니다.");
@@ -49,6 +51,23 @@ const index = () => {
       revalidate();
     }
   }, [mainPostCreateDone]);
+  useEffect(() => {
+    if (mainPostLikeDone) {
+      toastSuccessMessage("좋아요!💓");
+      dispatch(mainPostSlice.actions.mainPostLikeClear());
+      dispatch(getUserInfoAction());
+      revalidate();
+    }
+  }, [mainPostLikeDone]);
+
+  useEffect(() => {
+    if (mainPostDislikeDone) {
+      toastSuccessMessage("좋아요 취소💔");
+      dispatch(mainPostSlice.actions.mainPostDislikeClear());
+      dispatch(getUserInfoAction());
+      revalidate();
+    }
+  }, [mainPostDislikeDone]);
   return (
     <MainLayout>
       <h2 className="main-title">{country?.name + "에서 인기폭발 🥰"}</h2>
@@ -57,7 +76,7 @@ const index = () => {
       <MainTopContent />
       <h2 className="main-title">포스팅</h2>
       <MainPostingForm />
-      <MainArticleList setSize={setSize} setFilterType={setFilterType} mainPosts={mainPosts} />
+      <MainArticleList setSize={setSize} setFilter={setFilter} mainPosts={mainPosts} />
     </MainLayout>
   );
 };

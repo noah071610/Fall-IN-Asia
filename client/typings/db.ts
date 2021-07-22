@@ -40,6 +40,7 @@ export interface IMainPost {
   content: string;
   createdAt: Date;
   user: IUser;
+  images: IImages[];
   country: ICountry;
   comments?: IComment[];
   announcements?: IAnnouncement[];
@@ -65,7 +66,7 @@ export interface ICountry {
 
 export interface IImages {
   id: number;
-  image_src: string;
+  src: string;
 }
 
 export interface IComment {

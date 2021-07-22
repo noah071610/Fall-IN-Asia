@@ -1,20 +1,73 @@
-import { CommentOutlined, LikeOutlined } from "@ant-design/icons";
+import {
+  CommentOutlined,
+  HeartFilled,
+  HeartOutlined,
+  LikeOutlined,
+  MoreOutlined,
+  PlusCircleOutlined,
+} from "@ant-design/icons";
 import NameSpace from "@components/NameSpace";
 import { ICountry, IMainPost } from "@typings/db";
 import { DEFAULT_ICON_URL } from "config";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { ArticleCardWrapper } from "./styles";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import ReactHtmlParser from "react-html-parser";
 import { toastErrorMessage } from "config";
 import router from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "slices";
+import { mainPostDislikeAction, mainPostLikeAction } from "actions/mainPost";
 
 interface IProps {
   mainPost: IMainPost;
 }
 
 const ArticleCard: FC<IProps> = ({ mainPost }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.user);
+  const [liked, setLiked] = useState(false);
+  const [imageLayout, setImageLayout] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      if (user.likeMainPost?.find((v: any) => v.mainPostId === mainPost?.id)) {
+        setLiked(true);
+      } else {
+        setLiked(false);
+      }
+    }
+  }, [user, mainPost]);
+
+  const onClickLikeBtn = useCallback(() => {
+    if (!user) {
+      toastErrorMessage("로그인이 필요합니다.");
+      return;
+    }
+    dispatch(mainPostLikeAction(mainPost?.id));
+  }, [user, mainPost]);
+  const onClickDislikeBtn = useCallback(() => {
+    if (!user) {
+      toastErrorMessage("로그인이 필요합니다.");
+      return;
+    }
+    dispatch(mainPostDislikeAction(mainPost?.id));
+  }, [user, mainPost]);
+
+  useEffect(() => {
+    if (mainPost?.images?.length === 0) {
+      return;
+    }
+    if (mainPost?.images?.length === 1) {
+      setImageLayout("one-image");
+      return;
+    }
+    if (mainPost?.images?.length > 1) {
+      setImageLayout("two-images");
+    }
+  }, [mainPost]);
+
   const onClickCountryTag = useCallback(() => {
     router.push(`/country/${mainPost.code}`);
   }, []);
@@ -24,6 +77,10 @@ const ArticleCard: FC<IProps> = ({ mainPost }) => {
   const onClickPostIdTag = useCallback(() => {
     router.push(`/country/${mainPost.code}/${mainPost.id}`);
   }, []);
+  const onClickCommentBtn = useCallback(() => {
+    router.push(`/country/${mainPost.code}/${mainPost.id}`);
+  }, []);
+
   return (
     <ArticleCardWrapper className="article-card-wrapper">
       <div className="article-top">
@@ -37,22 +94,37 @@ const ArticleCard: FC<IProps> = ({ mainPost }) => {
       <div className="article">
         <div
           onClick={() => router.push(`/country/${mainPost?.country?.code}/${mainPost?.id}`)}
+          className={imageLayout}
+        >
+          {mainPost?.images?.slice(0, 2).map((v, i) => {
+            return <img key={i} src={v.src} />;
+          })}
+        </div>
+        <div
+          onClick={() => router.push(`/country/${mainPost?.country?.code}/${mainPost?.id}`)}
           className="content"
         >
           {ReactHtmlParser(mainPost?.content as string)}
         </div>
-        <div className="image-list"></div>
         <ul className="article-footer">
-          <li>
+          <li onClick={onClickCommentBtn}>
             <CommentOutlined />
             <span className="count">{mainPost?.comments?.length}</span>
             <span>댓글</span>
           </li>
-          <li>
-            <LikeOutlined />
-            <span className="count">{mainPost?.likedUser?.length}</span>
-            <span>좋아요</span>
-          </li>
+          {liked ? (
+            <li onClick={onClickDislikeBtn} className="liked">
+              <HeartFilled />
+              <span className="count">{mainPost?.likedUser?.length}</span>
+              <span>좋아요</span>
+            </li>
+          ) : (
+            <li onClick={onClickLikeBtn}>
+              <HeartOutlined />
+              <span className="count">{mainPost?.likedUser?.length}</span>
+              <span>좋아요</span>
+            </li>
+          )}
         </ul>
       </div>
     </ArticleCardWrapper>

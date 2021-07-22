@@ -17,6 +17,9 @@ import { ICountry } from "@typings/db";
 import styled from "@emotion/styled";
 import router from "next/router";
 import LG_Layout from "@layout/LG_Layout";
+import { wrapper } from "configureStore";
+import axios from "axios";
+import { getUserInfoAction } from "actions/user";
 
 const GobackBtn = styled.div`
   ${FLEX_STYLE("flex-end", "center")};
@@ -103,5 +106,20 @@ const select: FC<IProps> = () => {
     </LG_Layout>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req, res, ...etc }) => {
+      const cookie = req ? req.headers.cookie : "";
+      axios.defaults.headers.Cookie = "";
+      if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+      }
+      await store.dispatch(getUserInfoAction());
+      return {
+        props: {},
+      };
+    }
+);
 
 export default select;

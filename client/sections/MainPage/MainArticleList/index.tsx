@@ -8,10 +8,10 @@ import useOnScreen from "@hooks/useOnScreen";
 interface IProps {
   mainPosts: IMainPost[][] | undefined;
   setSize: (f: (size: number) => number) => Promise<IMainPost[][] | undefined>;
-  setFilterType: (value: string) => void;
+  setFilter: (value: string) => void;
 }
 
-const MainArticleList: FC<IProps> = ({ mainPosts, setSize, setFilterType }) => {
+const MainArticleList: FC<IProps> = ({ mainPosts, setSize, setFilter }) => {
   const [isReachingEnd, setIsReachingEnd] = useState(true);
   const ref = useRef(null);
   const isVisible = useOnScreen(ref);
@@ -31,13 +31,13 @@ const MainArticleList: FC<IProps> = ({ mainPosts, setSize, setFilterType }) => {
   const flatMainPosts = mainPosts ? mainPosts?.flat() : [];
 
   const onClickPopular = useCallback(() => {
-    setFilterType("popular");
+    setFilter("popular");
   }, []);
   const onClickNew = useCallback(() => {
-    setFilterType("new");
+    setFilter("new");
   }, []);
   const onClickTopComment = useCallback(() => {
-    setFilterType("topComment");
+    setFilter("topComment");
   }, []);
   return (
     <MainArticleListWrapper>

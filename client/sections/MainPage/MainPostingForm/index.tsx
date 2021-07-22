@@ -2,32 +2,37 @@ import { EditOutlined } from "@ant-design/icons";
 import EditorWithoutImage from "@components/PostingEditor/EditorWithoutImage";
 import ImageDragger from "@components/PostingEditor/ImageDragger";
 import useInput from "@hooks/useInput";
-import { mainPostCreateAction } from "actions/mainPost";
+import { mainPostCreateAction, mainPostEditAction } from "actions/mainPost";
 import { Select } from "antd";
 import { toastErrorMessage } from "config";
 import React, { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MainPostingFormWrapper } from "./styles";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
-import { ICountry } from "@typings/db";
+import { ICountry, IMainPost } from "@typings/db";
 import AutoCompleteSearch from "@components/AutoCompleteSearch";
 import { RootState } from "slices";
 const { Option, OptGroup } = Select;
-interface IProps {}
+interface IProps {
+  editPost?: IMainPost;
+}
 
-const MainPostingForm: FC<IProps> = () => {
-  const { data: countries, error, revalidate } = useSWR<ICountry[]>("/country", fetcher);
+const MainPostingForm: FC<IProps> = ({ editPost }) => {
+  const { data: countries } = useSWR<ICountry[]>("/country", fetcher);
 
   const { query } = useRouter();
   const dispatch = useDispatch();
   const [upImg, setUpImg] = useState<File[]>([]);
   const [content, setContent] = useState("");
+  const [isEdit, setIsEdit] = useState(false);
   const [type, setType] = useState("키워드 선택");
   const [selectedCountry, setCountry] = useState("");
   const [onPostingForm, setOnPostingForm] = useState(false);
-  const { mainPostCreateDone } = useSelector((state: RootState) => state.mainPost);
+  const { mainPostCreateDone, mainPostEditDone } = useSelector(
+    (state: RootState) => state.mainPost
+  );
   const { user } = useSelector((state: RootState) => state.user);
   useEffect(() => {
     if (mainPostCreateDone) {
@@ -37,6 +42,23 @@ const MainPostingForm: FC<IProps> = () => {
       setOnPostingForm(false);
     }
   }, [mainPostCreateDone]);
+  useEffect(() => {
+    if (mainPostEditDone) {
+      setContent("");
+      setUpImg([]);
+      setType("키워드 선택");
+      setOnPostingForm(false);
+    }
+  }, [mainPostEditDone]);
+
+  useEffect(() => {
+    if (editPost) {
+      setIsEdit(true);
+      setContent(editPost?.content);
+      setType(editPost?.type);
+      setCountry(editPost?.country?.name);
+    }
+  }, [editPost]);
   const countryOptions = useMemo(
     () =>
       countries?.map((v, i) => {
@@ -75,8 +97,13 @@ const MainPostingForm: FC<IProps> = () => {
       toastErrorMessage("유효하지 않은 국가입니다. 다시 확인해주세요.");
       return;
     }
-    dispatch(mainPostCreateAction(form));
-  }, [upImg, content, type, selectedCountry]);
+    if (isEdit) {
+      form.append("mainPostId", String(editPost?.id));
+      dispatch(mainPostEditAction(form));
+    } else {
+      dispatch(mainPostCreateAction(form));
+    }
+  }, [upImg, content, type, selectedCountry, isEdit, editPost]);
 
   const onClickOpenPostingForm = useCallback(() => {
     if (!user) {
@@ -86,8 +113,12 @@ const MainPostingForm: FC<IProps> = () => {
     setOnPostingForm(true);
   }, [user]);
   const onClickPostingCancle = useCallback(() => {
-    setOnPostingForm(false);
-  }, []);
+    if (isEdit) {
+      router.back();
+    } else {
+      setOnPostingForm(false);
+    }
+  }, [isEdit]);
 
   const handleTypeChange = useCallback((value: string) => {
     setType(value);
@@ -95,7 +126,7 @@ const MainPostingForm: FC<IProps> = () => {
 
   return (
     <MainPostingFormWrapper>
-      {!onPostingForm && (
+      {!onPostingForm && !isEdit && (
         <div onClick={onClickOpenPostingForm} className="posting-form-preview">
           <span className="placeholder">당신의 여행은 어땠나요?</span>
           <a>
@@ -103,7 +134,7 @@ const MainPostingForm: FC<IProps> = () => {
           </a>
         </div>
       )}
-      {onPostingForm && (
+      {(onPostingForm || isEdit) && (
         <>
           <div className="posting-editor">
             <div className="selector-wrapper">
@@ -111,10 +142,12 @@ const MainPostingForm: FC<IProps> = () => {
                 countryOptions={countryOptions}
                 selectedCountry={selectedCountry}
                 setCountry={setCountry}
+                disabled={isEdit ? true : false}
               />
               <Select
                 className="type-selector"
                 value={type}
+                disabled={isEdit ? true : false}
                 onChange={handleTypeChange}
                 style={{ width: "150px" }}
               >

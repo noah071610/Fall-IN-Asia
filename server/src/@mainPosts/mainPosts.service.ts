@@ -81,6 +81,7 @@ export class MainPostsService {
         'user',
         'country',
         'likedUser',
+        'images',
         'comments',
         'comments.user',
         'comments.subComments',
@@ -93,22 +94,69 @@ export class MainPostsService {
     return post;
   }
 
-  async getPosts(code?: string, page?: number,type?:string) {
-    const posts = await this.MainPostsRepository.createQueryBuilder('mainPosts')
-    .where(code ? `mainPosts.code = :code` : '1=1' { code })
-    .andWhere(type ? `mainPosts.type = :type` : '1=1' { type }).leftJoinAndSelect('mainPosts.country','country').leftJoinAndSelect('mainPosts.user','user').leftJoinAndSelect('mainPosts.likedUser','likedUser').leftJoinAndSelect('mainPosts.comments','comments').orderBy('mainPosts.id',"DESC").skip((page-1)*10).take(10).getMany()
-      return posts;
+  async getPopularPosts(code: string) {
+    const popularPosts = await this.MainPostsRepository.createQueryBuilder(
+      'mainPosts',
+    )
+      .leftJoin('mainPosts.likedUser', 'likedUser')
+      .orderBy('likedUser');
+    return popularPosts;
   }
 
-  async eidtPost(data: any) {
-    const editedPost = await this.MainPostsRepository.update(
-      { id: data.mainPostId },
-      { content: data.content },
-    );
+  async getPosts(code?: string, page?: number, type?: string) {
+    if (type) {
+      switch (type) {
+        case 'attractions':
+          type = '관광지';
+          break;
+        case 'accommodations':
+          type = '숙박';
+          break;
+        case 'food':
+          type = '음식';
+          break;
+        case 'alert':
+          type = '사기경보';
+          break;
+        default:
+          break;
+      }
+    }
+    const posts = await this.MainPostsRepository.createQueryBuilder('mainPosts')
+      .where(code ? `mainPosts.code = :code` : '1=1', { code })
+      .andWhere(type ? `mainPosts.type = :type` : '1=1', { type })
+      .leftJoinAndSelect('mainPosts.country', 'country')
+      .leftJoinAndSelect('mainPosts.user', 'user')
+      .leftJoinAndSelect('mainPosts.likedUser', 'likedUser')
+      .leftJoinAndSelect('mainPosts.comments', 'comments')
+      .leftJoinAndSelect('mainPosts.images', 'images')
+      .orderBy('mainPosts.id', 'DESC')
+      .skip((page - 1) * 10)
+      .take(10)
+      .getMany();
+    return posts;
+  }
+
+  async editPost(form: any, files: Express.Multer.File[]) {
+    const country = await this.CountriesRepository.findOne({
+      where: { code: form.code },
+    });
+    const editedPost = await this.MainPostsRepository.createQueryBuilder(
+      'mainPosts',
+    )
+      .update('mainPosts')
+      .set({
+        type: form.type,
+        content: form.content,
+        code: form.code,
+        country: <any>{ id: country.id },
+      })
+      .where('id = :id', { id: parseInt(form.mainPostId) })
+      .execute();
     if (!editedPost) {
       throw new NotFoundException('수정 할 게시물이 없습니다.');
     }
-    return editedPost;
+    return true;
   }
 
   async likePost(mainPostId: number, userId: number) {

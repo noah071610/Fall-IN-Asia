@@ -6,6 +6,7 @@ import {
   FLEX_STYLE,
   GRAY_COLOR,
   GRID_STYLE,
+  RED_COLOR,
   RGB_BLACK,
 } from "config";
 
@@ -35,7 +36,33 @@ export const ArticleCardWrapper = styled.div`
         text-decoration: underline;
       }
     }
-    .image-list {
+    .one-image {
+      cursor: pointer;
+      padding-bottom: 1rem;
+      img {
+        border-radius: 15px;
+        width: 50%;
+        height: 300px;
+      }
+    }
+    .two-images {
+      cursor: pointer;
+      ${FLEX_STYLE("flex-start", "center")};
+      padding-bottom: 1rem;
+      img {
+        border-radius: 15px;
+        width: 50%;
+        height: 300px;
+        margin-right: 0.2rem;
+      }
+      img:first-of-type {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+      img:last-of-type {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+      }
     }
   }
   .article-footer {
@@ -43,15 +70,20 @@ export const ArticleCardWrapper = styled.div`
       padding: 0.3rem;
       cursor: pointer;
       .count {
-        margin: 0 0.3rem;
+        margin: 0 0.23rem;
       }
       .anticon {
-        font-size: 1.2rem;
+        font-size: 1rem;
       }
       &:hover {
         background: ${GRAY_COLOR};
         border-radius: 5px;
       }
+    }
+  }
+  .liked {
+    .anticon {
+      color: ${RED_COLOR};
     }
   }
 `;

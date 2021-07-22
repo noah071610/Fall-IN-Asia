@@ -24,6 +24,7 @@ export class LocalSerializer extends PassportSerializer {
       .leftJoinAndSelect('users.mainPosts', 'mainPost')
       .leftJoinAndSelect('mainPost.announcements', 'c_announce')
       .leftJoinAndSelect('users.comments', 'com')
+      .leftJoinAndSelect('users.likeMainPost', 'likeMainPost')
       .leftJoinAndSelect('com.mainPost', 'cm_mainPost')
       .leftJoinAndSelect('users.announcements', 'announce')
       .where('users.id = :userId', { userId: +userId })

@@ -189,12 +189,11 @@ export const goodsPosterSettings = {
   verticalSwiping: true,
 };
 
-export const NewsMainPostsettings = {
+export const mainPostImageSettings = {
   dots: false,
   infinite: true,
   speed: 500,
-  autoplay: true,
-  autoplaySpeed: 3000,
+  autoplay: false,
   slidesToShow: 1,
   slidesToScroll: 1,
 };

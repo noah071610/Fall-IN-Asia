@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import fetcher from "utils/fetcher";
 import ReactHtmlParser from "react-html-parser";
 import { DEFAULT_ICON_URL } from "config";
-import ConfirmPasswordModal from "@components/ConfirmPasswordModal";
+import ConfirmPasswordModal from "@components/Modal/ConfirmPasswordModal";
 import { DoubleLeftOutlined, DoubleRightOutlined } from "@ant-design/icons";
 import Slider from "react-slick";
 import { IImages } from "@typings/db";

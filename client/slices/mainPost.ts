@@ -7,6 +7,7 @@ import {
   mainPostEditAction,
   mainPostLikeAction,
 } from "actions/mainPost";
+import { toastSuccessMessage } from "config";
 
 export interface MainPostState {
   mainPost: IMainPost | null;
@@ -82,6 +83,10 @@ export const mainPostSlice = createSlice({
       state.mainPostEditLoading = false;
       state.mainPostEditDone = false;
       state.mainPostEditError = false;
+      state.editPost = null;
+    },
+    mainPostEditSet(state, action) {
+      state.editPost = action.payload.mainPost;
     },
     mainPostEditConfirmClear(state) {
       state.mainPostEditConfirmLoading = false;

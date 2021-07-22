@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
@@ -21,6 +21,7 @@ import { IMainPost } from "@typings/db";
 const index = () => {
   const dispatch = useDispatch();
   const { query } = useRouter();
+  const [filter, setFilter] = useState("");
   const { data: mainPost, revalidate: revalidateMainPost } = useSWR(
     `/mainPost/${query?.code}/${query?.mainPostId}`,
     fetcher
@@ -31,7 +32,10 @@ const index = () => {
     revalidate: revalidateMainPosts,
     setSize,
   } = useSWRInfinite<IMainPost[]>(
-    (index) => `/mainPost?code=${query?.code || ""}&page=${index + 1}`,
+    (index) =>
+      filter
+        ? `/mainPost/${filter}`
+        : `/mainPost?code=${query?.code || ""}&page=${index + 1}&type=${query?.type || ""}`,
     fetcher
   );
 
@@ -99,6 +103,8 @@ const index = () => {
     if (mainPostLikeDone) {
       toastSuccessMessage("좋아요!💓");
       dispatch(mainPostSlice.actions.mainPostLikeClear());
+      dispatch(getUserInfoAction());
+      revalidateMainPosts();
       revalidateMainPost();
     }
   }, [mainPostLikeDone]);
@@ -107,6 +113,8 @@ const index = () => {
     if (mainPostDislikeDone) {
       toastSuccessMessage("좋아요 취소💔");
       dispatch(mainPostSlice.actions.mainPostDislikeClear());
+      dispatch(getUserInfoAction());
+      revalidateMainPosts();
       revalidateMainPost();
     }
   }, [mainPostDislikeDone]);
@@ -118,7 +126,7 @@ const index = () => {
       <MainTopContent />
       <h2 className="main-title">포스팅</h2>
       <MainPostingForm />
-      <MainArticleList setSize={setSize} size={size} mainPosts={mainPosts} />
+      <MainArticleList setFilter={setFilter} setSize={setSize} mainPosts={mainPosts} />
     </MainLayout>
   );
 };

@@ -51,16 +51,31 @@ export class MainPostsController {
     @User() user,
     @UploadedFiles() files: Express.Multer.File[],
   ) {
-    console.log('###########', form, user, files);
-
     await this.MainPostsService.createPost(form, user.id, files);
   }
 
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Edit post' })
+  @UseInterceptors(
+    FilesInterceptor('image', 5, {
+      storage: multer.diskStorage({
+        destination(req, file, cb) {
+          cb(null, 'uploads/');
+        },
+        filename(req, file, cb) {
+          const ext = path.extname(file.originalname);
+          cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+        },
+      }),
+      limits: { fileSize: 5 * 1024 * 1024 },
+    }),
+  )
   @Post('edit')
-  async editPost(@Body() data: any) {
-    await this.MainPostsService.eidtPost(data);
+  async editPost(
+    @Body() form: any,
+    @UploadedFiles() files: Express.Multer.File[],
+  ) {
+    await this.MainPostsService.editPost(form, files);
   }
 
   @UseGuards(new LoggedInGuard())
@@ -109,6 +124,24 @@ export class MainPostsController {
     @User() user,
   ) {
     await this.MainPostsService.dislikePost(mainPostId, user.id);
+  }
+
+  @ApiOperation({ summary: 'Get popular post' })
+  @Get('/popular/:code')
+  async getPopularPosts(@Param('code') code: string) {
+    return await this.MainPostsService.getPopularPosts(code);
+  }
+
+  @ApiOperation({ summary: 'Get topView post' })
+  @Get('/topView/:code')
+  async getTopViewPosts(@Param('code') code: string) {
+    return await this.MainPostsService.getTopViewPosts(code);
+  }
+
+  @ApiOperation({ summary: 'Get topComment post' })
+  @Get('/topComment/:code')
+  async getTopCommentPosts(@Param('code') code: string) {
+    return await this.MainPostsService.getTopCommentPosts(code);
   }
 
   @ApiOperation({ summary: 'Get one post for post page' })
