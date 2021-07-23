@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import router from "next/router";
 import { toastSuccessMessage } from "config";
-import { marketSlice } from "slices/market";
+import { marketSlice } from "slices/story";
 import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
-import { getMarketPostsAction } from "actions/market";
+import { getMarketPostsAction } from "actions/story";
 interface IProps {}
 
 const index: FC<IProps> = () => {

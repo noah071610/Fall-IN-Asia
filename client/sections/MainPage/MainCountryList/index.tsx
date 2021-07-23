@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useState } from "react";
 import { MainCountryListWrapper } from "./styles";
 import { SwiperSlide, Swiper } from "swiper/react";
-import CountryCard from "@components/Cards/CountryCard";
+import CountryCard from "@components/Cards/SmallCard";
 import { ICountry } from "@typings/db";
 
 interface IProps {

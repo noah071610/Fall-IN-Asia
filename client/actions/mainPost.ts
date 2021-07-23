@@ -16,12 +16,12 @@ export const mainPostCreateAction = createAsyncThunk<any, IMainPostRequestForm>(
   }
 );
 
-export const mainPostDeleteAction = createAsyncThunk<any, any>(
+export const mainPostDeleteAction = createAsyncThunk<any, number>(
   "mainPost/delete",
-  async (postId) => {
+  async (mainPostId) => {
     try {
-      await axios.delete(`/mainPost/${postId}`);
-      return;
+      const response = await axios.delete(`/mainPost/${mainPostId}`);
+      return response.data;
     } catch (error) {
       toastErrorMessage(error);
       throw error;

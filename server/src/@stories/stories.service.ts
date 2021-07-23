@@ -1,29 +1,26 @@
 import {
   Injectable,
   NotFoundException,
-  Post,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import bcrypt from 'bcrypt';
-import { Users } from 'src/entities/Users';
-import { Images } from 'src/entities/Images';
-import { Announcements } from 'src/entities/Announcements';
-import { MainPosts } from 'src/entities/MainPosts';
-import { Countries } from 'src/entities/Countries';
-import { MainPostLike } from 'src/entities/MainPostsLike';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Images } from 'src/entities/Images';
+import { Stories } from 'src/entities/Stories';
+import { Repository } from 'typeorm';
+import { Announcements } from 'src/entities/Announcements';
+import { Countries } from 'src/entities/Countries';
+import { StoryLike } from 'src/entities/StoryLike';
 @Injectable()
-export class MainPostsService {
+export class StoriesService {
   constructor(
-    @InjectRepository(MainPosts)
-    private MainPostsRepository: Repository<MainPosts>,
-    @InjectRepository(Countries)
+    @InjectRepository(Stories)
+    private StoriesRepository: Repository<Stories>,
+    @InjectRepository(Images)
     private CountriesRepository: Repository<Countries>,
     @InjectRepository(Images)
     private ImagesRepository: Repository<Images>,
-    @InjectRepository(MainPostLike)
-    private MainPostLikeRepository: Repository<MainPostLike>,
+    @InjectRepository(StoryLike)
+    private StoryLikeRepository: Repository<StoryLike>,
     @InjectRepository(Announcements)
     private AnnouncementsRepository: Repository<Announcements>,
   ) {}
@@ -38,13 +35,12 @@ export class MainPostsService {
     const country = await this.CountriesRepository.findOne({
       where: { code: form.code },
     });
-    const newPostCreate = new MainPosts();
+    const newPostCreate = new Stories();
     newPostCreate.code = form.code;
     newPostCreate.content = form.content;
-    newPostCreate.type = form.type;
     newPostCreate.country = <any>{ id: country.id };
     newPostCreate.user = <any>{ id: userId };
-    const newPost = await this.MainPostsRepository.save(newPostCreate);
+    const newPost = await this.StoriesRepository.save(newPostCreate);
     for (let i = 0; i < files.length; i++) {
       const newImage = new Images();
       newImage.image_src = process.env.BACK_URL + files[i].path;
@@ -53,7 +49,7 @@ export class MainPostsService {
     }
     await this.AnnouncementsRepository.save({
       userId: userId,
-      mainPostId: newPost.id,
+      storyId: newPost.id,
       content: `${form.content.slice(10)}...을 작성했습니다.`,
     });
     return true;
@@ -69,10 +65,10 @@ export class MainPostsService {
     return true;
   }
 
-  async getOnePost(mainPostId: number, code: string) {
-    const post = await this.MainPostsRepository.findOne({
+  async getOnePost(storyId: number, code: string) {
+    const post = await this.StoriesRepository.findOne({
       where: {
-        id: mainPostId,
+        id: storyId,
         code,
       },
       relations: [
@@ -98,16 +94,16 @@ export class MainPostsService {
     type?: string,
     page?: number,
   ) {
-    const filterPosts = await this.MainPostsRepository.createQueryBuilder(
-      'mainPosts',
+    const filterPosts = await this.StoriesRepository.createQueryBuilder(
+      'stories',
     )
-      .where(code ? `mainPosts.code = :code` : '1=1', { code })
-      .andWhere(type ? `mainPosts.type = :type` : '1=1', { type })
-      .leftJoinAndSelect('mainPosts.country', 'country')
-      .leftJoinAndSelect('mainPosts.user', 'user')
-      .leftJoinAndSelect('mainPosts.likedUser', 'likedUser')
-      .leftJoinAndSelect('mainPosts.comments', 'comments')
-      .leftJoinAndSelect('mainPosts.images', 'images')
+      .where(code ? `stories.code = :code` : '1=1', { code })
+      .andWhere(type ? `stories.type = :type` : '1=1', { type })
+      .leftJoinAndSelect('stories.country', 'country')
+      .leftJoinAndSelect('stories.user', 'user')
+      .leftJoinAndSelect('stories.likedUser', 'likedUser')
+      .leftJoinAndSelect('stories.comments', 'comments')
+      .leftJoinAndSelect('stories.images', 'images')
       .getMany();
     switch (filter) {
       case 'popular':
@@ -122,15 +118,15 @@ export class MainPostsService {
   }
 
   async getPosts(code?: string, page?: number, type?: string) {
-    const posts = await this.MainPostsRepository.createQueryBuilder('mainPosts')
-      .where(code ? `mainPosts.code = :code` : '1=1', { code })
-      .andWhere(type ? `mainPosts.type = :type` : '1=1', { type })
-      .leftJoinAndSelect('mainPosts.country', 'country')
-      .leftJoinAndSelect('mainPosts.user', 'user')
-      .leftJoinAndSelect('mainPosts.likedUser', 'likedUser')
-      .leftJoinAndSelect('mainPosts.comments', 'comments')
-      .leftJoinAndSelect('mainPosts.images', 'images')
-      .orderBy('mainPosts.id', 'DESC')
+    const posts = await this.StoriesRepository.createQueryBuilder('stories')
+      .where(code ? `stories.code = :code` : '1=1', { code })
+      .andWhere(type ? `stories.type = :type` : '1=1', { type })
+      .leftJoinAndSelect('stories.country', 'country')
+      .leftJoinAndSelect('stories.user', 'user')
+      .leftJoinAndSelect('stories.likedUser', 'likedUser')
+      .leftJoinAndSelect('stories.comments', 'comments')
+      .leftJoinAndSelect('stories.images', 'images')
+      .orderBy('stories.id', 'DESC')
       .skip((page - 1) * 10)
       .take(10)
       .getMany();
@@ -142,17 +138,17 @@ export class MainPostsService {
     const country = await this.CountriesRepository.findOne({
       where: { code: form.code },
     });
-    const editedPost = await this.MainPostsRepository.createQueryBuilder(
-      'mainPosts',
+    const editedPost = await this.StoriesRepository.createQueryBuilder(
+      'stories',
     )
-      .update('mainPosts')
+      .update('stories')
       .set({
         type: form.type,
         content: form.content,
         code: form.code,
         country: <any>{ id: country.id },
       })
-      .where('id = :id', { id: parseInt(form.mainPostId) })
+      .where('id = :id', { id: parseInt(form.storyId) })
       .execute();
     if (!editedPost) {
       throw new NotFoundException('수정 할 게시물이 없습니다.');
@@ -160,35 +156,35 @@ export class MainPostsService {
     return true;
   }
 
-  async likePost(mainPostId: number, userId: number) {
-    if (!mainPostId) {
+  async likePost(storyId: number, userId: number) {
+    if (!storyId) {
       throw new NotFoundException('게시물을 찾을 수 없습니다.');
     }
     if (!userId) {
       throw new UnauthorizedException('유저를 찾지 못했습니다.');
     }
-    const newPostLike = new MainPostLike();
+    const newPostLike = new StoryLike();
     newPostLike.userId = userId;
-    newPostLike.mainPostId = mainPostId;
-    return await this.MainPostLikeRepository.save(newPostLike);
+    newPostLike.storyId = storyId;
+    return await this.StoryLikeRepository.save(newPostLike);
   }
 
-  async dislikePost(mainPostId: number, userId: number) {
-    if (!mainPostId) {
+  async dislikePost(storyId: number, userId: number) {
+    if (!storyId) {
       throw new NotFoundException('게시물을 찾을 수 없습니다.');
     }
     if (!userId) {
       throw new UnauthorizedException('유저를 찾지 못했습니다.');
     }
-    return await this.MainPostLikeRepository.delete({ mainPostId, userId });
+    return await this.StoryLikeRepository.delete({ storyId, userId });
   }
 
-  async deletePost(mainPostId: number) {
-    if (!mainPostId) {
+  async deletePost(storyId: number) {
+    if (!storyId) {
       throw new NotFoundException('게시물을 찾을 수 없습니다.');
     }
-    return await this.MainPostsRepository.delete({
-      id: mainPostId,
+    return await this.StoriesRepository.delete({
+      id: storyId,
     });
   }
 }

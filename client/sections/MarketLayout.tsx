@@ -12,7 +12,7 @@ import {
   getMarketPostsAction,
   getMarketSearchPostsAction,
   getMarketTypePostsAction,
-} from "actions/market";
+} from "actions/story";
 
 export const MarketWrapper = styled.div`
   padding: 2rem;

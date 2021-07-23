@@ -12,7 +12,7 @@ import { CountriesModule } from './@countries/countries.module';
 import { MainPostsModule } from './@mainPosts/mainPosts.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { MarketModule } from './market/market.module';
+import { StoriesModule } from './@stories/stories.module';
 import { CommentsModule } from './@comments/comments.module';
 
 @Module({
@@ -24,7 +24,7 @@ import { CommentsModule } from './@comments/comments.module';
     TypeOrmModule.forRoot(ormconfig),
     CountriesModule,
     MainPostsModule,
-    MarketModule,
+    StoriesModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
       exclude: ['/api*'],

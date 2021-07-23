@@ -6,7 +6,7 @@ import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
 import CommonTitle from "@components/Common/CommonTitle";
-import { marketPostCreateAction } from "actions/market";
+import { marketPostCreateAction } from "actions/story";
 import { japanMapList, marketKeyword, toastErrorMessage, toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import useInput from "@hooks/useInput";
@@ -14,7 +14,7 @@ import ImageDragger from "@components/PostingEditor/ImageDragger";
 import EditorWithoutImage from "@components/PostingEditor/EditorWithoutImage";
 import { RootState } from "slices";
 import router from "next/router";
-import { marketSlice } from "slices/market";
+import { marketSlice } from "slices/story";
 export const PostWrapper = styled.div`
   padding: 2rem;
 `;

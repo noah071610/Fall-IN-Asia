@@ -2,6 +2,7 @@ import React, { FC, useCallback, useState } from "react";
 import { Upload } from "antd";
 import styled from "@emotion/styled";
 import { FLEX_STYLE, RGB_BLACK } from "config";
+import { memo } from "react";
 const { Dragger } = Upload;
 const ImageDraggerWrapper = styled.div`
   .dragger {
@@ -40,4 +41,4 @@ const ImageDragger: FC<IProps> = ({ setUpImg }) => {
   );
 };
 
-export default ImageDragger;
+export default memo(ImageDragger);

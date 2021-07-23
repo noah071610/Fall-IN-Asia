@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, RED_COLOR, RGB_BLACK } from "config";
+import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RED_COLOR, RGB_BLACK } from "config";
 
 export const CommentWrapper = styled.div`
   padding: 1rem 0;
@@ -11,8 +11,13 @@ export const CommentWrapper = styled.div`
     position: relative;
     .more-btn {
       position: absolute;
-      top: 0;
-      right: 0.5rem;
+      top: -0.5rem;
+      right: 0;
+      border-radius: 50%;
+      padding: 0.5rem;
+      &:hover {
+        background: ${GRAY_COLOR};
+      }
     }
   }
   .more-subComment {

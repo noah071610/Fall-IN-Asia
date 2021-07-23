@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { FLEX_STYLE, GRAY_COLOR, HOVER_GRAY } from "config";
 
-export const CountryCardWrapper = styled.li`
+export const SmallCardWrapper = styled.li`
   width: 100%;
   border-radius: 15px;
   padding: 0.5rem 1.5rem 0.5rem 0.5rem;

@@ -12,10 +12,11 @@ import {
 } from 'typeorm';
 import { MainPosts } from './MainPosts';
 import { Comments } from './Comments';
-import { MarketPosts } from './MarketPosts';
+import { Stories } from './Stories';
 import { MainPostLike } from './MainPostsLike';
 import { Announcements } from './Announcements';
 import { SubComments } from './SubComments';
+import { StoryLike } from './StoryLike';
 
 @Index('email', ['email'], { unique: true })
 @Entity({ schema: 'travelover', name: 'users' })
@@ -97,10 +98,10 @@ export class Users {
   })
   mainPosts: MainPosts[];
 
-  @OneToMany(() => MarketPosts, (marketPosts) => marketPosts.user, {
+  @OneToMany(() => Stories, (stories) => stories.user, {
     cascade: true,
   })
-  marketPosts: MarketPosts[];
+  stories: Stories[];
 
   @OneToMany(() => Comments, (comments) => comments.user, {
     cascade: true,
@@ -116,6 +117,11 @@ export class Users {
     cascade: true,
   })
   likeMainPost: MainPostLike[];
+
+  @OneToMany(() => StoryLike, (storyLike) => storyLike.user, {
+    cascade: true,
+  })
+  likeStory: StoryLike[];
 
   @OneToMany(() => Announcements, (announcements) => announcements.user, {
     cascade: true,

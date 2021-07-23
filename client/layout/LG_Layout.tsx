@@ -7,14 +7,14 @@ const Wrapper = styled.div`
     width: ${LG_SIZE};
     margin: 0 auto;
     padding: 2rem 0;
-
     .main-title {
       ${FONT_STYLE(1, true)}
       margin-top: 1.8rem;
       margin-bottom: 1rem;
     }
     .main-title:first-of-type {
-      margin: 0;
+      margin-top: 0;
+      margin-bottom: 1rem;
     }
   }
 `;

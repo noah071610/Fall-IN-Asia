@@ -1,10 +1,10 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Comments } from 'src/entities/Comments';
 import { Users } from 'src/entities/Users';
 import { Repository } from 'typeorm';
 import bcrypt from 'bcrypt';
 import { SubComments } from 'src/entities/SubComments';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class CommentsService {

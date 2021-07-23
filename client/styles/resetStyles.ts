@@ -1,4 +1,4 @@
-import { BLUE_COLOR, BORDER_THIN, RGB_BLACK, WHITE_COLOR, WHITE_STYLE } from "config";
+import { BLUE_COLOR, BORDER_THIN, GRAY_COLOR, RGB_BLACK, WHITE_COLOR, WHITE_STYLE } from "config";
 
 export const resetStyles = `
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
@@ -209,6 +209,20 @@ textarea {
   &:hover {
     border: 1px solid ${RGB_BLACK(0.08)} !important;
     box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
+  }
+}
+
+.cofirm-btn-wrapper {
+  margin-top:.75rem;
+  button{
+    padding:0.2rem 0.4rem;
+    border-radius:10px;
+    &:hover{
+      background:${GRAY_COLOR};
+    }
+  }
+  button:first-of-type {
+    margin-right:0.5rem;
   }
 }
 

@@ -1,6 +1,6 @@
 import React, { FC, memo } from "react";
 import { SwiperSlide, Swiper } from "swiper/react";
-import CountryCard from "@components/Cards/CountryCard";
+import SmallCard from "@components/Cards/SmallCard";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { ICountry } from "@typings/db";
@@ -26,7 +26,7 @@ const CountryCardSilde: FC<IProps> = ({ slidesPerView }) => {
         {countries?.map((v, i) => {
           return (
             <SwiperSlide key={i}>
-              <CountryCard country={v} />
+              <SmallCard country={v} />
             </SwiperSlide>
           );
         })}

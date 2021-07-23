@@ -11,6 +11,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { MainPosts } from './MainPosts';
+import { Stories } from './Stories';
 import { SubComments } from './SubComments';
 import { Users } from './Users';
 
@@ -45,11 +46,24 @@ export class Comments {
   })
   subComments: SubComments[];
 
-  @ManyToOne(() => Users, (users) => users.comments)
+  @ManyToOne(() => Users, (users) => users.comments, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn([{ name: 'user', referencedColumnName: 'id' }])
   user: Users;
 
-  @ManyToOne(() => MainPosts, (mainPosts) => mainPosts.comments)
-  @JoinColumn([{ name: 'post', referencedColumnName: 'id' }])
+  @ManyToOne(() => MainPosts, (mainPosts) => mainPosts.comments, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'mainPost', referencedColumnName: 'id' }])
   mainPost: MainPosts;
+
+  @ManyToOne(() => Stories, (stories) => stories.comments, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'story', referencedColumnName: 'id' }])
+  story: Stories;
 }

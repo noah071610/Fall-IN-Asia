@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, FLEX_STYLE, RED_COLOR, RGB_BLACK } from "config";
+import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RED_COLOR, RGB_BLACK } from "config";
 
 export const MainPostTitleWrapper = styled.div`
   padding: 1rem 0;
@@ -8,15 +8,15 @@ export const MainPostTitleWrapper = styled.div`
   ${FLEX_STYLE("space-between", "flex-end")};
   .right-menu {
     ${FLEX_STYLE("center", "flex-end")};
-    .like-btn {
-      &:hover {
-        -webkit-animation: heartBeat 1s;
-        animation: heartBeat 1s;
+    a {
+      padding: 0.3rem;
+      border-radius: 50%;
+      .anticon {
+        font-size: 1.1rem;
       }
-    }
-    .like-number {
-      margin-left: 0.5rem;
-      font-size: 1.4rem;
+      &:hover {
+        background: ${GRAY_COLOR};
+      }
     }
   }
 `;

@@ -29,7 +29,7 @@ export const MainPostWrapper = styled.div`
   }
   .post-content {
     font-size: 1rem;
-    padding: 0 2rem 3rem 2rem;
+    padding: 2rem 2rem 3rem 2rem;
     line-height: 2;
     min-height: 200px;
     img {

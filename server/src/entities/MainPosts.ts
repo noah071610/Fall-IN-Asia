@@ -96,7 +96,10 @@ export class MainPosts {
   })
   comments: Comments[];
 
-  @ManyToOne(() => Countries, (countries) => countries.mainPosts)
+  @ManyToOne(() => Countries, (countries) => countries.mainPosts, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'country', referencedColumnName: 'id' })
   country: Countries;
 

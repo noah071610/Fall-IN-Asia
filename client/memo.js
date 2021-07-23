@@ -56,3 +56,16 @@ useEffect(() => {
 
 react-masonry-css
 react-image-crop
+
+    const prevPosts = await this.mainPostsRepository.find({
+      where: { country_name: group, id: MoreThan(postId) },
+      relations: ['user'],
+      order: { id: 'DESC' },
+      take: 4,
+    });
+              .createQueryBuilder('posts')
+      .select('posts.country_name')
+      .addSelect('COUNT(*)', 'cnt')
+      .groupBy('posts.country_name')
+      .orderBy('cnt', 'DESC')
+      .getMany();

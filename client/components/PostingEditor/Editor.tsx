@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { imageHandler, quillSetting } from "config";
 import React, { FC, useEffect, useRef } from "react";
+import { memo } from "react";
 
 const EditorWrapper = styled.div`
   .ql-editor {
@@ -53,4 +54,4 @@ const Editor: FC<IProps> = ({ setContent, prevContent, isStudyPost }) => {
   );
 };
 
-export default Editor;
+export default memo(Editor);

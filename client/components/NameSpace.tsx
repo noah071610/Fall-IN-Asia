@@ -1,11 +1,11 @@
 import { IUser } from "@typings/db";
 import React, { FC, memo, useState } from "react";
 import dayjs from "dayjs";
-import { FLEX_STYLE, RGB_BLACK } from "config";
+import { DEFAULT_ICON_URL, FLEX_STYLE, RGB_BLACK } from "config";
 import styled from "@emotion/styled";
 
 const NameSpaceWrapper = styled.div` 
-  ${FLEX_STYLE("flex-start", "")};
+  ${FLEX_STYLE("flex-start", "center")};
   .icon {
     margin-right:.7rem;
     img {
@@ -21,10 +21,10 @@ const NameSpaceWrapper = styled.div`
     display:block;
   }
   .name{
-    font-size:0.75rem;
+    font-size:0.85rem;
   }
   .date{
-    padding-top:0.3rem;
+    padding-top:0.2rem;
     color:${RGB_BLACK(0.3)};
   }
 `;
@@ -39,7 +39,7 @@ const NameSpace: FC<IProps> = ({ user, date, comment }) => {
   return (
     <NameSpaceWrapper>
       <div className="icon">
-        <img src={user?.icon} alt="" />
+        <img src={user?.icon ? user?.icon : DEFAULT_ICON_URL} alt="" />
       </div>
       <div className="user-info">
         <span className="name">{user?.name}</span>

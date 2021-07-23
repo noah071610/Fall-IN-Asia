@@ -12,7 +12,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { MainPosts } from './MainPosts';
-import { MarketPosts } from './MarketPosts';
+import { Stories } from './Stories';
 import { Users } from './Users';
 
 @Entity({ schema: 'travelover', name: 'announcements' })
@@ -46,11 +46,11 @@ export class Announcements {
   @IsNumber()
   @ApiProperty({
     example: 1,
-    description: 'marketPost announcements',
+    description: 'story announcements',
     nullable: true,
   })
-  @Column('int', { name: 'marketPostId', nullable: true })
-  marketPostId: number;
+  @Column('int', { name: 'storyId', nullable: true })
+  storyId: number;
 
   @IsString()
   @IsNotEmpty()
@@ -67,7 +67,10 @@ export class Announcements {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Users, (users) => users.announcements)
+  @ManyToOne(() => Users, (users) => users.announcements, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn([{ name: 'user', referencedColumnName: 'id' }])
   user: Users;
 
@@ -79,11 +82,11 @@ export class Announcements {
   @JoinColumn({ name: 'mainPostId' })
   mainPost: MainPosts;
 
-  @ManyToOne(() => MarketPosts, (marketPosts) => marketPosts.announcements, {
+  @ManyToOne(() => Stories, (stories) => stories.announcements, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     nullable: true,
   })
-  @JoinColumn({ name: 'marketPostId' })
-  marketPost: MarketPosts;
+  @JoinColumn({ name: 'storyId' })
+  story: Stories;
 }

@@ -72,6 +72,7 @@ const index = () => {
   useEffect(() => {
     if (commentCreateDone) {
       toastSuccessMessage("댓글을 성공적으로 작성했습니다.");
+      dispatch(commentSlice.actions.commentCreateClear());
       revalidateMainPost();
     }
   }, [commentCreateDone]);
@@ -79,6 +80,7 @@ const index = () => {
   useEffect(() => {
     if (commentDeleteDone) {
       toastSuccessMessage("댓글을 성공적으로 삭제했습니다.");
+      dispatch(commentSlice.actions.commentDeleteClear());
       revalidateMainPost();
     }
   }, [commentDeleteDone]);
@@ -94,6 +96,7 @@ const index = () => {
   useEffect(() => {
     if (subCommentDeleteDone) {
       toastSuccessMessage("답글을 성공적으로 삭제했습니다.");
+      dispatch(commentSlice.actions.subCommentDeleteClear());
       revalidateMainPost();
     }
   }, [subCommentDeleteDone]);

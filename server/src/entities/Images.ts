@@ -10,7 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { MainPosts } from './MainPosts';
-import { MarketPosts } from './MarketPosts';
+import { Stories } from './Stories';
 
 @Entity({ schema: 'travelover', name: 'images' })
 export class Images {
@@ -38,12 +38,12 @@ export class Images {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => MarketPosts, (marketPosts) => marketPosts.images, {
+  @ManyToOne(() => Stories, (stories) => stories.images, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'marketPost', referencedColumnName: 'id' }])
-  marketPost: MarketPosts;
+  @JoinColumn([{ name: 'story', referencedColumnName: 'id' }])
+  story: Stories;
 
   @ManyToOne(() => MainPosts, (mainPosts) => mainPosts.images, {
     onDelete: 'CASCADE',

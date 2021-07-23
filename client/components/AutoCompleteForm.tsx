@@ -1,5 +1,4 @@
 import React, { FC, useMemo } from "react";
-import { ICountry } from "@typings/db";
 import { AutoComplete } from "antd";
 import { useCallback } from "react";
 import { memo } from "react";

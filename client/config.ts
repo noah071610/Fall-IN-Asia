@@ -50,7 +50,7 @@ export const BORDER_THIN = (border: string, px?: number) => `
 export const FONT_STYLE = (size: number, weight?: boolean, color?: string) => `
 font-size:${size}rem;
 font-weight:${weight && "bold"};
-color:${!color && "black"};
+color:${color ? color : "black"};
 `;
 
 export const FLEX_STYLE = (justify: string, align: string) => `

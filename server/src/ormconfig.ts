@@ -1,7 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import dotenv from 'dotenv';
 import { Users } from './entities/Users';
-import { MarketPosts } from './entities/MarketPosts';
+import { Stories } from './entities/Stories';
 import { Comments } from './entities/Comments';
 import { SubComments } from './entities/SubComments';
 import { Images } from './entities/Images';
@@ -9,6 +9,7 @@ import { Announcements } from './entities/Announcements';
 import { MainPosts } from './entities/MainPosts';
 import { MainPostLike } from './entities/MainPostsLike';
 import { Countries } from './entities/Countries';
+import { StoryLike } from './entities/StoryLike';
 
 dotenv.config();
 const config: TypeOrmModuleOptions = {
@@ -20,7 +21,8 @@ const config: TypeOrmModuleOptions = {
   database: process.env.DB_DATABASE,
   entities: [
     Users,
-    MarketPosts,
+    Stories,
+    StoryLike,
     MainPosts,
     Comments,
     SubComments,

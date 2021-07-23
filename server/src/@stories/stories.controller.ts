@@ -16,22 +16,22 @@ import {
 import { ApiCookieAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
 import { LoggedInGuard } from 'src/auth/logged-in.guard';
-import { MainPostsService } from './mainPosts.service';
+import { StoriesService } from './stories.service';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import multer from 'multer';
 import path from 'path';
 import { User } from 'src/decorators/user.decorator';
-import { MainPostRequestDto } from 'src/dto/mainPost.request.dto';
+import { StoryRequestDto } from 'src/dto/story.request.dto';
 
 @UseInterceptors(JsonResponeGenerator)
-@ApiTags('MainPosts')
+@ApiTags('Story')
 @ApiCookieAuth('connect.sid')
-@Controller('/api/mainPost')
-export class MainPostsController {
-  constructor(private readonly MainPostsService: MainPostsService) {}
+@Controller('/api/story')
+export class StoriesController {
+  constructor(private readonly StoriesService: StoriesService) {}
 
   @UseGuards(new LoggedInGuard())
-  @ApiOperation({ summary: 'Create main post' })
+  @ApiOperation({ summary: 'Create story post' })
   @UseInterceptors(
     FilesInterceptor('image', 5, {
       storage: multer.diskStorage({
@@ -48,11 +48,11 @@ export class MainPostsController {
   )
   @Post()
   async createPost(
-    @Body() form: MainPostRequestDto,
+    @Body() form: StoryRequestDto,
     @User() user,
     @UploadedFiles() files: Express.Multer.File[],
   ) {
-    await this.MainPostsService.createPost(form, user.id, files);
+    await this.StoriesService.createPost(form, user.id, files);
   }
 
   @UseGuards(new LoggedInGuard())
@@ -73,20 +73,20 @@ export class MainPostsController {
   )
   @Post('edit')
   async editPost(
-    @Body() form: MainPostRequestDto,
+    @Body() form: StoryRequestDto,
     @UploadedFiles() files: Express.Multer.File[],
   ) {
-    await this.MainPostsService.editPost(form, files);
+    await this.StoriesService.editPost(form, files);
   }
 
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Delete post' })
-  @Delete('/:mainPostId')
-  async deletePost(@Param('mainPostId',ParseIntPipe) mainPostId: number) {
-    await this.MainPostsService.deletePost(mainPostId);
+  @Delete('/:storyId')
+  async deletePost(@Param('storyId', ParseIntPipe) storyId: number) {
+    await this.StoriesService.deletePost(storyId);
   }
 
-  @ApiOperation({ summary: 'Get preview posts for main page' })
+  @ApiOperation({ summary: 'Get preview posts for story page' })
   @UseInterceptors(
     FileInterceptor('image', {
       storage: multer.diskStorage({
@@ -103,36 +103,36 @@ export class MainPostsController {
   )
   @Post('image')
   async saveImage(@UploadedFile() file: Express.Multer.File) {
-    await this.MainPostsService.saveImage(file);
+    await this.StoriesService.saveImage(file);
   }
 
   @ApiOperation({ summary: 'like post' })
   @UseGuards(new LoggedInGuard())
-  @Patch('like/:mainPostId')
+  @Patch('like/:storyId')
   async likePost(
-    @Param('mainPostId', ParseIntPipe) mainPostId: number,
+    @Param('storyId', ParseIntPipe) storyId: number,
     @User() user,
   ) {
-    await this.MainPostsService.likePost(mainPostId, user.id);
+    await this.StoriesService.likePost(storyId, user.id);
   }
 
   @ApiOperation({ summary: 'dislike post' })
   @UseGuards(new LoggedInGuard())
-  @Patch('dislike/:mainPostId')
+  @Patch('dislike/:storyId')
   async dislikePost(
-    @Param('mainPostId', ParseIntPipe) mainPostId: number,
+    @Param('storyId', ParseIntPipe) storyId: number,
     @User() user,
   ) {
-    await this.MainPostsService.dislikePost(mainPostId, user.id);
+    await this.StoriesService.dislikePost(storyId, user.id);
   }
 
   @ApiOperation({ summary: 'Get one post for post page' })
-  @Get(':code/:mainPostId')
+  @Get(':code/:storyId')
   async getOnePost(
     @Param('code') code: string,
-    @Param('mainPostId', ParseIntPipe) mainPostId: number,
+    @Param('storyId', ParseIntPipe) storyId: number,
   ) {
-    const post = await this.MainPostsService.getOnePost(mainPostId, code);
+    const post = await this.StoriesService.getOnePost(storyId, code);
     return post;
   }
 
@@ -163,13 +163,13 @@ export class MainPostsController {
       }
     }
     if (filter) {
-      return await this.MainPostsService.getCommentPosts(
+      return await this.StoriesService.getCommentPosts(
         filter,
         code,
         type,
         page,
       );
     }
-    return await this.MainPostsService.getPosts(code, page, type);
+    return await this.StoriesService.getPosts(code, page, type);
   }
 }

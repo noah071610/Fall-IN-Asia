@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
@@ -11,11 +12,14 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Announcements } from './Announcements';
+import { Comments } from './Comments';
+import { Countries } from './Countries';
 import { Images } from './Images';
+import { StoryLike } from './StoryLike';
 import { Users } from './Users';
 
-@Entity({ schema: 'travelover', name: 'marketPosts' })
-export class MarketPosts {
+@Entity({ schema: 'travelover', name: 'stories' })
+export class Stories {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty({
@@ -25,55 +29,29 @@ export class MarketPosts {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
+  @Index()
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    example: '直取引',
-    description: 'keyword for market post ',
+    example: 'KOR',
+    description: 'country code for url or query by using English',
   })
-  @Column('enum', {
-    name: 'keyword',
-    enum: ['直取引', '宅配', '出来れば直取引', '出来れば宅配'],
+  @Column('varchar', { name: 'code' })
+  code: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 125,
+    description: 'hit number each post',
   })
-  keyword: '直取引' | '宅配' | '出来れば直取引' | '出来れば宅配';
+  @Column('int', { name: 'hit', default: 0 })
+  hit: number;
 
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    example: '関東(東京)',
-    description: 'studyPost type',
-  })
-  @Column('enum', {
-    name: 'area',
-    enum: [
-      '関東(東京)',
-      '関西(大阪)',
-      '九州',
-      '東北',
-      '中部',
-      '中国',
-      '四国',
-      '北海道',
-      '沖縄',
-      '大韓民国',
-    ],
-  })
-  area:
-    | '関東(東京)'
-    | '関西(大阪)'
-    | '九州'
-    | '東北'
-    | '中部'
-    | '中国'
-    | '四国'
-    | '北海道'
-    | '沖縄'
-    | '大韓民国';
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty({
-    example: 'ユーザーが作成したテキスト…',
+    example: '아유타야 연대기 1화 ...',
     description: 'title for post',
   })
   @Column('varchar', { name: 'title', length: 50 })
@@ -82,7 +60,7 @@ export class MarketPosts {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    example: 'ユーザーが作成したテキスト…',
+    example: '태국에 처음 놀러갔을때 크게 놀랐던게 있습니다. 그건...',
     description: 'content in the post',
   })
   @Column('varchar', { name: 'content' })
@@ -94,17 +72,34 @@ export class MarketPosts {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Announcements, (announcements) => announcements.marketPost, {
+  @OneToMany(() => Announcements, (announcements) => announcements.story, {
     cascade: true,
   })
   announcements: Announcements[];
 
-  @OneToMany(() => Images, (images) => images.marketPost, {
+  @OneToMany(() => Images, (images) => images.story, {
     cascade: true,
   })
   images: Images[];
 
-  @ManyToOne(() => Users, (users) => users.marketPosts, {
+  @OneToMany(() => StoryLike, (storyLike) => storyLike.story, {
+    cascade: true,
+  })
+  likedUser: StoryLike[];
+
+  @OneToMany(() => Comments, (comments) => comments.story, {
+    cascade: true,
+  })
+  comments: Comments[];
+
+  @ManyToOne(() => Countries, (countries) => countries.mainPosts, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'country', referencedColumnName: 'id' })
+  country: Countries;
+
+  @ManyToOne(() => Users, (users) => users.stories, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

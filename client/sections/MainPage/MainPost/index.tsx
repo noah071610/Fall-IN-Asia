@@ -78,22 +78,24 @@ const MainPost: FC<IProps> = ({ mainPost }) => {
   return (
     <MainPostWrapper>
       <MainPostTitle mainPost={mainPost} />
-      <div className="image-wrapper">
-        <Image.PreviewGroup>
-          <Slider {...mainPostImageSettings}>
-            {mainPost?.images.map((v: IImage, i: number) => {
-              return (
-                <Image
-                  key={i}
-                  preview={{ mask: <ZoomInOutlined /> }}
-                  src={v.image_src}
-                  alt="goods-image"
-                />
-              );
-            })}
-          </Slider>
-        </Image.PreviewGroup>
-      </div>
+      {mainPost?.images.length > 0 && (
+        <div className="image-wrapper">
+          <Image.PreviewGroup>
+            <Slider {...mainPostImageSettings}>
+              {mainPost?.images.map((v: IImage, i: number) => {
+                return (
+                  <Image
+                    key={i}
+                    preview={{ mask: <ZoomInOutlined /> }}
+                    src={v.image_src}
+                    alt="goods-image"
+                  />
+                );
+              })}
+            </Slider>
+          </Image.PreviewGroup>
+        </div>
+      )}
       <div className="post-content">{ReactHtmlParser(mainPost?.content as string)}</div>
       <ul className="post-footer">
         <li>

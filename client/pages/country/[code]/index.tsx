@@ -38,9 +38,8 @@ const index = () => {
   if (error) {
     router.push("/");
   }
-  const { mainPostCreateDone, mainPostLikeDone, mainPostDislikeDone } = useSelector(
-    (state: RootState) => state.mainPost
-  );
+  const { mainPostCreateDone, mainPostLikeDone, mainPostDislikeDone, mainPostDeleteDone } =
+    useSelector((state: RootState) => state.mainPost);
   useEffect(() => {
     if (mainPostCreateDone) {
       toastSuccessMessage("게시물을 성공적으로 작성했습니다.");
@@ -48,6 +47,13 @@ const index = () => {
       revalidate();
     }
   }, [mainPostCreateDone]);
+  useEffect(() => {
+    if (mainPostDeleteDone) {
+      toastSuccessMessage("게시물을 성공적으로 삭제했습니다.");
+      dispatch(mainPostSlice.actions.mainPostDeleteClear());
+      revalidate();
+    }
+  }, [mainPostDeleteDone]);
   useEffect(() => {
     if (mainPostLikeDone) {
       toastSuccessMessage("좋아요!💓");

@@ -9,15 +9,15 @@ import useToggle from "@hooks/useToggle";
 import { commentSlice } from "slices/comment";
 import NameSpace from "@components/NameSpace";
 import { memo } from "react";
+import { toastDeleteConfirmMessage } from "@components/ConfirmToastify";
+import { subCommentDeleteAction } from "actions/comment";
 interface IProps {
   subComment: ISubComment;
 }
 
 const SubComment: FC<IProps> = ({ subComment }) => {
   const dispatch = useDispatch();
-  const [onDelete, onClickDeleteBtn, setOnDelete] = useToggle(false);
   const { user } = useSelector((state: RootState) => state.user);
-  const { subCommentDeleteDone } = useSelector((state: RootState) => state.comment);
   const [isOwner, setIsOwner] = useState(false);
   useEffect(() => {
     if (user?.id === subComment?.user.id) {
@@ -25,12 +25,11 @@ const SubComment: FC<IProps> = ({ subComment }) => {
     }
   }, [user, subComment]);
 
-  useEffect(() => {
-    if (subCommentDeleteDone) {
-      setOnDelete(false);
-      dispatch(commentSlice.actions.subCommentDeleteClear());
+  const onClickConfirm = useCallback(() => {
+    if (user && isOwner) {
+      dispatch(subCommentDeleteAction(subComment?.id));
     }
-  }, [subCommentDeleteDone]);
+  }, [user, isOwner]);
 
   return (
     <SubCommentWrapper>
@@ -41,10 +40,9 @@ const SubComment: FC<IProps> = ({ subComment }) => {
       />
       {isOwner && (
         <a
-          className="more-btn"
-          onClick={(e) => {
-            e.stopPropagation();
-            onClickDeleteBtn();
+          className="delete-btn"
+          onClick={() => {
+            toastDeleteConfirmMessage(onClickConfirm, "이 답글을");
           }}
         >
           <DeleteOutlined />

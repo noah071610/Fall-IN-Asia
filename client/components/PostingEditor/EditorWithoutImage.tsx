@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 import { BLACK_COLOR, GRAY_COLOR, HOVER_GRAY, quillModules, qullFormats, RGB_BLACK } from "config";
 import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
+import { memo } from "react";
 
 const EditorWrapper = styled.div`
   height: 250px;
@@ -53,4 +54,4 @@ const EditorWithoutImage: FC<IProps> = ({ content, setContent }) => {
   );
 };
 
-export default EditorWithoutImage;
+export default memo(EditorWithoutImage);

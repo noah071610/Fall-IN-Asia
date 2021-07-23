@@ -4,7 +4,7 @@ import { SwiperSlide, Swiper } from "swiper/react";
 import BoxCard from "@components/Cards/BoxCard";
 import "swiper/components/navigation/navigation.min.css";
 import SwiperCore, { Navigation } from "swiper/core";
-import OneLineCard from "@components/Cards/CountryCard";
+import OneLineCard from "@components/Cards/SmallCard";
 import { PlusCircleOutlined } from "@ant-design/icons";
 
 SwiperCore.use([Navigation]);

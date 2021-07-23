@@ -8,7 +8,6 @@ import TextareaAutosize from "react-textarea-autosize";
 import { commentCreateAction } from "actions/comment";
 import useInput from "@hooks/useInput";
 import { useRouter } from "next/router";
-import { IMainPost } from "@typings/db";
 import { memo } from "react";
 
 interface IProps {}
