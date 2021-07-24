@@ -89,14 +89,42 @@ p {
 h1,h2,h3,h4,h5{
   margin:0;
 }
+.map-gl{
+  border-radius:15px;
+  border:1px solid ${RGB_BLACK(0.08)};
+}
+.suggestions{
+  li{
+    width:100%;
+  }
+}
+.mapboxgl-ctrl-geocoder{
+  border-radius:10px ;
+}
+.mapboxgl-ctrl-geocoder--input{
+  &:focus{
+    outline:none;
+    border:none;
+    border-radius:10px ;
+    box-shadow:0px 0px 8px ${RGB_BLACK(0.3)};
 
+  }
+}
 .basic-input {
   background: ${WHITE_COLOR};
-  ${WHITE_STYLE(false)};
+  border-radius:10px;
+  ${BORDER_THIN("border")};
   &::placeholder {
     color: ${RGB_BLACK(0.25)};
   }
   padding: 0.5rem 1rem;
+  transition:0.3s all;
+  &:focus {
+    box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
+  }
+  &:hover {
+    box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
+  }
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -199,6 +227,19 @@ textarea {
   cursor: pointer;
 }
 
+.ql-toolbar {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom: none;
+  background:white;
+  border: 1px solid ${RGB_BLACK(0.15)};
+}
+.ql-container {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background:white;
+  border: 1px solid ${RGB_BLACK(0.15)};
+}
 
 .ant-select-selector {
   border-radius: 10px !important;
@@ -224,6 +265,17 @@ textarea {
   button:first-of-type {
     margin-right:0.5rem;
   }
+}
+
+.overlay {
+  cursor: pointer;
+  position: absolute;
+  transition:0.3s all;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: ${RGB_BLACK(0.4)};
 }
 
 `;

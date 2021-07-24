@@ -7,17 +7,6 @@ import { memo } from "react";
 const EditorWrapper = styled.div`
   height: 250px;
   margin-bottom: 4rem;
-  .ql-toolbar {
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    border-bottom: none;
-    border: 1px solid ${RGB_BLACK(0.15)};
-  }
-  .ql-container {
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    border: 1px solid ${RGB_BLACK(0.15)};
-  }
   button {
     &:hover {
       border-radius: 5px;

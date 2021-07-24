@@ -38,7 +38,23 @@ export interface IMainPost {
   country: ICountry;
   comments: IComment[];
   announcements?: IAnnouncement[];
-  likedUser?: IUser[];
+  likedUser: IUser[];
+}
+
+export interface IStory {
+  id: number;
+  code: string;
+  hit: number;
+  title: string;
+  content: string;
+  region: string;
+  thumbnail: string;
+  createdAt: Date;
+  user: IUser;
+  country: ICountry;
+  comments: IComment[];
+  announcements?: IAnnouncement[];
+  likedUser: IUser[];
 }
 
 export interface IAnnouncement {

@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useMemo, useState } from "react";
-import AutoCompleteSearch from "@components/AutoCompleteForm";
+import AutoCompleteForm from "@components/AutoCompleteForm";
 import MainCountryList from "@sections/MainPage/MainCountryList";
 import CountryCardSilde from "@components/CountryCardSilde";
 import useSWR from "swr";
@@ -55,9 +55,6 @@ interface IProps {}
 const select: FC<IProps> = () => {
   const { data: countries, error, revalidate } = useSWR<ICountry[]>("/country", fetcher);
   const [selectedCountry, setCountry] = useState("");
-  if (error) {
-    toastErrorMessage("데이터를 가져오지 못했습니다.");
-  }
   const countryOptions = useMemo(
     () =>
       countries?.map((v, i) => {
@@ -84,7 +81,7 @@ const select: FC<IProps> = () => {
       <h2 className="main-title">국가선택</h2>
       <AutoCompleteWrapper>
         <div className="search-bar">
-          <AutoCompleteSearch
+          <AutoCompleteForm
             countryOptions={countryOptions}
             selectedCountry={selectedCountry}
             setCountry={setCountry}

@@ -19,9 +19,10 @@ const ImageDraggerWrapper = styled.div`
 
 interface IProps {
   setUpImg: (value: any) => void;
+  single?: boolean;
 }
 
-const ImageDragger: FC<IProps> = ({ setUpImg }) => {
+const ImageDragger: FC<IProps> = ({ setUpImg, single }) => {
   const handleChange = useCallback((info: any) => {
     if (info.file.status === "done") {
       setUpImg((prev: any) => [...prev, info.file.originFileObj]);
@@ -30,7 +31,12 @@ const ImageDragger: FC<IProps> = ({ setUpImg }) => {
 
   return (
     <ImageDraggerWrapper>
-      <Dragger showUploadList={true} multiple={true} className="dragger" onChange={handleChange}>
+      <Dragger
+        showUploadList={true}
+        multiple={single ? false : true}
+        className="dragger"
+        onChange={handleChange}
+      >
         <img
           src="https://user-images.githubusercontent.com/74864925/124657825-f38a5500-dedd-11eb-8de9-6ed70a512f24.png"
           alt="drag"

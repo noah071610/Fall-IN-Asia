@@ -36,13 +36,6 @@ export const CENTER_POSITION = () => `
   z-index:10;
 `;
 
-export const WHITE_STYLE = (border?: boolean, width?: string, radius?: number) => `
-border:${border && "1px solid rgba(0,0,0,0.15)"};
-width:${width ? width : "100%"};
-background: ${WHITE_COLOR};
-border-radius: ${radius ? radius : "15"}px;
-`;
-
 export const BORDER_THIN = (border: string, px?: number) => `
   ${border}:${px ? px : "1"}px solid rgba(0,0,0,0.15)
 `;
@@ -57,6 +50,17 @@ export const FLEX_STYLE = (justify: string, align: string) => `
   display:flex;
   justify-content:${justify};
   align-items:${align};
+`;
+
+export const GRAY_STYLE = () => `
+
+`;
+
+export const WHITE_STYLE = (border?: boolean, width?: string, radius?: number) => `
+border:${border && "1px solid rgba(0,0,0,0.15)"};
+width:${width ? width : "100%"};
+background: ${WHITE_COLOR};
+border-radius: ${radius ? radius : "15"}px;
 `;
 
 export const HOVER_GRAY = (borderRadius?: number, transition?: boolean) => `
@@ -130,7 +134,7 @@ export const handleImgError = (e: React.SyntheticEvent) => {
 
 // React quill
 
-export const imageHandler = (quillInstance: any, isStudyPost?: boolean) => {
+export const imageHandler = (quillInstance: any, isStory?: boolean) => {
   const input = document.createElement("input");
   input.setAttribute("type", "file");
   input.setAttribute("accept", "image/*");
@@ -143,7 +147,7 @@ export const imageHandler = (quillInstance: any, isStudyPost?: boolean) => {
     }
     axios({
       method: "post",
-      url: isStudyPost ? "/study/image" : "/club/image",
+      url: isStory ? "/story/image" : "/mainPost/image",
       data: form,
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
@@ -171,7 +175,7 @@ export const quillModules = (isNoImageModule: boolean) => {
 export const quillSetting = (isNoImageModule: boolean) => {
   return {
     theme: "snow",
-    placeholder: "内容を書いてください。",
+    placeholder: "내용을 작성해주세요.",
     modules: quillModules(isNoImageModule),
   };
 };

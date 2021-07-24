@@ -39,6 +39,24 @@ export class Stories {
   @Column('varchar', { name: 'code' })
   code: string;
 
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: '다합 , dahab',
+    description: 'region where user visited',
+  })
+  @Column('varchar', { name: 'region' })
+  region: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 'http://upload/images/03420204.blob',
+    description: 'one picture of thumbnail for story',
+  })
+  @Column('longtext', { name: 'thumbnail' })
+  thumbnail: string;
+
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty({

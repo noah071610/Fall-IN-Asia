@@ -16,10 +16,10 @@ const EditorWrapper = styled.div`
 interface IProps {
   setContent: (value: string) => void;
   prevContent?: string;
-  isStudyPost?: boolean;
+  isStory?: boolean;
 }
 
-const Editor: FC<IProps> = ({ setContent, prevContent, isStudyPost }) => {
+const Editor: FC<IProps> = ({ setContent, prevContent, isStory }) => {
   const Quill = typeof window == "object" ? require("quill") : () => false;
   const quillElement = useRef<any>(null);
   const quillInstance = useRef<any>(null);
@@ -39,7 +39,7 @@ const Editor: FC<IProps> = ({ setContent, prevContent, isStudyPost }) => {
     });
 
     const toolbar = quill?.getModule("toolbar");
-    toolbar.addHandler("image", () => imageHandler(quillInstance, isStudyPost));
+    toolbar.addHandler("image", () => imageHandler(quillInstance, isStory));
   }, []);
 
   const onChangeEditor = (content: string) => {
@@ -48,7 +48,6 @@ const Editor: FC<IProps> = ({ setContent, prevContent, isStudyPost }) => {
 
   return (
     <EditorWrapper>
-      <h3>内容作成</h3>
       <div ref={quillElement} />
     </EditorWrapper>
   );

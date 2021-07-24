@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE, FONT_STYLE, GRAY_COLOR } from "config";
+import { FLEX_STYLE, FONT_STYLE, GRAY_COLOR, WHITE_COLOR, WHITE_STYLE } from "config";
 
 export const StoryCardWrapper = styled.div`
   cursor: pointer;
@@ -16,18 +16,21 @@ export const StoryCardWrapper = styled.div`
     border-radius: 10px;
     overflow: hidden;
     width: 40%;
+    position: relative;
     img {
       transition: 0.3s all;
       border-radius: 10px;
       width: 100%;
       height: 250px;
     }
-  }
-
-  .story-info {
-    ${FLEX_STYLE("flex-start", "center")};
-    ul {
-      margin-left: 1rem;
+    .like-comment-list {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      background: ${WHITE_COLOR};
+      padding: 0.25rem 0.5rem;
+      opacity: 0.5;
+      border-radius: 10px;
       li {
         padding: 0.3rem;
         cursor: pointer;
@@ -40,6 +43,10 @@ export const StoryCardWrapper = styled.div`
       }
     }
   }
+
+  .story-info {
+    ${FLEX_STYLE("flex-start", "flex-end")};
+  }
   .story-content {
     padding: 1rem 0;
     line-height: 1.7;
@@ -50,6 +57,6 @@ export const StoryCardWrapper = styled.div`
   }
   h2 {
     ${FONT_STYLE(1.2, true)};
-    padding-bottom: 0.5rem;
+    padding-bottom: 1rem;
   }
 `;

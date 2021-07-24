@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toastErrorMessage } from "config";
 
-export const storyPostCreateAction = createAsyncThunk<any, any>("story/post", async (form) => {
+export const storyCreateAction = createAsyncThunk<any, FormData>("story/post", async (form) => {
   try {
     const response = await axios.post("/story", form);
     return response.data;
@@ -12,7 +12,7 @@ export const storyPostCreateAction = createAsyncThunk<any, any>("story/post", as
   }
 });
 
-export const storyPostDeleteAction = createAsyncThunk<
+export const storyDeleteAction = createAsyncThunk<
   any,
   { postId: number; password: string; userId: number }
 >("story/delete", async (data) => {
@@ -25,7 +25,7 @@ export const storyPostDeleteAction = createAsyncThunk<
   }
 });
 
-export const storyPostEditAction = createAsyncThunk<any, any>("story/edit", async (form) => {
+export const storyEditAction = createAsyncThunk<any, any>("story/edit", async (form) => {
   try {
     const response = await axios.post("/story/edit", form);
     return response.data;

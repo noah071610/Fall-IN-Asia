@@ -8,7 +8,7 @@ interface IProps {}
 const BoxCard: FC<IProps> = () => {
   const [state, setstate] = useState();
   return (
-    <BoxCardWrapper>
+    <BoxCardWrapper className="box-card">
       <div className="image-wrapper">
         <img src="https://img.hankyung.com/photo/202103/0Q.25801355.1.jpg" alt="thai" />
       </div>

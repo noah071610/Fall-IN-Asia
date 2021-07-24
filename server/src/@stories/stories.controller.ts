@@ -33,7 +33,7 @@ export class StoriesController {
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Create story post' })
   @UseInterceptors(
-    FilesInterceptor('image', 5, {
+    FileInterceptor('image', {
       storage: multer.diskStorage({
         destination(req, file, cb) {
           cb(null, 'uploads/');
@@ -50,9 +50,9 @@ export class StoriesController {
   async createPost(
     @Body() form: StoryRequestDto,
     @User() user,
-    @UploadedFiles() files: Express.Multer.File[],
+    @UploadedFile() file: Express.Multer.File,
   ) {
-    await this.StoriesService.createPost(form, user.id, files);
+    await this.StoriesService.createPost(form, user.id, file);
   }
 
   @UseGuards(new LoggedInGuard())
@@ -139,37 +139,12 @@ export class StoriesController {
   @ApiOperation({ summary: 'Get posts' })
   @Get()
   async getPosts(
-    @Query('code') code: string,
     @Query('page', ParseIntPipe) page: number,
-    @Query('type') type: string,
     @Query('filter') filter: string,
   ) {
-    if (type) {
-      switch (type) {
-        case 'attractions':
-          type = '관광지';
-          break;
-        case 'accommodations':
-          type = '숙박';
-          break;
-        case 'food':
-          type = '음식';
-          break;
-        case 'alert':
-          type = '사기경보';
-          break;
-        default:
-          break;
-      }
-    }
     if (filter) {
-      return await this.StoriesService.getCommentPosts(
-        filter,
-        code,
-        type,
-        page,
-      );
+      return await this.StoriesService.getFilterPost(filter, page);
     }
-    return await this.StoriesService.getPosts(code, page, type);
+    return await this.StoriesService.getPosts(page);
   }
 }

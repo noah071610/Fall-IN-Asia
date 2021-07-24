@@ -29,7 +29,7 @@ export class Images {
     example: 'http://domain.com/uploads/239483294.jpg',
     description: 'image src',
   })
-  @Column('varchar', { name: 'image_src' })
+  @Column('longtext', { name: 'image_src' })
   image_src: string;
 
   @CreateDateColumn()

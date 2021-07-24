@@ -29,7 +29,7 @@ const MainArticleList: FC<IProps> = ({ mainPosts, setSize }) => {
     }
   }, [isVisible]);
 
-  const flatMainPosts = mainPosts ? mainPosts?.flat() : [];
+  const mainPostsData = mainPosts ? mainPosts?.flat() : [];
 
   const onClickPopular = useCallback(() => {
     if (query.code) {
@@ -64,7 +64,7 @@ const MainArticleList: FC<IProps> = ({ mainPosts, setSize }) => {
           <button onClick={onClickNewest}>최신순</button>
           <button onClick={onClickTopComment}>댓글많은순</button>
         </div>
-        {flatMainPosts?.map((v, i) => {
+        {mainPostsData?.map((v, i) => {
           return <ArticleCard key={i} mainPost={v} />;
         })}
         <div ref={ref} />

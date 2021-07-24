@@ -3,21 +3,21 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   storyDislikeAction,
   storyLikeAction,
-  storyPostCreateAction,
-  storyPostDeleteAction,
-  storyPostEditAction,
+  storyCreateAction,
+  storyDeleteAction,
+  storyEditAction,
 } from "actions/story";
 
 export interface StoryState {
-  storyPostCreateLoading: boolean;
-  storyPostCreateDone: boolean;
-  storyPostCreateError: boolean;
-  storyPostDeleteLoading: boolean;
-  storyPostDeleteDone: boolean;
-  storyPostDeleteError: boolean;
-  storyPostEditLoading: boolean;
-  storyPostEditDone: boolean;
-  storyPostEditError: boolean;
+  storyCreateLoading: boolean;
+  storyCreateDone: boolean;
+  storyCreateError: boolean;
+  storyDeleteLoading: boolean;
+  storyDeleteDone: boolean;
+  storyDeleteError: boolean;
+  storyEditLoading: boolean;
+  storyEditDone: boolean;
+  storyEditError: boolean;
   storyLikeLoading: boolean;
   storyLikeDone: boolean;
   storyLikeError: boolean;
@@ -27,15 +27,15 @@ export interface StoryState {
 }
 
 const initialState: StoryState = {
-  storyPostCreateLoading: false,
-  storyPostCreateDone: false,
-  storyPostCreateError: false,
-  storyPostDeleteLoading: false,
-  storyPostDeleteDone: false,
-  storyPostDeleteError: false,
-  storyPostEditLoading: false,
-  storyPostEditDone: false,
-  storyPostEditError: false,
+  storyCreateLoading: false,
+  storyCreateDone: false,
+  storyCreateError: false,
+  storyDeleteLoading: false,
+  storyDeleteDone: false,
+  storyDeleteError: false,
+  storyEditLoading: false,
+  storyEditDone: false,
+  storyEditError: false,
   storyLikeLoading: false,
   storyLikeDone: false,
   storyLikeError: false,
@@ -48,20 +48,20 @@ export const storySlice = createSlice({
   name: "story",
   initialState,
   reducers: {
-    storyPostCreateClear(state) {
-      state.storyPostCreateLoading = false;
-      state.storyPostCreateDone = false;
-      state.storyPostCreateError = false;
+    storyCreateClear(state) {
+      state.storyCreateLoading = false;
+      state.storyCreateDone = false;
+      state.storyCreateError = false;
     },
-    storyPostDeleteClear(state) {
-      state.storyPostDeleteLoading = false;
-      state.storyPostDeleteDone = false;
-      state.storyPostDeleteError = false;
+    storyDeleteClear(state) {
+      state.storyDeleteLoading = false;
+      state.storyDeleteDone = false;
+      state.storyDeleteError = false;
     },
-    storyPostEditClear(state) {
-      state.storyPostEditLoading = false;
-      state.storyPostEditDone = false;
-      state.storyPostEditError = false;
+    storyEditClear(state) {
+      state.storyEditLoading = false;
+      state.storyEditDone = false;
+      state.storyEditError = false;
     },
     storyLikeClear(state) {
       state.storyLikeLoading = false;
@@ -76,38 +76,38 @@ export const storySlice = createSlice({
   },
   extraReducers: (builder) =>
     builder
-      .addCase(storyPostCreateAction.pending, (state) => {
-        state.storyPostCreateLoading = true;
+      .addCase(storyCreateAction.pending, (state) => {
+        state.storyCreateLoading = true;
       })
-      .addCase(storyPostCreateAction.fulfilled, (state) => {
-        state.storyPostCreateLoading = false;
-        state.storyPostCreateDone = true;
+      .addCase(storyCreateAction.fulfilled, (state) => {
+        state.storyCreateLoading = false;
+        state.storyCreateDone = true;
       })
-      .addCase(storyPostCreateAction.rejected, (state) => {
-        state.storyPostCreateLoading = false;
-        state.storyPostCreateError = true;
+      .addCase(storyCreateAction.rejected, (state) => {
+        state.storyCreateLoading = false;
+        state.storyCreateError = true;
       })
-      .addCase(storyPostDeleteAction.pending, (state) => {
-        state.storyPostDeleteLoading = true;
+      .addCase(storyDeleteAction.pending, (state) => {
+        state.storyDeleteLoading = true;
       })
-      .addCase(storyPostDeleteAction.fulfilled, (state) => {
-        state.storyPostDeleteLoading = false;
-        state.storyPostDeleteDone = true;
+      .addCase(storyDeleteAction.fulfilled, (state) => {
+        state.storyDeleteLoading = false;
+        state.storyDeleteDone = true;
       })
-      .addCase(storyPostDeleteAction.rejected, (state) => {
-        state.storyPostDeleteLoading = false;
-        state.storyPostDeleteError = true;
+      .addCase(storyDeleteAction.rejected, (state) => {
+        state.storyDeleteLoading = false;
+        state.storyDeleteError = true;
       })
-      .addCase(storyPostEditAction.pending, (state) => {
-        state.storyPostEditLoading = true;
+      .addCase(storyEditAction.pending, (state) => {
+        state.storyEditLoading = true;
       })
-      .addCase(storyPostEditAction.fulfilled, (state) => {
-        state.storyPostEditLoading = false;
-        state.storyPostEditDone = true;
+      .addCase(storyEditAction.fulfilled, (state) => {
+        state.storyEditLoading = false;
+        state.storyEditDone = true;
       })
-      .addCase(storyPostEditAction.rejected, (state) => {
-        state.storyPostEditLoading = false;
-        state.storyPostEditError = true;
+      .addCase(storyEditAction.rejected, (state) => {
+        state.storyEditLoading = false;
+        state.storyEditError = true;
       })
       .addCase(storyLikeAction.pending, (state) => {
         state.storyLikeLoading = true;

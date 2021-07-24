@@ -3,7 +3,7 @@ import { IMainPostRequestForm } from "@typings/db";
 import axios from "axios";
 import { toastErrorMessage } from "config";
 
-export const mainPostCreateAction = createAsyncThunk<any, IMainPostRequestForm>(
+export const mainPostCreateAction = createAsyncThunk<any, FormData>(
   "mainPost/post",
   async (form) => {
     try {
@@ -29,18 +29,15 @@ export const mainPostDeleteAction = createAsyncThunk<any, number>(
   }
 );
 
-export const mainPostEditAction = createAsyncThunk<any, IMainPostRequestForm>(
-  "mainPost/edit",
-  async (form) => {
-    try {
-      const response = await axios.post("/mainPost/edit", form);
-      return response.data;
-    } catch (error) {
-      toastErrorMessage(error);
-      throw error;
-    }
+export const mainPostEditAction = createAsyncThunk<any, FormData>("mainPost/edit", async (form) => {
+  try {
+    const response = await axios.post("/mainPost/edit", form);
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
   }
-);
+});
 
 export const mainPostLikeAction = createAsyncThunk<any, number>(
   "mainPost/like",

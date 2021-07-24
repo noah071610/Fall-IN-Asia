@@ -10,12 +10,13 @@ import { Repository } from 'typeorm';
 import { Announcements } from 'src/entities/Announcements';
 import { Countries } from 'src/entities/Countries';
 import { StoryLike } from 'src/entities/StoryLike';
+import { StoryRequestDto } from 'src/dto/story.request.dto';
 @Injectable()
 export class StoriesService {
   constructor(
     @InjectRepository(Stories)
     private StoriesRepository: Repository<Stories>,
-    @InjectRepository(Images)
+    @InjectRepository(Countries)
     private CountriesRepository: Repository<Countries>,
     @InjectRepository(Images)
     private ImagesRepository: Repository<Images>,
@@ -25,7 +26,11 @@ export class StoriesService {
     private AnnouncementsRepository: Repository<Announcements>,
   ) {}
 
-  async createPost(form: any, userId: number, files: Express.Multer.File[]) {
+  async createPost(
+    form: StoryRequestDto,
+    userId: number,
+    file: Express.Multer.File,
+  ) {
     if (!form) {
       throw new NotFoundException('작성 할 데이터가 없습니다.');
     }
@@ -38,19 +43,16 @@ export class StoriesService {
     const newPostCreate = new Stories();
     newPostCreate.code = form.code;
     newPostCreate.content = form.content;
+    newPostCreate.title = form.title;
+    newPostCreate.region = form.region;
     newPostCreate.country = <any>{ id: country.id };
     newPostCreate.user = <any>{ id: userId };
+    newPostCreate.thumbnail = process.env.BACK_URL + file.path;
     const newPost = await this.StoriesRepository.save(newPostCreate);
-    for (let i = 0; i < files.length; i++) {
-      const newImage = new Images();
-      newImage.image_src = process.env.BACK_URL + files[i].path;
-      newImage.mainPost = <any>newPost.id;
-      await this.ImagesRepository.save(newImage);
-    }
     await this.AnnouncementsRepository.save({
       userId: userId,
       storyId: newPost.id,
-      content: `${form.content.slice(10)}...을 작성했습니다.`,
+      content: `${form.title.slice(10)}...을 작성했습니다.`,
     });
     return true;
   }
@@ -88,17 +90,10 @@ export class StoriesService {
     return post;
   }
 
-  async getCommentPosts(
-    filter: string,
-    code?: string,
-    type?: string,
-    page?: number,
-  ) {
+  async getFilterPost(filter: string, page?: number) {
     const filterPosts = await this.StoriesRepository.createQueryBuilder(
       'stories',
     )
-      .where(code ? `stories.code = :code` : '1=1', { code })
-      .andWhere(type ? `stories.type = :type` : '1=1', { type })
       .leftJoinAndSelect('stories.country', 'country')
       .leftJoinAndSelect('stories.user', 'user')
       .leftJoinAndSelect('stories.likedUser', 'likedUser')
@@ -117,10 +112,8 @@ export class StoriesService {
     }
   }
 
-  async getPosts(code?: string, page?: number, type?: string) {
+  async getPosts(page?: number) {
     const posts = await this.StoriesRepository.createQueryBuilder('stories')
-      .where(code ? `stories.code = :code` : '1=1', { code })
-      .andWhere(type ? `stories.type = :type` : '1=1', { type })
       .leftJoinAndSelect('stories.country', 'country')
       .leftJoinAndSelect('stories.user', 'user')
       .leftJoinAndSelect('stories.likedUser', 'likedUser')
