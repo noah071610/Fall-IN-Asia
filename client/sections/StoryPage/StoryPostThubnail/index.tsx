@@ -13,7 +13,11 @@ const StoryPostThubnail: FC<IProps> = ({ onClickScrollDown, story }) => {
   return (
     <StoryPostThubnailWrapper
       style={{
-        backgroundImage: `url('${story?.thumbnail}')`,
+        backgroundImage: `url('${
+          story?.thumbnail
+            ? story?.thumbnail
+            : "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1053&q=80"
+        }')`,
       }}
     >
       <div className="story-title">

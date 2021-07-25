@@ -1,14 +1,14 @@
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 import { Divider } from "antd";
 import React, { FC, useState } from "react";
-import { StoryPaginationWrapper } from "./styles";
+import { StoryPostPaginationWrapper } from "./styles";
 
 interface IProps {}
 
-const StoryPagination: FC<IProps> = () => {
+const StoryPostPagination: FC<IProps> = () => {
   const [state, setstate] = useState();
   return (
-    <StoryPaginationWrapper>
+    <StoryPostPaginationWrapper>
       <div className="pagination">
         <button className="btn-left">
           <div className="image-wrapper">
@@ -43,46 +43,8 @@ const StoryPagination: FC<IProps> = () => {
           </div>
         </button>
       </div>
-      <ul className="another-stories">
-        <li>
-          <img src="http://www.travelnbike.com/news/photo/201806/60535_93939_2917.jpg" alt="" />
-          <div className="story-list-desc">
-            <h4>대만</h4>
-            <p>
-              군의 외국에의 파견 또는 외국군대의 대한민국 영역안에서의 주류에 대한 동의권을 가진다.
-            </p>
-          </div>
-        </li>
-        <li>
-          <img src="http://www.travelnbike.com/news/photo/201806/60535_93939_2917.jpg" alt="" />
-          <div className="story-list-desc">
-            <h4>대만</h4>
-            <p>
-              군의 외국에의 파견 또는 외국군대의 대한민국 영역안에서의 주류에 대한 동의권을 가진다.
-            </p>
-          </div>
-        </li>
-        <li>
-          <img src="http://www.travelnbike.com/news/photo/201806/60535_93939_2917.jpg" alt="" />
-          <div className="story-list-desc">
-            <h4>대만</h4>
-            <p>
-              군의 외국에의 파견 또는 외국군대의 대한민국 영역안에서의 주류에 대한 동의권을 가진다.
-            </p>
-          </div>
-        </li>
-        <li>
-          <img src="http://www.travelnbike.com/news/photo/201806/60535_93939_2917.jpg" alt="" />
-          <div className="story-list-desc">
-            <h4>대만</h4>
-            <p>
-              군의 외국에의 파견 또는 외국군대의 대한민국 영역안에서의 주류에 대한 동의권을 가진다.
-            </p>
-          </div>
-        </li>
-      </ul>
-    </StoryPaginationWrapper>
+    </StoryPostPaginationWrapper>
   );
 };
 
-export default StoryPagination;
+export default StoryPostPagination;

@@ -1,21 +1,22 @@
-import React, { FC, useCallback, useRef, useState } from "react";
-import ReactMapGL, { Marker, FlyToInterpolator, Source, Layer, MapRef } from "react-map-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
-import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
+import React, { FC, useCallback, useState } from "react";
+import ReactMapGL, { Marker } from "react-map-gl";
 import Pin from "./Pin";
 
-interface IProps {}
+interface IProps {
+  lat: number;
+  lng: number;
+}
 
-const CountryMap: FC<IProps> = () => {
+const CountryMap: FC<IProps> = ({ lat, lng }) => {
   const [marker, setMarker] = useState({
-    latitude: 37.50529626491968,
-    longitude: 126.98047832475031,
+    latitude: lat || 37.50529626491968,
+    longitude: lng || 126.98047832475031,
   });
   const [viewport, setViewport] = useState({
     width: "100%",
     height: 400,
-    latitude: 37.50529626491968,
-    longitude: 126.98047832475031,
+    latitude: lat || 37.50529626491968,
+    longitude: lng || 126.98047832475031,
     zoom: 6,
   });
 

@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import MainLayout from "@layout/MainLayout";
 import AutoCompleteSearch from "@components/AutoCompleteForm";
-import MainCountryList from "@sections/MainPage/MainCountryList";
+import MainCountryList from "@sections/MainPage/MainCountryAllview";
 import CountryCardSilde from "@components/CountryCardSilde";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";

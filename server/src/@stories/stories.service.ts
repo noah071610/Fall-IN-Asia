@@ -42,12 +42,17 @@ export class StoriesService {
     });
     const newPostCreate = new Stories();
     newPostCreate.code = form.code;
-    newPostCreate.content = form.content;
     newPostCreate.title = form.title;
+    newPostCreate.content = form.content;
     newPostCreate.region = form.region;
+    newPostCreate.lat = form.lat;
+    newPostCreate.lng = form.lng;
     newPostCreate.country = <any>{ id: country.id };
     newPostCreate.user = <any>{ id: userId };
-    newPostCreate.thumbnail = process.env.BACK_URL + file.path;
+    if (file) {
+      newPostCreate.thumbnail =
+        process.env.BACK_URL + file.path.replace('\\', '/');
+    }
     const newPost = await this.StoriesRepository.save(newPostCreate);
     await this.AnnouncementsRepository.save({
       userId: userId,
@@ -62,7 +67,7 @@ export class StoriesService {
       throw new NotFoundException('사용 할 이미지가 없습니다.');
     }
     const newImage = new Images();
-    newImage.image_src = process.env.BACK_URL + file.path;
+    newImage.image_src = process.env.BACK_URL + file.path.replace('\\', '/');
     await this.ImagesRepository.save(newImage);
     return true;
   }
@@ -127,7 +132,7 @@ export class StoriesService {
     return posts;
   }
 
-  async editPost(form: any, files: Express.Multer.File[]) {
+  async editPost(form: StoryRequestDto, file: Express.Multer.File) {
     const country = await this.CountriesRepository.findOne({
       where: { code: form.code },
     });
@@ -136,13 +141,25 @@ export class StoriesService {
     )
       .update('stories')
       .set({
-        type: form.type,
-        content: form.content,
         code: form.code,
+        title: form.title,
+        content: form.content,
+        region: form.region,
+        lat: form.lat,
+        lng: form.lng,
         country: <any>{ id: country.id },
       })
-      .where('id = :id', { id: parseInt(form.storyId) })
+      .where('id = :id', { id: parseInt(form.id) })
       .execute();
+    if (file) {
+      await this.StoriesRepository.createQueryBuilder('stories')
+        .update('stories')
+        .set({
+          thumbnail: process.env.BACK_URL + file.path.replace('\\', '/'),
+        })
+        .where('id = :id', { id: parseInt(form.id) })
+        .execute();
+    }
     if (!editedPost) {
       throw new NotFoundException('수정 할 게시물이 없습니다.');
     }

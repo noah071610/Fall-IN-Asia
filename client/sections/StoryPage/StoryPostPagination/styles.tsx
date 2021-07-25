@@ -1,8 +1,8 @@
 import styled from "@emotion/styled/macro";
-import { BORDER_THIN, FLEX_STYLE, FONT_STYLE, HOVER_GRAY } from "config";
+import { FLEX_STYLE } from "config";
 import tw from "twin.macro";
 
-export const StoryPaginationWrapper = styled.div`
+export const StoryPostPaginationWrapper = styled.div`
   ${tw`w-3/5 mx-auto mt-4 mb-20`}
   .pagination {
     ${FLEX_STYLE("center", "center")};
@@ -46,21 +46,6 @@ export const StoryPaginationWrapper = styled.div`
         .anticon {
           ${tw`ml-3`}
         }
-      }
-    }
-  }
-  .another-stories {
-    ${tw`my-8 overflow-hidden rounded-2xl`}
-    li {
-      ${tw`flex w-full cursor-pointer p-4 hover:bg-gray-100`}
-      img {
-        ${tw`w-20 h-16 mr-4 rounded-md`}
-      }
-      h4 {
-        margin-bottom: 0.5rem;
-      }
-      p {
-        ${FONT_STYLE(0.94, true)}
       }
     }
   }

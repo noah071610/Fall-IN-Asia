@@ -1,12 +1,11 @@
 import styled from "@emotion/styled";
 import { BORDER_THIN, FLEX_STYLE, FONT_STYLE, WHITE_COLOR } from "config";
+import tw from "twin.macro";
 
 export const HeaderWrapper = styled.header`
-  padding: 0.7rem 1.2rem;
+  ${tw`py-3 px-5 w-full bg-white`}
   ${BORDER_THIN("border-bottom")};
-  width: 100%;
   ${FLEX_STYLE("space-between", "center")};
-  background-color: ${WHITE_COLOR};
   a {
     ${FONT_STYLE(1.05, true)};
   }
@@ -19,11 +18,9 @@ export const HeaderLeft = styled.ul`
     margin-right: 2rem;
   }
   li {
-    margin-right: 1.3rem;
+    ${tw`mr-6`}
     .icon {
-      width: 2.5rem;
-      height 2.5rem;
-      border-radius:50%;
+      ${tw`w-10 h-10 rounded-full`}
     }
   }
 `;
@@ -31,15 +28,16 @@ export const HeaderLeft = styled.ul`
 export const HeaderRight = styled.ul`
   ${FLEX_STYLE("", "center")};
   li {
-    margin-left: 1.3rem;
-    .icon {
-      width: 2.5rem;
-      height 2.5rem;
-      border-radius:50%;
-      margin-right:0.5rem;
+    ${tw`ml-3`}
+    padding: 0.5rem 0.6rem;
+    .user-icon {
+      ${tw`w-10 h-10 rounded-full`}
     }
     .anticon {
-      font-size : 1.3rem;
+      ${tw`text-2xl`}
     }
+  }
+  .icon-li {
+    ${tw`rounded-full hover:bg-gray-100`}
   }
 `;

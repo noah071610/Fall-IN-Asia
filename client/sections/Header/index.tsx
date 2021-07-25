@@ -7,6 +7,9 @@ import { RootState } from "slices";
 import LoginModal from "@components/Modals/LoginModal";
 import Link from "next/link";
 import { mainSlice } from "slices/main";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell, faBellSlash, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { NotificationOutlined, SearchOutlined } from "@ant-design/icons";
 
 interface HeaderProps {}
 
@@ -38,17 +41,27 @@ const Header: FC<HeaderProps> = () => {
           </Link>
         </li>
         <li>
-          <Link href="/market">
-            <a>마켓</a>
+          <Link href="/guide">
+            <a>가이드</a>
           </Link>
         </li>
       </HeaderLeft>
       <HeaderRight>
         {user ? (
           <>
+            <li className="icon-li">
+              <a>
+                <FontAwesomeIcon className="anticon" icon={faSearch} />
+              </a>
+            </li>
+            <li className="icon-li">
+              <a>
+                <FontAwesomeIcon className="anticon" icon={faBell} />
+              </a>
+            </li>
             <li>
               <a>
-                <img className="icon" src={user?.icon} alt={user?.name} />
+                <img className="user-icon" src={user?.icon} alt={user?.name} />
               </a>
             </li>
           </>

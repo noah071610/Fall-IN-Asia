@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import LG_Layout from "@layout/LG_Layout";
+import XLGLayout from "@layout/XLGLayout";
 import {
   BORDER_THIN,
   FLEX_STYLE,
@@ -28,6 +28,7 @@ import BoxCard from "@components/Cards/BoxCard";
 import StoryMainPoster from "@sections/StoryPage/StoryMainPoster";
 import tw from "twin.macro";
 import UserMainPoster from "@sections/UserPage/UserMainPoster";
+import StoryTopArticleList from "@sections/StoryPage/StoryTopArticleList";
 const Wrapper = styled.div`
   .story-post-btn {
     ${FLEX_STYLE("flex-end", "center")};
@@ -102,29 +103,20 @@ const index: FC<IProps> = () => {
   );
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
-  const { storyCreateDone } = useSelector((state: RootState) => state.story);
-
-  useEffect(() => {
-    if (storyCreateDone) {
-      toastSuccessMessage("당신에 멋진 연대기가 올라갔어요🥰");
-      dispatch(storySlice.actions.storyCreateClear());
-    }
-  }, [storyCreateDone]);
-
   return (
     <Wrapper>
       <StoryMainPoster />
-      <LG_Layout>
+      <XLGLayout>
         <div className="story-post-btn">
           <button onClick={() => router.push("/story/post")}>연대기 올리기</button>
         </div>
         <h2 className="main-title">국가별 연대기</h2>
         <CountryList slidesPerView={3.2} isMain={false} />
         <h2 className="main-title">인기 급상승 연대기</h2>
-        <StoryCard story={stories && stories[0][0]} />
+        <StoryTopArticleList />
         <h2 className="main-title">연대기 전체</h2>
         <StoryArticleList setSize={setSize} stories={stories} />
-      </LG_Layout>
+      </XLGLayout>
     </Wrapper>
   );
 };

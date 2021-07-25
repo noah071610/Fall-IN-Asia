@@ -83,7 +83,7 @@ const MainPostingForm: FC<IProps> = ({ editPost }) => {
       toastErrorMessage("내용을 작성해주세요.");
       return;
     }
-    let form = new FormData();
+    let form: FormData = new FormData();
     upImg?.forEach((v) => {
       form.append("image", v);
     });

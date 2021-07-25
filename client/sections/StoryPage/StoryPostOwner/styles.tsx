@@ -2,7 +2,7 @@ import tw from "twin.macro";
 import styled from "@emotion/styled/macro";
 import { FLEX_STYLE, HOVER_GRAY } from "config";
 
-export const StoryOwnerAnotherPostsWrapper = styled.div`
+export const StoryPostOwnerWrapper = styled.div`
   ${tw`mt-12 w-full`}
   ${FLEX_STYLE("center", "center")};
   .owner-info-wrapper {

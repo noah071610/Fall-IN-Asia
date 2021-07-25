@@ -51,10 +51,29 @@ export class Stories {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
+    example: '다합 , dahab',
+    description: 'region where user visited',
+  })
+  @Column('float', { name: 'lat' })
+  lat: number;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: '다합 , dahab',
+    description: 'region where user visited',
+  })
+  @Column('float', { name: 'lng' })
+  lng: number;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
     example: 'http://upload/images/03420204.blob',
     description: 'one picture of thumbnail for story',
+    nullable: true,
   })
-  @Column('longtext', { name: 'thumbnail' })
+  @Column('longtext', { name: 'thumbnail', nullable: true })
   thumbnail: string;
 
   @IsNumber()

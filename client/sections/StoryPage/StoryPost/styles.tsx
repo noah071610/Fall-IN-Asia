@@ -13,7 +13,7 @@ export const StoryPostWrapper = styled.div`
     ${FLEX_STYLE("flex-start", "center")};
     ${FONT_STYLE(1.3, true)};
     li {
-      ${tw`p-2 cursor-pointer hover:bg-gray-100`}
+      ${tw`p-2 cursor-pointer hover:bg-gray-100 rounded-xl`}
       .anticon,
       .count {
         margin-right: 0.5rem;

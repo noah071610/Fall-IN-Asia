@@ -9,8 +9,8 @@ import { CommentOutlined, HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { storyDislikeAction, storyLikeAction } from "actions/story";
 import CommentForm from "@components/CommentForm";
 import Comment from "@components/Comment";
-import StoryOwnerAnotherPosts from "../StoryOwnerAnotherPosts";
-import StoryPagination from "../StoryPagination";
+import StoryPostOwner from "../StoryPostOwner";
+import StoryPostPagination from "../StoryPostPagination";
 
 interface IProps {
   story: IStory;
@@ -46,8 +46,8 @@ const StoryPost: FC<IProps> = ({ story }) => {
   return (
     <StoryPostWrapper>
       <div className="story-content">{ReactHtmlParser(story?.content as string)}</div>
-      <StoryOwnerAnotherPosts />
-      <StoryPagination />
+      <StoryPostOwner story={story} />
+      <StoryPostPagination />
       <ul className="story-footer">
         <li>
           <CommentOutlined />

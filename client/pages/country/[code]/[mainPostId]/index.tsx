@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
-import { toastSuccessMessage } from "config";
+import { noRevalidate, toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import MainArticleList from "@sections/MainPage/MainArticleList";
@@ -23,7 +23,8 @@ const index = () => {
   const [filter, setFilter] = useState("");
   const { data: mainPost, revalidate: revalidateMainPost } = useSWR(
     `/mainPost/${query?.code}/${query?.mainPostId}`,
-    fetcher
+    fetcher,
+    noRevalidate
   );
   const {
     data: mainPosts,

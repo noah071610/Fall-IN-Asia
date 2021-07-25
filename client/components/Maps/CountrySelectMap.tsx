@@ -1,40 +1,38 @@
 import React, { FC, useCallback, useRef, useState } from "react";
 import ReactMapGL, { Marker, FlyToInterpolator, Source, Layer, MapRef } from "react-map-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
-import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Pin from "./Pin";
 //@ts-ignore
 import Geocoder from "react-map-gl-geocoder";
+import { ICoordinate } from "@typings/db";
 
 interface IProps {
   setRegion: (value: string) => void;
+  marker: ICoordinate;
+  setMarker: (coordinate: ICoordinate) => void;
+  lat: number | undefined;
+  lng: number | undefined;
 }
+// const route1 = {
+//   type: "Feature",
+//   properties: {},
+//   geometry: {
+//     type: "LineString",
+//     coordinates: [
+//       [126.98047832475031, 37.50529626491968],
+//       [139.64044156923396, 35.7066225827444],
+//       [114.37668379199201, 22.561031035250828],
+//     ],
+//   },
+// };
 
-const route1 = {
-  type: "Feature",
-  properties: {},
-  geometry: {
-    type: "LineString",
-    coordinates: [
-      [126.98047832475031, 37.50529626491968],
-      [139.64044156923396, 35.7066225827444],
-      [114.37668379199201, 22.561031035250828],
-    ],
-  },
-};
-
-const CountrySelectMap: FC<IProps> = ({ setRegion }) => {
-  const [marker, setMarker] = useState({
-    latitude: 37.50529626491968,
-    longitude: 126.98047832475031,
-  });
+const CountrySelectMap: FC<IProps> = ({ setRegion, marker, setMarker, lat, lng }) => {
   const mapRef = useRef<MapRef>(null);
   const [events, logEvents] = useState({});
   const [viewport, setViewport] = useState({
     width: "100%",
     height: 500,
-    latitude: 37.50529626491968,
-    longitude: 126.98047832475031,
+    latitude: lat || 37.50529626491968,
+    longitude: lng || 126.98047832475031,
     zoom: 8,
   });
   const onMarkerDragEnd = useCallback((event) => {
@@ -83,7 +81,7 @@ const CountrySelectMap: FC<IProps> = ({ setRegion }) => {
           setRegion(e.result.place_name);
         }}
       />
-      <Source type="geojson" data={route1}>
+      {/* <Source type="geojson" data={route1}>
         <Layer
           id="route"
           type="line"
@@ -91,7 +89,7 @@ const CountrySelectMap: FC<IProps> = ({ setRegion }) => {
           layout={{ "line-join": "round", "line-cap": "round" }}
           paint={{ "line-color": "red", "line-width": 2 }}
         />
-      </Source>
+      </Source> */}
       <Marker
         longitude={marker.longitude}
         latitude={marker.latitude}

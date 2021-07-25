@@ -8,7 +8,7 @@ import { RootState } from "slices";
 import NameSpace from "@components/NameSpace";
 import { mainPostSlice } from "slices/mainPost";
 import router from "next/router";
-import { toastDeleteConfirmMessage } from "@components/ConfirmToastify";
+import { toastConfirmMessage } from "@components/ConfirmToastify";
 import { mainPostDeleteAction } from "actions/mainPost";
 
 interface IProps {
@@ -53,7 +53,15 @@ const MainPostTitle: FC<IProps> = ({ mainPost }) => {
             </li>
             <Divider type="vertical" />
             <li className="delete-btn">
-              <a onClick={() => toastDeleteConfirmMessage(onClickConfirm)}>
+              <a
+                onClick={() =>
+                  toastConfirmMessage(
+                    onClickConfirm,
+                    "정말 이 포스트를 삭제할까요?",
+                    "삭제해주세요."
+                  )
+                }
+              >
                 <DeleteOutlined />
               </a>
             </li>

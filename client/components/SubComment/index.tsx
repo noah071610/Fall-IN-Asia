@@ -9,7 +9,7 @@ import useToggle from "@hooks/useToggle";
 import { commentSlice } from "slices/comment";
 import NameSpace from "@components/NameSpace";
 import { memo } from "react";
-import { toastDeleteConfirmMessage } from "@components/ConfirmToastify";
+import { toastConfirmMessage } from "@components/ConfirmToastify";
 import { subCommentDeleteAction } from "actions/comment";
 interface IProps {
   subComment: ISubComment;
@@ -42,7 +42,7 @@ const SubComment: FC<IProps> = ({ subComment }) => {
         <a
           className="delete-btn"
           onClick={() => {
-            toastDeleteConfirmMessage(onClickConfirm, "이 답글을");
+            toastConfirmMessage(onClickConfirm, "이 답글을 삭제할까요?", "삭제해주세요.");
           }}
         >
           <DeleteOutlined />

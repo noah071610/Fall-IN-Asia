@@ -16,7 +16,10 @@ const mainPostType = {
   사기경보: "사기경보",
 } as const;
 type EMainPostType = typeof mainPostType[keyof typeof mainPostType];
-
+export interface ICoordinate {
+  latitude: number;
+  longitude: number;
+}
 export interface IUser {
   id: number;
   googleId: number;
@@ -48,6 +51,8 @@ export interface IStory {
   title: string;
   content: string;
   region: string;
+  lat: number;
+  lng: number;
   thumbnail: string;
   createdAt: Date;
   user: IUser;

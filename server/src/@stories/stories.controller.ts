@@ -58,7 +58,7 @@ export class StoriesController {
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Edit post' })
   @UseInterceptors(
-    FilesInterceptor('image', 5, {
+    FileInterceptor('image', {
       storage: multer.diskStorage({
         destination(req, file, cb) {
           cb(null, 'uploads/');
@@ -74,9 +74,9 @@ export class StoriesController {
   @Post('edit')
   async editPost(
     @Body() form: StoryRequestDto,
-    @UploadedFiles() files: Express.Multer.File[],
+    @UploadedFile() file: Express.Multer.File,
   ) {
-    await this.StoriesService.editPost(form, files);
+    await this.StoriesService.editPost(form, file);
   }
 
   @UseGuards(new LoggedInGuard())

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE, FONT_STYLE, WHITE_COLOR } from "config";
+import { BLACK_COLOR, FLEX_STYLE, FONT_STYLE, WHITE_COLOR } from "config";
 import tw from "twin.macro";
 
 export const StoryPostThubnailWrapper = styled.div`
@@ -12,7 +12,7 @@ export const StoryPostThubnailWrapper = styled.div`
     ${FLEX_STYLE("center", "center", "column")};
     backgroud: rgba(255, 255, 255, 0.5);
     .overlay {
-      ${tw`w-full bg-white opacity-30`}
+      ${tw`w-full bg-black opacity-40 cursor-default`}
     }
     .name-space-wrapper {
       z-index: 1;

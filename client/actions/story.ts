@@ -12,12 +12,9 @@ export const storyCreateAction = createAsyncThunk<any, FormData>("story/post", a
   }
 });
 
-export const storyDeleteAction = createAsyncThunk<
-  any,
-  { postId: number; password: string; userId: number }
->("story/delete", async (data) => {
+export const storyDeleteAction = createAsyncThunk<any, number>("story/delete", async (storyId) => {
   try {
-    await axios.post(`/story/delete`, data);
+    await axios.delete(`/story/${storyId}`);
     return;
   } catch (error) {
     toastErrorMessage(error);
@@ -25,7 +22,7 @@ export const storyDeleteAction = createAsyncThunk<
   }
 });
 
-export const storyEditAction = createAsyncThunk<any, any>("story/edit", async (form) => {
+export const storyEditAction = createAsyncThunk<any, FormData>("story/edit", async (form) => {
   try {
     const response = await axios.post("/story/edit", form);
     return response.data;

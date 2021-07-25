@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { FLEX_STYLE, FONT_STYLE, GRAY_COLOR, WHITE_COLOR, WHITE_STYLE } from "config";
 import tw from "twin.macro";
 
-export const StoryCardWrapper = styled.div`
+export const GuideCardWrapper = styled.div`
   ${tw`cursor-pointer py-4 mb-4 flex`}
   &:hover {
     .image-wrapper {
@@ -12,21 +12,17 @@ export const StoryCardWrapper = styled.div`
     }
   }
   .image-wrapper {
-    ${tw`rounded-xl overflow-hidden w-2/5 relative`}
+    ${tw`rounded-xl overflow-hidden w-3/5 relative`}
     img {
       ${tw`rounded-xl h-60 w-full `}
       transition: 0.3s all;
     }
-    .like-comment-list {
-      ${tw`absolute bottom-4 right-4 bg-white py-1 px-2 opacity-50 rounded-xl`}
-      li {
-        ${tw`p-1 cursor-pointer`}
-        .count {
-          margin: 0 0.3rem;
-        }
-        .anticon {
-          font-size: 1.2rem;
-        }
+    .guide-label {
+      transform: skewX(-35deg);
+      ${tw`absolute top-3 -left-4 bg-blue-600 py-3 px-5 opacity-50 font-bold text-white`}
+      span {
+        ${tw`block ml-2`}
+        transform: skewX(35deg);
       }
     }
   }

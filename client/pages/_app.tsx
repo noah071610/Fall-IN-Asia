@@ -12,6 +12,8 @@ import "slick-carousel/slick/slick-theme.css";
 import "aos/dist/aos.css";
 import "react-toastify/dist/ReactToastify.css";
 import "react-quill/dist/quill.snow.css";
+import "mapbox-gl/dist/mapbox-gl.css";
+import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { ToastContainer } from "react-toastify";
 import Header from "@sections/Header";
 import Footer from "@sections/Footer";

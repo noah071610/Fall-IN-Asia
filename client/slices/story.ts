@@ -1,5 +1,5 @@
-import { IMarketPost } from "@typings/db";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IStory } from "@typings/db";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   storyDislikeAction,
   storyLikeAction,
@@ -9,6 +9,7 @@ import {
 } from "actions/story";
 
 export interface StoryState {
+  editStory: IStory | null;
   storyCreateLoading: boolean;
   storyCreateDone: boolean;
   storyCreateError: boolean;
@@ -27,6 +28,7 @@ export interface StoryState {
 }
 
 const initialState: StoryState = {
+  editStory: null,
   storyCreateLoading: false,
   storyCreateDone: false,
   storyCreateError: false,
@@ -57,6 +59,12 @@ export const storySlice = createSlice({
       state.storyDeleteLoading = false;
       state.storyDeleteDone = false;
       state.storyDeleteError = false;
+    },
+    storyEditSet(state, action) {
+      state.editStory = action.payload.story;
+    },
+    editStoryClear(state) {
+      state.editStory = null;
     },
     storyEditClear(state) {
       state.storyEditLoading = false;
