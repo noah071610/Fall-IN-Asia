@@ -21,11 +21,15 @@ export class LocalSerializer extends PassportSerializer {
   async deserializeUser(userId: string, done: CallableFunction) {
     return await this.usersRepository
       .createQueryBuilder('users')
-      .leftJoinAndSelect('users.mainPosts', 'mainPost')
-      .leftJoinAndSelect('mainPost.announcements', 'c_announce')
-      .leftJoinAndSelect('users.comments', 'com')
+      .leftJoinAndSelect('users.likeStory', 'likeStory')
       .leftJoinAndSelect('users.likeMainPost', 'likeMainPost')
+      .leftJoinAndSelect('users.stories', 'stories')
+      .leftJoinAndSelect('users.mainPosts', 'mainPosts')
+      .leftJoinAndSelect('mainPosts.announcements', 'c_announce')
+      .leftJoinAndSelect('stories.announcements', 's_announce')
+      .leftJoinAndSelect('users.comments', 'com')
       .leftJoinAndSelect('com.mainPost', 'cm_mainPost')
+      .leftJoinAndSelect('com.mainPost', 'cm_story')
       .leftJoinAndSelect('users.announcements', 'announce')
       .where('users.id = :userId', { userId: +userId })
       .getOne()

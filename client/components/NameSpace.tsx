@@ -37,7 +37,7 @@ interface IProps {
 
 const NameSpace: FC<IProps> = ({ user, date, comment }) => {
   return (
-    <NameSpaceWrapper>
+    <NameSpaceWrapper className="name-space-wrapper">
       <div className="icon">
         <img src={user?.icon ? user?.icon : DEFAULT_ICON_URL} alt="" />
       </div>

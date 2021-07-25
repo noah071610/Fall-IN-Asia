@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { wrapper } from "configureStore";
 import "antd/dist/antd.css";
 import "swiper/swiper.min.css";
+import "animate.css/animate.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "aos/dist/aos.css";

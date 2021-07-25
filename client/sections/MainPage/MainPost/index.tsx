@@ -73,7 +73,6 @@ const MainPost: FC<IProps> = ({ mainPost }) => {
     }
     dispatch(mainPostDislikeAction(mainPost?.id));
   }, [user, mainPost]);
-  console.log(mainPost);
 
   return (
     <MainPostWrapper>

@@ -156,17 +156,14 @@ textarea {
 .basic-btn {
   border: none;
   margin: 0;
-  padding: 0.6rem 1.5rem;
-  width: auto;
+  padding: 0.6rem 0.8rem;
   overflow: visible;
   cursor:pointer;
   background-color:inherit;
-  transition:0.3s all;
   ${BORDER_THIN("border")};
   border-radius:3px;
   &:hover{
-    border:1px solid ${BLUE_COLOR};
-    color:${BLUE_COLOR};
+    box-shadow:0px 0px 5px ${RGB_BLACK(0.15)};
   }
 }
 
@@ -186,16 +183,6 @@ textarea {
   transform:translateY(-100%);
 }
 
-@keyframes modalIn {
-  from {
-    transform-origin: top right;
-    transform: scale(0.3);
-  }
-  to {
-    transform-origin: top right;
-    transform: scale(1);
-  }
-}
 
 .reverse {
   transform:rotate(180deg);

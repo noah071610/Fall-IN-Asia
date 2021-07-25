@@ -6,4 +6,5 @@ export class CommentRequestDto extends PickType(Comments, [
 ] as const) {
   mainPostId: number;
   commentId: number;
+  storyId: number;
 }

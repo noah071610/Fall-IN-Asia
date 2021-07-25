@@ -7,7 +7,6 @@ import { IComment } from "@typings/db";
 import useToggle from "@hooks/useToggle";
 import SubCommentForm from "@components/SubCommentForm";
 import SubComment from "@components/SubComment";
-import { commentSlice } from "slices/comment";
 import NameSpace from "@components/NameSpace";
 interface IProps {
   comment: IComment;

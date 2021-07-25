@@ -21,7 +21,6 @@ const StoryCountryArticleList: FC<IProps> = () => {
           <>
             <div style={{ backgroundImage: `url(${v.image_src})` }} className="country-image">
               <h3>{v.name}</h3>
-
               <div className="overlay" />
             </div>
           </>

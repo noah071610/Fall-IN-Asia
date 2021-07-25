@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import bcrypt from 'bcrypt';
 import { SubComments } from 'src/entities/SubComments';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CommentRequestDto } from 'src/dto/comment.request.dto';
 
 @Injectable()
 export class CommentsService {
@@ -13,33 +14,23 @@ export class CommentsService {
     private commentsRepository: Repository<Comments>,
     @InjectRepository(SubComments)
     private subCommentsRepository: Repository<SubComments>,
-    @InjectRepository(Users)
-    private usersRepository: Repository<Users>,
   ) {}
 
-  async createComment(content: string, userId: number, mainPostId: number) {
+  async createComment(form: CommentRequestDto, userId: number) {
     const newComment = new Comments();
-    newComment.content = content;
+    newComment.content = form.content;
     newComment.user = <any>{ id: userId };
-    newComment.mainPost = <any>{ id: mainPostId };
+    if (form.mainPostId) {
+      newComment.mainPost = <any>{ id: form.mainPostId };
+    } else {
+      newComment.story = <any>{ id: form.storyId };
+    }
     await this.commentsRepository.save(newComment);
     return true;
   }
 
   async deleteComment(commentId: number) {
     await this.commentsRepository.delete({ id: commentId });
-    return true;
-  }
-
-  async comparePasswordForAuth(password: string, userId: number) {
-    const user = await this.usersRepository.findOne({
-      where: { id: userId },
-      select: ['password'],
-    });
-    const conparePassword = await bcrypt.compare(password, user.password);
-    if (!conparePassword) {
-      throw new UnauthorizedException('パスワードが違います。');
-    }
     return true;
   }
 

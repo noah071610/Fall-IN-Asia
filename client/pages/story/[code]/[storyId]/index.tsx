@@ -1,14 +1,33 @@
 import React, { FC, useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { FLEX_STYLE, FONT_STYLE, GRID_STYLE, noRevalidate, WHITE_COLOR } from "config";
+import {
+  FLEX_STYLE,
+  FONT_STYLE,
+  GRID_STYLE,
+  noRevalidate,
+  toastSuccessMessage,
+  WHITE_COLOR,
+} from "config";
 import NameSpace from "@components/NameSpace";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import XLG_Layout from "@layout/XLG_Layout";
 import CountrySelectMap from "@components/CountrySelectMap";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
+import { ICountry, IStory } from "@typings/db";
+import StoryPostInfo from "@sections/StoryPage/StoryPostInfo";
+import { Divider } from "antd";
+import StoryPost from "@sections/StoryPage/StoryPost";
+import { wrapper } from "configureStore";
+import axios from "axios";
+import { getUserInfoAction } from "actions/user";
+import { storySlice } from "slices/story";
+import { commentSlice } from "slices/comment";
+import StoryMainPoster from "@sections/StoryPage/StoryMainPoster";
+import StoryOwnerAnotherPosts from "@sections/StoryPage/StoryOwnerAnotherPosts";
+import StoryPagination from "@sections/StoryPage/StoryPagination";
 
 export const StoryPostWrapper = styled.div`
   .story-subtitle {
@@ -17,46 +36,6 @@ export const StoryPostWrapper = styled.div`
     margin-top: 3rem;
     margin-bottom: 1.5rem;
   }
-  .story-title {
-    ${FLEX_STYLE("center", "center")};
-    flex-direction: column;
-    h1 {
-      ${FONT_STYLE(2, true)};
-      margin-bottom: 2rem;
-    }
-  }
-  .thumbnail-wrapper {
-    margin: 2rem 0;
-    img {
-      width: 100%;
-      max-height: 520px;
-    }
-  }
-  .story-info {
-    ${GRID_STYLE("2rem", "1fr 1fr")};
-  }
-  .country-image {
-    position: relative;
-    border-radius: 15px;
-    width: 100%;
-    cursor: pointer;
-    height: 150px;
-    background-position: center;
-    background-repeat: no-repeat;
-    ${FLEX_STYLE("center", "center")};
-    .overlay {
-      border-radius: 15px;
-    }
-    h3 {
-      z-index: 1;
-      ${FONT_STYLE(1.5, true, WHITE_COLOR)};
-    }
-    &:hover {
-      .overlay {
-        opacity: 0.3;
-      }
-    }
-  }
 `;
 interface IProps {}
 
@@ -64,50 +43,126 @@ const index: FC<IProps> = () => {
   const dispatch = useDispatch();
   const { query } = useRouter();
   const [filter, setFilter] = useState("");
-  const { data: story, revalidate: revalidateStory } = useSWR(
+  const { data: story, revalidate: revalidateStory } = useSWR<IStory>(
     `/story/${query?.code}/${query?.storyId}`,
     fetcher,
     noRevalidate
   );
-  const { data: country, revalidate: revalidateCountry } = useSWR(
+  const { data: country, revalidate: revalidateCountry } = useSWR<ICountry>(
     `/country/${query?.code}`,
     fetcher,
     noRevalidate
   );
-
   const { user } = useSelector((state: RootState) => state.user);
+
+  const {
+    storyCreateDone,
+    storyEditConfirmDone,
+    storyDeleteDone,
+    storyDislikeDone,
+    storyLikeDone,
+  } = useSelector((state: RootState) => state.story);
+  const { commentCreateDone, commentDeleteDone, subCommentCreateDone, subCommentDeleteDone } =
+    useSelector((state: RootState) => state.comment);
+
+  useEffect(() => {
+    if (storyCreateDone) {
+      toastSuccessMessage("게시물을 성공적으로 작성했습니다.");
+      dispatch(storySlice.actions.storyCreateClear());
+      revalidateStory();
+    }
+  }, [storyCreateDone]);
+
+  useEffect(() => {
+    if (storyEditConfirmDone) {
+      router.push(`/club/${query?.group}/edit`);
+    }
+  }, [storyEditConfirmDone]);
+
+  useEffect(() => {
+    if (storyDeleteDone) {
+      toastSuccessMessage("게시글을 삭제했습니다.");
+      dispatch(storySlice.actions.storyDeleteClear());
+    }
+  }, [storyDeleteDone]);
+
+  useEffect(() => {
+    if (commentCreateDone) {
+      toastSuccessMessage("댓글을 성공적으로 작성했습니다.");
+      dispatch(commentSlice.actions.commentCreateClear());
+      revalidateStory();
+    }
+  }, [commentCreateDone]);
+
+  useEffect(() => {
+    if (commentDeleteDone) {
+      toastSuccessMessage("댓글을 성공적으로 삭제했습니다.");
+      dispatch(commentSlice.actions.commentDeleteClear());
+      revalidateStory();
+    }
+  }, [commentDeleteDone]);
+
+  useEffect(() => {
+    if (subCommentCreateDone) {
+      toastSuccessMessage("답글을 성공적으로 작성했습니다.");
+      dispatch(commentSlice.actions.subCommentCreateClear());
+      revalidateStory();
+    }
+  }, [subCommentCreateDone]);
+
+  useEffect(() => {
+    if (subCommentDeleteDone) {
+      toastSuccessMessage("답글을 성공적으로 삭제했습니다.");
+      dispatch(commentSlice.actions.subCommentDeleteClear());
+      revalidateStory();
+    }
+  }, [subCommentDeleteDone]);
+
+  useEffect(() => {
+    if (storyLikeDone) {
+      toastSuccessMessage("좋아요!💓");
+      dispatch(storySlice.actions.storyLikeClear());
+      dispatch(getUserInfoAction());
+      revalidateStory();
+    }
+  }, [storyLikeDone]);
+
+  useEffect(() => {
+    if (storyDislikeDone) {
+      toastSuccessMessage("좋아요 취소💔");
+      dispatch(storySlice.actions.storyDislikeClear());
+      dispatch(getUserInfoAction());
+      revalidateStory();
+    }
+  }, [storyDislikeDone]);
   useEffect(() => {}, []);
   return (
     <StoryPostWrapper>
+      <StoryMainPoster story={story} />
       <XLG_Layout>
-        <div className="story-title">
-          <h1>좌충우돌 다합에서 한달 살기</h1>
-          <NameSpace user={user} />
-        </div>
-        <div className="thumbnail-wrapper">
-          <img
-            src="https://media-cdn.tripadvisor.com/media/photo-s/03/b7/3b/ac/octopus-world-dahab.jpg"
-            alt="thumbnail-image"
-          />
-        </div>
         <h2 className="story-subtitle">연대기 정보</h2>
-        <div className="story-info">
-          <div className="info-location">
-            <CountrySelectMap />
-          </div>
-          <div className="info-country">
-            <div
-              style={{ backgroundImage: `url(${country?.image_src})` }}
-              className="country-image"
-            >
-              <h3>{country?.name}</h3>
-              <div className="overlay" />
-            </div>
-          </div>
-        </div>
+        {country && <StoryPostInfo country={country} />}
+        <Divider />
+        {story && <StoryPost story={story} />}
+        <StoryPagination />
       </XLG_Layout>
     </StoryPostWrapper>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req, res, ...etc }) => {
+      const cookie = req ? req.headers.cookie : "";
+      axios.defaults.headers.Cookie = "";
+      if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+      }
+      await store.dispatch(getUserInfoAction());
+      return {
+        props: {},
+      };
+    }
+);
 
 export default index;

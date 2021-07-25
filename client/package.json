@@ -16,6 +16,7 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@loadable/component": "^5.15.0",
     "@reduxjs/toolkit": "^1.6.1",
+    "animate.css": "^4.1.1",
     "antd": "^4.16.8",
     "aos": "^2.3.4",
     "axios": "^0.21.1",

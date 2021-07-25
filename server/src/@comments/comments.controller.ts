@@ -26,11 +26,7 @@ export class CommentsController {
   @ApiOperation({ summary: 'Create Comment' })
   @Post()
   async createComment(@Body() form: CommentRequestDto, @User() user) {
-    await this.CommentService.createComment(
-      form.content,
-      user.id,
-      form.mainPostId,
-    );
+    await this.CommentService.createComment(form, user.id);
   }
 
   @UseGuards(new LoggedInGuard())

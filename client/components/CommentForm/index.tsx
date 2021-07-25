@@ -10,9 +10,11 @@ import useInput from "@hooks/useInput";
 import { useRouter } from "next/router";
 import { memo } from "react";
 
-interface IProps {}
+interface IProps {
+  isStory?: boolean;
+}
 
-const CommentForm: FC<IProps> = () => {
+const CommentForm: FC<IProps> = ({ isStory }) => {
   const dispatch = useDispatch();
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
@@ -28,13 +30,17 @@ const CommentForm: FC<IProps> = () => {
       toastErrorMessage("로그인이 필요합니다.");
       return;
     }
-    let form = {
+    let form: { [key: string]: any; content: string } = {
       content,
-      mainPostId: parseInt(query?.mainPostId as string),
     };
+    if (isStory) {
+      form["storyId"] = parseInt(query?.storyId as string);
+    } else {
+      form["mainPostId"] = parseInt(query?.mainPostId as string);
+    }
     dispatch(commentCreateAction(form));
     setContent("");
-  }, [content, query, user]);
+  }, [content, query, user, isStory]);
 
   const onClickCommentCancle = useCallback(() => {
     setOnCommentForm(false);
@@ -55,7 +61,7 @@ const CommentForm: FC<IProps> = () => {
             ? { background: WHITE_COLOR, boxShadow: "0px 0px 5px rgba(0,0,0,0.15)" }
             : {}
         }
-        className="comment-wrapper"
+        className="comment-form-main"
       >
         <div
           style={onCommentForm ? { marginBottom: ".5rem" } : {}}

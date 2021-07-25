@@ -3,7 +3,7 @@ import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, HOVER_GRAY, RGB_BLACK 
 
 export const CommentFormWrapper = styled.div`
   padding: 1rem 2rem;
-  .comment-wrapper{
+  .comment-form-main{
     transition:0.25s all;
     border-radius: 15px;
     padding:0.3rem 0.5rem;
