@@ -1,35 +1,14 @@
-import { DoubleRightOutlined } from "@ant-design/icons";
-import NameSpace from "@components/NameSpace";
-import { IStory } from "@typings/db";
-import React, { FC, useCallback, useEffect, useState } from "react";
-import { useRef } from "react";
+import React, { FC, useState } from "react";
 import { StoryMainPosterWrapper } from "./styles";
 
-interface IProps {
-  story: IStory | undefined;
-}
+interface IProps {}
 
-const StoryMainPoster: FC<IProps> = ({ story }) => {
-  const onClickScrollDown = useCallback(() => {}, []);
+const StoryMainPoster: FC<IProps> = () => {
+  const [state, setstate] = useState();
   return (
     <StoryMainPosterWrapper>
-      <div
-        style={{
-          backgroundImage: `url('${story?.thumbnail}')`,
-        }}
-        className="story-thumbnail"
-      >
-        <div className="story-title">
-          <div className="overlay" />
-          <h1>{story?.title}</h1>
-          <NameSpace date={story?.createdAt!} user={story?.user!} />
-        </div>
-      </div>
-      <div onClick={onClickScrollDown} className="scroll-down-btn">
-        <a>
-          <DoubleRightOutlined />
-        </a>
-      </div>
+      <div className="overlay" />
+      <h1 className="title">울고 웃었던 당신의 소중한 연대기를 저희도 따라가볼래요.</h1>
     </StoryMainPosterWrapper>
   );
 };

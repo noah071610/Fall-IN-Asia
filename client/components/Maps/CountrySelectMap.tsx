@@ -1,9 +1,8 @@
 import React, { FC, useCallback, useRef, useState } from "react";
-import { CountrySelectMapWrapper } from "./styles";
 import ReactMapGL, { Marker, FlyToInterpolator, Source, Layer, MapRef } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
-import Pin from "./pin";
+import Pin from "./Pin";
 //@ts-ignore
 import Geocoder from "react-map-gl-geocoder";
 
@@ -64,49 +63,47 @@ const CountrySelectMap: FC<IProps> = ({ setRegion }) => {
   );
 
   return (
-    <CountrySelectMapWrapper>
-      <ReactMapGL
-        className="map-gl"
-        ref={mapRef}
-        {...viewport}
+    <ReactMapGL
+      className="map-gl"
+      ref={mapRef}
+      {...viewport}
+      mapboxApiAccessToken="pk.eyJ1IjoiamFuZ2h5dW5zb28iLCJhIjoiY2tyZ2l0NnhoMmtncjJ4bmp4YjZheXZvcCJ9.7aD4HiGVqpKqM7rUj8FfJg"
+      onViewportChange={handleViewportChange}
+      mapStyle="mapbox://sprites/mapbox/basic-v8"
+      asyncRender={true}
+      transitionInterpolator={new FlyToInterpolator()}
+    >
+      <Geocoder
+        marker={false}
+        mapRef={mapRef}
+        onViewportChange={handleGeocoderViewportChange}
         mapboxApiAccessToken="pk.eyJ1IjoiamFuZ2h5dW5zb28iLCJhIjoiY2tyZ2l0NnhoMmtncjJ4bmp4YjZheXZvcCJ9.7aD4HiGVqpKqM7rUj8FfJg"
-        onViewportChange={handleViewportChange}
-        mapStyle="mapbox://sprites/mapbox/basic-v8"
-        asyncRender={true}
-        transitionInterpolator={new FlyToInterpolator()}
-      >
-        <Geocoder
-          marker={false}
-          mapRef={mapRef}
-          onViewportChange={handleGeocoderViewportChange}
-          mapboxApiAccessToken="pk.eyJ1IjoiamFuZ2h5dW5zb28iLCJhIjoiY2tyZ2l0NnhoMmtncjJ4bmp4YjZheXZvcCJ9.7aD4HiGVqpKqM7rUj8FfJg"
-          position="top-left"
-          onResult={(e: any) => {
-            setRegion(e.result.place_name);
-          }}
+        position="top-left"
+        onResult={(e: any) => {
+          setRegion(e.result.place_name);
+        }}
+      />
+      <Source type="geojson" data={route1}>
+        <Layer
+          id="route"
+          type="line"
+          source="route"
+          layout={{ "line-join": "round", "line-cap": "round" }}
+          paint={{ "line-color": "red", "line-width": 2 }}
         />
-        <Source type="geojson" data={route1}>
-          <Layer
-            id="route"
-            type="line"
-            source="route"
-            layout={{ "line-join": "round", "line-cap": "round" }}
-            paint={{ "line-color": "red", "line-width": 2 }}
-          />
-        </Source>
-        <Marker
-          longitude={marker.longitude}
-          latitude={marker.latitude}
-          offsetTop={-20}
-          offsetLeft={-10}
-          draggable
-          onDragStart={onMarkerDragStart}
-          onDragEnd={onMarkerDragEnd}
-        >
-          <Pin size={20} />
-        </Marker>
-      </ReactMapGL>
-    </CountrySelectMapWrapper>
+      </Source>
+      <Marker
+        longitude={marker.longitude}
+        latitude={marker.latitude}
+        offsetTop={-20}
+        offsetLeft={-10}
+        draggable
+        onDragStart={onMarkerDragStart}
+        onDragEnd={onMarkerDragEnd}
+      >
+        <Pin size={20} />
+      </Marker>
+    </ReactMapGL>
   );
 };
 

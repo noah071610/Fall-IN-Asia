@@ -16,7 +16,7 @@ import {
 } from "config";
 import { storyCreateAction } from "actions/story";
 import router from "next/router";
-import CountrySelectMap from "@components/CountrySelectMap";
+import CountrySelectMap from "@components/Maps/CountrySelectMap";
 import AutoCompleteForm from "@components/AutoCompleteForm";
 import useSWR from "swr";
 import { ICountry } from "@typings/db";

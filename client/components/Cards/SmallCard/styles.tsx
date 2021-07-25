@@ -1,26 +1,17 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE, GRAY_COLOR, HOVER_GRAY } from "config";
+import { FLEX_STYLE } from "config";
+import tw from "twin.macro";
 
-export const SmallCardWrapper = styled.li`
-  border-radius: 15px;
-  padding: 0.5rem 0;
-  cursor: pointer;
-  margin: 0;
+export const SmallCardWrapper = styled.div`
+  ${tw`py-2 pr-8 pl-2 cursor-pointer rounded-md w-auto hover:bg-gray-100`}
   ${FLEX_STYLE("center", "center")};
   img {
-    border-radius: 5px;
-    width: 4rem;
-    height: 4rem;
+    ${tw`rounded-md w-20 h-20`}
   }
   .country-desc {
-    font-size: 0.7rem;
+    ${tw`text-xs ml-4`}
     h4 {
-      font-size: 1rem;
-      padding-bottom: 0.3rem;
+      ${tw`pb-1`}
     }
-    margin-left: 1rem;
-  }
-  &:hover {
-    background: ${GRAY_COLOR};
   }
 `;

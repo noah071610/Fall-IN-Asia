@@ -10,7 +10,6 @@ import { storyDislikeAction, storyLikeAction } from "actions/story";
 import CommentForm from "@components/CommentForm";
 import Comment from "@components/Comment";
 import StoryOwnerAnotherPosts from "../StoryOwnerAnotherPosts";
-import { Divider } from "antd";
 import StoryPagination from "../StoryPagination";
 
 interface IProps {
@@ -48,7 +47,6 @@ const StoryPost: FC<IProps> = ({ story }) => {
     <StoryPostWrapper>
       <div className="story-content">{ReactHtmlParser(story?.content as string)}</div>
       <StoryOwnerAnotherPosts />
-      <Divider />
       <StoryPagination />
       <ul className="story-footer">
         <li>

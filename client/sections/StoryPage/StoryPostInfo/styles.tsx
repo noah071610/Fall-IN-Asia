@@ -1,13 +1,13 @@
 import styled from "@emotion/styled";
 import { BORDER_THIN, FLEX_STYLE, FONT_STYLE, GRID_STYLE, HOVER_GRAY, WHITE_COLOR } from "config";
+import tw from "twin.macro";
 
 export const StoryPostInfoWrapper = styled.div`
-  ${GRID_STYLE("2rem", "1fr 1fr")};
+  ${tw`w-2/3 mx-auto`}
   .country-image {
+    ${tw`h-40 mb-4`}
     position: relative;
     border-radius: 15px;
-    width: 100%;
-    height: 150px;
     background-position: center;
     background-repeat: no-repeat;
     ${FLEX_STYLE("center", "center")};
@@ -22,26 +22,6 @@ export const StoryPostInfoWrapper = styled.div`
       .overlay {
         opacity: 0.5;
       }
-    }
-  }
-  .info-stories {
-    margin: 2rem 0;
-    ${BORDER_THIN("border")};
-    border-radius: 15px;
-    overflow: hidden;
-    li {
-      display: flex;
-      width: 100%;
-      cursor: pointer;
-      img {
-        width: 20%;
-        margin-right: 1rem;
-      }
-      padding: 1rem;
-      p {
-        ${FONT_STYLE(0.94, true)}
-      }
-      ${HOVER_GRAY()};
     }
   }
 `;

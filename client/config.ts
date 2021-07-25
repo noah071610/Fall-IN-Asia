@@ -46,14 +46,11 @@ font-weight:${weight && "bold"};
 color:${color ? color : "black"};
 `;
 
-export const FLEX_STYLE = (justify: string, align: string) => `
+export const FLEX_STYLE = (justify: string, align: string, flexStyle?: string) => `
   display:flex;
   justify-content:${justify};
   align-items:${align};
-`;
-
-export const GRAY_STYLE = () => `
-
+  flex-direction:${flexStyle};
 `;
 
 export const WHITE_STYLE = (border?: boolean, width?: string, radius?: number) => `
@@ -63,9 +60,7 @@ background: ${WHITE_COLOR};
 border-radius: ${radius ? radius : "15"}px;
 `;
 
-export const HOVER_GRAY = (borderRadius?: number, transition?: boolean) => `
-  border-radius:${borderRadius ? borderRadius + "px" : 0};
-  transition:${transition ? "0.3s all" : ""};
+export const HOVER_GRAY = () => `
   cursor:pointer;
   &:hover{
     background:${GRAY_COLOR};

@@ -33,7 +33,7 @@ export const CommentFormWrapper = styled.div`
       ${FLEX_STYLE("flex-end", "center")};
       button{
         padding:0.5rem 0.8rem;
-        ${HOVER_GRAY(5)};
+        ${HOVER_GRAY()};
         margin-left:0.5rem;
       }
     }

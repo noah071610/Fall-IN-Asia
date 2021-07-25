@@ -4,49 +4,31 @@ import LG_Layout from "@layout/LG_Layout";
 import {
   BORDER_THIN,
   FLEX_STYLE,
-  FONT_STYLE,
   GRAY_COLOR,
   GRID_STYLE,
-  HOVER_GRAY,
   noRevalidate,
   RGB_BLACK,
   toastSuccessMessage,
-  WHITE_COLOR,
   WHITE_STYLE,
 } from "config";
 import StoryCard from "@components/Cards/StoryCard";
-import { Scrollbars } from "react-custom-scrollbars";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { SwiperSlide, Swiper } from "swiper/react";
 import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
 import router, { useRouter } from "next/router";
 import { storySlice } from "slices/story";
 import { useSWRInfinite } from "swr";
-import { IMainPost, IStory } from "@typings/db";
+import { IStory } from "@typings/db";
 import fetcher from "utils/fetcher";
 import StoryArticleList from "@sections/StoryPage/StoryArticleList";
-import StoryCountryArticleList from "@sections/StoryPage/StoryCountryArticleList";
-import MainTopContent from "@sections/MainPage/MainTopContent";
+import CountryList from "@components/CountryList";
 import BoxCard from "@components/Cards/BoxCard";
-import { useRef } from "react";
+import StoryMainPoster from "@sections/StoryPage/StoryMainPoster";
+import tw from "twin.macro";
+import UserMainPoster from "@sections/UserPage/UserMainPoster";
 const Wrapper = styled.div`
-  .story-slider {
-    position: relative;
-    width: 100%;
-    height: 350px;
-    background: url(https://user-images.githubusercontent.com/74864925/126781509-8008fa80-5bb8-4a90-bb9e-132357def1aa.jpg)
-      no-repeat top left / 100% 100%;
-
-    ${FLEX_STYLE("center", "center")};
-    .title {
-      cursor: pointer;
-      z-index: 1;
-      ${FONT_STYLE(2, true, WHITE_COLOR)};
-    }
-  }
   .story-post-btn {
     ${FLEX_STYLE("flex-end", "center")};
     margin-bottom: 1rem;
@@ -55,12 +37,12 @@ const Wrapper = styled.div`
       ${BORDER_THIN("border")};
       ${WHITE_STYLE(false, "130px", 10)};
       &:hover {
-        box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)};
+        ${tw`shadow-md`}
       }
     }
   }
   .story-popular-wrapper {
-    ${GRID_STYLE("2rem", "1fr 1fr ")};
+    ${GRID_STYLE("2rem", "1fr 1fr 1fr")};
     margin-top: 2rem;
     .box-card {
       padding: 0;
@@ -109,7 +91,6 @@ const settings = {
 
 const index: FC<IProps> = () => {
   const { query } = useRouter();
-  const scrollbarRef = useRef(null);
   const {
     data: stories,
     revalidate,
@@ -132,22 +113,15 @@ const index: FC<IProps> = () => {
 
   return (
     <Wrapper>
-      <div className="story-slider">
-        <div className="overlay" />
-        <h1 className="title">울고 웃었던 당신의 소중한 연대기를 저희도 따라가볼래요.</h1>
-      </div>
+      <StoryMainPoster />
       <LG_Layout>
         <div className="story-post-btn">
           <button onClick={() => router.push("/story/post")}>연대기 올리기</button>
         </div>
         <h2 className="main-title">국가별 연대기</h2>
-        <StoryCountryArticleList />
+        <CountryList slidesPerView={3.2} isMain={false} />
         <h2 className="main-title">인기 급상승 연대기</h2>
         <StoryCard story={stories && stories[0][0]} />
-        <div className="story-popular-wrapper">
-          <BoxCard />
-          <BoxCard />
-        </div>
         <h2 className="main-title">연대기 전체</h2>
         <StoryArticleList setSize={setSize} stories={stories} />
       </LG_Layout>

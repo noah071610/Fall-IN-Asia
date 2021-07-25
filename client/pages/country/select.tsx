@@ -1,7 +1,6 @@
 import React, { FC, useCallback, useMemo, useState } from "react";
 import AutoCompleteForm from "@components/AutoCompleteForm";
-import MainCountryList from "@sections/MainPage/MainCountryList";
-import CountryCardSilde from "@components/CountryCardSilde";
+import CountryList from "@components/CountryList";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { FLEX_STYLE, GRAY_COLOR, toastErrorMessage, WHITE_STYLE } from "config";
@@ -12,6 +11,8 @@ import LG_Layout from "@layout/LG_Layout";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
+import MainCountryAllview from "@sections/MainPage/MainCountryAllview";
+import tw from "twin.macro";
 
 const GobackBtn = styled.div`
   ${FLEX_STYLE("flex-end", "center")};
@@ -23,9 +24,7 @@ const GobackBtn = styled.div`
 `;
 
 const AutoCompleteWrapper = styled.div`
-  ${WHITE_STYLE()};
-  display: flex;
-  padding: 0.7rem;
+  ${tw`bg-white flex p-2 rounded-2xl`}
   .search-bar {
     width: 100%;
   }
@@ -42,11 +41,7 @@ const AutoCompleteWrapper = styled.div`
     }
   }
   .search-btn {
-    width: 80px;
-    margin-left: 1rem;
-    border-radius: 10px;
-    cursor: pointer;
-    background: ${GRAY_COLOR};
+    ${tw`w-20 ml-4 rounded-xl cursor-pointer bg-gray-100 hover:bg-gray-300`}
   }
 `;
 
@@ -77,7 +72,7 @@ const select: FC<IProps> = () => {
         <button onClick={() => router.back()}>뒤로가기</button>
       </GobackBtn>
       <h2 className="main-title">인기여행지</h2>
-      <CountryCardSilde slidesPerView={4.7} />
+      <CountryList isMain={true} slidesPerView={4.7} />
       <h2 className="main-title">국가선택</h2>
       <AutoCompleteWrapper>
         <div className="search-bar">
@@ -91,7 +86,7 @@ const select: FC<IProps> = () => {
           이동
         </button>
       </AutoCompleteWrapper>
-      <MainCountryList countries={countries} />
+      <MainCountryAllview countries={countries} />
     </LG_Layout>
   );
 };

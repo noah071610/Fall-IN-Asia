@@ -1,38 +1,32 @@
-import styled from "@emotion/styled";
-import { BORDER_THIN, FLEX_STYLE, GRID_STYLE, HOVER_GRAY, WHITE_STYLE } from "config";
+import tw from "twin.macro";
+import styled from "@emotion/styled/macro";
+import { FLEX_STYLE, HOVER_GRAY } from "config";
 
 export const StoryOwnerAnotherPostsWrapper = styled.div`
-  margin-top: 3rem;
-  padding: 0 2rem;
-  width: 100%;
+  ${tw`mt-12 w-full`}
   ${FLEX_STYLE("center", "center")};
   .owner-info-wrapper {
     ${FLEX_STYLE("center", "center")};
-    flex-direction: column;
-    width: 40%;
+    ${tw`flex-col w-2/5`}
   }
   .icon {
     img {
-      border-radius: 50%;
-      width: 5rem;
-      height: 5rem;
+      ${tw`w-20 h-20 rounded-full`}
     }
   }
   .info {
     .name {
-      margin-top: 1rem;
-      text-align: center;
+      ${tw`mt-4 text-center`}
     }
     .introduce {
-      margin-top: 0.8rem;
+      ${tw`mt-3`}
     }
   }
   .links {
-    margin-top: 1.1rem;
+    ${tw`mt-4`}
     button {
-      ${HOVER_GRAY(10)};
-      padding: 0.5rem 0.4rem;
-      border-radius: 5px;
+      ${tw`py-2 px-1.5 rounded-md`}
+      ${HOVER_GRAY()};
     }
   }
 `;

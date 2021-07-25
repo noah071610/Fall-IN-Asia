@@ -1,23 +1,13 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
-import {
-  FLEX_STYLE,
-  FONT_STYLE,
-  GRID_STYLE,
-  noRevalidate,
-  toastSuccessMessage,
-  WHITE_COLOR,
-} from "config";
-import NameSpace from "@components/NameSpace";
+import { noRevalidate, toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import XLG_Layout from "@layout/XLG_Layout";
-import CountrySelectMap from "@components/CountrySelectMap";
 import router, { useRouter } from "next/router";
-import useSWR from "swr";
+import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
 import { ICountry, IStory } from "@typings/db";
-import StoryPostInfo from "@sections/StoryPage/StoryPostInfo";
 import { Divider } from "antd";
 import StoryPost from "@sections/StoryPage/StoryPost";
 import { wrapper } from "configureStore";
@@ -25,26 +15,29 @@ import axios from "axios";
 import { getUserInfoAction } from "actions/user";
 import { storySlice } from "slices/story";
 import { commentSlice } from "slices/comment";
-import StoryMainPoster from "@sections/StoryPage/StoryMainPoster";
-import StoryOwnerAnotherPosts from "@sections/StoryPage/StoryOwnerAnotherPosts";
-import StoryPagination from "@sections/StoryPage/StoryPagination";
+import StoryArticleList from "@sections/StoryPage/StoryArticleList";
+import StoryPostThubnail from "@sections/StoryPage/StoryPostThubnail";
+import CountryMap from "@components/Maps/CountryMap";
 
-export const StoryPostWrapper = styled.div`
-  .story-subtitle {
-    text-align: center;
-    ${FONT_STYLE(1.3, true)}
-    margin-top: 3rem;
-    margin-bottom: 1.5rem;
-  }
-`;
+export const StoryPostWrapper = styled.div``;
 interface IProps {}
 
 const index: FC<IProps> = () => {
   const dispatch = useDispatch();
   const { query } = useRouter();
+  const postRef = useRef<HTMLDivElement>(null);
   const [filter, setFilter] = useState("");
   const { data: story, revalidate: revalidateStory } = useSWR<IStory>(
     `/story/${query?.code}/${query?.storyId}`,
+    fetcher,
+    noRevalidate
+  );
+  const {
+    data: stories,
+    revalidate,
+    setSize,
+  } = useSWRInfinite<IStory[]>(
+    (index) => `/story?page=${index + 1}&filter=${query?.filter || ""}`,
     fetcher,
     noRevalidate
   );
@@ -135,16 +128,18 @@ const index: FC<IProps> = () => {
       revalidateStory();
     }
   }, [storyDislikeDone]);
-  useEffect(() => {}, []);
+  const onClickScrollDown = useCallback(() => {
+    (postRef?.current as HTMLDivElement).scrollIntoView({ behavior: "smooth" });
+  }, []);
   return (
     <StoryPostWrapper>
-      <StoryMainPoster story={story} />
-      <XLG_Layout>
-        <h2 className="story-subtitle">연대기 정보</h2>
-        {country && <StoryPostInfo country={country} />}
+      <StoryPostThubnail onClickScrollDown={onClickScrollDown} story={story} />
+      <XLG_Layout postRef={postRef}>
+        <h2 className="main-title">연대기 위치</h2>
+        {country && <CountryMap />}
         <Divider />
         {story && <StoryPost story={story} />}
-        <StoryPagination />
+        <StoryArticleList setSize={setSize} stories={stories} />
       </XLG_Layout>
     </StoryPostWrapper>
   );
