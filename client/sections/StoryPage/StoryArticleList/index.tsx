@@ -1,10 +1,9 @@
-import ArticleCard from "@components/Cards/ArticleCard";
 import { IMainPost, IStory } from "@typings/db";
 import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import { useRef } from "react";
 import { StoryArticleListWrapper } from "./styles";
 import router, { useRouter } from "next/router";
-import StoryCard from "@components/Cards/StoryCard";
+import ArticleCard from "@components/Cards/ArticleCard";
 import useOnScreen from "@hooks/useOnScreen";
 
 interface IProps {
@@ -50,7 +49,7 @@ const StoryArticleList: FC<IProps> = ({ stories, setSize }) => {
         <button onClick={onClickTopComment}>댓글많은순</button>
       </div>
       {storiesData?.map((v: IStory, i) => {
-        return <StoryCard key={i} story={v} />;
+        return <ArticleCard key={i} story={v} />;
       })}
       <div ref={ref} />
     </StoryArticleListWrapper>

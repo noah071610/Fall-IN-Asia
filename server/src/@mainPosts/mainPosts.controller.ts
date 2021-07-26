@@ -82,7 +82,7 @@ export class MainPostsController {
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Delete post' })
   @Delete('/:mainPostId')
-  async deletePost(@Param('mainPostId',ParseIntPipe) mainPostId: number) {
+  async deletePost(@Param('mainPostId', ParseIntPipe) mainPostId: number) {
     await this.MainPostsService.deletePost(mainPostId);
   }
 
@@ -124,6 +124,13 @@ export class MainPostsController {
     @User() user,
   ) {
     await this.MainPostsService.dislikePost(mainPostId, user.id);
+  }
+
+  @ApiOperation({ summary: 'Get latest posts by using ID -' })
+  @Get('latest')
+  async getLatestPosts() {
+    const latestPosts = await this.MainPostsService.getLatestPosts();
+    return latestPosts;
   }
 
   @ApiOperation({ summary: 'Get one post for post page' })

@@ -126,6 +126,13 @@ export class StoriesController {
     await this.StoriesService.dislikePost(storyId, user.id);
   }
 
+  @ApiOperation({ summary: 'Get latest posts by using ID -' })
+  @Get('latest')
+  async getLatestPosts() {
+    const latestPosts = await this.StoriesService.getLatestPosts();
+    return latestPosts;
+  }
+
   @ApiOperation({ summary: 'Get one post for post page' })
   @Get(':code/:storyId')
   async getOnePost(

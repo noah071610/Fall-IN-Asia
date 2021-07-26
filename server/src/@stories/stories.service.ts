@@ -95,6 +95,18 @@ export class StoriesService {
     return post;
   }
 
+  async getLatestPosts() {
+    const latestPosts = await this.StoriesRepository.find({
+      relations: ['country'],
+      order: { id: 'DESC' },
+      take: 3,
+    });
+    if (!latestPosts) {
+      throw new NotFoundException('가져올 게시물이 없습니다.');
+    }
+    return latestPosts;
+  }
+
   async getFilterPost(filter: string, page?: number) {
     const filterPosts = await this.StoriesRepository.createQueryBuilder(
       'stories',

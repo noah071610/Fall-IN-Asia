@@ -74,7 +74,17 @@ const LoginModal: FC<IProps> = () => {
             <button onClick={onClickSignUp}>간편회원가입</button>
           </div>
         </form>
-        <h2></h2>
+        <ul className="social-login-wrapper">
+          <li>
+            <img src="https://img.icons8.com/color/144/000000/google-logo.png" />
+          </li>
+          <li>
+            <img src="https://user-images.githubusercontent.com/74864925/126999733-b93a3a48-b5ec-40b5-9184-b9b2e4fcd6d2.jpg" />
+          </li>
+          <li>
+            <img src="https://user-images.githubusercontent.com/74864925/126999735-d90208dd-0eda-4951-924c-06ee8227fe7b.png" />
+          </li>
+        </ul>
       </LoginModalWrapper>
     </>
   );

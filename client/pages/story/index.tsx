@@ -1,33 +1,20 @@
 import React, { FC, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import XLGLayout from "@layout/XLGLayout";
-import {
-  BORDER_THIN,
-  FLEX_STYLE,
-  GRAY_COLOR,
-  GRID_STYLE,
-  noRevalidate,
-  RGB_BLACK,
-  toastSuccessMessage,
-  WHITE_STYLE,
-} from "config";
-import StoryCard from "@components/Cards/StoryCard";
+import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, GRID_STYLE, noRevalidate, WHITE_STYLE } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
 import router, { useRouter } from "next/router";
-import { storySlice } from "slices/story";
 import { useSWRInfinite } from "swr";
 import { IStory } from "@typings/db";
 import fetcher from "utils/fetcher";
 import StoryArticleList from "@sections/StoryPage/StoryArticleList";
 import CountryList from "@components/CountryList";
-import BoxCard from "@components/Cards/BoxCard";
 import StoryMainPoster from "@sections/StoryPage/StoryMainPoster";
 import tw from "twin.macro";
-import UserMainPoster from "@sections/UserPage/UserMainPoster";
 import StoryTopArticleList from "@sections/StoryPage/StoryTopArticleList";
 const Wrapper = styled.div`
   .story-post-btn {
@@ -80,15 +67,6 @@ const Wrapper = styled.div`
   }
 `;
 interface IProps {}
-
-const settings = {
-  dots: false,
-  infinite: true,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  autoplay: false,
-  speed: 300,
-};
 
 const index: FC<IProps> = () => {
   const { query } = useRouter();

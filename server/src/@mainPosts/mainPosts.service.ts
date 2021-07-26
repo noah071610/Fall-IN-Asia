@@ -92,6 +92,18 @@ export class MainPostsService {
     return post;
   }
 
+  async getLatestPosts() {
+    const latestPosts = await this.MainPostsRepository.find({
+      relations: ['user', 'country'],
+      order: { id: 'DESC' },
+      take: 5,
+    });
+    if (!latestPosts) {
+      throw new NotFoundException('가져올 게시물이 없습니다.');
+    }
+    return latestPosts;
+  }
+
   async getCommentPosts(
     filter: string,
     code?: string,

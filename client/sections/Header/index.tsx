@@ -10,6 +10,7 @@ import { mainSlice } from "slices/main";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faBellSlash, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { NotificationOutlined, SearchOutlined } from "@ant-design/icons";
+import Overlay from "@components/Modals/Overlay";
 
 interface HeaderProps {}
 
@@ -71,7 +72,12 @@ const Header: FC<HeaderProps> = () => {
           </li>
         )}
       </HeaderRight>
-      {onLoginModal && <LoginModal />}
+      {onLoginModal && (
+        <>
+          <LoginModal />
+          <Overlay />
+        </>
+      )}
       {onSignupModal && <SignupModal />}
     </HeaderWrapper>
   );

@@ -1,4 +1,4 @@
-import CountryCard from "@components/Cards/CountryCard";
+import ImageCard from "@components/Cards/ImageCard";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { ICountry } from "@typings/db";
 import { GRID_STYLE, noRevalidate } from "config";
@@ -43,7 +43,7 @@ const CountryList: FC<IProps> = ({ slidesPerView, isMain }) => {
       {countries?.map((v, i) => {
         return (
           <SwiperSlide key={i}>
-            <CountryCard country={v} />
+            <ImageCard country={v} />
           </SwiperSlide>
         );
       })}

@@ -7,15 +7,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import MainArticleList from "@sections/MainPage/MainArticleList";
 import MainPostingForm from "@sections/MainPage/MainPostingForm";
+import { SwiperSlide, Swiper } from "swiper/react";
 import { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
 import MainLayout from "@layout/MainLayout";
-import CountryCardSilde from "@components/CountryCardSilde";
-import MainTopContent from "@sections/MainPage/MainTopContent";
 import { mainPostSlice } from "slices/mainPost";
 import { useRouter } from "next/router";
 import { IMainPost } from "@typings/db";
 import CountryList from "@components/CountryList";
+import ArticleCard from "@components/Cards/ArticleCard";
+import { PlusCircleOutlined } from "@ant-design/icons";
+import MainTopArticleSlide from "@sections/MainPage/MainTopArticleSlide";
 
 const index = () => {
   const dispatch = useDispatch();
@@ -64,8 +66,8 @@ const index = () => {
     <MainLayout>
       <h2 className="main-title">인기여행지</h2>
       <CountryList slidesPerView={3.2} isMain={true} />
-      <h2 className="main-title">전세계 인기글</h2>
-      <MainTopContent />
+      <h2 className="main-title">인기 급상승 연대기</h2>
+      <MainTopArticleSlide />
       <h2 className="main-title">포스팅</h2>
       <MainPostingForm />
       <MainArticleList setSize={setSize} mainPosts={mainPosts} />

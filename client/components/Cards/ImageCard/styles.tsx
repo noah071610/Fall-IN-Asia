@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { FLEX_STYLE, FONT_STYLE, WHITE_COLOR } from "config";
 import tw from "twin.macro";
 
-export const CountryCardWrapper = styled.div`
+export const ImageCardWrapper = styled.div`
   ${tw`relative rounded-xl w-full h-full cursor-pointer`}
   background-position: center;
   background-repeat: no-repeat;

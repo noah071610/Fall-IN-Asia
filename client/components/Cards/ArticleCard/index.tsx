@@ -1,124 +1,45 @@
-import { CommentOutlined, HeartFilled, HeartOutlined } from "@ant-design/icons";
+import { CommentOutlined, LikeOutlined } from "@ant-design/icons";
 import NameSpace from "@components/NameSpace";
-import { IMainPost } from "@typings/db";
-import React, { FC, memo, useCallback, useEffect, useState } from "react";
+import { IStory } from "@typings/db";
+import { NO_IMAGE_URL } from "config";
+import React, { FC, useCallback, useState } from "react";
 import { ArticleCardWrapper } from "./styles";
 import ReactHtmlParser from "react-html-parser";
-import { toastErrorMessage } from "config";
 import router from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "slices";
-import { mainPostDislikeAction, mainPostLikeAction } from "actions/mainPost";
 
 interface IProps {
-  mainPost: IMainPost;
+  story: IStory;
+  isMain?: boolean;
 }
 
-const ArticleCard: FC<IProps> = ({ mainPost }) => {
-  const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.user);
-  const [liked, setLiked] = useState(false);
-  const [imageLayout, setImageLayout] = useState("");
-
-  useEffect(() => {
-    if (user) {
-      if (user.likeMainPost?.find((v: any) => v.mainPostId === mainPost?.id)) {
-        setLiked(true);
-      } else {
-        setLiked(false);
-      }
-    }
-  }, [user, mainPost]);
-
-  const onClickLikeBtn = useCallback(() => {
-    if (!user) {
-      toastErrorMessage("로그인이 필요합니다.");
-      return;
-    }
-    dispatch(mainPostLikeAction(mainPost?.id));
-  }, [user, mainPost]);
-  const onClickDislikeBtn = useCallback(() => {
-    if (!user) {
-      toastErrorMessage("로그인이 필요합니다.");
-      return;
-    }
-    dispatch(mainPostDislikeAction(mainPost?.id));
-  }, [user, mainPost]);
-
-  useEffect(() => {
-    if (mainPost?.images?.length === 0) {
-      return;
-    }
-    if (mainPost?.images?.length === 1) {
-      setImageLayout("one-image");
-      return;
-    }
-    if (mainPost?.images?.length > 1) {
-      setImageLayout("two-images");
-    }
-  }, [mainPost]);
-
-  const onClickCountryTag = useCallback(() => {
-    router.push(`/country/${mainPost.code}`);
-  }, []);
-  const onClickTypeTag = useCallback(() => {
-    router.push(`/country/${mainPost.code}/?type=${mainPost.type}`);
-  }, []);
-  const onClickPostIdTag = useCallback(() => {
-    router.push(`/country/${mainPost.code}/${mainPost.id}`);
-  }, []);
-  const onClickCommentBtn = useCallback(() => {
-    router.push(`/country/${mainPost.code}/${mainPost.id}`);
-  }, []);
-
+const ArticleCard: FC<IProps> = ({ story, isMain }) => {
+  const onClickArticleCard = useCallback(() => {
+    router.push(`/story/${story?.code}/${story?.id}`);
+  }, [story]);
   return (
-    <ArticleCardWrapper className="article-card-wrapper">
-      <div className="article-top">
-        <NameSpace user={mainPost?.user} date={mainPost?.createdAt} />
-        <div className="article-header">
-          <a onClick={onClickCountryTag}>{mainPost?.country?.name}</a>/
-          <a onClick={onClickTypeTag}>{mainPost?.type}</a>/
-          <a onClick={onClickPostIdTag}>{mainPost?.id}번째메아리</a>
-        </div>
-      </div>
-      <div className="article">
-        <div
-          onClick={() => router.push(`/country/${mainPost?.country?.code}/${mainPost?.id}`)}
-          className={imageLayout}
-        >
-          {mainPost?.images?.slice(0, 2).map((v, i) => {
-            return <img key={i} src={v.image_src} />;
-          })}
-        </div>
-        <div
-          onClick={() => router.push(`/country/${mainPost?.country?.code}/${mainPost?.id}`)}
-          className="content"
-        >
-          {ReactHtmlParser(mainPost?.content as string)}
-        </div>
-        <ul className="article-footer">
-          <li onClick={onClickCommentBtn}>
+    <ArticleCardWrapper className="article-card-wrapper" onClick={onClickArticleCard}>
+      <div style={isMain ? { width: "55%" } : {}} className="image-wrapper">
+        <img src={story?.thumbnail ? story.thumbnail : NO_IMAGE_URL} alt="thai" />
+        <ul className="like-comment-list">
+          <li>
             <CommentOutlined />
-            <span className="count">{mainPost?.comments?.length}</span>
-            <span>댓글</span>
+            <span className="count">{story?.comments.length}</span>
           </li>
-          {liked ? (
-            <li onClick={onClickDislikeBtn} className="liked">
-              <HeartFilled />
-              <span className="count">{mainPost?.likedUser?.length}</span>
-              <span>좋아요</span>
-            </li>
-          ) : (
-            <li onClick={onClickLikeBtn}>
-              <HeartOutlined />
-              <span className="count">{mainPost?.likedUser?.length}</span>
-              <span>좋아요</span>
-            </li>
-          )}
+          <li>
+            <LikeOutlined />
+            <span className="count">{story?.likedUser.length}</span>
+          </li>
         </ul>
+      </div>
+      <div className="story-main">
+        <h2>{story?.title}</h2>
+        <div className="story-info">
+          <NameSpace date={story?.createdAt} user={story?.user} />
+        </div>
+        <div className="story-content">{ReactHtmlParser(story?.content as string)}</div>
       </div>
     </ArticleCardWrapper>
   );
 };
 
-export default memo(ArticleCard);
+export default ArticleCard;

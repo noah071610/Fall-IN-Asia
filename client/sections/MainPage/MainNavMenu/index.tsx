@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
-import { MainAsideMenuWrapper } from "./styles";
+import { MainNavMenuWrapper } from "./styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBed,
@@ -13,18 +13,16 @@ import Link from "next/link";
 import router, { useRouter } from "next/router";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
-import { toastErrorMessage, toastSuccessMessage } from "config";
 import { ICountry } from "@typings/db";
 
 interface IProps {}
 
-const MainAsideMenu: FC<IProps> = () => {
+const MainNavMenu: FC<IProps> = () => {
   const { query } = useRouter();
-  const {
-    data: country,
-    error,
-    revalidate,
-  } = useSWR<ICountry>(query?.code ? `/country/${query?.code}` : null, fetcher);
+  const { data: country } = useSWR<ICountry>(
+    query?.code ? `/country/${query?.code}` : null,
+    fetcher
+  );
 
   const onClickCountry = useCallback(() => {
     if (query?.code) {
@@ -34,7 +32,7 @@ const MainAsideMenu: FC<IProps> = () => {
     }
   }, [query]);
   return (
-    <MainAsideMenuWrapper>
+    <MainNavMenuWrapper>
       <div className="country">
         <div onClick={onClickCountry} className="country-img">
           <img
@@ -109,8 +107,8 @@ const MainAsideMenu: FC<IProps> = () => {
           </Link>
         )}
       </ul>
-    </MainAsideMenuWrapper>
+    </MainNavMenuWrapper>
   );
 };
 
-export default MainAsideMenu;
+export default MainNavMenu;
