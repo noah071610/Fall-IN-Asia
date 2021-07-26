@@ -74,21 +74,6 @@ export const GRID_STYLE = (gap: string, colums: string, row?: string) => `
   gap:${gap};
 `;
 
-// list
-
-export const japanMapList = [
-  { name: "関東(東京)", eng: "kanto" },
-  { name: "関西(大阪)", eng: "kansai" },
-  { name: "九州", eng: "kyushu" },
-  { name: "東北", eng: "tohoku" },
-  { name: "中部", eng: "chubu" },
-  { name: "中国", eng: "chugoku" },
-  { name: "四国", eng: "shikoku" },
-  { name: "北海道", eng: "hotkaido" },
-  { name: "沖縄", eng: "okinawa" },
-  { name: "大韓民国", eng: "korea" },
-];
-
 // Toast Message
 
 export const toastErrorMessage = (error: any) => {
