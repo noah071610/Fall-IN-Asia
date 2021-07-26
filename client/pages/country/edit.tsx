@@ -1,26 +1,8 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
-import MainLayout from "@layout/MainLayout";
-import AutoCompleteSearch from "@components/AutoCompleteForm";
-import MainCountryList from "@sections/MainPage/MainCountryAllview";
-import CountryCardSilde from "@components/CountryCardSilde";
-import useSWR from "swr";
-import fetcher from "utils/fetcher";
-import {
-  FLEX_STYLE,
-  GRAY_COLOR,
-  HOVER_GRAY,
-  toastErrorMessage,
-  toastSuccessMessage,
-  WHITE_STYLE,
-} from "config";
-import { ICountry } from "@typings/db";
-import styled from "@emotion/styled";
+import { toastSuccessMessage } from "config";
 import router from "next/router";
 import LG_Layout from "@layout/LG_Layout";
 import MainPostingForm from "@sections/MainPage/MainPostingForm";
-import { getUserInfoAction } from "actions/user";
-import { wrapper } from "configureStore";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { mainPostSlice } from "slices/mainPost";
@@ -33,10 +15,6 @@ const edit: FC<IProps> = () => {
   const { editPost, mainPostEditDone } = useSelector((state: RootState) => state.mainPost);
 
   useEffect(() => {
-    if (!user) {
-      router.back();
-      return;
-    }
     if (!editPost) {
       router.back();
     }

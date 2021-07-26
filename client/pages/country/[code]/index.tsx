@@ -5,12 +5,12 @@ import { getUserInfoAction } from "actions/user";
 import { noRevalidate, toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import MainArticleList from "@sections/MainPage/MainArticleList";
+import MomentList from "@sections/MainPage/MomentList";
 import MainPostingForm from "@sections/MainPage/MainPostingForm";
 import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
 import MainLayout from "@layout/MainLayout";
-import MainTopContent from "@sections/MainPage/MainTopContent";
+import MainTopContent from "@sections/MainPage/MainTopArticleSlide";
 import { mainPostSlice } from "slices/mainPost";
 import router, { useRouter } from "next/router";
 import { ICountry, IMainPost } from "@typings/db";
@@ -79,7 +79,7 @@ const index = () => {
       <MainTopContent />
       <h2 className="main-title">포스팅</h2>
       <MainPostingForm />
-      <MainArticleList setSize={setSize} mainPosts={mainPosts} />
+      <MomentList setSize={setSize} mainPosts={mainPosts} />
     </MainLayout>
   );
 };

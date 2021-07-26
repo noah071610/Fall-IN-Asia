@@ -5,7 +5,7 @@ import { getUserInfoAction } from "actions/user";
 import { noRevalidate, toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import MainArticleList from "@sections/MainPage/MainArticleList";
+import MomentList from "@sections/MainPage/MomentList";
 import MainPostingForm from "@sections/MainPage/MainPostingForm";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { useSWRInfinite } from "swr";
@@ -15,8 +15,6 @@ import { mainPostSlice } from "slices/mainPost";
 import { useRouter } from "next/router";
 import { IMainPost } from "@typings/db";
 import CountryList from "@components/CountryList";
-import ArticleCard from "@components/Cards/ArticleCard";
-import { PlusCircleOutlined } from "@ant-design/icons";
 import MainTopArticleSlide from "@sections/MainPage/MainTopArticleSlide";
 
 const index = () => {
@@ -70,7 +68,7 @@ const index = () => {
       <MainTopArticleSlide />
       <h2 className="main-title">포스팅</h2>
       <MainPostingForm />
-      <MainArticleList setSize={setSize} mainPosts={mainPosts} />
+      <MomentList setSize={setSize} mainPosts={mainPosts} />
     </MainLayout>
   );
 };

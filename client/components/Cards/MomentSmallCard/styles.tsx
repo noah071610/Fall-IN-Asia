@@ -5,8 +5,8 @@ import tw from "twin.macro";
 export const MomentSmallCardWrapper = styled.div`
   ${tw`w-full cursor-pointer mb-6`}
   &:hover {
-    img {
-      transform: scale(1.1);
+    h2 {
+      text-decoration: underline;
     }
   }
   .memont-small-top {

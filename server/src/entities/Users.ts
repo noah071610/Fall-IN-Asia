@@ -50,16 +50,26 @@ export class Users {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    example: 'Noah',
+    example: '장현수',
     description: 'name',
   })
   @Column('varchar', { name: 'name', length: 30 })
   name: string;
 
   @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    example:
+      '안녕하세요 여행을 너무 사랑하는 노아입니다. 일본과 태국 여행을 좋아합니다.',
+    description: 'introduce',
+  })
+  @Column('varchar', { name: 'introduce' })
+  introduce: string;
+
+  @IsString()
   @ApiProperty({
     example: 'https://images.com/324324231',
-    description: 'iamge URL',
+    description: 'icon url',
   })
   @Column('varchar', {
     name: 'icon',
@@ -70,7 +80,7 @@ export class Users {
 
   @IsString()
   @ApiProperty({
-    example: '320sd8f78f2300dsa (hash key)',
+    example: '320sd8f78f2300dsa',
     description: 'Password',
   })
   @Column('varchar', { name: 'password', length: 100, select: false })
@@ -79,7 +89,7 @@ export class Users {
   @IsBoolean()
   @ApiProperty({
     example: 1,
-    description: 'admin (boolean data type)',
+    description: 'admin',
   })
   @Column('boolean', { name: 'admin', select: false, default: false })
   admin: boolean;

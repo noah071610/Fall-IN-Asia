@@ -1,38 +1,25 @@
 import styled from "@emotion/styled";
 import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RED_COLOR, RGB_BLACK } from "config";
+import tw from "twin.macro";
 
 export const CommentWrapper = styled.div`
-  padding: 1rem 0;
-  margin: 0 2rem;
+  ${tw`py-4 mx-8`}
   .comment-main {
-    cursor: pointer;
-    padding: 0 2rem 0 0.5rem;
+    ${tw`cursor-pointer pr-8 pl-2 relative`}
     transition: 0.3s all;
-    position: relative;
     .more-btn {
-      position: absolute;
-      top: -0.5rem;
-      right: 0;
-      border-radius: 50%;
-      padding: 0.5rem;
-      &:hover {
-        background: ${GRAY_COLOR};
-      }
+      ${tw`absolute -top-2 right-0 rounded-full p-2 hover:bg-gray-100`}
     }
   }
   .more-subComment {
     padding: 1rem 0.5rem 0 3.7rem;
     ${FLEX_STYLE("flex-start", "center")};
     .count {
-      font-size: 0.8rem;
-      margin-right: 0.2rem;
-      font-weight: bold;
+      ${tw`text-sm mr-1 font-bold `}
       color: ${BLUE_COLOR};
     }
     .more-subComment-btn {
-      cursor: pointer;
-      font-size: 0.8rem;
-      padding: 0;
+      ${tw`cursor-pointer text-sm p-0`}
       .anticon {
         font-size: 0.9rem;
         margin-left: 0.5rem;

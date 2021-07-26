@@ -103,7 +103,7 @@ export interface ISubComment {
 
 export interface IUserRequestForm {
   email: string;
-  name: string;
+  name?: string;
   password: string;
 }
 

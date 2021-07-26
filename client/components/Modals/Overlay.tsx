@@ -12,16 +12,18 @@ interface IProps {}
 
 const Overlay: FC<IProps> = () => {
   const dispatch = useDispatch();
-  const onscroll = useCallback(() => {
+  const onscroll = () => {
     scrollTo({ top: 0 });
-  }, []);
+  };
   useEffect(() => {
     window.addEventListener("scroll", onscroll);
     return () => {
       window.removeEventListener("scroll", onscroll);
     };
   }, []);
-  const closeModal = useCallback(() => {}, []);
+  const closeModal = useCallback(() => {
+    dispatch(mainSlice.actions.toggleLoginModal());
+  }, []);
   return <OverlayWrapper onClick={closeModal}></OverlayWrapper>;
 };
 

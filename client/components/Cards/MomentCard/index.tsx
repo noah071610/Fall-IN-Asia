@@ -64,10 +64,7 @@ const MomentCard: FC<IProps> = ({ mainPost }) => {
   const onClickTypeTag = useCallback(() => {
     router.push(`/country/${mainPost.code}/?type=${mainPost.type}`);
   }, []);
-  const onClickPostIdTag = useCallback(() => {
-    router.push(`/country/${mainPost.code}/${mainPost.id}`);
-  }, []);
-  const onClickCommentBtn = useCallback(() => {
+  const onClickGotoPost = useCallback(() => {
     router.push(`/country/${mainPost.code}/${mainPost.id}`);
   }, []);
 
@@ -78,7 +75,7 @@ const MomentCard: FC<IProps> = ({ mainPost }) => {
         <div className="article-header">
           <a onClick={onClickCountryTag}>{mainPost?.country?.name}</a>/
           <a onClick={onClickTypeTag}>{mainPost?.type}</a>/
-          <a onClick={onClickPostIdTag}>{mainPost?.id}번째메아리</a>
+          <a onClick={onClickGotoPost}>{mainPost?.id}번째메아리</a>
         </div>
       </div>
       <div className="article">
@@ -97,7 +94,7 @@ const MomentCard: FC<IProps> = ({ mainPost }) => {
           {ReactHtmlParser(mainPost?.content as string)}
         </div>
         <ul className="article-footer">
-          <li onClick={onClickCommentBtn}>
+          <li onClick={onClickGotoPost}>
             <CommentOutlined />
             <span className="count">{mainPost?.comments?.length}</span>
             <span>댓글</span>

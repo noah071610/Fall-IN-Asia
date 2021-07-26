@@ -171,23 +171,6 @@ textarea {
   background-color: rgba(0, 0, 0, 0.15);
 }
 
-.drop-down {
-  transition: 0.25s all;
-  height:100%;
-  transform:translateY(0);
-}
-
-.roll-up{
-  transition: 0.1s all;
-  height:0px;
-  transform:translateY(-100%);
-}
-
-
-.reverse {
-  transform:rotate(180deg);
-}
-
 .toast {
   padding:0.5rem;
 }
@@ -226,6 +209,15 @@ textarea {
   border-bottom-right-radius: 15px;
   background:white;
   border: 1px solid ${RGB_BLACK(0.15)};
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    background-color: none;
+    padding: 30px;
+    color: rgba(0,0,0,0.2) !important;
+    fill: white !important;
+    stroke: white !important;
 }
 
 .ant-select-selector {

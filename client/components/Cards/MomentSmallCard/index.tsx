@@ -1,6 +1,7 @@
 import { IMainPost } from "@typings/db";
 import React, { FC, useState } from "react";
 import { MomentSmallCardWrapper } from "./styles";
+import ReactHtmlParser from "react-html-parser";
 
 interface IProps {
   mainPost: IMainPost;
@@ -21,7 +22,7 @@ const MomentSmallCard: FC<IProps> = ({ mainPost }) => {
           <span>2021/07/26</span>
         </div>
       </div>
-      <h2>{mainPost?.content}</h2>
+      <h2>{ReactHtmlParser(mainPost?.content as string)}</h2>
     </MomentSmallCardWrapper>
   );
 };

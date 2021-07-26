@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { FLEX_STYLE } from "config";
 
-export const MainArticleListWrapper = styled.div`
+export const MomentListWrapper = styled.div`
   .content-wrapper {
     margin-top: 1rem;
     padding-bottom: 1rem;

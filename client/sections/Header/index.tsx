@@ -78,7 +78,6 @@ const Header: FC<HeaderProps> = () => {
           <Overlay />
         </>
       )}
-      {onSignupModal && <SignupModal />}
     </HeaderWrapper>
   );
 };

@@ -1,11 +1,9 @@
 import styled from "@emotion/styled";
 import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, HOVER_GRAY, RGB_BLACK, WHITE_STYLE } from "config";
+import tw from "twin.macro";
 
 export const MainPostingFormWrapper = styled.div`
-  border-radius: 15px;
-  background-color: white;
-  padding: 0.4rem;
-  width: 100%;
+  ${tw`rounded-2xl bg-white p-2 w-full`}
   .selector-wrapper {
     ${FLEX_STYLE("flex-start", "center")};
     margin-bottom: 1rem;
@@ -18,15 +16,12 @@ export const MainPostingFormWrapper = styled.div`
     margin-right: 1rem;
   }
   .posting-form-preview {
-    transition: 0.3s all;
-    border-radius: 15px;
-    cursor: pointer;
+    ${tw`rounded-2xl cursor-pointer py-2 px-4`}
     ${FLEX_STYLE("space-between", "center")}
-    padding: 0.4rem 1rem;
+    transition: 0.3s all;
     .anticon {
+      ${tw`text-xl p-2`}
       transition: 0.3s all;
-      font-size: 1.4rem;
-      padding: 0.5rem;
     }
     &:hover {
       background: ${GRAY_COLOR};
@@ -36,12 +31,10 @@ export const MainPostingFormWrapper = styled.div`
     }
   }
   .title-wrapper {
-    margin: 1rem;
-    border-radius: 15px;
+    ${tw`m-4 rounded-2xl`}
     ${BORDER_THIN("border")};
     input {
-      padding: 0.7rem 1rem;
-      border-radius: 15px;
+      ${tw`py-3 px-4 rounded-2xl`}
     }
   }
   .posting-editor {
@@ -50,9 +43,7 @@ export const MainPostingFormWrapper = styled.div`
       margin-top: 1rem;
       ${FLEX_STYLE("flex-end", "center")}
       button {
-        padding: 0.7rem 1.3rem;
-        font-weight: bold;
-        ${HOVER_GRAY(10)};
+        ${tw`py-3 px-5 font-bold rounded-xl hover:bg-gray-100`}
       }
     }
   }

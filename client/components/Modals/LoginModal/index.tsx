@@ -1,41 +1,65 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { LoginModalWrapper } from "./styles";
-import { Button } from "antd";
+import { Button, Divider } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faKey, faUser } from "@fortawesome/free-solid-svg-icons";
 import useInput from "@hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
 import { mainSlice } from "slices/main";
-import { logInAction } from "actions/user";
+import { logInAction, signupAction } from "actions/user";
 import { RootState } from "slices";
 import { userSlice } from "slices/user";
-import { toastSuccessMessage } from "config";
+import { toastErrorMessage, toastSuccessMessage } from "config";
+import SignupModal from "../SignupModal";
+import { IUserRequestForm } from "@typings/db";
 
 interface IProps {}
 
 const LoginModal: FC<IProps> = () => {
   const dispatch = useDispatch();
   const { logInDone, user } = useSelector((state: RootState) => state.user);
-  const [email, onChangeEmail] = useInput("");
-  const [password, onChangePassword] = useInput("");
+  const [onSignUp, setOnSignUp] = useState(false);
+  const [email, onChangeEmail] = useInput<string>("");
+  const [password, onChangePassword] = useInput<string>("");
+
+  const onClickSignUpToggle = useCallback((e) => {
+    e.preventDefault();
+    setOnSignUp((prev) => !prev);
+  }, []);
+
+  const onFinishSignUp = useCallback((values: any) => {
+    if (!values.email || !values.email?.trim()) {
+      toastErrorMessage("이메일을 입력해주세요.");
+      return;
+    }
+    if (!values.password || !values.password?.trim()) {
+      toastErrorMessage("비밀번호를 입력해주세요.");
+      return;
+    }
+    let name = values?.first_name + values?.last_name;
+    if (!name || !name?.trim()) {
+      toastErrorMessage("이름을 입력해주세요.");
+      return;
+    }
+    let form: IUserRequestForm = {
+      email: values.email,
+      name,
+      password: values.password,
+    };
+    dispatch(signupAction(form));
+  }, []);
+
   const onSubmitLogin = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(
-        logInAction({
-          email,
-          password,
-        })
-      );
+      let form: IUserRequestForm = {
+        email,
+        password,
+      };
+      dispatch(logInAction(form));
     },
     [email, password]
   );
-  const onClickSignUp = useCallback((e) => {
-    e.preventDefault();
-    dispatch(mainSlice.actions.toggleSignupModal());
-    dispatch(mainSlice.actions.toggleLoginModal());
-  }, []);
-
   useEffect(() => {
     if (logInDone && user) {
       toastSuccessMessage(`${user.name}님! 어서오세요.`);
@@ -53,38 +77,53 @@ const LoginModal: FC<IProps> = () => {
             alt="logo-image"
           />
         </div>
-        <form onSubmit={onSubmitLogin}>
-          <h4>
-            <FontAwesomeIcon className="icon" icon={faUser} />
-            <span>이메일</span>
-          </h4>
-          <input className="basic-input" value={email} onChange={onChangeEmail} type="email" />
-          <h4>
-            <FontAwesomeIcon className="icon" icon={faKey} />
-            <span>패스워드</span>
-          </h4>
-          <input
-            className="basic-input"
-            value={password}
-            onChange={onChangePassword}
-            type="password"
+        {onSignUp ? (
+          <SignupModal
+            onClickSignUpToggle={onClickSignUpToggle}
+            onFinishSignUp={onFinishSignUp}
+            setOnSignUp={setOnSignUp}
           />
-          <div className="btn-wrapper">
-            <button onSubmit={onSubmitLogin}>로그인</button>
-            <button onClick={onClickSignUp}>간편회원가입</button>
-          </div>
-        </form>
-        <ul className="social-login-wrapper">
-          <li>
-            <img src="https://img.icons8.com/color/144/000000/google-logo.png" />
-          </li>
-          <li>
-            <img src="https://user-images.githubusercontent.com/74864925/126999733-b93a3a48-b5ec-40b5-9184-b9b2e4fcd6d2.jpg" />
-          </li>
-          <li>
-            <img src="https://user-images.githubusercontent.com/74864925/126999735-d90208dd-0eda-4951-924c-06ee8227fe7b.png" />
-          </li>
-        </ul>
+        ) : (
+          <form onSubmit={onSubmitLogin}>
+            <h4>
+              <FontAwesomeIcon className="icon" icon={faUser} />
+              <span>이메일</span>
+            </h4>
+            <input className="basic-input" value={email} onChange={onChangeEmail} type="email" />
+            <h4>
+              <FontAwesomeIcon className="icon" icon={faKey} />
+              <span>패스워드</span>
+            </h4>
+            <input
+              className="basic-input"
+              value={password}
+              onChange={onChangePassword}
+              type="password"
+            />
+            <div className="btn-wrapper">
+              <button onSubmit={onSubmitLogin}>로그인</button>
+              <button onClick={onClickSignUpToggle}>간편회원가입</button>
+            </div>
+          </form>
+        )}
+        {!onSignUp && (
+          <>
+            <Divider className="social-login-divider" orientation="center">
+              소셜 로그인
+            </Divider>
+            <ul className="social-login-wrapper">
+              <li className="google-icon">
+                <img src="https://img.icons8.com/color/144/000000/google-logo.png" />
+              </li>
+              <li style={{ background: "#FAE301" }}>
+                <img src="https://user-images.githubusercontent.com/74864925/127008226-4ea6ec83-e82d-4e7f-bc9a-95b508f750cc.png" />
+              </li>
+              <li style={{ background: "#54BA5C" }}>
+                <img src="https://user-images.githubusercontent.com/74864925/127008231-213a4559-d3e8-488d-9901-0fe3f78b58c1.png" />
+              </li>
+            </ul>
+          </>
+        )}
       </LoginModalWrapper>
     </>
   );
