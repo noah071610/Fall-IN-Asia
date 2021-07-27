@@ -1,20 +1,23 @@
 import styled from "@emotion/styled/macro";
-import { FLEX_STYLE } from "config";
+import { FLEX_STYLE, GRID_STYLE } from "config";
 import tw from "twin.macro";
 
 export const StoryPostPaginationWrapper = styled.div`
-  ${tw`w-3/5 mx-auto mt-4 mb-20`}
+  ${tw`w-2/3 mx-auto mt-4 mb-20`}
+  .ant-divider {
+    margin: 1rem 0;
+  }
   .pagination {
-    ${FLEX_STYLE("center", "center")};
-    button {
-      ${tw`rounded-md p-4 hover:bg-gray-100`}
+    ${GRID_STYLE("1rem", "1fr 1fr")};
+    .side-post {
+      ${tw`rounded-md p-4 hover:bg-gray-100 cursor-pointer`}
       .image-wrapper {
         ${tw`p-2`}
         img {
           ${tw`w-full h-40  rounded-md`}
         }
       }
-      .btn-desc {
+      .post-desc {
         ${tw`w-full p-2`}
         div {
           h4 {
@@ -22,12 +25,12 @@ export const StoryPostPaginationWrapper = styled.div`
           }
         }
         .anticon {
-          ${tw`text-2xl`}
+          ${tw`text-base`}
         }
       }
     }
-    .btn-left {
-      .btn-desc {
+    .prev-post {
+      .post-desc {
         ${FLEX_STYLE("flex-start", "center")};
         h4 {
           ${tw`text-left`}
@@ -37,8 +40,8 @@ export const StoryPostPaginationWrapper = styled.div`
         }
       }
     }
-    .btn-right {
-      .btn-desc {
+    .next-post {
+      .post-desc {
         ${FLEX_STYLE("flex-end", "center")};
         h4 {
           ${tw`text-right`}

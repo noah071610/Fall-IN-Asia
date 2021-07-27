@@ -1,7 +1,6 @@
 import { EditOutlined } from "@ant-design/icons";
 import EditorWithoutImage from "@components/PostingEditor/EditorWithoutImage";
 import ImageDragger from "@components/PostingEditor/ImageDragger";
-import useInput from "@hooks/useInput";
 import { mainPostCreateAction, mainPostEditAction } from "actions/mainPost";
 import { Select } from "antd";
 import { toastErrorMessage } from "config";
@@ -14,14 +13,13 @@ import fetcher from "utils/fetcher";
 import { ICountry, IMainPost } from "@typings/db";
 import AutoCompleteSearch from "@components/AutoCompleteForm";
 import { RootState } from "slices";
-const { Option, OptGroup } = Select;
+const { Option } = Select;
 interface IProps {
   editPost?: IMainPost;
 }
 
 const MainPostingForm: FC<IProps> = ({ editPost }) => {
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher);
-
   const { query } = useRouter();
   const dispatch = useDispatch();
   const [upImg, setUpImg] = useState<File[]>([]);
@@ -62,7 +60,6 @@ const MainPostingForm: FC<IProps> = ({ editPost }) => {
   const countryOptions = useMemo(
     () =>
       countries?.map((v, i) => {
-        console.log("reva");
         return { value: v.name, code: v.code };
       }),
     [countries]

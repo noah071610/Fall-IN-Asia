@@ -68,7 +68,9 @@ const index = () => {
       <MainTopArticleSlide />
       <h2 className="main-title">포스팅</h2>
       <MainPostingForm />
-      <MomentList setSize={setSize} mainPosts={mainPosts} />
+      <div className="test" style={{ overflow: "hidden" }}>
+        <MomentList setSize={setSize} mainPosts={mainPosts} />
+      </div>
     </MainLayout>
   );
 };

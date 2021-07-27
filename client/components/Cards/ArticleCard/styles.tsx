@@ -46,7 +46,7 @@ export const ArticleCardWrapper = (isMain?: boolean) => css`
     ${FLEX_STYLE("flex-start", "flex-end")};
   }
   .story-content {
-    ${ELLIPSIS_STYLE(2, 5, "150px")};
+    ${ELLIPSIS_STYLE(1.8, 4, "120px")};
     padding: 1rem 0;
   }
   .story-main {
@@ -54,7 +54,6 @@ export const ArticleCardWrapper = (isMain?: boolean) => css`
     width: 60%;
   }
   h2 {
-    ${FONT_STYLE(1.2, true)};
-    padding-bottom: 1rem;
+    ${tw`text-xl font-bold pb-4`}
   }
 `;

@@ -5,6 +5,7 @@ import { MomentListWrapper } from "./styles";
 import useOnScreen from "@hooks/useOnScreen";
 import router, { useRouter } from "next/router";
 import MomentCard from "@components/Cards/MomentCard";
+import { NO_POST_URL } from "config";
 
 interface IProps {
   mainPosts: IMainPost[][] | undefined;
@@ -51,9 +52,16 @@ const MomentList: FC<IProps> = ({ mainPosts, setSize }) => {
           <button onClick={() => onClickFilter("")}>최신순</button>
           <button onClick={() => onClickFilter("comment")}>댓글많은순</button>
         </div>
-        {mainPostsData?.map((v, i) => {
-          return <MomentCard key={i} mainPost={v} />;
-        })}
+        {mainPostsData.length > 0 ? (
+          mainPostsData?.map((v, i) => {
+            return <MomentCard key={i} mainPost={v} />;
+          })
+        ) : (
+          <div className="no-post">
+            <img src={NO_POST_URL} />
+            <h4>게시글이 없어요😥</h4>
+          </div>
+        )}
         <div ref={ref} />
       </div>
     </MomentListWrapper>

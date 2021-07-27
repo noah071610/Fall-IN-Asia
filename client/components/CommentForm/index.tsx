@@ -54,7 +54,7 @@ const CommentForm: FC<IProps> = ({ isStory }) => {
     setOnCommentForm(true);
   }, [user]);
   return (
-    <CommentFormWrapper>
+    <CommentFormWrapper id="comment">
       <div
         style={
           onCommentForm

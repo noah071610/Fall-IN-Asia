@@ -21,14 +21,14 @@ const MomentSmallCard: FC<IProps> = ({ mainPost, story }) => {
   return (
     <MomentSmallCardWrapper onClick={onClickMomentSmallCard}>
       <div className="memont-small-top">
-        <div className="icon-wrapper">
+        <div className="image-wrapper">
           <img
             style={story ? { borderRadius: "5px" } : {}}
             src={mainPost?.user?.icon || story?.thumbnail}
             alt="article-image"
           />
         </div>
-        <div>
+        <div className="small-card-info">
           <span>
             {story && "연대기/"}
             {(mainPost || story)?.country?.name}

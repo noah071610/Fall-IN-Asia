@@ -13,16 +13,16 @@ const PosterCardWrapper = (isMain?: boolean) => css`
 
 interface IProps {
   isMain?: boolean;
-  country?: ICountry;
+  image: string;
 }
 
-const PosterCard: FC<IProps> = ({ isMain, country }) => {
+const PosterCard: FC<IProps> = ({ isMain, image }) => {
   return (
     <div
       css={PosterCardWrapper(isMain)}
       style={{
         backgroundImage: `url(${
-          country?.image_src ||
+          image ||
           "https://user-images.githubusercontent.com/74864925/126495159-2e4438ad-6efb-458a-b314-8f92823babc7.jpg"
         }
       )`,

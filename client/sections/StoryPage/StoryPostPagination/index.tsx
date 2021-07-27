@@ -1,47 +1,75 @@
-import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
+import {
+  LeftCircleOutlined,
+  LeftOutlined,
+  RightCircleOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
+import { IStory } from "@typings/db";
 import { Divider } from "antd";
-import React, { FC, useState } from "react";
+import router, { useRouter } from "next/router";
+import React, { FC, useCallback, useState } from "react";
 import { StoryPostPaginationWrapper } from "./styles";
+import useSWR from "swr";
+import fetcher from "utils/fetcher";
+import { GRAY_COLOR, NO_IMAGE_URL } from "config";
 
-interface IProps {}
+interface IProps {
+  userId: number;
+}
 
-const StoryPostPagination: FC<IProps> = () => {
-  const [state, setstate] = useState();
+const StoryPostPagination: FC<IProps> = ({ userId }) => {
+  const { query } = useRouter();
+  const { data: sidePosts } = useSWR<{ prevPost: IStory; nextPost: IStory }>(
+    `/story/side/${query?.storyId}/${userId}`,
+    fetcher
+  );
+
+  const onClickStoryBtn = useCallback((id?: number, code?: string) => {
+    router.push(`/story/${code}/${id}`);
+  }, []);
   return (
     <StoryPostPaginationWrapper>
       <div className="pagination">
-        <button className="btn-left">
+        <div
+          style={sidePosts?.prevPost ? {} : { background: GRAY_COLOR }}
+          onClick={() => {
+            sidePosts?.prevPost &&
+              onClickStoryBtn(sidePosts?.prevPost?.id, sidePosts?.prevPost?.code);
+          }}
+          className="side-post prev-post"
+        >
           <div className="image-wrapper">
-            <img
-              src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMDVfMTAy/MDAxNTc4MjE0NDkwNDAx.BglBTZ9Fu6xsKmbQiEpUMdSgHKS5wWyOgi-q8KMr4x8g.wO_60Od9p4VZQ-DGaE3qmZ5PSChW5M7AVWCa3jkbN98g.JPEG.mortareg/%EF%BB%BF%ED%91%B8%EC%BC%93_%EC%9E%90%EC%9C%A0%EC%97%AC%ED%96%89_%EC%9D%BC%EC%A0%95_%EC%B6%94%EC%B2%9C_%EC%BD%94%EC%8A%A4_(13).JPG?type=w800"
-              alt=""
-            />
+            <img src={sidePosts?.prevPost?.thumbnail || NO_IMAGE_URL} alt="" />
           </div>
           <Divider />
-          <div className="btn-desc">
-            <LeftCircleOutlined />
+          <div className="post-desc">
+            <LeftOutlined />
             <div>
               <h4>이전연대기</h4>
-              아유타야 1화 케니와 함께하는
+              <h4 className="post-title">{sidePosts?.prevPost?.title || "포스트가 없습니다."}</h4>
             </div>
           </div>
-        </button>
-        <button className="btn-right">
+        </div>
+        <div
+          style={sidePosts?.nextPost ? {} : { background: GRAY_COLOR }}
+          onClick={() => {
+            sidePosts?.nextPost &&
+              onClickStoryBtn(sidePosts?.nextPost?.id, sidePosts?.nextPost?.code);
+          }}
+          className="side-post next-post"
+        >
           <div className="image-wrapper">
-            <img
-              src="https://mblogthumb-phinf.pstatic.net/MjAyMDAxMDVfMTAy/MDAxNTc4MjE0NDkwNDAx.BglBTZ9Fu6xsKmbQiEpUMdSgHKS5wWyOgi-q8KMr4x8g.wO_60Od9p4VZQ-DGaE3qmZ5PSChW5M7AVWCa3jkbN98g.JPEG.mortareg/%EF%BB%BF%ED%91%B8%EC%BC%93_%EC%9E%90%EC%9C%A0%EC%97%AC%ED%96%89_%EC%9D%BC%EC%A0%95_%EC%B6%94%EC%B2%9C_%EC%BD%94%EC%8A%A4_(13).JPG?type=w800"
-              alt=""
-            />
+            <img src={sidePosts?.nextPost?.thumbnail || NO_IMAGE_URL} alt="" />
           </div>
           <Divider />
-          <div className="btn-desc">
+          <div className="post-desc">
             <div>
               <h4>다음연대기</h4>
-              아유타야 3화 오랫만에 먹는 한식
+              <h4 className="post-title">{sidePosts?.nextPost?.title || "포스트가 없습니다."}</h4>
             </div>
-            <RightCircleOutlined />
+            <RightOutlined />
           </div>
-        </button>
+        </div>
       </div>
     </StoryPostPaginationWrapper>
   );

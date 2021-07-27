@@ -3,7 +3,7 @@ import { FLEX_STYLE, FONT_STYLE, GRAY_COLOR } from "config";
 import tw from "twin.macro";
 
 export const ArticleColumnCardWrapper = styled.div`
-  ${tw`bg-white cursor-pointer pt-4 shadow-md`}
+  ${tw`bg-white cursor-pointer pt-4`}
   &:hover {
     .image-wrapper {
       img {

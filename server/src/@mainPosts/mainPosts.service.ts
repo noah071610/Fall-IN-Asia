@@ -113,7 +113,7 @@ export class MainPostsService {
     const latestPosts = await this.MainPostsRepository.find({
       relations: ['user', 'country'],
       order: { id: 'DESC' },
-      take: 5,
+      take: 2,
     });
     if (!latestPosts) {
       throw new NotFoundException('가져올 게시물이 없습니다.');

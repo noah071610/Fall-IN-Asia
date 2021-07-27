@@ -44,6 +44,12 @@ export interface IMainPost {
   likedUser: IUser[];
 }
 
+export interface IStoryPost {
+  post: IStory;
+  prevPost: IStory;
+  nextPost: IStory;
+}
+
 export interface IStory {
   id: number;
   code: string;

@@ -42,7 +42,7 @@ const StoryArticleList: FC<IProps> = ({ stories, setSize }) => {
   const storiesData = stories ? stories?.flat() : [];
 
   return (
-    <StoryArticleListWrapper>
+    <StoryArticleListWrapper id="article_list">
       <div className="content-filter">
         <button onClick={onClickPopular}>인기순</button>
         <button onClick={onClickNewest}>최신순</button>

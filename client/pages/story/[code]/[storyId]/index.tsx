@@ -7,7 +7,7 @@ import router, { useRouter } from "next/router";
 import XLGLayout from "@layout/XLGLayout";
 import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
-import { IStory } from "@typings/db";
+import { IStory, IStoryPost } from "@typings/db";
 import { Divider } from "antd";
 import StoryPost from "@sections/StoryPage/StoryPost";
 import { wrapper } from "configureStore";
@@ -163,6 +163,8 @@ const index: FC<IProps> = () => {
       toastSuccessMessage("연대기를 삭제했습니다.");
     }
   }, [user, isOwner, story]);
+  console.log(story);
+
   return (
     <StoryPostWrapper>
       <StoryPostLayout>

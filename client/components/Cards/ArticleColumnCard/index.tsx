@@ -14,7 +14,7 @@ interface IProps {
 const ArticleColumnCard: FC<IProps> = ({ story }) => {
   const onClickArticleCard = useCallback(() => {
     router.push(`/story/${story?.code}/${story?.id}`);
-  }, [story]);
+  }, []);
 
   return (
     <ArticleColumnCardWrapper onClick={onClickArticleCard} className="box-card">

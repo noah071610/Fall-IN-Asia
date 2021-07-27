@@ -32,7 +32,7 @@ const CountryMap: FC<IProps> = ({ lat, lng }) => {
       className="map-gl"
       style={{ marginBottom: "4rem" }}
       {...viewport}
-      mapboxApiAccessToken="pk.eyJ1IjoiamFuZ2h5dW5zb28iLCJhIjoiY2tyZ2l0NnhoMmtncjJ4bmp4YjZheXZvcCJ9.7aD4HiGVqpKqM7rUj8FfJg"
+      mapboxApiAccessToken={process.env.MAPBOX_API_ACCESS_KEY}
       onViewportChange={handleViewportChange}
       mapStyle="mapbox://sprites/mapbox/basic-v8"
     >

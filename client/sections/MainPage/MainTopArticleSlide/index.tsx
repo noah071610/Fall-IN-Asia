@@ -20,7 +20,7 @@ const MainTopArticleSlide: FC<IProps> = () => {
     router.push(`/story`);
   }, []);
   return (
-    <MainTopArticleSlideWrapper navigation={true} slidesPerView={1} freeMode={true}>
+    <MainTopArticleSlideWrapper navigation={true} slidesPerView={1}>
       {popularArticles?.slice(0, 3).map((v, i) => {
         return (
           <SwiperSlide key={i}>

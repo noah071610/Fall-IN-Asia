@@ -65,7 +65,7 @@ const CountrySelectMap: FC<IProps> = ({ setRegion, marker, setMarker, lat, lng }
       className="map-gl"
       ref={mapRef}
       {...viewport}
-      mapboxApiAccessToken="pk.eyJ1IjoiamFuZ2h5dW5zb28iLCJhIjoiY2tyZ2l0NnhoMmtncjJ4bmp4YjZheXZvcCJ9.7aD4HiGVqpKqM7rUj8FfJg"
+      mapboxApiAccessToken={process.env.MAPBOX_API_ACCESS_KEY}
       onViewportChange={handleViewportChange}
       mapStyle="mapbox://sprites/mapbox/basic-v8"
       asyncRender={true}
@@ -75,7 +75,7 @@ const CountrySelectMap: FC<IProps> = ({ setRegion, marker, setMarker, lat, lng }
         marker={false}
         mapRef={mapRef}
         onViewportChange={handleGeocoderViewportChange}
-        mapboxApiAccessToken="pk.eyJ1IjoiamFuZ2h5dW5zb28iLCJhIjoiY2tyZ2l0NnhoMmtncjJ4bmp4YjZheXZvcCJ9.7aD4HiGVqpKqM7rUj8FfJg"
+        mapboxApiAccessToken={process.env.MAPBOX_API_ACCESS_KEY}
         position="top-left"
         onResult={(e: any) => {
           setRegion(e.result.place_name);

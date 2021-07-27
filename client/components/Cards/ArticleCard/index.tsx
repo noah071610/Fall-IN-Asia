@@ -37,7 +37,10 @@ const ArticleCard: FC<IProps> = ({ story, isMain }) => {
         </ul>
       </div>
       <div className="story-main">
-        <h2>{story?.title}</h2>
+        <h2>
+          {story?.title.slice(0, 30)}
+          {story?.title.length > 30 && "..."}
+        </h2>
         <div className="story-info">
           <NameSpace date={story?.createdAt} user={story?.user} />
         </div>

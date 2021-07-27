@@ -10,23 +10,25 @@ export const MomentSmallCardWrapper = styled.div`
     }
   }
   .memont-small-top {
-    ${GRID_STYLE("1rem", "1fr 2.5fr")};
+    ${GRID_STYLE("1rem", "4.3rem 2.5fr")};
     margin-bottom: 0.5rem;
-    .icon-wrapper {
+    .image-wrapper {
       ${tw`flex overflow-hidden rounded-md`}
       img {
-        ${tw`w-full h-16 rounded-full `}
+        ${tw`rounded-full `}
+        width:4.3rem;
+        height: 4.3rem;
       }
     }
-    div {
+    .small-card-info {
       span {
-        ${tw`block mb-1`}
+        ${tw`block mb-1 text-xs`}
       }
     }
   }
   h2 {
-    padding-left: 0.15rem;
-    ${ELLIPSIS_STYLE(1.8, 2, "43px")};
-    ${FONT_STYLE(0.8, true)}
+    padding-left: 0.2rem;
+    ${ELLIPSIS_STYLE(1.65, 2, "43px")};
+    ${FONT_STYLE(0.85, true)}
   }
 `;

@@ -14,7 +14,7 @@ const StoryPostOwner: FC<IProps> = ({ story }) => {
   useEffect(() => {}, []);
   return (
     <StoryPostOwnerWrapper>
-      <div className="owner-info-wrapper">
+      <div id="user_info" className="owner-info-wrapper">
         <div className="icon">
           <img src={story?.user?.icon ? story.user.icon : DEFAULT_ICON_URL} alt="" />
         </div>

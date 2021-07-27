@@ -126,6 +126,18 @@ export class StoriesController {
     await this.StoriesService.dislikePost(storyId, user.id);
   }
 
+  @ApiOperation({ summary: 'Get posts' })
+  @Get()
+  async getPosts(
+    @Query('page', ParseIntPipe) page: number,
+    @Query('filter') filter: string,
+  ) {
+    if (filter) {
+      return await this.StoriesService.getFilterPost(filter, page);
+    }
+    return await this.StoriesService.getPosts(page);
+  }
+
   @ApiOperation({ summary: 'Get latest posts by using ID' })
   @Get('latest')
   async getLatestPosts() {
@@ -140,6 +152,18 @@ export class StoriesController {
     return popularPosts;
   }
 
+  @ApiOperation({
+    summary: 'Get side posts each one for pagination on the post page',
+  })
+  @Get('side/:storyId/:userId')
+  async getSidePosts(
+    @Param('storyId', ParseIntPipe) storyId: number,
+    @Param('userId', ParseIntPipe) userId: number,
+  ) {
+    const sidePosts = await this.StoriesService.getSidePosts(storyId, userId);
+    return sidePosts;
+  }
+
   @ApiOperation({ summary: 'Get one post for post page' })
   @Get(':code/:storyId/:ip')
   async getOnePost(
@@ -149,17 +173,5 @@ export class StoriesController {
   ) {
     const post = await this.StoriesService.getOnePost(storyId, code, ip);
     return post;
-  }
-
-  @ApiOperation({ summary: 'Get posts' })
-  @Get()
-  async getPosts(
-    @Query('page', ParseIntPipe) page: number,
-    @Query('filter') filter: string,
-  ) {
-    if (filter) {
-      return await this.StoriesService.getFilterPost(filter, page);
-    }
-    return await this.StoriesService.getPosts(page);
   }
 }

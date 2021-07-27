@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Images } from 'src/entities/Images';
 import { Stories } from 'src/entities/Stories';
-import { Repository } from 'typeorm';
+import { LessThan, MoreThan, Repository } from 'typeorm';
 import { Announcements } from 'src/entities/Announcements';
 import { Countries } from 'src/entities/Countries';
 import { StoryLike } from 'src/entities/StoryLike';
@@ -73,6 +73,36 @@ export class StoriesService {
     return newImage.image_src;
   }
 
+  async getSidePosts(storyId: number, userId: number) {
+    const prevPost = await this.StoriesRepository.findOne({
+      select: ['thumbnail', 'title', 'code', 'id'],
+      where: { user: userId, id: LessThan(storyId) },
+    }).then((res) => {
+      if (!res) {
+        return this.StoriesRepository.findOne({
+          select: ['thumbnail', 'title', 'code', 'id'],
+          where: { id: LessThan(storyId) },
+        });
+      } else {
+        return res;
+      }
+    });
+    const nextPost = await this.StoriesRepository.findOne({
+      select: ['thumbnail', 'title', 'code', 'id'],
+      where: { user: userId, id: MoreThan(storyId) },
+    }).then((res) => {
+      if (!res) {
+        return this.StoriesRepository.findOne({
+          select: ['thumbnail', 'title', 'code', 'id'],
+          where: { id: MoreThan(storyId) },
+        });
+      } else {
+        return res;
+      }
+    });
+    return { prevPost, nextPost };
+  }
+
   async getOnePost(storyId: number, code: string, ip: number) {
     const post = await this.StoriesRepository.findOne({
       where: {
@@ -93,6 +123,7 @@ export class StoriesService {
     if (!post) {
       throw new NotFoundException('가져올 게시물이 없습니다.');
     }
+
     if (post && ip !== 0) {
       if (!viewObj[storyId]) {
         viewObj[storyId] = [];
