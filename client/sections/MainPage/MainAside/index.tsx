@@ -6,6 +6,7 @@ import fetcher from "utils/fetcher";
 import { toastErrorMessage, toastSuccessMessage } from "config";
 import ArticleImageCard from "@components/Cards/ArticleImageCard";
 import { IMainPost, IStory } from "@typings/db";
+import useHtmlConverter from "@hooks/useHtmlConverter";
 
 interface IProps {}
 
@@ -16,7 +17,7 @@ const MainAside: FC<IProps> = () => {
     <MainAsideWrapper>
       <h2 className="aside-title">최근 연대기</h2>
       {latestStories?.map((v, i) => (
-        <ArticleImageCard story={v} key={i} />
+        <MomentSmallCard story={v} key={i} />
       ))}
       <h2 className="aside-title">최근 모멘트</h2>
       {latestMainPosts?.map((v, i) => (

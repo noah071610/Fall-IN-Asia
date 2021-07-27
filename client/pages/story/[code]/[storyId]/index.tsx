@@ -22,10 +22,11 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { toastConfirmMessage } from "@components/ConfirmToastify";
 import { storyDeleteAction } from "actions/story";
 import tw from "twin.macro";
+import LG_Layout from "@layout/LG_Layout";
+import StoryPostLayout from "@layout/StoryPostLayout";
 
 export const StoryPostWrapper = styled.div`
   .story-manage-wrapper {
-    ${tw`mb-16`}
     ${FLEX_STYLE("center", "center")};
     button {
       ${tw`py-2 px-4 hover:bg-gray-100 rounded-xl`}
@@ -164,8 +165,8 @@ const index: FC<IProps> = () => {
   }, [user, isOwner, story]);
   return (
     <StoryPostWrapper>
-      <StoryPostThubnail onClickScrollDown={onClickScrollDown} story={story} />
-      <XLGLayout postRef={postRef}>
+      <StoryPostLayout>
+        <StoryPostThubnail onClickScrollDown={onClickScrollDown} story={story} />
         {isOwner && (
           <>
             <h2 className="main-title">연대기 관리 (작성자 전용)</h2>
@@ -193,11 +194,11 @@ const index: FC<IProps> = () => {
         <h2 className="main-title">
           연대기 위치 <span>{story?.region}</span>
         </h2>
-        {story && <CountryMap lat={story?.lat} lng={story?.lng} />}
+        {/* {story && <CountryMap lat={story?.lat} lng={story?.lng} />} */}
         <Divider />
         {story && <StoryPost story={story} />}
         <StoryArticleList setSize={setSize} stories={stories} />
-      </XLGLayout>
+      </StoryPostLayout>
     </StoryPostWrapper>
   );
 };

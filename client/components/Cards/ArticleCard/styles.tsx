@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import {
   ELLIPSIS_STYLE,
@@ -9,8 +10,9 @@ import {
 } from "config";
 import tw from "twin.macro";
 
-export const ArticleCardWrapper = styled.div`
-  ${tw`cursor-pointer p-4 mb-4 flex`}
+export const ArticleCardWrapper = (isMain?: boolean) => css`
+  ${isMain ? tw`p-6 mb-4` : tw`py-8 px-4`}
+  ${tw`cursor-pointer flex`}
   &:hover {
     .image-wrapper {
       img {
@@ -19,9 +21,11 @@ export const ArticleCardWrapper = styled.div`
     }
   }
   .image-wrapper {
-    ${tw`rounded-xl overflow-hidden w-2/5 relative`}
+    ${isMain ? tw`rounded-xl w-3/5` : tw`rounded-md w-2/5`};
+    ${tw`overflow-hidden relative`}
     img {
-      ${tw`rounded-xl h-60 w-full `}
+      ${isMain ? tw`rounded-xl ` : tw`rounded-md`};
+      ${tw`h-60 w-full `}
       transition: 0.3s all;
     }
     .like-comment-list {

@@ -93,8 +93,7 @@ export class StoriesService {
     if (!post) {
       throw new NotFoundException('가져올 게시물이 없습니다.');
     }
-    if (post) {
-      console.log('###', viewObj);
+    if (post && ip !== 0) {
       if (!viewObj[storyId]) {
         viewObj[storyId] = [];
       }
@@ -111,14 +110,13 @@ export class StoriesService {
           viewObj[storyId].splice(viewObj[storyId].indexOf(ip), 1);
         }, 600000);
       }
-      console.log('@@@@', viewObj);
     }
     return post;
   }
 
   async getLatestPosts() {
     const latestPosts = await this.StoriesRepository.find({
-      relations: ['country'],
+      relations: ['country', 'user'],
       order: { id: 'DESC' },
       take: 3,
     });

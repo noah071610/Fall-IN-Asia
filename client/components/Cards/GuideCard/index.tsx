@@ -1,10 +1,7 @@
-import { CommentOutlined, LikeOutlined } from "@ant-design/icons";
-import NameSpace from "@components/NameSpace";
 import { IStory } from "@typings/db";
 import { NO_IMAGE_URL } from "config";
 import React, { FC, useCallback, useState } from "react";
 import { GuideCardWrapper } from "./styles";
-import ReactHtmlParser from "react-html-parser";
 import router from "next/router";
 
 interface IProps {

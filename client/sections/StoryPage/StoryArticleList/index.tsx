@@ -3,8 +3,8 @@ import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import { useRef } from "react";
 import { StoryArticleListWrapper } from "./styles";
 import router, { useRouter } from "next/router";
-import ArticleCard from "@components/Cards/ArticleCard";
 import useOnScreen from "@hooks/useOnScreen";
+import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
 
 interface IProps {
   stories: IStory[][] | undefined;
@@ -48,9 +48,11 @@ const StoryArticleList: FC<IProps> = ({ stories, setSize }) => {
         <button onClick={onClickNewest}>최신순</button>
         <button onClick={onClickTopComment}>댓글많은순</button>
       </div>
-      {storiesData?.map((v: IStory, i) => {
-        return <ArticleCard key={i} story={v} />;
-      })}
+      <div className="content-list-wrapper">
+        {storiesData?.map((v: IStory, i) => {
+          return <ArticleColumnCard key={i} story={v} />;
+        })}
+      </div>
       <div ref={ref} />
     </StoryArticleListWrapper>
   );

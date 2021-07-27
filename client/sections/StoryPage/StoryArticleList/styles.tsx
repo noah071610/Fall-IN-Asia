@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE } from "config";
+import { FLEX_STYLE, GRID_STYLE } from "config";
 
 export const StoryArticleListWrapper = styled.div`
   .content-filter {
@@ -11,5 +11,8 @@ export const StoryArticleListWrapper = styled.div`
         font-weight: bold;
       }
     }
+  }
+  .content-list-wrapper {
+    ${GRID_STYLE("1rem", "repeat(3,1fr)")};
   }
 `;

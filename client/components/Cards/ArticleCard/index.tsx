@@ -1,7 +1,7 @@
 import { CommentOutlined, LikeOutlined } from "@ant-design/icons";
 import NameSpace from "@components/NameSpace";
 import { IStory } from "@typings/db";
-import { NO_IMAGE_URL } from "config";
+import { NO_IMAGE_URL, RGB_BLACK } from "config";
 import { FC, useCallback } from "react";
 import { ArticleCardWrapper } from "./styles";
 import router from "next/router";
@@ -18,8 +18,12 @@ const ArticleCard: FC<IProps> = ({ story, isMain }) => {
   }, [story]);
 
   return (
-    <ArticleCardWrapper className="article-card-wrapper" onClick={onClickArticleCard}>
-      <div style={isMain ? { width: "55%" } : {}} className="image-wrapper">
+    <div
+      className="article-card-wrapper"
+      css={ArticleCardWrapper(isMain)}
+      onClick={onClickArticleCard}
+    >
+      <div className="image-wrapper">
         <img src={story?.thumbnail ? story.thumbnail : NO_IMAGE_URL} alt="thai" />
         <ul className="like-comment-list">
           <li>
@@ -39,7 +43,7 @@ const ArticleCard: FC<IProps> = ({ story, isMain }) => {
         </div>
         <div className="story-content">{useHtmlConverter(story?.content)}</div>
       </div>
-    </ArticleCardWrapper>
+    </div>
   );
 };
 

@@ -29,6 +29,18 @@ const StoryPost: FC<IProps> = ({ story }) => {
       }
     }
   }, [user, story]);
+
+  useEffect(() => {
+    if (story) {
+      let contentHeaders = document.querySelectorAll(
+        ".post-content > h1 , .post-content > h2 ,.post-content > h3"
+      );
+      contentHeaders.forEach((v: Element, i) => {
+        v.setAttribute("id", `header_${i + 1}`);
+      });
+    }
+  }, [story]);
+
   const onClickLikeBtn = useCallback(() => {
     if (!user) {
       toastErrorMessage("로그인이 필요합니다.");

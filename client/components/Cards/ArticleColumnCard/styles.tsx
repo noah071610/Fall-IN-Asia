@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import { FLEX_STYLE, FONT_STYLE, GRAY_COLOR } from "config";
 import tw from "twin.macro";
 
-export const BoxCardWrapper = styled.div`
-  ${tw`rounded-2xl bg-white cursor-pointer pt-4`}
+export const ArticleColumnCardWrapper = styled.div`
+  ${tw`bg-white cursor-pointer pt-4 shadow-md`}
   &:hover {
     .image-wrapper {
       img {
@@ -12,9 +12,9 @@ export const BoxCardWrapper = styled.div`
     }
   }
   .image-wrapper {
-    ${tw`rounded-xl mx-4 mb-4 overflow-hidden`}
+    ${tw`rounded-md mx-4 mb-4 overflow-hidden`}
     img {
-      ${tw`rounded-xl w-full h-60`}
+      ${tw`rounded-md w-full h-60`}
       transition: 0.3s all;
     }
   }

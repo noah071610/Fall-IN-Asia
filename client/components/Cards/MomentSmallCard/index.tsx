@@ -1,35 +1,44 @@
-import { IMainPost } from "@typings/db";
+import useHtmlConverter from "@hooks/useHtmlConverter";
+import { IMainPost, IStory } from "@typings/db";
 import router from "next/router";
 import React, { FC, useCallback, useMemo } from "react";
 import { MomentSmallCardWrapper } from "./styles";
+import dayjs from "dayjs";
 
 interface IProps {
-  mainPost: IMainPost;
+  mainPost?: IMainPost;
+  story?: IStory;
 }
-const MomentSmallCard: FC<IProps> = ({ mainPost }) => {
-  const contentWithoutHTML = useMemo(() => {
-    return mainPost?.content?.replace(/(<([^>]+)>)/gi, "").replace(/&.*;/gi, "");
-  }, [mainPost]);
-
+const MomentSmallCard: FC<IProps> = ({ mainPost, story }) => {
   const onClickMomentSmallCard = useCallback(() => {
-    router.push(`/country/${mainPost?.code}/${mainPost?.id}`);
+    if (mainPost) {
+      router.push(`/country/${mainPost?.code}/${mainPost?.id}`);
+    } else {
+      router.push(`/story/${story?.code}/${story?.id}`);
+    }
   }, []);
 
   return (
     <MomentSmallCardWrapper onClick={onClickMomentSmallCard}>
       <div className="memont-small-top">
         <div className="icon-wrapper">
-          <img src={mainPost?.user?.icon} alt="article-image" />
+          <img
+            style={story ? { borderRadius: "5px" } : {}}
+            src={mainPost?.user?.icon || story?.thumbnail}
+            alt="article-image"
+          />
         </div>
         <div>
           <span>
-            {mainPost?.country?.name}/{mainPost?.type}
+            {story && "연대기/"}
+            {(mainPost || story)?.country?.name}
+            {mainPost && "/" + mainPost?.type}
           </span>
-          <span>{mainPost?.user?.name}</span>
-          <span>2021/07/26</span>
+          <span>{(mainPost || story)?.user?.name}</span>
+          <span>{dayjs((mainPost || story)?.createdAt).format("YYYY/MM/DD")}</span>
         </div>
       </div>
-      <h2>{contentWithoutHTML}</h2>
+      <h2>{useHtmlConverter(mainPost?.content || story?.title)}</h2>
     </MomentSmallCardWrapper>
   );
 };
