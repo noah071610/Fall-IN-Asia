@@ -45,7 +45,7 @@ const StoryPost: FC<IProps> = ({ story }) => {
   }, [user, story]);
   return (
     <StoryPostWrapper>
-      <div className="story-content">{ReactHtmlParser(story?.content as string)}</div>
+      <div className="post-content">{ReactHtmlParser(story?.content as string)}</div>
       <StoryPostOwner story={story} />
       <StoryPostPagination />
       <ul className="story-footer">

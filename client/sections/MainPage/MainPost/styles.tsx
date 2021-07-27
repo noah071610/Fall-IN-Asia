@@ -1,21 +1,16 @@
 import styled from "@emotion/styled";
 import { GRAY_COLOR, RED_COLOR } from "config";
+import tw from "twin.macro";
 
 export const MainPostWrapper = styled.div`
-  margin-top: 1rem;
-  padding: 1rem 0;
-  border-radius: 15px;
-  background-color: white;
+  ${tw`mt-4 py-4 rounded-2xl bg-white`}
   .image-wrapper {
-    cursor: pointer;
-    padding: 2rem;
-    border-radius: 10px;
+    ${tw`p-8 cursor-pointer rounded-xl`}
     .ant-image {
-      width: 100%;
+      ${tw`w-full`}
       .ant-image-img {
-        width: 100%;
+        ${tw`w-full rounded-xl `}
         height: 450px;
-        border-radius: 10px;
       }
       .anticon {
         font-size: 3rem;
@@ -28,9 +23,7 @@ export const MainPostWrapper = styled.div`
     }
   }
   .post-content {
-    font-size: 1rem;
-    padding: 2rem 2rem 3rem 2rem;
-    line-height: 2;
+    ${tw`px-8 pt-8 pb-12`}
     min-height: 200px;
     img {
       width: 70%;
@@ -39,18 +32,12 @@ export const MainPostWrapper = styled.div`
   .post-footer {
     padding: 0 2rem;
     li {
-      padding: 0.3rem;
-      margin-right: 0.3rem;
-      cursor: pointer;
+      ${tw`py-1 px-2 mr-1 cursor-pointer rounded-xl hover:bg-gray-100`}
       .count {
         margin: 0 0.3rem;
       }
       .anticon {
         font-size: 1.2rem;
-      }
-      &:hover {
-        background: ${GRAY_COLOR};
-        border-radius: 5px;
       }
     }
   }

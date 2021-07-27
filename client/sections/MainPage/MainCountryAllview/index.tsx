@@ -5,15 +5,16 @@ import { ICountry } from "@typings/db";
 
 interface IProps {
   countries: ICountry[] | undefined;
+  isMain?: boolean;
 }
 
-const MainCountryAllview: FC<IProps> = ({ countries }) => {
+const MainCountryAllview: FC<IProps> = ({ countries, isMain }) => {
   return (
     <MainCountryAllviewWrapper>
       <h3>아시아</h3>
       <div className="country-card-wrapper">
         {countries?.map((v, i) => {
-          return <SmallCard country={v} key={i} />;
+          return <SmallCard isMain={isMain} country={v} key={i} />;
         })}
       </div>
       <h3>유라시아</h3>

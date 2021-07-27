@@ -86,7 +86,7 @@ const select: FC<IProps> = () => {
           이동
         </button>
       </AutoCompleteWrapper>
-      <MainCountryAllview countries={countries} />
+      <MainCountryAllview isMain={true} countries={countries} />
     </LG_Layout>
   );
 };

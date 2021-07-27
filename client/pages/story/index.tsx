@@ -1,21 +1,33 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import XLGLayout from "@layout/XLGLayout";
-import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, GRID_STYLE, noRevalidate, WHITE_STYLE } from "config";
+import {
+  BORDER_THIN,
+  FLEX_STYLE,
+  GRAY_COLOR,
+  GRID_STYLE,
+  noRevalidate,
+  RGB_BLACK,
+  WHITE_STYLE,
+} from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
 import router, { useRouter } from "next/router";
-import { useSWRInfinite } from "swr";
-import { IStory } from "@typings/db";
+import useSWR, { useSWRInfinite } from "swr";
+import { ICountry, IStory } from "@typings/db";
 import fetcher from "utils/fetcher";
 import StoryArticleList from "@sections/StoryPage/StoryArticleList";
 import CountryList from "@components/CountryList";
 import StoryMainPoster from "@sections/StoryPage/StoryMainPoster";
 import tw from "twin.macro";
 import StoryTopArticleList from "@sections/StoryPage/StoryTopArticleList";
+import { Divider } from "antd";
+import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import MainCountryAllview from "@sections/MainPage/MainCountryAllview";
+import useToggle from "@hooks/useToggle";
 const Wrapper = styled.div`
   .story-post-btn {
     ${FLEX_STYLE("flex-end", "center")};
@@ -65,22 +77,23 @@ const Wrapper = styled.div`
       }
     }
   }
+  .more-country-icon {
+    font-size: 2rem;
+    color: ${RGB_BLACK(0.15)};
+  }
 `;
 interface IProps {}
 
 const index: FC<IProps> = () => {
   const { query } = useRouter();
-  const {
-    data: stories,
-    revalidate,
-    setSize,
-  } = useSWRInfinite<IStory[]>(
+  const [onAllCountries, onClickAllCountries] = useToggle(false);
+  const { data: stories, setSize } = useSWRInfinite<IStory[]>(
     (index) => `/story?page=${index + 1}&filter=${query?.filter || ""}`,
     fetcher,
     noRevalidate
   );
-  const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.user);
+  const { data: countries } = useSWR<ICountry[]>(`/country`, fetcher, noRevalidate);
+
   return (
     <Wrapper>
       <StoryMainPoster />
@@ -90,6 +103,12 @@ const index: FC<IProps> = () => {
         </div>
         <h2 className="main-title">국가별 연대기</h2>
         <CountryList slidesPerView={3.2} isMain={false} />
+        {onAllCountries && <MainCountryAllview isMain={false} countries={countries} />}
+        <Divider orientation="center">
+          <a onClick={onClickAllCountries} className="more-country-icon">
+            {onAllCountries ? <MinusCircleOutlined /> : <PlusCircleOutlined />}
+          </a>
+        </Divider>
         <h2 className="main-title">인기 급상승 연대기</h2>
         <StoryTopArticleList />
         <h2 className="main-title">연대기 전체</h2>

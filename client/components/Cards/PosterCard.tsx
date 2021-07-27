@@ -1,4 +1,5 @@
 import { css } from "@emotion/react";
+import { ICountry } from "@typings/db";
 import React, { FC, useState } from "react";
 import tw from "twin.macro";
 
@@ -6,19 +7,24 @@ const PosterCardWrapper = (isMain?: boolean) => css`
   ${tw`w-full`}
   ${isMain ? tw`rounded-2xl h-60` : tw`h-80`}
   background-repeat: no-repeat;
-  background-position: left;
+  background-position: center;
+  background-size: 100% 250%;
 `;
 
 interface IProps {
   isMain?: boolean;
+  country?: ICountry;
 }
 
-const PosterCard: FC<IProps> = ({ isMain }) => {
+const PosterCard: FC<IProps> = ({ isMain, country }) => {
   return (
     <div
       css={PosterCardWrapper(isMain)}
       style={{
-        backgroundImage: `url(https://images.unsplash.com/photo-1587502537147-2ba64a62e3d3?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2017&q=80
+        backgroundImage: `url(${
+          country?.image_src ||
+          "https://user-images.githubusercontent.com/74864925/126495159-2e4438ad-6efb-458a-b314-8f92823babc7.jpg"
+        }
       )`,
       }}
     ></div>

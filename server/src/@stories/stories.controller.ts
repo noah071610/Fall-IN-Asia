@@ -9,7 +9,6 @@ import {
   Post,
   Query,
   UploadedFile,
-  UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -17,7 +16,7 @@ import { ApiCookieAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
 import { LoggedInGuard } from 'src/auth/logged-in.guard';
 import { StoriesService } from './stories.service';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor } from '@nestjs/platform-express';
 import multer from 'multer';
 import path from 'path';
 import { User } from 'src/decorators/user.decorator';
@@ -103,7 +102,8 @@ export class StoriesController {
   )
   @Post('image')
   async saveImage(@UploadedFile() file: Express.Multer.File) {
-    await this.StoriesService.saveImage(file);
+    const image = await this.StoriesService.saveImage(file);
+    return image;
   }
 
   @ApiOperation({ summary: 'like post' })
@@ -126,20 +126,28 @@ export class StoriesController {
     await this.StoriesService.dislikePost(storyId, user.id);
   }
 
-  @ApiOperation({ summary: 'Get latest posts by using ID -' })
+  @ApiOperation({ summary: 'Get latest posts by using ID' })
   @Get('latest')
   async getLatestPosts() {
     const latestPosts = await this.StoriesService.getLatestPosts();
     return latestPosts;
   }
 
+  @ApiOperation({ summary: 'Get popular 9 posts' })
+  @Get('popular')
+  async getPopularPosts() {
+    const popularPosts = await this.StoriesService.getPopularPosts();
+    return popularPosts;
+  }
+
   @ApiOperation({ summary: 'Get one post for post page' })
-  @Get(':code/:storyId')
+  @Get(':code/:storyId/:ip')
   async getOnePost(
     @Param('code') code: string,
     @Param('storyId', ParseIntPipe) storyId: number,
+    @Param('ip', ParseIntPipe) ip: number,
   ) {
-    const post = await this.StoriesService.getOnePost(storyId, code);
+    const post = await this.StoriesService.getOnePost(storyId, code, ip);
     return post;
   }
 

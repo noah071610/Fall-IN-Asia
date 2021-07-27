@@ -30,10 +30,6 @@ export const LoginModalWrapper = styled.div`
   }
   .social-login-divider {
     margin-top: 3rem;
-    background-color: white;
-    .ant-divider-inner-text {
-      color: ${RGB_BLACK(0.6)};
-    }
   }
   .social-login-wrapper {
     ${FLEX_STYLE("center", "center")};

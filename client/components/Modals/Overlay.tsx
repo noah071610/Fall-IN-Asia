@@ -1,6 +1,5 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback } from "react";
 import styled from "@emotion/styled";
-import { BLACK_COLOR } from "config";
 import { useDispatch } from "react-redux";
 import { mainSlice } from "slices/main";
 import tw from "twin.macro";
@@ -12,15 +11,6 @@ interface IProps {}
 
 const Overlay: FC<IProps> = () => {
   const dispatch = useDispatch();
-  const onscroll = () => {
-    scrollTo({ top: 0 });
-  };
-  useEffect(() => {
-    window.addEventListener("scroll", onscroll);
-    return () => {
-      window.removeEventListener("scroll", onscroll);
-    };
-  }, []);
   const closeModal = useCallback(() => {
     dispatch(mainSlice.actions.toggleLoginModal());
   }, []);

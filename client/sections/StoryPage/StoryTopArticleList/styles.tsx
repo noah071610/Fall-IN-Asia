@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE, FONT_STYLE, GRID_STYLE } from "config";
+import { ELLIPSIS_STYLE, FLEX_STYLE, FONT_STYLE, GRID_STYLE } from "config";
 import tw from "twin.macro";
 
 export const StoryTopArticleListWrapper = styled.div`
@@ -24,6 +24,7 @@ export const StoryTopArticleListWrapper = styled.div`
         margin-bottom: 0.5rem;
       }
       p {
+        ${ELLIPSIS_STYLE(1.3, 2, "40px")};
         ${FONT_STYLE(0.94, true)}
       }
     }

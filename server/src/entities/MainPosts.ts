@@ -67,7 +67,7 @@ export class MainPosts {
     example: '제가 물어볼게있습니다! 저는 태국을 여행하는..',
     description: 'content in the main post',
   })
-  @Column('varchar', { name: 'content' })
+  @Column('longtext', { name: 'content' })
   content: string;
 
   @CreateDateColumn()

@@ -19,10 +19,11 @@ import { IMainPost } from "@typings/db";
 
 const index = () => {
   const dispatch = useDispatch();
+  const [ip, setIP] = useState("");
   const { query } = useRouter();
   const [filter, setFilter] = useState("");
   const { data: mainPost, revalidate: revalidateMainPost } = useSWR(
-    `/mainPost/${query?.code}/${query?.mainPostId}`,
+    ip ? `/mainPost/${query?.code}/${query?.mainPostId}/${ip}` : null,
     fetcher,
     noRevalidate
   );
@@ -38,6 +39,21 @@ const index = () => {
         : `/mainPost?code=${query?.code || ""}&page=${index + 1}&type=${query?.type || ""}`,
     fetcher
   );
+
+  const getClientIp = async () => {
+    await fetch("https://jsonip.com", { mode: "cors" })
+      .then((resp) => resp.json())
+      .then((ip) => {
+        setIP(ip.ip.replaceAll(".", ""));
+      })
+      .catch(() => {
+        setIP("00000000");
+      });
+  };
+
+  useEffect(() => {
+    getClientIp();
+  }, []);
 
   const {
     mainPostCreateDone,

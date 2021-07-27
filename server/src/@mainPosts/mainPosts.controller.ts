@@ -134,12 +134,13 @@ export class MainPostsController {
   }
 
   @ApiOperation({ summary: 'Get one post for post page' })
-  @Get(':code/:mainPostId')
+  @Get(':code/:mainPostId/:ip')
   async getOnePost(
     @Param('code') code: string,
     @Param('mainPostId', ParseIntPipe) mainPostId: number,
+    @Param('ip', ParseIntPipe) ip: number,
   ) {
-    const post = await this.MainPostsService.getOnePost(mainPostId, code);
+    const post = await this.MainPostsService.getOnePost(mainPostId, code, ip);
     return post;
   }
 

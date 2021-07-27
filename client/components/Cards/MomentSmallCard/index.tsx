@@ -1,15 +1,22 @@
 import { IMainPost } from "@typings/db";
-import React, { FC, useState } from "react";
+import router from "next/router";
+import React, { FC, useCallback, useMemo } from "react";
 import { MomentSmallCardWrapper } from "./styles";
-import ReactHtmlParser from "react-html-parser";
 
 interface IProps {
   mainPost: IMainPost;
 }
 const MomentSmallCard: FC<IProps> = ({ mainPost }) => {
-  const [state, setstate] = useState();
+  const contentWithoutHTML = useMemo(() => {
+    return mainPost?.content?.replace(/(<([^>]+)>)/gi, "").replace(/&.*;/gi, "");
+  }, [mainPost]);
+
+  const onClickMomentSmallCard = useCallback(() => {
+    router.push(`/country/${mainPost?.code}/${mainPost?.id}`);
+  }, []);
+
   return (
-    <MomentSmallCardWrapper>
+    <MomentSmallCardWrapper onClick={onClickMomentSmallCard}>
       <div className="memont-small-top">
         <div className="icon-wrapper">
           <img src={mainPost?.user?.icon} alt="article-image" />
@@ -22,7 +29,7 @@ const MomentSmallCard: FC<IProps> = ({ mainPost }) => {
           <span>2021/07/26</span>
         </div>
       </div>
-      <h2>{ReactHtmlParser(mainPost?.content as string)}</h2>
+      <h2>{contentWithoutHTML}</h2>
     </MomentSmallCardWrapper>
   );
 };

@@ -43,7 +43,7 @@ const CountryList: FC<IProps> = ({ slidesPerView, isMain }) => {
       {countries?.map((v, i) => {
         return (
           <SwiperSlide key={i}>
-            <ImageCard country={v} />
+            <ImageCard isMain={isMain} country={v} />
           </SwiperSlide>
         );
       })}

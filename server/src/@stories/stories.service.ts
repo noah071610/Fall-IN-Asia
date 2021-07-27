@@ -11,6 +11,7 @@ import { Announcements } from 'src/entities/Announcements';
 import { Countries } from 'src/entities/Countries';
 import { StoryLike } from 'src/entities/StoryLike';
 import { StoryRequestDto } from 'src/dto/story.request.dto';
+const viewObj = new Object();
 @Injectable()
 export class StoriesService {
   constructor(
@@ -69,10 +70,10 @@ export class StoriesService {
     const newImage = new Images();
     newImage.image_src = process.env.BACK_URL + file.path.replace('\\', '/');
     await this.ImagesRepository.save(newImage);
-    return true;
+    return newImage.image_src;
   }
 
-  async getOnePost(storyId: number, code: string) {
+  async getOnePost(storyId: number, code: string, ip: number) {
     const post = await this.StoriesRepository.findOne({
       where: {
         id: storyId,
@@ -91,6 +92,26 @@ export class StoriesService {
     });
     if (!post) {
       throw new NotFoundException('가져올 게시물이 없습니다.');
+    }
+    if (post) {
+      console.log('###', viewObj);
+      if (!viewObj[storyId]) {
+        viewObj[storyId] = [];
+      }
+      if (viewObj[storyId].indexOf(ip) == -1) {
+        viewObj[storyId].push(ip);
+        await this.StoriesRepository.createQueryBuilder('stories')
+          .update('stories')
+          .set({
+            hit: () => 'hit + 1',
+          })
+          .where('id = :id', { id: storyId, code })
+          .execute();
+        setTimeout(() => {
+          viewObj[storyId].splice(viewObj[storyId].indexOf(ip), 1);
+        }, 600000);
+      }
+      console.log('@@@@', viewObj);
     }
     return post;
   }
@@ -127,6 +148,45 @@ export class StoriesService {
           .sort((a, b) => b.comments.length - a.comments.length)
           .slice((page - 1) * 10, page * 10);
     }
+  }
+
+  async getPopularPosts() {
+    const pointWithpostId = await this.StoriesRepository.createQueryBuilder(
+      'stories',
+    )
+      .select([
+        'stories.id',
+        'stories.hit',
+        'likedUser.id as user_len',
+        'comments.id as comment_len',
+      ])
+      .leftJoinAndSelect('stories.likedUser', 'likedUser')
+      .leftJoinAndSelect('stories.comments', 'comments')
+      .orderBy('stories.id', 'DESC')
+      .take(50)
+      .getMany()
+      .then((res) => {
+        return res
+          .map((v) => {
+            return {
+              id: v.id,
+              point: v.hit * 0.001 + v.comments.length + v.likedUser.length * 5,
+            };
+          })
+          .sort((a: any, b: any) => b.point - a.point)
+          .splice(0, 9);
+      });
+    let popularPosts = [];
+    for (const i of pointWithpostId) {
+      await this.StoriesRepository.findOne({
+        where: { id: i.id },
+        relations: ['user', 'country', 'likedUser', 'comments'],
+      }).then((res) => {
+        popularPosts.push(res);
+      });
+    }
+
+    return popularPosts;
   }
 
   async getPosts(page?: number) {

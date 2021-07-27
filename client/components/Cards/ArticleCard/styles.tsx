@@ -1,5 +1,12 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE, FONT_STYLE, GRAY_COLOR, WHITE_COLOR, WHITE_STYLE } from "config";
+import {
+  ELLIPSIS_STYLE,
+  FLEX_STYLE,
+  FONT_STYLE,
+  GRAY_COLOR,
+  WHITE_COLOR,
+  WHITE_STYLE,
+} from "config";
 import tw from "twin.macro";
 
 export const ArticleCardWrapper = styled.div`
@@ -35,8 +42,8 @@ export const ArticleCardWrapper = styled.div`
     ${FLEX_STYLE("flex-start", "flex-end")};
   }
   .story-content {
+    ${ELLIPSIS_STYLE(2, 5, "150px")};
     padding: 1rem 0;
-    line-height: 1.7;
   }
   .story-main {
     padding-left: 2rem;

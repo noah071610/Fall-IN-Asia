@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { FONT_STYLE } from "config";
+import { ELLIPSIS_STYLE, FONT_STYLE } from "config";
 import tw from "twin.macro";
 
 export const MomentSmallCardWrapper = styled.div`
@@ -24,6 +24,7 @@ export const MomentSmallCardWrapper = styled.div`
     }
   }
   h2 {
-    ${FONT_STYLE(0.94, true)}
+    ${ELLIPSIS_STYLE(1.8, 4, "90px")};
+    ${FONT_STYLE(0.8, true)}
   }
 `;

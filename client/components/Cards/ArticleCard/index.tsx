@@ -2,10 +2,10 @@ import { CommentOutlined, LikeOutlined } from "@ant-design/icons";
 import NameSpace from "@components/NameSpace";
 import { IStory } from "@typings/db";
 import { NO_IMAGE_URL } from "config";
-import React, { FC, useCallback, useState } from "react";
+import { FC, useCallback } from "react";
 import { ArticleCardWrapper } from "./styles";
-import ReactHtmlParser from "react-html-parser";
 import router from "next/router";
+import useHtmlConverter from "@hooks/useHtmlConverter";
 
 interface IProps {
   story: IStory;
@@ -16,6 +16,7 @@ const ArticleCard: FC<IProps> = ({ story, isMain }) => {
   const onClickArticleCard = useCallback(() => {
     router.push(`/story/${story?.code}/${story?.id}`);
   }, [story]);
+
   return (
     <ArticleCardWrapper className="article-card-wrapper" onClick={onClickArticleCard}>
       <div style={isMain ? { width: "55%" } : {}} className="image-wrapper">
@@ -36,7 +37,7 @@ const ArticleCard: FC<IProps> = ({ story, isMain }) => {
         <div className="story-info">
           <NameSpace date={story?.createdAt} user={story?.user} />
         </div>
-        <div className="story-content">{ReactHtmlParser(story?.content as string)}</div>
+        <div className="story-content">{useHtmlConverter(story?.content)}</div>
       </div>
     </ArticleCardWrapper>
   );

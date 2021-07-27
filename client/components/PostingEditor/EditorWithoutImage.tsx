@@ -1,5 +1,5 @@
-import React, { FC, useState } from "react";
-import { BLACK_COLOR, GRAY_COLOR, HOVER_GRAY, quillModules, qullFormats, RGB_BLACK } from "config";
+import React, { FC } from "react";
+import { BLACK_COLOR, GRAY_COLOR, quillModules, qullFormats } from "config";
 import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
 import { memo } from "react";

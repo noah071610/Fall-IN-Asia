@@ -1,4 +1,13 @@
-import { BLUE_COLOR, BORDER_THIN, GRAY_COLOR, RGB_BLACK, WHITE_COLOR, WHITE_STYLE } from "config";
+import {
+  BLUE_COLOR,
+  BORDER_THIN,
+  FONT_STYLE,
+  GRAY_COLOR,
+  RGB_BLACK,
+  WHITE_COLOR,
+  WHITE_STYLE,
+} from "config";
+import tw from "twin.macro";
 
 export const resetStyles = `
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
@@ -168,7 +177,10 @@ textarea {
 }
 
 .ant-divider {
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: white;
+  .ant-divider-inner-text {
+    color: ${RGB_BLACK(0.6)};
+  }
 }
 
 .toast {
@@ -215,7 +227,7 @@ textarea {
 .swiper-button-prev {
     background-color: none;
     padding: 30px;
-    color: rgba(0,0,0,0.2) !important;
+    color: black !important;
     fill: white !important;
     stroke: white !important;
 }
@@ -230,6 +242,17 @@ textarea {
     border: 1px solid ${RGB_BLACK(0.08)} !important;
     box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
   }
+}
+
+.drop-down {
+  transition: 0.25s all;
+  height:100%;
+  transform:translateY(0);
+}
+.roll-up{
+  transition: 0.1s all;
+  height:0px;
+  transform:translateY(-100%);
 }
 
 .cofirm-btn-wrapper {
@@ -257,4 +280,64 @@ textarea {
   background: ${RGB_BLACK(0.4)};
 }
 
+.post-content{
+  ${tw`pt-16 pb-24`}
+  font-size:1rem;
+  line-height: 1.7;
+  img {
+    width: 50%;
+  }
+  .ql-size-large {
+    ${FONT_STYLE(1.5, true)}
+  }
+  .ql-size-huge {
+    ${FONT_STYLE(2.5, true)}
+  }
+  .ql-size-small {
+    ${FONT_STYLE(0.85, false)}
+  }
+  ul {
+    list-style-type: disc;
+    list-style: inherit;
+    list-style-position: inside;
+  }
+  ol {
+    list-style-type: decimal;
+    list-style: decimal;
+    list-style-position: inside;
+  }
+  li {
+    display: list-item;
+    list-style: inherit;
+    list-style-position: inside;
+  }
+  .ql-align-center {
+    text-align: center;
+  }
+  .ql-align-right {
+    text-align: right;
+  }
+  blockquote {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-left: 10px solid ${GRAY_COLOR};
+  }
+  .ql-indent-1 {
+    margin-left: 4rem;
+  }
+  .ql-indent-2 {
+    margin-left: 8rem;
+  }
+  .ql-indent-3 {
+    margin-left: 12rem;
+  }
+  .ql-indent-4 {
+    margin-left: 16rem;
+  }
+  .ql-indent-5 {
+    margin-left: 20rem;
+  }
+}
 `;

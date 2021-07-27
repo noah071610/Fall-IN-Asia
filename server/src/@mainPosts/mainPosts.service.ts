@@ -1,18 +1,17 @@
 import {
   Injectable,
   NotFoundException,
-  Post,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import bcrypt from 'bcrypt';
-import { Users } from 'src/entities/Users';
 import { Images } from 'src/entities/Images';
 import { Announcements } from 'src/entities/Announcements';
 import { MainPosts } from 'src/entities/MainPosts';
 import { Countries } from 'src/entities/Countries';
 import { MainPostLike } from 'src/entities/MainPostsLike';
 import { InjectRepository } from '@nestjs/typeorm';
+const viewObj = new Object();
+
 @Injectable()
 export class MainPostsService {
   constructor(
@@ -69,7 +68,7 @@ export class MainPostsService {
     return true;
   }
 
-  async getOnePost(mainPostId: number, code: string) {
+  async getOnePost(mainPostId: number, code: string, ip: number) {
     const post = await this.MainPostsRepository.findOne({
       where: {
         id: mainPostId,
@@ -88,6 +87,24 @@ export class MainPostsService {
     });
     if (!post) {
       throw new NotFoundException('가져올 게시물이 없습니다.');
+    }
+    if (post) {
+      if (!viewObj[mainPostId]) {
+        viewObj[mainPostId] = [];
+      }
+      if (viewObj[mainPostId].indexOf(ip) == -1) {
+        viewObj[mainPostId].push(ip);
+        await this.MainPostsRepository.createQueryBuilder('mainPosts')
+          .update('mainPosts')
+          .set({
+            hit: () => 'hit + 1',
+          })
+          .where('id = :id', { id: mainPostId, code })
+          .execute();
+        setTimeout(() => {
+          viewObj[mainPostId].splice(viewObj[mainPostId].indexOf(ip), 1);
+        }, 600000);
+      }
     }
     return post;
   }

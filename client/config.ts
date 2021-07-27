@@ -60,6 +60,18 @@ background: ${WHITE_COLOR};
 border-radius: ${radius ? radius : "15"}px;
 `;
 
+export const ELLIPSIS_STYLE = (lineHeight: number, clamp: number, height: string) => `
+line-height: ${lineHeight};
+-webkit-line-clamp: ${clamp};
+height: ${height};
+display: -webkit-box;
+-webkit-box-orient: vertical;
+overflow: hidden;
+word-wrap: break-word;
+text-overflow: ellipsis;
+
+`;
+
 export const HOVER_GRAY = () => `
   cursor:pointer;
   &:hover{
@@ -131,6 +143,8 @@ export const imageHandler = (quillInstance: any, isStory?: boolean) => {
       data: form,
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
+      console.log(res);
+
       const range = quillInstance?.current?.getSelection(true);
       quillInstance?.current?.insertEmbed(range.index, "image", `${res.data.data}`);
       quillInstance?.current?.setSelection(range.index + 1);

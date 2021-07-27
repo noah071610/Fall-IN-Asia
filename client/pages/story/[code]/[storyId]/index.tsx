@@ -7,7 +7,7 @@ import router, { useRouter } from "next/router";
 import XLGLayout from "@layout/XLGLayout";
 import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
-import { ICountry, IStory } from "@typings/db";
+import { IStory } from "@typings/db";
 import { Divider } from "antd";
 import StoryPost from "@sections/StoryPage/StoryPost";
 import { wrapper } from "configureStore";
@@ -41,6 +41,7 @@ interface IProps {}
 const index: FC<IProps> = () => {
   const dispatch = useDispatch();
   const { query } = useRouter();
+  const [ip, setIP] = useState("");
   const [isOwner, setIsOwner] = useState(false);
   const postRef = useRef<HTMLDivElement>(null);
   const { user } = useSelector((state: RootState) => state.user);
@@ -51,7 +52,7 @@ const index: FC<IProps> = () => {
     useSelector((state: RootState) => state.comment);
 
   const { data: story, revalidate: revalidateStory } = useSWR<IStory>(
-    `/story/${query?.code}/${query?.storyId}`,
+    ip ? `/story/${query?.code}/${query?.storyId}/${ip}` : null,
     fetcher,
     noRevalidate
   );
@@ -64,6 +65,21 @@ const index: FC<IProps> = () => {
     fetcher,
     noRevalidate
   );
+
+  const getClientIp = async () => {
+    await fetch("https://jsonip.com", { mode: "cors" })
+      .then((resp) => resp.json())
+      .then((ip) => {
+        setIP(ip.ip.replaceAll(".", ""));
+      })
+      .catch(() => {
+        setIP("00000000");
+      });
+  };
+
+  useEffect(() => {
+    getClientIp();
+  }, []);
 
   useEffect(() => {
     if (user?.id === story?.user?.id) {

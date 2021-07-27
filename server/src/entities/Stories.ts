@@ -100,7 +100,7 @@ export class Stories {
     example: '태국에 처음 놀러갔을때 크게 놀랐던게 있습니다. 그건...',
     description: 'content in the post',
   })
-  @Column('varchar', { name: 'content' })
+  @Column('longtext', { name: 'content' })
   content: string;
 
   @CreateDateColumn()
