@@ -1,15 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface MainState {
-  currentPage: number;
-  onCommunityModal: boolean;
+  onProfilePopUp: boolean;
+  onNoticePopUp: boolean;
+  onSearchPopUp: boolean;
   onLoginModal: boolean;
   onSignupModal: boolean;
 }
 
 const mainState: MainState = {
-  currentPage: 1,
-  onCommunityModal: false,
+  onProfilePopUp: false,
+  onNoticePopUp: false,
+  onSearchPopUp: false,
   onLoginModal: false,
   onSignupModal: false,
 };
@@ -20,14 +22,38 @@ export const mainSlice = createSlice({
   reducers: {
     toggleLoginModal(state) {
       state.onLoginModal = !state.onLoginModal;
-      state.onCommunityModal = false;
+      state.onProfilePopUp = false;
+      state.onNoticePopUp = false;
+      state.onSearchPopUp = false;
     },
-    toggleSignupModal(state) {
-      state.onSignupModal = !state.onSignupModal;
-      state.onCommunityModal = false;
+    toggleProfilePopUp(state) {
+      state.onProfilePopUp = !state.onProfilePopUp;
+      state.onSearchPopUp = false;
+      state.onNoticePopUp = false;
     },
-    changeCurrentPage(state, action) {
-      state.currentPage = action.payload;
+    toggleNoticePopUp(state) {
+      state.onNoticePopUp = !state.onNoticePopUp;
+      state.onLoginModal = false;
+      state.onSearchPopUp = false;
+    },
+    toggleSearchPopUp(state) {
+      state.onSearchPopUp = !state.onSearchPopUp;
+      state.onLoginModal = false;
+      state.onNoticePopUp = false;
+      state.onProfilePopUp = false;
+    },
+    closeProfilePopUp(state) {
+      state.onProfilePopUp = false;
+    },
+    closeNoticePopUp(state) {
+      state.onNoticePopUp = false;
+    },
+    closeSearchPopUp(state) {
+      state.onSearchPopUp = false;
+    },
+    closeModal(state) {
+      state.onLoginModal = false;
+      state.onProfilePopUp = false;
     },
   },
   extraReducers: (builder) => builder,

@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 import { Global } from "@emotion/react";
 import { resetStyles } from "@styles/resetStyles";
 import AOS from "aos";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { wrapper } from "configureStore";
 import "antd/dist/antd.css";
 import "swiper/swiper.min.css";
@@ -17,19 +17,37 @@ import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { ToastContainer } from "react-toastify";
 import Header from "@sections/Header";
 import Footer from "@sections/Footer";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "slices";
+import { mainSlice } from "slices/main";
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const dispatch = useDispatch();
   useEffect(() => {
     AOS.init({ startEvent: "load" });
   }, []);
+  const { onProfilePopUp, onNoticePopUp, onSearchPopUp } = useSelector(
+    (state: RootState) => state.main
+  );
+  const onClickBody = useCallback(() => {
+    if (onProfilePopUp) {
+      dispatch(mainSlice.actions.closeProfilePopUp());
+    }
+    if (onNoticePopUp) {
+      dispatch(mainSlice.actions.closeNoticePopUp());
+    }
+    if (onSearchPopUp) {
+      dispatch(mainSlice.actions.closeSearchPopUp());
+    }
+  }, [onProfilePopUp, onNoticePopUp, onSearchPopUp]);
   return (
-    <>
+    <div onClick={onClickBody}>
       <Global styles={resetStyles} />
       <Header />
       <Component {...pageProps} />
       <Footer />
       <ToastContainer />
-    </>
+    </div>
   );
 };
 

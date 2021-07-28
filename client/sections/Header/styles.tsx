@@ -27,8 +27,8 @@ export const HeaderLeft = styled.ul`
 
 export const HeaderRight = styled.ul`
   ${FLEX_STYLE("", "center")};
-  li {
-    ${tw`ml-3`}
+  .header-right-li {
+    ${tw`ml-3 relative`}
     padding: 0.5rem 0.6rem;
     .user-icon {
       ${tw`w-10 h-10 rounded-full`}

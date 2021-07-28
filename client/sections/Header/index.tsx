@@ -1,26 +1,40 @@
 import { FC, useCallback, useEffect } from "react";
 import { HeaderWrapper, HeaderLeft, HeaderRight } from "./styles";
-import SignupModal from "@components/Modals/SignupModal";
 import { useSelector, useDispatch } from "react-redux";
-import { useRouter } from "next/router";
 import { RootState } from "slices";
 import LoginModal from "@components/Modals/LoginModal";
 import Link from "next/link";
 import { mainSlice } from "slices/main";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell, faBellSlash, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { NotificationOutlined, SearchOutlined } from "@ant-design/icons";
+import { faBell, faSearch } from "@fortawesome/free-solid-svg-icons";
 import Overlay from "@components/Modals/Overlay";
+import SearchPopUp from "@components/Modals/SearchPopUp";
+import NoticePopUp from "@components/Modals/NoticePopUp";
+import ProfilePopUp from "@components/Modals/ProfilePopUp";
 
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
-  const { onLoginModal, onSignupModal } = useSelector((state: RootState) => state.main);
+  const { onLoginModal, onProfilePopUp, onNoticePopUp, onSearchPopUp } = useSelector(
+    (state: RootState) => state.main
+  );
 
   const onClickLoginMenu = useCallback(() => {
     dispatch(mainSlice.actions.toggleLoginModal());
+  }, []);
+
+  const onClickProfilePopUp = useCallback(() => {
+    dispatch(mainSlice.actions.toggleProfilePopUp());
+  }, []);
+
+  const onClickNoticePopUp = useCallback(() => {
+    dispatch(mainSlice.actions.toggleNoticePopUp());
+  }, []);
+
+  const onClickSearchPopUp = useCallback(() => {
+    dispatch(mainSlice.actions.toggleSearchPopUp());
   }, []);
 
   return (
@@ -48,26 +62,29 @@ const Header: FC<HeaderProps> = () => {
         </li>
       </HeaderLeft>
       <HeaderRight>
+        <li style={{ display: "flex" }} className="header-right-li icon-li">
+          {onSearchPopUp && <SearchPopUp />}
+          <a onClick={onClickSearchPopUp}>
+            <FontAwesomeIcon className="anticon" icon={faSearch} />
+          </a>
+        </li>
         {user ? (
           <>
-            <li className="icon-li">
-              <a>
-                <FontAwesomeIcon className="anticon" icon={faSearch} />
-              </a>
-            </li>
-            <li className="icon-li">
-              <a>
+            <li className="header-right-li icon-li">
+              <a onClick={onClickNoticePopUp}>
                 <FontAwesomeIcon className="anticon" icon={faBell} />
               </a>
+              {onNoticePopUp && <NoticePopUp />}
             </li>
-            <li>
-              <a>
+            <li className="header-right-li">
+              <a onClick={onClickProfilePopUp}>
                 <img className="user-icon" src={user?.icon} alt={user?.name} />
               </a>
+              {onProfilePopUp && <ProfilePopUp />}
             </li>
           </>
         ) : (
-          <li>
+          <li className="header-right-li">
             <a onClick={onClickLoginMenu}>로그인</a>
           </li>
         )}
