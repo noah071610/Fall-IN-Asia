@@ -25,24 +25,6 @@ const UserInfoLayoutWrapper = styled.div`
         ${tw`mt-6`}
         ${GRID_STYLE("1rem", "1fr 1fr")};
       }
-      .user-info-list-card {
-        ${tw`flex w-full px-2 py-3 cursor-pointer mb-1 rounded-md`}
-        ${BORDER_THIN("border")};
-        &:hover {
-          ${tw`shadow-md`}
-        }
-        img {
-          ${tw`w-28 h-20 mr-4 rounded-md`}
-        }
-        .user-info-list-desc {
-          h4 {
-            ${tw`mb-2 text-xs`}
-          }
-          p {
-            ${tw`font-bold`}
-          }
-        }
-      }
     }
   }
 `;

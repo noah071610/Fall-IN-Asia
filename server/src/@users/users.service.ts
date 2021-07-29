@@ -100,4 +100,37 @@ export class UsersService {
       'https://user-images.githubusercontent.com/74864925/124331496-460bfe80-dbca-11eb-95dc-a5379a5750a6.png';
     return await this.userRepository.save(user);
   }
+
+  async changeUserInfo(userId: number, form) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+    if (!user) {
+      throw new NotFoundException('유저를 찾지 못했습니다.');
+    }
+    user.name = form.userName;
+    user.introduce = form.introduce;
+    return await this.userRepository.save(user);
+  }
+
+  async changeUserPassword(userId: number, form) {
+    const user = await this.userRepository.findOne({
+      select: ['id', 'icon', 'email', 'password'],
+      where: { id: userId },
+    });
+    if (!user) {
+      throw new NotFoundException('유저를 찾지 못했습니다.');
+    }
+    const result = await bcrypt.compare(form.prevPassword, user.password);
+    if (result) {
+      const mynewPassword = await bcrypt.hash(form.newPassword, 12);
+      user.password = mynewPassword;
+      await this.userRepository.save(user);
+      return true;
+    } else {
+      throw new UnauthorizedException(
+        '비밀번호가 일치하지 않습니다. 다시한번 확인해주세요.',
+      );
+    }
+  }
 }

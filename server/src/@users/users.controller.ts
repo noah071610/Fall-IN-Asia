@@ -15,6 +15,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiCookieAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
+import { format } from 'morgan';
 import multer from 'multer';
 import path from 'path';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
@@ -100,5 +101,34 @@ export class UsersController {
   async deleteUserIcon(@User() user) {
     const deleteUserIcon = this.usersService.deleteUserIcon(user.id);
     return deleteUserIcon;
+  }
+
+  @ApiOperation({ summary: 'change user information' })
+  @UseGuards(new LoggedInGuard())
+  @Post('info')
+  async changeUserInfo(@Body() form, @User() user) {
+    return await this.usersService.changeUserInfo(user.id, form);
+  }
+
+  @ApiOperation({ summary: 'change user password' })
+  @UseGuards(new LoggedInGuard())
+  @Post('password')
+  async changeUserPassword(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Body() form,
+    @User() user,
+  ) {
+    const cofirmedPassword = await this.usersService.changeUserPassword(
+      user.id,
+      form,
+    );
+    if (cofirmedPassword) {
+      req.session.destroy(null);
+      res.clearCookie('connect.sid', { httpOnly: true });
+      req.logout();
+      res.redirect('/');
+      return true;
+    }
   }
 }

@@ -65,3 +65,29 @@ export const deleteUserIconAction = createAsyncThunk<any>("user/icon/delete", as
     throw error;
   }
 });
+
+export const changeUserInfoAction = createAsyncThunk<any, { userName: string; introduce: string }>(
+  "user/info",
+  async (form) => {
+    try {
+      const response = await axios.post("/user/info", form);
+      return response.data;
+    } catch (error) {
+      toastErrorMessage(error);
+      throw error;
+    }
+  }
+);
+
+export const changeUserPasswordAction = createAsyncThunk<
+  any,
+  { newPassword: string; prevPassword: string }
+>("user/password", async (form) => {
+  try {
+    const response = await axios.post("/user/password", form);
+    return response.data;
+  } catch (error) {
+    toastErrorMessage(error);
+    throw error;
+  }
+});

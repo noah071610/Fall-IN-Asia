@@ -11,6 +11,7 @@ import fetcher from "utils/fetcher";
 import { noRevalidate } from "config";
 import { IUserInfo } from "@typings/db";
 import CountryRouteMap from "@components/Maps/CountryRouteMap";
+import ListCard from "@components/Cards/ListCard";
 
 const index = () => {
   const { query } = useRouter();
@@ -24,12 +25,7 @@ const index = () => {
     <UserInfoLayout>
       <h2 className="main-title">알림</h2>
       {notices?.map((v, i) => (
-        <li key={i} className="user-info-list-card">
-          <div className="user-info-list-desc">
-            <h4>{v.header}</h4>
-            <p>{v.content}</p>
-          </div>
-        </li>
+        <ListCard key={i} title={v.header} content={v.content} />
       ))}
       <h2 className="main-title">{userInfo?.name}님의 연대기 지도</h2>
       <CountryRouteMap stories={userInfo?.stories || []} />
@@ -38,33 +34,27 @@ const index = () => {
       <div className="post-list-wrapper">
         <div className="post-list">
           <h2 className="main-title">
-            {userInfo?.name}님의 작성 연대기 {userInfo?.moments?.length || 0}개
+            {userInfo?.name}님의 작성 연대기 {userInfo?.stories?.length || 0}개
           </h2>
           {userInfo?.stories?.map((v, i) => (
-            <li key={i} className="user-info-list-card">
-              <img src={v.thumbnail} alt="story_thumbnail" />
-              <div className="user-info-list-desc">
-                <h4>
-                  {v.country.name}/{userInfo?.name}의 {i + 1}번째 연대기
-                </h4>
-                <p>{v.title}</p>
-              </div>
-            </li>
+            <ListCard
+              key={i}
+              thumbnail={<img src={v.thumbnail} alt="story_thumbnail" />}
+              title={`${v.country.name}/${userInfo?.name}의 ${i + 1}번째 연대기`}
+              content={v.title}
+            />
           ))}
         </div>
         <div className="post-list">
           <h2 className="main-title">
-            {userInfo?.name}님의 작성 포스트 {userInfo?.stories?.length || 0}개
+            {userInfo?.name}님의 작성 포스트 {userInfo?.moments?.length || 0}개
           </h2>
           {userInfo?.moments?.map((v, i) => (
-            <li key={i} className="user-info-list-card">
-              <div className="user-info-list-desc">
-                <h4>
-                  {v.country.name}/{v.type}/{v.id}번째포스트
-                </h4>
-                <p>{v.content}</p>
-              </div>
-            </li>
+            <ListCard
+              key={i}
+              title={`${v.country.name}/${v.type}/${v.id}번째포스트`}
+              content={v.content}
+            />
           ))}
         </div>
       </div>

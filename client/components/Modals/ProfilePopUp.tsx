@@ -7,16 +7,14 @@ import tw from "twin.macro";
 import styled from "@emotion/styled";
 import { logoutAction } from "actions/user";
 import { userSlice } from "slices/user";
+import { mainSlice } from "slices/main";
 
 const ProfilePopUpWrapper = styled.ul`
   ${tw`absolute top-14 right-0 bg-white shadow-md rounded-xl overflow-hidden w-auto z-20`}
   white-space: nowrap;
   li {
-    ${tw`w-auto block cursor-pointer hover:bg-gray-100 py-3 px-8`}
+    ${tw`w-auto block cursor-pointer hover:bg-gray-100 py-3 px-8 text-sm font-bold`}
     ${FLEX_STYLE("center", "center")};
-    a {
-      ${tw`text-sm`}
-    }
   }
 `;
 interface IProps {}
@@ -30,19 +28,20 @@ const ProfilePopUp: FC<IProps> = () => {
         e.stopPropagation();
       }}
     >
-      <li>
-        <Link href={`/me/${user?.id}`}>
-          <a>내 프로필</a>
-        </Link>
+      <Link href={`/me/${user?.id}`}>
+        <a>
+          <li>내 프로필</li>
+        </a>
+      </Link>
+      <li
+        onClick={() => {
+          dispatch(mainSlice.actions.toggleProfilePopUp());
+          dispatch(mainSlice.actions.toggleNoticePopUp());
+        }}
+      >
+        알림
       </li>
-      <li>
-        <Link href="/vote">
-          <a>알림</a>
-        </Link>
-      </li>
-      <li>
-        <a onClick={() => dispatch(logoutAction())}>로그아웃</a>
-      </li>
+      <li onClick={() => dispatch(logoutAction())}>로그아웃</li>
     </ProfilePopUpWrapper>
   );
 };

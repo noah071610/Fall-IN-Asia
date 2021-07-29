@@ -27,13 +27,13 @@ export const UserInfoAsideWrapper = styled.aside`
       }
     }
     .user-intro-wrapper {
-      ${tw`mt-3 relative`}
+      ${tw`mt-3`}
       .user-name {
         ${tw`text-2xl font-bold mb-2 `}
         ${FLEX_STYLE("space-between", "center")};
       }
-      .edit-icon {
-        ${tw``}
+      .user-introduce {
+        ${tw`leading-6`}
       }
     }
     h3 {
@@ -45,10 +45,25 @@ export const UserInfoAsideWrapper = styled.aside`
     .post-len {
       ${tw`mb-4`}
     }
-    .edit-profile-btn {
-      ${tw`w-full mt-4 py-3 rounded-xl hover:shadow-md font-bold`}
-      transition:0.3s all;
+    .btn-wrapper {
+      ${tw`mt-8`}
+      button {
+        ${tw`w-full mt-2 py-2 rounded-md hover:shadow-md font-bold`}
+        transition:0.3s all;
+        ${BORDER_THIN("border")};
+      }
+    }
+
+    .edit-input {
+      ${tw`py-2 px-3 rounded-md hover:shadow-md focus:shadow-md`}
       ${BORDER_THIN("border")};
+    }
+    .edit-textarea {
+      ${tw`text-xs py-2 px-3 rounded-md hover:shadow-md focus:shadow-md`}
+      ${BORDER_THIN("border")};
+    }
+    .edit-title {
+      ${tw`my-3 font-bold`}
     }
   }
 `;

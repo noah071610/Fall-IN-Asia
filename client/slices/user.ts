@@ -2,6 +2,8 @@ import { IUser } from "@typings/db";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   changeUserIconAction,
+  changeUserInfoAction,
+  changeUserPasswordAction,
   deleteUserIconAction,
   getUserInfoAction,
   logInAction,
@@ -26,6 +28,12 @@ export interface UserState {
   addUserIconLoading: boolean;
   addUserIconDone: boolean;
   addUserIconError: boolean;
+  changeUserInfoLoading: boolean;
+  changeUserInfoDone: boolean;
+  changeUserInfoError: boolean;
+  changeUserPasswordLoading: boolean;
+  changeUserPasswordDone: boolean;
+  changeUserPasswordError: boolean;
   deleteUserIconLoading: boolean;
   deleteUserIconDone: boolean;
   deleteUserIconError: boolean;
@@ -48,6 +56,12 @@ const initialState: UserState = {
   addUserIconLoading: false,
   addUserIconDone: false,
   addUserIconError: false,
+  changeUserInfoLoading: false,
+  changeUserInfoDone: false,
+  changeUserInfoError: false,
+  changeUserPasswordLoading: false,
+  changeUserPasswordDone: false,
+  changeUserPasswordError: false,
   deleteUserIconLoading: false,
   deleteUserIconDone: false,
   deleteUserIconError: false,
@@ -81,6 +95,16 @@ export const userSlice = createSlice({
       state.deleteUserIconLoading = false;
       state.deleteUserIconDone = false;
       state.deleteUserIconError = false;
+    },
+    changeUserInfoClear(state) {
+      state.changeUserInfoLoading = false;
+      state.changeUserInfoDone = false;
+      state.changeUserInfoError = false;
+    },
+    changeUserPasswordClear(state) {
+      state.changeUserPasswordLoading = false;
+      state.changeUserPasswordDone = false;
+      state.changeUserPasswordError = false;
     },
   },
   extraReducers: (builder) =>
@@ -153,5 +177,27 @@ export const userSlice = createSlice({
       .addCase(deleteUserIconAction.rejected, (state) => {
         state.deleteUserIconLoading = false;
         state.deleteUserIconError = true;
+      })
+      .addCase(changeUserInfoAction.pending, (state) => {
+        state.changeUserInfoLoading = true;
+      })
+      .addCase(changeUserInfoAction.fulfilled, (state) => {
+        state.changeUserInfoLoading = false;
+        state.changeUserInfoDone = true;
+      })
+      .addCase(changeUserInfoAction.rejected, (state) => {
+        state.changeUserInfoLoading = false;
+        state.changeUserInfoError = true;
+      })
+      .addCase(changeUserPasswordAction.pending, (state) => {
+        state.changeUserPasswordLoading = true;
+      })
+      .addCase(changeUserPasswordAction.fulfilled, (state) => {
+        state.changeUserPasswordLoading = false;
+        state.changeUserPasswordDone = true;
+      })
+      .addCase(changeUserPasswordAction.rejected, (state) => {
+        state.changeUserPasswordLoading = false;
+        state.changeUserPasswordError = true;
       }),
 });
