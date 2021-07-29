@@ -5,11 +5,13 @@ import { Stories } from './entities/Stories';
 import { Comments } from './entities/Comments';
 import { SubComments } from './entities/SubComments';
 import { Images } from './entities/Images';
-import { Announcements } from './entities/Announcements';
-import { MainPosts } from './entities/MainPosts';
-import { MainPostLike } from './entities/MainPostsLike';
+import { Notices } from './entities/Notices';
+import { Moments } from './entities/Moments';
+import { MomentLike } from './entities/MomentLike';
 import { Countries } from './entities/Countries';
 import { StoryLike } from './entities/StoryLike';
+import { Follow } from './entities/Follow';
+import { VisitCountry } from './entities/VisitCountry';
 
 dotenv.config();
 const config: TypeOrmModuleOptions = {
@@ -23,13 +25,15 @@ const config: TypeOrmModuleOptions = {
     Users,
     Stories,
     StoryLike,
-    MainPosts,
+    Moments,
     Comments,
     SubComments,
     Images,
     Countries,
-    Announcements,
-    MainPostLike,
+    Notices,
+    MomentLike,
+    Follow,
+    VisitCountry,
   ],
   charset: 'utf8mb4',
   synchronize: false,

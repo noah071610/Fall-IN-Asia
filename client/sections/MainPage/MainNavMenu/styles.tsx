@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { FONT_STYLE, GRAY_COLOR, RGB_BLACK } from "config";
+import { FLEX_STYLE, FONT_STYLE, GRAY_COLOR, RGB_BLACK } from "config";
 import tw from "twin.macro";
 
 export const MainNavMenuWrapper = styled.nav`
@@ -29,9 +29,13 @@ export const MainNavMenuWrapper = styled.nav`
   ul {
     ${tw`block text-base pt-4 `}
     li {
-      ${tw`py-3 px-2 block cursor-pointer rounded-2xl `}
+      ${tw`py-3 px-2 block cursor-pointer rounded-2xl mb-1 `}
+      ${FLEX_STYLE("flex-start", "center")};
       .icon {
-        ${tw`w-4 h-4 mr-3`}
+        ${tw`w-5 h-5 mr-4`}
+      }
+      span {
+        ${tw`text-sm`}
       }
       &:hover {
         background: ${GRAY_COLOR};

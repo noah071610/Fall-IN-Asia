@@ -46,7 +46,7 @@ export const signupAction = createAsyncThunk<IUser, IUserRequestForm>(
   }
 );
 
-export const addUserIconAction = createAsyncThunk<any, any>("user/icon", async (data) => {
+export const changeUserIconAction = createAsyncThunk<any, any>("user/icon", async (data) => {
   try {
     const response = await axios.post("/user/icon", data);
     return response.data;

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MainPosts } from 'src/entities/MainPosts';
+import { Moments } from 'src/entities/Moments';
 import { Comments } from 'src/entities/Comments';
 import { Countries } from 'src/entities/Countries';
 import { SubComments } from 'src/entities/SubComments';
@@ -11,7 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      MainPosts,
+      Moments,
       Countries,
       Users,
       Comments,

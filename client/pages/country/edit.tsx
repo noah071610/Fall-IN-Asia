@@ -1,18 +1,18 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { toastSuccessMessage } from "config";
 import router from "next/router";
-import LG_Layout from "@layout/LG_Layout";
-import MainPostingForm from "@sections/MainPage/MainPostingForm";
+import LGLayout from "@layout/LGLayout";
+import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { mainPostSlice } from "slices/mainPost";
+import { momentSlice } from "slices/moment";
 
 interface IProps {}
 
 const edit: FC<IProps> = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
-  const { editPost, mainPostEditDone } = useSelector((state: RootState) => state.mainPost);
+  const { editPost, momentEditDone } = useSelector((state: RootState) => state.moment);
 
   useEffect(() => {
     if (!editPost) {
@@ -21,17 +21,17 @@ const edit: FC<IProps> = () => {
   }, [user, editPost]);
 
   useEffect(() => {
-    if (mainPostEditDone) {
+    if (momentEditDone) {
       toastSuccessMessage("게시글을 수정했습니다.");
       router.push(`/country/${editPost?.code}/${editPost?.id}`);
-      dispatch(mainPostSlice.actions.mainPostEditClear());
+      dispatch(momentSlice.actions.momentEditClear());
     }
-  }, [mainPostEditDone, editPost]);
+  }, [momentEditDone, editPost]);
 
   return (
-    <LG_Layout>
-      <MainPostingForm editPost={editPost} />
-    </LG_Layout>
+    <LGLayout>
+      <MomentPostingForm editPost={editPost} />
+    </LGLayout>
   );
 };
 

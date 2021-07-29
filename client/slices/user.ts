@@ -1,7 +1,7 @@
 import { IUser } from "@typings/db";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  addUserIconAction,
+  changeUserIconAction,
   deleteUserIconAction,
   getUserInfoAction,
   logInAction,
@@ -132,14 +132,14 @@ export const userSlice = createSlice({
         state.logoutLoading = false;
         state.logoutError = true;
       })
-      .addCase(addUserIconAction.pending, (state) => {
+      .addCase(changeUserIconAction.pending, (state) => {
         state.addUserIconLoading = true;
       })
-      .addCase(addUserIconAction.fulfilled, (state) => {
+      .addCase(changeUserIconAction.fulfilled, (state) => {
         state.addUserIconLoading = false;
         state.addUserIconDone = true;
       })
-      .addCase(addUserIconAction.rejected, (state) => {
+      .addCase(changeUserIconAction.rejected, (state) => {
         state.addUserIconLoading = false;
         state.addUserIconError = true;
       })

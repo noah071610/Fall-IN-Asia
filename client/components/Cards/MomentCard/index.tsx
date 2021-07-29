@@ -1,6 +1,6 @@
 import { CommentOutlined, HeartFilled, HeartOutlined } from "@ant-design/icons";
 import NameSpace from "@components/NameSpace";
-import { IMainPost } from "@typings/db";
+import { IMoment } from "@typings/db";
 import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import { MomentCardWrapper } from "./styles";
 import ReactHtmlParser from "react-html-parser";
@@ -8,13 +8,13 @@ import { toastErrorMessage } from "config";
 import router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { mainPostDislikeAction, mainPostLikeAction } from "actions/mainPost";
+import { momentDislikeAction, momentLikeAction } from "actions/moment";
 
 interface IProps {
-  mainPost: IMainPost;
+  moment: IMoment;
 }
 
-const MomentCard: FC<IProps> = ({ mainPost }) => {
+const MomentCard: FC<IProps> = ({ moment }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
   const [liked, setLiked] = useState(false);
@@ -22,93 +22,93 @@ const MomentCard: FC<IProps> = ({ mainPost }) => {
 
   useEffect(() => {
     if (user) {
-      if (user.likeMainPost?.find((v: any) => v.mainPostId === mainPost?.id)) {
+      if (user.likemoment?.find((v: any) => v.momentId === moment?.id)) {
         setLiked(true);
       } else {
         setLiked(false);
       }
     }
-  }, [user, mainPost]);
+  }, [user, moment]);
 
   const onClickLikeBtn = useCallback(() => {
     if (!user) {
       toastErrorMessage("로그인이 필요합니다.");
       return;
     }
-    dispatch(mainPostLikeAction(mainPost?.id));
-  }, [user, mainPost]);
+    dispatch(momentLikeAction(moment?.id));
+  }, [user, moment]);
   const onClickDislikeBtn = useCallback(() => {
     if (!user) {
       toastErrorMessage("로그인이 필요합니다.");
       return;
     }
-    dispatch(mainPostDislikeAction(mainPost?.id));
-  }, [user, mainPost]);
+    dispatch(momentDislikeAction(moment?.id));
+  }, [user, moment]);
 
   useEffect(() => {
-    if (mainPost?.images?.length === 0) {
+    if (moment?.images?.length === 0) {
       return;
     }
-    if (mainPost?.images?.length === 1) {
+    if (moment?.images?.length === 1) {
       setImageLayout("one-image");
       return;
     }
-    if (mainPost?.images?.length > 1) {
+    if (moment?.images?.length > 1) {
       setImageLayout("two-images");
     }
-  }, [mainPost]);
+  }, [moment]);
 
   const onClickCountryTag = useCallback(() => {
-    router.push(`/country/${mainPost.code}`);
+    router.push(`/country/${moment.code}`);
   }, []);
   const onClickTypeTag = useCallback(() => {
-    router.push(`/country/${mainPost.code}/?type=${mainPost.type}`);
+    router.push(`/country/${moment.code}/?type=${moment.type}`);
   }, []);
   const onClickGotoPost = useCallback(() => {
-    router.push(`/country/${mainPost.code}/${mainPost.id}`);
+    router.push(`/country/${moment.code}/${moment.id}`);
   }, []);
 
   return (
     <MomentCardWrapper className="article-card-wrapper">
       <div className="article-top">
-        <NameSpace user={mainPost?.user} date={mainPost?.createdAt} />
+        <NameSpace user={moment?.user} date={moment?.createdAt} />
         <div className="article-header">
-          <a onClick={onClickCountryTag}>{mainPost?.country?.name}</a>/
-          <a onClick={onClickTypeTag}>{mainPost?.type}</a>/
-          <a onClick={onClickGotoPost}>{mainPost?.id}번째메아리</a>
+          <a onClick={onClickCountryTag}>{moment?.country?.name}</a>/
+          <a onClick={onClickTypeTag}>{moment?.type}</a>/
+          <a onClick={onClickGotoPost}>{moment?.id}번째메아리</a>
         </div>
       </div>
       <div className="article">
         <div
-          onClick={() => router.push(`/country/${mainPost?.country?.code}/${mainPost?.id}`)}
+          onClick={() => router.push(`/country/${moment?.country?.code}/${moment?.id}`)}
           className={imageLayout}
         >
-          {mainPost?.images?.slice(0, 2).map((v, i) => {
+          {moment?.images?.slice(0, 2).map((v, i) => {
             return <img key={i} src={v.image_src} />;
           })}
         </div>
         <div
-          onClick={() => router.push(`/country/${mainPost?.country?.code}/${mainPost?.id}`)}
+          onClick={() => router.push(`/country/${moment?.country?.code}/${moment?.id}`)}
           className="content"
         >
-          {ReactHtmlParser(mainPost?.content as string)}
+          {ReactHtmlParser(moment?.content as string)}
         </div>
         <ul className="article-footer">
           <li onClick={onClickGotoPost}>
             <CommentOutlined />
-            <span className="count">{mainPost?.comments?.length}</span>
+            <span className="count">{moment?.comments?.length}</span>
             <span>댓글</span>
           </li>
           {liked ? (
             <li onClick={onClickDislikeBtn} className="liked">
               <HeartFilled />
-              <span className="count">{mainPost?.likedUser?.length}</span>
+              <span className="count">{moment?.likedUser?.length}</span>
               <span>좋아요</span>
             </li>
           ) : (
             <li onClick={onClickLikeBtn}>
               <HeartOutlined />
-              <span className="count">{mainPost?.likedUser?.length}</span>
+              <span className="count">{moment?.likedUser?.length}</span>
               <span>좋아요</span>
             </li>
           )}

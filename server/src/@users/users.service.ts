@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Users } from 'src/entities/Users';
@@ -18,20 +19,42 @@ export class UsersService {
     const user = await this.userRepository
       .createQueryBuilder('users')
       .leftJoinAndSelect('users.likeStory', 'likeStory')
-      .leftJoinAndSelect('users.likeMainPost', 'likeMainPost')
+      .leftJoinAndSelect('users.likeMoment', 'likeMoment')
       .leftJoinAndSelect('users.stories', 'stories')
-      .leftJoinAndSelect('users.mainPosts', 'mainPosts')
-      .leftJoinAndSelect('mainPosts.announcements', 'c_announce')
-      .leftJoinAndSelect('stories.announcements', 's_announce')
-      .leftJoinAndSelect('users.comments', 'com')
-      .leftJoinAndSelect('com.mainPost', 'cm_mainPost')
-      .leftJoinAndSelect('com.mainPost', 'cm_story')
-      .leftJoinAndSelect('users.announcements', 'announce')
+      .leftJoinAndSelect('users.moments', 'moments')
+      .leftJoinAndSelect('moments.country', 'm_country')
+      .leftJoinAndSelect('stories.country', 's_country')
+      .leftJoinAndSelect('users.notices', 'notices')
       .where('users.email= :email', { email })
       .getOne();
 
     if (!user) {
       throw new UnauthorizedException(
+        '유저정보가 없습니다. 다시한번 확인해주세요.',
+      );
+    }
+    return user;
+  }
+
+  async getUserInfoById(userId: number) {
+    const user = await this.userRepository
+      .createQueryBuilder('users')
+      .leftJoinAndSelect('users.likeStory', 'likeStory')
+      .leftJoinAndSelect('users.likeMoment', 'likeMoment')
+      .leftJoinAndSelect('users.stories', 'stories')
+      .leftJoinAndSelect('users.moments', 'moments')
+      .leftJoinAndSelect('users.visited', 'visited')
+      .leftJoinAndSelect('moments.country', 'm_country')
+      .leftJoinAndSelect('stories.country', 's_country')
+      .leftJoinAndSelect('users.comments', 'com')
+      .leftJoinAndSelect('com.moment', 'cm_moment')
+      .leftJoinAndSelect('com.story', 'cm_story')
+      .leftJoinAndSelect('users.notices', 'notices')
+      .where('users.id= :id', { id: userId })
+      .getOne();
+
+    if (!user) {
+      throw new NotFoundException(
         '유저정보가 없습니다. 다시한번 확인해주세요.',
       );
     }

@@ -3,11 +3,11 @@ import AutoCompleteForm from "@components/AutoCompleteForm";
 import CountryList from "@components/CountryList";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
-import { FLEX_STYLE, GRAY_COLOR, toastErrorMessage, WHITE_STYLE } from "config";
+import { FLEX_STYLE, toastErrorMessage, WHITE_STYLE } from "config";
 import { ICountry } from "@typings/db";
 import styled from "@emotion/styled";
 import router from "next/router";
-import LG_Layout from "@layout/LG_Layout";
+import LGLayout from "@layout/LGLayout";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
@@ -67,7 +67,7 @@ const select: FC<IProps> = () => {
     }
   }, [selectedCountry, countryOptions]);
   return (
-    <LG_Layout>
+    <LGLayout>
       <GobackBtn>
         <button onClick={() => router.back()}>뒤로가기</button>
       </GobackBtn>
@@ -87,7 +87,7 @@ const select: FC<IProps> = () => {
         </button>
       </AutoCompleteWrapper>
       <MainCountryAllview isMain={true} countries={countries} />
-    </LG_Layout>
+    </LGLayout>
   );
 };
 

@@ -1,4 +1,4 @@
-import { IMainPost, IStory } from "@typings/db";
+import { IStory } from "@typings/db";
 import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import { useRef } from "react";
 import { StoryArticleListWrapper } from "./styles";

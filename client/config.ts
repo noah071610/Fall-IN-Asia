@@ -139,7 +139,7 @@ export const imageHandler = (quillInstance: any, isStory?: boolean) => {
     }
     axios({
       method: "post",
-      url: isStory ? "/story/image" : "/mainPost/image",
+      url: isStory ? "/story/image" : "/moment/image",
       data: form,
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {

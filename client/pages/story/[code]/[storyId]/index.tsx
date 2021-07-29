@@ -4,10 +4,9 @@ import { FLEX_STYLE, noRevalidate, toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import router, { useRouter } from "next/router";
-import XLGLayout from "@layout/XLGLayout";
 import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
-import { IStory, IStoryPost } from "@typings/db";
+import { IStory } from "@typings/db";
 import { Divider } from "antd";
 import StoryPost from "@sections/StoryPage/StoryPost";
 import { wrapper } from "configureStore";
@@ -22,7 +21,6 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { toastConfirmMessage } from "@components/ConfirmToastify";
 import { storyDeleteAction } from "actions/story";
 import tw from "twin.macro";
-import LG_Layout from "@layout/LG_Layout";
 import StoryPostLayout from "@layout/StoryPostLayout";
 
 export const StoryPostWrapper = styled.div`

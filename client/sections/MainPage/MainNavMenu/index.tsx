@@ -5,8 +5,12 @@ import {
   faBed,
   faBell,
   faGlobe,
+  faHandshake,
   faHiking,
   faHotel,
+  faPlaneDeparture,
+  faUsers,
+  faUserTie,
   faUtensils,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
@@ -47,43 +51,45 @@ const MainNavMenu: FC<IProps> = () => {
           {country && (
             <div>
               <span>좋아요 : 0</span>
-              <span>포스팅수 : {country?.mainPosts?.length}</span>
+              <span>포스팅수 : {country?.moments?.length}</span>
             </div>
           )}
         </div>
       </div>
       <ul>
-        <Link href={country ? `/country/${country.code}?type=attractions` : "/?type=attractions"}>
+        <Link href={country ? `/country/${country.code}?type=trip` : "/?type=trip"}>
           <a>
-            <li className={query?.type === "attractions" ? "menu-active" : ""}>
-              <FontAwesomeIcon className="icon" icon={faHiking} />
-              관광지
-            </li>
-          </a>
-        </Link>
-        <Link href={country ? `/country/${country.code}?type=alert` : "/?type=alert"}>
-          <a>
-            <li className={query?.type === "alert" ? "menu-active" : ""}>
-              <FontAwesomeIcon className="icon" icon={faBell} />
-              사기경보
-            </li>
-          </a>
-        </Link>
-        <Link href={country ? `/country/${country.code}?type=food` : "/?type=food"}>
-          <a>
-            <li className={query?.type === "food" ? "menu-active" : ""}>
-              <FontAwesomeIcon className="icon" icon={faUtensils} />
-              음식
+            <li className={query?.type === "trip" ? "menu-active" : ""}>
+              <FontAwesomeIcon className="icon" icon={faPlaneDeparture} />
+              <span>관광 및 여행</span>
             </li>
           </a>
         </Link>
         <Link
-          href={country ? `/country/${country.code}?type=accommodations` : "/?type=accommodations"}
+          href={
+            country ? `/country/${country.code}?type=abroad+employment` : "/?type=abroad+employment"
+          }
         >
           <a>
-            <li className={query?.type === "accommodations" ? "menu-active" : ""}>
-              <FontAwesomeIcon className="icon" icon={faHotel} />
-              숙박
+            <li className={query?.type === "abroad employment" ? "menu-active" : ""}>
+              <FontAwesomeIcon className="icon" icon={faUserTie} />
+              <span>유학 및 취업</span>
+            </li>
+          </a>
+        </Link>
+        <Link href={country ? `/country/${country.code}?type=job+opening` : "/?type=job+opening"}>
+          <a>
+            <li className={query?.type === "job opening" ? "menu-active" : ""}>
+              <FontAwesomeIcon className="icon" icon={faHandshake} />
+              <span>구인구직</span>
+            </li>
+          </a>
+        </Link>
+        <Link href={country ? `/country/${country.code}?type=community` : "/?type=community"}>
+          <a>
+            <li className={query?.type === "community" ? "menu-active" : ""}>
+              <FontAwesomeIcon className="icon" icon={faUsers} />
+              <span>현지 커뮤니티</span>
             </li>
           </a>
         </Link>
@@ -92,7 +98,7 @@ const MainNavMenu: FC<IProps> = () => {
             <a>
               <li>
                 <FontAwesomeIcon className="icon" icon={faGlobe} />
-                전세계
+                <span>전세계</span>
               </li>
             </a>
           </Link>
@@ -101,7 +107,7 @@ const MainNavMenu: FC<IProps> = () => {
             <a>
               <li>
                 <FontAwesomeIcon className="icon" icon={faGlobe} />
-                국가선택
+                <span>국가선택</span>
               </li>
             </a>
           </Link>

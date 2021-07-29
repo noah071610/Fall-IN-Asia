@@ -5,11 +5,15 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { MainPosts } from './MainPosts';
+import { Moments } from './Moments';
+import { Users } from './Users';
+import { VisitCountry } from './VisitCountry';
 
 @Entity({ schema: 'travelover', name: 'countries' })
 export class Countries {
@@ -94,6 +98,9 @@ export class Countries {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => MainPosts, (mainPosts) => mainPosts.country)
-  mainPosts: MainPosts[];
+  @OneToMany(() => Moments, (moments) => moments.country)
+  moments: Moments[];
+
+  @OneToMany(() => VisitCountry, (visitCountry) => visitCountry.country)
+  visitors: VisitCountry[];
 }

@@ -18,6 +18,7 @@ import tw from "twin.macro";
 import MainAside from "@sections/MainPage/MainAside";
 import ImageCard from "@components/Cards/ImageCard";
 import ArticleImageCard from "@components/Cards/ArticleImageCard";
+import TopNavigation from "@components/TopNavigation";
 SwiperCore.use([EffectFade, Pagination, Autoplay]);
 
 const GuidePageWrapper = styled.div`
@@ -74,6 +75,7 @@ const index: FC<IProps> = () => {
           <PosterCard image="https://images.unsplash.com/photo-1492648272180-61e45a8d98a7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" />
         </SwiperSlide>
       </Swiper>
+      <TopNavigation />
       <XLGLayout>
         <h2 className="main-title">가이드</h2>
         <div className="layout-divide">

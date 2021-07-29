@@ -11,15 +11,23 @@ import Overlay from "@components/Modals/Overlay";
 import SearchPopUp from "@components/Modals/SearchPopUp";
 import NoticePopUp from "@components/Modals/NoticePopUp";
 import ProfilePopUp from "@components/Modals/ProfilePopUp";
+import { toastSuccessMessage } from "config";
+import { userSlice } from "slices/user";
 
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.user);
+  const { user, logoutDone } = useSelector((state: RootState) => state.user);
   const { onLoginModal, onProfilePopUp, onNoticePopUp, onSearchPopUp } = useSelector(
     (state: RootState) => state.main
   );
+  useEffect(() => {
+    if (logoutDone) {
+      toastSuccessMessage("로그아웃 되었습니다.");
+      dispatch(userSlice.actions.logoutClear());
+    }
+  }, [logoutDone]);
 
   const onClickLoginMenu = useCallback(() => {
     dispatch(mainSlice.actions.toggleLoginModal());

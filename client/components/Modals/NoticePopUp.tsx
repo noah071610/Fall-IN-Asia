@@ -7,7 +7,7 @@ import tw from "twin.macro";
 import styled from "@emotion/styled";
 
 const NoticePopUpWrapper = styled.ul`
-  ${tw`absolute top-12 right-0 bg-white shadow-md rounded-xl overflow-hidden w-auto`}
+  ${tw`absolute top-12 right-0 bg-white shadow-md rounded-xl overflow-hidden w-auto z-20`}
   white-space: nowrap;
   li {
     ${tw`w-auto block cursor-pointer hover:bg-gray-100 py-3 px-8`}

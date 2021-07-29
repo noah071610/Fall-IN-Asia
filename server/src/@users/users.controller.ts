@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
+  ParseIntPipe,
   Post,
   Req,
   Res,
@@ -11,7 +13,8 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiCookieAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Request, Response } from 'express';
 import multer from 'multer';
 import path from 'path';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
@@ -34,6 +37,12 @@ export class UsersController {
     return user || false;
   }
 
+  @ApiOperation({ summary: 'get specific user infomation for user page' })
+  @Get(':userId')
+  async getUserInfoById(@Param('userId', ParseIntPipe) userId: number) {
+    return await this.usersService.getUserInfoById(userId);
+  }
+
   @UseGuards(new NotLoggedInGuard())
   @ApiOperation({ summary: 'Sign up' })
   @Post()
@@ -51,11 +60,15 @@ export class UsersController {
     return fullUserInfo;
   }
 
+  @ApiCookieAuth('connect.sid')
   @ApiOperation({ summary: 'Logout' })
+  @UseGuards(new LoggedInGuard())
   @Post('logout')
-  logOut(@Req() req, @Res() res) {
-    req.logOut();
+  async logOut(@Req() req: Request, @Res() res: Response) {
+    req.session.destroy(null);
     res.clearCookie('connect.sid', { httpOnly: true });
+    req.logout();
+    res.redirect('/');
     return true;
   }
 

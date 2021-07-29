@@ -3,15 +3,12 @@ import React, { FC, useState } from "react";
 import { MainAsideWrapper } from "./styles";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
-import { toastErrorMessage, toastSuccessMessage } from "config";
-import ArticleImageCard from "@components/Cards/ArticleImageCard";
-import { IMainPost, IStory } from "@typings/db";
-import useHtmlConverter from "@hooks/useHtmlConverter";
+import { IMoment, IStory } from "@typings/db";
 
 interface IProps {}
 
 const MainAside: FC<IProps> = () => {
-  const { data: latestMainPosts } = useSWR<IMainPost[]>("/mainPost/latest", fetcher);
+  const { data: latestMoments } = useSWR<IMoment[]>("/moment/latest", fetcher);
   const { data: latestStories } = useSWR<IStory[]>("/story/latest", fetcher);
   return (
     <MainAsideWrapper>
@@ -20,8 +17,8 @@ const MainAside: FC<IProps> = () => {
         <MomentSmallCard story={v} key={i} />
       ))}
       <h2 className="aside-title">최근 모멘트</h2>
-      {latestMainPosts?.map((v, i) => (
-        <MomentSmallCard mainPost={v} key={i} />
+      {latestMoments?.map((v, i) => (
+        <MomentSmallCard moment={v} key={i} />
       ))}
     </MainAsideWrapper>
   );

@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Images } from 'src/entities/Images';
 import { Stories } from 'src/entities/Stories';
 import { LessThan, MoreThan, Repository } from 'typeorm';
-import { Announcements } from 'src/entities/Announcements';
+import { Notices } from 'src/entities/Notices';
 import { Countries } from 'src/entities/Countries';
 import { StoryLike } from 'src/entities/StoryLike';
 import { StoryRequestDto } from 'src/dto/story.request.dto';
@@ -23,8 +23,8 @@ export class StoriesService {
     private ImagesRepository: Repository<Images>,
     @InjectRepository(StoryLike)
     private StoryLikeRepository: Repository<StoryLike>,
-    @InjectRepository(Announcements)
-    private AnnouncementsRepository: Repository<Announcements>,
+    @InjectRepository(Notices)
+    private NoticesRepository: Repository<Notices>,
   ) {}
 
   async createPost(
@@ -55,10 +55,12 @@ export class StoriesService {
         process.env.BACK_URL + file.path.replace('\\', '/');
     }
     const newPost = await this.StoriesRepository.save(newPostCreate);
-    await this.AnnouncementsRepository.save({
+    await this.NoticesRepository.save({
+      header: `${country.name}/연대기`,
+      code: newPost.code,
       userId: userId,
       storyId: newPost.id,
-      content: `${form.title.slice(10)}...을 작성했습니다.`,
+      content: `${form.title.slice(0, 10)}...을 작성했습니다.`,
     });
     return true;
   }

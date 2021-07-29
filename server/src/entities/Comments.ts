@@ -10,7 +10,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { MainPosts } from './MainPosts';
+import { Notices } from './Notices';
+import { Moments } from './Moments';
 import { Stories } from './Stories';
 import { SubComments } from './SubComments';
 import { Users } from './Users';
@@ -46,6 +47,11 @@ export class Comments {
   })
   subComments: SubComments[];
 
+  @OneToMany(() => Notices, (notices) => notices.comment, {
+    cascade: true,
+  })
+  notices: Notices[];
+
   @ManyToOne(() => Users, (users) => users.comments, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
@@ -53,12 +59,12 @@ export class Comments {
   @JoinColumn([{ name: 'user', referencedColumnName: 'id' }])
   user: Users;
 
-  @ManyToOne(() => MainPosts, (mainPosts) => mainPosts.comments, {
+  @ManyToOne(() => Moments, (moments) => moments.comments, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'mainPost', referencedColumnName: 'id' }])
-  mainPost: MainPosts;
+  @JoinColumn([{ name: 'moment', referencedColumnName: 'id' }])
+  moment: Moments;
 
   @ManyToOne(() => Stories, (stories) => stories.comments, {
     onDelete: 'CASCADE',

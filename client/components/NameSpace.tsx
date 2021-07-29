@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { DEFAULT_ICON_URL, FLEX_STYLE, RGB_BLACK } from "config";
 import styled from "@emotion/styled";
 
-const NameSpaceWrapper = styled.div` 
+export const NameSpaceWrapper = styled.div` 
   ${FLEX_STYLE("flex-start", "center")};
   .icon {
     margin-right:.7rem;

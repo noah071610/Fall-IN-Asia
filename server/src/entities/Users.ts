@@ -10,13 +10,15 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { MainPosts } from './MainPosts';
+import { Moments } from './Moments';
 import { Comments } from './Comments';
 import { Stories } from './Stories';
-import { MainPostLike } from './MainPostsLike';
-import { Announcements } from './Announcements';
+import { MomentLike } from './MomentLike';
+import { Notices } from './Notices';
 import { SubComments } from './SubComments';
 import { StoryLike } from './StoryLike';
+import { Follow } from './Follow';
+import { VisitCountry } from './VisitCountry';
 
 @Index('email', ['email'], { unique: true })
 @Entity({ schema: 'travelover', name: 'users' })
@@ -35,7 +37,12 @@ export class Users {
     example: 394823049802,
     description: 'googleID',
   })
-  @Column('int', { unique: true, name: 'googleId', nullable: true })
+  @Column('int', {
+    unique: true,
+    select: false,
+    name: 'googleId',
+    nullable: true,
+  })
   googleId: number | null;
 
   @IsString()
@@ -44,7 +51,7 @@ export class Users {
     example: 'noah071610@naver.com',
     description: 'email',
   })
-  @Column('varchar', { name: 'email', unique: true, length: 30 })
+  @Column('varchar', { name: 'email', select: false, unique: true, length: 30 })
   email: string;
 
   @IsString()
@@ -97,16 +104,31 @@ export class Users {
   @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ select: false })
   updatedAt: Date;
 
   @DeleteDateColumn({ select: false })
   deletedAt: Date | null;
 
-  @OneToMany(() => MainPosts, (mainposts) => mainposts.user, {
+  @OneToMany(() => VisitCountry, (visitCountry) => visitCountry.user, {
     cascade: true,
   })
-  mainPosts: MainPosts[];
+  visited: VisitCountry[];
+
+  @OneToMany(() => Follow, (follow) => follow.following, {
+    cascade: true,
+  })
+  followings: Follow[];
+
+  @OneToMany(() => Follow, (follow) => follow.follower, {
+    cascade: true,
+  })
+  followers: Follow[];
+
+  @OneToMany(() => Moments, (moments) => moments.user, {
+    cascade: true,
+  })
+  moments: Moments[];
 
   @OneToMany(() => Stories, (stories) => stories.user, {
     cascade: true,
@@ -123,18 +145,18 @@ export class Users {
   })
   subComments: SubComments[];
 
-  @OneToMany(() => MainPostLike, (mainPostLike) => mainPostLike.user, {
+  @OneToMany(() => MomentLike, (momentLike) => momentLike.user, {
     cascade: true,
   })
-  likeMainPost: MainPostLike[];
+  likeMoment: MomentLike[];
 
   @OneToMany(() => StoryLike, (storyLike) => storyLike.user, {
     cascade: true,
   })
   likeStory: StoryLike[];
 
-  @OneToMany(() => Announcements, (announcements) => announcements.user, {
+  @OneToMany(() => Notices, (notices) => notices.user, {
     cascade: true,
   })
-  announcements: Announcements[];
+  notices: Notices[];
 }

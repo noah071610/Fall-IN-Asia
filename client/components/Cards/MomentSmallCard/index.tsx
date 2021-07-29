@@ -1,18 +1,18 @@
 import useHtmlConverter from "@hooks/useHtmlConverter";
-import { IMainPost, IStory } from "@typings/db";
+import { IMoment, IStory } from "@typings/db";
 import router from "next/router";
 import React, { FC, useCallback, useMemo } from "react";
 import { MomentSmallCardWrapper } from "./styles";
 import dayjs from "dayjs";
 
 interface IProps {
-  mainPost?: IMainPost;
+  moment?: IMoment;
   story?: IStory;
 }
-const MomentSmallCard: FC<IProps> = ({ mainPost, story }) => {
+const MomentSmallCard: FC<IProps> = ({ moment, story }) => {
   const onClickMomentSmallCard = useCallback(() => {
-    if (mainPost) {
-      router.push(`/country/${mainPost?.code}/${mainPost?.id}`);
+    if (moment) {
+      router.push(`/country/${moment?.code}/${moment?.id}`);
     } else {
       router.push(`/story/${story?.code}/${story?.id}`);
     }
@@ -24,21 +24,21 @@ const MomentSmallCard: FC<IProps> = ({ mainPost, story }) => {
         <div className="image-wrapper">
           <img
             style={story ? { borderRadius: "5px" } : {}}
-            src={mainPost?.user?.icon || story?.thumbnail}
+            src={moment?.user?.icon || story?.thumbnail}
             alt="article-image"
           />
         </div>
         <div className="small-card-info">
           <span>
             {story && "연대기/"}
-            {(mainPost || story)?.country?.name}
-            {mainPost && "/" + mainPost?.type}
+            {(moment || story)?.country?.name}
+            {moment && "/" + moment?.type}
           </span>
-          <span>{(mainPost || story)?.user?.name}</span>
-          <span>{dayjs((mainPost || story)?.createdAt).format("YYYY/MM/DD")}</span>
+          <span>{(moment || story)?.user?.name}</span>
+          <span>{dayjs((moment || story)?.createdAt).format("YYYY/MM/DD")}</span>
         </div>
       </div>
-      <h2>{useHtmlConverter(mainPost?.content || story?.title)}</h2>
+      <h2>{useHtmlConverter(moment?.content || story?.title)}</h2>
     </MomentSmallCardWrapper>
   );
 };

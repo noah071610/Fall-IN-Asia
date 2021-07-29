@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import styled from "@emotion/styled";
-import LG_Layout from "@layout/LG_Layout";
+import LGLayout from "@layout/LGLayout";
 import Editor from "@components/PostingEditor/Editor";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
@@ -141,7 +141,7 @@ const post: FC<IProps> = () => {
 
   return (
     <StoryPostWrapper>
-      <LG_Layout>
+      <LGLayout>
         <h2 className="main-title">제목</h2>
         <input
           value={title}
@@ -189,7 +189,7 @@ const post: FC<IProps> = () => {
             {editPostId ? "연대기 수정" : "연대기 업로드"}
           </button>
         </div>
-      </LG_Layout>
+      </LGLayout>
     </StoryPostWrapper>
   );
 };

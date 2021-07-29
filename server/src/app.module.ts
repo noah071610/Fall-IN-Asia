@@ -9,7 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as ormconfig from './ormconfig';
 import { AuthModule } from './auth/auth.module';
 import { CountriesModule } from './@countries/countries.module';
-import { MainPostsModule } from './@mainPosts/mainPosts.module';
+import { MomentsModule } from './@moments/moments.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { StoriesModule } from './@stories/stories.module';
@@ -23,7 +23,7 @@ import { CommentsModule } from './@comments/comments.module';
     UsersModule,
     TypeOrmModule.forRoot(ormconfig),
     CountriesModule,
-    MainPostsModule,
+    MomentsModule,
     StoriesModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),

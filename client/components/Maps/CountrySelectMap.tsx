@@ -12,18 +12,6 @@ interface IProps {
   lat: number | undefined;
   lng: number | undefined;
 }
-// const route1 = {
-//   type: "Feature",
-//   properties: {},
-//   geometry: {
-//     type: "LineString",
-//     coordinates: [
-//       [126.98047832475031, 37.50529626491968],
-//       [139.64044156923396, 35.7066225827444],
-//       [114.37668379199201, 22.561031035250828],
-//     ],
-//   },
-// };
 
 const CountrySelectMap: FC<IProps> = ({ setRegion, marker, setMarker, lat, lng }) => {
   const mapRef = useRef<MapRef>(null);
@@ -65,7 +53,7 @@ const CountrySelectMap: FC<IProps> = ({ setRegion, marker, setMarker, lat, lng }
       className="map-gl"
       ref={mapRef}
       {...viewport}
-      mapboxApiAccessToken={process.env.MAPBOX_API_ACCESS_KEY}
+      mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY}
       onViewportChange={handleViewportChange}
       mapStyle="mapbox://sprites/mapbox/basic-v8"
       asyncRender={true}
@@ -75,21 +63,12 @@ const CountrySelectMap: FC<IProps> = ({ setRegion, marker, setMarker, lat, lng }
         marker={false}
         mapRef={mapRef}
         onViewportChange={handleGeocoderViewportChange}
-        mapboxApiAccessToken={process.env.MAPBOX_API_ACCESS_KEY}
+        mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY}
         position="top-left"
         onResult={(e: any) => {
           setRegion(e.result.place_name);
         }}
       />
-      {/* <Source type="geojson" data={route1}>
-        <Layer
-          id="route"
-          type="line"
-          source="route"
-          layout={{ "line-join": "round", "line-cap": "round" }}
-          paint={{ "line-color": "red", "line-width": 2 }}
-        />
-      </Source> */}
       <Marker
         longitude={marker.longitude}
         latitude={marker.latitude}

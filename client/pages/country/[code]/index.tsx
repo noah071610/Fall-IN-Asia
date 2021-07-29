@@ -6,26 +6,26 @@ import { noRevalidate, toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import MomentList from "@sections/MainPage/MomentList";
-import MainPostingForm from "@sections/MainPage/MainPostingForm";
+import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
 import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
 import MainLayout from "@layout/MainLayout";
 import MainTopContent from "@sections/MainPage/MainTopArticleSlide";
-import { mainPostSlice } from "slices/mainPost";
+import { momentSlice } from "slices/moment";
 import router, { useRouter } from "next/router";
-import { ICountry, IMainPost } from "@typings/db";
+import { ICountry, IMoment } from "@typings/db";
 
 const index = () => {
   const dispatch = useDispatch();
   const { query } = useRouter();
   const {
-    data: mainPosts,
+    data: moments,
     size,
     revalidate,
     setSize,
-  } = useSWRInfinite<IMainPost[]>(
+  } = useSWRInfinite<IMoment[]>(
     (index) =>
-      `/mainPost?code=${query?.code || ""}&page=${index + 1}&filter=${query?.filter || ""}&type=${
+      `/moment?code=${query?.code || ""}&page=${index + 1}&filter=${query?.filter || ""}&type=${
         query?.type || ""
       }`,
     fetcher
@@ -38,39 +38,40 @@ const index = () => {
   if (error) {
     router.push("/");
   }
-  const { mainPostCreateDone, mainPostLikeDone, mainPostDislikeDone, mainPostDeleteDone } =
-    useSelector((state: RootState) => state.mainPost);
+  const { momentCreateDone, momentLikeDone, momentDislikeDone, momentDeleteDone } = useSelector(
+    (state: RootState) => state.moment
+  );
   useEffect(() => {
-    if (mainPostCreateDone) {
+    if (momentCreateDone) {
       toastSuccessMessage("게시물을 성공적으로 작성했습니다.");
-      dispatch(mainPostSlice.actions.mainPostCreateClear());
+      dispatch(momentSlice.actions.momentCreateClear());
       revalidate();
     }
-  }, [mainPostCreateDone]);
+  }, [momentCreateDone]);
   useEffect(() => {
-    if (mainPostDeleteDone) {
+    if (momentDeleteDone) {
       toastSuccessMessage("게시물을 성공적으로 삭제했습니다.");
-      dispatch(mainPostSlice.actions.mainPostDeleteClear());
+      dispatch(momentSlice.actions.momentDeleteClear());
       revalidate();
     }
-  }, [mainPostDeleteDone]);
+  }, [momentDeleteDone]);
   useEffect(() => {
-    if (mainPostLikeDone) {
+    if (momentLikeDone) {
       toastSuccessMessage("좋아요!💓");
-      dispatch(mainPostSlice.actions.mainPostLikeClear());
+      dispatch(momentSlice.actions.momentLikeClear());
       dispatch(getUserInfoAction());
       revalidate();
     }
-  }, [mainPostLikeDone]);
+  }, [momentLikeDone]);
 
   useEffect(() => {
-    if (mainPostDislikeDone) {
+    if (momentDislikeDone) {
       toastSuccessMessage("좋아요 취소💔");
-      dispatch(mainPostSlice.actions.mainPostDislikeClear());
+      dispatch(momentSlice.actions.momentDislikeClear());
       dispatch(getUserInfoAction());
       revalidate();
     }
-  }, [mainPostDislikeDone]);
+  }, [momentDislikeDone]);
   return (
     <MainLayout>
       <h2 className="main-title">{country?.name + "에서 인기폭발 🥰"}</h2>
@@ -78,8 +79,8 @@ const index = () => {
       <h2 className="main-title">{country?.name + " 인기일대기"}</h2>
       <MainTopContent />
       <h2 className="main-title">포스팅</h2>
-      <MainPostingForm />
-      <MomentList setSize={setSize} mainPosts={mainPosts} />
+      <MomentPostingForm />
+      <MomentList setSize={setSize} moments={moments} />
     </MainLayout>
   );
 };

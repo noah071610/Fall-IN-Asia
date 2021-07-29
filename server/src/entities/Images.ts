@@ -9,8 +9,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { MainPosts } from './MainPosts';
+import { Moments } from './Moments';
 import { Stories } from './Stories';
+import { VisitCountry } from './VisitCountry';
 
 @Entity({ schema: 'travelover', name: 'images' })
 export class Images {
@@ -38,6 +39,13 @@ export class Images {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @ManyToOne(() => VisitCountry, (visitCountry) => visitCountry.images, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'visit_country', referencedColumnName: 'id' }])
+  visit_country: VisitCountry;
+
   @ManyToOne(() => Stories, (stories) => stories.images, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
@@ -45,10 +53,10 @@ export class Images {
   @JoinColumn([{ name: 'story', referencedColumnName: 'id' }])
   story: Stories;
 
-  @ManyToOne(() => MainPosts, (mainPosts) => mainPosts.images, {
+  @ManyToOne(() => Moments, (moments) => moments.images, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'mainPost', referencedColumnName: 'id' }])
-  mainPost: MainPosts;
+  @JoinColumn([{ name: 'moment', referencedColumnName: 'id' }])
+  moment: Moments;
 }

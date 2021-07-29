@@ -5,7 +5,7 @@ export interface MainState {
   onNoticePopUp: boolean;
   onSearchPopUp: boolean;
   onLoginModal: boolean;
-  onSignupModal: boolean;
+  onIconCropperModal: boolean;
 }
 
 const mainState: MainState = {
@@ -13,7 +13,7 @@ const mainState: MainState = {
   onNoticePopUp: false,
   onSearchPopUp: false,
   onLoginModal: false,
-  onSignupModal: false,
+  onIconCropperModal: false,
 };
 
 export const mainSlice = createSlice({
@@ -22,6 +22,12 @@ export const mainSlice = createSlice({
   reducers: {
     toggleLoginModal(state) {
       state.onLoginModal = !state.onLoginModal;
+      state.onProfilePopUp = false;
+      state.onNoticePopUp = false;
+      state.onSearchPopUp = false;
+    },
+    toggleIconCropperModal(state) {
+      state.onIconCropperModal = !state.onIconCropperModal;
       state.onProfilePopUp = false;
       state.onNoticePopUp = false;
       state.onSearchPopUp = false;
@@ -53,7 +59,10 @@ export const mainSlice = createSlice({
     },
     closeModal(state) {
       state.onLoginModal = false;
+      state.onIconCropperModal = false;
+      state.onNoticePopUp = false;
       state.onProfilePopUp = false;
+      state.onSearchPopUp = false;
     },
   },
   extraReducers: (builder) => builder,

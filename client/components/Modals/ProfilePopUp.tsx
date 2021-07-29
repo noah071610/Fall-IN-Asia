@@ -2,12 +2,14 @@ import { FC, useEffect } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { FLEX_STYLE } from "config";
+import { FLEX_STYLE, toastSuccessMessage } from "config";
 import tw from "twin.macro";
 import styled from "@emotion/styled";
+import { logoutAction } from "actions/user";
+import { userSlice } from "slices/user";
 
 const ProfilePopUpWrapper = styled.ul`
-  ${tw`absolute top-14 right-0 bg-white shadow-md rounded-xl overflow-hidden w-auto`}
+  ${tw`absolute top-14 right-0 bg-white shadow-md rounded-xl overflow-hidden w-auto z-20`}
   white-space: nowrap;
   li {
     ${tw`w-auto block cursor-pointer hover:bg-gray-100 py-3 px-8`}
@@ -22,7 +24,6 @@ interface IProps {}
 const ProfilePopUp: FC<IProps> = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
-  useEffect(() => {}, []);
   return (
     <ProfilePopUpWrapper
       onClick={(e) => {
@@ -40,9 +41,7 @@ const ProfilePopUp: FC<IProps> = () => {
         </Link>
       </li>
       <li>
-        <Link href="/news">
-          <a>로그아웃</a>
-        </Link>
+        <a onClick={() => dispatch(logoutAction())}>로그아웃</a>
       </li>
     </ProfilePopUpWrapper>
   );

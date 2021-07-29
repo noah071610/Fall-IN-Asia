@@ -9,45 +9,50 @@ const continent = {
   오세아니아: "오세아니아",
 } as const;
 type EContinent = typeof continent[keyof typeof continent];
-const mainPostType = {
-  관광지: "관광지",
-  음식: "음식",
-  숙박: "숙박",
-  사기경보: "사기경보",
+
+const momentType = {
+  관광여행: "관광 및 여행",
+  유학취업: "유학 및 취업",
+  구인구직: "구인구직",
+  커뮤니티: "현지 커뮤니티",
 } as const;
-type EMainPostType = typeof mainPostType[keyof typeof mainPostType];
+type EMomentType = typeof momentType[keyof typeof momentType];
+
 export interface ICoordinate {
   latitude: number;
   longitude: number;
 }
 export interface IUser {
   id: number;
-  googleId: number;
-  email: string;
   name: string;
   icon: string;
-  admin?: boolean;
+  moments: IMoment[];
+  stories: IStory[];
+  comments: IComment[];
+  notices: INotice[];
+  likeMoment: ILikeMoment[];
+  likeStory: ILikeStory[];
 }
 
-export interface IMainPost {
+export interface IUserInfo extends IUser {
+  introduce: string;
+  createAt: Date;
+  visited: IVisitCountry[];
+}
+
+export interface IMoment {
   id: number;
   code: string;
   hit: number;
-  type: EMainPostType;
+  type: EMomentType;
   content: string;
   createdAt: Date;
   user: IUser;
   images: IImage[];
   country: ICountry;
   comments: IComment[];
-  announcements?: IAnnouncement[];
+  notices: INotice[];
   likedUser: IUser[];
-}
-
-export interface IStoryPost {
-  post: IStory;
-  prevPost: IStory;
-  nextPost: IStory;
 }
 
 export interface IStory {
@@ -64,14 +69,38 @@ export interface IStory {
   user: IUser;
   country: ICountry;
   comments: IComment[];
-  announcements?: IAnnouncement[];
+  notices: INotice[];
   likedUser: IUser[];
 }
 
-export interface IAnnouncement {
+export interface INotice {
+  id: number;
+  header: string;
+  userId: number | null;
+  momentId: number | null;
+  storyPostId: number | null;
+  createdAt: Date;
+  code: string;
+  content: string;
+}
+
+export interface IVisitCountry extends ICoordinate {
   id: number;
   userId: number;
-  mainPostId: number;
+  countryCode: string;
+  review: string;
+  images: IImage[];
+}
+
+export interface ILikeMoment {
+  id: number;
+  userId: number;
+  momentId: number;
+}
+
+export interface ILikeStory {
+  id: number;
+  userId: number;
   storyPostId: number;
 }
 
@@ -82,7 +111,7 @@ export interface ICountry {
   continent: EContinent;
   image_src: string;
   flag_src: string;
-  mainPosts?: IMainPost[];
+  moments?: IMoment[];
 }
 
 export interface IImage {
@@ -95,8 +124,9 @@ export interface IComment {
   content: string;
   user: IUser;
   createdAt: Date;
-  post: IMainPost;
+  post: IMoment;
   subComments: ISubComment[];
+  notices: INotice[];
 }
 
 export interface ISubComment {
@@ -113,24 +143,14 @@ export interface IUserRequestForm {
   password: string;
 }
 
-export interface IMainPostRequestForm {
+export interface IMomentRequestForm {
   code: string;
   content: string;
-  type: EMainPostType;
+  type: EMomentType;
 }
 
 export interface ICommentRequestForm {
   content: string;
-  mainPostId?: number;
+  momentId?: number;
   commentId?: number;
-}
-
-export interface IMarketPost {
-  id: number;
-  images: IImage[];
-  keyword: string;
-  area: number;
-  title: string;
-  content: number;
-  user: IUser;
 }

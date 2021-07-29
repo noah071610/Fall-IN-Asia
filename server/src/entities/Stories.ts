@@ -11,7 +11,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Announcements } from './Announcements';
+import { Notices } from './Notices';
 import { Comments } from './Comments';
 import { Countries } from './Countries';
 import { Images } from './Images';
@@ -51,8 +51,8 @@ export class Stories {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    example: '다합 , dahab',
-    description: 'region where user visited',
+    example: '133.2342345',
+    description: 'latitute of region',
   })
   @Column('float', { name: 'lat' })
   lat: number;
@@ -60,8 +60,8 @@ export class Stories {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    example: '다합 , dahab',
-    description: 'region where user visited',
+    example: '53.2342345',
+    description: 'longitude of region',
   })
   @Column('float', { name: 'lng' })
   lng: number;
@@ -109,10 +109,10 @@ export class Stories {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Announcements, (announcements) => announcements.story, {
+  @OneToMany(() => Notices, (notices) => notices.story, {
     cascade: true,
   })
-  announcements: Announcements[];
+  notices: Notices[];
 
   @OneToMany(() => Images, (images) => images.story, {
     cascade: true,
@@ -129,7 +129,7 @@ export class Stories {
   })
   comments: Comments[];
 
-  @ManyToOne(() => Countries, (countries) => countries.mainPosts, {
+  @ManyToOne(() => Countries, (countries) => countries.moments, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

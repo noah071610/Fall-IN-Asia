@@ -1,8 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Comments } from 'src/entities/Comments';
-import { Users } from 'src/entities/Users';
 import { Repository } from 'typeorm';
-import bcrypt from 'bcrypt';
 import { SubComments } from 'src/entities/SubComments';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CommentRequestDto } from 'src/dto/comment.request.dto';
@@ -20,8 +18,8 @@ export class CommentsService {
     const newComment = new Comments();
     newComment.content = form.content;
     newComment.user = <any>{ id: userId };
-    if (form.mainPostId) {
-      newComment.mainPost = <any>{ id: form.mainPostId };
+    if (form.momentId) {
+      newComment.moment = <any>{ id: form.momentId };
     } else {
       newComment.story = <any>{ id: form.storyId };
     }

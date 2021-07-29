@@ -36,7 +36,7 @@ const CommentForm: FC<IProps> = ({ isStory }) => {
     if (isStory) {
       form["storyId"] = parseInt(query?.storyId as string);
     } else {
-      form["mainPostId"] = parseInt(query?.mainPostId as string);
+      form["momentId"] = parseInt(query?.momentId as string);
     }
     dispatch(commentCreateAction(form));
     setContent("");

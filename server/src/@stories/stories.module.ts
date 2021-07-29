@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Announcements } from 'src/entities/Announcements';
+import { Notices } from 'src/entities/Notices';
 import { Countries } from 'src/entities/Countries';
 import { Images } from 'src/entities/Images';
 import { Stories } from 'src/entities/Stories';
@@ -15,7 +15,7 @@ import { StoriesService } from './stories.service';
       Stories,
       Users,
       Images,
-      Announcements,
+      Notices,
       StoryLike,
       Countries,
     ]),
