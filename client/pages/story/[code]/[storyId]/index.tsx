@@ -14,7 +14,6 @@ import axios from "axios";
 import { getUserInfoAction } from "actions/user";
 import { storySlice } from "slices/story";
 import { commentSlice } from "slices/comment";
-import StoryArticleList from "@sections/StoryPage/StoryArticleList";
 import StoryPostThubnail from "@sections/StoryPage/StoryPostThubnail";
 import CountryMap from "@components/Maps/CountryMap";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
@@ -22,6 +21,7 @@ import { toastConfirmMessage } from "@components/ConfirmToastify";
 import { storyDeleteAction } from "actions/story";
 import tw from "twin.macro";
 import StoryPostLayout from "@layout/StoryPostLayout";
+import StoryArticleList from "@sections/StoryPage/StoryArticleList";
 
 export const StoryPostWrapper = styled.div`
   .story-manage-wrapper {
@@ -47,19 +47,21 @@ const index: FC<IProps> = () => {
   const { storyEditConfirmDone, storyDislikeDone, storyLikeDone } = useSelector(
     (state: RootState) => state.story
   );
-  const { commentCreateDone, commentDeleteDone, subCommentCreateDone, subCommentDeleteDone } =
-    useSelector((state: RootState) => state.comment);
+  const {
+    commentCreateDone,
+    commentDeleteDone,
+    subCommentCreateDone,
+    subCommentDeleteDone,
+    commentLikeDone,
+    commentDislikeDone,
+  } = useSelector((state: RootState) => state.comment);
 
   const { data: story, revalidate: revalidateStory } = useSWR<IStory>(
     ip ? `/story/${query?.code}/${query?.storyId}/${ip}` : null,
     fetcher,
     noRevalidate
   );
-  const {
-    data: stories,
-    revalidate,
-    setSize,
-  } = useSWRInfinite<IStory[]>(
+  const { data: stories, setSize } = useSWRInfinite<IStory[]>(
     (index) => `/story?page=${index + 1}&filter=${query?.filter || ""}`,
     fetcher,
     noRevalidate
@@ -144,6 +146,24 @@ const index: FC<IProps> = () => {
     }
   }, [storyDislikeDone]);
 
+  useEffect(() => {
+    if (commentLikeDone) {
+      toastSuccessMessage("댓글 좋아요!💓");
+      dispatch(commentSlice.actions.commentLikeClear());
+      dispatch(getUserInfoAction());
+      revalidateStory();
+    }
+  }, [commentLikeDone]);
+
+  useEffect(() => {
+    if (commentDislikeDone) {
+      toastSuccessMessage("댓글 좋아요 취소💔");
+      dispatch(commentSlice.actions.commentDislikeClear());
+      dispatch(getUserInfoAction());
+      revalidateStory();
+    }
+  }, [commentDislikeDone]);
+
   const onClickScrollDown = useCallback(() => {
     (postRef?.current as HTMLDivElement).scrollIntoView({ behavior: "smooth" });
   }, []);
@@ -161,7 +181,6 @@ const index: FC<IProps> = () => {
       toastSuccessMessage("연대기를 삭제했습니다.");
     }
   }, [user, isOwner, story]);
-  console.log(story);
 
   return (
     <StoryPostWrapper>
@@ -197,7 +216,7 @@ const index: FC<IProps> = () => {
         {/* {story && <CountryMap lat={story?.lat} lng={story?.lng} />} */}
         <Divider />
         {story && <StoryPost story={story} />}
-        <StoryArticleList setSize={setSize} stories={stories} />
+        <StoryArticleList grid={3} gap="1rem" setSize={setSize} stories={stories} />
       </StoryPostLayout>
     </StoryPostWrapper>
   );

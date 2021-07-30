@@ -129,13 +129,14 @@ export class StoriesController {
   @ApiOperation({ summary: 'Get posts' })
   @Get()
   async getPosts(
+    @Query('code') code: string,
     @Query('page', ParseIntPipe) page: number,
     @Query('filter') filter: string,
   ) {
     if (filter) {
-      return await this.StoriesService.getFilterPost(filter, page);
+      return await this.StoriesService.getFilterPost(filter, code, page);
     }
-    return await this.StoriesService.getPosts(page);
+    return await this.StoriesService.getPosts(code, page);
   }
 
   @ApiOperation({ summary: 'Get latest posts by using ID' })

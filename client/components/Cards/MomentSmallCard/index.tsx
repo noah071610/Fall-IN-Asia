@@ -8,8 +8,9 @@ import dayjs from "dayjs";
 interface IProps {
   moment?: IMoment;
   story?: IStory;
+  isSearchPage?: boolean;
 }
-const MomentSmallCard: FC<IProps> = ({ moment, story }) => {
+const MomentSmallCard: FC<IProps> = ({ isSearchPage, moment, story }) => {
   const onClickMomentSmallCard = useCallback(() => {
     if (moment) {
       router.push(`/country/${moment?.code}/${moment?.id}`);
@@ -19,7 +20,7 @@ const MomentSmallCard: FC<IProps> = ({ moment, story }) => {
   }, []);
 
   return (
-    <MomentSmallCardWrapper onClick={onClickMomentSmallCard}>
+    <div css={MomentSmallCardWrapper(isSearchPage)} onClick={onClickMomentSmallCard}>
       <div className="memont-small-top">
         <div className="image-wrapper">
           <img
@@ -39,7 +40,7 @@ const MomentSmallCard: FC<IProps> = ({ moment, story }) => {
         </div>
       </div>
       <h2>{useHtmlConverter(moment?.content || story?.title)}</h2>
-    </MomentSmallCardWrapper>
+    </div>
   );
 };
 

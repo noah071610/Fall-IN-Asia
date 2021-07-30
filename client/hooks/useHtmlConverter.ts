@@ -1,10 +1,5 @@
 import { useMemo } from "react";
 
 export default function useHtmlConverter(content?: string): string {
-  return (
-    content
-      ?.replaceAll("<br>", "\n")
-      .replace(/(<([^>]+)>)/gi, "")
-      .replace(/&.*;/gi, "") || ""
-  );
+  return content?.replace(/(<([^>]+)>)/gi, "").replaceAll(/&nbsp;|&amp;/gi, "") || "";
 }

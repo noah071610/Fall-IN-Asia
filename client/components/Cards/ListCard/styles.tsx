@@ -1,22 +1,16 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN } from "config";
 import tw from "twin.macro";
 
-export const ListCardWrapper = styled.div`
-  ${tw`flex w-full px-2 py-3 cursor-pointer mb-1 rounded-md overflow-hidden`}
-  ${BORDER_THIN("border")};
+export const ListCardWrapper = styled.li`
+  ${tw`w-full p-4 cursor-pointer mb-2 shadow-md`}
+  transition:0.3s all;
   &:hover {
-    ${tw`shadow-md`}
+    ${tw`shadow-lg`}
   }
-  img {
-    ${tw`w-28 h-20 mr-4 rounded-md`}
+  h4 {
+    ${tw`mb-2 text-xs`}
   }
-  .list-card-desc {
-    h4 {
-      ${tw`mb-2 text-xs`}
-    }
-    p {
-      ${tw`font-bold`}
-    }
+  p {
+    ${tw`font-bold`}
   }
 `;

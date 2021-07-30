@@ -7,7 +7,7 @@ export const WHITE_COLOR = "white" as const;
 export const BLUE_COLOR = "#1187cf" as const;
 export const RED_COLOR = "#C02E4C" as const;
 export const SKY_COLOR = "#7B9ACC" as const;
-export const GRAY_COLOR = "#f6f6f9" as const;
+export const GRAY_COLOR = "rgba(243, 244, 246)" as const;
 export const DEEP_BLUE_COLOR = "#5A66D7" as const;
 export const PINK_COLOR = "#f6d6d6" as const;
 
@@ -85,6 +85,24 @@ export const GRID_STYLE = (gap: string, colums: string, row?: string) => `
   grid-template-rows:${row};
   gap:${gap};
 `;
+
+// list
+
+export const newsPageNavList = [
+  { name: "관광뉴스", value: "news" },
+  { name: "트렌드", value: "trand" },
+  { name: "쇼핑", value: "shopping" },
+  { name: "이색체험", value: "experience" },
+  { name: "이벤트", value: "event" },
+];
+
+export const searchPageNavList = [
+  { name: "모멘트", value: "news" },
+  { name: "트렌드", value: "trand" },
+  { name: "쇼핑", value: "shopping" },
+  { name: "이색체험", value: "experience" },
+  { name: "이벤트", value: "event" },
+];
 
 // Toast Message
 

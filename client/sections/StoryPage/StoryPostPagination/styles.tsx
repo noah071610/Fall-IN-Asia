@@ -1,5 +1,5 @@
 import styled from "@emotion/styled/macro";
-import { FLEX_STYLE, GRID_STYLE } from "config";
+import { ELLIPSIS_STYLE, FLEX_STYLE, GRID_STYLE } from "config";
 import tw from "twin.macro";
 
 export const StoryPostPaginationWrapper = styled.div`
@@ -10,22 +10,32 @@ export const StoryPostPaginationWrapper = styled.div`
   .pagination {
     ${GRID_STYLE("1rem", "1fr 1fr")};
     .side-post {
-      ${tw`rounded-md p-4 hover:bg-gray-100 cursor-pointer`}
-      .image-wrapper {
-        ${tw`p-2`}
+      transition: 0.3s all;
+      ${tw`cursor-pointer shadow-md`}
+      &:hover {
+        ${tw`shadow-lg`}
         img {
-          ${tw`w-full h-40  rounded-md`}
+          transform: scale(1.1);
+        }
+      }
+      .image-wrapper {
+        ${tw`overflow-hidden`}
+        img {
+          transition: 0.3s all;
+          ${tw`w-full`}
+          height:180px;
         }
       }
       .post-desc {
-        ${tw`w-full p-2`}
+        ${tw`w-full p-5`}
         div {
-          h4 {
-            ${tw`mb-1`}
+          h3 {
+            ${tw`text-xs mb-2`}
           }
-        }
-        .anticon {
-          ${tw`text-base`}
+          h4 {
+            ${ELLIPSIS_STYLE(1.7, 2, "46px")}
+            ${tw`mb-1 font-bold`}
+          }
         }
       }
     }

@@ -1,12 +1,16 @@
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { ELLIPSIS_STYLE, FONT_STYLE, GRID_STYLE } from "config";
+import { ELLIPSIS_STYLE, FLEX_STYLE, FONT_STYLE, GRID_STYLE } from "config";
 import tw from "twin.macro";
 
-export const MomentSmallCardWrapper = styled.div`
+export const MomentSmallCardWrapper = (isSearchPage?: boolean) => css`
   ${tw`w-full cursor-pointer mb-6`}
+  ${isSearchPage && tw`shadow-md px-4 pt-4 pb-8 mb-0`}
+  transition:0.3s all;
   &:hover {
+    ${isSearchPage && tw`shadow-lg`}
     h2 {
-      text-decoration: underline;
+      ${!isSearchPage && `text-decoration: underline;`}
     }
   }
   .memont-small-top {
@@ -21,6 +25,7 @@ export const MomentSmallCardWrapper = styled.div`
       }
     }
     .small-card-info {
+      ${FLEX_STYLE("center", "flex-start", "column")}
       span {
         ${tw`block mb-1 text-xs`}
       }

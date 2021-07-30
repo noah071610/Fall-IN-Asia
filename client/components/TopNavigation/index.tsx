@@ -1,16 +1,27 @@
 import React, { FC, useState } from "react";
 import { TopNavigationWrapper } from "./styles";
 
-interface IProps {}
+interface IProps {
+  list: any[];
+  onClickList: (value: string) => void;
+  filter: string;
+}
 
-const TopNavigation: FC<IProps> = () => {
-  const [state, setstate] = useState();
+const TopNavigation: FC<IProps> = ({ filter, list, onClickList }) => {
   return (
     <TopNavigationWrapper>
       <div className="nav-inner-list">
-        <li>여행사</li>
-        <li>현지가이드</li>
-        <li>이벤트</li>
+        {list?.map((v, i) => {
+          return (
+            <li
+              className={filter === v.value ? "active-list" : ""}
+              onClick={() => onClickList(v.value)}
+              key={i}
+            >
+              {v.name}
+            </li>
+          );
+        })}
       </div>
     </TopNavigationWrapper>
   );

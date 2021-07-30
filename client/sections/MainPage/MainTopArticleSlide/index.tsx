@@ -25,7 +25,7 @@ const MainTopArticleSlide: FC<IProps> = () => {
       {popularArticles?.slice(0, 3).map((v, i) => {
         return (
           <SwiperSlide key={i}>
-            <ArticleColumnCard story={v} />
+            <ArticleColumnCard isMain={true} story={v} />
           </SwiperSlide>
         );
       })}

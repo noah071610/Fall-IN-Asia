@@ -21,7 +21,7 @@ const ImageCard: FC<IProps> = ({ country, isMain }) => {
       onClick={onClickArticleImageCard}
       style={{ backgroundImage: `url(${country.image_src})` }}
     >
-      <h3>{country.name}</h3>
+      <h3 style={isMain ? {} : { fontSize: "1.1rem" }}>{country.name}</h3>
       <div className="overlay" />
     </ImageCardWrapper>
   );

@@ -6,14 +6,15 @@ import UserInfoAside from "@sections/UserPage/UserInfoAside";
 const UserInfoLayoutWrapper = styled.div`
   background: ${GRAY_COLOR};
   padding-top: 2rem;
+  padding-bottom: 6rem;
   .layout {
     width: ${XLG_SIZE};
     ${tw`mx-auto`};
     ${GRID_STYLE("3rem", "1fr 3fr")};
     .layout-middle {
-      ${tw`p-8 rounded-2xl bg-white`}
+      ${tw`px-4 py-8 rounded-2xl bg-white`}
       .main-title {
-        ${tw`text-sm font-bold mt-6 mb-3`};
+        ${tw`text-sm font-bold mt-6 mb-3 mx-4`};
         span {
           ${tw`block text-sm mt-2`};
         }
@@ -21,14 +22,17 @@ const UserInfoLayoutWrapper = styled.div`
       .main-title:first-of-type {
         ${tw`mt-0 mb-3`}
       }
-      .post-list-wrapper {
-        ${tw`mt-6`}
-        ${GRID_STYLE("1rem", "1fr 1fr")};
-      }
     }
   }
+
+  .moment-list,
+  .no-countries,
+  .route-map-wrapper,
+  .post-slider {
+    ${tw`p-4`}
+  }
   .no-post-wrapper {
-    ${tw`w-full h-80 rounded-xl select-none`}
+    ${tw`w-full h-60 rounded-xl select-none p-4`}
     ${BORDER_THIN("border")};
     ${FLEX_STYLE("center", "center", "column")};
     img {

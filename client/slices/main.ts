@@ -60,6 +60,9 @@ export const mainSlice = createSlice({
     closeProfilePopUp(state) {
       state.onProfilePopUp = false;
     },
+    openSearchPopUp(state) {
+      state.onSearchPopUp = true;
+    },
     closeNoticePopUp(state) {
       state.onNoticePopUp = false;
     },

@@ -1,17 +1,10 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import {
-  ELLIPSIS_STYLE,
-  FLEX_STYLE,
-  FONT_STYLE,
-  GRAY_COLOR,
-  WHITE_COLOR,
-  WHITE_STYLE,
-} from "config";
+import { ELLIPSIS_STYLE, FLEX_STYLE } from "config";
 import tw from "twin.macro";
 
 export const ArticleCardWrapper = (isMain?: boolean) => css`
-  ${isMain ? tw`p-6 mb-4` : tw`py-8 px-4`}
+  ${isMain ? tw`p-6 mb-4` : tw``}
   ${tw`cursor-pointer flex`}
   &:hover {
     .image-wrapper {
@@ -46,14 +39,15 @@ export const ArticleCardWrapper = (isMain?: boolean) => css`
     ${FLEX_STYLE("flex-start", "flex-end")};
   }
   .story-content {
-    ${ELLIPSIS_STYLE(1.8, 4, "120px")};
-    padding: 1rem 0;
+    margin-top: 1rem;
+    ${ELLIPSIS_STYLE(1.8, 5, "auto")};
   }
   .story-main {
     padding-left: 2rem;
     width: 60%;
   }
   h2 {
-    ${tw`text-xl font-bold pb-4`}
+    ${tw`text-2xl font-bold mb-4 overflow-hidden`}
+    ${ELLIPSIS_STYLE(1.5, 1, "auto")};
   }
 `;

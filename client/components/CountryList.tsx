@@ -12,7 +12,7 @@ SwiperCore.use([Autoplay]);
 
 const CountryListWrapper = (isMain?: boolean) => css`
   ${GRID_STYLE("1rem", "repeat(3,1fr)")};
-  height: ${isMain ? "100px" : "150px"};
+  height: ${isMain ? "100px" : "100px"};
 `;
 
 interface IProps {

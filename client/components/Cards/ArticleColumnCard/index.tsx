@@ -9,17 +9,28 @@ import router from "next/router";
 
 interface IProps {
   story: IStory;
+  isMain?: boolean;
 }
 
-const ArticleColumnCard: FC<IProps> = ({ story }) => {
+const ArticleColumnCard: FC<IProps> = ({ story, isMain }) => {
   const onClickArticleCard = useCallback(() => {
     router.push(`/story/${story?.code}/${story?.id}`);
   }, []);
 
   return (
-    <ArticleColumnCardWrapper onClick={onClickArticleCard} className="box-card">
-      <div className="image-wrapper">
-        <img src={story?.thumbnail} alt="thai" />
+    <ArticleColumnCardWrapper
+      onClick={onClickArticleCard}
+      style={isMain ? { boxShadow: "none", borderRadius: "15px" } : {}}
+    >
+      <div
+        style={isMain ? { borderTopLeftRadius: "15px", borderTopRightRadius: "15px" } : {}}
+        className="image-wrapper"
+      >
+        <img
+          style={isMain ? { borderTopLeftRadius: "15px", borderTopRightRadius: "15px" } : {}}
+          src={story?.thumbnail}
+          alt="story-image"
+        />
       </div>
       <div className="box-card-info">
         <NameSpace date={story?.createdAt} user={story?.user} />

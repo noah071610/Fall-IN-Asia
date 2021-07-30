@@ -11,12 +11,10 @@ import "swiper/components/pagination/pagination.min.css";
 import { useSWRInfinite } from "swr";
 import { IStory } from "@typings/db";
 import fetcher from "utils/fetcher";
-import { GRID_STYLE, noRevalidate } from "config";
+import { GRID_STYLE, newsPageNavList, noRevalidate } from "config";
 import GuideCard from "@components/Cards/GuideCard";
 import styled from "@emotion/styled";
 import tw from "twin.macro";
-import MainAside from "@sections/MainPage/MainAside";
-import ImageCard from "@components/Cards/ImageCard";
 import ArticleImageCard from "@components/Cards/ArticleImageCard";
 import TopNavigation from "@components/TopNavigation";
 SwiperCore.use([EffectFade, Pagination, Autoplay]);
@@ -75,7 +73,7 @@ const index: FC<IProps> = () => {
           <PosterCard image="https://images.unsplash.com/photo-1492648272180-61e45a8d98a7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" />
         </SwiperSlide>
       </Swiper>
-      <TopNavigation />
+      <TopNavigation list={newsPageNavList} />
       <XLGLayout>
         <h2 className="main-title">가이드</h2>
         <div className="layout-divide">

@@ -1,18 +1,18 @@
 import styled from "@emotion/styled";
-import { BLACK_COLOR, FLEX_STYLE, FONT_STYLE, WHITE_COLOR } from "config";
+import { BLACK_COLOR, BORDER_THIN, FLEX_STYLE, FONT_STYLE, WHITE_COLOR } from "config";
 import tw from "twin.macro";
 
 export const StoryPostThubnailWrapper = styled.div`
   ${FLEX_STYLE("center", "center", "column")};
-  margin-bottom: 2rem;
+  ${tw`mb-16`}
   .thumbnail {
-    margin-top: 2rem;
-    width: 70%;
+    ${tw`mt-8 w-3/4`}
   }
   .story-title {
-    margin: 2rem 0;
+    ${FLEX_STYLE("center", "center", "column")};
+    ${tw`my-8`}
     h1 {
-      margin-bottom: 1rem;
+      ${tw`mb-8 font-bold leading-10 text-center`}
     }
   }
 `;

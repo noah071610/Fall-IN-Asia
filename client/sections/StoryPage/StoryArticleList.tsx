@@ -1,18 +1,25 @@
 import { IStory } from "@typings/db";
 import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import { useRef } from "react";
-import { StoryArticleListWrapper } from "./styles";
 import router, { useRouter } from "next/router";
 import useOnScreen from "@hooks/useOnScreen";
 import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
-
+import styled from "@emotion/styled";
+import { GRID_STYLE } from "config";
+import tw from "twin.macro";
+import { css } from "@emotion/react";
+const StoryArticleListWrapper = (grid: number, gap: string) => css`
+  ${tw`pt-16`}
+  ${GRID_STYLE(gap, `repeat(${grid},1fr)`)};
+`;
 interface IProps {
   stories: IStory[][] | undefined;
   setSize: (f: (size: number) => number) => Promise<IStory[][] | undefined>;
+  grid: number;
+  gap: string;
 }
 
-const StoryArticleList: FC<IProps> = ({ stories, setSize }) => {
-  const { query } = useRouter();
+const StoryArticleList: FC<IProps> = ({ stories, grid, gap, setSize }) => {
   const [isReachingEnd, setIsReachingEnd] = useState(true);
   const ref = useRef(null);
   const isVisible = useOnScreen(ref);
@@ -29,32 +36,17 @@ const StoryArticleList: FC<IProps> = ({ stories, setSize }) => {
     }
   }, [isVisible]);
 
-  const onClickPopular = useCallback(() => {
-    router.push(`/story?filter=popular`);
-  }, [query]);
-  const onClickNewest = useCallback(() => {
-    router.push(`/story`);
-  }, [query]);
-  const onClickTopComment = useCallback(() => {
-    router.push(`/story?filter=comment`);
-  }, [query]);
-
   const storiesData = stories ? stories?.flat() : [];
 
   return (
-    <StoryArticleListWrapper id="article_list">
-      <div className="content-filter">
-        <button onClick={onClickPopular}>인기순</button>
-        <button onClick={onClickNewest}>최신순</button>
-        <button onClick={onClickTopComment}>댓글많은순</button>
-      </div>
-      <div className="content-list-wrapper">
+    <>
+      <div css={StoryArticleListWrapper(grid, gap)} id="article_list">
         {storiesData?.map((v: IStory, i) => {
           return <ArticleColumnCard key={i} story={v} />;
         })}
       </div>
       <div ref={ref} />
-    </StoryArticleListWrapper>
+    </>
   );
 };
 

@@ -160,10 +160,11 @@ export class StoriesService {
     return latestPosts;
   }
 
-  async getFilterPost(filter: string, page?: number) {
+  async getFilterPost(filter: string, code?: string, page?: number) {
     const filterPosts = await this.StoriesRepository.createQueryBuilder(
       'stories',
     )
+      .where(code ? `stories.code = :code` : '1=1', { code })
       .leftJoinAndSelect('stories.country', 'country')
       .leftJoinAndSelect('stories.user', 'user')
       .leftJoinAndSelect('stories.likedUser', 'likedUser')
@@ -221,13 +222,14 @@ export class StoriesService {
     return popularPosts;
   }
 
-  async getPosts(page?: number) {
+  async getPosts(code?: string, page?: number) {
     const posts = await this.StoriesRepository.createQueryBuilder('stories')
       .leftJoinAndSelect('stories.country', 'country')
       .leftJoinAndSelect('stories.user', 'user')
       .leftJoinAndSelect('stories.likedUser', 'likedUser')
       .leftJoinAndSelect('stories.comments', 'comments')
       .leftJoinAndSelect('stories.images', 'images')
+      .where(code ? `stories.code = :code` : '1=1', { code })
       .orderBy('stories.id', 'DESC')
       .skip((page - 1) * 10)
       .take(10)

@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, FLEX_STYLE, GRID_STYLE } from "config";
+import { BORDER_THIN } from "config";
 import tw from "twin.macro";
 
-export const VisitedCountryListWrapper = styled.div`
+export const VisitedCountryListWrapper = styled.ul`
+  ${tw`p-4`}
   li {
     ${tw`mr-4`}
     .image-wrapper {

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, FLEX_STYLE, XLG_SIZE } from "config";
+import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, SKY_COLOR, XLG_SIZE } from "config";
 import tw from "twin.macro";
 
 export const TopNavigationWrapper = styled.nav`
@@ -10,6 +10,11 @@ export const TopNavigationWrapper = styled.nav`
     ${FLEX_STYLE("center", "center")};
     li {
       ${tw`p-4 cursor-pointer`}
+    }
+    .active-list {
+      font-weight: bold;
+      border-bottom: 0.25rem solid ${BLUE_COLOR};
+      padding-bottom: 0.75rem;
     }
   }
 `;

@@ -40,6 +40,7 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express-session": "^1.17.2",
+    "faker": "^4.1.0",
     "morgan": "^1.10.0",
     "mysql2": "^2.2.5",
     "nest-morgan": "^2.0.0",

@@ -1,15 +1,7 @@
-import React, { FC } from "react";
+import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import styled from "@emotion/styled";
 import XLGLayout from "@layout/XLGLayout";
-import {
-  BORDER_THIN,
-  FLEX_STYLE,
-  GRAY_COLOR,
-  GRID_STYLE,
-  noRevalidate,
-  RGB_BLACK,
-  WHITE_STYLE,
-} from "config";
+import { BORDER_THIN, FLEX_STYLE, noRevalidate, RGB_BLACK, WHITE_STYLE, XLG_SIZE } from "config";
 import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
@@ -17,61 +9,29 @@ import router, { useRouter } from "next/router";
 import useSWR, { useSWRInfinite } from "swr";
 import { ICountry, IStory } from "@typings/db";
 import fetcher from "utils/fetcher";
-import StoryArticleList from "@sections/StoryPage/StoryArticleList";
 import CountryList from "@components/CountryList";
 import StoryMainPoster from "@sections/StoryPage/StoryMainPoster";
 import tw from "twin.macro";
-import { Divider } from "antd";
-import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import MainCountryAllview from "@sections/MainPage/MainCountryAllview";
-import useToggle from "@hooks/useToggle";
+import TopNavigation from "@components/TopNavigation";
+import StoryArticleList from "@sections/StoryPage/StoryArticleList";
 import ArticleCard from "@components/Cards/ArticleCard";
 const Wrapper = styled.div`
+  .country-list-wrapper {
+    ${tw`mx-auto py-4`}
+    width:${XLG_SIZE};
+  }
+  .story-top-section {
+    ${tw`pt-8`}
+  }
   .story-post-btn {
     ${FLEX_STYLE("flex-end", "center")};
-    margin-bottom: 1rem;
     button {
       padding: 0.55rem;
       ${BORDER_THIN("border")};
       ${WHITE_STYLE(false, "130px", 10)};
       &:hover {
         ${tw`shadow-md`}
-      }
-    }
-  }
-  .story-popular-wrapper {
-    ${GRID_STYLE("2rem", "1fr 1fr 1fr")};
-    margin-top: 2rem;
-    .box-card {
-      padding: 0;
-      background: ${GRAY_COLOR};
-      .image-wrapper {
-        margin: 0 0 1rem 0;
-      }
-      .box-card-info {
-        padding: 0;
-      }
-      h2 {
-        padding: 1rem 0;
-      }
-    }
-  }
-  .user-slide {
-    img {
-      border-radius: 50%;
-    }
-  }
-  .swiper-slide {
-    width: 180px;
-  }
-  .story-list-wrapper {
-    .small-list {
-      display: flex;
-      margin-bottom: 1rem;
-      img {
-        width: 7rem;
-        height: 4rem;
-        padding-right: 1rem;
       }
     }
   }
@@ -84,42 +44,80 @@ interface IProps {}
 
 const index: FC<IProps> = () => {
   const { query } = useRouter();
-  const [onAllCountries, onClickAllCountries] = useToggle(false);
-  const [onMorePopularPosts, onClickMorePopularPosts] = useToggle(false);
+  const [filter, setFilter] = useState("");
+  const [onAllCountries, setAllCountries] = useState(false);
   const { data: popularStories } = useSWR<IStory[]>("/story/popular", fetcher);
   const { data: stories, setSize } = useSWRInfinite<IStory[]>(
-    (index) => `/story?page=${index + 1}&filter=${query?.filter || ""}`,
+    (index) =>
+      `/story?page=${index + 1}&code=${query?.country || ""}&filter=${
+        filter === "country" ? "" : filter
+      }`,
     fetcher,
     noRevalidate
   );
+
+  const storyPageNav = useMemo(() => {
+    const nav_list = [
+      { name: "인기순", value: "popular" },
+      { name: "최신순", value: "" },
+      { name: "댓글많은순", value: "comment" },
+      { name: "조회순", value: "view" },
+    ];
+    if (query?.country) {
+      nav_list.push({ name: "전체보기", value: "all_country" });
+    } else {
+      nav_list.push({ name: "국가선택", value: "country" });
+    }
+    return nav_list;
+  }, [query]);
+
   const { data: countries } = useSWR<ICountry[]>(`/country`, fetcher, noRevalidate);
+
+  const { data: country } = useSWR<ICountry>(
+    query?.country ? `/country/${query?.country}` : null,
+    fetcher,
+    noRevalidate
+  );
+
+  useEffect(() => {
+    setAllCountries(false);
+    setFilter("");
+  }, [query]);
+
+  const onClickList = useCallback((value: string) => {
+    if (value === "all_country") {
+      router.push("/story");
+      return;
+    }
+    setFilter(value);
+    if (value === "country") {
+      setAllCountries((prev) => !prev);
+      return;
+    }
+    setAllCountries(false);
+  }, []);
 
   return (
     <Wrapper>
-      <StoryMainPoster />
+      <StoryMainPoster name={country?.name} />
+      {!query?.country && (
+        <div className="country-list-wrapper">
+          <CountryList slidesPerView={6.2} isMain={false} />
+        </div>
+      )}
+      <TopNavigation filter={filter} onClickList={onClickList} list={storyPageNav} />
       <XLGLayout>
         <div className="story-post-btn">
           <button onClick={() => router.push("/story/post")}>연대기 올리기</button>
         </div>
-        <h2 className="main-title">국가별 연대기</h2>
-        <CountryList slidesPerView={3.2} isMain={false} />
-        {onAllCountries && <MainCountryAllview isMain={false} countries={countries} />}
-        <Divider orientation="center">
-          <a onClick={onClickAllCountries} className="more-icon">
-            {onAllCountries ? <MinusCircleOutlined /> : <PlusCircleOutlined />}
-          </a>
-        </Divider>
-        <h2 className="main-title">인기 급상승 연대기</h2>
-        {popularStories && <ArticleCard story={popularStories[0]} />}
-        {onMorePopularPosts &&
-          popularStories?.slice(1).map((v, i) => <ArticleCard story={v} key={i} />)}
-        <Divider orientation="center">
-          <a onClick={onClickMorePopularPosts} className="more-icon">
-            {onMorePopularPosts ? <MinusCircleOutlined /> : <PlusCircleOutlined />}
-          </a>
-        </Divider>
-        <h2 className="main-title">연대기 전체</h2>
-        <StoryArticleList setSize={setSize} stories={stories} />
+        <div className="story-top-section">
+          {onAllCountries ? (
+            <MainCountryAllview isMain={false} countries={countries} />
+          ) : (
+            popularStories && <ArticleCard story={popularStories[0]} />
+          )}{" "}
+        </div>
+        <StoryArticleList grid={4} gap="1.5rem" setSize={setSize} stories={stories} />
       </XLGLayout>
     </Wrapper>
   );

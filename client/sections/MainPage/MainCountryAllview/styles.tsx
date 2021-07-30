@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import { FONT_STYLE, GRID_STYLE } from "config";
+import { FONT_STYLE } from "config";
 import tw from "twin.macro";
 
 export const MainCountryAllviewWrapper = styled.div`
-  ${tw`w-full rounded-2xl bg-white mt-4 p-4`}
+  ${tw`w-full rounded-2xl bg-white `}
   .country-card-wrapper {
     ${tw`flex flex-wrap`}
     img {
@@ -12,6 +12,9 @@ export const MainCountryAllviewWrapper = styled.div`
   }
   h3 {
     ${FONT_STYLE(0.9, true)};
-    margin-bottom: 1rem;
+    ${tw`mb-4 mt-6`}
+  }
+  h3:first-of-type {
+    ${tw`mt-0`}
   }
 `;

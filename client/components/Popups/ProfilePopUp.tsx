@@ -2,11 +2,10 @@ import { FC, useEffect } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { FLEX_STYLE, toastSuccessMessage } from "config";
+import { FLEX_STYLE } from "config";
 import tw from "twin.macro";
 import styled from "@emotion/styled";
 import { logoutAction } from "actions/user";
-import { userSlice } from "slices/user";
 import { mainSlice } from "slices/main";
 
 const ProfilePopUpWrapper = styled.ul`
@@ -31,6 +30,11 @@ const ProfilePopUp: FC<IProps> = () => {
       <Link href={`/me/${user?.id}`}>
         <a>
           <li>내 프로필</li>
+        </a>
+      </Link>
+      <Link href={`/story/post`}>
+        <a>
+          <li>새 연대기 작성</li>
         </a>
       </Link>
       <li

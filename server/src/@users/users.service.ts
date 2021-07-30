@@ -52,6 +52,7 @@ export class UsersService {
       .leftJoinAndSelect('followers.follower', 'follower')
       .leftJoinAndSelect('moments.country', 'm_country')
       .leftJoinAndSelect('stories.country', 's_country')
+      .leftJoinAndSelect('stories.user', 's_user')
       .leftJoinAndSelect('users.comments', 'com')
       .leftJoinAndSelect('com.moment', 'cm_moment')
       .leftJoinAndSelect('com.story', 'cm_story')

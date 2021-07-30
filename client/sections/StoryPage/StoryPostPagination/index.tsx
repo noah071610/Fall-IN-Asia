@@ -41,11 +41,10 @@ const StoryPostPagination: FC<IProps> = ({ userId }) => {
           <div className="image-wrapper">
             <img src={sidePosts?.prevPost?.thumbnail || NO_IMAGE_URL} alt="" />
           </div>
-          <Divider />
           <div className="post-desc">
             <LeftOutlined />
             <div>
-              <h4>이전연대기</h4>
+              <h3>이전연대기</h3>
               <h4 className="post-title">{sidePosts?.prevPost?.title || "포스트가 없습니다."}</h4>
             </div>
           </div>
@@ -61,10 +60,9 @@ const StoryPostPagination: FC<IProps> = ({ userId }) => {
           <div className="image-wrapper">
             <img src={sidePosts?.nextPost?.thumbnail || NO_IMAGE_URL} alt="" />
           </div>
-          <Divider />
           <div className="post-desc">
             <div>
-              <h4>다음연대기</h4>
+              <h3>다음연대기</h3>
               <h4 className="post-title">{sidePosts?.nextPost?.title || "포스트가 없습니다."}</h4>
             </div>
             <RightOutlined />

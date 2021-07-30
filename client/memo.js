@@ -16,3 +16,11 @@
 //     }
 //   };
 // }, [clubHistory, isPossibleRoute]);
+
+{
+  /* <Divider orientation="center">
+<a onClick={onClickAllCountries} className="more-icon">
+  {onAllCountries ? <MinusCircleOutlined /> : <PlusCircleOutlined />}
+</a>
+</Divider> */
+}

@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, FLEX_STYLE, FONT_STYLE, GRAY_COLOR, HOVER_GRAY, RED_COLOR } from "config";
+import { BORDER_THIN, FLEX_STYLE, FONT_STYLE, RED_COLOR } from "config";
 import tw from "twin.macro";
 
 export const StoryPostWrapper = styled.div`
-  ${tw`pb-16 mb-8`}
+  ${tw`pb-16`}
   ${BORDER_THIN("border-bottom")};
   .story-footer {
     ${tw`mx-8 mt-12`}

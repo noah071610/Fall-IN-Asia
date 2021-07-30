@@ -11,7 +11,7 @@ import Overlay from "@components/Modals/Overlay";
 import SearchPopUp from "@components/Popups/SearchPopUp";
 import NoticePopUp from "@components/Popups/NoticePopUp";
 import ProfilePopUp from "@components/Popups/ProfilePopUp";
-import { toastSuccessMessage } from "config";
+import { GRAY_COLOR, toastSuccessMessage } from "config";
 import { userSlice } from "slices/user";
 import useInput from "@hooks/useInput";
 import { searchWordAction } from "actions/main";
@@ -109,13 +109,16 @@ const Header: FC<HeaderProps> = () => {
           </Link>
         </li>
         <li>
-          <Link href="/guide">
-            <a>가이드</a>
+          <Link href="/news">
+            <a>여행소식</a>
           </Link>
         </li>
       </HeaderLeft>
       <HeaderRight>
-        <li style={{ display: "flex" }} className="header-right-li icon-li">
+        <li
+          style={onSearchPopUp ? { background: GRAY_COLOR, display: "flex" } : { display: "flex" }}
+          className="header-right-li icon-li"
+        >
           {onSearchPopUp && (
             <SearchPopUp
               inputRef={inputRef}
