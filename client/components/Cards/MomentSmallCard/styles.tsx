@@ -3,7 +3,7 @@ import { ELLIPSIS_STYLE, FONT_STYLE, GRID_STYLE } from "config";
 import tw from "twin.macro";
 
 export const MomentSmallCardWrapper = styled.div`
-  ${tw`w-full cursor-pointer mb-2`}
+  ${tw`w-full cursor-pointer mb-6`}
   &:hover {
     h2 {
       text-decoration: underline;
@@ -11,7 +11,7 @@ export const MomentSmallCardWrapper = styled.div`
   }
   .memont-small-top {
     ${GRID_STYLE("1rem", "4.3rem 2.5fr")};
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     .image-wrapper {
       ${tw`flex overflow-hidden rounded-md`}
       img {
@@ -28,7 +28,7 @@ export const MomentSmallCardWrapper = styled.div`
   }
   h2 {
     padding-left: 0.2rem;
-    ${ELLIPSIS_STYLE(1.65, 2, "43px")};
-    ${FONT_STYLE(0.85, true)}
+    ${ELLIPSIS_STYLE(1.65, 2, "auto")};
+    ${FONT_STYLE(0.8, true)}
   }
 `;

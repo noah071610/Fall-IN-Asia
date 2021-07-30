@@ -87,6 +87,7 @@ export class MomentsService {
         'images',
         'comments',
         'comments.user',
+        'comments.likedUser',
         'comments.subComments',
         'comments.subComments.user',
       ],

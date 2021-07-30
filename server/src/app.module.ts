@@ -14,6 +14,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { StoriesModule } from './@stories/stories.module';
 import { CommentsModule } from './@comments/comments.module';
+import { Stories } from './entities/Stories';
+import { Moments } from './entities/Moments';
 
 @Module({
   imports: [
@@ -22,6 +24,7 @@ import { CommentsModule } from './@comments/comments.module';
     MorganModule,
     UsersModule,
     TypeOrmModule.forRoot(ormconfig),
+    TypeOrmModule.forFeature([Moments, Stories]),
     CountriesModule,
     MomentsModule,
     StoriesModule,

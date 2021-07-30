@@ -54,3 +54,27 @@ export const subCommentDeleteAction = createAsyncThunk<any, number>(
     }
   }
 );
+
+export const commentLikeAction = createAsyncThunk<any, number>(
+  "comment/like",
+  async (commentId) => {
+    try {
+      const response = await axios.patch(`/comment/like/${commentId}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+export const commentDislikeAction = createAsyncThunk<any, number>(
+  "comment/dislike",
+  async (commentId) => {
+    try {
+      const response = await axios.patch(`/comment/dislike/${commentId}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);

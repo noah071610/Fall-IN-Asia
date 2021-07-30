@@ -10,10 +10,11 @@ import { NO_POST_URL } from "config";
 interface IProps {
   moments: IMoment[][] | undefined;
   setSize: (f: (size: number) => number) => Promise<IMoment[][] | undefined>;
+  setFilter: (filter: string) => void;
+  filter: string;
 }
 
-const MomentList: FC<IProps> = ({ moments, setSize }) => {
-  const { query } = useRouter();
+const MomentList: FC<IProps> = ({ filter, moments, setSize, setFilter }) => {
   const [isReachingEnd, setIsReachingEnd] = useState(true);
   const ref = useRef(null);
   const isVisible = useOnScreen(ref);
@@ -32,28 +33,31 @@ const MomentList: FC<IProps> = ({ moments, setSize }) => {
 
   const momentsData = moments ? moments?.flat() : [];
 
-  const onClickFilter = useCallback(
-    (filter: string) => {
-      if (query.code) {
-        router.push(
-          `/country/${query.code}/${query.type ? "?type=" + query.type + "&" : "?"}filter=${filter}`
-        );
-      } else {
-        router.push(`/${query.type ? "?type=" + query.type + "&" : "?"}filter=${filter}`);
-      }
-    },
-    [query]
-  );
   return (
     <MomentListWrapper>
       <div className="content-wrapper">
         <div className="content-filter">
-          <button onClick={() => onClickFilter("popular")}>인기순</button>
-          <button onClick={() => onClickFilter("")}>최신순</button>
-          <button onClick={() => onClickFilter("comment")}>댓글많은순</button>
+          <button
+            style={filter === "popular" ? { fontWeight: "bold" } : {}}
+            onClick={() => setFilter("popular")}
+          >
+            인기순
+          </button>
+          <button style={filter === "" ? { fontWeight: "bold" } : {}} onClick={() => setFilter("")}>
+            최신순
+          </button>
+          <button
+            style={filter === "comment" ? { fontWeight: "bold" } : {}}
+            onClick={() => setFilter("comment")}
+          >
+            댓글많은순
+          </button>
         </div>
         {momentsData.length > 0 ? (
           momentsData?.map((v, i) => {
+            if (momentsData.length - 1 === i) {
+              return <MomentCard isLast={true} key={i} moment={v} />;
+            }
             return <MomentCard key={i} moment={v} />;
           })
         ) : (

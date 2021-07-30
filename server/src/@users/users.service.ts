@@ -8,20 +8,24 @@ import { Users } from 'src/entities/Users';
 import { Repository } from 'typeorm';
 import bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Follow } from 'src/entities/Follow';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(Users) private userRepository: Repository<Users>,
+    @InjectRepository(Users) private UserRepository: Repository<Users>,
+    @InjectRepository(Follow) private FollowRepository: Repository<Follow>,
   ) {}
 
   async findUserInfoByEmail(email: string) {
-    const user = await this.userRepository
-      .createQueryBuilder('users')
+    const user = await this.UserRepository.createQueryBuilder('users')
       .leftJoinAndSelect('users.likeStory', 'likeStory')
       .leftJoinAndSelect('users.likeMoment', 'likeMoment')
+      .leftJoinAndSelect('users.likeComment', 'likeComment')
       .leftJoinAndSelect('users.stories', 'stories')
       .leftJoinAndSelect('users.moments', 'moments')
+      .leftJoinAndSelect('users.followings', 'followings')
+      .leftJoinAndSelect('users.followers', 'followers')
       .leftJoinAndSelect('moments.country', 'm_country')
       .leftJoinAndSelect('stories.country', 's_country')
       .leftJoinAndSelect('users.notices', 'notices')
@@ -37,13 +41,15 @@ export class UsersService {
   }
 
   async getUserInfoById(userId: number) {
-    const user = await this.userRepository
-      .createQueryBuilder('users')
+    const user = await this.UserRepository.createQueryBuilder('users')
       .leftJoinAndSelect('users.likeStory', 'likeStory')
       .leftJoinAndSelect('users.likeMoment', 'likeMoment')
       .leftJoinAndSelect('users.stories', 'stories')
       .leftJoinAndSelect('users.moments', 'moments')
-      .leftJoinAndSelect('users.visited', 'visited')
+      .leftJoinAndSelect('users.followings', 'followings')
+      .leftJoinAndSelect('users.followers', 'followers')
+      .leftJoinAndSelect('followings.following', 'following')
+      .leftJoinAndSelect('followers.follower', 'follower')
       .leftJoinAndSelect('moments.country', 'm_country')
       .leftJoinAndSelect('stories.country', 's_country')
       .leftJoinAndSelect('users.comments', 'com')
@@ -71,12 +77,12 @@ export class UsersService {
     if (!password) {
       throw new BadRequestException('비밀번호를 작성해주세요.');
     }
-    const user = await this.userRepository.findOne({ where: { email } });
+    const user = await this.UserRepository.findOne({ where: { email } });
     if (user) {
       throw new UnauthorizedException('누군가 사용하고있는 이메일입니다.');
     }
     const hashedPassword = await bcrypt.hash(password, 12);
-    await this.userRepository.save({
+    await this.UserRepository.save({
       email,
       name,
       password: hashedPassword,
@@ -85,24 +91,24 @@ export class UsersService {
   }
 
   async addUserIcon(userId: number, file: Express.Multer.File) {
-    const user = await this.userRepository.findOne({
+    const user = await this.UserRepository.findOne({
       where: { id: userId },
     });
     user.icon = process.env.BACK_URL + file.path;
-    return await this.userRepository.save(user);
+    return await this.UserRepository.save(user);
   }
 
   async deleteUserIcon(userId: number) {
-    const user = await this.userRepository.findOne({
+    const user = await this.UserRepository.findOne({
       where: { id: userId },
     });
     user.icon =
       'https://user-images.githubusercontent.com/74864925/124331496-460bfe80-dbca-11eb-95dc-a5379a5750a6.png';
-    return await this.userRepository.save(user);
+    return await this.UserRepository.save(user);
   }
 
   async changeUserInfo(userId: number, form) {
-    const user = await this.userRepository.findOne({
+    const user = await this.UserRepository.findOne({
       where: { id: userId },
     });
     if (!user) {
@@ -110,11 +116,11 @@ export class UsersService {
     }
     user.name = form.userName;
     user.introduce = form.introduce;
-    return await this.userRepository.save(user);
+    return await this.UserRepository.save(user);
   }
 
   async changeUserPassword(userId: number, form) {
-    const user = await this.userRepository.findOne({
+    const user = await this.UserRepository.findOne({
       select: ['id', 'icon', 'email', 'password'],
       where: { id: userId },
     });
@@ -125,12 +131,38 @@ export class UsersService {
     if (result) {
       const mynewPassword = await bcrypt.hash(form.newPassword, 12);
       user.password = mynewPassword;
-      await this.userRepository.save(user);
+      await this.UserRepository.save(user);
       return true;
     } else {
       throw new UnauthorizedException(
         '비밀번호가 일치하지 않습니다. 다시한번 확인해주세요.',
       );
     }
+  }
+
+  async followUser(followingId: number, userId: number) {
+    if (!followingId) {
+      throw new NotFoundException('팔로우 할 유저를 찾지 못했습니다.');
+    }
+    if (!userId) {
+      throw new UnauthorizedException('유저를 찾지 못했습니다.');
+    }
+    const newFollower = new Follow();
+    newFollower.followerId = userId;
+    newFollower.followingId = followingId;
+    return await this.FollowRepository.save(newFollower);
+  }
+
+  async unfollowUser(followingId: number, userId: number) {
+    if (!followingId) {
+      throw new NotFoundException('언팔로우를 할 유저를 찾지 못했습니다.');
+    }
+    if (!userId) {
+      throw new UnauthorizedException('유저를 찾지 못했습니다.');
+    }
+    return await this.FollowRepository.delete({
+      followingId,
+      followerId: userId,
+    });
   }
 }

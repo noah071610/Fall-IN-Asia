@@ -5,10 +5,12 @@ import {
   changeUserInfoAction,
   changeUserPasswordAction,
   deleteUserIconAction,
+  followUserAction,
   getUserInfoAction,
   logInAction,
   logoutAction,
   signupAction,
+  unfollowUserAction,
 } from "actions/user";
 
 export interface UserState {
@@ -37,6 +39,12 @@ export interface UserState {
   deleteUserIconLoading: boolean;
   deleteUserIconDone: boolean;
   deleteUserIconError: boolean;
+  followUserLoading: boolean;
+  followUserDone: boolean;
+  followUserError: boolean;
+  unfollowUserLoading: boolean;
+  unfollowUserDone: boolean;
+  unfollowUserError: boolean;
 }
 
 const initialState: UserState = {
@@ -65,6 +73,12 @@ const initialState: UserState = {
   deleteUserIconLoading: false,
   deleteUserIconDone: false,
   deleteUserIconError: false,
+  followUserLoading: false,
+  followUserDone: false,
+  followUserError: false,
+  unfollowUserLoading: false,
+  unfollowUserDone: false,
+  unfollowUserError: false,
 };
 
 export const userSlice = createSlice({
@@ -105,6 +119,16 @@ export const userSlice = createSlice({
       state.changeUserPasswordLoading = false;
       state.changeUserPasswordDone = false;
       state.changeUserPasswordError = false;
+    },
+    followUserClear(state) {
+      state.followUserLoading = false;
+      state.followUserDone = false;
+      state.followUserError = false;
+    },
+    unfollowUserClear(state) {
+      state.unfollowUserLoading = false;
+      state.unfollowUserDone = false;
+      state.unfollowUserError = false;
     },
   },
   extraReducers: (builder) =>
@@ -199,5 +223,27 @@ export const userSlice = createSlice({
       .addCase(changeUserPasswordAction.rejected, (state) => {
         state.changeUserPasswordLoading = false;
         state.changeUserPasswordError = true;
+      })
+      .addCase(followUserAction.pending, (state) => {
+        state.followUserLoading = true;
+      })
+      .addCase(followUserAction.fulfilled, (state) => {
+        state.followUserLoading = false;
+        state.followUserDone = true;
+      })
+      .addCase(followUserAction.rejected, (state) => {
+        state.followUserLoading = false;
+        state.followUserError = true;
+      })
+      .addCase(unfollowUserAction.pending, (state) => {
+        state.unfollowUserLoading = true;
+      })
+      .addCase(unfollowUserAction.fulfilled, (state) => {
+        state.unfollowUserLoading = false;
+        state.unfollowUserDone = true;
+      })
+      .addCase(unfollowUserAction.rejected, (state) => {
+        state.unfollowUserLoading = false;
+        state.unfollowUserError = true;
       }),
 });

@@ -91,3 +91,29 @@ export const changeUserPasswordAction = createAsyncThunk<
     throw error;
   }
 });
+
+export const followUserAction = createAsyncThunk<any, number>(
+  "user/follow",
+  async (followingId) => {
+    try {
+      const response = await axios.post(`/user/follow/${followingId}`);
+      return response.data;
+    } catch (error) {
+      toastErrorMessage(error);
+      throw error;
+    }
+  }
+);
+
+export const unfollowUserAction = createAsyncThunk<any, number>(
+  "user/unfollow",
+  async (followingId) => {
+    try {
+      const response = await axios.post(`/user/unfollow/${followingId}`);
+      return response.data;
+    } catch (error) {
+      toastErrorMessage(error);
+      throw error;
+    }
+  }
+);

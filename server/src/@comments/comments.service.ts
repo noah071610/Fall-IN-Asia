@@ -1,9 +1,14 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Comments } from 'src/entities/Comments';
 import { Repository } from 'typeorm';
 import { SubComments } from 'src/entities/SubComments';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CommentRequestDto } from 'src/dto/comment.request.dto';
+import { CommentLike } from 'src/entities/CommentLike';
 
 @Injectable()
 export class CommentsService {
@@ -12,6 +17,8 @@ export class CommentsService {
     private commentsRepository: Repository<Comments>,
     @InjectRepository(SubComments)
     private subCommentsRepository: Repository<SubComments>,
+    @InjectRepository(CommentLike)
+    private CommentLikeRepository: Repository<CommentLike>,
   ) {}
 
   async createComment(form: CommentRequestDto, userId: number) {
@@ -44,5 +51,28 @@ export class CommentsService {
   async deleteSubComment(subCommentId: number) {
     await this.subCommentsRepository.delete({ id: subCommentId });
     return true;
+  }
+
+  async likeComment(commentId: number, userId: number) {
+    if (!commentId) {
+      throw new NotFoundException('댓글을 찾을 수 없습니다.');
+    }
+    if (!userId) {
+      throw new UnauthorizedException('유저를 찾지 못했습니다.');
+    }
+    const newCommentLike = new CommentLike();
+    newCommentLike.userId = userId;
+    newCommentLike.commentId = commentId;
+    return await this.CommentLikeRepository.save(newCommentLike);
+  }
+
+  async dislikeComment(commentId: number, userId: number) {
+    if (!commentId) {
+      throw new NotFoundException('댓글을 찾을 수 없습니다.');
+    }
+    if (!userId) {
+      throw new UnauthorizedException('유저를 찾지 못했습니다.');
+    }
+    return await this.CommentLikeRepository.delete({ commentId, userId });
   }
 }

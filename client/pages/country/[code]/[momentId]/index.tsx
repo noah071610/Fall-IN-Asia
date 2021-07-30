@@ -34,9 +34,9 @@ const index = () => {
     setSize,
   } = useSWRInfinite<IMoment[]>(
     (index) =>
-      filter
-        ? `/moment/${filter}`
-        : `/moment?code=${query?.code || ""}&page=${index + 1}&type=${query?.type || ""}`,
+      `/moment?code=${query?.code || ""}&page=${index + 1}&filter=${filter}&type=${
+        query?.type || ""
+      }`,
     fetcher
   );
 
@@ -62,8 +62,14 @@ const index = () => {
     momentDislikeDone,
     momentLikeDone,
   } = useSelector((state: RootState) => state.moment);
-  const { commentCreateDone, commentDeleteDone, subCommentCreateDone, subCommentDeleteDone } =
-    useSelector((state: RootState) => state.comment);
+  const {
+    commentCreateDone,
+    commentDeleteDone,
+    subCommentCreateDone,
+    subCommentDeleteDone,
+    commentLikeDone,
+    commentDislikeDone,
+  } = useSelector((state: RootState) => state.comment);
 
   useEffect(() => {
     if (momentCreateDone) {
@@ -137,6 +143,26 @@ const index = () => {
       revalidateMoment();
     }
   }, [momentDislikeDone]);
+
+  useEffect(() => {
+    if (commentLikeDone) {
+      toastSuccessMessage("댓글 좋아요!💓");
+      dispatch(commentSlice.actions.commentLikeClear());
+      dispatch(getUserInfoAction());
+      revalidateMoments();
+      revalidateMoment();
+    }
+  }, [commentLikeDone]);
+
+  useEffect(() => {
+    if (commentDislikeDone) {
+      toastSuccessMessage("댓글 좋아요 취소💔");
+      dispatch(commentSlice.actions.commentDislikeClear());
+      dispatch(getUserInfoAction());
+      revalidateMoments();
+      revalidateMoment();
+    }
+  }, [commentDislikeDone]);
   return (
     <MainLayout>
       <h2 className="main-title">15번째 메아리</h2>
@@ -145,7 +171,7 @@ const index = () => {
       <MainTopContent />
       <h2 className="main-title">포스팅</h2>
       <MomentPostingForm />
-      <MomentList setSize={setSize} moments={moments} />
+      <MomentList setFilter={setFilter} setSize={setSize} moments={moments} />
     </MainLayout>
   );
 };

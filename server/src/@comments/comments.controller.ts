@@ -4,6 +4,7 @@ import {
   Delete,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   UseGuards,
   UseInterceptors,
@@ -55,5 +56,25 @@ export class CommentsController {
     @Param('subCommentId', ParseIntPipe) subCommentId: number,
   ) {
     await this.CommentService.deleteSubComment(subCommentId);
+  }
+
+  @ApiOperation({ summary: 'like Comment' })
+  @UseGuards(new LoggedInGuard())
+  @Patch('like/:commentId')
+  async likeComment(
+    @Param('commentId', ParseIntPipe) commentId: number,
+    @User() user,
+  ) {
+    await this.CommentService.likeComment(commentId, user.id);
+  }
+
+  @ApiOperation({ summary: 'dislike Comment' })
+  @UseGuards(new LoggedInGuard())
+  @Patch('dislike/:commentId')
+  async dislikeComment(
+    @Param('commentId', ParseIntPipe) commentId: number,
+    @User() user,
+  ) {
+    await this.CommentService.dislikeComment(commentId, user.id);
   }
 }

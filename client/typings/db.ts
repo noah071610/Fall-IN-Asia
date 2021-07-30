@@ -28,16 +28,17 @@ export interface IUser {
   icon: string;
   moments: IMoment[];
   stories: IStory[];
-  comments: IComment[];
   notices: INotice[];
   likeMoment: ILikeMoment[];
   likeStory: ILikeStory[];
+  followers: IFollow[];
+  followings: IFollow[];
 }
 
 export interface IUserInfo extends IUser {
   introduce: string;
   createAt: Date;
-  visited: IVisitCountry[];
+  comments: IComment[];
 }
 
 export interface IMoment {
@@ -96,6 +97,14 @@ export interface ILikeMoment {
   id: number;
   userId: number;
   momentId: number;
+}
+
+export interface IFollow {
+  id: number;
+  followingId: number;
+  followerId: number;
+  follower: IUser;
+  following: IUser;
 }
 
 export interface ILikeStory {

@@ -29,17 +29,20 @@ const App = ({ Component, pageProps }: AppProps) => {
   const { onProfilePopUp, onNoticePopUp, onSearchPopUp } = useSelector(
     (state: RootState) => state.main
   );
-  const onClickBody = useCallback(() => {
-    if (onProfilePopUp) {
-      dispatch(mainSlice.actions.closeProfilePopUp());
-    }
-    if (onNoticePopUp) {
-      dispatch(mainSlice.actions.closeNoticePopUp());
-    }
-    if (onSearchPopUp) {
-      dispatch(mainSlice.actions.closeSearchPopUp());
-    }
-  }, [onProfilePopUp, onNoticePopUp, onSearchPopUp]);
+  const onClickBody = useCallback(
+    (e) => {
+      if (onProfilePopUp) {
+        dispatch(mainSlice.actions.closeProfilePopUp());
+      }
+      if (onNoticePopUp) {
+        dispatch(mainSlice.actions.closeNoticePopUp());
+      }
+      if (onSearchPopUp && e.target.nodeName !== "HEADER") {
+        dispatch(mainSlice.actions.closeSearchPopUp());
+      }
+    },
+    [onProfilePopUp, onNoticePopUp, onSearchPopUp]
+  );
   return (
     <div onClick={onClickBody}>
       <Global styles={resetStyles} />

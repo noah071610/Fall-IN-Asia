@@ -152,7 +152,6 @@ export class MomentsController {
     @Query('type') type: string,
     @Query('filter') filter: string,
   ) {
-    console.log('######', type);
     if (type) {
       switch (type) {
         case 'trip':

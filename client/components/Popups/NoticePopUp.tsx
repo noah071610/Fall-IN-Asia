@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { BORDER_THIN, FLEX_STYLE } from "config";
+import { BORDER_THIN, FLEX_STYLE, RGB_BLACK } from "config";
 import tw from "twin.macro";
 import styled from "@emotion/styled";
 import ListCard from "@components/Cards/ListCard";
@@ -12,13 +12,20 @@ import router from "next/router";
 const NoticePopUpWrapper = styled.ul`
   ${tw`absolute top-12 right-0 bg-white shadow-md rounded-xl overflow-hidden w-80 z-20`}
   h2 {
-    ${tw`p-4 text-sm font-bold`}
+    ${tw`pt-4 px-4 pb-2 text-sm font-bold`}
+  }
+  .notices-wrapper {
+    ${tw`divide-y divide-solid divide-gray-100`}
   }
   .list-card-wrapper {
-    ${tw`border-none hover:bg-gray-100 rounded-none px-4 m-0`}
+    ${tw`border-none hover:bg-gray-100 rounded-none px-4 py-2 m-0 `}.list-card-desc {
+      h4 {
+        ${tw`mb-1 text-xs`}
+      }
+    }
   }
   .no-notices {
-    ${tw`pt-4 pb-8 px-16`}
+    ${tw`pt-4 pb-8 px-4`}
     p {
       ${tw`text-xs leading-5`}
     }
@@ -42,9 +49,11 @@ const NoticePopUp: FC<IProps> = () => {
       <h2>{user?.notices?.length > 0 ? "알림" : "알림이 없습니다."}</h2>
       {user?.notices?.length > 0 ? (
         <>
-          {user?.notices.map((v: INotice, i: number) => (
-            <ListCard key={i} title={v.header + " 알림"} content={v.content} />
-          ))}
+          <div className="notices-wrapper">
+            {user?.notices.map((v: INotice, i: number) => (
+              <ListCard key={i} title={v.header + " 알림"} content={v.content} />
+            ))}
+          </div>
           <div onClick={() => router.push(`/me/${user?.id}`)} className="more-notices">
             <span>더보기</span>
           </div>

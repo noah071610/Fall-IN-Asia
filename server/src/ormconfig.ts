@@ -11,7 +11,8 @@ import { MomentLike } from './entities/MomentLike';
 import { Countries } from './entities/Countries';
 import { StoryLike } from './entities/StoryLike';
 import { Follow } from './entities/Follow';
-import { VisitCountry } from './entities/VisitCountry';
+import { Articles } from './entities/Articles';
+import { CommentLike } from './entities/CommentLike';
 
 dotenv.config();
 const config: TypeOrmModuleOptions = {
@@ -33,7 +34,8 @@ const config: TypeOrmModuleOptions = {
     Notices,
     MomentLike,
     Follow,
-    VisitCountry,
+    Articles,
+    CommentLike,
   ],
   charset: 'utf8mb4',
   synchronize: false,

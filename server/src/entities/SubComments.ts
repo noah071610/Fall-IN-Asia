@@ -35,7 +35,7 @@ export class SubComments {
   @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ select: false })
   updatedAt: Date;
 
   @ManyToOne(() => Comments, (comments) => comments.subComments, {

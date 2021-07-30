@@ -61,6 +61,7 @@ export class Moments {
   })
   type: '관광 및 여행' | '유학 및 취업' | '구인구직' | '현지 커뮤니티';
 
+  @Index(['content'], { fulltext: true, parser: 'ngram' })
   @IsString()
   @IsNotEmpty()
   @ApiProperty({

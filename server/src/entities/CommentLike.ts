@@ -7,11 +7,11 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Stories } from './Stories';
+import { Comments } from './Comments';
 import { Users } from './Users';
 
-@Entity({ schema: 'travelover', name: 'follow' })
-export class Follow {
+@Entity({ schema: 'travelover', name: 'commentLike' })
+export class CommentLike {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty({
@@ -24,30 +24,30 @@ export class Follow {
   @IsNotEmpty()
   @ApiProperty({
     example: 1,
-    description: 'followingId (Following)',
+    description: 'UserId (Like)',
   })
   @Column()
-  followingId: number;
+  userId: number;
 
   @IsNotEmpty()
   @ApiProperty({
     example: 1,
-    description: 'followerId (Follower)',
+    description: 'commentId (Liked)',
   })
   @Column()
-  followerId: number;
+  commentId: number;
 
-  @ManyToOne(() => Users, (users) => users.followings, {
+  @ManyToOne(() => Users, (users) => users.likeComment, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn({ name: 'followingId' })
-  following: Users;
+  @JoinColumn({ name: 'userId' })
+  user: Users;
 
-  @ManyToOne(() => Users, (users) => users.followers, {
+  @ManyToOne(() => Comments, (comments) => comments.likedUser, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn({ name: 'followerId' })
-  follower: Users;
+  @JoinColumn({ name: 'commentId' })
+  comment: Comments;
 }

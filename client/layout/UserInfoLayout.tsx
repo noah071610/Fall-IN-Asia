@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styled from "@emotion/styled/macro";
-import { BLUE_COLOR, BORDER_THIN, GRAY_COLOR, GRID_STYLE, XLG_SIZE } from "config";
+import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, GRID_STYLE, XLG_SIZE } from "config";
 import tw from "twin.macro";
 import UserInfoAside from "@sections/UserPage/UserInfoAside";
 const UserInfoLayoutWrapper = styled.div`
@@ -25,6 +25,14 @@ const UserInfoLayoutWrapper = styled.div`
         ${tw`mt-6`}
         ${GRID_STYLE("1rem", "1fr 1fr")};
       }
+    }
+  }
+  .no-post-wrapper {
+    ${tw`w-full h-80 rounded-xl select-none`}
+    ${BORDER_THIN("border")};
+    ${FLEX_STYLE("center", "center", "column")};
+    img {
+      ${tw`w-20 h-20 opacity-30 mb-4`}
     }
   }
 `;

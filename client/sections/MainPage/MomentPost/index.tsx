@@ -51,7 +51,7 @@ const moment: FC<IProps> = ({ moment }) => {
   const { user } = useSelector((state: RootState) => state.user);
   useEffect(() => {
     if (user) {
-      if (user.likemoment?.find((v: any) => v.momentId === moment?.id)) {
+      if (user.likeMoment?.find((v: any) => v.momentId === moment?.id)) {
         setLiked(true);
       } else {
         setLiked(false);

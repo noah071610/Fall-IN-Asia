@@ -131,4 +131,24 @@ export class UsersController {
       return true;
     }
   }
+
+  @ApiOperation({ summary: 'follow user by followingId' })
+  @UseGuards(new LoggedInGuard())
+  @Post('follow/:followingId')
+  async followUser(
+    @Param('followingId', ParseIntPipe) followingId: number,
+    @User() user,
+  ) {
+    return await this.usersService.followUser(followingId, user?.id);
+  }
+
+  @ApiOperation({ summary: 'follow user by followingId' })
+  @UseGuards(new LoggedInGuard())
+  @Post('unfollow/:followingId')
+  async unfollowUser(
+    @Param('followingId', ParseIntPipe) followingId: number,
+    @User() user,
+  ) {
+    return await this.usersService.unfollowUser(followingId, user?.id);
+  }
 }

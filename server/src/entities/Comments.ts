@@ -15,6 +15,7 @@ import { Moments } from './Moments';
 import { Stories } from './Stories';
 import { SubComments } from './SubComments';
 import { Users } from './Users';
+import { CommentLike } from './CommentLike';
 
 @Entity({ schema: 'travelover', name: 'comments' })
 export class Comments {
@@ -39,7 +40,7 @@ export class Comments {
   @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ select: false })
   updatedAt: Date;
 
   @OneToMany(() => SubComments, (subComments) => subComments.comment, {
@@ -51,6 +52,11 @@ export class Comments {
     cascade: true,
   })
   notices: Notices[];
+
+  @OneToMany(() => CommentLike, (commentLike) => commentLike.comment, {
+    cascade: true,
+  })
+  likedUser: CommentLike[];
 
   @ManyToOne(() => Users, (users) => users.comments, {
     onDelete: 'CASCADE',

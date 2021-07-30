@@ -4,7 +4,7 @@ import tw from "twin.macro";
 
 export const UserInfoAsideWrapper = styled.aside`
   .user-info-aside {
-    ${tw`w-full py-8 px-12 bg-white rounded-2xl`}
+    ${tw`w-full py-8 px-10 bg-white rounded-2xl`}
     .icon-wrapper {
       ${tw`w-full mb-2 `}
       ${FLEX_STYLE("center", "center")};
@@ -39,8 +39,17 @@ export const UserInfoAsideWrapper = styled.aside`
     h3 {
       ${tw`text-sm font-bold mb-2`}
     }
-    .social-wrapper {
+    .follow-wrapper {
       ${tw`mb-4`}
+      .follow-icon-wrapper {
+        ${tw`mb-2 mt-3`}
+        img {
+          ${tw`w-6 h-6 rounded-full border-solid border border-gray-100 mr-2`}
+        }
+      }
+      span {
+        ${tw`leading-5`}
+      }
     }
     .post-len {
       ${tw`mb-4`}
@@ -48,7 +57,7 @@ export const UserInfoAsideWrapper = styled.aside`
     .btn-wrapper {
       ${tw`mt-8`}
       button {
-        ${tw`w-full mt-2 py-2 rounded-md hover:shadow-md font-bold`}
+        ${tw`w-full mt-2 py-3 rounded-md hover:shadow-md font-bold`}
         transition:0.3s all;
         ${BORDER_THIN("border")};
       }

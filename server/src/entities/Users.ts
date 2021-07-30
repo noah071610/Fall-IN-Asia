@@ -18,7 +18,7 @@ import { Notices } from './Notices';
 import { SubComments } from './SubComments';
 import { StoryLike } from './StoryLike';
 import { Follow } from './Follow';
-import { VisitCountry } from './VisitCountry';
+import { CommentLike } from './CommentLike';
 
 @Index('email', ['email'], { unique: true })
 @Entity({ schema: 'travelover', name: 'users' })
@@ -110,20 +110,15 @@ export class Users {
   @DeleteDateColumn({ select: false })
   deletedAt: Date | null;
 
-  @OneToMany(() => VisitCountry, (visitCountry) => visitCountry.user, {
-    cascade: true,
-  })
-  visited: VisitCountry[];
-
   @OneToMany(() => Follow, (follow) => follow.following, {
     cascade: true,
   })
-  followings: Follow[];
+  followers: Follow[];
 
   @OneToMany(() => Follow, (follow) => follow.follower, {
     cascade: true,
   })
-  followers: Follow[];
+  followings: Follow[];
 
   @OneToMany(() => Moments, (moments) => moments.user, {
     cascade: true,
@@ -149,6 +144,11 @@ export class Users {
     cascade: true,
   })
   likeMoment: MomentLike[];
+
+  @OneToMany(() => CommentLike, (commentLike) => commentLike.user, {
+    cascade: true,
+  })
+  likeComment: CommentLike[];
 
   @OneToMany(() => StoryLike, (storyLike) => storyLike.user, {
     cascade: true,

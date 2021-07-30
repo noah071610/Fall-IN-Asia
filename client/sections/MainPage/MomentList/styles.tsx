@@ -9,7 +9,7 @@ export const MomentListWrapper = styled.div`
       padding: 1rem;
       ${FLEX_STYLE("flex-end", "center")}
       button {
-        ${FLEX_STYLE("center", "center")}
+        ${tw`px-0 pb-1 mx-2`}
         &:hover {
           font-weight: bold;
         }
@@ -22,5 +22,8 @@ export const MomentListWrapper = styled.div`
         ${tw`w-1/5 opacity-30`}
       }
     }
+  }
+  .article-card-wrapper:last-of-type {
+    background: red;
   }
 `;

@@ -7,6 +7,7 @@ import { Users } from 'src/entities/Users';
 import { CommentsController } from './comments.controller';
 import { CommentsService } from './comments.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CommentLike } from 'src/entities/CommentLike';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       Users,
       Comments,
       SubComments,
+      CommentLike,
     ]),
   ],
   providers: [CommentsService],

@@ -7,8 +7,17 @@ export const CommentWrapper = styled.div`
   .comment-main {
     ${tw`cursor-pointer pr-8 pl-2 relative`}
     transition: 0.3s all;
-    .more-btn {
-      ${tw`absolute -top-2 right-0 rounded-full p-2 hover:bg-gray-100`}
+    .btn-wrapper {
+      ${tw`absolute right-0 `}
+      top:0.25rem;
+      a {
+        ${tw`rounded-full px-2 py-1 hover:bg-gray-100`}
+      }
+      .liked {
+        .anticon {
+          color: ${RED_COLOR};
+        }
+      }
     }
   }
   .more-subComment {

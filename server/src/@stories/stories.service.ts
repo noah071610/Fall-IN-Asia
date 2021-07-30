@@ -118,6 +118,7 @@ export class StoriesService {
         'images',
         'comments',
         'comments.user',
+        'comments.likedUser',
         'comments.subComments',
         'comments.subComments.user',
       ],

@@ -9,20 +9,22 @@ import router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { momentDislikeAction, momentLikeAction } from "actions/moment";
+import useHtmlConverter from "@hooks/useHtmlConverter";
 
 interface IProps {
   moment: IMoment;
+  isLast?: boolean;
 }
 
-const MomentCard: FC<IProps> = ({ moment }) => {
+const MomentCard: FC<IProps> = ({ moment, isLast }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
   const [liked, setLiked] = useState(false);
   const [imageLayout, setImageLayout] = useState("");
 
   useEffect(() => {
-    if (user) {
-      if (user.likemoment?.find((v: any) => v.momentId === moment?.id)) {
+    if (user && moment) {
+      if (user.likeMoment?.find((v: any) => v.momentId === moment?.id)) {
         setLiked(true);
       } else {
         setLiked(false);
@@ -69,7 +71,7 @@ const MomentCard: FC<IProps> = ({ moment }) => {
   }, []);
 
   return (
-    <MomentCardWrapper className="article-card-wrapper">
+    <MomentCardWrapper style={isLast ? { borderBottom: "none" } : {}}>
       <div className="article-top">
         <NameSpace user={moment?.user} date={moment?.createdAt} />
         <div className="article-header">
@@ -91,7 +93,7 @@ const MomentCard: FC<IProps> = ({ moment }) => {
           onClick={() => router.push(`/country/${moment?.country?.code}/${moment?.id}`)}
           className="content"
         >
-          {ReactHtmlParser(moment?.content as string)}
+          {useHtmlConverter(moment?.content as string)}
         </div>
         <ul className="article-footer">
           <li onClick={onClickGotoPost}>

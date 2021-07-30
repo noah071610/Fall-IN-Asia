@@ -3,7 +3,7 @@ import { BORDER_THIN } from "config";
 import tw from "twin.macro";
 
 export const ListCardWrapper = styled.div`
-  ${tw`flex w-full px-2 py-3 cursor-pointer mb-1 rounded-md`}
+  ${tw`flex w-full px-2 py-3 cursor-pointer mb-1 rounded-md overflow-hidden`}
   ${BORDER_THIN("border")};
   &:hover {
     ${tw`shadow-md`}

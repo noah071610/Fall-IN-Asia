@@ -166,6 +166,20 @@ export const quillModules = (isNoImageModule: boolean) => {
   };
 };
 
+export const quillMomentModules = () => {
+  return {
+    toolbar: {
+      container: [
+        [{ header: [1, 2, 3, false] }],
+        ["bold", "italic", "underline", "strike", "blockquote"],
+        [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
+        ["link", "image"],
+        [{ align: [] }, { color: [] }, { background: [] }],
+      ],
+    },
+  };
+};
+
 export const quillSetting = (isNoImageModule: boolean) => {
   return {
     theme: "snow",

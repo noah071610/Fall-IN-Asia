@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
@@ -19,13 +19,14 @@ import MainTopArticleSlide from "@sections/MainPage/MainTopArticleSlide";
 const index = () => {
   const dispatch = useDispatch();
   const { query } = useRouter();
+  const [filter, setFilter] = useState("");
   const {
     data: moments,
     revalidate,
     setSize,
   } = useSWRInfinite<IMoment[]>(
     (index) =>
-      `/moment?code=${query?.code || ""}&page=${index + 1}&filter=${query?.filter || ""}&type=${
+      `/moment?code=${query?.code || ""}&page=${index + 1}&filter=${filter}&type=${
         query?.type || ""
       }`,
     fetcher,
@@ -67,7 +68,7 @@ const index = () => {
       <MainTopArticleSlide />
       <h2 className="main-title">포스팅</h2>
       <MomentPostingForm />
-      <MomentList setSize={setSize} moments={moments} />
+      <MomentList filter={filter} setFilter={setFilter} setSize={setSize} moments={moments} />
     </MainLayout>
   );
 };

@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RED_COLOR } from "config";
+import tw from "twin.macro";
 
 export const MomentCardWrapper = styled.div`
-  margin: 0 1.5rem;
-  padding: 1.5rem 0;
+  ${tw`py-8 mx-6`}
   ${BORDER_THIN("border-bottom")};
   .article-header {
     a {
@@ -18,14 +18,7 @@ export const MomentCardWrapper = styled.div`
   }
   .article {
     .content {
-      cursor: pointer;
-      line-height: 1.8;
-      font-weight: bold;
-      padding-left: 0.3rem;
-      padding-bottom: 1rem;
-      &:hover {
-        text-decoration: underline;
-      }
+      ${tw`cursor-pointer font-bold pl-1 pb-4 hover:underline  leading-6`}
     }
     .one-image {
       cursor: pointer;
@@ -58,10 +51,9 @@ export const MomentCardWrapper = styled.div`
   }
   .article-footer {
     li {
-      padding: 0.3rem;
-      cursor: pointer;
+      ${tw`cursor-pointer p-1`}
       .count {
-        margin: 0 0.23rem;
+        ${tw`mx-1`}
       }
       .anticon {
         font-size: 1rem;

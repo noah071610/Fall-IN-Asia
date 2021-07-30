@@ -11,15 +11,12 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Notices } from './Notices';
-import { Comments } from './Comments';
 import { Countries } from './Countries';
 import { Images } from './Images';
-import { StoryLike } from './StoryLike';
-import { Users } from './Users';
 
-@Entity({ schema: 'travelover', name: 'stories' })
-export class Stories {
+@Entity({ schema: 'travelover', name: 'articles' })
+export class Articles {
+  @Index()
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty({
@@ -29,22 +26,24 @@ export class Stories {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
-  @Index()
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    example: 'KOR',
-    description: 'country code for url or query by using English',
+    example: '관광뉴스',
+    description: 'articles type',
   })
-  @Column('varchar', { name: 'code' })
-  code: string;
+  @Column('enum', {
+    name: 'type',
+    enum: ['관광뉴스', '트렌드', '쇼핑', '이색체험', '이벤트'],
+  })
+  type: '관광뉴스' | '트렌드' | '쇼핑' | '이색체험' | '이벤트';
 
   @Index(['region'], { fulltext: true, parser: 'ngram' })
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
     example: '다합 , dahab',
-    description: 'region where user visited',
+    description: 'region for articles',
   })
   @Column('varchar', { name: 'region' })
   region: string;
@@ -71,27 +70,18 @@ export class Stories {
   @IsNotEmpty()
   @ApiProperty({
     example: 'http://upload/images/03420204.blob',
-    description: 'one picture of thumbnail for story',
+    description: 'one picture of thumbnail for article',
     nullable: true,
   })
   @Column('longtext', { name: 'thumbnail', nullable: true })
   thumbnail: string;
 
-  @IsNumber()
-  @IsNotEmpty()
-  @ApiProperty({
-    example: 125,
-    description: 'hit number each post',
-  })
-  @Column('int', { name: 'hit', default: 0 })
-  hit: number;
-
   @Index(['title'], { fulltext: true, parser: 'ngram' })
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    example: '아유타야 연대기 1화 ...',
-    description: 'title for post',
+    example: '꼭 가봐야하는 이색체험 명소 ...',
+    description: 'title for news',
   })
   @Column('varchar', { name: 'title', length: 50 })
   title: string;
@@ -101,7 +91,7 @@ export class Stories {
   @IsNotEmpty()
   @ApiProperty({
     example: '태국에 처음 놀러갔을때 크게 놀랐던게 있습니다. 그건...',
-    description: 'content in the post',
+    description: 'content in the news',
   })
   @Column('longtext', { name: 'content' })
   content: string;
@@ -109,40 +99,18 @@ export class Stories {
   @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ select: false })
   updatedAt: Date;
 
-  @OneToMany(() => Notices, (notices) => notices.story, {
-    cascade: true,
-  })
-  notices: Notices[];
-
-  @OneToMany(() => Images, (images) => images.story, {
+  @OneToMany(() => Images, (images) => images.article, {
     cascade: true,
   })
   images: Images[];
 
-  @OneToMany(() => StoryLike, (storyLike) => storyLike.story, {
-    cascade: true,
-  })
-  likedUser: StoryLike[];
-
-  @OneToMany(() => Comments, (comments) => comments.story, {
-    cascade: true,
-  })
-  comments: Comments[];
-
-  @ManyToOne(() => Countries, (countries) => countries.moments, {
+  @ManyToOne(() => Countries, (countries) => countries.articles, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'country', referencedColumnName: 'id' })
   country: Countries;
-
-  @ManyToOne(() => Users, (users) => users.stories, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  @JoinColumn([{ name: 'user', referencedColumnName: 'id' }])
-  user: Users;
 }
