@@ -10,6 +10,7 @@ import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { noRevalidate } from "config";
 import { IStory } from "@typings/db";
+import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
 
 SwiperCore.use([Navigation]);
 interface IProps {}
@@ -20,11 +21,11 @@ const MainTopArticleSlide: FC<IProps> = () => {
     router.push(`/story`);
   }, []);
   return (
-    <MainTopArticleSlideWrapper navigation={true} slidesPerView={1}>
+    <MainTopArticleSlideWrapper navigation={true} slidesPerView={2} spaceBetween={16}>
       {popularArticles?.slice(0, 3).map((v, i) => {
         return (
           <SwiperSlide key={i}>
-            <ArticleCard story={v} isMain={true} />
+            <ArticleColumnCard story={v} />
           </SwiperSlide>
         );
       })}

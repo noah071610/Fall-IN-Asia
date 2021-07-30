@@ -34,7 +34,7 @@ const ArticleColumnCard: FC<IProps> = ({ story }) => {
           </li>
         </ul>
       </div>
-      <h2>{story?.title}</h2>
+      <p>{story?.title}</p>
     </ArticleColumnCardWrapper>
   );
 };

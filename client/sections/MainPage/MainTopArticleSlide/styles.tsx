@@ -4,7 +4,6 @@ import { Swiper } from "swiper/react";
 import tw from "twin.macro";
 
 export const MainTopArticleSlideWrapper = styled(Swiper)`
-  ${tw`rounded-2xl bg-white`}
   .more-card {
     ${tw`cursor-pointer`}
     height:272px;
@@ -17,8 +16,5 @@ export const MainTopArticleSlideWrapper = styled(Swiper)`
         margin-bottom: 1rem;
       }
     }
-  }
-  .article-card-wrapper {
-    margin-bottom: 0;
   }
 `;

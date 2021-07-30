@@ -81,7 +81,7 @@ const index = () => {
       <MainTopContent />
       <h2 className="main-title">포스팅</h2>
       <MomentPostingForm />
-      <MomentList setFilter={setFilter} setSize={setSize} moments={moments} />
+      <MomentList filter={filter} setFilter={setFilter} setSize={setSize} moments={moments} />
     </MainLayout>
   );
 };
