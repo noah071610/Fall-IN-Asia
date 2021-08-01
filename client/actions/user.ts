@@ -92,6 +92,19 @@ export const changeUserPasswordAction = createAsyncThunk<
   }
 });
 
+export const withdrawalUserAction = createAsyncThunk<any, { reason: string; password: string }>(
+  "user/withdrawal",
+  async (form) => {
+    try {
+      const response = await axios.post("/user/withdrawal", form);
+      return response.data;
+    } catch (error) {
+      toastErrorMessage(error);
+      throw error;
+    }
+  }
+);
+
 export const followUserAction = createAsyncThunk<any, number>(
   "user/follow",
   async (followingId) => {

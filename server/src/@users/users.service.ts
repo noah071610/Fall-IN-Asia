@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -116,7 +117,7 @@ export class UsersService {
     return await this.UserRepository.save(user);
   }
 
-  async changeUserPassword(userId: number, form) {
+  async confirmPassword(userId: number, password: string) {
     const user = await this.UserRepository.findOne({
       select: ['id', 'icon', 'email', 'password'],
       where: { id: userId },
@@ -124,17 +125,32 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException('유저를 찾지 못했습니다.');
     }
-    const result = await bcrypt.compare(form.prevPassword, user.password);
+    const result = await bcrypt.compare(password, user.password);
     if (result) {
-      const mynewPassword = await bcrypt.hash(form.newPassword, 12);
-      user.password = mynewPassword;
-      await this.UserRepository.save(user);
       return true;
     } else {
       throw new UnauthorizedException(
         '비밀번호가 일치하지 않습니다. 다시한번 확인해주세요.',
       );
     }
+  }
+
+  async changeUserPassword(userId: number, newPassword: string) {
+    const user = await this.UserRepository.findOne({
+      where: { id: userId },
+    });
+    if (!user) {
+      throw new NotFoundException('유저를 찾지 못했습니다.');
+    }
+    const myNewPassword = await bcrypt.hash(newPassword, 12);
+    user.password = myNewPassword;
+    return await this.UserRepository.save(user);
+  }
+
+  async deleteUser(userId: number) {
+    return await this.UserRepository.delete({
+      id: userId,
+    });
   }
 
   async followUser(followingId: number, userId: number) {

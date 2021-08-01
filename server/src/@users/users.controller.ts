@@ -118,15 +118,39 @@ export class UsersController {
     @Body() form,
     @User() user,
   ) {
-    const cofirmedPassword = await this.usersService.changeUserPassword(
+    const cofirmedPassword = await this.usersService.confirmPassword(
       user.id,
-      form,
+      form.prevPassword,
     );
     if (cofirmedPassword) {
+      await this.usersService.changeUserPassword(user.id, form.newPassword);
       req.session.destroy(null);
       res.clearCookie('connect.sid', { httpOnly: true });
       req.logout();
-      res.redirect('/');
+      res.send('success');
+      return true;
+    }
+  }
+
+  @ApiOperation({ summary: 'withdrawal user' })
+  @UseGuards(new LoggedInGuard())
+  @Post('withdrawal')
+  async withdrawalUser(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Body() form,
+    @User() user,
+  ) {
+    const cofirmedPassword = await this.usersService.confirmPassword(
+      user.id,
+      form.password,
+    );
+    if (cofirmedPassword) {
+      await this.usersService.deleteUser(user.id);
+      req.session.destroy(null);
+      res.clearCookie('connect.sid', { httpOnly: true });
+      req.logout();
+      res.send('success');
       return true;
     }
   }

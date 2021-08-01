@@ -11,6 +11,7 @@ import {
   logoutAction,
   signupAction,
   unfollowUserAction,
+  withdrawalUserAction,
 } from "actions/user";
 
 export interface UserState {
@@ -39,6 +40,9 @@ export interface UserState {
   deleteUserIconLoading: boolean;
   deleteUserIconDone: boolean;
   deleteUserIconError: boolean;
+  withdrawalUserLoading: boolean;
+  withdrawalUserDone: boolean;
+  withdrawalUserError: boolean;
   followUserLoading: boolean;
   followUserDone: boolean;
   followUserError: boolean;
@@ -73,6 +77,9 @@ const initialState: UserState = {
   deleteUserIconLoading: false,
   deleteUserIconDone: false,
   deleteUserIconError: false,
+  withdrawalUserLoading: false,
+  withdrawalUserDone: false,
+  withdrawalUserError: false,
   followUserLoading: false,
   followUserDone: false,
   followUserError: false,
@@ -129,6 +136,11 @@ export const userSlice = createSlice({
       state.unfollowUserLoading = false;
       state.unfollowUserDone = false;
       state.unfollowUserError = false;
+    },
+    withdrawalUserClear(state) {
+      state.withdrawalUserLoading = false;
+      state.withdrawalUserDone = false;
+      state.withdrawalUserError = false;
     },
   },
   extraReducers: (builder) =>
@@ -245,5 +257,16 @@ export const userSlice = createSlice({
       .addCase(unfollowUserAction.rejected, (state) => {
         state.unfollowUserLoading = false;
         state.unfollowUserError = true;
+      })
+      .addCase(withdrawalUserAction.pending, (state) => {
+        state.withdrawalUserLoading = true;
+      })
+      .addCase(withdrawalUserAction.fulfilled, (state) => {
+        state.withdrawalUserLoading = false;
+        state.withdrawalUserDone = true;
+      })
+      .addCase(withdrawalUserAction.rejected, (state) => {
+        state.withdrawalUserLoading = false;
+        state.withdrawalUserError = true;
       }),
 });

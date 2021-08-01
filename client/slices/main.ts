@@ -8,6 +8,7 @@ export interface MainState {
   onSearchPopUp: boolean;
   onLoginModal: boolean;
   onIconCropperModal: boolean;
+  onWithdrawalModal: boolean;
   searchWordLoading: boolean;
   searchWordDone: boolean;
   searchWordError: boolean;
@@ -19,6 +20,7 @@ const mainState: MainState = {
   onNoticePopUp: false,
   onSearchPopUp: false,
   onLoginModal: false,
+  onWithdrawalModal: false,
   onIconCropperModal: false,
   searchWordLoading: false,
   searchWordDone: false,
@@ -37,6 +39,12 @@ export const mainSlice = createSlice({
     },
     toggleIconCropperModal(state) {
       state.onIconCropperModal = !state.onIconCropperModal;
+      state.onProfilePopUp = false;
+      state.onNoticePopUp = false;
+      state.onSearchPopUp = false;
+    },
+    toggleWithdrawalModal(state) {
+      state.onWithdrawalModal = !state.onWithdrawalModal;
       state.onProfilePopUp = false;
       state.onNoticePopUp = false;
       state.onSearchPopUp = false;
@@ -72,6 +80,7 @@ export const mainSlice = createSlice({
     closeModal(state) {
       state.onLoginModal = false;
       state.onIconCropperModal = false;
+      state.onWithdrawalModal = false;
       state.onNoticePopUp = false;
       state.onProfilePopUp = false;
       state.onSearchPopUp = false;

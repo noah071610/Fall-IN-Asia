@@ -2,7 +2,6 @@ import React, { FC, useCallback, useEffect, useState } from "react";
 import { UserInfoAsideWrapper } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import IconCard from "@components/Cards/IconCard";
 import { Divider } from "antd";
 import router, { useRouter } from "next/router";
 import { IFollow, IUserInfo } from "@typings/db";
@@ -28,6 +27,7 @@ import { toastConfirmMessage } from "@components/ConfirmToastify";
 import TextareaAutosize from "react-textarea-autosize";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserMinus, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import WithdrawalModal from "@components/Modals/WithdrawalModal";
 
 interface IProps {}
 
@@ -68,12 +68,12 @@ const UserInfoAside: FC<IProps> = () => {
     }
   }, [user, userInfo]);
 
-  const { onIconCropperModal } = useSelector((state: RootState) => state.main);
+  const { onIconCropperModal, onWithdrawalModal } = useSelector((state: RootState) => state.main);
   const [onPasswordChange, onClickPasswordChange, setPasswordChange] = useToggle(false);
   const [onUserInfoEdit, setUserInfoEdit] = useState(false);
   const [userName, onChangeUserName, setUserName] = useInput("");
-  const [prevPassword, onChangePrevPassword, setPrevPassword] = useInput("");
-  const [newPassword, onChangeNewPassword, setNewPassword] = useInput("");
+  const [prevPassword, onChangePrevPassword] = useInput("");
+  const [newPassword, onChangeNewPassword] = useInput("");
   const [introduce, onChangeIntroduce, setIntroduce] = useInput("");
 
   const onClickUserInfoEditBtn = useCallback(() => {
@@ -157,6 +157,14 @@ const UserInfoAside: FC<IProps> = () => {
     }
     dispatch(changeUserPasswordAction({ prevPassword, newPassword }));
   }, [prevPassword, newPassword]);
+
+  const onClickWithdrawal = useCallback(() => {
+    if (!isOwner) {
+      toastErrorMessage("본인프로필만 변경 가능합니다.");
+      return;
+    }
+    dispatch(mainSlice.actions.toggleWithdrawalModal());
+  }, [isOwner]);
 
   const onClickFollowBtn = useCallback(() => {
     if (!user) {
@@ -297,6 +305,7 @@ const UserInfoAside: FC<IProps> = () => {
           <div className="btn-wrapper">
             <button onClick={onClickUserInfoEditBtn}>프로필 수정</button>
             <button onClick={onClickPasswordChange}>비밀번호 변경</button>
+            <button onClick={onClickWithdrawal}>회원탈퇴</button>
           </div>
         )}
         {!isOwner && (
@@ -314,6 +323,12 @@ const UserInfoAside: FC<IProps> = () => {
       {onIconCropperModal && (
         <>
           <IconCropperModal />
+          <Overlay />
+        </>
+      )}
+      {onWithdrawalModal && (
+        <>
+          <WithdrawalModal />
           <Overlay />
         </>
       )}
