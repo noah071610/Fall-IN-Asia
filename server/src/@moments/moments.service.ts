@@ -51,7 +51,7 @@ export class MomentsService {
       await this.ImagesRepository.save(newImage);
     }
     await this.NoticesRepository.save({
-      header: `${country.name}/포스트`,
+      header: `${country.name}/모멘트`,
       code: newPost.code,
       userId: userId,
       momentId: newPost.id,
@@ -102,7 +102,7 @@ export class MomentsService {
       if (viewObj[momentId].indexOf(ip) == -1) {
         viewObj[momentId].push(ip);
         await this.MomentsRepository.createQueryBuilder('moments')
-          .update('moments')
+          .update()
           .set({
             hit: () => 'hit + 1',
           })
@@ -128,7 +128,7 @@ export class MomentsService {
     return latestPosts;
   }
 
-  async getCommentPosts(
+  async getFilterPosts(
     filter: string,
     code?: string,
     type?: string,
@@ -153,6 +153,10 @@ export class MomentsService {
       case 'comment':
         return filterPosts
           .sort((a, b) => b.comments.length - a.comments.length)
+          .slice((page - 1) * 10, page * 10);
+      case 'view':
+        return filterPosts
+          .sort((a, b) => b.hit - a.hit)
           .slice((page - 1) * 10, page * 10);
     }
   }

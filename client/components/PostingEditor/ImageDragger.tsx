@@ -1,7 +1,7 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback } from "react";
 import { Upload } from "antd";
 import styled from "@emotion/styled";
-import { FLEX_STYLE, RGB_BLACK } from "config";
+import { RGB_BLACK } from "config";
 import { memo } from "react";
 const { Dragger } = Upload;
 const ImageDraggerWrapper = styled.div`
@@ -15,6 +15,9 @@ const ImageDraggerWrapper = styled.div`
       width: 5rem;
     }
   }
+  .ant-upload-list-item-list-type-picture {
+    border-radius: 10px;
+  }
 `;
 
 interface IProps {
@@ -23,17 +26,25 @@ interface IProps {
 }
 
 const ImageDragger: FC<IProps> = ({ setUpImg, single }) => {
-  const handleChange = useCallback((info: any) => {
-    if (info.file.status === "done") {
-      setUpImg((prev: any) => [...prev, info.file.originFileObj]);
-    }
-  }, []);
+  const handleChange = useCallback(
+    (info: any) => {
+      if (info.file.status === "done") {
+        if (single) {
+          setUpImg(info.file.originFileObj);
+        } else {
+          setUpImg((prev: any) => [...prev, info.file.originFileObj]);
+        }
+      }
+    },
+    [single]
+  );
 
   return (
     <ImageDraggerWrapper>
       <Dragger
         showUploadList={true}
         multiple={single ? false : true}
+        listType="picture"
         className="dragger"
         onChange={handleChange}
       >

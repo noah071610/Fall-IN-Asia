@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { Moments } from './Moments';
 import { Articles } from './Articles';
+import { Stories } from './Stories';
 
 @Entity({ schema: 'travelover', name: 'countries' })
 export class Countries {
@@ -50,26 +51,9 @@ export class Countries {
   })
   @Column('enum', {
     name: 'continent',
-    enum: [
-      '아시아',
-      '유라시아',
-      '중동',
-      '아프리카',
-      '북아메리카',
-      '남아메리카',
-      '유럽',
-      '오세아니아',
-    ],
+    enum: ['동북아시아', '동남아시아', '남아시아'],
   })
-  continent:
-    | '아시아'
-    | '유라시아'
-    | '중동'
-    | '아프리카'
-    | '북아메리카'
-    | '남아메리카'
-    | '유럽'
-    | '오세아니아';
+  continent: '동북아시아' | '동남아시아' | '남아시아';
 
   @IsString()
   @IsNotEmpty()
@@ -100,4 +84,7 @@ export class Countries {
 
   @OneToMany(() => Articles, (articles) => articles.country)
   articles: Articles[];
+
+  @OneToMany(() => Stories, (stories) => stories.country)
+  stories: Stories[];
 }

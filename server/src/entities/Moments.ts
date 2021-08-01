@@ -57,9 +57,9 @@ export class Moments {
   })
   @Column('enum', {
     name: 'type',
-    enum: ['관광 및 여행', '유학 및 취업', '구인구직', '현지 커뮤니티'],
+    enum: ['한인 커뮤니티', '여행정보 공유', '사기 경보', '동행자 모집'],
   })
-  type: '관광 및 여행' | '유학 및 취업' | '구인구직' | '현지 커뮤니티';
+  type: '한인 커뮤니티' | '여행정보 공유' | '사기 경보' | '동행자 모집';
 
   @Index(['content'], { fulltext: true, parser: 'ngram' })
   @IsString()

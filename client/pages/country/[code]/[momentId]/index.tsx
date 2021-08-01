@@ -9,27 +9,26 @@ import MomentList from "@sections/MainPage/MomentList";
 import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
 import MommentPost from "@sections/MainPage/MomentPost";
 import MainLayout from "@layout/MainLayout";
-import MainTopContent from "@sections/MainPage/MainTopArticleSlide";
+import MainTopArticleSlide from "@sections/MainPage/MainTopArticleSlide";
 import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
 import router, { useRouter } from "next/router";
 import { momentSlice } from "slices/moment";
 import { commentSlice } from "slices/comment";
-import { IMoment } from "@typings/db";
+import { ICountry, IMoment } from "@typings/db";
 
 const index = () => {
   const dispatch = useDispatch();
   const [ip, setIP] = useState("");
   const { query } = useRouter();
   const [filter, setFilter] = useState("");
-  const { data: moment, revalidate: revalidateMoment } = useSWR(
+  const { data: moment, revalidate: revalidateMoment } = useSWR<IMoment>(
     ip ? `/moment/${query?.code}/${query?.momentId}/${ip}` : null,
     fetcher,
     noRevalidate
   );
   const {
     data: moments,
-    size,
     revalidate: revalidateMoments,
     setSize,
   } = useSWRInfinite<IMoment[]>(
@@ -39,6 +38,7 @@ const index = () => {
       }`,
     fetcher
   );
+  const { data: country } = useSWR<ICountry>(`/country/${query?.code}`, fetcher, noRevalidate);
 
   const getClientIp = async () => {
     await fetch("https://jsonip.com", { mode: "cors" })
@@ -73,7 +73,7 @@ const index = () => {
 
   useEffect(() => {
     if (momentCreateDone) {
-      toastSuccessMessage("게시물을 성공적으로 작성했습니다.");
+      toastSuccessMessage("모멘트를 성공적으로 작성했습니다.");
       dispatch(momentSlice.actions.momentCreateClear());
       revalidateMoments();
     }
@@ -87,7 +87,7 @@ const index = () => {
 
   useEffect(() => {
     if (momentDeleteDone) {
-      toastSuccessMessage("게시글을 삭제했습니다.");
+      toastSuccessMessage("모멘트를 삭제했습니다.");
       dispatch(momentSlice.actions.momentDeleteClear());
     }
   }, [momentDeleteDone]);
@@ -165,10 +165,9 @@ const index = () => {
   }, [commentDislikeDone]);
   return (
     <MainLayout>
-      <h2 className="main-title">15번째 메아리</h2>
-      <MommentPost moment={moment} />
-      <h2 className="main-title">인기급상승</h2>
-      <MainTopContent />
+      {moment && <MommentPost moment={moment} />}
+      <h2 className="main-title">{country?.name} 인기 연대기</h2>
+      <MainTopArticleSlide country={country} />
       <h2 className="main-title">포스팅</h2>
       <MomentPostingForm />
       <MomentList filter={filter} setFilter={setFilter} setSize={setSize} moments={moments} />

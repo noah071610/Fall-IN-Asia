@@ -9,7 +9,8 @@ import { logoutAction } from "actions/user";
 import { mainSlice } from "slices/main";
 
 const ProfilePopUpWrapper = styled.ul`
-  ${tw`absolute top-14 right-0 bg-white shadow-md rounded-xl overflow-hidden w-auto z-20`}
+  ${tw`absolute top-12 right-0 bg-white shadow-md rounded-xl overflow-hidden w-auto`}
+  z-index:80;
   white-space: nowrap;
   li {
     ${tw`w-auto block cursor-pointer hover:bg-gray-100 py-3 px-8 text-sm font-bold`}

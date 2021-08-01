@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { MainCountryAllviewWrapper } from "./styles";
 import SmallCard from "@components/Cards/SmallCard";
 import { ICountry } from "@typings/db";
+import { GRAY_COLOR } from "config";
 
 interface IProps {
   countries: ICountry[] | undefined;
@@ -10,20 +11,31 @@ interface IProps {
 
 const MainCountryAllview: FC<IProps> = ({ countries, isMain }) => {
   return (
-    <MainCountryAllviewWrapper>
-      <h3>아시아</h3>
+    <MainCountryAllviewWrapper style={isMain ? {} : { marginTop: 0, paddingTop: 0 }}>
+      <h3>동북아시아</h3>
       <div className="country-card-wrapper">
-        {countries?.map((v, i) => {
-          return <SmallCard isMain={isMain} country={v} key={i} />;
-        })}
+        {countries
+          ?.filter((v) => v.continent === "동북아시아")
+          .map((v, i) => {
+            return <SmallCard isMain={isMain} country={v} key={i} />;
+          })}
       </div>
-      <h3>유라시아</h3>
-      <h3>중동</h3>
-      <h3>아프리카</h3>
-      <h3>북아메리카</h3>
-      <h3>남아메리카</h3>
-      <h3>유럽</h3>
-      <h3>오세아니아</h3>
+      <h3>동남아시아</h3>
+      <div className="country-card-wrapper">
+        {countries
+          ?.filter((v) => v.continent === "동남아시아")
+          .map((v, i) => {
+            return <SmallCard isMain={isMain} country={v} key={i} />;
+          })}
+      </div>
+      <h3>남아시아</h3>
+      <div className="country-card-wrapper">
+        {countries
+          ?.filter((v) => v.continent === "남아시아")
+          .map((v, i) => {
+            return <SmallCard isMain={isMain} country={v} key={i} />;
+          })}
+      </div>
     </MainCountryAllviewWrapper>
   );
 };

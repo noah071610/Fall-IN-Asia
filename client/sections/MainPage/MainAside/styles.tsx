@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
-import { ELLIPSIS_STYLE, FONT_STYLE, GRID_STYLE } from "config";
+import { ELLIPSIS_STYLE, FONT_STYLE } from "config";
 import tw from "twin.macro";
 
 export const MainAsideWrapper = styled.aside`
-  ${tw`bg-white rounded-2xl h-full py-6 px-4 sticky top-4`}
+  ${tw`bg-white rounded-2xl h-full py-6 px-4 sticky`}
+  top:4.5rem;
   width: 22%;
   .aside-title {
     ${FONT_STYLE(0.9, true)}

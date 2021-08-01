@@ -9,9 +9,6 @@ export const MomentSmallCardWrapper = (isSearchPage?: boolean) => css`
   transition:0.3s all;
   &:hover {
     ${isSearchPage && tw`shadow-lg`}
-    h2 {
-      ${!isSearchPage && `text-decoration: underline;`}
-    }
   }
   .memont-small-top {
     ${GRID_STYLE("1rem", "4.3rem 2.5fr")};

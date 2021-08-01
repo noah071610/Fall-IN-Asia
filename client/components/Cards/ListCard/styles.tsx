@@ -11,6 +11,6 @@ export const ListCardWrapper = styled.li`
     ${tw`mb-2 text-xs`}
   }
   p {
-    ${tw`font-bold`}
+    ${tw`font-bold leading-6`}
   }
 `;

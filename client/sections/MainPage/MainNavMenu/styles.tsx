@@ -3,8 +3,9 @@ import { FLEX_STYLE, FONT_STYLE, GRAY_COLOR, RGB_BLACK } from "config";
 import tw from "twin.macro";
 
 export const MainNavMenuWrapper = styled.nav`
+  ${tw`bg-white rounded-2xl h-full p-4 sticky`}
+  top:4.5rem;
   width: 18%;
-  ${tw`bg-white rounded-2xl h-full p-4 sticky top-4`}
   .country {
     .country-img {
       ${tw`cursor-pointer inline-block w-full rounded-2xl`}

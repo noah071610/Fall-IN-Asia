@@ -15,6 +15,13 @@ export class CountriesController {
     return countries;
   }
 
+  @ApiOperation({ summary: 'get Countries order by popular' })
+  @Get('popular')
+  async getPopularCountries() {
+    const popularCountries = await this.CountriesService.getPopularCountries();
+    return popularCountries;
+  }
+
   @ApiOperation({ summary: 'get one country' })
   @Get('/:code')
   async getCountry(@Param('code') code: string) {

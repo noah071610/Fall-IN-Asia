@@ -22,7 +22,7 @@ const edit: FC<IProps> = () => {
 
   useEffect(() => {
     if (momentEditDone) {
-      toastSuccessMessage("게시글을 수정했습니다.");
+      toastSuccessMessage("모멘트를 수정했습니다.");
       router.push(`/country/${editPost?.code}/${editPost?.id}`);
       dispatch(momentSlice.actions.momentEditClear());
     }

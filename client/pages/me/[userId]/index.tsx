@@ -1,8 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React from "react";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
-import { useDispatch, useSelector } from "react-redux";
 import router, { useRouter } from "next/router";
 import UserInfoLayout from "@layout/UserInfoLayout";
 import VisitedCountryList from "@sections/UserPage/VisitedCountryList";
@@ -11,7 +10,6 @@ import fetcher from "utils/fetcher";
 import { noRevalidate, NO_POST_URL } from "config";
 import { IUserInfo } from "@typings/db";
 import ListCard from "@components/Cards/ListCard";
-import { RootState } from "slices";
 import CountryRouteMap from "@components/Maps/CountryRouteMap";
 import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
 import { SwiperSlide, Swiper } from "swiper/react";
@@ -19,19 +17,7 @@ import { SwiperSlide, Swiper } from "swiper/react";
 const index = () => {
   const { query } = useRouter();
   const { data: userInfo } = useSWR<IUserInfo>(`/user/${query?.userId}`, fetcher, noRevalidate);
-  const { user } = useSelector((state: RootState) => state.user);
-  const [isOwner, setIsOwner] = useState(false);
-  useEffect(() => {
-    if (user?.id === userInfo?.id) {
-      setIsOwner(true);
-    } else {
-      setIsOwner(false);
-    }
-  }, [user, userInfo]);
 
-  const notices = useMemo(() => {
-    return userInfo?.notices.reverse();
-  }, [userInfo]);
   return (
     <UserInfoLayout>
       <h2 className="main-title">{userInfo?.name}님의 연대기 지도</h2>
@@ -52,7 +38,7 @@ const index = () => {
       {userInfo && userInfo?.stories.length > 0 ? (
         <Swiper className="post-slider" slidesPerView={3} spaceBetween={16}>
           {userInfo?.stories?.map((v, i) => (
-            <SwiperSlide>
+            <SwiperSlide key={i}>
               <ArticleColumnCard key={i} story={v} />
             </SwiperSlide>
           ))}
@@ -65,7 +51,7 @@ const index = () => {
       )}
 
       <h2 className="main-title">
-        {userInfo?.name}님의 작성 포스트 {userInfo?.moments?.length || 0}개
+        {userInfo?.name}님의 작성 모멘트 {userInfo?.moments?.length || 0}개
       </h2>
       {userInfo && userInfo?.moments.length > 0 ? (
         <ul className="moment-list">
@@ -73,7 +59,7 @@ const index = () => {
             <ListCard
               onClickListCard={() => router.push(`/country/${v.code}/${v.id}`)}
               key={i}
-              title={`${v.country.name}/${v.type}/${v.id}번째포스트`}
+              title={`${v.country.name}/${v.type}/${v.id}번째모멘트`}
               content={v.content}
             />
           ))}
@@ -81,7 +67,7 @@ const index = () => {
       ) : (
         <div className="no-post-wrapper">
           <img src={NO_POST_URL} alt="no-post" />
-          <h4>아직 작성한 포스트가 없습니다.</h4>
+          <h4>아직 작성한 모멘트가 없습니다.</h4>
         </div>
       )}
     </UserInfoLayout>

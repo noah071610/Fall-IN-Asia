@@ -38,7 +38,7 @@ const index = () => {
   );
   useEffect(() => {
     if (momentCreateDone) {
-      toastSuccessMessage("게시물을 성공적으로 작성했습니다.");
+      toastSuccessMessage("모멘트를 성공적으로 작성했습니다.");
       dispatch(momentSlice.actions.momentCreateClear());
       revalidate();
     }
@@ -62,9 +62,9 @@ const index = () => {
   }, [momentDislikeDone]);
   return (
     <MainLayout>
-      <h2 className="main-title">인기여행지</h2>
+      <h2 className="main-title">인기 여행지</h2>
       <CountryList slidesPerView={3.2} isMain={true} />
-      <h2 className="main-title">인기 급상승 연대기</h2>
+      <h2 className="main-title">인기 연대기</h2>
       <MainTopArticleSlide />
       <h2 className="main-title">포스팅</h2>
       <MomentPostingForm />

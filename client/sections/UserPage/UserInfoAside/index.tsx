@@ -67,7 +67,6 @@ const UserInfoAside: FC<IProps> = () => {
       }
     }
   }, [user, userInfo]);
-  console.log(user);
 
   const { onIconCropperModal } = useSelector((state: RootState) => state.main);
   const [onPasswordChange, onClickPasswordChange, setPasswordChange] = useToggle(false);

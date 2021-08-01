@@ -1,23 +1,19 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback } from "react";
 import { MainNavMenuWrapper } from "./styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBed,
-  faBell,
+  faExclamationCircle,
   faGlobe,
   faHandshake,
-  faHiking,
-  faHotel,
   faPlaneDeparture,
   faUsers,
-  faUserTie,
-  faUtensils,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import router, { useRouter } from "next/router";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { ICountry } from "@typings/db";
+import { WORLD_IMAGE } from "config";
 
 interface IProps {}
 
@@ -39,15 +35,10 @@ const MainNavMenu: FC<IProps> = () => {
     <MainNavMenuWrapper>
       <div className="country">
         <div onClick={onClickCountry} className="country-img">
-          <img
-            src={
-              country?.image_src ||
-              "https://user-images.githubusercontent.com/74864925/126495159-2e4438ad-6efb-458a-b314-8f92823babc7.jpg"
-            }
-          />
+          <img src={country?.image_src || WORLD_IMAGE} />
         </div>
         <div className="country-desc">
-          <a onClick={onClickCountry}>{country?.name || "전세계"}</a>
+          <a onClick={onClickCountry}>{country?.name || "아시아 전체"}</a>
           {country && (
             <div>
               <span>좋아요 : 0</span>
@@ -57,39 +48,35 @@ const MainNavMenu: FC<IProps> = () => {
         </div>
       </div>
       <ul>
+        <Link href={country ? `/country/${country.code}?type=community` : "/?type=community"}>
+          <a>
+            <li className={query?.type === "community" ? "menu-active" : ""}>
+              <FontAwesomeIcon className="icon" icon={faHandshake} />
+              <span>한인 커뮤니티</span>
+            </li>
+          </a>
+        </Link>
         <Link href={country ? `/country/${country.code}?type=trip` : "/?type=trip"}>
           <a>
             <li className={query?.type === "trip" ? "menu-active" : ""}>
               <FontAwesomeIcon className="icon" icon={faPlaneDeparture} />
-              <span>관광 및 여행</span>
+              <span>여행정보 공유</span>
             </li>
           </a>
         </Link>
-        <Link
-          href={
-            country ? `/country/${country.code}?type=abroad+employment` : "/?type=abroad+employment"
-          }
-        >
+        <Link href={country ? `/country/${country.code}?type=scam+alert` : "/?type=scam+alert"}>
           <a>
-            <li className={query?.type === "abroad employment" ? "menu-active" : ""}>
-              <FontAwesomeIcon className="icon" icon={faUserTie} />
-              <span>유학 및 취업</span>
+            <li className={query?.type === "scam alert" ? "menu-active" : ""}>
+              <FontAwesomeIcon className="icon" icon={faExclamationCircle} />
+              <span>사기 경보</span>
             </li>
           </a>
         </Link>
-        <Link href={country ? `/country/${country.code}?type=job+opening` : "/?type=job+opening"}>
+        <Link href={country ? `/country/${country.code}?type=accompany` : "/?type=accompany"}>
           <a>
-            <li className={query?.type === "job opening" ? "menu-active" : ""}>
-              <FontAwesomeIcon className="icon" icon={faHandshake} />
-              <span>구인구직</span>
-            </li>
-          </a>
-        </Link>
-        <Link href={country ? `/country/${country.code}?type=community` : "/?type=community"}>
-          <a>
-            <li className={query?.type === "community" ? "menu-active" : ""}>
+            <li className={query?.type === "accompany" ? "menu-active" : ""}>
               <FontAwesomeIcon className="icon" icon={faUsers} />
-              <span>현지 커뮤니티</span>
+              <span>동행자 모집</span>
             </li>
           </a>
         </Link>
@@ -98,7 +85,7 @@ const MainNavMenu: FC<IProps> = () => {
             <a>
               <li>
                 <FontAwesomeIcon className="icon" icon={faGlobe} />
-                <span>전세계</span>
+                <span>아시아 전체</span>
               </li>
             </a>
           </Link>

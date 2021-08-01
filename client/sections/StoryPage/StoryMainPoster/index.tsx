@@ -4,10 +4,12 @@ import { FLEX_STYLE, FONT_STYLE, WHITE_COLOR } from "config";
 import tw from "twin.macro";
 
 interface IProps {
+  image?: string;
   name?: string;
 }
 const StoryMainPosterWrapper = styled.div`
   ${tw`relative w-full h-80`}
+  background-repeat: no-repeat;
   ${FLEX_STYLE("center", "center")};
   .title {
     cursor: pointer;
@@ -15,16 +17,24 @@ const StoryMainPosterWrapper = styled.div`
     ${FONT_STYLE(2, true, WHITE_COLOR)};
   }
 `;
-const StoryMainPoster: FC<IProps> = ({ name }) => {
+const StoryMainPoster: FC<IProps> = ({ name, image }) => {
   return (
     <StoryMainPosterWrapper
-      style={{
-        background: `url(https://user-images.githubusercontent.com/74864925/126781509-8008fa80-5bb8-4a90-bb9e-132357def1aa.jpg
+      style={
+        image
+          ? {
+              background: `url(${image}
+          )`,
+              backgroundPosition: "10% 40%",
+              backgroundSize: "100% 230%",
+            }
+          : {
+              background: `url(https://user-images.githubusercontent.com/74864925/126781509-8008fa80-5bb8-4a90-bb9e-132357def1aa.jpg
         )`,
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "top left",
-        backgroundSize: "100% 100%",
-      }}
+              backgroundPosition: "top left",
+              backgroundSize: "100% 100%",
+            }
+      }
     >
       <div className="overlay" />
       <h1 className="title">

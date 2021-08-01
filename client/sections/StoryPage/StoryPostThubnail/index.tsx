@@ -1,16 +1,14 @@
-import { DoubleRightOutlined } from "@ant-design/icons";
 import NameSpace from "@components/NameSpace";
 import { IStory } from "@typings/db";
 import { Divider } from "antd";
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, memo } from "react";
 import { StoryPostThubnailWrapper } from "./styles";
 
 interface IProps {
   story: IStory | undefined;
-  onClickScrollDown: () => void;
 }
 
-const StoryPostThubnail: FC<IProps> = ({ onClickScrollDown, story }) => {
+const StoryPostThubnail: FC<IProps> = ({ story }) => {
   return (
     <StoryPostThubnailWrapper>
       <div className="story-title">
@@ -23,4 +21,4 @@ const StoryPostThubnail: FC<IProps> = ({ onClickScrollDown, story }) => {
   );
 };
 
-export default StoryPostThubnail;
+export default memo(StoryPostThubnail);

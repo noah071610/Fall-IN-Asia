@@ -24,11 +24,16 @@ export class AppService {
       .getMany();
 
     const stories = await this.StoriesRepository.createQueryBuilder('stories')
+      .select(['stories.title', 'stories.thumbnail', 'stories.id'])
       .leftJoinAndSelect('stories.country', 'country')
+      .leftJoinAndSelect('stories.comments', 'comments')
+      .leftJoinAndSelect('stories.likedUser', 'likedUser')
       .leftJoinAndSelect('stories.user', 'user')
-      .where(`MATCH(content) AGAINST ('${searchWord}' IN BOOLEAN MODE)`)
-      .orWhere(`MATCH(region) AGAINST ('${searchWord}' IN BOOLEAN MODE)`)
-      .orWhere(`MATCH(title) AGAINST ('${searchWord}' IN BOOLEAN MODE)`)
+      .where(`MATCH(stories.content) AGAINST ('${searchWord}' IN BOOLEAN MODE)`)
+      .orWhere(
+        `MATCH(stories.region) AGAINST ('${searchWord}' IN BOOLEAN MODE)`,
+      )
+      .orWhere(`MATCH(stories.title) AGAINST ('${searchWord}' IN BOOLEAN MODE)`)
       .getMany();
 
     return { searchWord, moments, stories };

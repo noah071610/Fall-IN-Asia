@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR } from "config";
+import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RGB_BLACK } from "config";
 import tw from "twin.macro";
 
 export const MomentPostingFormWrapper = styled.div`
@@ -8,6 +8,7 @@ export const MomentPostingFormWrapper = styled.div`
     ${FLEX_STYLE("flex-start", "center")};
     margin-bottom: 1rem;
   }
+
   .autoComplete-form {
     margin-right: 1rem;
     width: 200px;

@@ -24,6 +24,7 @@ import StoryPostLayout from "@layout/StoryPostLayout";
 import StoryArticleList from "@sections/StoryPage/StoryArticleList";
 
 export const StoryPostWrapper = styled.div`
+  padding-top: 6rem;
   .story-manage-wrapper {
     ${FLEX_STYLE("center", "center")};
     button {
@@ -71,7 +72,7 @@ const index: FC<IProps> = () => {
     await fetch("https://jsonip.com", { mode: "cors" })
       .then((resp) => resp.json())
       .then((ip) => {
-        setIP(ip.ip.replaceAll(".", ""));
+        setIP(ip.ip.replaceAll(".", "").slice(0, -3));
       })
       .catch(() => {
         setIP("00000000");
@@ -185,7 +186,7 @@ const index: FC<IProps> = () => {
   return (
     <StoryPostWrapper>
       <StoryPostLayout>
-        <StoryPostThubnail onClickScrollDown={onClickScrollDown} story={story} />
+        <StoryPostThubnail story={story} />
         {isOwner && (
           <>
             <h2 className="main-title">연대기 관리 (작성자 전용)</h2>

@@ -12,6 +12,9 @@ export const CommentWrapper = styled.div`
       top:0.25rem;
       a {
         ${tw`rounded-full px-2 py-1 hover:bg-gray-100`}
+        .count {
+          padding-left: 0.25rem;
+        }
       }
       .liked {
         .anticon {

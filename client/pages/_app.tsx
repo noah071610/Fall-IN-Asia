@@ -43,6 +43,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     },
     [onProfilePopUp, onNoticePopUp, onSearchPopUp]
   );
+
   return (
     <div onClick={onClickBody}>
       <Global styles={resetStyles} />

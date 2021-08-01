@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import { GRAY_COLOR, RED_COLOR } from "config";
+import { RED_COLOR } from "config";
 import tw from "twin.macro";
 
 export const MomentPostWrapper = styled.div`
-  ${tw`mt-4 py-4 rounded-2xl bg-white`}
+  ${tw`mb-8 py-4 rounded-2xl bg-white`}
   .image-wrapper {
     ${tw`p-8 cursor-pointer rounded-xl`}
     .ant-image {

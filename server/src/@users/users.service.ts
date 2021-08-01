@@ -42,21 +42,17 @@ export class UsersService {
 
   async getUserInfoById(userId: number) {
     const user = await this.UserRepository.createQueryBuilder('users')
-      .leftJoinAndSelect('users.likeStory', 'likeStory')
-      .leftJoinAndSelect('users.likeMoment', 'likeMoment')
       .leftJoinAndSelect('users.stories', 'stories')
+      .leftJoinAndSelect('stories.comments', 'comments')
+      .leftJoinAndSelect('stories.likedUser', 'likedUser')
+      .leftJoinAndSelect('stories.country', 's_country')
+      .leftJoinAndSelect('stories.user', 's_user')
       .leftJoinAndSelect('users.moments', 'moments')
+      .leftJoinAndSelect('moments.country', 'm_country')
       .leftJoinAndSelect('users.followings', 'followings')
       .leftJoinAndSelect('users.followers', 'followers')
       .leftJoinAndSelect('followings.following', 'following')
       .leftJoinAndSelect('followers.follower', 'follower')
-      .leftJoinAndSelect('moments.country', 'm_country')
-      .leftJoinAndSelect('stories.country', 's_country')
-      .leftJoinAndSelect('stories.user', 's_user')
-      .leftJoinAndSelect('users.comments', 'com')
-      .leftJoinAndSelect('com.moment', 'cm_moment')
-      .leftJoinAndSelect('com.story', 'cm_story')
-      .leftJoinAndSelect('users.notices', 'notices')
       .where('users.id= :id', { id: userId })
       .getOne();
 

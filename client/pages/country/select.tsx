@@ -18,8 +18,7 @@ const GobackBtn = styled.div`
   ${FLEX_STYLE("flex-end", "center")};
   margin-bottom: 2rem;
   button {
-    ${WHITE_STYLE(false, "120px", 10)};
-    padding: 0.55rem 1rem;
+    ${tw`bg-white w-28 rounded-xl px-4 py-2 hover:shadow-md`}
   }
 `;
 

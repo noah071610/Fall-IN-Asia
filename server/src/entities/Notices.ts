@@ -74,7 +74,7 @@ export class Notices {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    example: '헝가리/유학/포스트',
+    example: '헝가리/유학/모멘트',
     description: 'notice header ',
   })
   @Column('varchar', { name: 'header' })

@@ -6,13 +6,14 @@ export const ImageCardWrapper = styled.div`
   ${tw`relative rounded-xl w-full h-full cursor-pointer`}
   background-position: center;
   background-repeat: no-repeat;
+  background-size: 100% 100%;
   ${FLEX_STYLE("center", "center")};
   .overlay {
     ${tw`rounded-2xl`}
   }
   h3 {
     ${tw`z-10`}
-    ${FONT_STYLE(1.5, true, WHITE_COLOR)};
+    ${FONT_STYLE(1.1, true, WHITE_COLOR)};
   }
   &:hover {
     .overlay {

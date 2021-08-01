@@ -8,7 +8,7 @@ export const StoryPostAsideWrapper = styled.aside`
     ${tw`mb-4 text-lg font-bold cursor-pointer`}
   }
   .aside-quick-viewer {
-    ${tw`p-2 rounded-xl  sticky top-16`}
+    ${tw`p-2 rounded-xl  sticky top-20`}
   }
   .aside-header-list {
     ${tw`block pb-4`}

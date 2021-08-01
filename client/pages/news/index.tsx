@@ -8,7 +8,7 @@ import SwiperCore, { Pagination, EffectFade, Autoplay } from "swiper/core";
 import PosterCard from "@components/Cards/PosterCard";
 import "swiper/components/effect-fade/effect-fade.min.css";
 import "swiper/components/pagination/pagination.min.css";
-import { useSWRInfinite } from "swr";
+import useSWR, { useSWRInfinite } from "swr";
 import { IStory } from "@typings/db";
 import fetcher from "utils/fetcher";
 import { GRID_STYLE, newsPageNavList, noRevalidate } from "config";
@@ -17,11 +17,13 @@ import styled from "@emotion/styled";
 import tw from "twin.macro";
 import ArticleImageCard from "@components/Cards/ArticleImageCard";
 import TopNavigation from "@components/TopNavigation";
+import MomentSmallCard from "@components/Cards/MomentSmallCard";
 SwiperCore.use([EffectFade, Pagination, Autoplay]);
 
 const GuidePageWrapper = styled.div`
+  padding-top: 4rem;
   .layout-divide {
-    ${GRID_STYLE("2rem", "2fr 1fr")};
+    ${GRID_STYLE("2rem", "2.5fr 1fr")};
   }
   .swiper-pagination-bullet {
     ${tw`rounded-none w-auto h-auto inline-block py-2 px-4 bg-white opacity-70 hover:opacity-100 mx-1 font-bold`}
@@ -34,6 +36,10 @@ interface IProps {}
 const bulletTextByIndex = ["아름다운동행", "태국음식체험전", "러브캠핑"];
 
 const index: FC<IProps> = () => {
+  const { data: cc } = useSWR(
+    `http://apis.data.go.kr/1262000/CountryCovid19SafetyServiceNew/getCountrySafetyNewsListNew?serviceKey=RNdwq5b9d0Il9ORdhvxBAQ%2BoM3kPH3YOkdj88JnV1uXi07ybaod1V7XAMbyphVB5OqYPm2uNRCNzhMrh5dnWzw%3D%3D&returnType=JSON&numOfRows=50&pageNo=10`
+  );
+
   const {
     data: stories,
     revalidate,
@@ -84,6 +90,12 @@ const index: FC<IProps> = () => {
           </div>
           <div>
             <ArticleImageCard />
+            {stories && <MomentSmallCard story={stories[0][0]} />}
+            {stories && <MomentSmallCard story={stories[0][0]} />}
+            {stories && <MomentSmallCard story={stories[0][0]} />}
+            <ArticleImageCard />
+            {stories && <MomentSmallCard story={stories[0][0]} />}
+            {stories && <MomentSmallCard story={stories[0][0]} />}
           </div>
         </div>
       </XLGLayout>

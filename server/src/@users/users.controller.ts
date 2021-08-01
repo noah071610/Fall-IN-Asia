@@ -69,8 +69,7 @@ export class UsersController {
     req.session.destroy(null);
     res.clearCookie('connect.sid', { httpOnly: true });
     req.logout();
-    res.redirect('/');
-    return true;
+    return res.send('success');
   }
 
   @ApiOperation({ summary: 'change user icon' })

@@ -160,7 +160,7 @@ export class StoriesService {
     return latestPosts;
   }
 
-  async getFilterPost(filter: string, code?: string, page?: number) {
+  async getFilterPosts(filter: string, code?: string, page?: number) {
     const filterPosts = await this.StoriesRepository.createQueryBuilder(
       'stories',
     )
@@ -180,10 +180,14 @@ export class StoriesService {
         return filterPosts
           .sort((a, b) => b.comments.length - a.comments.length)
           .slice((page - 1) * 10, page * 10);
+      case 'view':
+        return filterPosts
+          .sort((a, b) => b.hit - a.hit)
+          .slice((page - 1) * 10, page * 10);
     }
   }
 
-  async getPopularPosts() {
+  async getPopularPosts(code?: string) {
     const pointWithpostId = await this.StoriesRepository.createQueryBuilder(
       'stories',
     )
@@ -195,6 +199,7 @@ export class StoriesService {
       ])
       .leftJoinAndSelect('stories.likedUser', 'likedUser')
       .leftJoinAndSelect('stories.comments', 'comments')
+      .where(code ? `stories.code = :code` : '1=1', { code })
       .orderBy('stories.id', 'DESC')
       .take(50)
       .getMany()
@@ -207,7 +212,7 @@ export class StoriesService {
             };
           })
           .sort((a: any, b: any) => b.point - a.point)
-          .splice(0, 9);
+          .splice(0, 5);
       });
     let popularPosts = [];
     for (const i of pointWithpostId) {
@@ -238,37 +243,39 @@ export class StoriesService {
     return posts;
   }
 
-  async editPost(form: StoryRequestDto, file: Express.Multer.File) {
+  async editPost(
+    form: StoryRequestDto,
+    file: Express.Multer.File,
+    userId: number,
+  ) {
     const country = await this.CountriesRepository.findOne({
       where: { code: form.code },
     });
-    const editedPost = await this.StoriesRepository.createQueryBuilder(
-      'stories',
-    )
-      .update('stories')
-      .set({
-        code: form.code,
-        title: form.title,
-        content: form.content,
-        region: form.region,
-        lat: form.lat,
-        lng: form.lng,
-        country: <any>{ id: country.id },
-      })
-      .where('id = :id', { id: parseInt(form.id) })
-      .execute();
-    if (file) {
-      await this.StoriesRepository.createQueryBuilder('stories')
-        .update('stories')
-        .set({
-          thumbnail: process.env.BACK_URL + file.path.replace('\\', '/'),
-        })
-        .where('id = :id', { id: parseInt(form.id) })
-        .execute();
-    }
-    if (!editedPost) {
+    const editPost = await this.StoriesRepository.findOne({
+      where: { id: form.id },
+    });
+    if (!editPost || !country) {
       throw new NotFoundException('수정 할 게시물이 없습니다.');
     }
+    editPost.code = form.code;
+    editPost.title = form.title;
+    editPost.content = form.content;
+    editPost.region = form.region;
+    editPost.lat = form.lat;
+    editPost.lng = form.lng;
+    editPost.country = <any>{ id: country.id };
+    if (file) {
+      editPost.thumbnail = process.env.BACK_URL + file.path.replace('\\', '/');
+    }
+    await this.StoriesRepository.save(editPost);
+
+    await this.NoticesRepository.save({
+      header: `${country.name}/연대기`,
+      code: editPost.code,
+      userId: userId,
+      storyId: editPost.id,
+      content: `${form.title.slice(0, 10)}...을 수정 완료했습니다.`,
+    });
     return true;
   }
 

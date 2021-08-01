@@ -76,8 +76,7 @@ const MomentCard: FC<IProps> = ({ moment, isLast }) => {
         <NameSpace user={moment?.user} date={moment?.createdAt} />
         <div className="article-header">
           <a onClick={onClickCountryTag}>{moment?.country?.name}</a>/
-          <a onClick={onClickTypeTag}>{moment?.type}</a>/
-          <a onClick={onClickGotoPost}>{moment?.id}번째메아리</a>
+          <a onClick={onClickTypeTag}>{moment?.type}</a>
         </div>
       </div>
       <div className="article">

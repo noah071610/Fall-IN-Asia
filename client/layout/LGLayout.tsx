@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { FONT_STYLE, GRAY_COLOR, LG_SIZE } from "config";
 import tw from "twin.macro";
 const Wrapper = styled.div`
+  ${tw`pt-16`}
   background-color: ${GRAY_COLOR};
   .layout {
     width: ${LG_SIZE};

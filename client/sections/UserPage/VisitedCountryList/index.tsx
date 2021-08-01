@@ -1,5 +1,5 @@
 import ImageCard from "@components/Cards/ImageCard";
-import React, { FC, useMemo, useState } from "react";
+import React, { FC, memo, useMemo, useState } from "react";
 import { VisitedCountryListWrapper } from "./styles";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
@@ -11,9 +11,13 @@ interface IProps {
 }
 
 const VisitedCountryList: FC<IProps> = ({ stories }) => {
+  const storiesWithoutSame = useMemo(() => {
+    return stories?.filter((v, i, arr) => i === arr.findIndex((t) => v.code === t.code));
+  }, [stories]);
+
   return (
     <VisitedCountryListWrapper>
-      {stories?.map((v, i) => (
+      {storiesWithoutSame?.map((v, i) => (
         <li key={i}>
           <div className="image-wrapper">
             <img src={v.country.flag_src} alt="flag_image" />
@@ -25,4 +29,4 @@ const VisitedCountryList: FC<IProps> = ({ stories }) => {
   );
 };
 
-export default VisitedCountryList;
+export default memo(VisitedCountryList);

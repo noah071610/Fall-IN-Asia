@@ -1,5 +1,5 @@
-import { FC, KeyboardEvent, LegacyRef, RefObject, useCallback, useEffect, useRef } from "react";
-import { HeaderWrapper, HeaderLeft, HeaderRight } from "./styles";
+import { FC, KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
+import { HeaderWrapper } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "slices";
 import LoginModal from "@components/Modals/LoginModal";
@@ -15,8 +15,8 @@ import { GRAY_COLOR, toastSuccessMessage } from "config";
 import { userSlice } from "slices/user";
 import useInput from "@hooks/useInput";
 import { searchWordAction } from "actions/main";
-import { createRef } from "react";
 import router from "next/router";
+import { throttle } from "lodash";
 
 interface HeaderProps {}
 
@@ -24,7 +24,9 @@ const Header: FC<HeaderProps> = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const [searchWord, onChangeSearchWord, setSearchWord] = useInput("");
+  const [headerDownSize, setHeaderDownSize] = useState(false);
   const { user, logoutDone } = useSelector((state: RootState) => state.user);
+
   const {
     searchWordDone,
     searchWord: searchedWord,
@@ -40,6 +42,20 @@ const Header: FC<HeaderProps> = () => {
       dispatch(userSlice.actions.logoutClear());
     }
   }, [logoutDone]);
+
+  useEffect(() => {
+    const scrollCallBack = () => {
+      if (window.scrollY > 100) {
+        setHeaderDownSize(true);
+      } else {
+        setHeaderDownSize(false);
+      }
+    };
+    window.addEventListener("scroll", throttle(scrollCallBack, 300));
+    return () => {
+      window.removeEventListener("scroll", scrollCallBack);
+    };
+  }, []);
 
   useEffect(() => {
     if (onSearchPopUp) {
@@ -91,39 +107,40 @@ const Header: FC<HeaderProps> = () => {
   );
 
   return (
-    <HeaderWrapper>
-      <HeaderLeft>
+    <header css={HeaderWrapper(headerDownSize)}>
+      <ul className="header-left">
         <Link href="/">
           <a>
             <img src="https://user-images.githubusercontent.com/74864925/123951789-21ecc980-d9e0-11eb-9f3c-421cbea7d9cf.png" />
           </a>
         </Link>
-        <li>
+        <li className="header-list">
           <Link href="/">
-            <a>전세계</a>
+            <a>모멘트</a>
           </Link>
         </li>
-        <li>
+        <li className="header-list">
           <Link href="/story">
             <a>연대기</a>
           </Link>
         </li>
-        <li>
+        <li className="header-list">
           <Link href="/news">
             <a>여행소식</a>
           </Link>
         </li>
-      </HeaderLeft>
-      <HeaderRight>
+      </ul>
+      <ul className="header-right">
         <li
           style={onSearchPopUp ? { background: GRAY_COLOR, display: "flex" } : { display: "flex" }}
-          className="header-right-li icon-li"
+          className="header-list list-icon"
         >
           {onSearchPopUp && (
             <SearchPopUp
               inputRef={inputRef}
               onPressEnter={onPressEnter}
               searchWord={searchWord}
+              setSearchWord={setSearchWord}
               onChangeSearchWord={onChangeSearchWord}
             />
           )}
@@ -133,13 +150,13 @@ const Header: FC<HeaderProps> = () => {
         </li>
         {user ? (
           <>
-            <li className="header-right-li icon-li">
+            <li className="header-list list-icon">
               <a onClick={onClickNoticePopUp}>
                 <FontAwesomeIcon className="anticon" icon={faBell} />
               </a>
               {onNoticePopUp && <NoticePopUp />}
             </li>
-            <li className="header-right-li">
+            <li className="header-list" style={{ padding: 0, marginLeft: "1.2rem" }}>
               <a onClick={onClickProfilePopUp}>
                 <img className="user-icon" src={user?.icon} alt={user?.name} />
               </a>
@@ -147,18 +164,18 @@ const Header: FC<HeaderProps> = () => {
             </li>
           </>
         ) : (
-          <li className="header-right-li">
+          <li className="header-list">
             <a onClick={onClickLoginMenu}>로그인</a>
           </li>
         )}
-      </HeaderRight>
+      </ul>
       {onLoginModal && (
         <>
           <LoginModal />
           <Overlay />
         </>
       )}
-    </HeaderWrapper>
+    </header>
   );
 };
 

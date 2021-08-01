@@ -3,9 +3,8 @@ import { useRef } from "react";
 import { IMoment } from "@typings/db";
 import { MomentListWrapper } from "./styles";
 import useOnScreen from "@hooks/useOnScreen";
-import router, { useRouter } from "next/router";
 import MomentCard from "@components/Cards/MomentCard";
-import { NO_POST_URL } from "config";
+import { BLUE_COLOR, NO_POST_URL } from "config";
 
 interface IProps {
   moments: IMoment[][] | undefined;
@@ -38,16 +37,25 @@ const MomentList: FC<IProps> = ({ filter, moments, setSize, setFilter }) => {
       <div className="content-wrapper">
         <div className="content-filter">
           <button
-            style={filter === "popular" ? { fontWeight: "bold" } : {}}
+            style={filter === "" ? { fontWeight: "bold", color: BLUE_COLOR } : {}}
+            onClick={() => setFilter("")}
+          >
+            최신순
+          </button>
+          <button
+            style={filter === "popular" ? { fontWeight: "bold", color: BLUE_COLOR } : {}}
             onClick={() => setFilter("popular")}
           >
             인기순
           </button>
-          <button style={filter === "" ? { fontWeight: "bold" } : {}} onClick={() => setFilter("")}>
-            최신순
+          <button
+            style={filter === "view" ? { fontWeight: "bold", color: BLUE_COLOR } : {}}
+            onClick={() => setFilter("view")}
+          >
+            조회순
           </button>
           <button
-            style={filter === "comment" ? { fontWeight: "bold" } : {}}
+            style={filter === "comment" ? { fontWeight: "bold", color: BLUE_COLOR } : {}}
             onClick={() => setFilter("comment")}
           >
             댓글많은순
@@ -63,7 +71,7 @@ const MomentList: FC<IProps> = ({ filter, moments, setSize, setFilter }) => {
         ) : (
           <div className="no-post">
             <img src={NO_POST_URL} />
-            <h4>게시글이 없어요😥</h4>
+            <h4>아직 모멘트가 없어요😥</h4>
           </div>
         )}
         <div ref={ref} />

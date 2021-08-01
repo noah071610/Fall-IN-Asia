@@ -57,7 +57,7 @@ const MomentPostTitle: FC<IProps> = ({ moment }) => {
                 onClick={() =>
                   toastConfirmMessage(
                     onClickConfirm,
-                    "정말 이 포스트를 삭제할까요?",
+                    "정말 이 모멘트를 삭제할까요?",
                     "삭제해주세요."
                   )
                 }

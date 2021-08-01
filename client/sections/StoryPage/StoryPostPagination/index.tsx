@@ -45,7 +45,7 @@ const StoryPostPagination: FC<IProps> = ({ userId }) => {
             <LeftOutlined />
             <div>
               <h3>이전연대기</h3>
-              <h4 className="post-title">{sidePosts?.prevPost?.title || "포스트가 없습니다."}</h4>
+              <h4 className="post-title">{sidePosts?.prevPost?.title || "연대기가 없습니다."}</h4>
             </div>
           </div>
         </div>
@@ -63,7 +63,7 @@ const StoryPostPagination: FC<IProps> = ({ userId }) => {
           <div className="post-desc">
             <div>
               <h3>다음연대기</h3>
-              <h4 className="post-title">{sidePosts?.nextPost?.title || "포스트가 없습니다."}</h4>
+              <h4 className="post-title">{sidePosts?.nextPost?.title || "연대기가 없습니다."}</h4>
             </div>
             <RightOutlined />
           </div>

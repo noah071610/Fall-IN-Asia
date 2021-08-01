@@ -14,11 +14,11 @@ export const MomentCardWrapper = styled.div`
   }
   .article-top {
     ${FLEX_STYLE("space-between", "flex-start")};
-    padding-bottom: 1rem;
+    ${tw`pb-4 pl-1`}
   }
   .article {
     .content {
-      ${tw`cursor-pointer font-bold pl-1 pb-4 hover:underline  leading-6`}
+      ${tw`cursor-pointer font-bold pl-1 pb-4 leading-7`}
     }
     .one-image {
       cursor: pointer;

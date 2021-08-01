@@ -1,7 +1,15 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import styled from "@emotion/styled";
 import XLGLayout from "@layout/XLGLayout";
-import { BORDER_THIN, FLEX_STYLE, noRevalidate, RGB_BLACK, WHITE_STYLE, XLG_SIZE } from "config";
+import {
+  BORDER_THIN,
+  FLEX_STYLE,
+  noRevalidate,
+  NO_POST_URL,
+  RGB_BLACK,
+  WHITE_STYLE,
+  XLG_SIZE,
+} from "config";
 import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
@@ -17,6 +25,7 @@ import TopNavigation from "@components/TopNavigation";
 import StoryArticleList from "@sections/StoryPage/StoryArticleList";
 import ArticleCard from "@components/Cards/ArticleCard";
 const Wrapper = styled.div`
+  padding-top: 4rem;
   .country-list-wrapper {
     ${tw`mx-auto py-4`}
     width:${XLG_SIZE};
@@ -24,20 +33,32 @@ const Wrapper = styled.div`
   .story-top-section {
     ${tw`pt-8`}
   }
-  .story-post-btn {
+  .story-post-btn-wrapper {
     ${FLEX_STYLE("flex-end", "center")};
-    button {
-      padding: 0.55rem;
-      ${BORDER_THIN("border")};
-      ${WHITE_STYLE(false, "130px", 10)};
-      &:hover {
-        ${tw`shadow-md`}
-      }
-    }
   }
   .more-icon {
     font-size: 2rem;
     color: ${RGB_BLACK(0.15)};
+  }
+  .story-post-btn {
+    padding: 0.55rem;
+    ${BORDER_THIN("border")};
+    ${WHITE_STYLE(false, "130px", 10)};
+    &:hover {
+      ${tw`shadow-md`}
+    }
+  }
+
+  .no-story-wrapper {
+    ${tw`rounded-xl select-none p-8 mt-8`}
+    height:500px;
+    ${FLEX_STYLE("center", "center", "column")};
+    img {
+      ${tw`w-40 h-40 opacity-30 mb-4`}
+    }
+    h2 {
+      ${tw`text-base font-bold mb-4`}
+    }
   }
 `;
 interface IProps {}
@@ -64,7 +85,7 @@ const index: FC<IProps> = () => {
       { name: "조회순", value: "view" },
     ];
     if (query?.country) {
-      nav_list.push({ name: "전체보기", value: "all_country" });
+      nav_list.push({ name: "국가전체보기", value: "all_country" });
     } else {
       nav_list.push({ name: "국가선택", value: "country" });
     }
@@ -99,7 +120,7 @@ const index: FC<IProps> = () => {
 
   return (
     <Wrapper>
-      <StoryMainPoster name={country?.name} />
+      <StoryMainPoster name={country?.name} image={country?.image_src} />
       {!query?.country && (
         <div className="country-list-wrapper">
           <CountryList slidesPerView={6.2} isMain={false} />
@@ -107,8 +128,10 @@ const index: FC<IProps> = () => {
       )}
       <TopNavigation filter={filter} onClickList={onClickList} list={storyPageNav} />
       <XLGLayout>
-        <div className="story-post-btn">
-          <button onClick={() => router.push("/story/post")}>연대기 올리기</button>
+        <div className="story-post-btn-wrapper">
+          <button className="story-post-btn" onClick={() => router.push("/story/post")}>
+            연대기 올리기
+          </button>
         </div>
         <div className="story-top-section">
           {onAllCountries ? (
@@ -117,7 +140,17 @@ const index: FC<IProps> = () => {
             popularStories && <ArticleCard story={popularStories[0]} />
           )}{" "}
         </div>
-        <StoryArticleList grid={4} gap="1.5rem" setSize={setSize} stories={stories} />
+        {stories && stories?.flat().length > 0 ? (
+          <StoryArticleList grid={4} gap="1.5rem" setSize={setSize} stories={stories} />
+        ) : (
+          <div className="no-story-wrapper">
+            <img src={NO_POST_URL} alt="no-post-img" />
+            <h2>연대기가 없습니다. 첫 연대기에 주인공이 되어주세요!</h2>
+            <button className="story-post-btn" onClick={() => router.push("/story/post")}>
+              연대기 올리기
+            </button>
+          </div>
+        )}
       </XLGLayout>
     </Wrapper>
   );

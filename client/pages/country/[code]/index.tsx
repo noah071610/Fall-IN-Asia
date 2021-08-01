@@ -10,7 +10,7 @@ import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
 import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
 import MainLayout from "@layout/MainLayout";
-import MainTopContent from "@sections/MainPage/MainTopArticleSlide";
+import MainTopArticleSlide from "@sections/MainPage/MainTopArticleSlide";
 import { momentSlice } from "slices/moment";
 import router, { useRouter } from "next/router";
 import { ICountry, IMoment } from "@typings/db";
@@ -44,14 +44,14 @@ const index = () => {
   );
   useEffect(() => {
     if (momentCreateDone) {
-      toastSuccessMessage("게시물을 성공적으로 작성했습니다.");
+      toastSuccessMessage("모멘트를 성공적으로 작성했습니다.");
       dispatch(momentSlice.actions.momentCreateClear());
       revalidate();
     }
   }, [momentCreateDone]);
   useEffect(() => {
     if (momentDeleteDone) {
-      toastSuccessMessage("게시물을 성공적으로 삭제했습니다.");
+      toastSuccessMessage("모멘트를 성공적으로 삭제했습니다.");
       dispatch(momentSlice.actions.momentDeleteClear());
       revalidate();
     }
@@ -78,7 +78,7 @@ const index = () => {
       <h2 className="main-title">{country?.name + "에서 인기폭발 🥰"}</h2>
       <div />
       <h2 className="main-title">{country?.name + " 인기 연대기"}</h2>
-      <MainTopContent />
+      <MainTopArticleSlide country={country} />
       <h2 className="main-title">포스팅</h2>
       <MomentPostingForm />
       <MomentList filter={filter} setFilter={setFilter} setSize={setSize} moments={moments} />

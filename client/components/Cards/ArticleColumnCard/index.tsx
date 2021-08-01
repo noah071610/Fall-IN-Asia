@@ -1,9 +1,7 @@
-import { CommentOutlined, LikeOutlined } from "@ant-design/icons";
+import { CommentOutlined, HeartOutlined } from "@ant-design/icons";
 import NameSpace from "@components/NameSpace";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback } from "react";
 import { ArticleColumnCardWrapper } from "./styles";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "slices";
 import { IStory } from "@typings/db";
 import router from "next/router";
 
@@ -40,7 +38,7 @@ const ArticleColumnCard: FC<IProps> = ({ story, isMain }) => {
             <span className="count">{story?.comments?.length}</span>
           </li>
           <li>
-            <LikeOutlined />
+            <HeartOutlined />
             <span className="count">{story?.likedUser?.length}</span>
           </li>
         </ul>

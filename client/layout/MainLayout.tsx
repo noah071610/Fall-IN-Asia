@@ -1,14 +1,13 @@
 import React, { FC } from "react";
 import styled from "@emotion/styled";
-import { FLEX_STYLE, FONT_STYLE, GRAY_COLOR, GRID_STYLE, LG_SIZE, XLG_SIZE } from "config";
+import { FONT_STYLE, GRAY_COLOR, XLG_SIZE } from "config";
 import tw from "twin.macro";
 import MainNavMenu from "@sections/MainPage/MainNavMenu";
 import MainAside from "@sections/MainPage/MainAside";
-import PosterCard from "@components/Cards/PosterCard";
 import MainPoster from "@sections/MainPage/MainPoster";
 const MainLayoutWrapper = styled.div`
   background: ${GRAY_COLOR};
-  padding-top: 2rem;
+  padding-top: 6rem;
   .layout {
     width: ${XLG_SIZE};
     ${tw`mx-auto py-8 flex`}

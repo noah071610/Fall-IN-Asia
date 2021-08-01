@@ -1,6 +1,6 @@
-import { FC, RefObject } from "react";
+import { FC } from "react";
 import styled from "@emotion/styled/macro";
-import { FONT_STYLE, GRID_STYLE, LG_SIZE, XLG_SIZE } from "config";
+import { FONT_STYLE, LG_SIZE } from "config";
 import tw from "twin.macro";
 const SearchPageLayoutWrapper = styled.div`
   width: ${LG_SIZE};

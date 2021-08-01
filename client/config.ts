@@ -16,6 +16,9 @@ export const MD_SIZE = "768px" as const;
 export const LG_SIZE = "992px" as const;
 export const XLG_SIZE = "1200px" as const;
 
+export const WORLD_IMAGE =
+  "https://user-images.githubusercontent.com/74864925/126495159-2e4438ad-6efb-458a-b314-8f92823babc7.jpg";
+
 export const DEFAULT_ICON_URL =
   "https://user-images.githubusercontent.com/74864925/124331496-460bfe80-dbca-11eb-95dc-a5379a5750a6.png" as const;
 
@@ -87,6 +90,63 @@ export const GRID_STYLE = (gap: string, colums: string, row?: string) => `
 `;
 
 // list
+
+// We will update this list from popular searched word of entity Database-Indexing  (2021/08/01 JANG HYUN SOO)
+
+export const searchOptions = [
+  "태국",
+  "여행",
+  "관광지",
+  "여행지 추천",
+  "관광명소",
+  "코로나",
+  "일본",
+  "도쿄 올림픽",
+  "도쿄",
+  "푸켓",
+  "워킹스트리트",
+  "호치민",
+  "방콕",
+  "맛집",
+  "먹방",
+  "해변",
+  "볼거리",
+  "더운 나라",
+  "동남아시아",
+  "동북아시아",
+  "아시아",
+  "게스트하우스",
+  "호텔",
+  "사원",
+  "동남아시아 코로나 현황",
+  "입국 금지",
+  "커피",
+  "베트남 커피",
+  "길거리 음식",
+  "먹거리",
+  "현지인",
+  "사기",
+  "사기 안당하는법",
+  "사기 수법",
+  "바가지",
+  "레스토랑",
+  "유흥가",
+  "배낭여행",
+  "배낭여행 추천지",
+  "명소",
+  "랜드마크",
+  "현지 맛집",
+  "현지 추천",
+  "추천 명소",
+  "안녕하세요 영어",
+  "바다",
+  "힐링 명소",
+  "유원지",
+]
+  .sort()
+  .map((v) => {
+    return { value: v };
+  });
 
 export const newsPageNavList = [
   { name: "관광뉴스", value: "news" },

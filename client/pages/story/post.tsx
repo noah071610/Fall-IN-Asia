@@ -7,13 +7,9 @@ import { RootState } from "slices";
 import {
   BORDER_THIN,
   FLEX_STYLE,
-  FONT_STYLE,
-  HOVER_GRAY,
   noRevalidate,
-  RGB_BLACK,
   toastErrorMessage,
   toastSuccessMessage,
-  WHITE_COLOR,
 } from "config";
 import { storyCreateAction, storyEditAction } from "actions/story";
 import router from "next/router";
@@ -43,6 +39,9 @@ export const StoryPostWrapper = styled.div`
       ${BORDER_THIN("border")};
       transition: 0.3s all;
     }
+  }
+  .mapboxgl-ctrl-geocoder--button {
+    ${tw`rounded-full`}
   }
 `;
 interface IProps {}
@@ -101,6 +100,13 @@ const post: FC<IProps> = () => {
     }
   }, [storyCreateDone, storyEditDone]);
 
+  useEffect(() => {
+    if (!user) {
+      router.back();
+    }
+  }, [user]);
+  console.log(upImg);
+
   const onClickSubmit = useCallback(() => {
     if (!title) {
       toastErrorMessage("제목을 작성해주세요.");
@@ -116,7 +122,7 @@ const post: FC<IProps> = () => {
     }
     let form: FormData = new FormData();
     if (upImg) {
-      form.append("image", upImg[0]);
+      form.append("image", upImg);
     }
     form.append("title", String(title));
     form.append("region", String(region));
@@ -164,9 +170,13 @@ const post: FC<IProps> = () => {
           setMarker={setMarker}
           setRegion={setRegion}
         />
+        <h2 className="main-title">선택 지역</h2>
+        <h3>{region}</h3>
         <h2 className="main-title">내용작성</h2>
         <Editor prevContent={editStory?.content} setContent={setContent} isStory={true} />
-        <h2 className="main-title">썸네일 업로드</h2>
+        <h2 className="main-title">
+          {editPostId ? "썸네일 변경 (미선택시 기존 썸네일 사용)" : "썸네일 업로드"}
+        </h2>
         <ImageDragger setUpImg={setUpImg} single={true} />
         <div className="editor-btn-wrapper">
           <button onClick={() => router.back()}>뒤로가기</button>
@@ -178,7 +188,7 @@ const post: FC<IProps> = () => {
               ) {
                 toastConfirmMessage(
                   onClickSubmit,
-                  "지역 좌표를 입력하지 않으셨어요, 이상태로 진행할까요? (현재 좌표 : 대한민국 서울)",
+                  "지역 좌표를 입력하지 않으셨어요, 이상태로 진행할까요? (현재 좌표 : 대한민국 서울 , 이름모를 어딘가)",
                   "진행해주세요"
                 );
               } else {

@@ -74,8 +74,9 @@ export class StoriesController {
   async editPost(
     @Body() form: StoryRequestDto,
     @UploadedFile() file: Express.Multer.File,
+    @User() user,
   ) {
-    await this.StoriesService.editPost(form, file);
+    await this.StoriesService.editPost(form, file, user?.id);
   }
 
   @UseGuards(new LoggedInGuard())
@@ -134,7 +135,7 @@ export class StoriesController {
     @Query('filter') filter: string,
   ) {
     if (filter) {
-      return await this.StoriesService.getFilterPost(filter, code, page);
+      return await this.StoriesService.getFilterPosts(filter, code, page);
     }
     return await this.StoriesService.getPosts(code, page);
   }
@@ -148,8 +149,8 @@ export class StoriesController {
 
   @ApiOperation({ summary: 'Get popular 9 posts' })
   @Get('popular')
-  async getPopularPosts() {
-    const popularPosts = await this.StoriesService.getPopularPosts();
+  async getPopularPosts(@Query('code') code: string) {
+    const popularPosts = await this.StoriesService.getPopularPosts(code);
     return popularPosts;
   }
 

@@ -21,10 +21,14 @@ interface IProps {
 }
 
 const CountryList: FC<IProps> = ({ slidesPerView, isMain }) => {
-  const { data: countries } = useSWR<ICountry[]>("/country", fetcher, noRevalidate);
+  const { data: countries } = useSWR<ICountry[]>(
+    isMain ? "/country/popular" : "/country",
+    fetcher,
+    noRevalidate
+  );
+
   return (
     <Swiper
-      loop={true}
       autoplay={
         isMain
           ? { delay: 1000000 }

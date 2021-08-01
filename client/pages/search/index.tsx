@@ -1,38 +1,21 @@
-import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
-import GuideCard from "@components/Cards/GuideCard";
-import ListCard from "@components/Cards/ListCard";
-import MomentCard from "@components/Cards/MomentCard";
-import MomentSmallCard from "@components/Cards/MomentSmallCard";
-import PosterCard from "@components/Cards/PosterCard";
-import TopNavigation from "@components/TopNavigation";
+import React, { FC, useCallback, useState } from "react";
 import styled from "@emotion/styled";
-import LGLayout from "@layout/LGLayout";
-import SearchPageLayout from "@layout/SearchPageLayout";
 import XLGLayout from "@layout/XLGLayout";
-import SearchPagePoster from "@sections/SearchPagePoster";
+import SearchPagePoster from "@sections/SearchPage/SearchPagePoster";
+import SearchPostList from "@sections/SearchPage/SearchPostList";
 import { IMoment, IStory } from "@typings/db";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
-import { GRID_STYLE, noRevalidate, XLG_SIZE } from "config";
 import { wrapper } from "configureStore";
 import { useRouter } from "next/router";
-import React, { FC, useState } from "react";
 import useSWR from "swr";
 import tw from "twin.macro";
 import fetcher from "utils/fetcher";
 
 const SearchPageWrapper = styled.div`
+  ${tw`bg-white pb-60 pt-16`}
   .layout {
     ${tw`bg-white`}
-  }
-  ${tw`bg-white`}
-
-  .searched-story-wrapper {
-    ${GRID_STYLE("1rem", "repeat(4,1fr)")}
-  }
-
-  .searched-moment-wrapper {
-    ${GRID_STYLE("1rem", "repeat(4,1fr)")}
   }
 `;
 
@@ -42,6 +25,8 @@ interface IProps {
 
 const index: FC<IProps> = ({ searchPosts }) => {
   const { query } = useRouter();
+  const [onMoreMoments, setOnMoreMoments] = useState(false);
+  const [onMoreNews, setOnMoreNews] = useState(false);
   const { data: searchPostsData } = useSWR<{
     searchWord: string;
     moments: IMoment[];
@@ -52,34 +37,30 @@ const index: FC<IProps> = ({ searchPosts }) => {
     revalidateOnReconnect: false,
   });
 
+  const onClickMoreMoments = useCallback(() => {
+    setOnMoreMoments((prev) => !prev);
+  }, []);
+  const onClickMoreNews = useCallback(() => {
+    setOnMoreNews((prev) => !prev);
+  }, []);
+
   return (
     <SearchPageWrapper>
       <SearchPagePoster searchWord={searchPostsData?.searchWord || ""} />
       <XLGLayout>
         <h3 className="main-title">연대기</h3>
-        <div className="searched-story-wrapper">
-          {searchPostsData?.stories?.length! > 0 ? (
-            searchPostsData?.stories?.map((v, i) => <ArticleColumnCard key={i} story={v} />)
-          ) : (
-            <div>연대기가 없습니다.</div>
-          )}
-        </div>
+        {searchPostsData && searchPostsData?.stories?.length > 0 ? (
+          <SearchPostList stories={searchPostsData?.stories} />
+        ) : (
+          <div>연대기가 없습니다.</div>
+        )}
         <h3 className="main-title">모멘트</h3>
-        <div className="searched-moment-wrapper">
-          {searchPostsData?.moments?.length! > 0 ? (
-            searchPostsData?.moments?.map((v, i) => (
-              <MomentSmallCard isSearchPage={true} moment={v} key={i} />
-            ))
-          ) : (
-            <div>연대기가 없습니다.</div>
-          )}
-        </div>
+        {searchPostsData && searchPostsData?.moments?.length > 0 ? (
+          <SearchPostList moments={searchPostsData?.moments} />
+        ) : (
+          <div>모멘트가 없습니다.</div>
+        )}
         <h3 className="main-title">여행소식</h3>
-        <div className="searched-news-wrapper">
-          {searchPostsData?.stories?.map((v, i) => (
-            <GuideCard key={i} />
-          ))}
-        </div>
       </XLGLayout>
     </SearchPageWrapper>
   );

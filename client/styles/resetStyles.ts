@@ -225,12 +225,20 @@ textarea {
 
 .swiper-button-next,
 .swiper-button-prev {
-    background-color: none;
-    padding: 30px;
+    padding: 30px 0;
     color: black !important;
     fill: white !important;
     stroke: white !important;
 }
+.swiper-button-next {
+    padding-right: 10px;
+    padding-left: 40px;
+}
+.swiper-button-prev {
+    padding-right: 40px;
+    padding-left: 10px;
+}
+
 
 .ant-select-selector {
   border-radius: 10px !important;
@@ -340,4 +348,5 @@ textarea {
     margin-left: 20rem;
   }
 }
+
 `;

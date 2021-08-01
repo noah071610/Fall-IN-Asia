@@ -3,14 +3,14 @@ import { FLEX_STYLE, FONT_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
 import tw from "twin.macro";
 
 export const ArticleImageCardWrapper = styled.div`
-  ${tw`relative overflow-hidden cursor-pointer rounded-md  mb-4`}
+  ${tw`relative overflow-hidden cursor-pointer rounded-md  mb-8`}
   &:hover {
     .card-image {
       transform: scale(1.15);
     }
   }
   .card-image {
-    ${tw`rounded-md w-full h-60`}
+    ${tw`rounded-md w-full h-52`}
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100% 100%;

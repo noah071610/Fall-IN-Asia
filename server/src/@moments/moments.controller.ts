@@ -154,29 +154,24 @@ export class MomentsController {
   ) {
     if (type) {
       switch (type) {
-        case 'trip':
-          type = '관광 및 여행';
-          break;
-        case 'abroad employment':
-          type = '유학 및 취업';
-          break;
-        case 'job opening':
-          type = '구인구직';
-          break;
         case 'community':
-          type = '현지 커뮤니티';
+          type = '한인 커뮤니티';
+          break;
+        case 'trip':
+          type = '여행정보 공유';
+          break;
+        case 'scam alert':
+          type = '사기 경보';
+          break;
+        case 'accompany':
+          type = '동행자 모집';
           break;
         default:
           break;
       }
     }
     if (filter) {
-      return await this.MomentsService.getCommentPosts(
-        filter,
-        code,
-        type,
-        page,
-      );
+      return await this.MomentsService.getFilterPosts(filter, code, type, page);
     }
     return await this.MomentsService.getPosts(code, page, type);
   }

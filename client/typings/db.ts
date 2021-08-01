@@ -1,20 +1,15 @@
 const continent = {
-  아시아: "아시아",
-  유라시아: "유라시아",
-  중동: "중동",
-  아프리카: "아프리카",
-  북아메리카: "북아메리카",
-  남아메리카: "남아메리카",
-  유럽: "유럽",
-  오세아니아: "오세아니아",
+  동북아시아: "동북아시아",
+  동남아시아: "동남아시아",
+  남아시아: "남아시아",
 } as const;
 type EContinent = typeof continent[keyof typeof continent];
 
 const momentType = {
-  관광여행: "관광 및 여행",
-  유학취업: "유학 및 취업",
-  구인구직: "구인구직",
-  커뮤니티: "현지 커뮤니티",
+  커뮤니티: "한인 커뮤니티",
+  여행정보: "여행정보 공유",
+  사기경보: "사기 경보",
+  동행자모집: "동행자 모집",
 } as const;
 type EMomentType = typeof momentType[keyof typeof momentType];
 
@@ -99,6 +94,12 @@ export interface ILikeMoment {
   momentId: number;
 }
 
+export interface ILikeComment {
+  id: number;
+  userId: number;
+  commentId: number;
+}
+
 export interface IFollow {
   id: number;
   followingId: number;
@@ -136,6 +137,7 @@ export interface IComment {
   post: IMoment;
   subComments: ISubComment[];
   notices: INotice[];
+  likedUser: ILikeComment[];
 }
 
 export interface ISubComment {

@@ -1,8 +1,6 @@
-import { FC, useEffect } from "react";
-import Link from "next/link";
+import { FC, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { BORDER_THIN, FLEX_STYLE, RGB_BLACK } from "config";
 import tw from "twin.macro";
 import styled from "@emotion/styled";
 import ListCard from "@components/Cards/ListCard";
@@ -10,7 +8,8 @@ import { INotice } from "@typings/db";
 import router from "next/router";
 
 const NoticePopUpWrapper = styled.ul`
-  ${tw`absolute top-12 right-0 bg-white shadow-md rounded-xl overflow-hidden w-80 z-20`}
+  ${tw`absolute top-10 right-0 bg-white shadow-md rounded-xl overflow-hidden w-80`}
+  z-index:80;
   h2 {
     ${tw`pt-4 px-4 pb-2 text-sm font-bold`}
   }
@@ -37,8 +36,8 @@ const NoticePopUpWrapper = styled.ul`
 interface IProps {}
 
 const NoticePopUp: FC<IProps> = () => {
-  const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
+  const onClickListCard = useCallback(() => {}, []);
 
   return (
     <NoticePopUpWrapper
@@ -51,7 +50,12 @@ const NoticePopUp: FC<IProps> = () => {
         <>
           <div className="notices-wrapper">
             {user?.notices.map((v: INotice, i: number) => (
-              <ListCard key={i} title={v.header + " 알림"} content={v.content} />
+              <ListCard
+                onClickListCard={onClickListCard}
+                key={i}
+                title={v.header + " 알림"}
+                content={v.content}
+              />
             ))}
           </div>
           <div onClick={() => router.push(`/me/${user?.id}`)} className="more-notices">
@@ -60,7 +64,7 @@ const NoticePopUp: FC<IProps> = () => {
         </>
       ) : (
         <div className="no-notices">
-          <p>유저님이 게시글,연대기,코멘트 작성 및 수정등 활동을 하면 저희가 알려줄게요!</p>
+          <p>유저님이 모멘트,연대기,코멘트 작성 및 수정등 활동을 하면 저희가 알려줄게요!</p>
         </div>
       )}
     </NoticePopUpWrapper>

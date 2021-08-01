@@ -78,11 +78,12 @@ const Comment: FC<IProps> = ({ comment }) => {
           {liked ? (
             <a className="liked" onClick={onClickDislikeComment}>
               <HeartFilled />
-              <span>{}</span>
+              <span className="count">{comment?.likedUser?.length || 0}</span>
             </a>
           ) : (
             <a onClick={onClickLikeComment}>
               <HeartOutlined />
+              <span className="count">{comment?.likedUser?.length || 0}</span>
             </a>
           )}
           {isOwner && (

@@ -146,16 +146,16 @@ const MomentPostingForm: FC<IProps> = ({ editPost }) => {
                 onChange={handleTypeChange}
                 style={{ width: "180px" }}
               >
-                <Option value="관광 및 여행">관광 및 여행</Option>
-                <Option value="유학 및 취업">유학 및 취업</Option>
-                <Option value="구인구직">구인구직</Option>
-                <Option value="현지 커뮤니티">현지 커뮤니티</Option>
+                <Option value="한인 커뮤니티">한인 커뮤니티</Option>
+                <Option value="여행정보 공유">여행정보 공유</Option>
+                <Option value="사기 경보">사기 경보</Option>
+                <Option value="동행자 모집">동행자 모집</Option>
               </Select>
             </div>
             <EditorWithoutImage content={content} setContent={setContent} />
             <ImageDragger setUpImg={setUpImg} />
             <div className="editor-btn-wrapper">
-              <button onClick={onClickSubmit}>게시물 올리기</button>
+              <button onClick={onClickSubmit}>모멘트 올리기</button>
               <button onClick={onClickPostingCancle}>취소</button>
             </div>
           </div>

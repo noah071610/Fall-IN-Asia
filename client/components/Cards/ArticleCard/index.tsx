@@ -1,7 +1,7 @@
-import { CommentOutlined, LikeOutlined } from "@ant-design/icons";
+import { CommentOutlined, HeartOutlined } from "@ant-design/icons";
 import NameSpace from "@components/NameSpace";
 import { IStory } from "@typings/db";
-import { NO_IMAGE_URL, RGB_BLACK } from "config";
+import { NO_IMAGE_URL } from "config";
 import { FC, useCallback } from "react";
 import { ArticleCardWrapper } from "./styles";
 import router from "next/router";
@@ -31,7 +31,7 @@ const ArticleCard: FC<IProps> = ({ story, isMain }) => {
             <span className="count">{story?.comments.length}</span>
           </li>
           <li>
-            <LikeOutlined />
+            <HeartOutlined />
             <span className="count">{story?.likedUser.length}</span>
           </li>
         </ul>

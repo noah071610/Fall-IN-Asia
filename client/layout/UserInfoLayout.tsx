@@ -5,8 +5,7 @@ import tw from "twin.macro";
 import UserInfoAside from "@sections/UserPage/UserInfoAside";
 const UserInfoLayoutWrapper = styled.div`
   background: ${GRAY_COLOR};
-  padding-top: 2rem;
-  padding-bottom: 6rem;
+  padding: 6rem 0;
   .layout {
     width: ${XLG_SIZE};
     ${tw`mx-auto`};
@@ -32,7 +31,7 @@ const UserInfoLayoutWrapper = styled.div`
     ${tw`p-4`}
   }
   .no-post-wrapper {
-    ${tw`w-full h-60 rounded-xl select-none p-4`}
+    ${tw`h-60 rounded-xl select-none p-4 m-4`}
     ${BORDER_THIN("border")};
     ${FLEX_STYLE("center", "center", "column")};
     img {
