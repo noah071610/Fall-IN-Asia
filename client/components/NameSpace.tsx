@@ -1,5 +1,5 @@
 import { IUser } from "@typings/db";
-import React, { FC, memo, useCallback, useState } from "react";
+import React, { FC, memo, useCallback } from "react";
 import dayjs from "dayjs";
 import { DEFAULT_ICON_URL, FLEX_STYLE, RGB_BLACK } from "config";
 import styled from "@emotion/styled";
@@ -8,8 +8,9 @@ import router from "next/router";
 
 export const NameSpaceWrapper = styled.div`
   ${FLEX_STYLE("flex-start", "center")};
+  ${tw`cursor-pointer hover:opacity-50`}
   .icon {
-    ${tw`cursor-pointer mr-3 hover:opacity-70`};
+    ${tw`cursor-pointer mr-3`};
     img {
       ${tw`w-10 h-10 rounded-full`};
     }
@@ -22,7 +23,7 @@ export const NameSpaceWrapper = styled.div`
     display: block;
   }
   .name {
-    ${tw`text-sm hover:font-bold cursor-pointer font-bold`}
+    ${tw`text-sm`}
   }
   .date {
     padding-top: 0.2rem;
@@ -35,16 +36,7 @@ interface IProps {
   date: Date;
   comment?: string;
 }
-// .follow-btn{
-//   ${tw`ml-1`}
-//   ${FLEX_STYLE("center", "center")};
-//   .follow-icon{
-//     font-size:1rem;
-//   }
-//   span{
-//     ${tw`ml-1 text-xs`}
-//   }
-// }
+
 const NameSpace: FC<IProps> = ({ user, date, comment }) => {
   const onClickGotoProfile = useCallback(
     (e) => {

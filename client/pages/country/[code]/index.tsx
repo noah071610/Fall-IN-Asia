@@ -14,6 +14,7 @@ import MainTopArticleSlide from "@sections/MainPage/MainTopArticleSlide";
 import { momentSlice } from "slices/moment";
 import router, { useRouter } from "next/router";
 import { ICountry, IMoment } from "@typings/db";
+import MainCountryAnnouncement from "@sections/MainPage/MainCountryAnnouncement";
 
 const index = () => {
   const dispatch = useDispatch();
@@ -75,8 +76,12 @@ const index = () => {
   }, [momentDislikeDone]);
   return (
     <MainLayout>
-      <h2 className="main-title">{country?.name + "에서 인기폭발 🥰"}</h2>
-      <div />
+      {country && (
+        <>
+          <h2 className="main-title">{country?.name + " 관련 정보 📢"}</h2>
+          <MainCountryAnnouncement country={country} />
+        </>
+      )}
       <h2 className="main-title">{country?.name + " 인기 연대기"}</h2>
       <MainTopArticleSlide country={country} />
       <h2 className="main-title">포스팅</h2>

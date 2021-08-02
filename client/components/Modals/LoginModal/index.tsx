@@ -101,7 +101,9 @@ const LoginModal: FC<IProps> = () => {
               type="password"
             />
             <div className="btn-wrapper">
-              <button onSubmit={onSubmitLogin}>로그인</button>
+              <button className="btn-point" onSubmit={onSubmitLogin}>
+                로그인
+              </button>
               <button onClick={onClickSignUpToggle}>간편회원가입</button>
             </div>
           </form>

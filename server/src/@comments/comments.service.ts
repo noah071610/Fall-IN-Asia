@@ -9,6 +9,8 @@ import { SubComments } from 'src/entities/SubComments';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CommentRequestDto } from 'src/dto/comment.request.dto';
 import { CommentLike } from 'src/entities/CommentLike';
+import { Notices } from 'src/entities/Notices';
+import { Moments } from 'src/entities/Moments';
 
 @Injectable()
 export class CommentsService {
@@ -19,9 +21,19 @@ export class CommentsService {
     private subCommentsRepository: Repository<SubComments>,
     @InjectRepository(CommentLike)
     private CommentLikeRepository: Repository<CommentLike>,
+    @InjectRepository(Notices)
+    private NoticesRepository: Repository<Notices>,
+    @InjectRepository(Moments)
+    private MomentsRepository: Repository<Moments>,
   ) {}
 
   async createComment(form: CommentRequestDto, userId: number) {
+    const moment = await this.MomentsRepository.findOne({
+      where: { id: form.momentId },
+    });
+    if (moment) {
+      throw new NotFoundException('모멘트를 찾지 못했습니다.');
+    }
     const newComment = new Comments();
     newComment.content = form.content;
     newComment.user = <any>{ id: userId };
@@ -31,6 +43,13 @@ export class CommentsService {
       newComment.story = <any>{ id: form.storyId };
     }
     await this.commentsRepository.save(newComment);
+    await this.NoticesRepository.save({
+      header: `${moment.code}/${moment.id}번모멘트/댓글`,
+      code: moment.code,
+      userId: userId,
+      momentId: moment.id,
+      content: `${form.content.slice(0, 10)}...을 작성했습니다.`,
+    });
     return true;
   }
 

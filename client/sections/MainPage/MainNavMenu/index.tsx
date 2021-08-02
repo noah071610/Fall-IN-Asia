@@ -41,8 +41,7 @@ const MainNavMenu: FC<IProps> = () => {
           <a onClick={onClickCountry}>{country?.name || "아시아 전체"}</a>
           {country && (
             <div>
-              <span>좋아요 : 0</span>
-              <span>포스팅수 : {country?.moments?.length}</span>
+              <span>포스팅수 : {country?.moments?.length + country?.stories?.length}</span>
             </div>
           )}
         </div>

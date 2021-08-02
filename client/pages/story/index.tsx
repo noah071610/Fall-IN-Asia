@@ -113,6 +113,7 @@ const index: FC<IProps> = () => {
     setFilter(value);
     if (value === "country") {
       setAllCountries((prev) => !prev);
+      scrollTo({ top: 461 });
       return;
     }
     setAllCountries(false);

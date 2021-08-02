@@ -22,6 +22,16 @@ export class CountriesController {
     return popularCountries;
   }
 
+  @ApiOperation({ summary: 'get information about country ' })
+  @Get('info/:code/:type')
+  async getCountryInfo(
+    @Param('code') code: string,
+    @Param('type') type: string,
+  ) {
+    const countryInfo = await this.CountriesService.getCountryInfo(code, type);
+    return countryInfo;
+  }
+
   @ApiOperation({ summary: 'get one country' })
   @Get('/:code')
   async getCountry(@Param('code') code: string) {

@@ -135,7 +135,9 @@ const IconCropperModalper: FC<IProps> = () => {
           </NameSpaceWrapper>
           <div className="btn-wrapper">
             <button onClick={() => setUpImg(null)}>다시 선택</button>
-            <button onClick={onClickChangeIcon}>이미지 올리기</button>
+            <button className="btn-point" onClick={onClickChangeIcon}>
+              이미지 올리기
+            </button>
           </div>
         </div>
       )}

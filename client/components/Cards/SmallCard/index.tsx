@@ -21,7 +21,7 @@ const SmallCard: FC<IProps> = ({ country, isMain }) => {
       <img src={country?.image_src} alt="country_image" />
       <div className="country-desc">
         <h4>{country?.name}</h4>
-        <span className="count">포스팅: {country?.moments?.length}</span>
+        <span className="count">포스팅: {country?.moments?.length + country?.stories?.length}</span>
       </div>
     </SmallCardWrapper>
   );

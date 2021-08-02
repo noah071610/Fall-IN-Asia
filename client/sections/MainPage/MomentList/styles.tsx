@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE } from "config";
+import { BLUE_COLOR, FLEX_STYLE } from "config";
 import tw from "twin.macro";
 
 export const MomentListWrapper = styled.div`
@@ -12,6 +12,7 @@ export const MomentListWrapper = styled.div`
         ${tw`px-0 pb-1 mx-2`}
         &:hover {
           font-weight: bold;
+          color: ${BLUE_COLOR};
         }
       }
     }

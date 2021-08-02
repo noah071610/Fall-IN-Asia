@@ -3,7 +3,6 @@ import NameSpace from "@components/NameSpace";
 import { IMoment } from "@typings/db";
 import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import { MomentCardWrapper } from "./styles";
-import ReactHtmlParser from "react-html-parser";
 import { toastErrorMessage } from "config";
 import router from "next/router";
 import { useDispatch, useSelector } from "react-redux";

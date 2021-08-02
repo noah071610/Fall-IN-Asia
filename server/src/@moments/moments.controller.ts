@@ -75,8 +75,9 @@ export class MomentsController {
   async editPost(
     @Body() form: MomentRequestDto,
     @UploadedFiles() files: Express.Multer.File[],
+    @User() user,
   ) {
-    await this.MomentsService.editPost(form, files);
+    await this.MomentsService.editPost(form, files, user.id);
   }
 
   @UseGuards(new LoggedInGuard())

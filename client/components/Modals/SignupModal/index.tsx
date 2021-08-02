@@ -7,6 +7,7 @@ import { RootState } from "slices";
 import { userSlice } from "slices/user";
 import { toastSuccessMessage } from "config";
 import Checkbox from "antd/lib/checkbox/Checkbox";
+import router from "next/router";
 interface IProps {
   onFinishSignUp: (values: any) => void;
   onClickSignUpToggle: (e: any) => void;
@@ -112,11 +113,16 @@ const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSig
           {...tailFormItemLayout}
         >
           <Checkbox>
-            백패커스의 이용약관, 개인정보취급방침 에 동의합니다. <a className="term">약관보기</a>
+            백패커스의 이용약관, 개인정보취급방침 에 동의합니다.{" "}
+            <a onClick={() => router.push("/about#policy")} className="term">
+              약관보기
+            </a>
           </Checkbox>
         </Form.Item>
         <div className="btn-wrapper">
-          <button onSubmit={onFinishSignUp}>회원가입</button>
+          <button className="btn-point" onSubmit={onFinishSignUp}>
+            회원가입
+          </button>
           <button onClick={onClickSignUpToggle}>뒤로가기</button>
         </div>
       </Form>

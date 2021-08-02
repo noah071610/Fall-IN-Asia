@@ -29,8 +29,8 @@ export const MomentSmallCardWrapper = (isSearchPage?: boolean) => css`
     }
   }
   h2 {
-    padding-left: 0.2rem;
+    ${tw`pl-1 font-bold hover:underline`}
     ${ELLIPSIS_STYLE(1.65, 2, "auto")};
-    ${FONT_STYLE(0.8, true)}
+    font-size: 0.8rem;
   }
 `;

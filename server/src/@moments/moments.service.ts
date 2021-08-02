@@ -178,13 +178,11 @@ export class MomentsService {
     return posts;
   }
 
-  async editPost(form: any, files: Express.Multer.File[]) {
+  async editPost(form: any, files: Express.Multer.File[], userId: number) {
     const country = await this.CountriesRepository.findOne({
       where: { code: form.code },
     });
-    const editedPost = await this.MomentsRepository.createQueryBuilder(
-      'moments',
-    )
+    const editPost = await this.MomentsRepository.createQueryBuilder('moments')
       .update('moments')
       .set({
         type: form.type,
@@ -194,9 +192,16 @@ export class MomentsService {
       })
       .where('id = :id', { id: parseInt(form.momentId) })
       .execute();
-    if (!editedPost) {
+    if (!editPost) {
       throw new NotFoundException('수정 할 게시물이 없습니다.');
     }
+    await this.NoticesRepository.save({
+      header: `${country.name}/모멘트`,
+      code: form.code,
+      userId,
+      momentId: form.momentId,
+      content: `${form.momentId}번 모멘트를 수정했습니다.`,
+    });
     return true;
   }
 

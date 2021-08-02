@@ -1,0 +1,109 @@
+import React, { FC, useState } from "react";
+import styled from "@emotion/styled";
+import LGLayout from "@layout/LGLayout";
+import { LG_SIZE } from "config";
+import tw from "twin.macro";
+import { Divider } from "antd";
+
+export const AboutPageWrapper = styled.div`
+  background: white;
+  .layout {
+    h2 {
+      font-weight: bold;
+    }
+    .ant-divider-horizontal.ant-divider-with-text::before,
+    .ant-divider-horizontal.ant-divider-with-text::after {
+      border-top: 1px solid rgba(0, 0, 0, 0.3);
+    }
+    ${tw`pt-24 pb-16 mx-auto`}
+    .aboutme {
+      ${tw`pb-16`}
+    }
+    .policy {
+      ${tw` leading-8`}
+    }
+  }
+`;
+interface IProps {}
+
+const about: FC<IProps> = () => {
+  const [state, setstate] = useState();
+  return (
+    <AboutPageWrapper>
+      <div className="layout" style={{ width: LG_SIZE }}>
+        <Divider style={{ marginBottom: "2rem" }} orientation="left">
+          <h2>About us</h2>
+        </Divider>
+        <div className="aboutme">안녕하세요 장현수 입니다.</div>
+        <Divider style={{ marginBottom: "2rem" }} orientation="left">
+          <h2 id="policy">Policy</h2>
+        </Divider>
+        <div className="policy">
+          <h2>
+            제1조(개인정보의 처리 목적)<strong>장현수('www.loveasia.co.kr'이하 'Love Asia')</strong>
+            은(는) 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적
+            이외의 용도로는 이용되지 않으며 이용 목적이 변경되는 겨우에는 「개인정보 보호법」
+            제18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.
+          </h2>
+          <br />
+          1. 홈페이지 회원가입 및 관리 댓글 및 좋아요 서비스 이용 목적으로 개인정보를 처리합니다.{" "}
+          <br />
+          <br />
+          <br />
+          <h2>제2조(개인정보의 처리 및 보유 기간)</h2>
+          <br /> ① <strong>장현수</strong>은(는) 법령에 따른 개인정보 보유·이용기간 또는
+          정보주체로부터 개인정보를 수집 시에 동의받은 개인정보 보유·이용기간 내에서 개인정보를
+          처리·보유합니다. <br />② 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다. <br />
+          1.홈페이지 회원가입 및 관리 <br />
+          홈페이지 회원가입 및 관와 관련한 개인정보는 수집.이용에 관한 정보는{" "}
+          <b style={{ color: "red" }}>언제든지 지체없이 파기 가능합니다.</b> <br />
+          보유근거 : 댓글 및 좋아요 삭제 방지 <br />
+          <br />
+          <br />
+          <h2>제3조(정보주체와 법정대리인의 권리·의무 및 그 행사방법)</h2>
+          <br /> ① 정보주체는 장현수 에 대해 언제든지 개인정보 열람·정정·삭제·처리정지 요구 등의
+          권리를 행사할 수 있습니다. <br />② 제1항에 따른 권리 행사는장현수 에 대해 「개인정보
+          보호법」 시행령 제41조제1항에 따라 서면, 전자우편, 모사전송(FAX) 등을 통하여 하실 수
+          있으며 장현수 은(는) 이에 대해 지체 없이 조치하겠습니다.
+          <br />
+          <br />
+          <br />
+          <h2>제4조(처리하는 개인정보의 항목 작성)</h2>
+          <br /> ① <strong>장현수</strong>은(는) 다음의 개인정보 항목을 처리하고 있습니다. <br />
+          <b>본인 확인용 이메일과 이름 수집</b>
+          <br />
+          <br />
+          <br />
+          <br /> <h2>제5조(개인정보의 파기)</h2>
+          <br /> ① 장현수 은(는) 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게
+          되었을 때에는 지체없이 해당 개인정보를 파기합니다.
+          <br />
+          <br />
+          <br /> <h2>제6조(개인정보의 안전성 확보 조치)</h2>
+          <br />
+          장현수은(는) 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고 있습니다.
+          <br />
+          1. 개인정보의 암호화이용자의 개인정보는 비밀번호는 암호화 되어 저장 및 관리되고 있어,
+          본인만이 알 수 있으며 중요한 데이터는 파일 및 전송 데이터를 암호화 하거나 파일 잠금 기능을
+          사용하는 등의 별도 보안기능을 사용하고 있습니다
+          <br /> 2. 개인정보에 대한 접근 제한개인정보를 처리하는 데이터베이스시스템에 대한
+          접근권한의 부여,변경,말소를 통하여 개인정보에 대한 접근통제를 위하여 필요한 조치를 하고
+          있으며 침입차단시스템을 이용하여 외부로부터의 무단 접근을 통제하고 있습니다 <br />
+          3. 문서보안을 위한 잠금장치 사용개인정보가 포함된 서류, 보조저장매체 등을 잠금장치가 있는
+          안전한 장소에 보관하고 있습니다.
+          <br />
+          <br />
+          <br /> <h2>제7조 (개인정보 보호책임자)</h2>
+          <br />
+          ① 장현수 은(는) 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한
+          정보주체의 불만처리 및 피해구제 등을 위하여 아래와 같이 개인정보 보호책임자를 지정하고
+          있습니다. <br />• ▶ 개인정보 보호책임자
+          <br /> • 성명 :장현수 <br />• 연락처 :010-5672-3486,
+          <br />• noah071610@naver.com,
+        </div>
+      </div>
+    </AboutPageWrapper>
+  );
+};
+
+export default about;

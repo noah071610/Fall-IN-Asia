@@ -121,7 +121,8 @@ export interface ICountry {
   continent: EContinent;
   image_src: string;
   flag_src: string;
-  moments?: IMoment[];
+  moments: IMoment[];
+  stories: IStory[];
 }
 
 export interface IImage {

@@ -36,10 +36,6 @@ interface IProps {}
 const bulletTextByIndex = ["아름다운동행", "태국음식체험전", "러브캠핑"];
 
 const index: FC<IProps> = () => {
-  const { data: cc } = useSWR(
-    `http://apis.data.go.kr/1262000/CountryCovid19SafetyServiceNew/getCountrySafetyNewsListNew?serviceKey=RNdwq5b9d0Il9ORdhvxBAQ%2BoM3kPH3YOkdj88JnV1uXi07ybaod1V7XAMbyphVB5OqYPm2uNRCNzhMrh5dnWzw%3D%3D&returnType=JSON&numOfRows=50&pageNo=10`
-  );
-
   const {
     data: stories,
     revalidate,

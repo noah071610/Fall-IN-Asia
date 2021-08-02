@@ -40,6 +40,9 @@ export const IconCropperModalWrapper = (upImg: ArrayBuffer | string | null) => c
       button {
         ${tw`text-white font-bold py-3 bg-gray-300 rounded-xl hover:bg-gray-400`}
       }
+      .btn-point {
+        ${tw`bg-blue-400 hover:bg-blue-500`}
+      }
     }
   }
 `;

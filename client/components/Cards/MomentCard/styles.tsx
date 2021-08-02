@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RED_COLOR } from "config";
+import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RED_COLOR } from "config";
 import tw from "twin.macro";
 
 export const MomentCardWrapper = styled.div`
@@ -8,7 +8,7 @@ export const MomentCardWrapper = styled.div`
   .article-header {
     a {
       &:hover {
-        font-weight: bold;
+        color: ${BLUE_COLOR};
       }
     }
   }
@@ -18,7 +18,7 @@ export const MomentCardWrapper = styled.div`
   }
   .article {
     .content {
-      ${tw`cursor-pointer font-bold pl-1 pb-4 leading-7`}
+      ${tw`cursor-pointer font-bold pl-1 pb-4 leading-7 hover:underline`}
     }
     .one-image {
       cursor: pointer;

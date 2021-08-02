@@ -3,6 +3,9 @@ import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, SKY_COLOR, XLG_SIZE } from "config
 import tw from "twin.macro";
 
 export const TopNavigationWrapper = styled.nav`
+  ${tw`sticky bg-white`}
+  top:57px;
+  z-index: 60;
   ${BORDER_THIN("border-bottom")};
   .nav-inner-list {
     ${tw` mx-auto`}

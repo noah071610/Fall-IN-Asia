@@ -272,9 +272,9 @@ export class StoriesService {
     await this.NoticesRepository.save({
       header: `${country.name}/연대기`,
       code: editPost.code,
-      userId: userId,
+      userId,
       storyId: editPost.id,
-      content: `${form.title.slice(0, 10)}...을 수정 완료했습니다.`,
+      content: `${form.title.slice(0, 10)}...을 수정했습니다.`,
     });
     return true;
   }

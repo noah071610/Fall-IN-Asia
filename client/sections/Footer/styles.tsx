@@ -1,13 +1,46 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, LG_SIZE, RGB_BLACK, WHITE_COLOR } from "config";
+import { BORDER_THIN, LG_SIZE, RGB_BLACK, WHITE_COLOR, XLG_SIZE } from "config";
+import tw from "twin.macro";
 
 export const FooterWrapper = styled.div`
-  padding: 2rem 0.7rem 2rem 0.7rem;
-  background-color: ${RGB_BLACK(0.7)};
+  ${tw`py-8 px-3 bg-gray-700`}
   ${BORDER_THIN("border-top")};
-  .footer-lgsize {
-    width: ${LG_SIZE};
-    color: ${WHITE_COLOR};
-    margin: 0 auto;
+  .footer-inner {
+    width: ${XLG_SIZE};
+    ${tw`mx-auto text-white px-8`}
+    h1,h2,h3,h4,a {
+      ${tw`text-white`}
+    }
+    h1,
+    h2,
+    h3 {
+      ${tw`font-bold`}
+    }
+    .footer-top {
+      ${tw`mb-8`}
+      h1 {
+        ${tw`mb-2 text-3xl`}
+      }
+    }
+    .footer-list-wrapper {
+      ${tw`flex mb-2`}
+      .footer-list {
+        ${tw`mr-12 mb-4`}
+        h2 {
+          ${tw`mb-4`}
+        }
+        ul {
+          li {
+            ${tw`block pb-3`}
+          }
+        }
+        .anticon {
+          ${tw`mr-2`}
+        }
+      }
+    }
+    .license {
+      ${tw`mb-4`}
+    }
   }
 `;
