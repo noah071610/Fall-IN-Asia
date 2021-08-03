@@ -8,7 +8,7 @@ import router from "next/router";
 
 export const NameSpaceWrapper = styled.div`
   ${FLEX_STYLE("flex-start", "center")};
-  ${tw`cursor-pointer hover:opacity-50`}
+  ${tw`cursor-pointer`}
   .icon {
     ${tw`cursor-pointer mr-3`};
     img {

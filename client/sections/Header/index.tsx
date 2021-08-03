@@ -14,7 +14,6 @@ import ProfilePopUp from "@components/Popups/ProfilePopUp";
 import { GRAY_COLOR, toastSuccessMessage } from "config";
 import { userSlice } from "slices/user";
 import useInput from "@hooks/useInput";
-import { searchWordAction } from "actions/main";
 import router from "next/router";
 import { throttle } from "lodash";
 
@@ -27,14 +26,9 @@ const Header: FC<HeaderProps> = () => {
   const [headerDownSize, setHeaderDownSize] = useState(false);
   const { user, logoutDone } = useSelector((state: RootState) => state.user);
 
-  const {
-    searchWordDone,
-    searchWord: searchedWord,
-    onLoginModal,
-    onProfilePopUp,
-    onNoticePopUp,
-    onSearchPopUp,
-  } = useSelector((state: RootState) => state.main);
+  const { onLoginModal, onProfilePopUp, onNoticePopUp, onSearchPopUp } = useSelector(
+    (state: RootState) => state.main
+  );
 
   useEffect(() => {
     if (logoutDone) {
@@ -63,12 +57,6 @@ const Header: FC<HeaderProps> = () => {
     }
   }, [onSearchPopUp, inputRef]);
 
-  useEffect(() => {
-    if (searchWordDone) {
-      router.push(`/search/?keyword=${searchedWord}`);
-    }
-  }, [searchWordDone, searchedWord]);
-
   const onClickLoginMenu = useCallback(() => {
     dispatch(mainSlice.actions.toggleLoginModal());
   }, []);
@@ -90,7 +78,7 @@ const Header: FC<HeaderProps> = () => {
       dispatch(mainSlice.actions.toggleSearchPopUp());
       return;
     }
-    dispatch(searchWordAction(searchWord));
+    router.push(`/search?keyword=${searchWord}`);
   }, [searchWord]);
 
   const onPressEnter = useCallback(
@@ -99,7 +87,7 @@ const Header: FC<HeaderProps> = () => {
         if (searchWord === "" || !searchWord?.trim()) {
           return;
         }
-        dispatch(searchWordAction(searchWord));
+        router.push(`/search?keyword=${searchWord}`);
         dispatch(mainSlice.actions.toggleSearchPopUp());
       }
     },

@@ -13,6 +13,15 @@ const momentType = {
 } as const;
 type EMomentType = typeof momentType[keyof typeof momentType];
 
+const articleType = {
+  관광뉴스: "관광뉴스",
+  트렌드: "트렌드",
+  쇼핑: "쇼핑",
+  이색체험: "이색체험",
+  이벤트: "이벤트",
+} as const;
+type EArticleType = typeof articleType[keyof typeof articleType];
+
 export interface ICoordinate {
   latitude: number;
   longitude: number;
@@ -28,10 +37,10 @@ export interface IUser {
   likeStory: ILikeStory[];
   followers: IFollow[];
   followings: IFollow[];
+  introduce: string;
 }
 
 export interface IUserInfo extends IUser {
-  introduce: string;
   createAt: Date;
   comments: IComment[];
 }
@@ -67,6 +76,21 @@ export interface IStory {
   comments: IComment[];
   notices: INotice[];
   likedUser: IUser[];
+}
+
+export interface IArticle {
+  id: number;
+  type: EArticleType;
+  label: string;
+  region: number;
+  title: string;
+  content: string;
+  lat: number;
+  lng: number;
+  user: IUser;
+  thumbnail: string;
+  createdAt: Date;
+  country: ICountry;
 }
 
 export interface INotice {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
@@ -14,9 +14,16 @@ import CountryRouteMap from "@components/Maps/CountryRouteMap";
 import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
 import { SwiperSlide, Swiper } from "swiper/react";
 
-const index = () => {
+interface IProps {
+  initialUserInfo: IUserInfo;
+}
+
+const index: FC<IProps> = ({ initialUserInfo }) => {
   const { query } = useRouter();
-  const { data: userInfo } = useSWR<IUserInfo>(`/user/${query?.userId}`, fetcher, noRevalidate);
+  const { data: userInfo } = useSWR<IUserInfo>(`/user/${query?.userId}`, fetcher, {
+    initialData: initialUserInfo,
+    ...noRevalidate,
+  });
 
   return (
     <UserInfoLayout>
@@ -76,15 +83,16 @@ const index = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, res, ...etc }) => {
+    async ({ req, res, params }) => {
       const cookie = req ? req.headers.cookie : "";
       axios.defaults.headers.Cookie = "";
       if (req && cookie) {
         axios.defaults.headers.Cookie = cookie;
       }
       await store.dispatch(getUserInfoAction());
+      const initialUserInfo = await fetcher(`/user/${params?.userId}`);
       return {
-        props: {},
+        props: { initialUserInfo },
       };
     }
 );

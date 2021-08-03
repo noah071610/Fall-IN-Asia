@@ -8,7 +8,6 @@ import { FooterWrapper } from "./styles";
 interface IProps {}
 
 const Footer: FC<IProps> = () => {
-  const [state, setstate] = useState();
   return (
     <FooterWrapper>
       <div className="footer-inner">
@@ -41,7 +40,7 @@ const Footer: FC<IProps> = () => {
             <h2>Contact</h2>
             <ul>
               <li>
-                <a>
+                <a href="mailto:noah071610@naver.com">
                   <FontAwesomeIcon className="anticon" icon={faEnvelope} />
                   noah071610@naver.com
                 </a>
@@ -63,9 +62,21 @@ const Footer: FC<IProps> = () => {
           <div className="footer-list footer-aboutsite">
             <h2>About site</h2>
             <ul>
-              <li>개발자 정보</li>
-              <li>이용 약관</li>
-              <li>커피 사주기</li>
+              <Link href="/about">
+                <a>
+                  <li>개발자 정보</li>
+                </a>
+              </Link>
+              <Link href="/about#policy">
+                <a>
+                  <li>이용 약관</li>
+                </a>
+              </Link>
+              <Link href="/about">
+                <a>
+                  <li>커피 사주기</li>
+                </a>
+              </Link>
             </ul>
           </div>
         </div>

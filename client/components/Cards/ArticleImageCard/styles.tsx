@@ -20,6 +20,7 @@ export const ArticleImageCardWrapper = styled.div`
     background: ${RGB_BLACK(0.45)};
     ${tw`absolute bottom-0 left-0 w-full p-2 leading-5`}
     h3 {
+      ${tw`mb-2`}
       ${FONT_STYLE(0.78, false, WHITE_COLOR)};
     }
     h4 {

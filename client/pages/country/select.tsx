@@ -1,9 +1,9 @@
 import React, { FC, useCallback, useMemo, useState } from "react";
 import AutoCompleteForm from "@components/AutoCompleteForm";
-import CountryList from "@components/CountryList";
+import CountryList from "@components/CountryPreviewSlide";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
-import { FLEX_STYLE, toastErrorMessage, WHITE_STYLE } from "config";
+import { FLEX_STYLE, noRevalidate, toastErrorMessage } from "config";
 import { ICountry } from "@typings/db";
 import styled from "@emotion/styled";
 import router from "next/router";
@@ -11,7 +11,7 @@ import LGLayout from "@layout/LGLayout";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
-import MainCountryAllview from "@sections/MainPage/MainCountryAllview";
+import MainCountryAllview from "@components/CountryAllview";
 import tw from "twin.macro";
 
 const GobackBtn = styled.div`
@@ -44,10 +44,15 @@ const AutoCompleteWrapper = styled.div`
   }
 `;
 
-interface IProps {}
+interface IProps {
+  initialCountries: ICountry[];
+}
 
-const select: FC<IProps> = () => {
-  const { data: countries, error, revalidate } = useSWR<ICountry[]>("/country", fetcher);
+const select: FC<IProps> = ({ initialCountries }) => {
+  const { data: countries } = useSWR<ICountry[]>("/country", fetcher, {
+    initialData: initialCountries,
+    ...noRevalidate,
+  });
   const [selectedCountry, setCountry] = useState("");
   const countryOptions = useMemo(
     () =>
@@ -90,19 +95,17 @@ const select: FC<IProps> = () => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ req, res, ...etc }) => {
-      const cookie = req ? req.headers.cookie : "";
-      axios.defaults.headers.Cookie = "";
-      if (req && cookie) {
-        axios.defaults.headers.Cookie = cookie;
-      }
-      await store.dispatch(getUserInfoAction());
-      return {
-        props: {},
-      };
-    }
-);
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, res }) => {
+  const cookie = req ? req.headers.cookie : "";
+  axios.defaults.headers.Cookie = "";
+  if (req && cookie) {
+    axios.defaults.headers.Cookie = cookie;
+  }
+  await store.dispatch(getUserInfoAction());
+  const initialCountries = await fetcher(`/country`);
+  return {
+    props: { initialCountries },
+  };
+});
 
 export default select;

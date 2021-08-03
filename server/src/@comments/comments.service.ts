@@ -29,9 +29,10 @@ export class CommentsService {
 
   async createComment(form: CommentRequestDto, userId: number) {
     const moment = await this.MomentsRepository.findOne({
+      relations: ['country'],
       where: { id: form.momentId },
     });
-    if (moment) {
+    if (!moment) {
       throw new NotFoundException('모멘트를 찾지 못했습니다.');
     }
     const newComment = new Comments();
@@ -44,7 +45,7 @@ export class CommentsService {
     }
     await this.commentsRepository.save(newComment);
     await this.NoticesRepository.save({
-      header: `${moment.code}/${moment.id}번모멘트/댓글`,
+      header: `${moment.country.name}/${moment.id}번모멘트/댓글`,
       code: moment.code,
       userId: userId,
       momentId: moment.id,

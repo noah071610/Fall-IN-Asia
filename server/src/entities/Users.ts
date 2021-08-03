@@ -19,6 +19,7 @@ import { SubComments } from './SubComments';
 import { StoryLike } from './StoryLike';
 import { Follow } from './Follow';
 import { CommentLike } from './CommentLike';
+import { Articles } from './Articles';
 
 @Index('email', ['email'], { unique: true })
 @Entity({ schema: 'travelover', name: 'users' })
@@ -129,6 +130,11 @@ export class Users {
     cascade: true,
   })
   stories: Stories[];
+
+  @OneToMany(() => Articles, (articles) => articles.user, {
+    cascade: true,
+  })
+  articles: Articles[];
 
   @OneToMany(() => Comments, (comments) => comments.user, {
     cascade: true,

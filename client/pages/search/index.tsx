@@ -74,10 +74,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (req && cookie) {
         axios.defaults.headers.Cookie = cookie;
       }
-
       await store.dispatch(getUserInfoAction());
       const searchPosts = await fetcher(`/search/${encodeURIComponent(query?.keyword as string)}`);
-
       return {
         props: { searchPosts },
       };

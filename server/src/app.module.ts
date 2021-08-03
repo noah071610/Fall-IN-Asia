@@ -14,8 +14,10 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { StoriesModule } from './@stories/stories.module';
 import { CommentsModule } from './@comments/comments.module';
-import { Stories } from './entities/Stories';
+import { ArticlesModule } from './@articles/articles.module';
 import { Moments } from './entities/Moments';
+import { Stories } from './entities/Stories';
+import { Notices } from './entities/Notices';
 
 @Module({
   imports: [
@@ -24,7 +26,7 @@ import { Moments } from './entities/Moments';
     MorganModule,
     UsersModule,
     TypeOrmModule.forRoot(ormconfig),
-    TypeOrmModule.forFeature([Moments, Stories]),
+    TypeOrmModule.forFeature([Moments, Stories, Notices]),
     CountriesModule,
     MomentsModule,
     StoriesModule,
@@ -34,6 +36,7 @@ import { Moments } from './entities/Moments';
       serveRoot: '/uploads',
     }),
     CommentsModule,
+    ArticlesModule,
   ],
   controllers: [AppController],
   providers: [

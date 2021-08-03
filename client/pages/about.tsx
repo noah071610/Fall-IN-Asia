@@ -1,9 +1,15 @@
 import React, { FC, useState } from "react";
 import styled from "@emotion/styled";
-import LGLayout from "@layout/LGLayout";
-import { LG_SIZE } from "config";
+import { BORDER_THIN, FLEX_STYLE, LG_SIZE } from "config";
 import tw from "twin.macro";
 import { Divider } from "antd";
+import { GithubFilled, InstagramFilled } from "@ant-design/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import router from "next/router";
+import { wrapper } from "configureStore";
+import axios from "axios";
+import { getUserInfoAction } from "actions/user";
 
 export const AboutPageWrapper = styled.div`
   background: white;
@@ -17,7 +23,39 @@ export const AboutPageWrapper = styled.div`
     }
     ${tw`pt-24 pb-16 mx-auto`}
     .aboutme {
-      ${tw`pb-16`}
+      ${tw`pb-16 flex`}
+      gap:0 2rem;
+      img {
+        ${tw`w-48 h-48 rounded-full`}
+      }
+      h3 {
+        ${tw`text-2xl font-bold mb-6`}
+      }
+      p {
+        ${tw`leading-6 mb-4`}
+      }
+      ul {
+        ${tw``}
+        li {
+          ${tw`mr-3`}
+          .anticon {
+            ${tw`text-2xl text-gray-300`}
+          }
+          &:hover {
+            .anticon {
+              ${tw`text-gray-500`}
+            }
+          }
+        }
+      }
+      .aboutme-btn-wrapper {
+        ${tw`mt-4`}
+        ${FLEX_STYLE("center", "center")};
+        button {
+          ${tw`ml-2 rounded-xl py-2 px-6`};
+          ${BORDER_THIN("border")};
+        }
+      }
     }
     .policy {
       ${tw` leading-8`}
@@ -34,7 +72,46 @@ const about: FC<IProps> = () => {
         <Divider style={{ marginBottom: "2rem" }} orientation="left">
           <h2>About us</h2>
         </Divider>
-        <div className="aboutme">안녕하세요 장현수 입니다.</div>
+        <div className="aboutme">
+          <div>
+            <img
+              src="https://user-images.githubusercontent.com/74864925/127884325-018d43e0-881c-4d70-baa8-145fc9098514.jpg"
+              alt=""
+            />
+            <div className="aboutme-btn-wrapper">
+              <button onClick={() => router.push("/news/post")}>기사 올리기</button>
+            </div>
+          </div>
+          <div>
+            <h3>안녕하세요. 개발자 장현수 입니다.</h3>
+            <p>
+              관광통역사 국가자격증 영어와 일본어 2개, 국외여행인솔자 자격증을 보유중이며 통역가이드
+              및 호텔 지배인으로 일했었고 지금은 여행을 너무 사랑하는 개발자로 살아가고있어요!
+            </p>
+            <ul>
+              <li>
+                <a href="mailto:noah071610@naver.com">
+                  <FontAwesomeIcon className="anticon" icon={faEnvelope} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/salmonchobab/"
+                  target="_blac
+                "
+                  rel="noreferrer"
+                >
+                  <InstagramFilled />
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/noah071610" rel="noreferrer">
+                  <GithubFilled />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
         <Divider style={{ marginBottom: "2rem" }} orientation="left">
           <h2 id="policy">Policy</h2>
         </Divider>
@@ -105,5 +182,12 @@ const about: FC<IProps> = () => {
     </AboutPageWrapper>
   );
 };
+
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+  await store.dispatch(getUserInfoAction());
+  return {
+    props: {},
+  };
+});
 
 export default about;

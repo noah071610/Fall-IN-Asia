@@ -5,7 +5,8 @@ import { mainSlice } from "slices/main";
 import tw from "twin.macro";
 
 const OverlayWrapper = styled.div`
-  ${tw`fixed top-0 left-0 w-screen h-screen bg-white opacity-40 z-20`}
+  ${tw`fixed top-0 left-0 w-screen h-screen bg-white opacity-40`}
+  z-index:80;
 `;
 interface IProps {}
 

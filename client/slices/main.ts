@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { searchWordAction } from "actions/main";
+import { deleteNoticeAction, searchWordAction } from "actions/main";
 
 export interface MainState {
   searchWord: string;
@@ -12,6 +12,9 @@ export interface MainState {
   searchWordLoading: boolean;
   searchWordDone: boolean;
   searchWordError: boolean;
+  deleteNoticeLoading: boolean;
+  deleteNoticeDone: boolean;
+  deleteNoticeError: boolean;
 }
 
 const mainState: MainState = {
@@ -25,6 +28,9 @@ const mainState: MainState = {
   searchWordLoading: false,
   searchWordDone: false,
   searchWordError: false,
+  deleteNoticeLoading: false,
+  deleteNoticeDone: false,
+  deleteNoticeError: false,
 };
 
 export const mainSlice = createSlice({
@@ -90,6 +96,11 @@ export const mainSlice = createSlice({
       state.searchWordDone = false;
       state.searchWordError = false;
     },
+    deleteNoticeClear(state) {
+      state.deleteNoticeLoading = false;
+      state.deleteNoticeDone = false;
+      state.deleteNoticeError = false;
+    },
   },
   extraReducers: (builder) =>
     builder
@@ -104,5 +115,16 @@ export const mainSlice = createSlice({
       .addCase(searchWordAction.rejected, (state) => {
         state.searchWordLoading = false;
         state.searchWordError = true;
+      })
+      .addCase(deleteNoticeAction.pending, (state) => {
+        state.deleteNoticeLoading = true;
+      })
+      .addCase(deleteNoticeAction.fulfilled, (state) => {
+        state.deleteNoticeLoading = false;
+        state.deleteNoticeDone = true;
+      })
+      .addCase(deleteNoticeAction.rejected, (state) => {
+        state.deleteNoticeLoading = false;
+        state.deleteNoticeError = true;
       }),
 });

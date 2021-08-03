@@ -1,6 +1,5 @@
 import { EditOutlined } from "@ant-design/icons";
-import EditorWithoutImage from "@components/PostingEditor/EditorWithoutImage";
-import ImageDragger from "@components/PostingEditor/ImageDragger";
+import ImageDragger from "@components/Editor/ImageDragger";
 import { momentCreateAction, momentEditAction } from "actions/moment";
 import { Select } from "antd";
 import { toastErrorMessage } from "config";
@@ -11,9 +10,13 @@ import router, { useRouter } from "next/router";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { ICountry, IMoment } from "@typings/db";
-import AutoCompleteSearch from "@components/AutoCompleteForm";
+import AutoCompleteForm from "@components/AutoCompleteForm";
 import { RootState } from "slices";
+import dynamic from "next/dynamic";
 const { Option } = Select;
+
+const EditorWithoutImage = dynamic(import("@components/Editor/EditorWithoutImage"));
+
 interface IProps {
   editPost?: IMoment;
 }
@@ -133,7 +136,7 @@ const MomentPostingForm: FC<IProps> = ({ editPost }) => {
         <>
           <div className="posting-editor">
             <div className="selector-wrapper">
-              <AutoCompleteSearch
+              <AutoCompleteForm
                 countryOptions={countryOptions}
                 selectedCountry={selectedCountry}
                 setCountry={setCountry}

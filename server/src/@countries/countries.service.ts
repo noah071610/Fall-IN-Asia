@@ -77,27 +77,38 @@ export class CountriesService {
   }
 
   async getCountryInfo(code: string, type: string) {
+    let type2url = '';
+    switch (type) {
+      case 'covidInfo':
+        type2url = 'CountryCovid19SafetyServiceNew/getCountrySafetyNewsListNew';
+        break;
+      case 'safeInfo':
+        type2url = "'CountrySafetyService2/getCountrySafetyList2";
+        break;
+
+      default:
+        break;
+    }
+    if (!type2url) {
+      throw new NotFoundException('정보를 불러오는데 실패했습니다.');
+    }
     const country_info = await axios
       .get(
-        `http://apis.data.go.kr/1262000/${type.replace('_', '/')}?serviceKey=${
-          process.env.OPEN_DATA_API_KEY
-        }&returnType=JSON&numOfRows=10&pageNo=1&cond[country_iso_alp2::EQ]=${code}`,
+        `http://apis.data.go.kr/1262000/${type2url}?serviceKey=${process.env.OPEN_DATA_API_KEY}&returnType=JSON&numOfRows=10&pageNo=1&cond[country_iso_alp2::EQ]=${code}`,
       )
       .then((res) => {
-        if (
-          type === 'CountryCovid19SafetyServiceNew_getCountrySafetyNewsListNew'
-        ) {
+        if (type === 'covidInfo') {
           return {
             content: res.data.data[0].html_origin_cn,
           };
         }
-        if (type === 'CountrySafetyService2_getCountrySafetyList2') {
+        if (type === 'safeInfo') {
           return {
             content: res.data.data[0].txt_origin_cn,
           };
         }
       })
-      .catch((error) => {
+      .catch(() => {
         throw new InternalServerErrorException(
           '서버에 오류가 발생했습니다. 불편을 드려 죄송합니다.',
         );

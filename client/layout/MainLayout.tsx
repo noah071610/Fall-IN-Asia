@@ -2,8 +2,8 @@ import React, { FC } from "react";
 import styled from "@emotion/styled";
 import { FONT_STYLE, GRAY_COLOR, XLG_SIZE } from "config";
 import tw from "twin.macro";
-import MainNavMenu from "@sections/MainPage/MainNavMenu";
-import MainAside from "@sections/MainPage/MainAside";
+import MainAsideLeftNav from "@sections/MainPage/MainAsideLeftNav";
+import MainAsideRightList from "@sections/MainPage/MainAsideRightList";
 import MainPoster from "@sections/MainPage/MainPoster";
 const MainLayoutWrapper = styled.div`
   background: ${GRAY_COLOR};
@@ -31,9 +31,9 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     <MainLayoutWrapper>
       <MainPoster />
       <div className="layout">
-        <MainNavMenu />
+        <MainAsideLeftNav />
         <div className="layout-middle">{children}</div>
-        <MainAside />
+        <MainAsideRightList />
       </div>
     </MainLayoutWrapper>
   );

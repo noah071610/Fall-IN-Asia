@@ -183,12 +183,9 @@ export class MomentsService {
       where: { code: form.code },
     });
     const editPost = await this.MomentsRepository.createQueryBuilder('moments')
-      .update('moments')
+      .update()
       .set({
-        type: form.type,
         content: form.content,
-        code: form.code,
-        country: <any>{ id: country.id },
       })
       .where('id = :id', { id: parseInt(form.momentId) })
       .execute();

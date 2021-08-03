@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import styled from "@emotion/styled";
 import LGLayout from "@layout/LGLayout";
-import Editor from "@components/PostingEditor/Editor";
+import Editor from "@components/Editor/Editor";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import {
@@ -18,11 +18,12 @@ import AutoCompleteForm from "@components/AutoCompleteForm";
 import useSWR from "swr";
 import { ICoordinate, ICountry } from "@typings/db";
 import fetcher from "utils/fetcher";
-import ImageDragger from "@components/PostingEditor/ImageDragger";
+import ImageDragger from "@components/Editor/ImageDragger";
 import useInput from "@hooks/useInput";
 import { toastConfirmMessage } from "@components/ConfirmToastify";
 import { storySlice } from "slices/story";
 import tw from "twin.macro";
+import { getUserInfoAction } from "actions/user";
 
 export const StoryPostWrapper = styled.div`
   .title-input {
@@ -47,7 +48,7 @@ export const StoryPostWrapper = styled.div`
 interface IProps {}
 
 const post: FC<IProps> = () => {
-  const { user } = useSelector((state: RootState) => state.user);
+  const { user, getUserInfoDone } = useSelector((state: RootState) => state.user);
   const { storyCreateDone, editStory, storyEditDone } = useSelector(
     (state: RootState) => state.story
   );
@@ -71,6 +72,10 @@ const post: FC<IProps> = () => {
       }),
     [countries]
   );
+
+  useEffect(() => {
+    dispatch(getUserInfoAction());
+  }, []);
 
   useEffect(() => {
     if (editStory) {
@@ -101,11 +106,12 @@ const post: FC<IProps> = () => {
   }, [storyCreateDone, storyEditDone]);
 
   useEffect(() => {
-    if (!user) {
-      router.back();
+    if (getUserInfoDone) {
+      if (!user) {
+        router.back();
+      }
     }
-  }, [user]);
-  console.log(upImg);
+  }, [user, getUserInfoDone]);
 
   const onClickSubmit = useCallback(() => {
     if (!title) {

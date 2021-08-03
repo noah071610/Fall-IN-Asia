@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
-import { noRevalidate, toastSuccessMessage } from "config";
+import { noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import MomentList from "@sections/MainPage/MomentList";
@@ -10,19 +10,23 @@ import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
 import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
 import MainLayout from "@layout/MainLayout";
-import MainTopArticleSlide from "@sections/MainPage/MainTopArticleSlide";
+import MainTopArticleSlide from "@sections/MainPage/MainPopularArticleSlide";
 import { momentSlice } from "slices/moment";
 import router, { useRouter } from "next/router";
 import { ICountry, IMoment } from "@typings/db";
 import MainCountryAnnouncement from "@sections/MainPage/MainCountryAnnouncement";
 
-const index = () => {
+interface IProps {
+  initialMoments: IMoment[][];
+  initialCountry: ICountry;
+}
+
+const index: FC<IProps> = ({ initialMoments, initialCountry }) => {
   const dispatch = useDispatch();
   const { query } = useRouter();
   const [filter, setFilter] = useState("");
   const {
     data: moments,
-    size,
     revalidate,
     setSize,
   } = useSWRInfinite<IMoment[]>(
@@ -30,16 +34,20 @@ const index = () => {
       `/moment?code=${query?.code || ""}&page=${index + 1}&filter=${filter}&type=${
         query?.type || ""
       }`,
-    fetcher
+    fetcher,
+    {
+      initialData: initialMoments,
+      ...noRevalidate,
+    }
   );
-  const { data: country, error } = useSWR<ICountry>(
+  const { data: country } = useSWR<ICountry>(
     query?.code ? `/country/${query?.code}` : null,
     fetcher,
-    noRevalidate
+    {
+      initialData: initialCountry,
+      ...noRevalidate,
+    }
   );
-  if (error) {
-    router.push("/");
-  }
   const { momentCreateDone, momentLikeDone, momentDislikeDone, momentDeleteDone } = useSelector(
     (state: RootState) => state.moment
   );
@@ -91,19 +99,19 @@ const index = () => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ req, res, ...etc }) => {
-      const cookie = req ? req.headers.cookie : "";
-      axios.defaults.headers.Cookie = "";
-      if (req && cookie) {
-        axios.defaults.headers.Cookie = cookie;
-      }
-      await store.dispatch(getUserInfoAction());
-      return {
-        props: {},
-      };
-    }
-);
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, params }) => {
+  const cookie = req ? req.headers.cookie : "";
+  axios.defaults.headers.Cookie = "";
+  if (req && cookie) {
+    axios.defaults.headers.Cookie = cookie;
+  }
+  await store.dispatch(getUserInfoAction());
+  let initialMoments = await fetcher(`/moment?code=${params?.code}&page=1`);
+  initialMoments = [initialMoments];
+  const initialCountry = await fetcher(`/country/${params?.code}`);
+  return {
+    props: { initialMoments, initialCountry },
+  };
+});
 
 export default index;

@@ -3,6 +3,8 @@ import styled from "@emotion/styled";
 import router from "next/router";
 import tw from "twin.macro";
 import { FLEX_STYLE } from "config";
+import { wrapper } from "configureStore";
+import { getUserInfoAction } from "actions/user";
 
 export const NotFoundWrapper = styled.div`
   ${tw`pt-16`}
@@ -27,5 +29,12 @@ const notFound: FC<IProps> = () => {
     </NotFoundWrapper>
   );
 };
+
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+  await store.dispatch(getUserInfoAction());
+  return {
+    props: {},
+  };
+});
 
 export default notFound;

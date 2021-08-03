@@ -13,6 +13,7 @@ import {
 } from 'typeorm';
 import { Countries } from './Countries';
 import { Images } from './Images';
+import { Users } from './Users';
 
 @Entity({ schema: 'travelover', name: 'articles' })
 export class Articles {
@@ -25,6 +26,24 @@ export class Articles {
   })
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
+
+  @IsNumber()
+  @ApiProperty({
+    example: 4,
+    description: 'ranking number for article recommendation',
+    nullable: true,
+  })
+  @Column({ type: 'int', name: 'ranking', nullable: true })
+  ranking: number;
+
+  @IsString()
+  @ApiProperty({
+    example: '지금 인기!',
+    description: 'ranking number for article recommendation',
+    nullable: true,
+  })
+  @Column('varchar', { name: 'label', nullable: true })
+  label: string;
 
   @IsString()
   @IsNotEmpty()
@@ -113,4 +132,11 @@ export class Articles {
   })
   @JoinColumn({ name: 'country', referencedColumnName: 'id' })
   country: Countries;
+
+  @ManyToOne(() => Users, (users) => users.articles, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'user', referencedColumnName: 'id' })
+  user: Users;
 }

@@ -1,15 +1,13 @@
 import { IStory } from "@typings/db";
 import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import { useRef } from "react";
-import router, { useRouter } from "next/router";
 import useOnScreen from "@hooks/useOnScreen";
 import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
-import styled from "@emotion/styled";
 import { GRID_STYLE } from "config";
 import tw from "twin.macro";
 import { css } from "@emotion/react";
 const StoryArticleListWrapper = (grid: number, gap: string) => css`
-  ${tw`pt-16`}
+  ${tw`pt-16 relative`}
   ${GRID_STYLE(gap, `repeat(${grid},1fr)`)};
 `;
 interface IProps {
@@ -40,7 +38,8 @@ const StoryArticleList: FC<IProps> = ({ stories, grid, gap, setSize }) => {
 
   return (
     <>
-      <div css={StoryArticleListWrapper(grid, gap)} id="article_list">
+      <div css={StoryArticleListWrapper(grid, gap)}>
+        <span id="article_list" className="anchor-offset-controller" />
         {storiesData?.map((v: IStory, i) => {
           return <ArticleColumnCard key={i} story={v} />;
         })}

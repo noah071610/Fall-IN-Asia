@@ -15,7 +15,7 @@ const edit: FC<IProps> = () => {
   const { editPost, momentEditDone } = useSelector((state: RootState) => state.moment);
 
   useEffect(() => {
-    if (!editPost) {
+    if (!editPost || !user) {
       router.back();
     }
   }, [user, editPost]);

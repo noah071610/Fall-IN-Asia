@@ -4,7 +4,6 @@ import { MainCountryAnnouncementWrapper } from "./styles";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { noRevalidate } from "config";
-import { Divider } from "antd";
 import ReactHtmlParser from "react-html-parser";
 
 interface IProps {
@@ -17,20 +16,20 @@ const MainCountryAnnouncement: FC<IProps> = ({ country }) => {
   const [covid, setCovid] = useState(false);
   const [alert, setAlert] = useState(false);
   const { data, error, revalidate } = useSWR<any>(
-    type ? `/country/info/${country?.code}/${type || ""}` : null,
+    type ? `/country/info/${country?.code}/${type}` : null,
     fetcher,
     noRevalidate
   );
 
   const onClickCovid = useCallback(() => {
     setWarning(false);
-    setType("CountryCovid19SafetyServiceNew_getCountrySafetyNewsListNew");
+    setType("covidInfo");
     setCovid((prev) => !prev);
     setAlert(false);
   }, []);
   const onClickAlert = useCallback(() => {
     setWarning(false);
-    setType("CountrySafetyService2_getCountrySafetyList2");
+    setType("safeInfo");
     setCovid(false);
     setAlert((prev) => !prev);
   }, []);

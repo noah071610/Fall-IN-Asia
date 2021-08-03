@@ -348,5 +348,13 @@ textarea {
     margin-left: 20rem;
   }
 }
+.anchor-offset-parent {
+  position:relative;
+}
+
+.anchor-offset-controller {
+  position:absolute; 
+  top:-6rem;
+}
 
 `;

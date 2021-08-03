@@ -149,11 +149,11 @@ export const searchOptions = [
   });
 
 export const newsPageNavList = [
-  { name: "관광뉴스", value: "news" },
-  { name: "트렌드", value: "trand" },
-  { name: "쇼핑", value: "shopping" },
-  { name: "이색체험", value: "experience" },
-  { name: "이벤트", value: "event" },
+  { name: "관광뉴스", value: "관광뉴스" },
+  { name: "트렌드", value: "트렌드" },
+  { name: "쇼핑", value: "쇼핑" },
+  { name: "이색체험", value: "이색체험" },
+  { name: "이벤트", value: "이벤트" },
 ];
 
 export const searchPageNavList = [

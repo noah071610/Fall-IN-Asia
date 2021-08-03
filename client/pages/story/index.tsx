@@ -17,13 +17,16 @@ import router, { useRouter } from "next/router";
 import useSWR, { useSWRInfinite } from "swr";
 import { ICountry, IStory } from "@typings/db";
 import fetcher from "utils/fetcher";
-import CountryList from "@components/CountryList";
-import StoryMainPoster from "@sections/StoryPage/StoryMainPoster";
+import CountryList from "@components/CountryPreviewSlide";
+import StoryMainPoster from "@sections/StoryPage/StoryPoster";
 import tw from "twin.macro";
-import MainCountryAllview from "@sections/MainPage/MainCountryAllview";
+import MainCountryAllview from "@components/CountryAllview";
 import TopNavigation from "@components/TopNavigation";
 import StoryArticleList from "@sections/StoryPage/StoryArticleList";
 import ArticleCard from "@components/Cards/ArticleCard";
+import { useSelector } from "react-redux";
+import { RootState } from "slices";
+
 const Wrapper = styled.div`
   padding-top: 4rem;
   .country-list-wrapper {
@@ -31,7 +34,7 @@ const Wrapper = styled.div`
     width:${XLG_SIZE};
   }
   .story-top-section {
-    ${tw`pt-8`}
+    ${tw`pt-16`}
   }
   .story-post-btn-wrapper {
     ${FLEX_STYLE("flex-end", "center")};
@@ -61,20 +64,31 @@ const Wrapper = styled.div`
     }
   }
 `;
-interface IProps {}
 
-const index: FC<IProps> = () => {
+interface IProps {
+  initiaStories: IStory[][];
+  initialPopularStories: IStory[];
+}
+
+const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
   const { query } = useRouter();
+  const { user } = useSelector((state: RootState) => state.user);
   const [filter, setFilter] = useState("");
   const [onAllCountries, setAllCountries] = useState(false);
-  const { data: popularStories } = useSWR<IStory[]>("/story/popular", fetcher);
+  const { data: popularStories } = useSWR<IStory[]>("/story/popular", fetcher, {
+    initialData: initialPopularStories,
+    ...noRevalidate,
+  });
   const { data: stories, setSize } = useSWRInfinite<IStory[]>(
     (index) =>
       `/story?page=${index + 1}&code=${query?.country || ""}&filter=${
         filter === "country" ? "" : filter
       }`,
     fetcher,
-    noRevalidate
+    {
+      initialData: initiaStories,
+      ...noRevalidate,
+    }
   );
 
   const storyPageNav = useMemo(() => {
@@ -129,11 +143,13 @@ const index: FC<IProps> = () => {
       )}
       <TopNavigation filter={filter} onClickList={onClickList} list={storyPageNav} />
       <XLGLayout>
-        <div className="story-post-btn-wrapper">
-          <button className="story-post-btn" onClick={() => router.push("/story/post")}>
-            연대기 올리기
-          </button>
-        </div>
+        {user && (
+          <div className="story-post-btn-wrapper">
+            <button className="story-post-btn" onClick={() => router.push("/story/post")}>
+              연대기 올리기
+            </button>
+          </div>
+        )}
         <div className="story-top-section">
           {onAllCountries ? (
             <MainCountryAllview isMain={false} countries={countries} />
@@ -166,8 +182,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         axios.defaults.headers.Cookie = cookie;
       }
       await store.dispatch(getUserInfoAction());
+      let initialStories = await fetcher(`/story?page=1`);
+      initialStories = [initialStories];
+      let initialPopularStories = await fetcher(`/story/popular`);
       return {
-        props: {},
+        props: { initialStories, initialPopularStories },
       };
     }
 );

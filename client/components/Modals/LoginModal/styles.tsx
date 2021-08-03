@@ -3,8 +3,9 @@ import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, GRID_STYLE, RGB_BLACK, WHITE_STYLE
 import tw from "twin.macro";
 
 export const LoginModalWrapper = styled.div`
-  ${tw`fixed top-1/2 left-1/2 py-8 px-12 z-30 shadow-lg bg-white rounded-2xl`}
-  transform:translate(-50%,-50%);
+  ${tw`fixed top-1/2 left-1/2 py-8 px-12 shadow-lg bg-white rounded-2xl`}
+  z-index:90;
+  transform: translate(-50%, -50%);
   .image-wrapper {
     ${FLEX_STYLE("center", "center")};
     img {

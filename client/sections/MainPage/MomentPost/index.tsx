@@ -1,8 +1,7 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { MomentPostWrapper } from "./styles";
-import CommentForm from "@components/CommentForm";
 import MomentPostTitle from "@sections/MainPage/MomentPostTitle";
-import Comment from "@components/Comment";
+import Comment from "@components/Comments/Comment";
 import { IImage, IMoment } from "@typings/db";
 import ReactHtmlParser from "react-html-parser";
 import {
@@ -19,6 +18,7 @@ import { RootState } from "slices";
 import { toastErrorMessage } from "config";
 import { Image } from "antd";
 import Slider from "react-slick";
+import CommentForm from "@components/Comments/CommentForm";
 
 interface IProps {
   moment: IMoment;
@@ -102,21 +102,13 @@ const moment: FC<IProps> = ({ moment }) => {
           <span className="count">{moment?.comments?.length}</span>
           <span>댓글</span>
         </li>
-        {liked ? (
-          <li onClick={onClickDislikeBtn} className="liked">
-            <HeartFilled />
-            <span className="count">{moment?.likedUser?.length}</span>
-            <span>좋아요</span>
-          </li>
-        ) : (
-          <li onClick={onClickLikeBtn}>
-            <HeartOutlined />
-            <span className="count">{moment?.likedUser?.length}</span>
-            <span>좋아요</span>
-          </li>
-        )}
+        <li onClick={liked ? onClickDislikeBtn : onClickLikeBtn} className={liked ? "liked" : ""}>
+          {liked ? <HeartFilled /> : <HeartOutlined />}
+          <span className="count">{moment?.likedUser?.length}</span>
+          <span>좋아요</span>
+        </li>
       </ul>
-      <CommentForm />
+      <CommentForm isStory={false} />
       {moment?.comments?.map((v, i) => {
         return <Comment key={i} comment={v} />;
       })}

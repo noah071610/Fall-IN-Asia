@@ -6,6 +6,7 @@ import { momentSlice } from "./moment";
 import { storySlice } from "./story";
 import { studySlice } from "./study";
 import { commentSlice } from "./comment";
+import { articleSlice } from "./article";
 
 export const reducer = (state: any = {}, action: any) => {
   if (action.type === HYDRATE) {
@@ -21,6 +22,7 @@ export const reducer = (state: any = {}, action: any) => {
     story: storySlice.reducer,
     study: studySlice.reducer,
     comment: commentSlice.reducer,
+    article: articleSlice.reducer,
   })(state, action);
 };
 
