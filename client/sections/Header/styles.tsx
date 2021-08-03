@@ -49,5 +49,11 @@ export const HeaderWrapper = (headerDownSize: boolean) => css`
     .list-icon {
       ${tw`rounded-full hover:bg-gray-100`}
     }
+    .notice-icon {
+      ${tw`relative`}
+      .circle {
+        ${tw`absolute bottom-0 right-0 text-xs text-green-300`}
+      }
+    }
   }
 `;

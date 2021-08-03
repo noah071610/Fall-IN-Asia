@@ -1,4 +1,4 @@
-import { FC, KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
+import { FC, KeyboardEvent, memo, useCallback, useEffect, useRef, useState } from "react";
 import { HeaderWrapper } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "slices";
@@ -6,7 +6,7 @@ import LoginModal from "@components/Modals/LoginModal";
 import Link from "next/link";
 import { mainSlice } from "slices/main";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
 import Overlay from "@components/Modals/Overlay";
 import SearchPopUp from "@components/Popups/SearchPopUp";
 import NoticePopUp from "@components/Popups/NoticePopUp";
@@ -16,6 +16,7 @@ import { userSlice } from "slices/user";
 import useInput from "@hooks/useInput";
 import router from "next/router";
 import { throttle } from "lodash";
+import { INotice } from "@typings/db";
 
 interface HeaderProps {}
 
@@ -24,7 +25,8 @@ const Header: FC<HeaderProps> = () => {
   const dispatch = useDispatch();
   const [searchWord, onChangeSearchWord, setSearchWord] = useInput("");
   const [headerDownSize, setHeaderDownSize] = useState(false);
-  const { user, logoutDone } = useSelector((state: RootState) => state.user);
+  const [isAllReadNotices, setIsAllReadNotices] = useState(true);
+  const { user, logoutDone, readNoticeDone } = useSelector((state: RootState) => state.user);
 
   const { onLoginModal, onProfilePopUp, onNoticePopUp, onSearchPopUp } = useSelector(
     (state: RootState) => state.main
@@ -94,6 +96,22 @@ const Header: FC<HeaderProps> = () => {
     [searchWord]
   );
 
+  useEffect(() => {
+    if (user) {
+      if (readNoticeDone) {
+        setIsAllReadNotices(true);
+        dispatch(userSlice.actions.readNoticeClear());
+      } else {
+        user?.notices?.find((v: INotice) => {
+          if (v.readAt === null) {
+            setIsAllReadNotices(false);
+            return;
+          }
+        });
+      }
+    }
+  }, [user, readNoticeDone]);
+
   return (
     <header css={HeaderWrapper(headerDownSize)}>
       <ul className="header-left">
@@ -138,9 +156,10 @@ const Header: FC<HeaderProps> = () => {
         </li>
         {user ? (
           <>
-            <li className="header-list list-icon">
+            <li className="header-list list-icon notice-icon">
               <a onClick={onClickNoticePopUp}>
                 <FontAwesomeIcon className="anticon" icon={faBell} />
+                {!isAllReadNotices && <FontAwesomeIcon className="circle" icon={faCircle} />}
               </a>
               {onNoticePopUp && <NoticePopUp />}
             </li>
@@ -167,4 +186,4 @@ const Header: FC<HeaderProps> = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

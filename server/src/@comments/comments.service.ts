@@ -29,7 +29,7 @@ export class CommentsService {
 
   async createComment(form: CommentRequestDto, userId: number) {
     const moment = await this.MomentsRepository.findOne({
-      relations: ['country'],
+      relations: ['country', 'user'],
       where: { id: form.momentId },
     });
     if (!moment) {
@@ -51,6 +51,19 @@ export class CommentsService {
       momentId: moment.id,
       content: `${form.content.slice(0, 10)}...을 작성했습니다.`,
     });
+    if (moment.user.id !== userId) {
+      await this.NoticesRepository.save({
+        header: `${moment.country.name}/${moment.id}번모멘트/댓글`,
+        code: moment.code,
+        userId: moment.user.id,
+        momentId: moment.id,
+        content: `${moment.content
+          .slice(0, 30)
+          .replace(/(<([^>]+)>)/gi, '')
+          .replace(/&.*;/gi, '')
+          .slice(0, 10)}... 에 댓글이 달렸습니다.`,
+      });
+    }
     return true;
   }
 

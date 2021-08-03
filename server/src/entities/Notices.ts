@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmpty, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsDate,
+  IsEmpty,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+} from 'class-validator';
 import {
   Column,
   CreateDateColumn,
@@ -83,11 +89,20 @@ export class Notices {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    example: '新しいお知らせがあります',
+    example: '12번 포스트에 댓글을 남기셨습니다.',
     description: 'notice content',
   })
   @Column('varchar', { name: 'content' })
   content: string;
+
+  @IsDate()
+  @ApiProperty({
+    example: '2020/08/03',
+    description: 'if read notice , check date',
+    nullable: true,
+  })
+  @Column('date', { name: 'readAt', nullable: true })
+  readAt: Date;
 
   @CreateDateColumn()
   createdAt: Date;

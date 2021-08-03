@@ -95,7 +95,7 @@ export class MomentsService {
     if (!post) {
       throw new NotFoundException('가져올 게시물이 없습니다.');
     }
-    if (post) {
+    if (post && ip !== 0) {
       if (!viewObj[momentId]) {
         viewObj[momentId] = [];
       }

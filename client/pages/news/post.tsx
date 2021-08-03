@@ -12,11 +12,11 @@ import {
   toastSuccessMessage,
 } from "config";
 import { articleCreateAction, articleEditAction } from "actions/article";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import CountrySelectMap from "@components/Maps/CountrySelectMap";
 import AutoCompleteForm from "@components/AutoCompleteForm";
 import useSWR from "swr";
-import { ICoordinate, ICountry } from "@typings/db";
+import { ICoordinate, ICountry, IArticle } from "@typings/db";
 import fetcher from "utils/fetcher";
 import ImageDragger from "@components/Editor/ImageDragger";
 import useInput from "@hooks/useInput";
@@ -24,6 +24,9 @@ import { toastConfirmMessage } from "@components/ConfirmToastify";
 import { articleSlice } from "slices/article";
 import tw from "twin.macro";
 import { Select } from "antd";
+import { wrapper } from "configureStore";
+import axios from "axios";
+import { getUserInfoAction } from "actions/user";
 const { Option } = Select;
 
 export const ArticlePostWrapper = styled.div`
@@ -52,24 +55,28 @@ export const ArticlePostWrapper = styled.div`
 interface IProps {}
 
 const post: FC<IProps> = () => {
+  const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
-  const { articleCreateDone, editArticle, articleEditDone } = useSelector(
-    (state: RootState) => state.article
+  const { articleCreateDone, articleEditDone } = useSelector((state: RootState) => state.article);
+  const { data: article } = useSWR<IArticle>(
+    (query?.articleId as string) && `/article/${query?.articleId}`,
+    fetcher,
+    noRevalidate
   );
-  const [type, setType] = useState("타입 선택");
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher, noRevalidate);
+  const [type, setType] = useState("타입 선택");
   const dispatch = useDispatch();
   const [selectedCountry, setCountry] = useState("");
   const [title, onChangeTitle, setTitle] = useInput("");
-  const [label, onChangeLabel, setLabel] = useInput("");
+  const [label, onChangeLabel, setLabel] = useInput<Number | string>("");
   const [ranking, onChangeRanking, setRanking] = useInput("");
   const [region, setRegion] = useState("이름모를 어딘가");
   const [upImg, setUpImg] = useState("");
   const [content, setContent] = useState("");
-  const [editPostId, setEditPostId] = useState(null);
+  const [editPostId, setEditPostId] = useState<number | null>(null);
   const [marker, setMarker] = useState<ICoordinate>({
-    latitude: editArticle?.lat || 37.50529626491968,
-    longitude: editArticle?.lng || 126.98047832475031,
+    latitude: article?.lat || 37.50529626491968,
+    longitude: article?.lng || 126.98047832475031,
   });
 
   const countryOptions = useMemo(
@@ -81,15 +88,35 @@ const post: FC<IProps> = () => {
   );
 
   useEffect(() => {
-    if (editArticle) {
-      setRegion(editArticle?.region);
-      setTitle(editArticle?.title);
-      setContent(editArticle?.content);
-      setCountry(editArticle?.country?.name);
-      setEditPostId(editArticle?.id);
-      dispatch(articleSlice.actions.editArticleClear());
+    dispatch(getUserInfoAction());
+  }, []);
+
+  useEffect(() => {
+    if (article) {
+      setRegion(article?.region);
+      setTitle(article?.title);
+      setType(article?.type);
+      setContent(article?.content);
+      setCountry(article?.country?.name);
+      setEditPostId(article?.id);
+      setLabel(article?.label || "");
+      setRanking(article?.ranking || "");
     }
-  }, [editArticle]);
+  }, [article]);
+
+  useEffect(() => {
+    if (!user) {
+      router.back();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (article) {
+      if (user?.id !== article?.user?.id) {
+        router.back();
+      }
+    }
+  }, [user, article]);
 
   useEffect(() => {
     if (articleCreateDone || articleEditDone) {
@@ -133,10 +160,10 @@ const post: FC<IProps> = () => {
       form.append("image", upImg);
     }
     if (label) {
-      form.append("image", String(label));
+      form.append("label", String(label));
     }
     if (ranking) {
-      form.append("image", String(ranking));
+      form.append("ranking", String(ranking));
     }
     form.append("title", String(title));
     form.append("region", String(region));
@@ -158,7 +185,19 @@ const post: FC<IProps> = () => {
     } else {
       dispatch(articleCreateAction(form));
     }
-  }, [title, region, countryOptions, selectedCountry, content, upImg, marker, editPostId, type]);
+  }, [
+    title,
+    region,
+    countryOptions,
+    selectedCountry,
+    content,
+    upImg,
+    marker,
+    editPostId,
+    type,
+    label,
+    ranking,
+  ]);
 
   const handleTypeChange = useCallback((value: string) => {
     setType(value);
@@ -200,7 +239,6 @@ const post: FC<IProps> = () => {
         <h2 className="main-title">타입 지정</h2>
         <Select
           className="type-selector"
-          disabled={editPostId ? true : false}
           value={type}
           onChange={handleTypeChange}
           style={{ width: "180px" }}
@@ -213,8 +251,8 @@ const post: FC<IProps> = () => {
         </Select>
         <h2 className="main-title">지역 지정</h2>
         <CountrySelectMap
-          lat={editArticle?.lat}
-          lng={editArticle?.lng}
+          lat={article?.lat}
+          lng={article?.lng}
           marker={marker}
           setMarker={setMarker}
           setRegion={setRegion}
@@ -222,7 +260,7 @@ const post: FC<IProps> = () => {
         <h2 className="main-title">선택 지역</h2>
         <h3>{region}</h3>
         <h2 className="main-title">내용작성</h2>
-        <Editor prevContent={editArticle?.content} setContent={setContent} isStory={true} />
+        <Editor prevContent={article?.content} setContent={setContent} isStory={true} />
         <h2 className="main-title">
           {editPostId ? "썸네일 변경 (미선택시 기존 썸네일 사용)" : "썸네일 업로드"}
         </h2>

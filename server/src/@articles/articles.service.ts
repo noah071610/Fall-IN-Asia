@@ -119,10 +119,17 @@ export class ArticlesService {
   async editPost(
     form: ArticleRequestDto,
     file: Express.Multer.File,
-    isAdmin: boolean,
+    userId: boolean,
   ) {
-    if (!isAdmin) {
-      throw new UnauthorizedException('운영자만 수정 할 수 있습니다.');
+    if (!userId) {
+      throw new UnauthorizedException('운영자만 작성 할 수 있습니다.');
+    }
+    const user = await this.UsersRepository.findOne({
+      select: ['id', 'admin'],
+      where: { id: userId },
+    });
+    if (!user.admin) {
+      throw new UnauthorizedException('운영자만 작성 할 수 있습니다.');
     }
     const country = await this.CountriesRepository.findOne({
       where: { code: form.code },
@@ -152,9 +159,19 @@ export class ArticlesService {
     return await this.ArticlesRepository.save(editPost);
   }
 
-  async deletePost(articleId: number) {
+  async deletePost(articleId: number, userId: number) {
     if (!articleId) {
       throw new NotFoundException('게시물을 찾을 수 없습니다.');
+    }
+    if (!userId) {
+      throw new UnauthorizedException('운영자만 작성 할 수 있습니다.');
+    }
+    const user = await this.UsersRepository.findOne({
+      select: ['id', 'admin'],
+      where: { id: userId },
+    });
+    if (!user.admin) {
+      throw new UnauthorizedException('운영자만 작성 할 수 있습니다.');
     }
     return await this.ArticlesRepository.delete({
       id: articleId,

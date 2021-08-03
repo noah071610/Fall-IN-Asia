@@ -20,13 +20,10 @@ export const MomentCardWrapper = styled.div`
     .content {
       ${tw`cursor-pointer font-bold pl-1 pb-4 leading-7 hover:underline`}
     }
-    .one-image {
-      cursor: pointer;
-      padding-bottom: 1rem;
-      img {
-        border-radius: 15px;
-        width: 50%;
-        height: 300px;
+    .moment-image-wrapper {
+      ${tw`cursor-pointer mb-4`}
+      .moment-image {
+        ${tw`rounded-2xl w-32 h-32 mr-2`}
       }
     }
     .two-images {

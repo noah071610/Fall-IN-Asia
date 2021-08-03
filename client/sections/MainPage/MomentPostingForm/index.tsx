@@ -18,10 +18,10 @@ const { Option } = Select;
 const EditorWithoutImage = dynamic(import("@components/Editor/EditorWithoutImage"));
 
 interface IProps {
-  editPost?: IMoment;
+  moment?: IMoment;
 }
 
-const MomentPostingForm: FC<IProps> = ({ editPost }) => {
+const MomentPostingForm: FC<IProps> = ({ moment }) => {
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher);
   const { query } = useRouter();
   const dispatch = useDispatch();
@@ -51,13 +51,13 @@ const MomentPostingForm: FC<IProps> = ({ editPost }) => {
   }, [momentEditDone]);
 
   useEffect(() => {
-    if (editPost) {
+    if (moment) {
       setIsEdit(true);
-      setContent(editPost?.content);
-      setType(editPost?.type);
-      setCountry(editPost?.country?.name);
+      setContent(moment?.content);
+      setType(moment?.type);
+      setCountry(moment?.country?.name);
     }
-  }, [editPost]);
+  }, [moment]);
   const countryOptions = useMemo(
     () =>
       countries?.map((v, i) => {
@@ -96,12 +96,12 @@ const MomentPostingForm: FC<IProps> = ({ editPost }) => {
       return;
     }
     if (isEdit) {
-      form.append("momentId", String(editPost?.id));
+      form.append("momentId", String(moment?.id));
       dispatch(momentEditAction(form));
     } else {
       dispatch(momentCreateAction(form));
     }
-  }, [upImg, content, type, selectedCountry, isEdit, editPost]);
+  }, [upImg, content, type, selectedCountry, isEdit, moment]);
 
   const onClickOpenPostingForm = useCallback(() => {
     if (!user) {

@@ -53,7 +53,6 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
   const { query } = useRouter();
   const [ip, setIP] = useState("");
   const [isOwner, setIsOwner] = useState(false);
-  const postRef = useRef<HTMLDivElement>(null);
   const { user } = useSelector((state: RootState) => state.user);
   const { storyEditConfirmDone, storyDislikeDone, storyLikeDone } = useSelector(
     (state: RootState) => state.story
@@ -203,10 +202,9 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
 
   const onClickEditBtn = useCallback(() => {
     if (user && isOwner) {
-      dispatch(storySlice.actions.storyEditSet({ story }));
-      router.push("/story/post");
+      router.push(`/story/post?code=${query?.code}&storyId=${query?.storyId}`);
     }
-  }, [user, isOwner]);
+  }, [user, isOwner, query]);
   const onClickConfirm = useCallback(() => {
     if (user && isOwner) {
       dispatch(storyDeleteAction(story?.id as number));

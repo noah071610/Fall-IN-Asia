@@ -17,7 +17,6 @@ import { CommentsModule } from './@comments/comments.module';
 import { ArticlesModule } from './@articles/articles.module';
 import { Moments } from './entities/Moments';
 import { Stories } from './entities/Stories';
-import { Notices } from './entities/Notices';
 
 @Module({
   imports: [
@@ -26,7 +25,7 @@ import { Notices } from './entities/Notices';
     MorganModule,
     UsersModule,
     TypeOrmModule.forRoot(ormconfig),
-    TypeOrmModule.forFeature([Moments, Stories, Notices]),
+    TypeOrmModule.forFeature([Moments, Stories]),
     CountriesModule,
     MomentsModule,
     StoriesModule,

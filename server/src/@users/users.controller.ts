@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   Req,
   Res,
@@ -130,6 +131,23 @@ export class UsersController {
       res.send('success');
       return true;
     }
+  }
+
+  @UseGuards(new LoggedInGuard())
+  @Patch('/notice')
+  async readNotice(@User() user) {
+    await this.usersService.readNotice(user.id);
+    return await this.usersService.getUserInfoById(user.id);
+  }
+
+  @UseGuards(new LoggedInGuard())
+  @Delete('/notice/:noticeId')
+  async deleteNotice(
+    @Param('noticeId', ParseIntPipe) noticeId: number,
+    @User() user,
+  ) {
+    await this.usersService.deleteNotice(noticeId, user.id);
+    return await this.usersService.getUserInfoById(user.id);
   }
 
   @ApiOperation({ summary: 'withdrawal user' })

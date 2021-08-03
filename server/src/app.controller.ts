@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -27,14 +28,5 @@ export class AppController {
   @Get('/search/:searchWord')
   async getSearchPosts(@Param('searchWord') searchWord: string) {
     return await this.appService.getSearchPosts(decodeURIComponent(searchWord));
-  }
-
-  @UseGuards(new LoggedInGuard())
-  @Delete('/notice/:noticeId')
-  async deleteNotice(
-    @Param('noticeId', ParseIntPipe) noticeId: number,
-    @User() user,
-  ) {
-    return await this.appService.deleteNotice(noticeId, user.id);
   }
 }

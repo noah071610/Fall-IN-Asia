@@ -1,7 +1,7 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import ReactHtmlParser from "react-html-parser";
-import { FLEX_STYLE, noRevalidate } from "config";
+import { FLEX_STYLE, noRevalidate, toastSuccessMessage } from "config";
 import router, { useRouter } from "next/router";
 import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
@@ -15,11 +15,19 @@ import NewsArticleList from "@sections/NewsPage/NewsArticleList";
 import PostThubnail from "@components/Post/PostThubnail";
 import CountryMap from "@components/Maps/CountryMap";
 import tw from "twin.macro";
+import { toastConfirmMessage } from "@components/ConfirmToastify";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "slices";
+import { articleDeleteAction } from "actions/article";
 
 export const NewsArticleWrapper = styled.div`
   padding-top: 6rem;
   .post-content {
     ${tw`pb-16 relative`}
+  }
+  .article-manage-wrapper {
+    ${FLEX_STYLE("center", "center")};
   }
 `;
 
@@ -28,7 +36,10 @@ interface IProps {
   initialArticle: IArticle;
 }
 const index: FC<IProps> = ({ initialArticle, initialArticles }) => {
+  const dispatch = useDispatch();
   const { query } = useRouter();
+  const [isOwner, setIsOwner] = useState(false);
+  const { user } = useSelector((state: RootState) => state.user);
   const { data: article } = useSWR<IArticle>(`/article/${query?.articleId}`, fetcher, {
     initialData: initialArticle,
     ...noRevalidate,
@@ -42,6 +53,14 @@ const index: FC<IProps> = ({ initialArticle, initialArticles }) => {
       ...noRevalidate,
     }
   );
+
+  useEffect(() => {
+    if (user?.id === article?.user?.id) {
+      setIsOwner(true);
+    } else {
+      setIsOwner(false);
+    }
+  }, [user, article]);
 
   useEffect(() => {
     if (article) {
@@ -58,12 +77,50 @@ const index: FC<IProps> = ({ initialArticle, initialArticles }) => {
     }
   }, [article]);
 
+  const onClickConfirm = useCallback(() => {
+    if (user && isOwner) {
+      dispatch(articleDeleteAction(article?.id as number));
+      router.push(`/news`);
+      toastSuccessMessage("기사를 삭제했습니다.");
+    }
+  }, [user, isOwner, article]);
+
+  const onClickEditBtn = useCallback(() => {
+    if (user && isOwner) {
+      router.push(`/news/post?articleId=${query?.articleId}`);
+    }
+  }, [user, isOwner, query]);
+
   return (
     <NewsArticleWrapper>
       <PostLayout>
         {article && (
           <>
             <PostThubnail article={article} />
+            {isOwner && (
+              <>
+                <h2 className="main-title">관리 (운영자 전용)</h2>
+                <div className="article-manage-wrapper">
+                  <button onClick={onClickEditBtn} className="edit-btn">
+                    <EditOutlined />
+                    기사 수정
+                  </button>
+                  <button
+                    onClick={() =>
+                      toastConfirmMessage(
+                        onClickConfirm,
+                        "정말 이 기사를 삭제할까요?",
+                        "삭제해주세요."
+                      )
+                    }
+                    className="delete-btn"
+                  >
+                    <DeleteOutlined />
+                    기사 삭제
+                  </button>
+                </div>
+              </>
+            )}
             <h2 className="main-title">
               연대기 위치 <span>{article?.region}</span>
             </h2>

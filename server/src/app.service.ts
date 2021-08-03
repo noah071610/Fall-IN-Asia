@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Moments } from './entities/Moments';
-import { Notices } from './entities/Notices';
 import { Stories } from './entities/Stories';
 
 @Injectable()
@@ -12,8 +11,6 @@ export class AppService {
     private MomentsRepository: Repository<Moments>,
     @InjectRepository(Stories)
     private StoriesRepository: Repository<Stories>,
-    @InjectRepository(Notices)
-    private NoticesRepository: Repository<Notices>,
   ) {}
 
   welcomeTravelover(): string {
@@ -40,11 +37,5 @@ export class AppService {
       .getMany();
 
     return { searchWord, moments, stories };
-  }
-  async deleteNotice(noticeId: number, userId: number) {
-    return await this.NoticesRepository.delete({
-      id: noticeId,
-      userId: userId,
-    });
   }
 }

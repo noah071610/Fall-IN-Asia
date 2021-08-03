@@ -30,10 +30,9 @@ const MomentPostTitle: FC<IProps> = ({ moment }) => {
 
   const onClickEditBtn = useCallback(() => {
     if (user && isOwner) {
-      dispatch(momentSlice.actions.momentEditSet({ moment }));
-      router.push("/country/edit");
+      router.push(`/country/edit?code=${moment?.code}&momentId=${moment?.id}`);
     }
-  }, [user, isOwner]);
+  }, [user, isOwner, moment]);
   const onClickConfirm = useCallback(() => {
     if (user && isOwner) {
       dispatch(momentDeleteAction(moment?.id));

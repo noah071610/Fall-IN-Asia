@@ -76,14 +76,17 @@ export class ArticlesController {
     @UploadedFile() file: Express.Multer.File,
     @User() user,
   ) {
-    await this.ArticlesService.editPost(form, file, user.admin);
+    await this.ArticlesService.editPost(form, file, user.id);
   }
 
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Delete post' })
   @Delete('/:articleId')
-  async deletePost(@Param('articleId', ParseIntPipe) articleId: number) {
-    await this.ArticlesService.deletePost(articleId);
+  async deletePost(
+    @Param('articleId', ParseIntPipe) articleId: number,
+    @User() user,
+  ) {
+    await this.ArticlesService.deletePost(articleId, user.id);
   }
 
   @ApiOperation({ summary: 'save image for article' })

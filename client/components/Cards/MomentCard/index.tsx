@@ -19,8 +19,6 @@ const MomentCard: FC<IProps> = ({ moment, isLast }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
   const [liked, setLiked] = useState(false);
-  const [imageLayout, setImageLayout] = useState("");
-
   useEffect(() => {
     if (user && moment) {
       if (user.likeMoment?.find((v: any) => v.momentId === moment?.id)) {
@@ -46,19 +44,6 @@ const MomentCard: FC<IProps> = ({ moment, isLast }) => {
     dispatch(momentDislikeAction(moment?.id));
   }, [user, moment]);
 
-  useEffect(() => {
-    if (moment?.images?.length === 0) {
-      return;
-    }
-    if (moment?.images?.length === 1) {
-      setImageLayout("one-image");
-      return;
-    }
-    if (moment?.images?.length > 1) {
-      setImageLayout("two-images");
-    }
-  }, [moment]);
-
   const onClickCountryTag = useCallback(() => {
     router.push(`/country/${moment.code}`);
   }, []);
@@ -81,10 +66,10 @@ const MomentCard: FC<IProps> = ({ moment, isLast }) => {
       <div className="article">
         <div
           onClick={() => router.push(`/country/${moment?.country?.code}/${moment?.id}`)}
-          className={imageLayout}
+          className="moment-image-wrapper"
         >
-          {moment?.images?.slice(0, 2).map((v, i) => {
-            return <img key={i} src={v.image_src} />;
+          {moment?.images?.slice(0, 3).map((v, i) => {
+            return <img className="moment-image" key={i} src={v.image_src} />;
           })}
         </div>
         <div

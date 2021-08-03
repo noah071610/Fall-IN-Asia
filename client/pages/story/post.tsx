@@ -12,11 +12,11 @@ import {
   toastSuccessMessage,
 } from "config";
 import { storyCreateAction, storyEditAction } from "actions/story";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import CountrySelectMap from "@components/Maps/CountrySelectMap";
 import AutoCompleteForm from "@components/AutoCompleteForm";
 import useSWR from "swr";
-import { ICoordinate, ICountry } from "@typings/db";
+import { ICoordinate, ICountry, IStory } from "@typings/db";
 import fetcher from "utils/fetcher";
 import ImageDragger from "@components/Editor/ImageDragger";
 import useInput from "@hooks/useInput";
@@ -24,6 +24,8 @@ import { toastConfirmMessage } from "@components/ConfirmToastify";
 import { storySlice } from "slices/story";
 import tw from "twin.macro";
 import { getUserInfoAction } from "actions/user";
+import { wrapper } from "configureStore";
+import axios from "axios";
 
 export const StoryPostWrapper = styled.div`
   .title-input {
@@ -48,21 +50,25 @@ export const StoryPostWrapper = styled.div`
 interface IProps {}
 
 const post: FC<IProps> = () => {
-  const { user, getUserInfoDone } = useSelector((state: RootState) => state.user);
-  const { storyCreateDone, editStory, storyEditDone } = useSelector(
-    (state: RootState) => state.story
-  );
+  const { query } = useRouter();
+  const { user } = useSelector((state: RootState) => state.user);
+  const { storyCreateDone, storyEditDone } = useSelector((state: RootState) => state.story);
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher, noRevalidate);
+  const { data: story } = useSWR<IStory>(
+    query?.storyId ? `/story/${query?.code}/${query?.storyId}/0` : null,
+    fetcher,
+    noRevalidate
+  );
   const dispatch = useDispatch();
   const [selectedCountry, setCountry] = useState("");
   const [title, onChangeTitle, setTitle] = useInput("");
   const [region, setRegion] = useState("이름모를 어딘가");
   const [upImg, setUpImg] = useState("");
   const [content, setContent] = useState("");
-  const [editPostId, setEditPostId] = useState(null);
+  const [editPostId, setEditPostId] = useState<number | null>(null);
   const [marker, setMarker] = useState<ICoordinate>({
-    latitude: editStory?.lat || 37.50529626491968,
-    longitude: editStory?.lng || 126.98047832475031,
+    latitude: story?.lat || 37.50529626491968,
+    longitude: story?.lng || 126.98047832475031,
   });
 
   const countryOptions = useMemo(
@@ -78,15 +84,14 @@ const post: FC<IProps> = () => {
   }, []);
 
   useEffect(() => {
-    if (editStory) {
-      setRegion(editStory?.region);
-      setTitle(editStory?.title);
-      setContent(editStory?.content);
-      setCountry(editStory?.country?.name);
-      setEditPostId(editStory?.id);
-      dispatch(storySlice.actions.editStoryClear());
+    if (story) {
+      setRegion(story?.region);
+      setTitle(story?.title);
+      setContent(story?.content);
+      setCountry(story?.country?.name);
+      setEditPostId(story?.id);
     }
-  }, [editStory]);
+  }, [story]);
 
   useEffect(() => {
     if (storyCreateDone || storyEditDone) {
@@ -106,12 +111,18 @@ const post: FC<IProps> = () => {
   }, [storyCreateDone, storyEditDone]);
 
   useEffect(() => {
-    if (getUserInfoDone) {
-      if (!user) {
+    if (!user) {
+      router.back();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (story) {
+      if (user?.id !== story?.user?.id) {
         router.back();
       }
     }
-  }, [user, getUserInfoDone]);
+  }, [user, story]);
 
   const onClickSubmit = useCallback(() => {
     if (!title) {
@@ -170,8 +181,8 @@ const post: FC<IProps> = () => {
         />
         <h2 className="main-title">지역 지정</h2>
         <CountrySelectMap
-          lat={editStory?.lat}
-          lng={editStory?.lng}
+          lat={story?.lat}
+          lng={story?.lng}
           marker={marker}
           setMarker={setMarker}
           setRegion={setRegion}
@@ -179,7 +190,7 @@ const post: FC<IProps> = () => {
         <h2 className="main-title">선택 지역</h2>
         <h3>{region}</h3>
         <h2 className="main-title">내용작성</h2>
-        <Editor prevContent={editStory?.content} setContent={setContent} isStory={true} />
+        <Editor prevContent={story?.content} setContent={setContent} isStory={true} />
         <h2 className="main-title">
           {editPostId ? "썸네일 변경 (미선택시 기존 썸네일 사용)" : "썸네일 업로드"}
         </h2>

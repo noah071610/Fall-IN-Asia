@@ -12,8 +12,9 @@ import {
   signupAction,
   unfollowUserAction,
   withdrawalUserAction,
+  deleteNoticeAction,
+  readNoticeAction,
 } from "actions/user";
-
 export interface UserState {
   user: IUser | null;
   getUserInfoLoading: boolean;
@@ -49,6 +50,12 @@ export interface UserState {
   unfollowUserLoading: boolean;
   unfollowUserDone: boolean;
   unfollowUserError: boolean;
+  readNoticeLoading: boolean;
+  readNoticeDone: boolean;
+  readNoticeError: boolean;
+  deleteNoticeLoading: boolean;
+  deleteNoticeDone: boolean;
+  deleteNoticeError: boolean;
 }
 
 const initialState: UserState = {
@@ -86,6 +93,12 @@ const initialState: UserState = {
   unfollowUserLoading: false,
   unfollowUserDone: false,
   unfollowUserError: false,
+  readNoticeLoading: false,
+  readNoticeDone: false,
+  readNoticeError: false,
+  deleteNoticeLoading: false,
+  deleteNoticeDone: false,
+  deleteNoticeError: false,
 };
 
 export const userSlice = createSlice({
@@ -141,6 +154,16 @@ export const userSlice = createSlice({
       state.withdrawalUserLoading = false;
       state.withdrawalUserDone = false;
       state.withdrawalUserError = false;
+    },
+    readNoticeClear(state) {
+      state.readNoticeLoading = false;
+      state.readNoticeDone = false;
+      state.readNoticeError = false;
+    },
+    deleteNoticeClear(state) {
+      state.deleteNoticeLoading = false;
+      state.deleteNoticeDone = false;
+      state.deleteNoticeError = false;
     },
   },
   extraReducers: (builder) =>
@@ -268,5 +291,29 @@ export const userSlice = createSlice({
       .addCase(withdrawalUserAction.rejected, (state) => {
         state.withdrawalUserLoading = false;
         state.withdrawalUserError = true;
+      })
+      .addCase(readNoticeAction.pending, (state) => {
+        state.readNoticeLoading = true;
+      })
+      .addCase(readNoticeAction.fulfilled, (state, action) => {
+        state.readNoticeLoading = false;
+        state.readNoticeDone = true;
+        state.user = action.payload.data;
+      })
+      .addCase(readNoticeAction.rejected, (state) => {
+        state.readNoticeLoading = false;
+        state.readNoticeError = true;
+      })
+      .addCase(deleteNoticeAction.pending, (state) => {
+        state.deleteNoticeLoading = true;
+      })
+      .addCase(deleteNoticeAction.fulfilled, (state, action) => {
+        state.deleteNoticeLoading = false;
+        state.deleteNoticeDone = true;
+        state.user = action.payload.data;
+      })
+      .addCase(deleteNoticeAction.rejected, (state) => {
+        state.deleteNoticeLoading = false;
+        state.deleteNoticeError = true;
       }),
 });

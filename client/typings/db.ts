@@ -82,7 +82,8 @@ export interface IArticle {
   id: number;
   type: EArticleType;
   label: string;
-  region: number;
+  ranking: number;
+  region: string;
   title: string;
   content: string;
   lat: number;
@@ -98,8 +99,9 @@ export interface INotice {
   header: string;
   userId: number | null;
   momentId: number | null;
-  storyPostId: number | null;
+  storyId: number | null;
   createdAt: Date;
+  readAt: Date | null;
   code: string;
   content: string;
 }

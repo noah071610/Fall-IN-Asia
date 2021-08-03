@@ -17,10 +17,7 @@ export const AboutPageWrapper = styled.div`
     h2 {
       font-weight: bold;
     }
-    .ant-divider-horizontal.ant-divider-with-text::before,
-    .ant-divider-horizontal.ant-divider-with-text::after {
-      border-top: 1px solid rgba(0, 0, 0, 0.3);
-    }
+
     ${tw`pt-24 pb-16 mx-auto`}
     .aboutme {
       ${tw`pb-16 flex`}

@@ -28,8 +28,6 @@ const CountrySelectMap: FC<IProps> = ({ setRegion, marker, setMarker, lat, lng }
   const handleGeocoderViewportChange = useCallback(
     (newViewport) => {
       const geocoderDefaultOverrides = { transitionDuration: 1000 };
-      console.log(newViewport, geocoderDefaultOverrides);
-
       setMarker(newViewport);
       return handleViewportChange({
         width: "100%",

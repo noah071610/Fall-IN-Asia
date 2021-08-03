@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   Injectable,
-  InternalServerErrorException,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -10,12 +9,15 @@ import { Repository } from 'typeorm';
 import bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Follow } from 'src/entities/Follow';
+import { Notices } from 'src/entities/Notices';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(Users) private UserRepository: Repository<Users>,
     @InjectRepository(Follow) private FollowRepository: Repository<Follow>,
+    @InjectRepository(Notices)
+    private NoticesRepository: Repository<Notices>,
   ) {}
 
   async findUserInfoByEmail(email: string) {
@@ -24,12 +26,17 @@ export class UsersService {
       .leftJoinAndSelect('users.likeMoment', 'likeMoment')
       .leftJoinAndSelect('users.likeComment', 'likeComment')
       .leftJoinAndSelect('users.stories', 'stories')
-      .leftJoinAndSelect('users.moments', 'moments')
+      .leftJoinAndSelect('users.notices', 'notices')
       .leftJoinAndSelect('users.followings', 'followings')
       .leftJoinAndSelect('users.followers', 'followers')
-      .leftJoinAndSelect('moments.country', 'm_country')
+      .leftJoinAndSelect('stories.comments', 'comments')
+      .leftJoinAndSelect('stories.likedUser', 'likedUser')
       .leftJoinAndSelect('stories.country', 's_country')
-      .leftJoinAndSelect('users.notices', 'notices')
+      .leftJoinAndSelect('stories.user', 's_user')
+      .leftJoinAndSelect('users.moments', 'moments')
+      .leftJoinAndSelect('moments.country', 'm_country')
+      .leftJoinAndSelect('followings.following', 'following')
+      .leftJoinAndSelect('followers.follower', 'follower')
       .where('users.email= :email', { email })
       .getOne();
 
@@ -43,15 +50,19 @@ export class UsersService {
 
   async getUserInfoById(userId: number) {
     const user = await this.UserRepository.createQueryBuilder('users')
+      .leftJoinAndSelect('users.likeStory', 'likeStory')
+      .leftJoinAndSelect('users.likeMoment', 'likeMoment')
+      .leftJoinAndSelect('users.likeComment', 'likeComment')
       .leftJoinAndSelect('users.stories', 'stories')
+      .leftJoinAndSelect('users.notices', 'notices')
+      .leftJoinAndSelect('users.followings', 'followings')
+      .leftJoinAndSelect('users.followers', 'followers')
       .leftJoinAndSelect('stories.comments', 'comments')
       .leftJoinAndSelect('stories.likedUser', 'likedUser')
       .leftJoinAndSelect('stories.country', 's_country')
       .leftJoinAndSelect('stories.user', 's_user')
       .leftJoinAndSelect('users.moments', 'moments')
       .leftJoinAndSelect('moments.country', 'm_country')
-      .leftJoinAndSelect('users.followings', 'followings')
-      .leftJoinAndSelect('users.followers', 'followers')
       .leftJoinAndSelect('followings.following', 'following')
       .leftJoinAndSelect('followers.follower', 'follower')
       .where('users.id= :id', { id: userId })
@@ -176,6 +187,29 @@ export class UsersService {
     return await this.FollowRepository.delete({
       followingId,
       followerId: userId,
+    });
+  }
+
+  async readNotice(userId: number) {
+    const notices = await this.NoticesRepository.find({
+      where: { userId },
+    });
+    if (!notices) {
+      return true;
+    }
+    notices.forEach((v) => {
+      if (v.readAt === null) {
+        v.readAt = new Date();
+      }
+    });
+    await this.NoticesRepository.save(notices);
+    return true;
+  }
+
+  async deleteNotice(noticeId: number, userId: number) {
+    return await this.NoticesRepository.delete({
+      id: noticeId,
+      userId: userId,
     });
   }
 }

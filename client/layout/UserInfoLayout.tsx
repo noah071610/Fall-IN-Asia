@@ -30,6 +30,21 @@ const UserInfoLayoutWrapper = styled.div`
   .post-slider {
     ${tw`p-4`}
   }
+  .notice-list {
+    .anticon {
+      ${tw`text-xl`}
+    }
+  }
+  .notice-more-btn {
+    ${FLEX_STYLE("center", "center")};
+    ${tw`text-sm font-bold`}
+    span {
+      ${tw`mr-2`}
+    }
+  }
+  .notice-list {
+    ${tw`p-4`}
+  }
   .no-post-wrapper {
     ${tw`h-60 rounded-xl select-none p-4 m-4`}
     ${BORDER_THIN("border")};

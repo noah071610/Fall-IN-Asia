@@ -357,4 +357,9 @@ textarea {
   top:-6rem;
 }
 
+.ant-divider-horizontal.ant-divider-with-text::before,
+.ant-divider-horizontal.ant-divider-with-text::after {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
 `;

@@ -9,15 +9,3 @@ export const searchWordAction = createAsyncThunk<any, string>("/search", async (
     throw error;
   }
 });
-
-export const deleteNoticeAction = createAsyncThunk<any, number>(
-  "/notice/delete",
-  async (noticeId) => {
-    try {
-      const response = await axios.delete(`/notice/${noticeId}`);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  }
-);
