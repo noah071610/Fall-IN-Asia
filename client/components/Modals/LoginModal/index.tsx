@@ -86,12 +86,12 @@ const LoginModal: FC<IProps> = () => {
         ) : (
           <form onSubmit={onSubmitLogin}>
             <h4>
-              <FontAwesomeIcon className="icon" icon={faUser} />
+              <FontAwesomeIcon className="login-icon" icon={faUser} />
               <span>이메일</span>
             </h4>
             <input className="basic-input" value={email} onChange={onChangeEmail} type="email" />
             <h4>
-              <FontAwesomeIcon className="icon" icon={faKey} />
+              <FontAwesomeIcon className="login-icon" icon={faKey} />
               <span>패스워드</span>
             </h4>
             <input
