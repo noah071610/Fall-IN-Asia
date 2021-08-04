@@ -3,9 +3,9 @@ import { RED_COLOR } from "config";
 import tw from "twin.macro";
 
 export const MomentPostWrapper = styled.div`
-  ${tw`mb-8 py-4 rounded-2xl bg-white`}
+  ${tw`mb-8 p-8 rounded-2xl bg-white`}
   .image-wrapper {
-    ${tw`p-8 cursor-pointer rounded-xl`}
+    ${tw`py-8 cursor-pointer rounded-xl`}
     .ant-image {
       ${tw`w-full`}
       .ant-image-img {
@@ -23,14 +23,13 @@ export const MomentPostWrapper = styled.div`
     }
   }
   .post-content {
-    ${tw`px-8 pt-8 pb-12`}
+    ${tw`pt-8 pb-12`}
     min-height: 200px;
     img {
       width: 70%;
     }
   }
   .post-footer {
-    padding: 0 2rem;
     li {
       ${tw`py-1 px-2 mr-1 cursor-pointer rounded-xl hover:bg-gray-100`}
       .count {

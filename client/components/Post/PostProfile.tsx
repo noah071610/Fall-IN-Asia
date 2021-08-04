@@ -1,10 +1,10 @@
 import React, { FC, useCallback } from "react";
-import { DEFAULT_ICON_URL } from "config";
+import { DEFAULT_ICON_URL, MD_SIZE, SM_SIZE } from "config";
 import { IStory } from "@typings/db";
 import router from "next/router";
 import tw from "twin.macro";
 import styled from "@emotion/styled/macro";
-import { FLEX_STYLE, HOVER_GRAY } from "config";
+import { FLEX_STYLE } from "config";
 
 const PostProfileWrapper = styled.div`
   ${tw`mt-12 mb-8 w-full`}
@@ -30,8 +30,17 @@ const PostProfileWrapper = styled.div`
   .links {
     ${tw`mt-3`}
     button {
-      ${tw`py-2 px-1.5 rounded-md`}
-      ${HOVER_GRAY()};
+      ${tw`py-2 px-1.5 rounded-md hover:bg-gray-100`}
+    }
+  }
+  @media (max-width: ${MD_SIZE}) {
+    .owner-info-wrapper {
+      ${tw`w-4/5`}
+    }
+  }
+  @media (max-width: ${SM_SIZE}) {
+    .owner-info-wrapper {
+      ${tw`w-full`}
     }
   }
 `;

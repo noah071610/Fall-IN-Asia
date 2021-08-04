@@ -4,10 +4,13 @@ import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE } from "config";
 import tw from "twin.macro";
 
 const TopNavigationWrapper = styled.nav`
-  ${tw`sticky bg-white`}
+  ${tw`sticky`}
   top:57px;
   z-index: 1;
   ${BORDER_THIN("border-bottom")};
+  .nav-outer {
+    ${tw`mx-2  bg-white`}
+  }
   .nav-inner-list {
     ${tw` mx-auto`}
     width:100%;
@@ -32,18 +35,20 @@ interface IProps {
 const TopNavigation: FC<IProps> = ({ filter, list, onClickList }) => {
   return (
     <TopNavigationWrapper>
-      <div className="nav-inner-list">
-        {list?.map((v, i) => {
-          return (
-            <li
-              className={filter === v.value ? "active-list" : ""}
-              onClick={() => onClickList(v.value)}
-              key={i}
-            >
-              {v.name}
-            </li>
-          );
-        })}
+      <div className="nav-outer">
+        <div className="nav-inner-list">
+          {list?.map((v, i) => {
+            return (
+              <li
+                className={filter === v.value ? "active-list" : ""}
+                onClick={() => onClickList(v.value)}
+                key={i}
+              >
+                {v.name}
+              </li>
+            );
+          })}
+        </div>
       </div>
     </TopNavigationWrapper>
   );

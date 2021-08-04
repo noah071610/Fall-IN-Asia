@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
-import { noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
+import { noRevalidate, toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import MomentList from "@sections/MainPage/MomentList";
@@ -12,7 +12,7 @@ import fetcher from "utils/fetcher";
 import MainLayout from "@layout/MainLayout";
 import MainTopArticleSlide from "@sections/MainPage/MainPopularArticleSlide";
 import { momentSlice } from "slices/moment";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { ICountry, IMoment } from "@typings/db";
 import MainCountryAnnouncement from "@sections/MainPage/MainCountryAnnouncement";
 

@@ -3,7 +3,7 @@ import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RGB_BLACK } from "config";
 import tw from "twin.macro";
 
 export const MomentPostingFormWrapper = styled.div`
-  ${tw`rounded-2xl bg-white p-2 w-full`}
+  ${tw`rounded-2xl bg-white p-2`}
   .selector-wrapper {
     ${FLEX_STYLE("flex-start", "center")};
     margin-bottom: 1rem;

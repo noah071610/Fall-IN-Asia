@@ -34,8 +34,9 @@ export class CountriesService {
   async getPopularCountries() {
     const countriesWithPoint =
       await this.CountriesRepository.createQueryBuilder('country')
-        .leftJoinAndSelect('country.moments', 'moments')
-        .leftJoinAndSelect('country.stories', 'stories')
+        .addSelect(['moments.id', 'stories.id'])
+        .leftJoin('country.moments', 'moments')
+        .leftJoin('country.stories', 'stories')
         .getMany()
         .then((res) => {
           return res

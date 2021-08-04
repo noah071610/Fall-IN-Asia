@@ -3,11 +3,23 @@ import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import { useRef } from "react";
 import useOnScreen from "@hooks/useOnScreen";
 import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
-import { GRID_STYLE } from "config";
+import { GRID_STYLE, SM_SIZE } from "config";
 import tw from "twin.macro";
 import { css } from "@emotion/react";
 const StoryArticleListWrapper = (grid: number, gap: string) => css`
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+  @media (max-width: 750px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  @media (max-width: ${SM_SIZE}) {
+    display: block;
+  }
   ${tw`pt-16 relative`}
+  transition:0.3s all;
   ${GRID_STYLE(gap, `repeat(${grid},1fr)`)};
 `;
 interface IProps {

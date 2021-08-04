@@ -1,6 +1,6 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import styled from "@emotion/styled";
-import { FLEX_STYLE, FONT_STYLE, WHITE_COLOR } from "config";
+import { FLEX_STYLE } from "config";
 import tw from "twin.macro";
 
 interface IProps {
@@ -12,9 +12,7 @@ const StoryPosterWrapper = styled.div`
   background-repeat: no-repeat;
   ${FLEX_STYLE("center", "center")};
   .title {
-    cursor: pointer;
-    z-index: 1;
-    ${FONT_STYLE(2, true, WHITE_COLOR)};
+    ${tw`text-3xl font-bold text-white cursor-pointer z-10`};
   }
 `;
 const StoryPoster: FC<IProps> = ({ name, image }) => {

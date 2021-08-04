@@ -23,7 +23,7 @@ SwiperCore.use([EffectFade, Pagination, Autoplay]);
 const GuidePageWrapper = styled.div`
   padding-top: 4rem;
   .layout-divide {
-    ${GRID_STYLE("2rem", "2.5fr 1fr")};
+    ${GRID_STYLE("2rem", "3fr 1fr")};
   }
   .swiper-pagination-bullet {
     ${tw`rounded-none w-auto h-auto inline-block py-2 px-4 bg-white opacity-70 hover:opacity-100 mx-1 font-bold`}
@@ -43,6 +43,14 @@ const GuidePageWrapper = styled.div`
     }
     h2 {
       ${tw`text-base font-bold mb-4`}
+    }
+  }
+  @media (max-width: 1000px) {
+    .layout-divide {
+      ${tw`block w-full`}
+    }
+    .news-aside {
+      ${tw`hidden`}
     }
   }
 `;

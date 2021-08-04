@@ -1,6 +1,6 @@
 import { FC, RefObject } from "react";
 import styled from "@emotion/styled/macro";
-import { FONT_STYLE, GRID_STYLE, XLG_SIZE } from "config";
+import { GRID_STYLE, LG_SIZE, XLG_SIZE } from "config";
 import tw from "twin.macro";
 import PostAsideNav from "@components/Post/PostAsideNav";
 const PostLayoutWrapper = styled.div`
@@ -9,8 +9,7 @@ const PostLayoutWrapper = styled.div`
   ${GRID_STYLE("2rem", "4fr 1fr")};
   .layout {
     .main-title {
-      ${tw`text-center mt-12 mb-6`};
-      ${FONT_STYLE(1.1, true)}
+      ${tw`text-center mt-12 mb-6 text-lg font-bold`};
       span {
         ${tw`block text-sm mt-2`};
       }
@@ -18,6 +17,9 @@ const PostLayoutWrapper = styled.div`
     .main-title:first-of-type {
       ${tw`mt-0 mb-6`}
     }
+  }
+  @media (max-width: ${LG_SIZE}) {
+    ${tw`block w-full p-2`}
   }
 `;
 

@@ -13,7 +13,7 @@ const ConfirmToastForm = ({
 }) => (
   <div style={{ cursor: "default" }}>
     <h4 style={{ marginLeft: "0.3rem" }}>{message}</h4>
-    <div className="cofirm-btn-wrapper">
+    <div className="confirm-btn-wrapper">
       <button
         onClick={() => {
           onClickConfirm();

@@ -49,6 +49,7 @@ const edit: FC<IProps> = ({ initialMoment }) => {
 
   return (
     <LGLayout>
+      <h2 className="main-title">모멘트 수정</h2>
       <MomentPostingForm moment={moment} />
     </LGLayout>
   );

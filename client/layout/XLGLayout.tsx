@@ -1,13 +1,15 @@
 import { FC, RefObject } from "react";
 import styled from "@emotion/styled/macro";
-import { FONT_STYLE, XLG_SIZE } from "config";
+import { XLG_SIZE } from "config";
 import tw from "twin.macro";
 const XLGLayoutWrapper = styled.div`
+  @media (max-width: 1300px) {
+    ${tw`w-full px-2`}
+  }
   width: ${XLG_SIZE};
   ${tw`mx-auto py-8`};
   .main-title {
-    ${tw`mt-12 mb-6`};
-    ${FONT_STYLE(1.1, true)}
+    ${tw`text-lg font-bold mt-12 mb-6`};
     span {
       ${tw`block text-sm mt-2`};
     }

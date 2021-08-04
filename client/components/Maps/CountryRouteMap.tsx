@@ -16,6 +16,7 @@ const CountryRouteMap: FC<IProps> = ({ stories }) => {
     longitude: stories?.[0]?.lng || 126.98047832475031,
     zoom: 1,
   });
+
   const route1 = useMemo(() => {
     return {
       type: "Feature",
@@ -27,7 +28,10 @@ const CountryRouteMap: FC<IProps> = ({ stories }) => {
     };
   }, [stories]);
 
-  const handleViewportChange = useCallback((newViewport) => setViewport(newViewport), []);
+  const handleViewportChange = useCallback(
+    (newViewport) => setViewport({ ...newViewport, width: "100%" }),
+    []
+  );
 
   return (
     <ReactMapGL

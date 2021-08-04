@@ -1,6 +1,6 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC } from "react";
 import styled from "@emotion/styled";
-import { FONT_STYLE, GRAY_COLOR, LG_SIZE } from "config";
+import { GRAY_COLOR, LG_SIZE } from "config";
 import tw from "twin.macro";
 const Wrapper = styled.div`
   ${tw`pt-16`}
@@ -9,11 +9,13 @@ const Wrapper = styled.div`
     width: ${LG_SIZE};
     ${tw`mx-auto py-8`}
     .main-title {
-      ${FONT_STYLE(1, true)}
-      ${tw`mt-8 mb-4`}
+      ${tw`text-base font-bold mt-8 mb-4`}
     }
     .main-title:first-of-type {
       ${tw`mt-0 mb-4`}
+    }
+    @media (max-width: ${LG_SIZE}) {
+      ${tw`w-full px-4 pt-8 pb-16`}
     }
   }
 `;

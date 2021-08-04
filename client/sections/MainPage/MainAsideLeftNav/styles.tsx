@@ -1,8 +1,11 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE, FONT_STYLE, GRAY_COLOR } from "config";
+import { FLEX_STYLE, GRAY_COLOR } from "config";
 import tw from "twin.macro";
 
 export const MainAsideLeftNavWrapper = styled.nav`
+  @media (max-width: 900px) {
+    ${tw`hidden`}
+  }
   ${tw`bg-white rounded-2xl h-full p-4 sticky`}
   top:4.5rem;
   width: 18%;
@@ -16,9 +19,11 @@ export const MainAsideLeftNavWrapper = styled.nav`
     .country-desc {
       margin: 1rem 0;
       a {
-        ${FONT_STYLE(1.4, true)}
+        ${tw`font-bold`};
+        font-size: 1.4rem;
       }
       div {
+        ${tw`font-bold`};
         margin-top: 0.5rem;
         span {
           display: block;

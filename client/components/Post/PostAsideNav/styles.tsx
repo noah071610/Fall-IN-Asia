@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, SKY_COLOR } from "config";
+import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, LG_SIZE, SKY_COLOR } from "config";
 import tw from "twin.macro";
 
 export const PostAsideNavWrapper = styled.aside`
@@ -31,5 +31,8 @@ export const PostAsideNavWrapper = styled.aside`
     h3 {
       border-left: 2px solid ${BLUE_COLOR};
     }
+  }
+  @media (max-width: ${LG_SIZE}) {
+    ${tw`hidden`}
   }
 `;

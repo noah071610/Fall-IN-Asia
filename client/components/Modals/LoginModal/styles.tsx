@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, GRID_STYLE, RGB_BLACK, WHITE_STYLE } from "config";
+import { BORDER_THIN, FLEX_STYLE, GRID_STYLE, RGB_BLACK } from "config";
 import tw from "twin.macro";
 
 export const LoginModalWrapper = styled.div`

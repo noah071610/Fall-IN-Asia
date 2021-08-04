@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { ELLIPSIS_STYLE, FONT_STYLE } from "config";
+import { ELLIPSIS_STYLE } from "config";
 import tw from "twin.macro";
 
 export const NewsCardWrapper = styled.div`
@@ -35,7 +35,6 @@ export const NewsCardWrapper = styled.div`
     width: 60%;
   }
   h2 {
-    ${FONT_STYLE(1.2, true)};
-    padding-bottom: 1rem;
+    ${tw`text-xl font-bold pb-4`}
   }
 `;

@@ -185,53 +185,55 @@ const UserInfoAside: FC<IProps> = () => {
   return (
     <UserInfoAsideWrapper>
       <aside className="user-info-aside">
-        <div className="icon-wrapper">
-          <div className="icon">
-            <img src={userInfo?.icon} alt="icon-image" />
-            <div
-              onClick={
-                userInfo?.icon === DEFAULT_ICON_URL
-                  ? () => dispatch(mainSlice.actions.toggleIconCropperModal())
-                  : () =>
-                      toastConfirmMessage(
-                        onClickConfirm,
-                        "정말 아이콘을 삭제하시겠어요?",
-                        "삭제해주세요."
-                      )
-              }
-              className="icon-changer"
-            >
-              {userInfo?.icon === DEFAULT_ICON_URL ? <PlusOutlined /> : <DeleteOutlined />}
+        <div className="icon-profile-wrapper">
+          <div className="icon-wrapper">
+            <div className="icon">
+              <img src={userInfo?.icon} alt="icon-image" />
+              <div
+                onClick={
+                  userInfo?.icon === DEFAULT_ICON_URL
+                    ? () => dispatch(mainSlice.actions.toggleIconCropperModal())
+                    : () =>
+                        toastConfirmMessage(
+                          onClickConfirm,
+                          "정말 아이콘을 삭제하시겠어요?",
+                          "삭제해주세요."
+                        )
+                }
+                className="icon-changer"
+              >
+                {userInfo?.icon === DEFAULT_ICON_URL ? <PlusOutlined /> : <DeleteOutlined />}
+              </div>
             </div>
           </div>
+          <div className="user-profile-wrapper">
+            {onUserInfoEdit ? (
+              <>
+                <h4 className="edit-title">이름</h4>
+                <input
+                  className="edit-input"
+                  value={userName}
+                  onChange={onChangeUserName}
+                  type="text"
+                />
+                <h4 className="edit-title">자기소개</h4>
+                <TextareaAutosize
+                  className="edit-textarea"
+                  value={introduce}
+                  onChange={onChangeIntroduce}
+                />
+              </>
+            ) : (
+              <>
+                <h2 className="user-name">{userInfo?.name}</h2>
+                <p className="user-introduce">{userInfo?.introduce}</p>
+              </>
+            )}
+          </div>
         </div>
-        <div className="user-intro-wrapper">
-          {onUserInfoEdit ? (
-            <>
-              <h4 className="edit-title">이름</h4>
-              <input
-                className="edit-input"
-                value={userName}
-                onChange={onChangeUserName}
-                type="text"
-              />
-              <h4 className="edit-title">자기소개</h4>
-              <TextareaAutosize
-                className="edit-textarea"
-                value={introduce}
-                onChange={onChangeIntroduce}
-              />
-            </>
-          ) : (
-            <>
-              <h2 className="user-name">{userInfo?.name}</h2>
-              <p className="user-introduce">{userInfo?.introduce}</p>
-            </>
-          )}
-        </div>
-        {!onUserInfoEdit && onPasswordChange ? (
-          <>
-            <Divider />
+        <Divider />
+        <div className="follow-manage-wrapper">
+          {!onUserInfoEdit && onPasswordChange ? (
             <div className="password-edit-wrapper">
               <h4 className="edit-title">이전 비밀번호</h4>
               <input
@@ -248,77 +250,76 @@ const UserInfoAside: FC<IProps> = () => {
                 type="password"
               />
             </div>
-          </>
-        ) : (
-          <>
-            <Divider />
-            <h3>팔로워</h3>
-            {userInfo && (
-              <div className="follow-wrapper">
-                <div className="follow-icon-wrapper">
-                  {userInfo?.followers.slice(0, 6).map((v, i) => (
-                    <img key={i} src={v.follower.icon} alt="follow-icon" />
-                  ))}
+          ) : (
+            <div className="follow-wrapper">
+              <h3>팔로워</h3>
+              {userInfo && (
+                <div className="follow-wrapper">
+                  <div className="follow-icon-wrapper">
+                    {userInfo?.followers.slice(0, 6).map((v, i) => (
+                      <img key={i} src={v.follower.icon} alt="follow-icon" />
+                    ))}
+                  </div>
+                  <span>
+                    {userInfo.followers.length > 0
+                      ? `${userInfo?.followers[0].follower?.name}님 외 ${
+                          userInfo?.followers?.length - 1
+                        }명 팔로우.`
+                      : "아직 팔로워가 없습니다."}
+                  </span>
                 </div>
-                <span>
-                  {userInfo.followers.length > 0
-                    ? `${userInfo?.followers[0].follower?.name}님 외 ${
-                        userInfo?.followers?.length - 1
-                      }명 팔로우.`
-                    : "아직 팔로워가 없습니다."}
-                </span>
-              </div>
-            )}
-            <h3>팔로잉</h3>
-            {userInfo && (
-              <div className="follow-wrapper">
-                <div className="follow-icon-wrapper">
-                  {userInfo?.followings.slice(0, 6).map((v, i) => (
-                    <img key={i} src={v.following.icon} alt="follow-icon" />
-                  ))}
+              )}
+              <h3>팔로잉</h3>
+              {userInfo && (
+                <div className="follow-wrapper">
+                  <div className="follow-icon-wrapper">
+                    {userInfo?.followings.slice(0, 6).map((v, i) => (
+                      <img key={i} src={v.following.icon} alt="follow-icon" />
+                    ))}
+                  </div>
+                  <span>
+                    {" "}
+                    {userInfo.followings.length > 0
+                      ? `${userInfo?.followings[0].following?.name}님 외 ${
+                          userInfo?.followings?.length - 1
+                        }명 팔로잉.`
+                      : "아직 팔로잉이 없습니다."}
+                  </span>
                 </div>
-                <span>
-                  {" "}
-                  {userInfo.followings.length > 0
-                    ? `${userInfo?.followings[0].following?.name}님 외 ${
-                        userInfo?.followings?.length - 1
-                      }명 팔로잉.`
-                    : "아직 팔로잉이 없습니다."}
-                </span>
-              </div>
-            )}
-          </>
-        )}
-        {isOwner && onUserInfoEdit && (
-          <div className="btn-wrapper">
-            <button onClick={onClickChangeUserInfo}>프로필 수정 완료</button>
-            <button onClick={() => setUserInfoEdit(false)}>취소</button>
-          </div>
-        )}
-        {isOwner && onPasswordChange && (
-          <div className="btn-wrapper">
-            <button onClick={onClickChangePassword}>비밀번호 변경 완료</button>
-            <button onClick={() => setPasswordChange(false)}>취소</button>
-          </div>
-        )}
-        {isOwner && !onUserInfoEdit && !onPasswordChange && (
-          <div className="btn-wrapper">
-            <button onClick={onClickUserInfoEditBtn}>프로필 수정</button>
-            <button onClick={onClickPasswordChange}>비밀번호 변경</button>
-            <button onClick={onClickWithdrawal}>회원탈퇴</button>
-          </div>
-        )}
-        {!isOwner && (
-          <div className="btn-wrapper">
-            <button onClick={onClickFollowBtn}>
-              <FontAwesomeIcon
-                icon={isFollowed ? faUserMinus : faUserPlus}
-                style={{ marginRight: "0.7rem" }}
-              />
-              유저 {isFollowed && "언"}팔로우
-            </button>
-          </div>
-        )}
+              )}
+            </div>
+          )}
+          {isOwner && onUserInfoEdit && (
+            <div className="btn-wrapper">
+              <button onClick={onClickChangeUserInfo}>프로필 수정 완료</button>
+              <button onClick={() => setUserInfoEdit(false)}>취소</button>
+            </div>
+          )}
+          {isOwner && onPasswordChange && (
+            <div className="btn-wrapper">
+              <button onClick={onClickChangePassword}>비밀번호 변경 완료</button>
+              <button onClick={() => setPasswordChange(false)}>취소</button>
+            </div>
+          )}
+          {isOwner && !onUserInfoEdit && !onPasswordChange && (
+            <div className="btn-wrapper">
+              <button onClick={onClickUserInfoEditBtn}>프로필 수정</button>
+              <button onClick={onClickPasswordChange}>비밀번호 변경</button>
+              <button onClick={onClickWithdrawal}>회원탈퇴</button>
+            </div>
+          )}
+          {!isOwner && (
+            <div className="btn-wrapper">
+              <button onClick={onClickFollowBtn}>
+                <FontAwesomeIcon
+                  icon={isFollowed ? faUserMinus : faUserPlus}
+                  style={{ marginRight: "0.7rem" }}
+                />
+                유저 {isFollowed && "언"}팔로우
+              </button>
+            </div>
+          )}
+        </div>
       </aside>
       {onIconCropperModal && (
         <>

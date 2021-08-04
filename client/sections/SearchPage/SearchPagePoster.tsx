@@ -21,6 +21,9 @@ const SearchPagePosterWrapper = styled.div`
       ${tw`bg-white py-2 px-4 rounded-md`}
     }
   }
+  @media (max-width: ${XLG_SIZE}) {
+    ${tw`px-2`}
+  }
 `;
 
 interface IProps {

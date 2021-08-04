@@ -52,7 +52,6 @@ const Header: FC<HeaderProps> = () => {
       window.removeEventListener("scroll", scrollCallBack);
     };
   }, []);
-
   useEffect(() => {
     if (onSearchPopUp) {
       inputRef?.current?.focus();

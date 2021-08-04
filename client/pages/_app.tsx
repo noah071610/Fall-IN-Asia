@@ -20,6 +20,7 @@ import Footer from "@sections/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { mainSlice } from "slices/main";
+import Head from "next/head";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useDispatch();
@@ -45,13 +46,19 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 
   return (
-    <div onClick={onClickBody}>
-      <Global styles={resetStyles} />
-      <Header />
-      <Component {...pageProps} />
-      <Footer />
-      <ToastContainer />
-    </div>
+    <>
+      <Head>
+        <title>My page title</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <div onClick={onClickBody}>
+        <Global styles={resetStyles} />
+        <Header />
+        <Component {...pageProps} />
+        <Footer />
+        <ToastContainer />
+      </div>
+    </>
   );
 };
 

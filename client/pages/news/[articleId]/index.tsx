@@ -122,7 +122,7 @@ const index: FC<IProps> = ({ initialArticle, initialArticles }) => {
               </>
             )}
             <h2 className="main-title">
-              연대기 위치 <span>{article?.region}</span>
+              위치 <span>{article?.region}</span>
             </h2>
             <CountryMap lat={article?.lat} lng={article?.lng} />
             <Divider />

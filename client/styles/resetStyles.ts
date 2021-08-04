@@ -1,12 +1,4 @@
-import {
-  BLUE_COLOR,
-  BORDER_THIN,
-  FONT_STYLE,
-  GRAY_COLOR,
-  RGB_BLACK,
-  WHITE_COLOR,
-  WHITE_STYLE,
-} from "config";
+import { BLUE_COLOR, BORDER_THIN, GRAY_COLOR, RGB_BLACK, WHITE_COLOR } from "config";
 import tw from "twin.macro";
 
 export const resetStyles = `
@@ -17,7 +9,7 @@ export const resetStyles = `
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
 
 *::-webkit-scrollbar {
-  width: 7px;
+  width: 5px;
 }
 
 /* Track */
@@ -43,7 +35,8 @@ html {
   line-height: 1.2;
   font-family: 'Sawarabi Gothic', sans-serif;
 }
-html {
+
+body{
   overflow-x: hidden;
 }
 blockquote,
@@ -193,20 +186,31 @@ textarea {
   top: 50%;
   position: absolute;
   font-size: 2rem;
+  left:-1rem;
   transform: translateY(-50%);
   color: ${WHITE_COLOR};
-  cursor: pointer;
+  padding:1rem;
+  transition:0.3s all;
+  &:hover{
+    transform: translate(-10%,-50%);
+    color: ${BLUE_COLOR};
+  }
 }
 .slick-right-arrow {
   display: block;
   z-index: 1;
   top: 50%;
-  right: 0;
+  right:-1rem;
   position: absolute;
   font-size: 2rem;
   transform: translateY(-50%);
   color: ${WHITE_COLOR};
-  cursor: pointer;
+  padding:1rem;
+  transition:0.3s all;
+  &:hover{
+    transform: translate(10%,-50%);
+    color: ${BLUE_COLOR};
+  }
 }
 
 .ql-toolbar {
@@ -220,25 +224,10 @@ textarea {
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   background:white;
+  height:250px;
+  padding-bottom:1rem;
   border: 1px solid ${RGB_BLACK(0.15)};
 }
-
-.swiper-button-next,
-.swiper-button-prev {
-    padding: 30px 0;
-    color: black !important;
-    fill: white !important;
-    stroke: white !important;
-}
-.swiper-button-next {
-    padding-right: 10px;
-    padding-left: 40px;
-}
-.swiper-button-prev {
-    padding-right: 40px;
-    padding-left: 10px;
-}
-
 
 .ant-select-selector {
   border-radius: 10px !important;
@@ -263,7 +252,7 @@ textarea {
   transform:translateY(-100%);
 }
 
-.cofirm-btn-wrapper {
+.confirm-btn-wrapper {
   margin-top:.75rem;
   button{
     padding:0.2rem 0.4rem;
@@ -296,13 +285,13 @@ textarea {
     width: 50%;
   }
   .ql-size-large {
-    ${FONT_STYLE(1.5, true)}
+    ${tw`text-2xl font-bold`}
   }
   .ql-size-huge {
-    ${FONT_STYLE(2.5, true)}
+    ${tw`text-4xl font-bold`}
   }
   .ql-size-small {
-    ${FONT_STYLE(0.85, false)}
+    ${tw`text-sm`}
   }
   ul {
     list-style-type: disc;
@@ -348,6 +337,7 @@ textarea {
     margin-left: 20rem;
   }
 }
+
 .anchor-offset-parent {
   position:relative;
 }
@@ -362,4 +352,7 @@ textarea {
   border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 
+.track-vertical{
+  z-index:100;
+}
 `;

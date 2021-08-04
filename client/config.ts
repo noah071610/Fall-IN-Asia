@@ -13,8 +13,8 @@ export const PINK_COLOR = "#f6d6d6" as const;
 
 export const SM_SIZE = "576px" as const;
 export const MD_SIZE = "768px" as const;
-export const LG_SIZE = "992px" as const;
-export const XLG_SIZE = "1200px" as const;
+export const LG_SIZE = "1024px" as const;
+export const XLG_SIZE = "1280px" as const;
 
 export const WORLD_IMAGE =
   "https://user-images.githubusercontent.com/74864925/126495159-2e4438ad-6efb-458a-b314-8f92823babc7.jpg";
@@ -32,21 +32,8 @@ export const RGB_BLACK = (opacity: number) => `
   rgba(0,0,0,${opacity})
 `;
 
-export const CENTER_POSITION = () => `
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  z-index:10;
-`;
-
 export const BORDER_THIN = (border: string, px?: number) => `
   ${border}:${px ? px : "1"}px solid rgba(0,0,0,0.15)
-`;
-
-export const FONT_STYLE = (size: number, weight?: boolean, color?: string) => `
-font-size:${size}rem;
-font-weight:${weight && "bold"};
-color:${color ? color : "black"};
 `;
 
 export const FLEX_STYLE = (justify: string, align: string, flexStyle?: string) => `
@@ -54,13 +41,6 @@ export const FLEX_STYLE = (justify: string, align: string, flexStyle?: string) =
   justify-content:${justify};
   align-items:${align};
   flex-direction:${flexStyle};
-`;
-
-export const WHITE_STYLE = (border?: boolean, width?: string, radius?: number) => `
-border:${border && "1px solid rgba(0,0,0,0.15)"};
-width:${width ? width : "100%"};
-background: ${WHITE_COLOR};
-border-radius: ${radius ? radius : "15"}px;
 `;
 
 export const ELLIPSIS_STYLE = (lineHeight: number, clamp: number, height: string) => `
@@ -75,13 +55,6 @@ text-overflow: ellipsis;
 
 `;
 
-export const HOVER_GRAY = () => `
-  cursor:pointer;
-  &:hover{
-    background:${GRAY_COLOR};
-  }
-`;
-
 export const GRID_STYLE = (gap: string, colums: string, row?: string) => `
   display:grid;
   grid-template-columns:${colums};
@@ -92,7 +65,7 @@ export const GRID_STYLE = (gap: string, colums: string, row?: string) => `
 // list
 
 // We will update this list from popular searched word of entity Database-Indexing  (2021/08/01 JANG HYUN SOO)
-
+// 이 auto complete 리스트들은 앞으로 DB content 인덱싱을 통해 자동화과정을 거칠것입니다. 지금은 예시로 봐주세요 (장현수)
 export const searchOptions = [
   "태국",
   "여행",

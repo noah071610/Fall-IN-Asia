@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE, FONT_STYLE, RGB_BLACK, WHITE_COLOR } from "config";
+import { RGB_BLACK } from "config";
 import tw from "twin.macro";
 
 export const ArticleImageCardWrapper = styled.div`
@@ -21,10 +21,10 @@ export const ArticleImageCardWrapper = styled.div`
     ${tw`absolute bottom-0 left-0 w-full p-2 leading-5`}
     h3 {
       ${tw`mb-2`}
-      ${FONT_STYLE(0.78, false, WHITE_COLOR)};
+      ${tw`text-xs text-white`}
     }
     h4 {
-      ${FONT_STYLE(0.85, true, WHITE_COLOR)};
+      ${tw`text-sm font-bold text-white`}
     }
   }
 `;

@@ -5,20 +5,18 @@ import styled from "@emotion/styled";
 import { memo } from "react";
 
 const EditorWrapper = styled.div`
-  height: 250px;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   button {
     &:hover {
       border-radius: 5px;
       background: ${GRAY_COLOR};
-      color: ${BLACK_COLOR};
     }
   }
 `;
 
 const QuillEditor = dynamic(import("react-quill"), {
   ssr: false,
-  loading: () => <p>Loading ...</p>,
+  loading: () => <p>에디터 불러오는중 ...</p>,
 });
 
 interface IProps {
@@ -33,7 +31,6 @@ const EditorWithoutImage: FC<IProps> = ({ content, setContent }) => {
   return (
     <EditorWrapper>
       <QuillEditor
-        style={{ height: "100%" }}
         modules={quillModules(true)}
         formats={qullFormats}
         value={content || ""}

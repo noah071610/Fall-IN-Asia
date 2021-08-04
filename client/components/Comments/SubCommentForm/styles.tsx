@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, HOVER_GRAY, RGB_BLACK } from "config";
+import { FLEX_STYLE } from "config";
+import tw from "twin.macro";
 
 export const SubCommentFormWrapper = styled.div`
   padding: 1rem 0 0 3.7rem;
@@ -7,19 +8,10 @@ export const SubCommentFormWrapper = styled.div`
   ${FLEX_STYLE("flex-start", "center")};
   .icon {
     img {
-      width: 2rem;
-      border-radius: 50%;
-      margin-right: 0.5rem;
+      ${tw`w-8 rounded-full mr-2`}
     }
   }
   button {
-    width: 100px;
-    padding: 0.5rem 0.8rem;
-    background: ${GRAY_COLOR};
-    border-radius: 5px;
-    margin-left: 0.5rem;
-    &:hover {
-      background: ${RGB_BLACK(0.15)};
-    }
+    ${tw`w-24 py-2 px-3 bg-gray-100 rounded-md ml-2 hover:bg-gray-300`}
   }
 `;

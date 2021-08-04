@@ -10,6 +10,13 @@ import { GRID_STYLE } from "config";
 const SearchPostListWrapper = styled.div`
   .searched-post-wrapper {
     ${GRID_STYLE("1rem", "repeat(4,1fr)")}
+    @media (max-width: 1000px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 700px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
   }
 `;
 

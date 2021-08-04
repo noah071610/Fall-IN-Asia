@@ -1,17 +1,17 @@
 import ImageCard from "@components/Cards/CountryImageCard";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { ICountry } from "@typings/db";
-import { GRID_STYLE, noRevalidate } from "config";
+import { GRID_STYLE, MD_SIZE, noRevalidate } from "config";
 import React, { FC, useState } from "react";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { css } from "@emotion/react";
 import SwiperCore, { Autoplay } from "swiper/core";
+import tw from "twin.macro";
 
 SwiperCore.use([Autoplay]);
 
 const CountryPreviewSlideWrapper = (isMain?: boolean) => css`
-  ${GRID_STYLE("1rem", "repeat(3,1fr)")};
   height: ${isMain ? "100px" : "100px"};
 `;
 
@@ -27,6 +27,23 @@ const CountryPreviewSlide: FC<IProps> = ({ slidesPerView, isMain }) => {
     noRevalidate
   );
 
+  const breakPoints = {
+    1024: {
+      slidesPerView,
+    },
+    768: {
+      slidesPerView: 5.2,
+    },
+    480: {
+      slidesPerView: 4.2,
+      spaceBetween: 8,
+    },
+    0: {
+      slidesPerView: 3.2,
+      spaceBetween: 8,
+    },
+  };
+
   return (
     <Swiper
       autoplay={
@@ -39,6 +56,7 @@ const CountryPreviewSlide: FC<IProps> = ({ slidesPerView, isMain }) => {
               delay: 2000,
             }
       }
+      breakpoints={breakPoints}
       slidesPerView={slidesPerView}
       freeMode={true}
       spaceBetween={16}

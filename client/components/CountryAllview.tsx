@@ -2,20 +2,22 @@ import React, { FC } from "react";
 import { ICountry } from "@typings/db";
 import CountryListCard from "@components/Cards/CountryListCard";
 import styled from "@emotion/styled";
-import { FONT_STYLE } from "config";
 import tw from "twin.macro";
-
+import { XLG_SIZE } from "config";
 const CountryAllviewWrapper = styled.div`
   ${tw`w-full rounded-2xl bg-white p-4 pb-8 mt-4`}
   .country-card-wrapper {
     ${tw`flex flex-wrap`}
   }
   h3 {
-    ${FONT_STYLE(0.9, true)};
+    ${tw`text-sm font-bold`}
     ${tw`mb-4 mt-6`}
   }
   h3:first-of-type {
     ${tw`mt-4`}
+  }
+  @media (max-width: ${XLG_SIZE}) {
+    ${tw`px-0`}
   }
 `;
 

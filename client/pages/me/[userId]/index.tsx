@@ -12,12 +12,10 @@ import { INotice, IUserInfo } from "@typings/db";
 import ListCard from "@components/Cards/ListCard";
 import CountryRouteMap from "@components/Maps/CountryRouteMap";
 import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
-import { SwiperSlide, Swiper } from "swiper/react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "slices";
-import { Divider } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
-import { mainSlice } from "slices/main";
+import { NextArrow, PrevArrow } from "@components/SliderArrow";
 
 interface IProps {
   initialUserInfo: IUserInfo;
@@ -27,7 +25,6 @@ const index: FC<IProps> = ({ initialUserInfo }) => {
   const { query } = useRouter();
   const [noticePage, setnNoticePage] = useState(5);
   const [isOwner, setIsOwner] = useState(false);
-  const dispatch = useDispatch();
   const { user, deleteNoticeDone } = useSelector((state: RootState) => state.user);
   const { data: userInfo, revalidate } = useSWR<IUserInfo>(`/user/${query?.userId}`, fetcher, {
     initialData: initialUserInfo,
@@ -89,7 +86,7 @@ const index: FC<IProps> = ({ initialUserInfo }) => {
       ) : (
         <>
           <h2 className="main-title">알림이 없습니다</h2>
-          <p style={{ padding: "1rem" }}>
+          <p className="no-notice-wrapper">
             유저님이 모멘트,연대기,코멘트 작성 및 수정등 활동을 하면 저희가 알려줄게요!
           </p>
         </>
@@ -110,13 +107,11 @@ const index: FC<IProps> = ({ initialUserInfo }) => {
         {userInfo?.name}님의 작성 연대기 {userInfo?.stories?.length || 0}개
       </h2>
       {userInfo && userInfo?.stories.length > 0 ? (
-        <Swiper className="post-slider" slidesPerView={3} spaceBetween={16}>
+        <div className="post-slider">
           {userInfo?.stories?.map((v, i) => (
-            <SwiperSlide key={i}>
-              <ArticleColumnCard key={i} story={v} />
-            </SwiperSlide>
+            <ArticleColumnCard key={i} story={v} />
           ))}
-        </Swiper>
+        </div>
       ) : (
         <div className="no-post-wrapper">
           <img src={NO_POST_URL} alt="no-post" />

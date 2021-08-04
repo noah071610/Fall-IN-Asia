@@ -19,6 +19,9 @@ const VisitedCountryListWrapper = styled.ul`
       ${tw`ml-2`}
     }
   }
+  @media (max-width: 1000px) {
+    ${tw`px-0`}
+  }
 `;
 
 interface IProps {

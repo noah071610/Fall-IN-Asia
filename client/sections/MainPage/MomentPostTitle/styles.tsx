@@ -1,21 +1,18 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR } from "config";
+import { BORDER_THIN, FLEX_STYLE } from "config";
+import tw from "twin.macro";
 
 export const MomentPostTitleWrapper = styled.div`
-  padding: 1rem 0;
-  margin: 0 2rem;
+  ${tw`pb-4`}
   ${BORDER_THIN("border-bottom")};
   ${FLEX_STYLE("space-between", "flex-end")};
   .right-menu {
     ${FLEX_STYLE("center", "flex-end")};
     a {
-      padding: 0.3rem;
+      ${tw`p-1 rounded-full hover:bg-gray-100`}
       border-radius: 50%;
       .anticon {
         font-size: 1.1rem;
-      }
-      &:hover {
-        background: ${GRAY_COLOR};
       }
     }
   }

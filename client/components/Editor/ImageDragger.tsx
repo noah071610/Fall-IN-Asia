@@ -3,6 +3,7 @@ import { Upload } from "antd";
 import styled from "@emotion/styled";
 import { RGB_BLACK } from "config";
 import { memo } from "react";
+import tw from "twin.macro";
 const { Dragger } = Upload;
 const ImageDraggerWrapper = styled.div`
   .dragger {

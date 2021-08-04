@@ -2,11 +2,11 @@ import { ICountry } from "@typings/db";
 import router from "next/router";
 import React, { FC, memo, useCallback } from "react";
 import styled from "@emotion/styled";
-import { FLEX_STYLE } from "config";
+import { FLEX_STYLE, MD_SIZE, SM_SIZE } from "config";
 import tw from "twin.macro";
 
-export const CountryListCardWrapper = styled.div`
-  ${tw`py-2 pr-8 pl-2 cursor-pointer rounded-md w-auto hover:bg-gray-100 mb-2 mr-2`}
+const CountryListCardWrapper = styled.div`
+  ${tw`py-2 pr-8 pl-4 cursor-pointer rounded-md w-auto hover:bg-gray-100 mb-2 mr-2`}
   ${FLEX_STYLE("center", "center")};
   img {
     ${tw`rounded-md w-16 h-16`}
@@ -15,6 +15,18 @@ export const CountryListCardWrapper = styled.div`
     ${tw`text-xs ml-4`}
     h4 {
       ${tw`pb-1`}
+    }
+  }
+  @media (max-width: ${MD_SIZE}) {
+    ${tw`pr-4`}
+    img {
+      ${tw`w-12 h-12`}
+    }
+  }
+  @media (max-width: ${SM_SIZE}) {
+    ${tw`w-full px-1 py-2 m-0 justify-start`}
+    img {
+      ${tw`w-48 h-24`}
     }
   }
 `;

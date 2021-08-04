@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RED_COLOR, RGB_BLACK } from "config";
+import { BLUE_COLOR, FLEX_STYLE, RED_COLOR } from "config";
 import tw from "twin.macro";
 
 export const CommentWrapper = styled.div`
-  ${tw`py-4 mx-8`}
+  ${tw`py-4`}
   .comment-main {
     ${tw`cursor-pointer pr-8 pl-2 relative`}
     transition: 0.3s all;

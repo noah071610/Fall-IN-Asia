@@ -1,24 +1,21 @@
 import { css } from "@emotion/react";
-import styled from "@emotion/styled";
-import { ELLIPSIS_STYLE, FLEX_STYLE } from "config";
+import { ELLIPSIS_STYLE, FLEX_STYLE, GRID_STYLE } from "config";
 import tw from "twin.macro";
 
-export const ArticleCardWrapper = (isMain?: boolean) => css`
-  ${isMain ? tw`p-6 mb-4` : tw``}
+export const ArticleCardWrapper = () => css`
   ${tw`cursor-pointer flex`}
+  ${GRID_STYLE("2rem", "1.5fr 2.5fr")}
   &:hover {
     .image-wrapper {
       img {
-        transform: scale(1.05);
+        transform: scale(1.15);
       }
     }
   }
   .image-wrapper {
-    ${isMain ? tw`rounded-xl w-3/5` : tw`rounded-md w-2/5`};
-    ${tw`overflow-hidden relative`}
+    ${tw`rounded-md overflow-hidden relative`};
     img {
-      ${isMain ? tw`rounded-xl ` : tw`rounded-md`};
-      ${tw`h-60 w-full `}
+      ${tw`rounded-md h-60 w-full`};
       transition: 0.3s all;
     }
     .like-comment-list {
@@ -34,7 +31,6 @@ export const ArticleCardWrapper = (isMain?: boolean) => css`
       }
     }
   }
-
   .story-info {
     ${FLEX_STYLE("flex-start", "flex-end")};
   }
@@ -42,12 +38,17 @@ export const ArticleCardWrapper = (isMain?: boolean) => css`
     margin-top: 1rem;
     ${ELLIPSIS_STYLE(1.8, 5, "auto")};
   }
-  .story-main {
-    padding-left: 2rem;
-    width: 60%;
-  }
   h2 {
     ${tw`text-2xl font-bold mb-4 overflow-hidden`}
     ${ELLIPSIS_STYLE(1.5, 1, "auto")};
+  }
+  @media (max-width: 1000px) {
+    ${GRID_STYLE("2rem", "repeat(2,1fr)")}
+    h2 {
+      ${ELLIPSIS_STYLE(1.5, 2, "auto")};
+    }
+    .story-content {
+      ${ELLIPSIS_STYLE(1.8, 4, "auto")};
+    }
   }
 `;

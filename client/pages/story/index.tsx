@@ -4,10 +4,10 @@ import XLGLayout from "@layout/XLGLayout";
 import {
   BORDER_THIN,
   FLEX_STYLE,
+  LG_SIZE,
   noRevalidate,
   NO_POST_URL,
   RGB_BLACK,
-  WHITE_STYLE,
   XLG_SIZE,
 } from "config";
 import { wrapper } from "configureStore";
@@ -17,7 +17,7 @@ import router, { useRouter } from "next/router";
 import useSWR, { useSWRInfinite } from "swr";
 import { ICountry, IStory } from "@typings/db";
 import fetcher from "utils/fetcher";
-import CountryList from "@components/CountryPreviewSlide";
+import CountryPreviewSlide from "@components/CountryPreviewSlide";
 import StoryMainPoster from "@sections/StoryPage/StoryPoster";
 import tw from "twin.macro";
 import MainCountryAllview from "@components/CountryAllview";
@@ -44,9 +44,8 @@ const Wrapper = styled.div`
     color: ${RGB_BLACK(0.15)};
   }
   .story-post-btn {
-    padding: 0.55rem;
+    ${tw`p-2 w-32 rounded-xl`}
     ${BORDER_THIN("border")};
-    ${WHITE_STYLE(false, "130px", 10)};
     &:hover {
       ${tw`shadow-md`}
     }
@@ -61,6 +60,11 @@ const Wrapper = styled.div`
     }
     h2 {
       ${tw`text-base font-bold mb-4`}
+    }
+  }
+  @media (max-width: ${LG_SIZE}) {
+    .country-list-wrapper {
+      ${tw`mx-2 w-full`}
     }
   }
 `;
@@ -138,7 +142,7 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
       <StoryMainPoster name={country?.name} image={country?.image_src} />
       {!query?.country && (
         <div className="country-list-wrapper">
-          <CountryList slidesPerView={6.2} isMain={false} />
+          <CountryPreviewSlide slidesPerView={6.2} isMain={false} />
         </div>
       )}
       <TopNavigation filter={filter} onClickList={onClickList} list={storyPageNav} />
@@ -150,13 +154,15 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
             </button>
           </div>
         )}
-        <div className="story-top-section">
-          {onAllCountries ? (
-            <MainCountryAllview isMain={false} countries={countries} />
-          ) : (
-            popularStories && <ArticleCard story={popularStories[0]} />
-          )}{" "}
-        </div>
+        {onAllCountries ? (
+          <MainCountryAllview isMain={false} countries={countries} />
+        ) : (
+          popularStories && (
+            <div className="story-top-section">
+              <ArticleCard story={popularStories[0]} />
+            </div>
+          )
+        )}{" "}
         {stories && stories?.flat().length > 0 ? (
           <StoryArticleList grid={4} gap="1.5rem" setSize={setSize} stories={stories} />
         ) : (

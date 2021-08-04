@@ -1,5 +1,5 @@
 import styled from "@emotion/styled/macro";
-import { ELLIPSIS_STYLE, FLEX_STYLE, GRID_STYLE } from "config";
+import { ELLIPSIS_STYLE, FLEX_STYLE, GRID_STYLE, MD_SIZE } from "config";
 import tw from "twin.macro";
 
 export const PostPaginationWrapper = styled.div`
@@ -42,6 +42,7 @@ export const PostPaginationWrapper = styled.div`
     .prev-post {
       .post-desc {
         ${FLEX_STYLE("flex-start", "center")};
+        h3,
         h4 {
           ${tw`text-left`}
         }
@@ -53,11 +54,41 @@ export const PostPaginationWrapper = styled.div`
     .next-post {
       .post-desc {
         ${FLEX_STYLE("flex-end", "center")};
+        h3,
         h4 {
           ${tw`text-right`}
         }
         .anticon {
           ${tw`ml-3`}
+        }
+      }
+    }
+  }
+  @media (max-width: 750px) {
+    ${tw`w-full`}
+    .pagination {
+      gap: 0.5rem;
+    }
+  }
+  @media (max-width: 480px) {
+    .pagination {
+      ${tw`block`}
+      .side-post {
+        ${GRID_STYLE("", "1fr 1.5fr")};
+        .post-desc {
+          ${tw`p-2`}
+        }
+        .image-wrapper {
+          img {
+            ${tw`h-32`}
+          }
+        }
+      }
+      .prev-post {
+        ${tw`mb-2`}
+        direction: rtl;
+        .post-desc {
+          flex-direction: row-reverse;
         }
       }
     }

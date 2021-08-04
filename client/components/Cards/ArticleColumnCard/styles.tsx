@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { ELLIPSIS_STYLE, FLEX_STYLE, FONT_STYLE, GRAY_COLOR } from "config";
+import { ELLIPSIS_STYLE, FLEX_STYLE, GRAY_COLOR, SM_SIZE } from "config";
 import tw from "twin.macro";
 
 export const ArticleColumnCardWrapper = styled.div`
@@ -9,7 +9,7 @@ export const ArticleColumnCardWrapper = styled.div`
     ${tw`shadow-lg`}
     .image-wrapper {
       img {
-        transform: scale(1.05);
+        transform: scale(1.15);
       }
     }
   }
@@ -43,7 +43,13 @@ export const ArticleColumnCardWrapper = styled.div`
   }
   p {
     ${tw`m-4 mb-0 overflow-hidden`};
-    ${FONT_STYLE(0.85, true)};
+    ${tw`text-sm font-bold`}
     ${ELLIPSIS_STYLE(1.7, 2, "46px")}
+  }
+  @media (max-width: ${SM_SIZE}) {
+    ${tw`pb-6 mb-4`}
+    p {
+      ${ELLIPSIS_STYLE(1.7, 2, "auto")}
+    }
   }
 `;

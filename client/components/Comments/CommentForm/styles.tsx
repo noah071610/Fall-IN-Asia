@@ -1,13 +1,12 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, HOVER_GRAY, RGB_BLACK } from "config";
+import { FLEX_STYLE } from "config";
 import tw from "twin.macro";
 
 export const CommentFormWrapper = styled.div`
-  ${tw`py-4 px-8`}
+  ${tw`py-4`}
   .comment-form-main {
-    ${tw`rounded-2xl bg-gray-100`}
+    ${tw`rounded-2xl bg-gray-100 p-2`}
     transition:0.25s all;
-    padding: 0.3rem 0.5rem;
   }
   .comment-input {
     display: flex;

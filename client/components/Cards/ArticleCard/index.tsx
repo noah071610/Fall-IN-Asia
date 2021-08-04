@@ -9,20 +9,15 @@ import useHtmlConverter from "@hooks/useHtmlConverter";
 
 interface IProps {
   story: IStory;
-  isMain?: boolean;
 }
 
-const ArticleCard: FC<IProps> = ({ story, isMain }) => {
+const ArticleCard: FC<IProps> = ({ story }) => {
   const onClickArticleCard = useCallback(() => {
     router.push(`/story/${story?.code}/${story?.id}`);
   }, [story]);
 
   return (
-    <div
-      className="article-card-wrapper"
-      css={ArticleCardWrapper(isMain)}
-      onClick={onClickArticleCard}
-    >
+    <div css={ArticleCardWrapper()} onClick={onClickArticleCard}>
       <div className="image-wrapper">
         <img src={story?.thumbnail ? story.thumbnail : NO_IMAGE_URL} alt="thai" />
         <ul className="like-comment-list">

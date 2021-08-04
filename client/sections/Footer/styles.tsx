@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, LG_SIZE, RGB_BLACK, WHITE_COLOR, XLG_SIZE } from "config";
+import { BORDER_THIN, XLG_SIZE } from "config";
 import tw from "twin.macro";
 
 export const FooterWrapper = styled.div`
@@ -41,6 +41,11 @@ export const FooterWrapper = styled.div`
     }
     .license {
       ${tw`mb-4`}
+    }
+  }
+  @media (max-width: 1300px) {
+    .footer-inner {
+      ${tw`w-full px-2`}
     }
   }
 `;

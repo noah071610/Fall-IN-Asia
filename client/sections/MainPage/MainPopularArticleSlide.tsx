@@ -1,29 +1,16 @@
 import React, { FC, memo, useCallback } from "react";
-import { SwiperSlide } from "swiper/react";
-import "swiper/components/navigation/navigation.min.css";
-import SwiperCore, { Navigation } from "swiper/core";
-import { DoubleLeftOutlined, DoubleRightOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import { PlusCircleOutlined } from "@ant-design/icons";
 import router from "next/router";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
-import { noRevalidate } from "config";
+import { noRevalidate, SM_SIZE } from "config";
 import { ICountry, IStory } from "@typings/db";
 import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
 import styled from "@emotion/styled";
 import { FLEX_STYLE, RGB_BLACK } from "config";
-import { Swiper } from "swiper/react";
 import tw from "twin.macro";
 import Slider from "react-slick";
-
-function SampleNextArrow(props: any) {
-  const { onClick } = props;
-  return <DoubleRightOutlined className="slick-right-arrow" onClick={onClick} />;
-}
-
-function SamplePrevArrow(props: any) {
-  const { onClick } = props;
-  return <DoubleLeftOutlined className="slick-left-arrow" onClick={onClick} />;
-}
+import { NextArrow, PrevArrow } from "@components/SliderArrow";
 
 const popularSlideSettings = {
   dots: false,
@@ -32,8 +19,16 @@ const popularSlideSettings = {
   slidesToScroll: 1,
   autoplay: false,
   speed: 300,
-  nextArrow: <SampleNextArrow />,
-  prevArrow: <SamplePrevArrow />,
+  nextArrow: <NextArrow />,
+  prevArrow: <PrevArrow />,
+  responsive: [
+    {
+      breakpoint: 576,
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+  ],
 };
 
 const MainPopularArticleSlideWrapper = styled(Slider)`
@@ -54,7 +49,14 @@ const MainPopularArticleSlideWrapper = styled(Slider)`
       }
     }
   }
+  @media (max-width: ${SM_SIZE}) {
+    .slick-slide {
+      ${tw`p-0`}
+    }
+  }
 `;
+
+const NoStoryWrapper = styled.div``;
 
 interface IProps {
   country?: ICountry;
@@ -84,7 +86,7 @@ const MainPopularArticleSlide: FC<IProps> = ({ country }) => {
           </div>
         </MainPopularArticleSlideWrapper>
       ) : (
-        <div>아직 {country?.name}관련 연대기가 없어요.😰</div>
+        <NoStoryWrapper>아직 {country?.name}관련 연대기가 없어요.😰</NoStoryWrapper>
       )}
     </>
   );

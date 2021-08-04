@@ -3,7 +3,7 @@ import { IArticle, IStory } from "@typings/db";
 import { Divider } from "antd";
 import React, { FC, memo } from "react";
 import styled from "@emotion/styled";
-import { FLEX_STYLE } from "config";
+import { FLEX_STYLE, SM_SIZE } from "config";
 import tw from "twin.macro";
 
 export const PostThubnailWrapper = styled.div`
@@ -17,6 +17,17 @@ export const PostThubnailWrapper = styled.div`
     ${tw`my-8`}
     h1 {
       ${tw`mb-8 font-bold leading-10 text-center`}
+    }
+  }
+  @media (max-width: ${SM_SIZE}) {
+    .story-title {
+      ${tw`my-4`}
+      h1 {
+        ${tw`text-xl mb-4`}
+      }
+    }
+    .thumbnail {
+      ${tw`w-full`}
     }
   }
 `;
