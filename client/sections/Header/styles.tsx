@@ -1,9 +1,5 @@
 import { css } from "@emotion/react";
-<<<<<<< HEAD
-import { BORDER_THIN, FLEX_STYLE, MD_SIZE, SM_SIZE } from "config";
-=======
-import { BORDER_THIN, FLEX_STYLE } from "config";
->>>>>>> parent of cc0f26e (Create : Mobile slide menu and header)
+import { BORDER_THIN, FLEX_STYLE, MD_SIZE } from "config";
 import tw from "twin.macro";
 
 export const HeaderWrapper = (headerDownSize: boolean) => css`
@@ -13,25 +9,20 @@ export const HeaderWrapper = (headerDownSize: boolean) => css`
   transition: 0.3s all;
   ${BORDER_THIN("border-bottom")};
   ${FLEX_STYLE("space-between", "center")};
-  a {
+  .header-anchor {
     transition: 0.3s all;
     ${tw`font-bold`}
     ${headerDownSize ? tw`text-sm` : "font-size:1.05rem"}
   }
+  .logo {
+    ${tw`w-32 h-10 mr-8`}
+    transition: 0.3s all;
+    ${headerDownSize && `transform:scale(0.8)`}
+  }
   .header-left {
-    img {
-      width: 8.5rem;
-      height: 2.5rem;
-      margin-right: 2rem;
-      transition: 0.3s all;
-      ${headerDownSize && `transform:scale(0.8)`}
-    }
-    .header-list {
+    li {
       transition: 0.3s all;
       ${tw`mr-6`}
-      .icon {
-        ${tw`w-10 h-10 rounded-full`}
-      }
     }
   }
   .header-right {
@@ -40,20 +31,35 @@ export const HeaderWrapper = (headerDownSize: boolean) => css`
       transition: 0.3s all;
       ${tw`ml-3 relative`}
       padding: 0.3rem 0.5rem;
-      .user-icon {
-        ${tw`w-10 h-10 rounded-full`}
-        transition: 0.3s all;
-        ${headerDownSize && `transform:scale(0.8)`}
-      }
-      .anticon {
-        transition: 0.3s all;
-        ${headerDownSize ? tw`text-base` : tw`text-2xl`}
-      }
     }
-    .list-icon {
-      ${tw`rounded-full hover:bg-gray-100`}
+  }
+  .user-icon {
+    ${tw`w-10 h-10 rounded-full`}
+    transition: 0.3s all;
+    ${headerDownSize && `transform:scale(0.8)`}
+  }
+  .list-icon {
+    ${tw`rounded-full hover:bg-gray-100`}
+  }
+  .icon {
+    transition: 0.3s all;
+    ${headerDownSize ? tw`text-base` : tw`text-2xl`}
+  }
+  .notice-icon {
+    ${tw`relative`}
+    .circle {
+      ${tw`absolute bottom-0 right-0 text-xs text-green-300`}
     }
-<<<<<<< HEAD
+  }
+  .header-small {
+    display: none;
+  }
+  @media (max-width: ${MD_SIZE}) {
+    ${tw`px-4`}
+    .header-right,
+    .header-left {
+      display: none;
+    }
     .header-small {
       ${tw`w-full`}
       ${FLEX_STYLE("space-between", "center")};
@@ -62,12 +68,6 @@ export const HeaderWrapper = (headerDownSize: boolean) => css`
       }
       .logo {
         ${tw`m-0`}
-=======
-    .notice-icon {
-      ${tw`relative`}
-      .circle {
-        ${tw`absolute bottom-0 right-0 text-xs text-green-300`}
->>>>>>> parent of cc0f26e (Create : Mobile slide menu and header)
       }
     }
   }
