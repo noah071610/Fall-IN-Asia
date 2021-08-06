@@ -26,7 +26,7 @@ const index: FC<IProps> = ({ initialMoments, initialCountry, initialMoment }) =>
   const [ip, setIP] = useState("");
   const [filter, setFilter] = useState("");
   const { data: moment, revalidate: revalidateMoment } = useSWR<IMoment>(
-    `/moment/${query?.code}/${query?.momentId}/${ip}`,
+    `/moment/${query?.code}/${query?.momentId}/0`,
     fetcher,
     {
       initialData: initialMoment,
@@ -52,26 +52,6 @@ const index: FC<IProps> = ({ initialMoments, initialCountry, initialMoment }) =>
     initialData: initialCountry,
     ...noRevalidate,
   });
-
-  const getClientIp = async () => {
-    await fetch("https://jsonip.com", { mode: "cors" })
-      .then((resp) => resp.json())
-      .then((ip) => {
-        localStorage.setItem("client_ip", ip.ip.replaceAll(".", "").slice(3));
-        setIP(ip.ip.replaceAll(".", "").slice(3));
-      })
-      .catch(() => {
-        setIP("00000000");
-      });
-  };
-
-  useEffect(() => {
-    if (localStorage.getItem("client_ip")) {
-      setIP(JSON.parse(localStorage.getItem("client_ip")!));
-    } else {
-      getClientIp();
-    }
-  }, []);
 
   return (
     <MainLayout>

@@ -7,7 +7,6 @@ export interface MainState {
   onNoticePopUp: boolean;
   onSearchPopUp: boolean;
   onLoginModal: boolean;
-  onSlideMenu: boolean;
   onIconCropperModal: boolean;
   onWithdrawalModal: boolean;
   searchWordLoading: boolean;
@@ -21,7 +20,6 @@ const mainState: MainState = {
   onNoticePopUp: false,
   onSearchPopUp: false,
   onLoginModal: false,
-  onSlideMenu: false,
   onWithdrawalModal: false,
   onIconCropperModal: false,
   searchWordLoading: false,
@@ -38,26 +36,18 @@ export const mainSlice = createSlice({
       state.onProfilePopUp = false;
       state.onNoticePopUp = false;
       state.onSearchPopUp = false;
-      state.onSlideMenu = false;
-    },
-    toggleSlideMenu(state) {
-      state.onSlideMenu = !state.onSlideMenu;
-      state.onLoginModal = false;
-      state.onSearchPopUp = false;
     },
     toggleIconCropperModal(state) {
       state.onIconCropperModal = !state.onIconCropperModal;
       state.onProfilePopUp = false;
       state.onNoticePopUp = false;
       state.onSearchPopUp = false;
-      state.onSlideMenu = false;
     },
     toggleWithdrawalModal(state) {
       state.onWithdrawalModal = !state.onWithdrawalModal;
       state.onProfilePopUp = false;
       state.onNoticePopUp = false;
       state.onSearchPopUp = false;
-      state.onSlideMenu = false;
     },
     toggleProfilePopUp(state) {
       state.onProfilePopUp = !state.onProfilePopUp;
@@ -78,9 +68,6 @@ export const mainSlice = createSlice({
     closeProfilePopUp(state) {
       state.onProfilePopUp = false;
     },
-    closeSlideMenu(state) {
-      state.onSlideMenu = false;
-    },
     openSearchPopUp(state) {
       state.onSearchPopUp = true;
     },
@@ -97,7 +84,6 @@ export const mainSlice = createSlice({
       state.onNoticePopUp = false;
       state.onProfilePopUp = false;
       state.onSearchPopUp = false;
-      state.onSlideMenu = false;
     },
     clearSearchWord(state) {
       state.searchWordLoading = false;

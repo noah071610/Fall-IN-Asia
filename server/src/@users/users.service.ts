@@ -22,14 +22,9 @@ export class UsersService {
 
   async findUserInfoByEmail(email: string) {
     const user = await this.UserRepository.createQueryBuilder('users')
-      .addSelect([
-        'likeComment.commentId',
-        'likeMoment.momentId',
-        'likeStory.storyId',
-      ])
-      .leftJoin('users.likeStory', 'likeStory')
-      .leftJoin('users.likeMoment', 'likeMoment')
-      .leftJoin('users.likeComment', 'likeComment')
+      .leftJoinAndSelect('users.likeStory', 'likeStory')
+      .leftJoinAndSelect('users.likeMoment', 'likeMoment')
+      .leftJoinAndSelect('users.likeComment', 'likeComment')
       .leftJoinAndSelect('users.stories', 'stories')
       .leftJoinAndSelect('users.notices', 'notices')
       .leftJoinAndSelect('users.followings', 'followings')
