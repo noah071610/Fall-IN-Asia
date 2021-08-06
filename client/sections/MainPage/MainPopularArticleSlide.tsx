@@ -36,10 +36,10 @@ const MainPopularArticleSlideWrapper = styled(Slider)`
     padding: 0.5rem;
   }
   .more-card {
-    ${tw`cursor-pointer relative  rounded-2xl bg-gray-300 shadow-md`}
-    height:300px;
+    ${tw`cursor-pointer relative  rounded-2xl`}
+    height:330px;
     .more-icon {
-      ${tw`absolute top-1/2 left-1/2 text-white`}
+      ${tw`absolute top-1/2 left-1/2 text-gray-300`}
       transform:translate(-50%,-50%);
       ${FLEX_STYLE("center", "center", "column")};
       .anticon {

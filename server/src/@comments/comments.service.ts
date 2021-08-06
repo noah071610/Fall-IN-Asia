@@ -105,7 +105,7 @@ export class CommentsService {
 
     if (postType === 'moment') {
       return await comments
-        .where('comments.story= :story', { story: postId })
+        .where('comments.moment= :moment', { moment: postId })
         .orderBy('comments.id', 'ASC')
         .getMany();
     } else if (postType === 'story') {

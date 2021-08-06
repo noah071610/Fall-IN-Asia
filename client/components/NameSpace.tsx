@@ -34,6 +34,7 @@ export const NameSpaceWrapper = styled.div`
   }
   .date {
     padding-top: 0.2rem;
+    font-size: 0.7rem;
     color: ${RGB_BLACK(0.3)};
   }
 `;

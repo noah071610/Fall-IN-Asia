@@ -11,7 +11,7 @@ const PosterCardWrapper = (isMain?: boolean) => css`
   background-position: center;
   background-size: 100% 250%;
   @media (max-width: ${SM_SIZE}) {
-    ${isMain && tw`rounded-none h-40`}
+    ${isMain ? tw`rounded-none h-40` : tw`h-48`}
   }
 `;
 

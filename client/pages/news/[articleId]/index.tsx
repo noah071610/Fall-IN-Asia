@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import ReactHtmlParser from "react-html-parser";
-import { FLEX_STYLE, noRevalidate, toastSuccessMessage } from "config";
+import { FLEX_STYLE, noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
 import router, { useRouter } from "next/router";
 import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
@@ -17,10 +17,8 @@ import CountryMap from "@components/Maps/CountryMap";
 import tw from "twin.macro";
 import { toastConfirmMessage } from "@components/ConfirmToastify";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "slices";
-import { articleDeleteAction } from "actions/article";
-
 export const NewsArticleWrapper = styled.div`
   padding-top: 6rem;
   .post-content {
@@ -36,7 +34,6 @@ interface IProps {
   initialArticle: IArticle;
 }
 const index: FC<IProps> = ({ initialArticle, initialArticles }) => {
-  const dispatch = useDispatch();
   const { query } = useRouter();
   const [isOwner, setIsOwner] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
@@ -77,11 +74,18 @@ const index: FC<IProps> = ({ initialArticle, initialArticles }) => {
     }
   }, [article]);
 
-  const onClickConfirm = useCallback(() => {
+  const onClickConfirmDelete = useCallback(() => {
     if (user && isOwner) {
-      dispatch(articleDeleteAction(article?.id as number));
-      router.push(`/news`);
-      toastSuccessMessage("기사를 삭제했습니다.");
+      axios
+        .delete(`/article/${article?.id}`)
+        .then(() => {
+          toastSuccessMessage("연대기를 성공적으로 삭제했습니다.");
+          router.push(`/news`);
+        })
+        .catch((error) => {
+          toastErrorMessage(error);
+          throw error;
+        });
     }
   }, [user, isOwner, article]);
 
@@ -108,7 +112,7 @@ const index: FC<IProps> = ({ initialArticle, initialArticles }) => {
                   <button
                     onClick={() =>
                       toastConfirmMessage(
-                        onClickConfirm,
+                        onClickConfirmDelete,
                         "정말 이 기사를 삭제할까요?",
                         "삭제해주세요."
                       )

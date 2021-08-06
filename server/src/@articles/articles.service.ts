@@ -44,26 +44,26 @@ export class ArticlesService {
     const country = await this.CountriesRepository.findOne({
       where: { code: form.code },
     });
-    const newPostCreate = new Articles();
-    newPostCreate.type = form.type;
-    newPostCreate.title = form.title;
-    newPostCreate.content = form.content;
-    newPostCreate.region = form.region;
-    newPostCreate.lat = form.lat;
-    newPostCreate.lng = form.lng;
-    newPostCreate.country = <any>{ id: country.id };
-    newPostCreate.user = <any>{ id: user.id };
+    const newPost = new Articles();
+    newPost.type = form.type;
+    newPost.title = form.title;
+    newPost.content = form.content;
+    newPost.region = form.region;
+    newPost.lat = form.lat;
+    newPost.lng = form.lng;
+    newPost.country = <any>{ id: country.id };
+    newPost.user = <any>{ id: user.id };
     if (form.ranking) {
-      newPostCreate.ranking = parseInt(form.ranking);
+      newPost.ranking = parseInt(form.ranking);
     }
     if (form.label) {
-      newPostCreate.label = form.label;
+      newPost.label = form.label;
     }
     if (file) {
-      newPostCreate.thumbnail =
-        process.env.BACK_URL + file.path.replace('\\', '/');
+      newPost.thumbnail = process.env.BACK_URL + file.path.replace('\\', '/');
     }
-    return await this.ArticlesRepository.save(newPostCreate);
+    await this.ArticlesRepository.save(newPost);
+    return { articleId: newPost.id };
   }
 
   async saveImage(file: Express.Multer.File) {
@@ -89,20 +89,29 @@ export class ArticlesService {
     return post;
   }
 
-  async getAsidePosts() {
-    const latestPosts = await this.ArticlesRepository.find({
-      relations: ['country'],
-      order: { id: 'DESC' },
-      take: 4,
-    });
-    const rankingPosts = await this.ArticlesRepository.createQueryBuilder(
-      'articles',
-    )
-      .leftJoinAndSelect('articles.country', 'country')
-      .orderBy('articles.ranking', 'DESC')
-      .take(4)
-      .getMany();
-    return { latestPosts, rankingPosts };
+  async getPopularPosts(code?: string) {
+    if (code) {
+      const country = await this.CountriesRepository.findOne({
+        where: { code },
+      });
+      const rankingPostsByCountry =
+        await this.ArticlesRepository.createQueryBuilder('articles')
+          .leftJoinAndSelect('articles.country', 'country')
+          .orderBy('articles.ranking', 'DESC')
+          .where(`articles.country = :country`, { country: country.id })
+          .take(4)
+          .getMany();
+      return rankingPostsByCountry;
+    } else {
+      const rankingPosts = await this.ArticlesRepository.createQueryBuilder(
+        'articles',
+      )
+        .leftJoinAndSelect('articles.country', 'country')
+        .orderBy('articles.ranking', 'DESC')
+        .take(6)
+        .getMany();
+      return rankingPosts;
+    }
   }
 
   async getPosts(type?: string, page?: number) {
@@ -135,7 +144,7 @@ export class ArticlesService {
       where: { code: form.code },
     });
     const editPost = await this.ArticlesRepository.findOne({
-      where: { id: form.id },
+      where: { id: form.articleId },
     });
     if (!editPost || !country) {
       throw new NotFoundException('수정 할 게시물이 없습니다.');
@@ -156,7 +165,8 @@ export class ArticlesService {
     if (file) {
       editPost.thumbnail = process.env.BACK_URL + file.path.replace('\\', '/');
     }
-    return await this.ArticlesRepository.save(editPost);
+    await this.ArticlesRepository.save(editPost);
+    return { articleId: parseInt(form.articleId) };
   }
 
   async deletePost(articleId: number, userId: number) {

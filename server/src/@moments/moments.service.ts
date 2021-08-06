@@ -159,13 +159,12 @@ export class MomentsService {
         'user.name',
         'likedUser.id',
         'comments.id',
-        'images.image_src',
       ])
       .leftJoin('moments.country', 'country')
       .leftJoin('moments.user', 'user')
       .leftJoin('moments.likedUser', 'likedUser')
       .leftJoin('moments.comments', 'comments')
-      .leftJoin('moments.images', 'images')
+      .leftJoinAndSelect('moments.images', 'images')
       .getMany();
     switch (filter) {
       case 'popular':
@@ -194,13 +193,12 @@ export class MomentsService {
         'user.name',
         'likedUser.id',
         'comments.id',
-        'images.image_src',
       ])
       .leftJoin('moments.country', 'country')
       .leftJoin('moments.user', 'user')
       .leftJoin('moments.likedUser', 'likedUser')
       .leftJoin('moments.comments', 'comments')
-      .leftJoin('moments.images', 'images')
+      .leftJoinAndSelect('moments.images', 'images')
       .orderBy('moments.id', 'DESC')
       .skip((page - 1) * 10)
       .take(10)
@@ -217,13 +215,21 @@ export class MomentsService {
     const country = await this.CountriesRepository.findOne({
       where: { code: form.code },
     });
-    const editPost = await this.MomentsRepository.createQueryBuilder('moments')
-      .update()
-      .set({
-        content: form.content,
-      })
-      .where('id = :id', { id: parseInt(form.momentId) })
-      .execute();
+    const editPost = await this.MomentsRepository.findOne({
+      where: { id: form.momentId },
+    });
+    editPost.content = form.content;
+    if (files) {
+      await this.ImagesRepository.delete({
+        moment: <any>editPost.id,
+      });
+      for (let i = 0; i < files.length; i++) {
+        const newImage = new Images();
+        newImage.image_src = process.env.BACK_URL + files[i].path;
+        newImage.moment = <any>editPost.id;
+        await this.ImagesRepository.save(newImage);
+      }
+    }
     if (!editPost) {
       throw new NotFoundException('수정 할 게시물이 없습니다.');
     }

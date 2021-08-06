@@ -46,7 +46,13 @@ const index: FC<IProps> = ({ initialMoments }) => {
         <MainPopularArticleSlide />
         <h2 className="main-title">포스팅</h2>
         <MomentPostingForm />
-        <MomentList filter={filter} setFilter={setFilter} setSize={setSize} moments={moments} />
+        <MomentList
+          revalidateMoments={revalidateMoments}
+          filter={filter}
+          setFilter={setFilter}
+          setSize={setSize}
+          moments={moments}
+        />
       </MainLayout>
     </>
   );

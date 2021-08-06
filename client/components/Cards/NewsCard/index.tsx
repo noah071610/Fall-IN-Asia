@@ -14,7 +14,7 @@ const NewsCard: FC<IProps> = ({ article }) => {
     router.push(`/news/${article?.id}`);
   }, [article]);
   return (
-    <NewsCardWrapper onClick={onClickNewsCard}>
+    <NewsCardWrapper className="news-card-wrapper" onClick={onClickNewsCard}>
       <div className="image-wrapper">
         <img src={article?.thumbnail ? article.thumbnail : NO_IMAGE_URL} alt="thai" />
         {article?.label && (

@@ -81,10 +81,11 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
       form.append("momentId", String(editMoment?.id));
     }
     axios
-      .post(`/moment/${editMoment && "edit"}`, form)
+      .post(`/moment/${editMoment ? "edit" : ""}`, form)
       .then((res) => {
         const { momentId } = res.data.data;
         router.push(`/country/${pickCountry?.code}/${momentId}`);
+        scrollTo({ top: 0 });
         setContent("");
         setUpImg([]);
         setType("키워드 선택");
@@ -120,6 +121,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
   const handleTypeChange = useCallback((value: string) => {
     setType(value);
   }, []);
+  console.log(upImg);
 
   return (
     <MomentPostingFormWrapper>
@@ -154,7 +156,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
                 <Option value="동행자 모집">동행자 모집</Option>
               </Select>
             </div>
-            <EditorWithoutImage content={content} setContent={setContent} />
+            <EditorWithoutImage content={content} setContent={setContent} />{" "}
             <ImageDragger setUpImg={setUpImg} />
             <div className="editor-btn-wrapper">
               <button onClick={onClickSubmit}>모멘트 올리기</button>

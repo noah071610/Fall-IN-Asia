@@ -48,21 +48,16 @@ export const StoryPostWrapper = styled.div`
     height: 40vh;
   }
 `;
-interface IProps {
-  initialStory: IStory;
-}
+interface IProps {}
 
-const post: FC<IProps> = ({ initialStory }) => {
+const post: FC<IProps> = () => {
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher, noRevalidate);
   const { data: editStory } = useSWR<IStory>(
     query?.storyId ? `/story/${query?.code}/${query?.storyId}/0` : null,
     fetcher,
-    {
-      initialData: initialStory,
-      ...noRevalidate,
-    }
+    noRevalidate
   );
   const [selectedCountry, setCountry] = useState("");
   const [title, onChangeTitle, setTitle] = useInput("");
@@ -140,10 +135,11 @@ const post: FC<IProps> = ({ initialStory }) => {
       form.append("storyId", String(editStory?.id));
     }
     axios
-      .post(`/story/${editStory && "edit"}`, form)
+      .post(`/story/${editStory ? "edit" : ""}`, form)
       .then((res) => {
         const { storyId } = res.data.data;
         router.push(`/story/${pickCountry?.code}/${storyId}`);
+        scrollTo({ top: 0 });
         setRegion("");
         setUpImg("");
         setTitle("");
@@ -227,9 +223,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     axios.defaults.headers.Cookie = cookie;
   }
   await store.dispatch(getUserInfoAction());
-  const initialStory = await fetcher(query && `/story/${query?.code}/${query?.storyId}/0`);
   return {
-    props: { initialStory },
+    props: {},
   };
 });
 

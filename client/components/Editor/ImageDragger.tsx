@@ -28,11 +28,19 @@ interface IProps {
 const ImageDragger: FC<IProps> = ({ setUpImg, single }) => {
   const handleChange = useCallback(
     (info: any) => {
+      console.log(info);
       if (info.file.status === "done") {
         if (single) {
           setUpImg(info.file.originFileObj);
         } else {
           setUpImg((prev: any) => [...prev, info.file.originFileObj]);
+        }
+      }
+      if (info.file.status === "removed") {
+        if (single) {
+          setUpImg(null);
+        } else {
+          setUpImg(info.fileList.map((v: any) => v.originFileObj));
         }
       }
     },
@@ -43,7 +51,7 @@ const ImageDragger: FC<IProps> = ({ setUpImg, single }) => {
     <ImageDraggerWrapper>
       <Dragger
         showUploadList={true}
-        multiple={single ? false : true}
+        maxCount={single ? 1 : undefined}
         listType="picture"
         className="dragger"
         onChange={handleChange}

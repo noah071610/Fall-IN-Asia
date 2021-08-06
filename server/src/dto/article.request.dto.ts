@@ -9,7 +9,7 @@ export class ArticleRequestDto extends PickType(Articles, [
   'type',
   'lng',
 ] as const) {
-  id?: string;
+  articleId?: string;
   ranking?: string;
   label?: string;
   code: string;

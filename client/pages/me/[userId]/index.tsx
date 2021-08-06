@@ -23,15 +23,19 @@ interface IProps {
 
 const index: FC<IProps> = ({ initialUserInfo }) => {
   const { query } = useRouter();
-  const [noticePage, setnNoticePage] = useState(5);
+  const [noticePage, setNoticePage] = useState(5);
   const [isOwner, setIsOwner] = useState(false);
   const [storyPageNumber, setStoryPageNumber] = useState(6);
   const [momentPageNumber, setMomentPageNumber] = useState(5);
-  const { user, deleteNoticeDone } = useSelector((state: RootState) => state.user);
-  const { data: userInfo, revalidate } = useSWR<IUserInfo>(`/user/${query?.userId}`, fetcher, {
-    initialData: initialUserInfo,
-    ...noRevalidate,
-  });
+  const { user } = useSelector((state: RootState) => state.user);
+  const { data: userInfo, revalidate: revalidateUserInfo } = useSWR<IUserInfo>(
+    `/user/${query?.userId}`,
+    fetcher,
+    {
+      initialData: initialUserInfo,
+      ...noRevalidate,
+    }
+  );
   useEffect(() => {
     if (user?.id === userInfo?.id) {
       setIsOwner(true);
@@ -42,23 +46,17 @@ const index: FC<IProps> = ({ initialUserInfo }) => {
 
   const onClickMoreNotice = useCallback(() => {
     if (userInfo) {
-      setnNoticePage(userInfo?.notices?.length);
+      setNoticePage(userInfo?.notices?.length);
     }
   }, [userInfo]);
 
-  const onClickListCard = useCallback((v: INotice) => {
+  const onClickNoticeList = useCallback((v: INotice) => {
     if (v.momentId) {
       router.push(`/country/${v.code}/${v.momentId}`);
     } else {
       router.push(`/story/${v.code}/${v.storyId}`);
     }
   }, []);
-
-  useEffect(() => {
-    if (deleteNoticeDone) {
-      revalidate();
-    }
-  }, [deleteNoticeDone]);
 
   return (
     <UserInfoLayout>
@@ -68,11 +66,12 @@ const index: FC<IProps> = ({ initialUserInfo }) => {
           <ul className="notice-list">
             {userInfo?.notices?.slice(0, noticePage).map((v: INotice, i) => (
               <ListCard
-                onClickListCard={() => onClickListCard(v)}
+                onClickListCard={() => onClickNoticeList(v)}
                 key={i}
                 title={v.header}
                 content={v.content}
                 noticeId={v.id}
+                revalidateUserInfo={revalidateUserInfo}
               />
             ))}
           </ul>

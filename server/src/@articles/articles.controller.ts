@@ -51,7 +51,7 @@ export class ArticlesController {
     @User() user,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    await this.ArticlesService.createPost(form, user.id, file);
+    return await this.ArticlesService.createPost(form, user.id, file);
   }
 
   @UseGuards(new LoggedInGuard())
@@ -76,7 +76,7 @@ export class ArticlesController {
     @UploadedFile() file: Express.Multer.File,
     @User() user,
   ) {
-    await this.ArticlesService.editPost(form, file, user.id);
+    return await this.ArticlesService.editPost(form, file, user.id);
   }
 
   @UseGuards(new LoggedInGuard())
@@ -120,10 +120,10 @@ export class ArticlesController {
   }
 
   @ApiOperation({ summary: 'Get latest posts by using ID' })
-  @Get('aside')
-  async getAsidePosts() {
-    const asidePosts = await this.ArticlesService.getAsidePosts();
-    return asidePosts;
+  @Get('popular')
+  async getPopularPosts(@Query('code') code: string) {
+    const popularPosts = await this.ArticlesService.getPopularPosts(code);
+    return popularPosts;
   }
 
   @ApiOperation({ summary: 'Get one post for post page' })

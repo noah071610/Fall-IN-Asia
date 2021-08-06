@@ -2,7 +2,6 @@ import { HYDRATE } from "next-redux-wrapper";
 import { combineReducers } from "@reduxjs/toolkit";
 import { mainSlice } from "./main";
 import { userSlice } from "./user";
-import { articleSlice } from "./article";
 
 export const reducer = (state: any = {}, action: any) => {
   if (action.type === HYDRATE) {
@@ -14,7 +13,6 @@ export const reducer = (state: any = {}, action: any) => {
   return combineReducers({
     main: mainSlice.reducer,
     user: userSlice.reducer,
-    article: articleSlice.reducer,
   })(state, action);
 };
 

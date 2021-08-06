@@ -1,64 +1,61 @@
-import { ICountry } from "@typings/db";
-import { FC, useCallback, useState } from "react";
-import { MainCountryAnnouncementWrapper } from "./styles";
+import { IArticle, ICountry } from "@typings/db";
+import { FC, memo, useCallback, useState } from "react";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
-import { noRevalidate } from "config";
-import ReactHtmlParser from "react-html-parser";
+import { noRevalidate, SM_SIZE } from "config";
+import NewsCard from "@components/Cards/NewsCard";
+import { NextArrow, PrevArrow } from "@components/SliderArrow";
+import styled from "@emotion/styled";
+import { FLEX_STYLE } from "config";
+import tw from "twin.macro";
+import Slider from "react-slick";
+import { useRouter } from "next/router";
+
+const MainCountryAnnouncementWrapper = styled(Slider)`
+  .news-card-wrapper {
+    ${tw`m-4`}
+    border-radius: 15px;
+  }
+  @media (max-width: ${SM_SIZE}) {
+    .news-card-wrapper {
+      ${tw`m-2`}
+      .image-wrapper {
+        ${tw`h-48`}
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        img {
+          ${tw`h-48`}
+          border-top-left-radius: 15px;
+          border-top-right-radius: 15px;
+        }
+      }
+    }
+  }
+`;
 
 interface IProps {
-  country: ICountry;
+  news: IArticle[];
 }
 
-const MainCountryAnnouncement: FC<IProps> = ({ country }) => {
-  const [type, setType] = useState<string | null>(null);
-  const [warning, setWarning] = useState(false);
-  const [covid, setCovid] = useState(false);
-  const [alert, setAlert] = useState(false);
-  const { data, error, revalidate } = useSWR<any>(
-    type ? `/country/info/${country?.code}/${type}` : null,
-    fetcher,
-    noRevalidate
-  );
+const slideSettings = {
+  dots: false,
+  infinite: false,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: false,
+  speed: 300,
+  nextArrow: <NextArrow />,
+  prevArrow: <PrevArrow />,
+};
 
-  const onClickCovid = useCallback(() => {
-    setWarning(false);
-    setType("covidInfo");
-    setCovid((prev) => !prev);
-    setAlert(false);
-  }, []);
-  const onClickAlert = useCallback(() => {
-    setWarning(false);
-    setType("safeInfo");
-    setCovid(false);
-    setAlert((prev) => !prev);
-  }, []);
-  const onClickWarning = useCallback(() => {
-    setWarning((prev) => !prev);
-    setCovid(false);
-    setAlert(false);
-  }, []);
-
+const MainCountryAnnouncement: FC<IProps> = ({ news }) => {
   return (
-    <MainCountryAnnouncementWrapper>
-      <ul>
-        <li onClick={onClickCovid}>코로나 관련 소식</li>
-        <li onClick={onClickAlert}>안전공지</li>
-        <li onClick={onClickWarning}>여행경보</li>
-      </ul>
-      {(covid || alert) && !warning && data && (
-        <div className="announcement">{data?.content ? ReactHtmlParser(data.content) : null}</div>
-      )}
-      {warning && (
-        <div className="announcement">
-          <img
-            src="https://www.0404.go.kr/imgsrc.mofa?atch_file_id=FILE_000000000010504&file_sn=3"
-            alt="warning"
-          />
-        </div>
-      )}
+    <MainCountryAnnouncementWrapper {...slideSettings}>
+      {news?.map((v, i) => {
+        return <NewsCard key={i} article={v} />;
+      })}
     </MainCountryAnnouncementWrapper>
   );
 };
 
-export default MainCountryAnnouncement;
+export default memo(MainCountryAnnouncement);

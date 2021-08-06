@@ -11,7 +11,6 @@ import {
   toastErrorMessage,
   toastSuccessMessage,
 } from "config";
-import { articleCreateAction, articleEditAction } from "actions/article";
 import router, { useRouter } from "next/router";
 import CountrySelectMap from "@components/Maps/CountrySelectMap";
 import AutoCompleteForm from "@components/AutoCompleteForm";
@@ -21,7 +20,6 @@ import fetcher from "utils/fetcher";
 import ImageDragger from "@components/Editor/ImageDragger";
 import useInput from "@hooks/useInput";
 import { toastConfirmMessage } from "@components/ConfirmToastify";
-import { articleSlice } from "slices/article";
 import tw from "twin.macro";
 import { Select } from "antd";
 import { wrapper } from "configureStore";
@@ -51,21 +49,22 @@ export const ArticlePostWrapper = styled.div`
   .mapboxgl-ctrl-geocoder--button {
     ${tw`rounded-full`}
   }
+  .dragger {
+    height: 40vh;
+  }
 `;
 interface IProps {}
 
 const post: FC<IProps> = () => {
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
-  const { articleCreateDone, articleEditDone } = useSelector((state: RootState) => state.article);
-  const { data: article } = useSWR<IArticle>(
-    (query?.articleId as string) && `/article/${query?.articleId}`,
+  const { data: editArticle } = useSWR<IArticle>(
+    query?.articleId ? `/article/${query?.articleId}` : null,
     fetcher,
     noRevalidate
   );
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher, noRevalidate);
   const [type, setType] = useState("타입 선택");
-  const dispatch = useDispatch();
   const [selectedCountry, setCountry] = useState("");
   const [title, onChangeTitle, setTitle] = useInput("");
   const [label, onChangeLabel, setLabel] = useInput<Number | string>("");
@@ -75,8 +74,8 @@ const post: FC<IProps> = () => {
   const [content, setContent] = useState("");
   const [editPostId, setEditPostId] = useState<number | null>(null);
   const [marker, setMarker] = useState<ICoordinate>({
-    latitude: article?.lat || 37.50529626491968,
-    longitude: article?.lng || 126.98047832475031,
+    latitude: 37.50529626491968,
+    longitude: 126.98047832475031,
   });
 
   const countryOptions = useMemo(
@@ -88,55 +87,32 @@ const post: FC<IProps> = () => {
   );
 
   useEffect(() => {
-    dispatch(getUserInfoAction());
-  }, []);
-
-  useEffect(() => {
-    if (article) {
-      setRegion(article?.region);
-      setTitle(article?.title);
-      setType(article?.type);
-      setContent(article?.content);
-      setCountry(article?.country?.name);
-      setEditPostId(article?.id);
-      setLabel(article?.label || "");
-      setRanking(article?.ranking || "");
+    if (editArticle) {
+      setRegion(editArticle?.region);
+      setTitle(editArticle?.title);
+      setType(editArticle?.type);
+      setContent(editArticle?.content);
+      setCountry(editArticle?.country?.name);
+      setEditPostId(editArticle?.id);
+      setMarker({
+        latitude: editArticle?.lat,
+        longitude: editArticle?.lng,
+      });
+      setLabel(editArticle?.label || "");
+      setRanking(editArticle?.ranking || "");
     }
-  }, [article]);
+  }, [editArticle]);
 
   useEffect(() => {
     if (!user) {
       router.back();
     }
-  }, [user]);
-
-  useEffect(() => {
-    if (article) {
-      if (user?.id !== article?.user?.id) {
+    if (editArticle) {
+      if (user?.id !== editArticle?.user?.id) {
         router.back();
       }
     }
-  }, [user, article]);
-
-  useEffect(() => {
-    if (articleCreateDone || articleEditDone) {
-      if (articleCreateDone) {
-        toastSuccessMessage("당신에 멋진 기사가 올라갔어요🥰");
-      }
-      if (articleEditDone) {
-        toastSuccessMessage("성공적으로 기사를 수정했습니다.");
-      }
-      router.push("/news");
-      setRegion("");
-      setUpImg("");
-      setTitle("");
-      setType("타입 선택");
-      setContent("");
-      setCountry("");
-      setLabel("");
-      setRanking("");
-    }
-  }, [articleCreateDone, articleEditDone]);
+  }, [user, editArticle]);
 
   const onClickSubmit = useCallback(() => {
     if (!title) {
@@ -179,12 +155,32 @@ const post: FC<IProps> = () => {
       toastErrorMessage("유효하지 않은 국가입니다. 다시 확인해주세요.");
       return;
     }
-    if (editPostId) {
-      form.append("id", String(editPostId));
-      dispatch(articleEditAction(form));
-    } else {
-      dispatch(articleCreateAction(form));
+    if (editArticle) {
+      form.append("articleId", String(editArticle?.id));
     }
+    axios
+      .post(`/article/${editArticle ? "edit" : ""}`, form)
+      .then((res) => {
+        const { articleId } = res.data.data;
+        router.push(`/news/${articleId}`);
+        setRegion("");
+        setUpImg("");
+        setTitle("");
+        setType("타입 선택");
+        setContent("");
+        setCountry("");
+        setLabel("");
+        setRanking("");
+        if (editArticle) {
+          toastSuccessMessage("기사를 수정했습니다.");
+        } else {
+          toastSuccessMessage("기사를 성공적으로 작성했습니다.");
+        }
+      })
+      .catch((error) => {
+        toastErrorMessage(error);
+        throw error;
+      });
   }, [
     title,
     region,
@@ -193,7 +189,7 @@ const post: FC<IProps> = () => {
     content,
     upImg,
     marker,
-    editPostId,
+    editArticle,
     type,
     label,
     ranking,
@@ -251,8 +247,8 @@ const post: FC<IProps> = () => {
         </Select>
         <h2 className="main-title">지역 지정</h2>
         <CountrySelectMap
-          lat={article?.lat}
-          lng={article?.lng}
+          lat={editArticle?.lat}
+          lng={editArticle?.lng}
           marker={marker}
           setMarker={setMarker}
           setRegion={setRegion}
@@ -260,7 +256,7 @@ const post: FC<IProps> = () => {
         <h2 className="main-title">선택 지역</h2>
         <h3>{region}</h3>
         <h2 className="main-title">내용작성</h2>
-        <Editor prevContent={article?.content} setContent={setContent} isStory={true} />
+        <Editor prevContent={editArticle?.content} setContent={setContent} isStory={true} />
         <h2 className="main-title">
           {editPostId ? "썸네일 변경 (미선택시 기존 썸네일 사용)" : "썸네일 업로드"}
         </h2>
@@ -290,5 +286,17 @@ const post: FC<IProps> = () => {
     </ArticlePostWrapper>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
+  const cookie = req ? req.headers.cookie : "";
+  axios.defaults.headers.Cookie = "";
+  if (req && cookie) {
+    axios.defaults.headers.Cookie = cookie;
+  }
+  await store.dispatch(getUserInfoAction());
+  return {
+    props: {},
+  };
+});
 
 export default post;

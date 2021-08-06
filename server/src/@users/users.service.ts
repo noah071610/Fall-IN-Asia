@@ -55,21 +55,41 @@ export class UsersService {
 
   async getUserInfoById(userId: number) {
     const user = await this.UserRepository.createQueryBuilder('users')
-      .leftJoinAndSelect('users.likeStory', 'likeStory')
-      .leftJoinAndSelect('users.likeMoment', 'likeMoment')
-      .leftJoinAndSelect('users.likeComment', 'likeComment')
-      .leftJoinAndSelect('users.stories', 'stories')
+      .addSelect([
+        'stories.code',
+        'stories.title',
+        'stories.lat',
+        'stories.lng',
+        'stories.region',
+        'stories.thumbnail',
+        'stories.id',
+        'comments.id',
+        'likedUser.id',
+        's_country.code',
+        's_country.flag_src',
+        's_country.name',
+        's_user.name',
+        's_user.icon',
+        's_user.id',
+        'm_country.code',
+        'm_country.name',
+        'following.icon',
+        'following.name',
+        'follower.icon',
+        'follower.name',
+      ])
+      .leftJoin('users.stories', 'stories')
+      .leftJoin('stories.comments', 'comments')
+      .leftJoin('stories.likedUser', 'likedUser')
+      .leftJoin('stories.country', 's_country')
+      .leftJoin('stories.user', 's_user')
+      .leftJoinAndSelect('users.moments', 'moments')
+      .leftJoin('moments.country', 'm_country')
       .leftJoinAndSelect('users.notices', 'notices')
       .leftJoinAndSelect('users.followings', 'followings')
       .leftJoinAndSelect('users.followers', 'followers')
-      .leftJoinAndSelect('stories.comments', 'comments')
-      .leftJoinAndSelect('stories.likedUser', 'likedUser')
-      .leftJoinAndSelect('stories.country', 's_country')
-      .leftJoinAndSelect('stories.user', 's_user')
-      .leftJoinAndSelect('users.moments', 'moments')
-      .leftJoinAndSelect('moments.country', 'm_country')
-      .leftJoinAndSelect('followings.following', 'following')
-      .leftJoinAndSelect('followers.follower', 'follower')
+      .leftJoin('followings.following', 'following')
+      .leftJoin('followers.follower', 'follower')
       .where('users.id= :id', { id: userId })
       .getOne();
 

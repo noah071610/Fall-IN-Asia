@@ -10,7 +10,7 @@ export const ArticleImageCardWrapper = styled.div`
     }
   }
   .card-image {
-    ${tw`rounded-md w-full h-52`}
+    ${tw`rounded-md w-full h-44`}
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100% 100%;

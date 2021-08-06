@@ -14,6 +14,8 @@ import fetcher from "utils/fetcher";
 import {
   FLEX_STYLE,
   GRID_STYLE,
+  LG_SIZE,
+  MD_SIZE,
   newsPageNavList,
   noRevalidate,
   NO_POST_URL,
@@ -29,8 +31,18 @@ SwiperCore.use([EffectFade, Pagination, Autoplay]);
 
 const GuidePageWrapper = styled.div`
   padding-top: 4rem;
-  .layout-divide {
-    ${GRID_STYLE("2rem", "3fr 1fr")};
+  .news-layout {
+    width: ${LG_SIZE};
+    ${tw`mx-auto py-8`}
+    .main-title {
+      ${tw`text-base font-bold mt-8 mb-4`}
+    }
+    .main-title:first-of-type {
+      ${tw`mt-0 mb-4`}
+    }
+    .layout-divide {
+      ${GRID_STYLE("2rem", "3fr 1fr")};
+    }
   }
   .swiper-pagination-bullet {
     ${tw`rounded-none w-auto h-auto inline-block py-2 px-4 bg-white opacity-70 hover:opacity-100 mx-1 font-bold`}
@@ -52,15 +64,24 @@ const GuidePageWrapper = styled.div`
       ${tw`text-base font-bold mb-4`}
     }
   }
-  @media (max-width: 1000px) {
-    .layout-divide {
-      ${tw`block w-full`}
+  .swiper-pagination {
+    ${tw`block`}
+  }
+  @media (max-width: ${MD_SIZE}) {
+    .news-layout {
+      ${tw`w-full px-2`};
+      .layout-divide {
+        ${tw`block w-full`}
+      }
     }
     .news-aside {
       ${tw`hidden`}
     }
   }
   @media (max-width: ${SM_SIZE}) {
+    .swiper-pagination {
+      ${tw`hidden`}
+    }
     .no-article-wrapper {
       ${tw`p-0 mt-6`}
       height:300px;
@@ -71,14 +92,9 @@ const GuidePageWrapper = styled.div`
   }
 `;
 
-interface IAsideArticle {
-  latestPosts: IArticle[];
-  rankingPosts: IArticle[];
-}
-
 interface IProps {
   initialArticles: IArticle[][];
-  initialAsideArticle: IAsideArticle;
+  initialAsideArticle: IArticle[];
 }
 
 const bulletTextByIndex = ["아름다운동행", "태국음식체험전", "러브캠핑"];
@@ -87,7 +103,7 @@ const index: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
   const [type, setType] = useState("관광뉴스");
   const {
     data: articles,
-    revalidate,
+    revalidate: revalidateArticles,
     setSize,
   } = useSWRInfinite<IArticle[]>(
     (index) => `/article?page=${index + 1}&type=${type ? encodeURIComponent(type) : ""}`,
@@ -98,14 +114,10 @@ const index: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
     }
   );
 
-  const { data: asideArticle } = useSWR<{ latestPosts: IArticle[]; rankingPosts: IArticle[] }>(
-    `/article/aside`,
-    fetcher,
-    {
-      initialData: initialAsideArticle,
-      ...noRevalidate,
-    }
-  );
+  const { data: asideArticle } = useSWR<IArticle[]>(`/article/popular`, fetcher, {
+    initialData: initialAsideArticle,
+    ...noRevalidate,
+  });
 
   const pagination = useMemo(() => {
     return {
@@ -145,7 +157,7 @@ const index: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
         </SwiperSlide>
       </Swiper>
       <TopNavigation onClickList={onClickList} filter={type} list={newsPageNavList} />
-      <XLGLayout>
+      <div className="news-layout">
         <h2 className="main-title">{type}</h2>
         <div className="layout-divide">
           {articles && articles?.flat().length > 0 ? (
@@ -158,20 +170,19 @@ const index: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
           )}
           {asideArticle && (
             <aside className="news-aside">
-              <h2 className="aside-title">인기 소식</h2>
-              <ArticleImageCard article={asideArticle?.rankingPosts[0]} />
-              {asideArticle?.rankingPosts?.slice(1).map((v, i) => {
-                return <ArticleSmallCard key={i} article={v} />;
-              })}
-              <h2 className="aside-title">최신 소식</h2>
-              <ArticleImageCard article={asideArticle?.latestPosts[0]} />
-              {asideArticle?.latestPosts?.slice(1).map((v, i) => {
-                return <ArticleSmallCard key={i} article={v} />;
-              })}
+              {asideArticle?.length > 0 && (
+                <>
+                  <h2 className="aside-title">인기 소식</h2>
+                  <ArticleImageCard article={asideArticle[0]} />
+                  {asideArticle?.slice(1).map((v, i) => {
+                    return <ArticleSmallCard key={i} article={v} />;
+                  })}
+                </>
+              )}
             </aside>
           )}
         </div>
-      </XLGLayout>
+      </div>
     </GuidePageWrapper>
   );
 };

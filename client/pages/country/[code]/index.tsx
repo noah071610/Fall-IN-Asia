@@ -10,15 +10,16 @@ import fetcher from "utils/fetcher";
 import MainLayout from "@layout/MainLayout";
 import MainTopArticleSlide from "@sections/MainPage/MainPopularArticleSlide";
 import { useRouter } from "next/router";
-import { ICountry, IMoment } from "@typings/db";
+import { IArticle, ICountry, IMoment } from "@typings/db";
 import MainCountryAnnouncement from "@sections/MainPage/MainCountryAnnouncement";
 
 interface IProps {
   initialMoments: IMoment[][];
   initialCountry: ICountry;
+  initialNews: IArticle[];
 }
 
-const index: FC<IProps> = ({ initialMoments, initialCountry }) => {
+const index: FC<IProps> = ({ initialMoments, initialCountry, initialNews }) => {
   const { query } = useRouter();
   const [filter, setFilter] = useState("");
   const {
@@ -44,13 +45,17 @@ const index: FC<IProps> = ({ initialMoments, initialCountry }) => {
       ...noRevalidate,
     }
   );
+  const { data: news } = useSWR<IArticle[]>(`/article/popular?code=${query?.code}`, fetcher, {
+    initialData: initialNews,
+    ...noRevalidate,
+  });
 
   return (
     <MainLayout>
-      {country && (
+      {news && news.length > 0 && (
         <>
-          <h2 className="main-title">{country?.name + " 관련 정보 📢"}</h2>
-          <MainCountryAnnouncement country={country} />
+          <h2 className="main-title">{country?.name + " 관련 소식 📢"}</h2>
+          <MainCountryAnnouncement news={news} />
         </>
       )}
       <h2 className="main-title">{country?.name + " 인기 연대기"}</h2>
@@ -78,8 +83,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   let initialMoments = await fetcher(`/moment?code=${params?.code}&page=1`);
   initialMoments = [initialMoments];
   const initialCountry = await fetcher(`/country/${params?.code}`);
+  const initialNews = await fetcher(`/article/popular?code=${params?.code}`);
   return {
-    props: { initialMoments, initialCountry },
+    props: { initialMoments, initialCountry, initialNews },
   };
 });
 

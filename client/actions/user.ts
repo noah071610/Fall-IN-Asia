@@ -131,18 +131,6 @@ export const unfollowUserAction = createAsyncThunk<any, number>(
   }
 );
 
-export const deleteNoticeAction = createAsyncThunk<any, number>(
-  "/notice/delete",
-  async (noticeId) => {
-    try {
-      const response = await axios.delete(`/user/notice/${noticeId}`);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  }
-);
-
 export const readNoticeAction = createAsyncThunk<any>("/notice/read", async () => {
   try {
     const response = await axios.patch(`/user/notice`);
