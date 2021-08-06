@@ -9,5 +9,5 @@ export class StoryRequestDto extends PickType(Stories, [
   'lat',
   'lng',
 ] as const) {
-  id?: string;
+  storyId?: string;
 }

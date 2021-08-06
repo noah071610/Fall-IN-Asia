@@ -5,7 +5,6 @@ import { memo } from "react";
 
 const EditorWrapper = styled.div`
   .ql-editor {
-    height: 450px;
     padding: 1rem;
     img {
       width: 50%;
@@ -48,7 +47,7 @@ const Editor: FC<IProps> = ({ setContent, prevContent, isStory }) => {
 
   return (
     <EditorWrapper>
-      <div ref={quillElement} />
+      <div style={{ height: "70vh" }} ref={quillElement} />
     </EditorWrapper>
   );
 };

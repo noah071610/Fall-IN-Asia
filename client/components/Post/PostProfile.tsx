@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, memo, useCallback } from "react";
 import { DEFAULT_ICON_URL, MD_SIZE, SM_SIZE } from "config";
 import { IStory } from "@typings/db";
 import router from "next/router";
@@ -71,4 +71,4 @@ const PostProfile: FC<IProps> = ({ story }) => {
   );
 };
 
-export default PostProfile;
+export default memo(PostProfile);

@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
-import { FLEX_STYLE, noRevalidate, toastSuccessMessage } from "config";
+import { FLEX_STYLE, noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import router, { useRouter } from "next/router";
@@ -11,11 +11,8 @@ import { Divider } from "antd";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
-import { storySlice } from "slices/story";
-import { commentSlice } from "slices/comment";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { toastConfirmMessage } from "@components/ConfirmToastify";
-import { storyDeleteAction } from "actions/story";
 import tw from "twin.macro";
 import PostLayout from "@layout/PostLayout";
 import StoryArticleList from "@sections/StoryPage/StoryArticleList";
@@ -51,23 +48,12 @@ interface IProps {
 const index: FC<IProps> = ({ initialStories, initialStory }) => {
   const dispatch = useDispatch();
   const { query } = useRouter();
-  const [ip, setIP] = useState("");
+  // const [ip, setIP] = useState("");
   const [isOwner, setIsOwner] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
-  const { storyEditConfirmDone, storyDislikeDone, storyLikeDone } = useSelector(
-    (state: RootState) => state.story
-  );
-  const {
-    commentCreateDone,
-    commentDeleteDone,
-    subCommentCreateDone,
-    subCommentDeleteDone,
-    commentLikeDone,
-    commentDislikeDone,
-  } = useSelector((state: RootState) => state.comment);
 
   const { data: story, revalidate: revalidateStory } = useSWR<IStory>(
-    ip ? `/story/${query?.code}/${query?.storyId}/${ip}` : null,
+    `/story/${query?.code}/${query?.storyId}/0`,
     fetcher,
     {
       initialData: initialStory,
@@ -83,17 +69,25 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
     }
   );
 
-  const getClientIp = async () => {
-    await fetch("https://jsonip.com", { mode: "cors" })
-      .then((resp) => resp.json())
-      .then((ip) => {
-        localStorage.setItem("client_ip", ip.ip.replaceAll(".", "").slice(3));
-        setIP(ip.ip.replaceAll(".", "").slice(3));
-      })
-      .catch(() => {
-        setIP("00000000");
-      });
-  };
+  // const getClientIp = async () => {
+  //   await fetch("https://jsonip.com", { mode: "cors" })
+  //     .then((resp) => resp.json())
+  //     .then((ip) => {
+  //       localStorage.setItem("client_ip", ip.ip.replaceAll(".", "").slice(3));
+  //       setIP(ip.ip.replaceAll(".", "").slice(3));
+  //     })
+  //     .catch(() => {
+  //       setIP("00000000");
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("client_ip")) {
+  //     setIP(JSON.parse(localStorage.getItem("client_ip")!));
+  //   } else {
+  //     getClientIp();
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (story) {
@@ -111,14 +105,6 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
   }, [story]);
 
   useEffect(() => {
-    if (localStorage.getItem("client_ip")) {
-      setIP(JSON.parse(localStorage.getItem("client_ip")!));
-    } else {
-      getClientIp();
-    }
-  }, []);
-
-  useEffect(() => {
     if (user?.id === story?.user?.id) {
       setIsOwner(true);
     } else {
@@ -126,90 +112,24 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
     }
   }, [user, story]);
 
-  useEffect(() => {
-    if (storyEditConfirmDone) {
-      router.push(`/club/${query?.group}/edit`);
-    }
-  }, [storyEditConfirmDone]);
-
-  useEffect(() => {
-    if (commentCreateDone) {
-      toastSuccessMessage("댓글을 성공적으로 작성했습니다.");
-      dispatch(commentSlice.actions.commentCreateClear());
-      revalidateStory();
-    }
-  }, [commentCreateDone]);
-
-  useEffect(() => {
-    if (commentDeleteDone) {
-      toastSuccessMessage("댓글을 성공적으로 삭제했습니다.");
-      dispatch(commentSlice.actions.commentDeleteClear());
-      revalidateStory();
-    }
-  }, [commentDeleteDone]);
-
-  useEffect(() => {
-    if (subCommentCreateDone) {
-      toastSuccessMessage("답글을 성공적으로 작성했습니다.");
-      dispatch(commentSlice.actions.subCommentCreateClear());
-      revalidateStory();
-    }
-  }, [subCommentCreateDone]);
-
-  useEffect(() => {
-    if (subCommentDeleteDone) {
-      toastSuccessMessage("답글을 성공적으로 삭제했습니다.");
-      dispatch(commentSlice.actions.subCommentDeleteClear());
-      revalidateStory();
-    }
-  }, [subCommentDeleteDone]);
-
-  useEffect(() => {
-    if (storyLikeDone) {
-      toastSuccessMessage("좋아요!💓");
-      dispatch(storySlice.actions.storyLikeClear());
-      dispatch(getUserInfoAction());
-      revalidateStory();
-    }
-  }, [storyLikeDone]);
-
-  useEffect(() => {
-    if (storyDislikeDone) {
-      toastSuccessMessage("좋아요 취소💔");
-      dispatch(storySlice.actions.storyDislikeClear());
-      dispatch(getUserInfoAction());
-      revalidateStory();
-    }
-  }, [storyDislikeDone]);
-
-  useEffect(() => {
-    if (commentLikeDone) {
-      toastSuccessMessage("댓글 좋아요!💓");
-      dispatch(commentSlice.actions.commentLikeClear());
-      dispatch(getUserInfoAction());
-      revalidateStory();
-    }
-  }, [commentLikeDone]);
-
-  useEffect(() => {
-    if (commentDislikeDone) {
-      toastSuccessMessage("댓글 좋아요 취소💔");
-      dispatch(commentSlice.actions.commentDislikeClear());
-      dispatch(getUserInfoAction());
-      revalidateStory();
-    }
-  }, [commentDislikeDone]);
-
   const onClickEditBtn = useCallback(() => {
     if (user && isOwner) {
-      router.push(`/story/post?code=${query?.code}&storyId=${query?.storyId}`);
+      router.push(`/story/post?code=${story?.code}&storyId=${story?.id}`);
     }
-  }, [user, isOwner, query]);
-  const onClickConfirm = useCallback(() => {
+  }, [user, isOwner]);
+
+  const onClickConfirmDelete = useCallback(() => {
     if (user && isOwner) {
-      dispatch(storyDeleteAction(story?.id as number));
-      router.push(`/story`);
-      toastSuccessMessage("연대기를 삭제했습니다.");
+      axios
+        .delete(`/story/${story?.id}`)
+        .then(() => {
+          toastSuccessMessage("연대기를 성공적으로 삭제했습니다.");
+          router.push(`/story`);
+        })
+        .catch((error) => {
+          toastErrorMessage(error);
+          throw error;
+        });
     }
   }, [user, isOwner, story]);
 
@@ -230,7 +150,7 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
                   <button
                     onClick={() =>
                       toastConfirmMessage(
-                        onClickConfirm,
+                        onClickConfirmDelete,
                         "정말 이 연대기를 삭제할까요?",
                         "삭제해주세요."
                       )
@@ -254,7 +174,7 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
             </div>
             <PostProfile story={story} />
             <PostPagination userId={story?.user.id} />
-            <PostComment story={story} />
+            <PostComment revalidateStory={revalidateStory} story={story} />
           </>
         )}
         <div style={{ height: "3rem" }} />
@@ -264,22 +184,19 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ req, res, params }) => {
-      const cookie = req ? req.headers.cookie : "";
-      axios.defaults.headers.Cookie = "";
-      if (req && cookie) {
-        axios.defaults.headers.Cookie = cookie;
-      }
-      await store.dispatch(getUserInfoAction());
-      const initialStory = await fetcher(`/story/${params?.code}/${params?.storyId}/0`);
-      let initialStories = await fetcher(`/story?code=${params?.code}&page=1`);
-      initialStories = [initialStories];
-      return {
-        props: { initialStory, initialStories },
-      };
-    }
-);
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, params }) => {
+  const cookie = req ? req.headers.cookie : "";
+  axios.defaults.headers.Cookie = "";
+  if (req && cookie) {
+    axios.defaults.headers.Cookie = cookie;
+  }
+  await store.dispatch(getUserInfoAction());
+  const initialStory = await fetcher(`/story/${params?.code}/${params?.storyId}/0`);
+  let initialStories = await fetcher(`/story?code=${params?.code}&page=1`);
+  initialStories = [initialStories];
+  return {
+    props: { initialStory, initialStories },
+  };
+});
 
 export default index;

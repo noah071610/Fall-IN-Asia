@@ -11,6 +11,7 @@ import { CommentRequestDto } from 'src/dto/comment.request.dto';
 import { CommentLike } from 'src/entities/CommentLike';
 import { Notices } from 'src/entities/Notices';
 import { Moments } from 'src/entities/Moments';
+import { Stories } from 'src/entities/Stories';
 
 @Injectable()
 export class CommentsService {
@@ -25,82 +26,93 @@ export class CommentsService {
     private NoticesRepository: Repository<Notices>,
     @InjectRepository(Moments)
     private MomentsRepository: Repository<Moments>,
+    @InjectRepository(Stories)
+    private StoriesRepository: Repository<Stories>,
   ) {}
 
   async createComment(form: CommentRequestDto, userId: number) {
-    const moment = await this.MomentsRepository.findOne({
-      relations: ['country', 'user'],
-      where: { id: form.momentId },
-    });
-    if (!moment) {
-      throw new NotFoundException('모멘트를 찾지 못했습니다.');
-    }
     const newComment = new Comments();
     newComment.content = form.content;
     newComment.user = <any>{ id: userId };
     if (form.momentId) {
       newComment.moment = <any>{ id: form.momentId };
-    } else {
-      newComment.story = <any>{ id: form.storyId };
-    }
-    await this.CommentsRepository.save(newComment);
-    await this.NoticesRepository.save({
-      header: `${moment.country.name}/${moment.id}번모멘트/댓글`,
-      code: moment.code,
-      userId: userId,
-      momentId: moment.id,
-      content: `${form.content.slice(0, 10)}...을 작성했습니다.`,
-    });
-    if (moment.user.id !== userId) {
+      const moment = await this.MomentsRepository.findOne({
+        relations: ['country', 'user'],
+        where: { id: form.momentId },
+      });
       await this.NoticesRepository.save({
         header: `${moment.country.name}/${moment.id}번모멘트/댓글`,
         code: moment.code,
-        userId: moment.user.id,
+        userId: userId,
         momentId: moment.id,
-        content: `${moment.content
-          .slice(0, 30)
-          .replace(/(<([^>]+)>)/gi, '')
-          .replace(/&.*;/gi, '')
-          .slice(0, 10)}... 에 댓글이 달렸습니다.`,
+        content: `${form.content.slice(0, 10)}...을 작성했습니다.`,
       });
+      if (moment.user.id !== userId) {
+        await this.NoticesRepository.save({
+          header: `${moment.country.name}/${moment.id}번모멘트/댓글`,
+          code: moment.code,
+          userId: moment.user.id,
+          momentId: moment.id,
+          content: `${moment.content
+            .slice(0, 30)
+            .replace(/(<([^>]+)>)/gi, '')
+            .replace(/&.*;/gi, '')
+            .slice(0, 10)}... 에 댓글이 달렸습니다.`,
+        });
+      }
+    } else {
+      newComment.story = <any>{ id: form.storyId };
+      const story = await this.StoriesRepository.findOne({
+        relations: ['country', 'user'],
+        where: { id: form.storyId },
+      });
+      await this.NoticesRepository.save({
+        header: `${story.country.name}/${story.id}번연대기/댓글`,
+        code: story.code,
+        userId,
+        storyId: story.id,
+        content: `${form.content.slice(0, 10)}...을 작성했습니다.`,
+      });
+      if (story.user.id !== userId) {
+        await this.NoticesRepository.save({
+          header: `${story.country.name}/${story.id}번연대기/댓글`,
+          code: story.code,
+          userId: story.user.id,
+          storyId: story.id,
+          content: `${story.title.slice(0, 10)}... 에 댓글이 달렸습니다.`,
+        });
+      }
     }
+    await this.CommentsRepository.save(newComment);
     return true;
   }
 
   async getComments(postId: number, postType: string) {
+    const comments = this.CommentsRepository.createQueryBuilder('comments')
+      .addSelect([
+        'likedUser.id',
+        'user.id',
+        'user.icon',
+        'user.name',
+        'subComments_user.id',
+        'subComments_user.icon',
+        'subComments_user.name',
+      ])
+      .leftJoin('comments.likedUser', 'likedUser')
+      .leftJoin('comments.user', 'user')
+      .leftJoinAndSelect('comments.subComments', 'subComments')
+      .leftJoin('subComments.user', 'subComments_user');
+
     if (postType === 'moment') {
-      const comments = await this.CommentsRepository.createQueryBuilder(
-        'comments',
-      )
-        .addSelect([
-          'likedUser.id',
-          'user.id',
-          'user.icon',
-          'user.name',
-          'subComments_user.id',
-          'subComments_user.icon',
-          'subComments_user.name',
-        ])
-        .leftJoin('comments.likedUser', 'likedUser')
-        .leftJoin('comments.user', 'user')
-        .leftJoinAndSelect('comments.subComments', 'subComments')
-        .leftJoin('subComments.user', 'subComments_user')
-        .where('comments.moment= :moment', { moment: postId })
-        .orderBy('comments.id', 'DESC')
-        .getMany();
-      return comments;
-    } else if (postType === 'story') {
-      const comments = await this.CommentsRepository.createQueryBuilder(
-        'comments',
-      )
-        .addSelect(['likedUser.id', 'user.id', 'user.icon', 'user.name'])
-        .leftJoin('comments.likedUser', 'likedUser')
-        .leftJoin('comments.user', 'user')
-        .leftJoinAndSelect('comments.subComments', 'subComments')
+      return await comments
         .where('comments.story= :story', { story: postId })
-        .orderBy('comments.id', 'DESC')
+        .orderBy('comments.id', 'ASC')
         .getMany();
-      return comments;
+    } else if (postType === 'story') {
+      return await comments
+        .where('comments.story= :story', { story: postId })
+        .orderBy('comments.id', 'ASC')
+        .getMany();
     }
   }
 

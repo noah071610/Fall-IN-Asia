@@ -11,7 +11,6 @@ import {
   toastErrorMessage,
   toastSuccessMessage,
 } from "config";
-import { storyCreateAction, storyEditAction } from "actions/story";
 import router, { useRouter } from "next/router";
 import CountrySelectMap from "@components/Maps/CountrySelectMap";
 import AutoCompleteForm from "@components/AutoCompleteForm";
@@ -21,11 +20,10 @@ import fetcher from "utils/fetcher";
 import ImageDragger from "@components/Editor/ImageDragger";
 import useInput from "@hooks/useInput";
 import { toastConfirmMessage } from "@components/ConfirmToastify";
-import { storySlice } from "slices/story";
 import tw from "twin.macro";
 import { getUserInfoAction } from "actions/user";
-import { wrapper } from "configureStore";
 import axios from "axios";
+import { wrapper } from "configureStore";
 
 export const StoryPostWrapper = styled.div`
   .title-input {
@@ -46,29 +44,34 @@ export const StoryPostWrapper = styled.div`
   .mapboxgl-ctrl-geocoder--button {
     ${tw`rounded-full`}
   }
+  .dragger {
+    height: 40vh;
+  }
 `;
-interface IProps {}
+interface IProps {
+  initialStory: IStory;
+}
 
-const post: FC<IProps> = () => {
+const post: FC<IProps> = ({ initialStory }) => {
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
-  const { storyCreateDone, storyEditDone } = useSelector((state: RootState) => state.story);
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher, noRevalidate);
-  const { data: story } = useSWR<IStory>(
+  const { data: editStory } = useSWR<IStory>(
     query?.storyId ? `/story/${query?.code}/${query?.storyId}/0` : null,
     fetcher,
-    noRevalidate
+    {
+      initialData: initialStory,
+      ...noRevalidate,
+    }
   );
-  const dispatch = useDispatch();
   const [selectedCountry, setCountry] = useState("");
   const [title, onChangeTitle, setTitle] = useInput("");
   const [region, setRegion] = useState("이름모를 어딘가");
   const [upImg, setUpImg] = useState("");
   const [content, setContent] = useState("");
-  const [editPostId, setEditPostId] = useState<number | null>(null);
   const [marker, setMarker] = useState<ICoordinate>({
-    latitude: story?.lat || 37.50529626491968,
-    longitude: story?.lng || 126.98047832475031,
+    latitude: 37.50529626491968,
+    longitude: 126.98047832475031,
   });
 
   const countryOptions = useMemo(
@@ -80,49 +83,28 @@ const post: FC<IProps> = () => {
   );
 
   useEffect(() => {
-    dispatch(getUserInfoAction());
-  }, []);
-
-  useEffect(() => {
-    if (story) {
-      setRegion(story?.region);
-      setTitle(story?.title);
-      setContent(story?.content);
-      setCountry(story?.country?.name);
-      setEditPostId(story?.id);
+    if (editStory) {
+      setRegion(editStory?.region);
+      setTitle(editStory?.title);
+      setContent(editStory?.content);
+      setCountry(editStory?.country?.name);
+      setMarker({
+        latitude: editStory?.lat,
+        longitude: editStory?.lng,
+      });
     }
-  }, [story]);
-
-  useEffect(() => {
-    if (storyCreateDone || storyEditDone) {
-      if (storyCreateDone) {
-        toastSuccessMessage("당신에 멋진 연대기가 올라갔어요🥰");
-      }
-      if (storyEditDone) {
-        toastSuccessMessage("성공적으로 연대기를 수정했습니다.");
-      }
-      router.push("/story");
-      setRegion("");
-      setUpImg("");
-      setTitle("");
-      setContent("");
-      setCountry("");
-    }
-  }, [storyCreateDone, storyEditDone]);
+  }, [editStory]);
 
   useEffect(() => {
     if (!user) {
       router.back();
     }
-  }, [user]);
-
-  useEffect(() => {
-    if (story) {
-      if (user?.id !== story?.user?.id) {
+    if (editStory) {
+      if (user?.id !== editStory?.user?.id) {
         router.back();
       }
     }
-  }, [user, story]);
+  }, [user, editStory]);
 
   const onClickSubmit = useCallback(() => {
     if (!title) {
@@ -154,13 +136,30 @@ const post: FC<IProps> = () => {
       toastErrorMessage("유효하지 않은 국가입니다. 다시 확인해주세요.");
       return;
     }
-    if (editPostId) {
-      form.append("id", String(editPostId));
-      dispatch(storyEditAction(form));
-    } else {
-      dispatch(storyCreateAction(form));
+    if (editStory) {
+      form.append("storyId", String(editStory?.id));
     }
-  }, [title, region, countryOptions, selectedCountry, content, upImg, marker, editPostId]);
+    axios
+      .post(`/story/${editStory && "edit"}`, form)
+      .then((res) => {
+        const { storyId } = res.data.data;
+        router.push(`/story/${pickCountry?.code}/${storyId}`);
+        setRegion("");
+        setUpImg("");
+        setTitle("");
+        setContent("");
+        setCountry("");
+        if (editStory) {
+          toastSuccessMessage("연대기를 수정했습니다.");
+        } else {
+          toastSuccessMessage("연대기를 성공적으로 작성했습니다.");
+        }
+      })
+      .catch((error) => {
+        toastErrorMessage(error);
+        throw error;
+      });
+  }, [title, region, countryOptions, selectedCountry, content, upImg, marker, editStory]);
 
   return (
     <StoryPostWrapper>
@@ -181,8 +180,8 @@ const post: FC<IProps> = () => {
         />
         <h2 className="main-title">지역 지정</h2>
         <CountrySelectMap
-          lat={story?.lat}
-          lng={story?.lng}
+          lat={editStory?.lat}
+          lng={editStory?.lng}
           marker={marker}
           setMarker={setMarker}
           setRegion={setRegion}
@@ -190,9 +189,9 @@ const post: FC<IProps> = () => {
         <h2 className="main-title">선택 지역</h2>
         <h3>{region}</h3>
         <h2 className="main-title">내용작성</h2>
-        <Editor prevContent={story?.content} setContent={setContent} isStory={true} />
+        <Editor prevContent={editStory?.content} setContent={setContent} isStory={true} />
         <h2 className="main-title">
-          {editPostId ? "썸네일 변경 (미선택시 기존 썸네일 사용)" : "썸네일 업로드"}
+          {editStory ? "썸네일 변경 (미선택시 기존 썸네일 사용)" : "썸네일 업로드"}
         </h2>
         <ImageDragger setUpImg={setUpImg} single={true} />
         <div className="editor-btn-wrapper">
@@ -213,12 +212,25 @@ const post: FC<IProps> = () => {
               }
             }}
           >
-            {editPostId ? "연대기 수정" : "연대기 업로드"}
+            {editStory ? "연대기 수정" : "연대기 업로드"}
           </button>
         </div>
       </LGLayout>
     </StoryPostWrapper>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
+  const cookie = req ? req.headers.cookie : "";
+  axios.defaults.headers.Cookie = "";
+  if (req && cookie) {
+    axios.defaults.headers.Cookie = cookie;
+  }
+  await store.dispatch(getUserInfoAction());
+  const initialStory = await fetcher(query && `/story/${query?.code}/${query?.storyId}/0`);
+  return {
+    props: { initialStory },
+  };
+});
 
 export default post;

@@ -13,7 +13,7 @@ import router, { useRouter } from "next/router";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { ICountry } from "@typings/db";
-import { WORLD_IMAGE } from "config";
+import { noRevalidate, WORLD_IMAGE } from "config";
 
 interface IProps {}
 
@@ -21,7 +21,8 @@ const MainAsideLeftNav: FC<IProps> = () => {
   const { query } = useRouter();
   const { data: country } = useSWR<ICountry>(
     query?.code ? `/country/${query?.code}` : null,
-    fetcher
+    fetcher,
+    noRevalidate
   );
 
   const onClickCountry = useCallback(() => {

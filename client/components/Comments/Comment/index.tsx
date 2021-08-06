@@ -18,6 +18,7 @@ import SubComment from "../SubComment";
 import SubCommentForm from "../SubCommentForm";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
+import { reverse } from "lodash";
 interface IProps {
   comment: IComment;
   revalidateComments: () => Promise<boolean>;
@@ -87,7 +88,6 @@ const Comment: FC<IProps> = ({ comment, revalidateComments }) => {
     },
     [user, comment]
   );
-
   return (
     <CommentWrapper>
       <div onClick={onChangeSubCommentForm} className="comment-main">

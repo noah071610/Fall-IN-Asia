@@ -1,7 +1,7 @@
 import { EditOutlined } from "@ant-design/icons";
 import ImageDragger from "@components/Editor/ImageDragger";
 import { Select } from "antd";
-import { toastErrorMessage, toastSuccessMessage } from "config";
+import { noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
 import React, { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { MomentPostingFormWrapper } from "./styles";
@@ -22,8 +22,8 @@ interface IProps {
 }
 
 const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
-  const { data: countries } = useSWR<ICountry[]>("/country", fetcher);
   const { query } = useRouter();
+  const { data: countries } = useSWR<ICountry[]>("/country", fetcher, noRevalidate);
   const [upImg, setUpImg] = useState<File[]>([]);
   const [content, setContent] = useState("");
   const [type, setType] = useState("키워드 선택");

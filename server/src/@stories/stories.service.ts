@@ -62,7 +62,7 @@ export class StoriesService {
       storyId: newPost.id,
       content: `${form.title.slice(0, 10)}...을 작성했습니다.`,
     });
-    return true;
+    return { storyId: newPost.id };
   }
 
   async saveImage(file: Express.Multer.File) {
@@ -252,7 +252,7 @@ export class StoriesService {
       where: { code: form.code },
     });
     const editPost = await this.StoriesRepository.findOne({
-      where: { id: form.id },
+      where: { id: form.storyId },
     });
     if (!editPost || !country) {
       throw new NotFoundException('수정 할 게시물이 없습니다.');
@@ -276,7 +276,7 @@ export class StoriesService {
       storyId: editPost.id,
       content: `${form.title.slice(0, 10)}...을 수정했습니다.`,
     });
-    return true;
+    return { storyId: parseInt(form.storyId) };
   }
 
   async likePost(storyId: number, userId: number) {

@@ -51,7 +51,7 @@ export class StoriesController {
     @User() user,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    await this.StoriesService.createPost(form, user.id, file);
+    return await this.StoriesService.createPost(form, user.id, file);
   }
 
   @UseGuards(new LoggedInGuard())
@@ -76,7 +76,7 @@ export class StoriesController {
     @UploadedFile() file: Express.Multer.File,
     @User() user,
   ) {
-    await this.StoriesService.editPost(form, file, user?.id);
+    return await this.StoriesService.editPost(form, file, user?.id);
   }
 
   @UseGuards(new LoggedInGuard())

@@ -40,7 +40,8 @@ interface IProps {
 
 const ListCard: FC<IProps> = ({ title, content, onClickListCard, noticeId }) => {
   const dispatch = useDispatch();
-  const onClickDeleteNotice = useCallback((noticeId: number) => {
+  const onClickDeleteNotice = useCallback((e, noticeId: number) => {
+    e.stopPropagation();
     dispatch(deleteNoticeAction(noticeId));
   }, []);
   return (
@@ -48,7 +49,7 @@ const ListCard: FC<IProps> = ({ title, content, onClickListCard, noticeId }) => 
       <h4>{title}</h4>
       <p>{useHtmlConverter(content)}</p>
       {noticeId && (
-        <a onClick={() => onClickDeleteNotice(noticeId)}>
+        <a onClick={(e) => onClickDeleteNotice(e, noticeId)}>
           <DeleteOutlined />
         </a>
       )}

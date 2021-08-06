@@ -5,6 +5,7 @@ import { DEFAULT_ICON_URL, FLEX_STYLE, RGB_BLACK } from "config";
 import styled from "@emotion/styled";
 import tw from "twin.macro";
 import router from "next/router";
+import useCalcDate from "@hooks/useCalcDate";
 
 export const NameSpaceWrapper = styled.div`
   ${FLEX_STYLE("flex-start", "center")};
@@ -22,8 +23,14 @@ export const NameSpaceWrapper = styled.div`
   span {
     display: block;
   }
-  .name {
+  .name-title {
     ${tw`text-sm`}
+    ${FLEX_STYLE("flex-start", "center")};
+    .comment-date {
+      margin-left: 0.6rem;
+      color: ${RGB_BLACK(0.3)};
+      font-size: 0.75rem;
+    }
   }
   .date {
     padding-top: 0.2rem;
@@ -51,14 +58,11 @@ const NameSpace: FC<IProps> = ({ user, date, comment }) => {
         <img src={user?.icon ? user?.icon : DEFAULT_ICON_URL} alt="" />
       </div>
       <div className="user-info">
-        <span onClick={onClickGotoProfile} className="name">
-          {user?.name}
-        </span>
-        {comment ? (
-          <p>{comment}</p>
-        ) : (
-          <span className="date">{dayjs(date).format("YYYY/MM/DD")}</span>
-        )}
+        <div className="name-title" onClick={onClickGotoProfile}>
+          <span className="name">{user?.name}</span>
+          {comment && <span className="comment-date">{useCalcDate(date)}</span>}
+        </div>
+        {comment ? <p>{comment}</p> : <span className="date">{useCalcDate(date)}</span>}
       </div>
     </NameSpaceWrapper>
   );

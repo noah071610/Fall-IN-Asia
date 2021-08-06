@@ -9,6 +9,7 @@ import { CommentsService } from './comments.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommentLike } from 'src/entities/CommentLike';
 import { Notices } from 'src/entities/Notices';
+import { Stories } from 'src/entities/Stories';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { Notices } from 'src/entities/Notices';
       SubComments,
       CommentLike,
       Notices,
+      Stories,
     ]),
   ],
   providers: [CommentsService],

@@ -1,21 +1,31 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { PostCommentWrapper } from "./styles";
-import { IArticle, IStory } from "@typings/db";
-import { toastErrorMessage } from "config";
+import { IComment, IStory } from "@typings/db";
+import { noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { CommentOutlined, HeartFilled, HeartOutlined } from "@ant-design/icons";
-import { storyDislikeAction, storyLikeAction } from "actions/story";
 import CommentForm from "@components/Comments/CommentForm";
 import Comment from "@components/Comments/Comment";
+import axios from "axios";
+import { getUserInfoAction } from "actions/user";
+import fetcher from "utils/fetcher";
+import useSWR from "swr";
 interface IProps {
   story: IStory;
+  revalidateStory: () => void;
 }
 
-const PostComment: FC<IProps> = ({ story }) => {
+const PostComment: FC<IProps> = ({ story, revalidateStory }) => {
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
+  const { data: comments, revalidate: revalidateComments } = useSWR<IComment[]>(
+    `/comment/${story?.id}?postType=story`,
+    fetcher,
+    noRevalidate
+  );
+
   useEffect(() => {
     if (user && story) {
       if (user?.likeStory?.find((v: any) => v.storyId === story?.id)) {
@@ -26,45 +36,53 @@ const PostComment: FC<IProps> = ({ story }) => {
     }
   }, [user, story]);
 
-  const onClickLikeBtn = useCallback(() => {
-    if (!user) {
-      toastErrorMessage("로그인이 필요합니다.");
-      return;
-    }
-    if (!story) {
-      return;
-    }
-    dispatch(storyLikeAction(story?.id));
-  }, [user, story]);
-
-  const onClickDislikeBtn = useCallback(() => {
-    if (!user) {
-      toastErrorMessage("로그인이 필요합니다.");
-      return;
-    }
-    if (!story) {
-      return;
-    }
-    dispatch(storyDislikeAction(story?.id));
-  }, [user, story]);
+  const onClickLikeOrDisLike = useCallback(
+    (value: string) => {
+      if (!user) {
+        toastErrorMessage("로그인이 필요합니다.");
+        return;
+      }
+      axios
+        .patch(`/story/${value}/${story?.id}`)
+        .then(() => {
+          if (value === "like") {
+            toastSuccessMessage("좋아요!💓");
+          } else {
+            toastSuccessMessage("좋아요 취소💔");
+          }
+          revalidateStory();
+          dispatch(getUserInfoAction());
+        })
+        .catch((error) => {
+          toastErrorMessage(error);
+          throw error;
+        });
+    },
+    [user, story]
+  );
   return (
     <PostCommentWrapper>
       <span id="comment" className="anchor-offset-controller" />
       <ul className="comment-header">
         <li>
           <CommentOutlined />
-          <span className="count">{story?.comments?.length}</span>
+          <span className="count">{comments?.length}</span>
           <span>댓글</span>
         </li>
-        <li onClick={liked ? onClickDislikeBtn : onClickLikeBtn} className={liked ? "liked" : ""}>
+        <li
+          onClick={
+            liked ? () => onClickLikeOrDisLike("dislike") : () => onClickLikeOrDisLike("like")
+          }
+          className={liked ? "liked" : ""}
+        >
           {liked ? <HeartFilled /> : <HeartOutlined />}
           <span className="count">{story?.likedUser?.length}</span>
           <span>좋아요</span>
         </li>
       </ul>
-      <CommentForm isStory={true} />
-      {story?.comments?.map((v, i) => {
-        return <Comment key={i} comment={v} />;
+      <CommentForm revalidateComments={revalidateComments} isStory={true} />
+      {comments?.map((v, i) => {
+        return <Comment revalidateComments={revalidateComments} key={i} comment={v} />;
       })}
     </PostCommentWrapper>
   );

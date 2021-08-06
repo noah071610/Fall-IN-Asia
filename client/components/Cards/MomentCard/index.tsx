@@ -45,7 +45,6 @@ const MomentCard: FC<IProps> = ({ revalidateMoments, moment, isLast }) => {
           } else {
             toastSuccessMessage("좋아요 취소💔");
           }
-          revalidateMoments();
           dispatch(getUserInfoAction());
         })
         .catch((error) => {

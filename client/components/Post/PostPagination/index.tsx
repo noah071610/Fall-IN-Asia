@@ -5,7 +5,7 @@ import router, { useRouter } from "next/router";
 import { PostPaginationWrapper } from "./styles";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
-import { GRAY_COLOR, NO_IMAGE_URL } from "config";
+import { GRAY_COLOR, noRevalidate, NO_IMAGE_URL } from "config";
 
 interface IProps {
   userId: number;
@@ -15,7 +15,8 @@ const PostPagination: FC<IProps> = ({ userId }) => {
   const { query } = useRouter();
   const { data: sidePosts } = useSWR<{ prevPost: IStory; nextPost: IStory }>(
     `/story/side/${query?.storyId}/${userId}`,
-    fetcher
+    fetcher,
+    noRevalidate
   );
 
   const onClickStoryBtn = useCallback((id?: number, code?: string) => {

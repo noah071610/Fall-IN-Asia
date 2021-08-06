@@ -1,9 +1,9 @@
 import React, { FC, useEffect } from "react";
-import { noRevalidate, toastSuccessMessage } from "config";
+import { noRevalidate } from "config";
 import router, { useRouter } from "next/router";
 import LGLayout from "@layout/LGLayout";
 import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import { wrapper } from "configureStore";
 import axios from "axios";
@@ -28,11 +28,10 @@ const edit: FC<IProps> = ({ initialMoment }) => {
     if (!user) {
       router.back();
     }
-  }, [user]);
-
-  useEffect(() => {
-    if (user?.id !== moment?.user.id) {
-      router.back();
+    if (moment) {
+      if (user?.id !== moment?.user.id) {
+        router.back();
+      }
     }
   }, [user, moment]);
 
