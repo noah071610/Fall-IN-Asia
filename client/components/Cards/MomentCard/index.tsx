@@ -1,21 +1,23 @@
-import { CommentOutlined, HeartFilled, HeartOutlined } from "@ant-design/icons";
+import { CommentOutlined, HeartFilled, HeartOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import NameSpace from "@components/NameSpace";
 import { IMoment } from "@typings/db";
 import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import { MomentCardWrapper } from "./styles";
-import { toastErrorMessage } from "config";
+import { toastErrorMessage, toastSuccessMessage } from "config";
 import router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { momentDislikeAction, momentLikeAction } from "actions/moment";
 import useHtmlConverter from "@hooks/useHtmlConverter";
+import axios from "axios";
+import { getUserInfoAction } from "actions/user";
 
 interface IProps {
   moment: IMoment;
   isLast?: boolean;
+  revalidateMoments: () => void;
 }
 
-const MomentCard: FC<IProps> = ({ moment, isLast }) => {
+const MomentCard: FC<IProps> = ({ revalidateMoments, moment, isLast }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
   const [liked, setLiked] = useState(false);
@@ -29,20 +31,30 @@ const MomentCard: FC<IProps> = ({ moment, isLast }) => {
     }
   }, [user, moment]);
 
-  const onClickLikeBtn = useCallback(() => {
-    if (!user) {
-      toastErrorMessage("로그인이 필요합니다.");
-      return;
-    }
-    dispatch(momentLikeAction(moment?.id));
-  }, [user, moment]);
-  const onClickDislikeBtn = useCallback(() => {
-    if (!user) {
-      toastErrorMessage("로그인이 필요합니다.");
-      return;
-    }
-    dispatch(momentDislikeAction(moment?.id));
-  }, [user, moment]);
+  const onClickLikeOrDisLike = useCallback(
+    (value: string) => {
+      if (!user) {
+        toastErrorMessage("로그인이 필요합니다.");
+        return;
+      }
+      axios
+        .patch(`/moment/${value}/${moment?.id}`)
+        .then(() => {
+          if (value === "like") {
+            toastSuccessMessage("좋아요!💓");
+          } else {
+            toastSuccessMessage("좋아요 취소💔");
+          }
+          revalidateMoments();
+          dispatch(getUserInfoAction());
+        })
+        .catch((error) => {
+          toastErrorMessage(error);
+          throw error;
+        });
+    },
+    [user, moment]
+  );
 
   const onClickCountryTag = useCallback(() => {
     router.push(`/country/${moment.code}`);
@@ -64,16 +76,23 @@ const MomentCard: FC<IProps> = ({ moment, isLast }) => {
         </div>
       </div>
       <div className="article">
+        {moment?.images?.length > 0 && (
+          <div
+            onClick={() => router.push(`/country/${moment?.code}/${moment?.id}`)}
+            className="moment-image-wrapper"
+          >
+            {moment?.images?.slice(0, 2).map((v, i) => {
+              return <img className="moment-image" key={i} src={v.image_src} />;
+            })}
+            {moment?.images?.length > 2 && (
+              <div className="moment-more-image">
+                <PlusCircleOutlined />
+              </div>
+            )}
+          </div>
+        )}
         <div
-          onClick={() => router.push(`/country/${moment?.country?.code}/${moment?.id}`)}
-          className="moment-image-wrapper"
-        >
-          {moment?.images?.slice(0, 3).map((v, i) => {
-            return <img className="moment-image" key={i} src={v.image_src} />;
-          })}
-        </div>
-        <div
-          onClick={() => router.push(`/country/${moment?.country?.code}/${moment?.id}`)}
+          onClick={() => router.push(`/country/${moment?.code}/${moment?.id}`)}
           className="content"
         >
           {useHtmlConverter(moment?.content as string)}
@@ -84,19 +103,16 @@ const MomentCard: FC<IProps> = ({ moment, isLast }) => {
             <span className="count">{moment?.comments?.length}</span>
             <span>댓글</span>
           </li>
-          {liked ? (
-            <li onClick={onClickDislikeBtn} className="liked">
-              <HeartFilled />
-              <span className="count">{moment?.likedUser?.length}</span>
-              <span>좋아요</span>
-            </li>
-          ) : (
-            <li onClick={onClickLikeBtn}>
-              <HeartOutlined />
-              <span className="count">{moment?.likedUser?.length}</span>
-              <span>좋아요</span>
-            </li>
-          )}
+          <li
+            onClick={
+              liked ? () => onClickLikeOrDisLike("dislike") : () => onClickLikeOrDisLike("like")
+            }
+            className={liked ? "liked" : ""}
+          >
+            {liked ? <HeartFilled /> : <HeartOutlined />}
+            <span className="count">{moment?.likedUser?.length}</span>
+            <span>좋아요</span>
+          </li>
         </ul>
       </div>
     </MomentCardWrapper>

@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
 import {
   BORDER_THIN,
+  ELLIPSIS_STYLE,
   FLEX_STYLE,
   GRID_STYLE,
   MD_SIZE,
   RGB_BLACK,
   SM_SIZE,
-  WHITE_COLOR,
 } from "config";
 import tw from "twin.macro";
 
@@ -110,6 +110,20 @@ export const UserInfoAsideWrapper = styled.aside`
   }
 
   @media (max-width: ${SM_SIZE}) {
+    .user-info-aside {
+      ${tw`px-6`}
+    }
+    .icon-profile-wrapper {
+      display: block;
+      .icon-wrapper {
+        .icon {
+          width: 50%;
+        }
+      }
+      .user-name {
+        ${tw`mt-3 mb-5 text-center w-full`}
+      }
+    }
     .follow-manage-wrapper {
       ${tw`block`};
       .edit-title:first-of-type {

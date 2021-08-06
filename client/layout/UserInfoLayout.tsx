@@ -1,7 +1,6 @@
 import { FC } from "react";
 import styled from "@emotion/styled/macro";
 import {
-  BLUE_COLOR,
   BORDER_THIN,
   FLEX_STYLE,
   GRAY_COLOR,
@@ -75,6 +74,9 @@ const UserInfoLayoutWrapper = styled.div`
       ${tw`mr-2`}
     }
   }
+  .more-btn-wrapper {
+    ${tw`px-4`}
+  }
   .no-post-wrapper {
     ${tw`h-60 rounded-xl select-none p-4 m-4`}
     ${BORDER_THIN("border")};
@@ -91,6 +93,15 @@ const UserInfoLayoutWrapper = styled.div`
           ${tw`mx-0`};
         }
       }
+    }
+    .more-btn-wrapper {
+      ${tw`px-2`}
+    }
+  }
+  @media (max-width: ${SM_SIZE}) {
+    ${tw`pt-20`}
+    .layout {
+      ${tw`px-2`}
     }
   }
 `;

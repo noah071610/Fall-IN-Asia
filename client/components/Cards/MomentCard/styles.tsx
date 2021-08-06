@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RED_COLOR } from "config";
+import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RED_COLOR, SM_SIZE } from "config";
 import tw from "twin.macro";
 
 export const MomentCardWrapper = styled.div`
@@ -21,28 +21,16 @@ export const MomentCardWrapper = styled.div`
       ${tw`cursor-pointer font-bold pl-1 pb-4 leading-7 hover:underline`}
     }
     .moment-image-wrapper {
-      ${tw`cursor-pointer mb-4`}
+      ${tw`cursor-pointer mb-4 flex`}
       .moment-image {
-        ${tw`rounded-2xl w-32 h-32 mr-2`}
+        ${tw`rounded-2xl w-36 h-36 mr-2`}
       }
-    }
-    .two-images {
-      cursor: pointer;
-      ${FLEX_STYLE("flex-start", "center")};
-      padding-bottom: 1rem;
-      img {
-        border-radius: 15px;
-        width: 50%;
-        height: 300px;
-        margin-right: 0.2rem;
-      }
-      img:first-of-type {
-        border-top-right-radius: 0px;
-        border-bottom-right-radius: 0px;
-      }
-      img:last-of-type {
-        border-top-left-radius: 0px;
-        border-bottom-left-radius: 0px;
+      .moment-more-image {
+        ${tw`w-36 h-36 bg-gray-300 rounded-2xl`}
+        ${FLEX_STYLE("center", "center")};
+        span {
+          ${tw`text-white font-bold text-3xl`}
+        }
       }
     }
   }
@@ -64,6 +52,22 @@ export const MomentCardWrapper = styled.div`
   .liked {
     .anticon {
       color: ${RED_COLOR};
+    }
+  }
+  @media (max-width: ${SM_SIZE}) {
+    ${tw`pt-4 pb-6 mx-4`}
+    .article {
+      .moment-image-wrapper {
+        .moment-image {
+          ${tw`rounded-xl w-24 h-24 mr-2`}
+        }
+        .moment-more-image {
+          ${tw`w-24 h-24 rounded-xl`}
+          span {
+            ${tw`text-2xl`}
+          }
+        }
+      }
     }
   }
 `;

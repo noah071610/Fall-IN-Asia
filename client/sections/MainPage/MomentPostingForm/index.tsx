@@ -1,10 +1,9 @@
 import { EditOutlined } from "@ant-design/icons";
 import ImageDragger from "@components/Editor/ImageDragger";
-import { momentCreateAction, momentEditAction } from "actions/moment";
 import { Select } from "antd";
-import { toastErrorMessage } from "config";
+import { toastErrorMessage, toastSuccessMessage } from "config";
 import React, { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { MomentPostingFormWrapper } from "./styles";
 import router, { useRouter } from "next/router";
 import useSWR from "swr";
@@ -13,51 +12,33 @@ import { ICountry, IMoment } from "@typings/db";
 import AutoCompleteForm from "@components/AutoCompleteForm";
 import { RootState } from "slices";
 import dynamic from "next/dynamic";
+import axios from "axios";
 const { Option } = Select;
 
 const EditorWithoutImage = dynamic(import("@components/Editor/EditorWithoutImage"));
 
 interface IProps {
-  moment?: IMoment;
+  editMoment?: IMoment;
 }
 
-const MomentPostingForm: FC<IProps> = ({ moment }) => {
+const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher);
   const { query } = useRouter();
-  const dispatch = useDispatch();
   const [upImg, setUpImg] = useState<File[]>([]);
   const [content, setContent] = useState("");
-  const [isEdit, setIsEdit] = useState(false);
   const [type, setType] = useState("키워드 선택");
   const [selectedCountry, setCountry] = useState("");
   const [onPostingForm, setOnPostingForm] = useState(false);
-  const { momentCreateDone, momentEditDone } = useSelector((state: RootState) => state.moment);
   const { user } = useSelector((state: RootState) => state.user);
-  useEffect(() => {
-    if (momentCreateDone) {
-      setContent("");
-      setUpImg([]);
-      setType("키워드 선택");
-      setOnPostingForm(false);
-    }
-  }, [momentCreateDone]);
-  useEffect(() => {
-    if (momentEditDone) {
-      setContent("");
-      setUpImg([]);
-      setType("키워드 선택");
-      setOnPostingForm(false);
-    }
-  }, [momentEditDone]);
 
   useEffect(() => {
-    if (moment) {
-      setIsEdit(true);
-      setContent(moment?.content);
-      setType(moment?.type);
-      setCountry(moment?.country?.name);
+    if (editMoment) {
+      setContent(editMoment?.content);
+      setType(editMoment?.type);
+      setCountry(editMoment?.country?.name);
     }
-  }, [moment]);
+  }, [editMoment]);
+
   const countryOptions = useMemo(
     () =>
       countries?.map((v, i) => {
@@ -65,6 +46,7 @@ const MomentPostingForm: FC<IProps> = ({ moment }) => {
       }),
     [countries]
   );
+
   useEffect(() => {
     if (query?.code && countryOptions) {
       let pickCountry = countryOptions?.find((v) => v.code === query?.code);
@@ -95,13 +77,29 @@ const MomentPostingForm: FC<IProps> = ({ moment }) => {
       toastErrorMessage("유효하지 않은 국가입니다. 다시 확인해주세요.");
       return;
     }
-    if (isEdit) {
-      form.append("momentId", String(moment?.id));
-      dispatch(momentEditAction(form));
-    } else {
-      dispatch(momentCreateAction(form));
+    if (editMoment) {
+      form.append("momentId", String(editMoment?.id));
     }
-  }, [upImg, content, type, selectedCountry, isEdit, moment]);
+    axios
+      .post(`/moment/${editMoment && "edit"}`, form)
+      .then((res) => {
+        const { momentId } = res.data.data;
+        router.push(`/country/${pickCountry?.code}/${momentId}`);
+        setContent("");
+        setUpImg([]);
+        setType("키워드 선택");
+        setOnPostingForm(false);
+        if (editMoment) {
+          toastSuccessMessage("모멘트를 수정했습니다.");
+        } else {
+          toastSuccessMessage("모멘트를 성공적으로 작성했습니다.");
+        }
+      })
+      .catch((error) => {
+        toastErrorMessage(error);
+        throw error;
+      });
+  }, [upImg, content, type, selectedCountry, editMoment]);
 
   const onClickOpenPostingForm = useCallback(() => {
     if (!user) {
@@ -110,13 +108,14 @@ const MomentPostingForm: FC<IProps> = ({ moment }) => {
     }
     setOnPostingForm(true);
   }, [user]);
+
   const onClickPostingCancle = useCallback(() => {
-    if (isEdit) {
+    if (editMoment) {
       router.back();
     } else {
       setOnPostingForm(false);
     }
-  }, [isEdit]);
+  }, [editMoment]);
 
   const handleTypeChange = useCallback((value: string) => {
     setType(value);
@@ -124,7 +123,7 @@ const MomentPostingForm: FC<IProps> = ({ moment }) => {
 
   return (
     <MomentPostingFormWrapper>
-      {!onPostingForm && !isEdit && (
+      {!onPostingForm && !editMoment && (
         <div onClick={onClickOpenPostingForm} className="posting-form-preview">
           <span className="placeholder">당신의 여행은 어땠나요?</span>
           <a>
@@ -132,7 +131,7 @@ const MomentPostingForm: FC<IProps> = ({ moment }) => {
           </a>
         </div>
       )}
-      {(onPostingForm || isEdit) && (
+      {(onPostingForm || editMoment) && (
         <>
           <div className="posting-editor">
             <div className="selector-wrapper">
@@ -140,12 +139,12 @@ const MomentPostingForm: FC<IProps> = ({ moment }) => {
                 countryOptions={countryOptions}
                 selectedCountry={selectedCountry}
                 setCountry={setCountry}
-                disabled={isEdit ? true : false}
+                disabled={editMoment ? true : false}
               />
               <Select
                 className="type-selector"
                 value={type}
-                disabled={isEdit ? true : false}
+                disabled={editMoment ? true : false}
                 onChange={handleTypeChange}
                 style={{ width: "180px" }}
               >

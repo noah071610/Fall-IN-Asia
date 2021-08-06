@@ -21,7 +21,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { mainSlice } from "slices/main";
 import Head from "next/head";
-import MobileSlideMenu from "@components/MobileSlideMenu";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useDispatch();
@@ -49,7 +48,6 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Head>
-        <title>My page title</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <div onClick={onClickBody}>

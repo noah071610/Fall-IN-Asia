@@ -15,7 +15,7 @@ import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
 import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import { PlusCircleOutlined } from "@ant-design/icons";
-import { NextArrow, PrevArrow } from "@components/SliderArrow";
+import MoreButton from "@components/MoreButton";
 
 interface IProps {
   initialUserInfo: IUserInfo;
@@ -25,6 +25,8 @@ const index: FC<IProps> = ({ initialUserInfo }) => {
   const { query } = useRouter();
   const [noticePage, setnNoticePage] = useState(5);
   const [isOwner, setIsOwner] = useState(false);
+  const [storyPageNumber, setStoryPageNumber] = useState(6);
+  const [momentPageNumber, setMomentPageNumber] = useState(5);
   const { user, deleteNoticeDone } = useSelector((state: RootState) => state.user);
   const { data: userInfo, revalidate } = useSWR<IUserInfo>(`/user/${query?.userId}`, fetcher, {
     initialData: initialUserInfo,
@@ -107,11 +109,22 @@ const index: FC<IProps> = ({ initialUserInfo }) => {
         {userInfo?.name}님의 작성 연대기 {userInfo?.stories?.length || 0}개
       </h2>
       {userInfo && userInfo?.stories.length > 0 ? (
-        <div className="post-slider">
-          {userInfo?.stories?.map((v, i) => (
-            <ArticleColumnCard key={i} story={v} />
-          ))}
-        </div>
+        <>
+          <div className="post-slider">
+            {userInfo?.stories?.slice(0, storyPageNumber).map((v, i) => (
+              <ArticleColumnCard key={i} story={v} />
+            ))}
+          </div>
+          {userInfo?.stories.length > storyPageNumber && (
+            <div className="more-btn-wrapper">
+              <MoreButton
+                onClickMoreBtn={() => {
+                  setStoryPageNumber((prev) => prev + 6);
+                }}
+              />
+            </div>
+          )}
+        </>
       ) : (
         <div className="no-post-wrapper">
           <img src={NO_POST_URL} alt="no-post" />
@@ -124,7 +137,7 @@ const index: FC<IProps> = ({ initialUserInfo }) => {
       </h2>
       {userInfo && userInfo?.moments.length > 0 ? (
         <ul className="moment-list">
-          {userInfo?.moments?.map((v, i) => (
+          {userInfo?.moments?.slice(0, momentPageNumber).map((v, i) => (
             <ListCard
               onClickListCard={() => router.push(`/country/${v.code}/${v.id}`)}
               key={i}
@@ -132,6 +145,13 @@ const index: FC<IProps> = ({ initialUserInfo }) => {
               content={v.content}
             />
           ))}
+          {userInfo?.moments.length > momentPageNumber && (
+            <MoreButton
+              onClickMoreBtn={() => {
+                setMomentPageNumber((prev) => prev + 5);
+              }}
+            />
+          )}
         </ul>
       ) : (
         <div className="no-post-wrapper">

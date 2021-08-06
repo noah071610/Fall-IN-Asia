@@ -10,6 +10,10 @@ import { Moments } from 'src/entities/Moments';
 import { Countries } from 'src/entities/Countries';
 import { MomentLike } from 'src/entities/MomentLike';
 import { InjectRepository } from '@nestjs/typeorm';
+import {
+  MomentCreateRequestDto,
+  MomentModifyRequestDto,
+} from 'src/dto/moment.request.dto';
 const viewObj = new Object();
 
 @Injectable()
@@ -27,7 +31,11 @@ export class MomentsService {
     private NoticesRepository: Repository<Notices>,
   ) {}
 
-  async createPost(form: any, userId: number, files: Express.Multer.File[]) {
+  async createPost(
+    form: MomentCreateRequestDto,
+    userId: number,
+    files: Express.Multer.File[],
+  ) {
     if (!form) {
       throw new NotFoundException('작성 할 데이터가 없습니다.');
     }
@@ -61,7 +69,7 @@ export class MomentsService {
         .replace(/&.*;/gi, '')
         .slice(0, 11)}...을 작성했습니다.`,
     });
-    return true;
+    return { momentId: newPost.id };
   }
 
   async saveImage(file: Express.Multer.File) {
@@ -75,23 +83,23 @@ export class MomentsService {
   }
 
   async getOnePost(momentId: number, code: string, ip: number) {
-    const post = await this.MomentsRepository.findOne({
-      where: {
-        id: momentId,
-        code,
-      },
-      relations: [
-        'user',
-        'country',
-        'likedUser',
-        'images',
-        'comments',
-        'comments.user',
-        'comments.likedUser',
-        'comments.subComments',
-        'comments.subComments.user',
-      ],
-    });
+    const post = await this.MomentsRepository.createQueryBuilder('moments')
+      .addSelect([
+        'images.image_src',
+        'country.name',
+        'user.name',
+        'user.icon',
+        'user.id',
+        'likedUser.id',
+      ])
+      .leftJoin('moments.country', 'country')
+      .leftJoin('moments.user', 'user')
+      .leftJoin('moments.images', 'images')
+      .leftJoin('moments.likedUser', 'likedUser')
+      .where('moments.id= :id', { id: momentId })
+      .andWhere('moments.code= :code', { code })
+      .orderBy('moments.id', 'DESC')
+      .getOne();
     if (!post) {
       throw new NotFoundException('가져올 게시물이 없습니다.');
     }
@@ -102,11 +110,12 @@ export class MomentsService {
       if (viewObj[momentId].indexOf(ip) == -1) {
         viewObj[momentId].push(ip);
         await this.MomentsRepository.createQueryBuilder('moments')
-          .update()
+          .update('moments')
           .set({
             hit: () => 'hit + 1',
           })
-          .where('id = :id', { id: momentId, code })
+          .where('moments.id = :id', { id: momentId })
+          .andWhere('moments.code= :code', { code })
           .execute();
         setTimeout(() => {
           viewObj[momentId].splice(viewObj[momentId].indexOf(ip), 1);
@@ -117,11 +126,15 @@ export class MomentsService {
   }
 
   async getLatestPosts() {
-    const latestPosts = await this.MomentsRepository.find({
-      relations: ['user', 'country'],
-      order: { id: 'DESC' },
-      take: 2,
-    });
+    const latestPosts = await this.MomentsRepository.createQueryBuilder(
+      'moments',
+    )
+      .addSelect(['country.name', 'user.name', 'user.icon'])
+      .leftJoin('moments.country', 'country')
+      .leftJoin('moments.user', 'user')
+      .orderBy('moments.id', 'DESC')
+      .take(2)
+      .getMany();
     if (!latestPosts) {
       throw new NotFoundException('가져올 게시물이 없습니다.');
     }
@@ -139,11 +152,20 @@ export class MomentsService {
     )
       .where(code ? `moments.code = :code` : '1=1', { code })
       .andWhere(type ? `moments.type = :type` : '1=1', { type })
-      .leftJoinAndSelect('moments.country', 'country')
-      .leftJoinAndSelect('moments.user', 'user')
-      .leftJoinAndSelect('moments.likedUser', 'likedUser')
-      .leftJoinAndSelect('moments.comments', 'comments')
-      .leftJoinAndSelect('moments.images', 'images')
+      .addSelect([
+        'country.name',
+        'user.id',
+        'user.icon',
+        'user.name',
+        'likedUser.id',
+        'comments.id',
+        'images.image_src',
+      ])
+      .leftJoin('moments.country', 'country')
+      .leftJoin('moments.user', 'user')
+      .leftJoin('moments.likedUser', 'likedUser')
+      .leftJoin('moments.comments', 'comments')
+      .leftJoin('moments.images', 'images')
       .getMany();
     switch (filter) {
       case 'popular':
@@ -165,11 +187,20 @@ export class MomentsService {
     const posts = await this.MomentsRepository.createQueryBuilder('moments')
       .where(code ? `moments.code = :code` : '1=1', { code })
       .andWhere(type ? `moments.type = :type` : '1=1', { type })
-      .leftJoinAndSelect('moments.country', 'country')
-      .leftJoinAndSelect('moments.user', 'user')
-      .leftJoinAndSelect('moments.likedUser', 'likedUser')
-      .leftJoinAndSelect('moments.comments', 'comments')
-      .leftJoinAndSelect('moments.images', 'images')
+      .addSelect([
+        'country.name',
+        'user.id',
+        'user.icon',
+        'user.name',
+        'likedUser.id',
+        'comments.id',
+        'images.image_src',
+      ])
+      .leftJoin('moments.country', 'country')
+      .leftJoin('moments.user', 'user')
+      .leftJoin('moments.likedUser', 'likedUser')
+      .leftJoin('moments.comments', 'comments')
+      .leftJoin('moments.images', 'images')
       .orderBy('moments.id', 'DESC')
       .skip((page - 1) * 10)
       .take(10)
@@ -178,7 +209,11 @@ export class MomentsService {
     return posts;
   }
 
-  async editPost(form: any, files: Express.Multer.File[], userId: number) {
+  async editPost(
+    form: MomentModifyRequestDto,
+    files: Express.Multer.File[],
+    userId: number,
+  ) {
     const country = await this.CountriesRepository.findOne({
       where: { code: form.code },
     });
@@ -196,10 +231,10 @@ export class MomentsService {
       header: `${country.name}/모멘트`,
       code: form.code,
       userId,
-      momentId: form.momentId,
+      momentId: parseInt(form.momentId),
       content: `${form.momentId}번 모멘트를 수정했습니다.`,
     });
-    return true;
+    return { momentId: parseInt(form.momentId) };
   }
 
   async likePost(momentId: number, userId: number) {

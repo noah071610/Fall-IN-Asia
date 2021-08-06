@@ -15,10 +15,10 @@ const StoryArticleListWrapper = (grid: number, gap: string) => css`
     grid-template-columns: repeat(2, 1fr);
     gap: 0.5rem;
   }
-  @media (max-width: ${SM_SIZE}) {
+  @media (max-width: 460px) {
     display: block;
   }
-  ${tw`pt-16 relative`}
+  ${tw`relative`}
   transition:0.3s all;
   ${GRID_STYLE(gap, `repeat(${grid},1fr)`)};
 `;

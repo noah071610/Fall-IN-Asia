@@ -12,16 +12,18 @@ import { RootState } from "slices";
 import { IComment } from "@typings/db";
 import useToggle from "@hooks/useToggle";
 import NameSpace from "@components/NameSpace";
-import { commentDeleteAction, commentDislikeAction, commentLikeAction } from "actions/comment";
 import { toastConfirmMessage } from "@components/ConfirmToastify";
-import { toastErrorMessage } from "config";
+import { toastErrorMessage, toastSuccessMessage } from "config";
 import SubComment from "../SubComment";
 import SubCommentForm from "../SubCommentForm";
+import axios from "axios";
+import { getUserInfoAction } from "actions/user";
 interface IProps {
   comment: IComment;
+  revalidateComments: () => Promise<boolean>;
 }
 
-const Comment: FC<IProps> = ({ comment }) => {
+const Comment: FC<IProps> = ({ comment, revalidateComments }) => {
   const dispatch = useDispatch();
   const [onSubCommentForm, onChangeSubCommentForm, setSubCommentForm] = useToggle(false);
   const [onSubCommentList, onChangeSubCommentList, setSubCommentList] = useToggle(true);
@@ -41,34 +43,50 @@ const Comment: FC<IProps> = ({ comment }) => {
       }
     }
   }, [user, comment]);
-  console.log(comment);
-
   useEffect(() => {
     if (comment?.subComments?.length > 2) {
       setSubCommentList(false);
     }
   }, []);
-  const onClickConfirm = useCallback(() => {
+  const onClickConfirmDelete = useCallback(async () => {
     if (user && isOwner) {
-      dispatch(commentDeleteAction(comment?.id));
+      await axios
+        .delete(`/comment/${comment?.id}`)
+        .then(() => {
+          revalidateComments();
+          toastSuccessMessage("댓글을 성공적으로 삭제했습니다.");
+        })
+        .catch((error) => {
+          toastErrorMessage(error);
+          throw error;
+        });
     }
   }, [user, isOwner, comment]);
 
-  const onClickLikeComment = useCallback(() => {
-    if (!user) {
-      toastErrorMessage("로그인이 필요합니다.");
-      return;
-    }
-    dispatch(commentLikeAction(comment?.id));
-  }, [user, comment]);
-
-  const onClickDislikeComment = useCallback(() => {
-    if (!user) {
-      toastErrorMessage("로그인이 필요합니다.");
-      return;
-    }
-    dispatch(commentDislikeAction(comment?.id));
-  }, [user, comment]);
+  const onClickLikeOrDisLike = useCallback(
+    (value: string) => {
+      if (!user) {
+        toastErrorMessage("로그인이 필요합니다.");
+        return;
+      }
+      axios
+        .patch(`/comment/${value}/${comment?.id}`)
+        .then(() => {
+          if (value === "like") {
+            toastSuccessMessage("댓글 좋아요!💓");
+          } else {
+            toastSuccessMessage("댓글 좋아요 취소💔");
+          }
+          revalidateComments();
+          dispatch(getUserInfoAction());
+        })
+        .catch((error) => {
+          toastErrorMessage(error);
+          throw error;
+        });
+    },
+    [user, comment]
+  );
 
   return (
     <CommentWrapper>
@@ -76,12 +94,12 @@ const Comment: FC<IProps> = ({ comment }) => {
         <NameSpace user={comment?.user} date={comment?.createdAt} comment={comment?.content} />
         <div onClick={(e) => e.stopPropagation()} className="btn-wrapper">
           {liked ? (
-            <a className="liked" onClick={onClickDislikeComment}>
+            <a className="liked" onClick={() => onClickLikeOrDisLike("dislike")}>
               <HeartFilled />
               <span className="count">{comment?.likedUser?.length || 0}</span>
             </a>
           ) : (
-            <a onClick={onClickLikeComment}>
+            <a onClick={() => onClickLikeOrDisLike("like")}>
               <HeartOutlined />
               <span className="count">{comment?.likedUser?.length || 0}</span>
             </a>
@@ -89,7 +107,7 @@ const Comment: FC<IProps> = ({ comment }) => {
           {isOwner && (
             <a
               onClick={() => {
-                toastConfirmMessage(onClickConfirm, "이 댓글을 삭제할까요?", "삭제해주세요.");
+                toastConfirmMessage(onClickConfirmDelete, "이 댓글을 삭제할까요?", "삭제해주세요.");
               }}
             >
               <DeleteOutlined />
@@ -97,7 +115,9 @@ const Comment: FC<IProps> = ({ comment }) => {
           )}
         </div>
       </div>
-      {onSubCommentForm && <SubCommentForm commentId={comment?.id} />}
+      {onSubCommentForm && (
+        <SubCommentForm revalidateComments={revalidateComments} commentId={comment?.id} />
+      )}
       {comment?.subComments?.length > 2 && (
         <div onClick={onChangeSubCommentList} className="more-subComment">
           <button className="more-subComment-btn">
@@ -109,7 +129,7 @@ const Comment: FC<IProps> = ({ comment }) => {
       )}
       {onSubCommentList &&
         comment?.subComments?.map((v, i) => {
-          return <SubComment subComment={v} key={i} />;
+          return <SubComment revalidateComments={revalidateComments} subComment={v} key={i} />;
         })}
     </CommentWrapper>
   );

@@ -65,57 +65,62 @@ const MobileSlideMenu: FC<IProps> = () => {
         </a>
       </div>
       <Divider className="slide-menu-divider" orientation="left">
-        <span>로그인</span>
+        <span>{user ? "프로필" : "로그인"}</span>
       </Divider>
-      <h3 className="slide-menu-sub-title">로그인하고 더 많은 서비스를 누리세요!</h3>
-      <button onClick={onClickLogin} className="login-btn">
-        <span>간편로그인</span>
-        <ul className="social-icon-wrapper">
-          <li style={{ background: WHITE_COLOR }}>
-            <img src="https://img.icons8.com/color/144/000000/google-logo.png" />
-          </li>
-          <li style={{ background: "#FAE301" }}>
-            <img src="https://user-images.githubusercontent.com/74864925/127008226-4ea6ec83-e82d-4e7f-bc9a-95b508f750cc.png" />
-          </li>
-          <li style={{ background: "#54BA5C" }}>
-            <img src="https://user-images.githubusercontent.com/74864925/127008231-213a4559-d3e8-488d-9901-0fe3f78b58c1.png" />
-          </li>
-        </ul>
-      </button>
-      {/* <div className="user-profile-wrapper">
-        <div className="icon-wrapper">
-          <img src={DEFAULT_ICON_URL} alt="" />
-        </div>
-        <div className="user-info">
-          <h2>장현수님</h2>
-          <p>안녕하세요 장현수입니다.</p>
-        </div>
-      </div> */}
-      {user && (
-        <ul className="user-menu-list">
-          <Link href={`/me/${user?.id}`}>
-            <a>
+      {user ? (
+        <>
+          <div className="user-profile-wrapper">
+            <div className="icon-wrapper">
+              <img src={DEFAULT_ICON_URL} alt="" />
+            </div>
+            <div className="user-info">
+              <h2>{user?.name}님</h2>
+              <p>{user?.introduce}</p>
+            </div>
+          </div>
+          <ul className="user-menu-list">
+            <Link href={`/me/${user?.id}`}>
+              <a>
+                <li>
+                  <FontAwesomeIcon className="list-icon" icon={faUser} />
+                  <h4>내 프로필</h4>{" "}
+                </li>
+              </a>
+            </Link>
+            <Link href={`/story/post`}>
+              <a>
+                <li className="middle-list">
+                  <FontAwesomeIcon className="list-icon" icon={faEdit} />
+                  <h4>새 연대기</h4>
+                </li>
+              </a>
+            </Link>
+            <a onClick={() => dispatch(logoutAction())}>
               <li>
-                <FontAwesomeIcon className="list-icon" icon={faUser} />
-                <h4>내 프로필</h4>{" "}
+                <FontAwesomeIcon className="list-icon" icon={faSignOutAlt} />
+                <h4>로그아웃</h4>
               </li>
             </a>
-          </Link>
-          <Link href={`/story/post`}>
-            <a>
-              <li className="middle-list">
-                <FontAwesomeIcon className="list-icon" icon={faEdit} />
-                <h4>새 연대기</h4>
+          </ul>
+        </>
+      ) : (
+        <>
+          <h3 className="slide-menu-sub-title">로그인하고 더 많은 서비스를 누리세요!</h3>
+          <button onClick={onClickLogin} className="login-btn">
+            <span>간편로그인</span>
+            <ul className="social-icon-wrapper">
+              <li style={{ background: WHITE_COLOR }}>
+                <img src="https://img.icons8.com/color/144/000000/google-logo.png" />
               </li>
-            </a>
-          </Link>
-          <a onClick={() => dispatch(logoutAction())}>
-            <li>
-              <FontAwesomeIcon className="list-icon" icon={faSignOutAlt} />
-              <h4>로그아웃</h4>
-            </li>
-          </a>
-        </ul>
+              <li style={{ background: "#FAE301" }}>
+                <img src="https://user-images.githubusercontent.com/74864925/127008226-4ea6ec83-e82d-4e7f-bc9a-95b508f750cc.png" />
+              </li>
+              <li style={{ background: "#54BA5C" }}>
+                <img src="https://user-images.githubusercontent.com/74864925/127008231-213a4559-d3e8-488d-9901-0fe3f78b58c1.png" />
+              </li>
+            </ul>
+          </button>
+        </>
       )}
       <Divider className="slide-menu-divider" orientation="left">
         <span>바로가기</span>
@@ -128,7 +133,6 @@ const MobileSlideMenu: FC<IProps> = () => {
             </li>
           </a>
         </Link>
-
         <Link href="/story">
           <a className="direct-link">
             <li style={activePath === "story" ? { borderLeft: `3px solid ${BLUE_COLOR}` } : {}}>

@@ -16,7 +16,7 @@ import { Moments } from 'src/entities/Moments';
 export class CommentsService {
   constructor(
     @InjectRepository(Comments)
-    private commentsRepository: Repository<Comments>,
+    private CommentsRepository: Repository<Comments>,
     @InjectRepository(SubComments)
     private subCommentsRepository: Repository<SubComments>,
     @InjectRepository(CommentLike)
@@ -43,7 +43,7 @@ export class CommentsService {
     } else {
       newComment.story = <any>{ id: form.storyId };
     }
-    await this.commentsRepository.save(newComment);
+    await this.CommentsRepository.save(newComment);
     await this.NoticesRepository.save({
       header: `${moment.country.name}/${moment.id}번모멘트/댓글`,
       code: moment.code,
@@ -67,8 +67,45 @@ export class CommentsService {
     return true;
   }
 
+  async getComments(postId: number, postType: string) {
+    if (postType === 'moment') {
+      const comments = await this.CommentsRepository.createQueryBuilder(
+        'comments',
+      )
+        .addSelect([
+          'likedUser.id',
+          'user.id',
+          'user.icon',
+          'user.name',
+          'subComments_user.id',
+          'subComments_user.icon',
+          'subComments_user.name',
+        ])
+        .leftJoin('comments.likedUser', 'likedUser')
+        .leftJoin('comments.user', 'user')
+        .leftJoinAndSelect('comments.subComments', 'subComments')
+        .leftJoin('subComments.user', 'subComments_user')
+        .where('comments.moment= :moment', { moment: postId })
+        .orderBy('comments.id', 'DESC')
+        .getMany();
+      return comments;
+    } else if (postType === 'story') {
+      const comments = await this.CommentsRepository.createQueryBuilder(
+        'comments',
+      )
+        .addSelect(['likedUser.id', 'user.id', 'user.icon', 'user.name'])
+        .leftJoin('comments.likedUser', 'likedUser')
+        .leftJoin('comments.user', 'user')
+        .leftJoinAndSelect('comments.subComments', 'subComments')
+        .where('comments.story= :story', { story: postId })
+        .orderBy('comments.id', 'DESC')
+        .getMany();
+      return comments;
+    }
+  }
+
   async deleteComment(commentId: number) {
-    await this.commentsRepository.delete({ id: commentId });
+    await this.CommentsRepository.delete({ id: commentId });
     return true;
   }
 

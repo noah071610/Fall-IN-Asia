@@ -1,22 +1,20 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { SubCommentWrapper } from "./styles";
-import { DeleteOutlined, MoreOutlined } from "@ant-design/icons";
-import { DEFAULT_ICON_URL, toastErrorMessage } from "config";
+import { DeleteOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { ISubComment } from "@typings/db";
-import useToggle from "@hooks/useToggle";
-import { commentSlice } from "slices/comment";
 import NameSpace from "@components/NameSpace";
 import { memo } from "react";
 import { toastConfirmMessage } from "@components/ConfirmToastify";
-import { subCommentDeleteAction } from "actions/comment";
+import axios from "axios";
+import { toastErrorMessage, toastSuccessMessage } from "config";
 interface IProps {
   subComment: ISubComment;
+  revalidateComments: () => void;
 }
 
-const SubComment: FC<IProps> = ({ subComment }) => {
-  const dispatch = useDispatch();
+const SubComment: FC<IProps> = ({ subComment, revalidateComments }) => {
   const { user } = useSelector((state: RootState) => state.user);
   const [isOwner, setIsOwner] = useState(false);
   useEffect(() => {
@@ -25,11 +23,20 @@ const SubComment: FC<IProps> = ({ subComment }) => {
     }
   }, [user, subComment]);
 
-  const onClickConfirm = useCallback(() => {
+  const onClickConfirmDelete = useCallback(() => {
     if (user && isOwner) {
-      dispatch(subCommentDeleteAction(subComment?.id));
+      axios
+        .delete(`/comment/subComment/${subComment?.id}`)
+        .then(() => {
+          revalidateComments();
+          toastSuccessMessage("답글을 성공적으로 삭제했습니다.");
+        })
+        .catch((error) => {
+          toastErrorMessage(error);
+          throw error;
+        });
     }
-  }, [user, isOwner]);
+  }, [user, isOwner, subComment]);
 
   return (
     <SubCommentWrapper>
@@ -42,7 +49,7 @@ const SubComment: FC<IProps> = ({ subComment }) => {
         <a
           className="delete-btn"
           onClick={() => {
-            toastConfirmMessage(onClickConfirm, "이 답글을 삭제할까요?", "삭제해주세요.");
+            toastConfirmMessage(onClickConfirmDelete, "이 답글을 삭제할까요?", "삭제해주세요.");
           }}
         >
           <DeleteOutlined />

@@ -6,10 +6,10 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import NameSpace from "@components/NameSpace";
-import { momentSlice } from "slices/moment";
 import router from "next/router";
 import { toastConfirmMessage } from "@components/ConfirmToastify";
-import { momentDeleteAction } from "actions/moment";
+import axios from "axios";
+import { toastErrorMessage, toastSuccessMessage } from "config";
 
 interface IProps {
   moment: IMoment;
@@ -33,10 +33,18 @@ const MomentPostTitle: FC<IProps> = ({ moment }) => {
       router.push(`/country/edit?code=${moment?.code}&momentId=${moment?.id}`);
     }
   }, [user, isOwner, moment]);
-  const onClickConfirm = useCallback(() => {
+  const onClickConfirmDelete = useCallback(() => {
     if (user && isOwner) {
-      dispatch(momentDeleteAction(moment?.id));
-      router.push(`/country/${moment?.code}`);
+      axios
+        .delete(`/moment/${moment?.id}`)
+        .then(() => {
+          toastSuccessMessage("모멘트를 성공적으로 삭제했습니다.");
+          router.push(`/country/${moment?.code}`);
+        })
+        .catch((error) => {
+          toastErrorMessage(error);
+          throw error;
+        });
     }
   }, [user, isOwner, moment]);
   return (
@@ -55,7 +63,7 @@ const MomentPostTitle: FC<IProps> = ({ moment }) => {
               <a
                 onClick={() =>
                   toastConfirmMessage(
-                    onClickConfirm,
+                    onClickConfirmDelete,
                     "정말 이 모멘트를 삭제할까요?",
                     "삭제해주세요."
                   )

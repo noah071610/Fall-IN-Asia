@@ -212,7 +212,7 @@ export class StoriesService {
             };
           })
           .sort((a: any, b: any) => b.point - a.point)
-          .splice(0, 5);
+          .splice(0, 4);
       });
     let popularPosts = [];
     for (const i of pointWithpostId) {

@@ -7,7 +7,7 @@ export const MainAsideLeftNavWrapper = styled.nav`
     ${tw`hidden`}
   }
   ${tw`bg-white rounded-2xl h-full p-4 sticky`}
-  top:4.5rem;
+  top:6rem;
   width: 18%;
   .country {
     .country-img {

@@ -180,39 +180,6 @@ textarea {
   padding:0.5rem;
 }
 
-.slick-left-arrow {
-  display: block;
-  z-index: 1;
-  top: 50%;
-  position: absolute;
-  font-size: 2rem;
-  left:-1rem;
-  transform: translateY(-50%);
-  color: ${WHITE_COLOR};
-  padding:1rem;
-  transition:0.3s all;
-  &:hover{
-    transform: translate(-10%,-50%);
-    color: ${BLUE_COLOR};
-  }
-}
-.slick-right-arrow {
-  display: block;
-  z-index: 1;
-  top: 50%;
-  right:-1rem;
-  position: absolute;
-  font-size: 2rem;
-  transform: translateY(-50%);
-  color: ${WHITE_COLOR};
-  padding:1rem;
-  transition:0.3s all;
-  &:hover{
-    transform: translate(10%,-50%);
-    color: ${BLUE_COLOR};
-  }
-}
-
 .ql-toolbar {
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;

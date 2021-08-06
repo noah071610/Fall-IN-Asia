@@ -11,7 +11,14 @@ import "swiper/components/pagination/pagination.min.css";
 import useSWR, { useSWRInfinite } from "swr";
 import { IArticle, IStory } from "@typings/db";
 import fetcher from "utils/fetcher";
-import { FLEX_STYLE, GRID_STYLE, newsPageNavList, noRevalidate, NO_POST_URL } from "config";
+import {
+  FLEX_STYLE,
+  GRID_STYLE,
+  newsPageNavList,
+  noRevalidate,
+  NO_POST_URL,
+  SM_SIZE,
+} from "config";
 import styled from "@emotion/styled";
 import tw from "twin.macro";
 import ArticleImageCard from "@components/Cards/ArticleImageCard";
@@ -51,6 +58,15 @@ const GuidePageWrapper = styled.div`
     }
     .news-aside {
       ${tw`hidden`}
+    }
+  }
+  @media (max-width: ${SM_SIZE}) {
+    .no-article-wrapper {
+      ${tw`p-0 mt-6`}
+      height:300px;
+      img {
+        ${tw`mb-3`}
+      }
     }
   }
 `;

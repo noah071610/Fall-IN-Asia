@@ -17,10 +17,10 @@ const ArticleCard: FC<IProps> = ({ story }) => {
   }, [story]);
 
   return (
-    <div css={ArticleCardWrapper()} onClick={onClickArticleCard}>
+    <div className="article-card-wrapper" css={ArticleCardWrapper()} onClick={onClickArticleCard}>
       <div className="image-wrapper">
         <img src={story?.thumbnail ? story.thumbnail : NO_IMAGE_URL} alt="thai" />
-        <ul className="like-comment-list">
+        <ul className="like-comment">
           <li>
             <CommentOutlined />
             <span className="count">{story?.comments.length}</span>

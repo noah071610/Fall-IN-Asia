@@ -24,9 +24,9 @@ const CountryListCardWrapper = styled.div`
     }
   }
   @media (max-width: ${SM_SIZE}) {
-    ${tw`w-full px-1 py-2 m-0 justify-start`}
-    img {
-      ${tw`w-48 h-24`}
+    ${tw`m-0`}
+    .country-desc {
+      ${tw`ml-2`}
     }
   }
 `;

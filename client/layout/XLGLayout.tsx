@@ -3,9 +3,6 @@ import styled from "@emotion/styled/macro";
 import { XLG_SIZE } from "config";
 import tw from "twin.macro";
 const XLGLayoutWrapper = styled.div`
-  @media (max-width: 1300px) {
-    ${tw`w-full px-2`}
-  }
   width: ${XLG_SIZE};
   ${tw`mx-auto py-8`};
   .main-title {
@@ -16,6 +13,9 @@ const XLGLayoutWrapper = styled.div`
   }
   .main-title:first-of-type {
     ${tw`mt-0 mb-6`}
+  }
+  @media (max-width: 1300px) {
+    ${tw`w-full px-2`}
   }
 `;
 

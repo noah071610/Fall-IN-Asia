@@ -7,7 +7,7 @@ export const MainAsideRightListWrapper = styled.aside`
     ${tw`hidden`}
   }
   ${tw`bg-white rounded-2xl h-full py-6 px-4 sticky`}
-  top:4.5rem;
+  top:6rem;
   width: 22%;
   .aside-title {
     ${tw`text-sm font-bold`};

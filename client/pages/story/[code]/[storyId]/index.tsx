@@ -257,6 +257,7 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
             <PostComment story={story} />
           </>
         )}
+        <div style={{ height: "3rem" }} />
         <StoryArticleList grid={3} gap="1rem" setSize={setSize} stories={stories} />
       </PostLayout>
     </StoryPostWrapper>

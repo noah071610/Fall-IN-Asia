@@ -5,7 +5,6 @@ import LGLayout from "@layout/LGLayout";
 import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { momentSlice } from "slices/moment";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
@@ -18,10 +17,8 @@ interface IProps {
 }
 
 const edit: FC<IProps> = ({ initialMoment }) => {
-  const dispatch = useDispatch();
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
-  const { momentEditDone } = useSelector((state: RootState) => state.moment);
   const { data: moment } = useSWR<IMoment>(`/moment/${query?.code}/${query?.momentId}/0`, fetcher, {
     initialData: initialMoment,
     ...noRevalidate,
@@ -39,18 +36,10 @@ const edit: FC<IProps> = ({ initialMoment }) => {
     }
   }, [user, moment]);
 
-  useEffect(() => {
-    if (momentEditDone) {
-      toastSuccessMessage("모멘트를 수정했습니다.");
-      router.push(`/country/${moment?.code}/${moment?.id}`);
-      dispatch(momentSlice.actions.momentEditClear());
-    }
-  }, [momentEditDone]);
-
   return (
     <LGLayout>
       <h2 className="main-title">모멘트 수정</h2>
-      <MomentPostingForm moment={moment} />
+      <MomentPostingForm editMoment={moment} />
     </LGLayout>
   );
 };

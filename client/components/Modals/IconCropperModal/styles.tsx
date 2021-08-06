@@ -3,12 +3,13 @@ import { FLEX_STYLE, GRID_STYLE, RGB_BLACK } from "config";
 import tw from "twin.macro";
 
 export const IconCropperModalWrapper = (upImg: ArrayBuffer | string | null) => css`
-  ${tw`fixed top-1/2 left-1/2 p-8 z-30 shadow-lg bg-white rounded-2xl`}
+  ${tw`fixed top-1/2 left-1/2 p-8 shadow-lg bg-white rounded-2xl`}
+  width:700px;
+  z-index: 90;
   ${upImg && GRID_STYLE("2rem", "repeat(2,1fr)")};
   transform: translate(-50%, -60%);
   .dragger {
-    ${tw`rounded-xl`};
-    width: 50vw;
+    ${tw`w-full rounded-xl`};
     height: 60vh;
     border: 1px solid ${RGB_BLACK(0.08)};
     &:hover {
@@ -42,6 +43,29 @@ export const IconCropperModalWrapper = (upImg: ArrayBuffer | string | null) => c
       }
       .btn-point {
         ${tw`bg-blue-400 hover:bg-blue-500`}
+      }
+    }
+  }
+  @media (max-width: 700px) {
+    width: 95%;
+    ${tw`p-4`}
+    display:block;
+    .crop-image-wrapper {
+      ${FLEX_STYLE("center", "center")};
+      .crop-image {
+        div,
+        img {
+          max-height: 250px;
+        }
+      }
+    }
+    .image-preview {
+      ${FLEX_STYLE("center", "center")};
+      .name-space-preview {
+        ${tw`my-4`}
+        .icon {
+          ${tw`w-16 h-16`}
+        }
       }
     }
   }

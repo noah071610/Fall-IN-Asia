@@ -11,9 +11,10 @@ interface IProps {
   setSize: (f: (size: number) => number) => Promise<IMoment[][] | undefined>;
   setFilter: (filter: string) => void;
   filter: string;
+  revalidateMoments: () => void;
 }
 
-const MomentList: FC<IProps> = ({ filter, moments, setSize, setFilter }) => {
+const MomentList: FC<IProps> = ({ revalidateMoments, filter, moments, setSize, setFilter }) => {
   const [isReachingEnd, setIsReachingEnd] = useState(true);
   const ref = useRef(null);
   const isVisible = useOnScreen(ref);
@@ -64,9 +65,16 @@ const MomentList: FC<IProps> = ({ filter, moments, setSize, setFilter }) => {
         {momentsData.length > 0 ? (
           momentsData?.map((v, i) => {
             if (momentsData.length - 1 === i) {
-              return <MomentCard isLast={true} key={i} moment={v} />;
+              return (
+                <MomentCard
+                  revalidateMoments={revalidateMoments}
+                  isLast={true}
+                  key={i}
+                  moment={v}
+                />
+              );
             }
-            return <MomentCard key={i} moment={v} />;
+            return <MomentCard revalidateMoments={revalidateMoments} key={i} moment={v} />;
           })
         ) : (
           <div className="no-post">

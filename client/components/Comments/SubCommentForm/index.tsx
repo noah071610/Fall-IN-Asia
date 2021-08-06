@@ -1,36 +1,44 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback } from "react";
 import { SubCommentFormWrapper } from "./styles";
 import useInput from "@hooks/useInput";
-import { subCommentCreateAction } from "actions/comment";
-import TextareaAutosize from "react-textarea-autosize";
-import { DEFAULT_ICON_URL, toastErrorMessage } from "config";
+import { DEFAULT_ICON_URL, toastErrorMessage, toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { memo } from "react";
+import axios from "axios";
 
 interface IProps {
   commentId: number;
+  revalidateComments: () => void;
 }
 
-const SubCommentForm: FC<IProps> = ({ commentId }) => {
+const SubCommentForm: FC<IProps> = ({ commentId, revalidateComments }) => {
   const [content, onChangeContent, setContent] = useInput("");
-  const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
   const onSubmitSubComment = useCallback(() => {
     if (content === "" || !content?.trim()) {
-      toastErrorMessage("内容を書いてください。");
+      toastErrorMessage("내용을 적어주세요");
       return;
     }
     if (!user) {
-      toastErrorMessage("ログインが必要です。");
+      toastErrorMessage("로그인이 필요합니다.");
       return;
     }
     let form = {
       content,
       commentId,
     };
-    dispatch(subCommentCreateAction(form));
-    setContent("");
+    axios
+      .post("/comment/subComment", form)
+      .then(() => {
+        revalidateComments();
+        toastSuccessMessage("답글을 성공적으로 작성했습니다.");
+        setContent("");
+      })
+      .catch((error) => {
+        toastSuccessMessage(error);
+        throw error;
+      });
   }, [commentId, content]);
   return (
     <SubCommentFormWrapper>

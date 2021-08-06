@@ -2,36 +2,24 @@ import React, { FC, useCallback, useEffect, useState } from "react";
 import { MomentPostWrapper } from "./styles";
 import MomentPostTitle from "@sections/MainPage/MomentPostTitle";
 import Comment from "@components/Comments/Comment";
-import { IImage, IMoment } from "@typings/db";
+import { IComment, IImage, IMoment } from "@typings/db";
 import ReactHtmlParser from "react-html-parser";
-import {
-  CommentOutlined,
-  DoubleLeftOutlined,
-  DoubleRightOutlined,
-  HeartFilled,
-  HeartOutlined,
-  ZoomInOutlined,
-} from "@ant-design/icons";
-import { momentDislikeAction, momentLikeAction } from "actions/moment";
+import { CommentOutlined, HeartFilled, HeartOutlined, ZoomInOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { toastErrorMessage } from "config";
+import { noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
 import { Image } from "antd";
 import Slider from "react-slick";
 import CommentForm from "@components/Comments/CommentForm";
+import { NextArrow, PrevArrow } from "@components/SliderArrow";
+import useSWR from "swr";
+import fetcher from "utils/fetcher";
+import axios from "axios";
+import { getUserInfoAction } from "actions/user";
 
 interface IProps {
   moment: IMoment;
-}
-
-function SampleNextArrow(props: any) {
-  const { onClick } = props;
-  return <DoubleRightOutlined className="slick-right-arrow" onClick={onClick} />;
-}
-
-function SamplePrevArrow(props: any) {
-  const { onClick } = props;
-  return <DoubleLeftOutlined className="slick-left-arrow" onClick={onClick} />;
+  revalidateMoment: () => Promise<boolean>;
 }
 
 const momentImageSettings = {
@@ -41,14 +29,19 @@ const momentImageSettings = {
   slidesToScroll: 1,
   autoplay: false,
   speed: 300,
-  nextArrow: <SampleNextArrow />,
-  prevArrow: <SamplePrevArrow />,
+  nextArrow: <NextArrow />,
+  prevArrow: <PrevArrow />,
 };
 
-const moment: FC<IProps> = ({ moment }) => {
+const MomentPost: FC<IProps> = ({ moment, revalidateMoment }) => {
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
+  const { data: comments, revalidate: revalidateComments } = useSWR<IComment[]>(
+    `/comment/${moment?.id}?postType=moment`,
+    fetcher,
+    noRevalidate
+  );
   useEffect(() => {
     if (user) {
       if (user.likeMoment?.find((v: any) => v.momentId === moment?.id)) {
@@ -59,20 +52,30 @@ const moment: FC<IProps> = ({ moment }) => {
     }
   }, [user, moment]);
 
-  const onClickLikeBtn = useCallback(() => {
-    if (!user) {
-      toastErrorMessage("로그인이 필요합니다.");
-      return;
-    }
-    dispatch(momentLikeAction(moment?.id));
-  }, [user, moment]);
-  const onClickDislikeBtn = useCallback(() => {
-    if (!user) {
-      toastErrorMessage("로그인이 필요합니다.");
-      return;
-    }
-    dispatch(momentDislikeAction(moment?.id));
-  }, [user, moment]);
+  const onClickLikeOrDisLike = useCallback(
+    (value: string) => {
+      if (!user) {
+        toastErrorMessage("로그인이 필요합니다.");
+        return;
+      }
+      axios
+        .patch(`/moment/${value}/${moment?.id}`)
+        .then(() => {
+          if (value === "like") {
+            toastSuccessMessage("좋아요!💓");
+          } else {
+            toastSuccessMessage("좋아요 취소💔");
+          }
+          revalidateMoment();
+          dispatch(getUserInfoAction());
+        })
+        .catch((error) => {
+          toastErrorMessage(error);
+          throw error;
+        });
+    },
+    [user, moment]
+  );
 
   return (
     <MomentPostWrapper>
@@ -99,21 +102,26 @@ const moment: FC<IProps> = ({ moment }) => {
       <ul className="post-footer">
         <li>
           <CommentOutlined />
-          <span className="count">{moment?.comments?.length}</span>
+          <span className="count">{comments?.length}</span>
           <span>댓글</span>
         </li>
-        <li onClick={liked ? onClickDislikeBtn : onClickLikeBtn} className={liked ? "liked" : ""}>
+        <li
+          onClick={
+            liked ? () => onClickLikeOrDisLike("dislike") : () => onClickLikeOrDisLike("like")
+          }
+          className={liked ? "liked" : ""}
+        >
           {liked ? <HeartFilled /> : <HeartOutlined />}
           <span className="count">{moment?.likedUser?.length}</span>
           <span>좋아요</span>
         </li>
       </ul>
-      <CommentForm isStory={false} />
-      {moment?.comments?.map((v, i) => {
-        return <Comment key={i} comment={v} />;
+      <CommentForm revalidateComments={revalidateComments} isStory={false} />
+      {comments?.map((v, i) => {
+        return <Comment revalidateComments={revalidateComments} key={i} comment={v} />;
       })}
     </MomentPostWrapper>
   );
 };
 
-export default moment;
+export default MomentPost;

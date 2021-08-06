@@ -1,9 +1,16 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, GRID_STYLE } from "config";
+import {
+  BLUE_COLOR,
+  BORDER_THIN,
+  ELLIPSIS_STYLE,
+  FLEX_STYLE,
+  GRAY_COLOR,
+  GRID_STYLE,
+} from "config";
 import tw from "twin.macro";
 
 export const MobileSlideMenuWrapper = styled.nav`
-  ${tw`fixed top-0 left-0 h-screen bg-white w-2/3 p-4`}
+  ${tw`fixed top-0 left-0 h-screen bg-white w-5/6 p-4`}
   z-index:100;
   transition: 0.15s all;
   .slide-menu-logo {
@@ -29,6 +36,7 @@ export const MobileSlideMenuWrapper = styled.nav`
     }
     p {
       ${tw`text-xs mt-2 `}
+      ${ELLIPSIS_STYLE(1.4, 2, "auto")};
     }
   }
   .user-menu-list {

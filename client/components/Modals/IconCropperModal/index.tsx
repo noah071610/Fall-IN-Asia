@@ -98,14 +98,16 @@ const IconCropperModalper: FC<IProps> = () => {
   return (
     <div css={IconCropperModalWrapper(upImg)}>
       {upImg ? (
-        <ReactCrop
-          className="crop-image"
-          src={upImg as string}
-          onImageLoaded={onLoad}
-          crop={crop}
-          onChange={(c) => setCrop(c)}
-          onComplete={(c) => setCompletedCrop(c)}
-        />
+        <div className="crop-image-wrapper">
+          <ReactCrop
+            className="crop-image"
+            src={upImg as string}
+            onImageLoaded={onLoad}
+            crop={crop}
+            onChange={(c) => setCrop(c)}
+            onComplete={(c) => setCompletedCrop(c)}
+          />
+        </div>
       ) : (
         <Dragger
           showUploadList={false}

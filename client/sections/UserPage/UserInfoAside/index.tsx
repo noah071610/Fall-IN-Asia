@@ -139,7 +139,7 @@ const UserInfoAside: FC<IProps> = () => {
       return;
     }
     dispatch(deleteUserIconAction());
-  }, []);
+  }, [isOwner]);
 
   const onClickChangeUserInfo = useCallback(() => {
     if (!isOwner) {
@@ -148,7 +148,7 @@ const UserInfoAside: FC<IProps> = () => {
     }
     dispatch(changeUserInfoAction({ userName, introduce }));
     setUserInfoEdit(false);
-  }, [userName, introduce]);
+  }, [userName, introduce, isOwner]);
 
   const onClickChangePassword = useCallback(() => {
     if (!isOwner) {
@@ -156,7 +156,7 @@ const UserInfoAside: FC<IProps> = () => {
       return;
     }
     dispatch(changeUserPasswordAction({ prevPassword, newPassword }));
-  }, [prevPassword, newPassword]);
+  }, [prevPassword, newPassword, isOwner]);
 
   const onClickWithdrawal = useCallback(() => {
     if (!isOwner) {

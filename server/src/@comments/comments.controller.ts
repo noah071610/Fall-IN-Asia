@@ -2,10 +2,12 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -23,11 +25,20 @@ import { CommentsService } from './comments.service';
 export class CommentsController {
   constructor(private readonly CommentService: CommentsService) {}
 
+  @ApiOperation({ summary: 'get Comment by post id' })
+  @Get('/:postId')
+  async getComments(
+    @Param('postId', ParseIntPipe) postId: number,
+    @Query('postType') postType: string,
+  ) {
+    return await this.CommentService.getComments(postId, postType);
+  }
+
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Create Comment' })
   @Post()
   async createComment(@Body() form: CommentRequestDto, @User() user) {
-    await this.CommentService.createComment(form, user.id);
+    return await this.CommentService.createComment(form, user.id);
   }
 
   @UseGuards(new LoggedInGuard())

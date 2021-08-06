@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, XLG_SIZE } from "config";
+import { BORDER_THIN, GRID_STYLE, SM_SIZE, XLG_SIZE } from "config";
 import tw from "twin.macro";
 
 export const FooterWrapper = styled.div`
@@ -46,6 +46,37 @@ export const FooterWrapper = styled.div`
   @media (max-width: 1300px) {
     .footer-inner {
       ${tw`w-full px-2`}
+    }
+  }
+  @media (max-width: ${SM_SIZE}) {
+    .footer-inner {
+      .footer-top {
+        ${tw`mb-6`}
+        span {
+          ${tw`text-xs`}
+        }
+      }
+      .footer-list-wrapper {
+        ${GRID_STYLE("0.5rem", "1fr 2fr 1fr")}
+        ${tw`mb-6`}
+        .footer-list {
+          ${tw`m-0`}
+          h2 {
+            ${tw`text-sm`}
+          }
+          ul {
+            li {
+              ${tw`text-xs pb-3`}
+            }
+          }
+          .anticon {
+            ${tw`mr-2`}
+          }
+        }
+      }
+    }
+    .license {
+      ${tw`text-xs`}
     }
   }
 `;

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import styled from "@emotion/styled";
-import { FLEX_STYLE } from "config";
+import { FLEX_STYLE, SM_SIZE } from "config";
 import tw from "twin.macro";
 
 interface IProps {
@@ -13,6 +13,12 @@ const StoryPosterWrapper = styled.div`
   ${FLEX_STYLE("center", "center")};
   .title {
     ${tw`text-3xl font-bold text-white cursor-pointer z-10`};
+  }
+  @media (max-width: ${SM_SIZE}) {
+    ${tw`h-52`}
+    .title {
+      ${tw`text-lg px-4 text-center`}
+    }
   }
 `;
 const StoryPoster: FC<IProps> = ({ name, image }) => {

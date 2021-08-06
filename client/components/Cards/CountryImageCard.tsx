@@ -2,7 +2,7 @@ import { ICountry } from "@typings/db";
 import router from "next/router";
 import React, { FC, useCallback } from "react";
 import styled from "@emotion/styled";
-import { FLEX_STYLE } from "config";
+import { FLEX_STYLE, SM_SIZE } from "config";
 import tw from "twin.macro";
 
 const CountryImageCardWrapper = styled.div`
@@ -21,6 +21,15 @@ const CountryImageCardWrapper = styled.div`
   &:hover {
     .overlay {
       ${tw`opacity-30`}
+    }
+  }
+  @media (max-width: ${SM_SIZE}) {
+    ${tw`rounded-md`}
+    .overlay {
+      ${tw`rounded-md`}
+    }
+    h3 {
+      ${tw`text-sm`}
     }
   }
 `;

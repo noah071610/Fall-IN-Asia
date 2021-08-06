@@ -1,7 +1,7 @@
 import ImageCard from "@components/Cards/CountryImageCard";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { ICountry } from "@typings/db";
-import { GRID_STYLE, MD_SIZE, noRevalidate } from "config";
+import { noRevalidate, SM_SIZE } from "config";
 import React, { FC, useState } from "react";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
@@ -13,6 +13,9 @@ SwiperCore.use([Autoplay]);
 
 const CountryPreviewSlideWrapper = (isMain?: boolean) => css`
   height: ${isMain ? "100px" : "100px"};
+  @media (max-width: ${SM_SIZE}) {
+    ${tw`h-16`}
+  }
 `;
 
 interface IProps {
@@ -39,8 +42,8 @@ const CountryPreviewSlide: FC<IProps> = ({ slidesPerView, isMain }) => {
       spaceBetween: 8,
     },
     0: {
-      slidesPerView: 3.2,
-      spaceBetween: 8,
+      slidesPerView: 3.6,
+      spaceBetween: 4,
     },
   };
 

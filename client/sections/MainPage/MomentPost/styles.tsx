@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { RED_COLOR } from "config";
+import { RED_COLOR, SM_SIZE } from "config";
 import tw from "twin.macro";
 
 export const MomentPostWrapper = styled.div`
@@ -39,5 +39,8 @@ export const MomentPostWrapper = styled.div`
         font-size: 1.2rem;
       }
     }
+  }
+  @media (max-width: ${SM_SIZE}) {
+    ${tw`py-4 px-2`}
   }
 `;

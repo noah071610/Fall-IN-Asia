@@ -5,7 +5,8 @@ import { IMoment, IStory } from "@typings/db";
 import { Divider } from "antd";
 import React, { FC, useCallback, useState } from "react";
 import styled from "@emotion/styled";
-import { GRID_STYLE } from "config";
+import { GRID_STYLE, SM_SIZE } from "config";
+import tw from "twin.macro";
 
 const SearchPostListWrapper = styled.div`
   .searched-post-wrapper {
@@ -16,6 +17,9 @@ const SearchPostListWrapper = styled.div`
     @media (max-width: 700px) {
       grid-template-columns: repeat(2, 1fr);
       gap: 0.5rem;
+    }
+    @media (max-width: 460px) {
+      ${tw`block`}
     }
   }
 `;

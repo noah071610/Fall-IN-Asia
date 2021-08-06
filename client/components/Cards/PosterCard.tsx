@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { ICountry } from "@typings/db";
-import { WORLD_IMAGE } from "config";
+import { SM_SIZE, WORLD_IMAGE } from "config";
 import React, { FC, useState } from "react";
 import tw from "twin.macro";
 
@@ -10,6 +10,9 @@ const PosterCardWrapper = (isMain?: boolean) => css`
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 250%;
+  @media (max-width: ${SM_SIZE}) {
+    ${isMain && tw`rounded-none h-40`}
+  }
 `;
 
 interface IProps {

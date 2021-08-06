@@ -1,20 +1,57 @@
+import styled from "@emotion/styled";
 import { faArrowCircleLeft, faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { BLUE_COLOR, SM_SIZE } from "config";
+import tw from "twin.macro";
+
+const SliderRightArrow = styled.a`
+  ${tw`block z-10 top-1/2 -right-4 absolute text-4xl text-white p-4 `}
+  transform: translateY(-50%);
+  transition: 0.3s all;
+  &:hover {
+    transform: translate(10%, -50%);
+    color: ${BLUE_COLOR};
+  }
+  @media (max-width: ${SM_SIZE}) {
+    ${tw`right-0 pr-0`}
+  }
+`;
+
+const SliderLeftArrow = styled.a`
+  ${tw`block z-10 top-1/2 -left-4 absolute text-4xl text-white p-4`}
+  transform: translateY(-50%);
+  transition: 0.3s all;
+  &:hover {
+    transform: translate(-10%, -50%);
+    color: ${BLUE_COLOR};
+  }
+  @media (max-width: ${SM_SIZE}) {
+    ${tw`left-0 pl-0`}
+  }
+`;
 
 export const NextArrow = (props: any) => {
-  const { onClick } = props;
+  const { onClick, slideCount, currentSlide } = props;
   return (
-    <a className="slick-right-arrow" onClick={onClick}>
-      <FontAwesomeIcon icon={faArrowCircleRight} />
-    </a>
+    <>
+      {slideCount - 1 !== currentSlide && (
+        <SliderRightArrow onClick={onClick}>
+          <FontAwesomeIcon icon={faArrowCircleRight} />
+        </SliderRightArrow>
+      )}
+    </>
   );
 };
 
 export const PrevArrow = (props: any) => {
-  const { onClick } = props;
+  const { onClick, slideCount, currentSlide } = props;
   return (
-    <a className="slick-left-arrow" onClick={onClick}>
-      <FontAwesomeIcon icon={faArrowCircleLeft} />
-    </a>
+    <>
+      {currentSlide !== 0 && (
+        <SliderLeftArrow onClick={onClick}>
+          <FontAwesomeIcon icon={faArrowCircleLeft} />
+        </SliderLeftArrow>
+      )}
+    </>
   );
 };

@@ -9,8 +9,9 @@ export const WithdrawalModalWrapper = styled.div`
   h3:first-of-type {
     ${tw`mt-0`}
   }
-  ${tw`fixed top-1/2 left-1/2 py-8 px-12 z-30 shadow-lg bg-white rounded-2xl`}
-  width:500px;
+  ${tw`fixed top-1/2 left-1/2 py-8 px-12 shadow-lg bg-white rounded-2xl`}
+  z-index: 90;
+  width: 500px;
   transform: translate(-50%, -50%);
   .password-input {
     ${tw`py-2 px-3 hover:shadow-md focus:shadow-md`}
@@ -25,6 +26,13 @@ export const WithdrawalModalWrapper = styled.div`
     ${GRID_STYLE(".5rem", "1fr 1fr")};
     button {
       ${tw`text-white font-bold py-3 bg-gray-300 rounded-xl hover:bg-gray-400`}
+    }
+  }
+  @media (max-width: 500px) {
+    ${tw`py-12`}
+    width: 95%;
+    p {
+      ${tw`text-xs`}
     }
   }
 `;

@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import tw from "twin.macro";
 import fetcher from "utils/fetcher";
+import Head from "next/head";
 
 const SearchPageWrapper = styled.div`
   ${tw`bg-white pb-60 pt-16`}
@@ -45,24 +46,29 @@ const index: FC<IProps> = ({ searchPosts }) => {
   }, []);
 
   return (
-    <SearchPageWrapper>
-      <SearchPagePoster searchWord={searchPostsData?.searchWord || ""} />
-      <XLGLayout>
-        <h3 className="main-title">연대기</h3>
-        {searchPostsData && searchPostsData?.stories?.length > 0 ? (
-          <SearchPostList stories={searchPostsData?.stories} />
-        ) : (
-          <div>연대기가 없습니다.</div>
-        )}
-        <h3 className="main-title">모멘트</h3>
-        {searchPostsData && searchPostsData?.moments?.length > 0 ? (
-          <SearchPostList moments={searchPostsData?.moments} />
-        ) : (
-          <div>모멘트가 없습니다.</div>
-        )}
-        <h3 className="main-title">여행소식</h3>
-      </XLGLayout>
-    </SearchPageWrapper>
+    <>
+      <Head>
+        <title>Search - {searchPostsData?.searchWord}</title>
+      </Head>
+      <SearchPageWrapper>
+        <SearchPagePoster searchWord={searchPostsData?.searchWord || ""} />
+        <XLGLayout>
+          <h3 className="main-title">연대기</h3>
+          {searchPostsData && searchPostsData?.stories?.length > 0 ? (
+            <SearchPostList stories={searchPostsData?.stories} />
+          ) : (
+            <div>연대기가 없습니다.</div>
+          )}
+          <h3 className="main-title">모멘트</h3>
+          {searchPostsData && searchPostsData?.moments?.length > 0 ? (
+            <SearchPostList moments={searchPostsData?.moments} />
+          ) : (
+            <div>모멘트가 없습니다.</div>
+          )}
+          <h3 className="main-title">여행소식</h3>
+        </XLGLayout>
+      </SearchPageWrapper>
+    </>
   );
 };
 

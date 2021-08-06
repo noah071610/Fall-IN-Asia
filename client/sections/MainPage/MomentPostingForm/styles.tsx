@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RGB_BLACK } from "config";
+import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RGB_BLACK, SM_SIZE } from "config";
 import tw from "twin.macro";
 
 export const MomentPostingFormWrapper = styled.div`
@@ -46,6 +46,11 @@ export const MomentPostingFormWrapper = styled.div`
       button {
         ${tw`py-3 px-5 font-bold rounded-xl hover:bg-gray-100`}
       }
+    }
+  }
+  @media (max-width: ${SM_SIZE}) {
+    .posting-editor {
+      ${tw`p-2`}
     }
   }
 `;

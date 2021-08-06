@@ -1,20 +1,21 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { CommentFormWrapper } from "./styles";
-import { Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import { DEFAULT_ICON_URL, toastErrorMessage, WHITE_COLOR } from "config";
+import { DEFAULT_ICON_URL, toastErrorMessage, toastSuccessMessage, WHITE_COLOR } from "config";
 import TextareaAutosize from "react-textarea-autosize";
-import { commentCreateAction } from "actions/comment";
 import useInput from "@hooks/useInput";
 import { useRouter } from "next/router";
 import { memo } from "react";
+import { mainSlice } from "slices/main";
+import axios from "axios";
 
 interface IProps {
   isStory: boolean;
+  revalidateComments: () => Promise<boolean>;
 }
 
-const CommentForm: FC<IProps> = ({ isStory }) => {
+const CommentForm: FC<IProps> = ({ isStory, revalidateComments }) => {
   const dispatch = useDispatch();
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
@@ -38,8 +39,17 @@ const CommentForm: FC<IProps> = ({ isStory }) => {
     } else {
       form["momentId"] = parseInt(query?.momentId as string);
     }
-    dispatch(commentCreateAction(form));
-    setContent("");
+    axios
+      .post("/comment", form, { withCredentials: true })
+      .then(() => {
+        revalidateComments();
+        toastSuccessMessage("댓글을 성공적으로 작성했습니다.");
+        setContent("");
+      })
+      .catch((error) => {
+        toastSuccessMessage(error);
+        throw error;
+      });
   }, [content, query, user, isStory]);
 
   const onClickCommentCancle = useCallback(() => {
@@ -49,6 +59,7 @@ const CommentForm: FC<IProps> = ({ isStory }) => {
 
   const onClickCommentForm = useCallback(() => {
     if (!user) {
+      dispatch(mainSlice.actions.toggleLoginModal());
       return;
     }
     setOnCommentForm(true);

@@ -21,7 +21,10 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import multer from 'multer';
 import path from 'path';
 import { User } from 'src/decorators/user.decorator';
-import { MomentRequestDto } from 'src/dto/moment.request.dto';
+import {
+  MomentCreateRequestDto,
+  MomentModifyRequestDto,
+} from 'src/dto/moment.request.dto';
 
 @UseInterceptors(JsonResponeGenerator)
 @ApiTags('Moments')
@@ -48,11 +51,11 @@ export class MomentsController {
   )
   @Post()
   async createPost(
-    @Body() form: MomentRequestDto,
+    @Body() form: MomentCreateRequestDto,
     @User() user,
     @UploadedFiles() files: Express.Multer.File[],
   ) {
-    await this.MomentsService.createPost(form, user.id, files);
+    return await this.MomentsService.createPost(form, user.id, files);
   }
 
   @UseGuards(new LoggedInGuard())
@@ -73,11 +76,11 @@ export class MomentsController {
   )
   @Post('edit')
   async editPost(
-    @Body() form: MomentRequestDto,
+    @Body() form: MomentModifyRequestDto,
     @UploadedFiles() files: Express.Multer.File[],
     @User() user,
   ) {
-    await this.MomentsService.editPost(form, files, user.id);
+    return await this.MomentsService.editPost(form, files, user.id);
   }
 
   @UseGuards(new LoggedInGuard())

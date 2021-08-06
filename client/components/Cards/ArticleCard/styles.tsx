@@ -3,7 +3,7 @@ import { ELLIPSIS_STYLE, FLEX_STYLE, GRID_STYLE } from "config";
 import tw from "twin.macro";
 
 export const ArticleCardWrapper = () => css`
-  ${tw`cursor-pointer flex`}
+  ${tw`cursor-pointer mb-4`}
   ${GRID_STYLE("2rem", "1.5fr 2.5fr")}
   &:hover {
     .image-wrapper {
@@ -18,7 +18,7 @@ export const ArticleCardWrapper = () => css`
       ${tw`rounded-md h-60 w-full`};
       transition: 0.3s all;
     }
-    .like-comment-list {
+    .like-comment {
       ${tw`absolute bottom-4 right-4 bg-white py-1 px-2 opacity-50 rounded-xl`}
       li {
         ${tw`p-1 cursor-pointer`}

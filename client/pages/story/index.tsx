@@ -26,6 +26,8 @@ import StoryArticleList from "@sections/StoryPage/StoryArticleList";
 import ArticleCard from "@components/Cards/ArticleCard";
 import { useSelector } from "react-redux";
 import { RootState } from "slices";
+import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
+import MoreButton from "@components/MoreButton";
 
 const Wrapper = styled.div`
   padding-top: 4rem;
@@ -50,7 +52,14 @@ const Wrapper = styled.div`
       ${tw`shadow-md`}
     }
   }
-
+  .popular-story-wrapper {
+    .article-card-wrapper {
+      ${tw`grid`}
+    }
+    .article-card-column-wrapper {
+      ${tw`hidden`}
+    }
+  }
   .no-story-wrapper {
     ${tw`rounded-xl select-none p-8 mt-8`}
     height:500px;
@@ -64,7 +73,17 @@ const Wrapper = styled.div`
   }
   @media (max-width: ${LG_SIZE}) {
     .country-list-wrapper {
-      ${tw`mx-2 w-full`}
+      ${tw`px-2 w-full`}
+    }
+  }
+  @media (max-width: 460px) {
+    .popular-story-wrapper {
+      .article-card-wrapper {
+        ${tw`hidden`}
+      }
+      .article-card-column-wrapper {
+        ${tw`block`}
+      }
     }
   }
 `;
@@ -79,6 +98,7 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
   const { user } = useSelector((state: RootState) => state.user);
   const [filter, setFilter] = useState("");
   const [onAllCountries, setAllCountries] = useState(false);
+  const [onMorePopularStory, setOnMorePopularStory] = useState(false);
   const { data: popularStories } = useSWR<IStory[]>("/story/popular", fetcher, {
     initialData: initialPopularStories,
     ...noRevalidate,
@@ -137,6 +157,10 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
     setAllCountries(false);
   }, []);
 
+  const onClickMorePopularStoryBtn = useCallback(() => {
+    setOnMorePopularStory(true);
+  }, []);
+
   return (
     <Wrapper>
       <StoryMainPoster name={country?.name} image={country?.image_src} />
@@ -154,15 +178,33 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
             </button>
           </div>
         )}
-        {onAllCountries ? (
-          <MainCountryAllview isMain={false} countries={countries} />
-        ) : (
-          popularStories && (
-            <div className="story-top-section">
+        {onAllCountries && (
+          <>
+            <h2 className="main-title">국가선택</h2>
+            <MainCountryAllview isMain={false} countries={countries} />
+          </>
+        )}
+        <h2 className="main-title">인기연대기</h2>
+        {popularStories && (
+          <>
+            <div className="popular-story-wrapper">
               <ArticleCard story={popularStories[0]} />
+              <ArticleColumnCard story={popularStories[0]} />
+              {onMorePopularStory &&
+                popularStories?.slice(1).map((v, i) => {
+                  return <ArticleCard key={i} story={v} />;
+                })}
+              {onMorePopularStory &&
+                popularStories?.slice(1).map((v, i) => {
+                  return <ArticleColumnCard key={i} story={v} />;
+                })}
+              {!onMorePopularStory && popularStories?.length > 1 && (
+                <MoreButton onClickMoreBtn={onClickMorePopularStoryBtn} />
+              )}
             </div>
-          )
-        )}{" "}
+          </>
+        )}
+        <h2 className="main-title">연대기</h2>
         {stories && stories?.flat().length > 0 ? (
           <StoryArticleList grid={4} gap="1.5rem" setSize={setSize} stories={stories} />
         ) : (

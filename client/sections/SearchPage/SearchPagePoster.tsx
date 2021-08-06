@@ -2,7 +2,7 @@ import React, { FC, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { mainSlice } from "slices/main";
 import styled from "@emotion/styled";
-import { FLEX_STYLE, XLG_SIZE } from "config";
+import { FLEX_STYLE, SM_SIZE, XLG_SIZE } from "config";
 import tw from "twin.macro";
 
 const SearchPagePosterWrapper = styled.div`
@@ -23,6 +23,20 @@ const SearchPagePosterWrapper = styled.div`
   }
   @media (max-width: ${XLG_SIZE}) {
     ${tw`px-2`}
+  }
+  @media (max-width: ${SM_SIZE}) {
+    ${tw`px-0 h-52`}
+    ${FLEX_STYLE("center", "center", "column")};
+    .poster-inner {
+      ${FLEX_STYLE("center", "center", "column")};
+      ${tw`w-full`}
+      h1 {
+        ${tw`text-lg`}
+      }
+      button {
+        ${tw`text-xs`}
+      }
+    }
   }
 `;
 

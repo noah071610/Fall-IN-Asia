@@ -17,6 +17,7 @@ const ArticleColumnCard: FC<IProps> = ({ story, isMain }) => {
 
   return (
     <ArticleColumnCardWrapper
+      className="article-card-column-wrapper"
       onClick={onClickArticleCard}
       style={isMain ? { boxShadow: "none", borderRadius: "15px" } : {}}
     >
@@ -29,10 +30,7 @@ const ArticleColumnCard: FC<IProps> = ({ story, isMain }) => {
           src={story?.thumbnail}
           alt="story-image"
         />
-      </div>
-      <div className="box-card-info">
-        <NameSpace date={story?.createdAt} user={story?.user} />
-        <ul className="box-card-list">
+        <ul className="like-comment">
           <li>
             <CommentOutlined />
             <span className="count">{story?.comments?.length}</span>
@@ -42,6 +40,9 @@ const ArticleColumnCard: FC<IProps> = ({ story, isMain }) => {
             <span className="count">{story?.likedUser?.length}</span>
           </li>
         </ul>
+      </div>
+      <div className="box-card-info">
+        <NameSpace date={story?.createdAt} user={story?.user} />
       </div>
       <p>{story?.title}</p>
     </ArticleColumnCardWrapper>
