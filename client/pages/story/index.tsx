@@ -68,7 +68,7 @@ const Wrapper = styled.div`
       ${tw`w-40 h-40 opacity-30 mb-4`}
     }
     h2 {
-      ${tw`text-base font-bold mb-4`}
+      ${tw`text-base font-bold mb-4 text-center`}
     }
   }
   @media (max-width: ${LG_SIZE}) {

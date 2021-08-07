@@ -10,6 +10,8 @@ export class MomentCreateRequestDto extends PickType(Moments, [
 export class MomentModifyRequestDto extends PickType(Moments, [
   'code',
   'content',
+  'type',
 ] as const) {
   momentId: string;
+  prevImage?: string[];
 }

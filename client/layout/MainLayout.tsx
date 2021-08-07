@@ -10,7 +10,7 @@ const MainLayoutWrapper = styled.div`
   ${tw`bg-gray-100`}
   .layout {
     width: ${XLG_SIZE};
-    ${tw`mx-auto pt-24 pb-32 flex`}
+    ${tw`mx-auto pt-8 pb-32 flex`}
     .layout-middle {
       ${tw`w-3/5 px-8`}
       .main-title {
@@ -34,7 +34,7 @@ const MainLayoutWrapper = styled.div`
   }
   @media (max-width: ${SM_SIZE}) {
     .layout {
-      ${tw`pt-20 px-2`}
+      ${tw`px-2`}
     }
   }
 `;
@@ -44,6 +44,7 @@ interface MainLayoutProps {}
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   return (
     <MainLayoutWrapper>
+      <MainPoster />
       <div className="layout">
         <MainAsideLeftNav />
         <div className="layout-middle">{children}</div>

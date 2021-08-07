@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { mainSlice } from "slices/main";
 import Head from "next/head";
+import faker from "faker";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useDispatch();
@@ -30,6 +31,12 @@ const App = ({ Component, pageProps }: AppProps) => {
   const { onProfilePopUp, onNoticePopUp, onSearchPopUp } = useSelector(
     (state: RootState) => state.main
   );
+
+  useEffect(() => {
+    if (!localStorage.getItem("client_identifier")) {
+      localStorage.setItem("client_identifier", faker.datatype.uuid());
+    }
+  }, []);
   const onClickBody = useCallback(
     (e) => {
       if (onProfilePopUp) {

@@ -10,6 +10,11 @@ import useCalcDate from "@hooks/useCalcDate";
 export const NameSpaceWrapper = styled.div`
   ${FLEX_STYLE("flex-start", "center")};
   ${tw`cursor-pointer`}
+  &:hover {
+    p {
+      ${tw`underline`}
+    }
+  }
   .icon {
     ${tw`cursor-pointer mr-3`};
     img {

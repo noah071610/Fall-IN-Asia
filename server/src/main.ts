@@ -6,10 +6,11 @@ import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import session from 'express-session';
 import { ValidationPipe } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 declare const module: any;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => app.close());
@@ -22,8 +23,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
   const config = new DocumentBuilder()
-    .setTitle('K Heart')
-    .setDescription('君とKPOPの繋がり')
+    .setTitle('love asia')
+    .setDescription('우리들만의 작은 여행 커뮤니티')
     .setVersion('1.0')
     .addCookieAuth('connect.sid')
     .build();
@@ -42,6 +43,7 @@ async function bootstrap() {
   );
   app.use(passport.initialize());
   app.use(passport.session());
+  app.set('trust proxy', true);
   await app.listen(port);
   console.log(`Port number ${port}`);
 }

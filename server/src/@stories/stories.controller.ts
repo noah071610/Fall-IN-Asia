@@ -12,6 +12,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+
 import { ApiCookieAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
 import { LoggedInGuard } from 'src/auth/logged-in.guard';
@@ -21,6 +22,7 @@ import multer from 'multer';
 import path from 'path';
 import { User } from 'src/decorators/user.decorator';
 import { StoryRequestDto } from 'src/dto/story.request.dto';
+import { RealIP } from 'nestjs-real-ip';
 
 @UseInterceptors(JsonResponeGenerator)
 @ApiTags('Story')
@@ -167,13 +169,14 @@ export class StoriesController {
   }
 
   @ApiOperation({ summary: 'Get one post for post page' })
-  @Get(':code/:storyId/:ip')
+  @Get(':code/:storyId')
   async getOnePost(
     @Param('code') code: string,
     @Param('storyId', ParseIntPipe) storyId: number,
-    @Param('ip', ParseIntPipe) ip: number,
+    @Query('uuid') uuid: string,
+    @RealIP() ip: string,
   ) {
-    const post = await this.StoriesService.getOnePost(storyId, code, ip);
+    const post = await this.StoriesService.getOnePost(storyId, code, uuid);
     return post;
   }
 }

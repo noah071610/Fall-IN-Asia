@@ -71,7 +71,7 @@ const MobileSlideMenu: FC<IProps> = () => {
         <>
           <div className="user-profile-wrapper">
             <div className="icon-wrapper">
-              <img src={DEFAULT_ICON_URL} alt="" />
+              <img src={user?.icon || DEFAULT_ICON_URL} alt="icon-image" />
             </div>
             <div className="user-info">
               <h2>{user?.name}님</h2>
@@ -148,15 +148,18 @@ const MobileSlideMenu: FC<IProps> = () => {
             </li>
           </a>
         </Link>
-        <Link href="/about">
-          <a className="direct-link">
-            <li style={activePath === "about" ? { borderLeft: `3px solid ${BLUE_COLOR}` } : {}}>
-              개발자정보
-            </li>
-          </a>
-        </Link>
       </ul>
-      <h4 className="license">ⓒ JANG HYUN SOO (Noah) All Rights Resrved.</h4>
+      <div className="slide-menu-footer">
+        <h4 className="license">ⓒ JANG HYUN SOO (Noah) All Rights Resrved.</h4>
+        <div>
+          <Link href="/about">
+            <a>About us</a>
+          </Link>
+          <Link href="/about#policy">
+            <a>이용약관</a>
+          </Link>
+        </div>
+      </div>
     </MobileSlideMenuWrapper>
   );
 };

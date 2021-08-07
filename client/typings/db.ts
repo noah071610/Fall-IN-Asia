@@ -178,7 +178,8 @@ export interface ISubComment {
 export interface IUserRequestForm {
   email: string;
   name?: string;
-  password: string;
+  password?: string;
+  authNum?: number;
 }
 
 export interface IMomentRequestForm {
@@ -191,4 +192,11 @@ export interface ICommentRequestForm {
   content: string;
   momentId?: number;
   commentId?: number;
+}
+
+export interface IPrevImage {
+  uid: string;
+  name: string;
+  status: string;
+  url: string;
 }

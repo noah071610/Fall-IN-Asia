@@ -13,12 +13,14 @@ import { useRouter } from "next/router";
 
 const MainCountryAnnouncementWrapper = styled(Slider)`
   .news-card-wrapper {
-    ${tw`m-4`}
+    box-shadow: none;
     border-radius: 15px;
+    &:hover {
+      box-shadow: none;
+    }
   }
   @media (max-width: ${SM_SIZE}) {
     .news-card-wrapper {
-      ${tw`m-2`}
       .image-wrapper {
         ${tw`h-48`}
         border-top-left-radius: 15px;
@@ -28,6 +30,9 @@ const MainCountryAnnouncementWrapper = styled(Slider)`
           border-top-left-radius: 15px;
           border-top-right-radius: 15px;
         }
+      }
+      .new-main {
+        ${tw`px-4`}
       }
     }
   }

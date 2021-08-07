@@ -59,7 +59,7 @@ export const NewsCardWrapper = styled.div`
       ${ELLIPSIS_STYLE(1.7, 3, "auto")};
     }
     .news-main {
-      ${tw`w-full p-2 pb-6 pt-0`}
+      ${tw`w-full px-4 pb-6 pt-0`}
     }
     h2 {
       ${ELLIPSIS_STYLE(1, 1, "auto")};

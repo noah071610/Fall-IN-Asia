@@ -20,6 +20,7 @@ interface IProps {
 const MomentCard: FC<IProps> = ({ revalidateMoments, moment, isLast }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
+  const [userLike, setUserLike] = useState(0);
   const [liked, setLiked] = useState(false);
   useEffect(() => {
     if (user && moment) {
@@ -42,8 +43,10 @@ const MomentCard: FC<IProps> = ({ revalidateMoments, moment, isLast }) => {
         .then(() => {
           if (value === "like") {
             toastSuccessMessage("좋아요!💓");
+            setUserLike((prev) => prev + 1);
           } else {
             toastSuccessMessage("좋아요 취소💔");
+            setUserLike((prev) => prev - 1);
           }
           dispatch(getUserInfoAction());
         })
@@ -109,7 +112,7 @@ const MomentCard: FC<IProps> = ({ revalidateMoments, moment, isLast }) => {
             className={liked ? "liked" : ""}
           >
             {liked ? <HeartFilled /> : <HeartOutlined />}
-            <span className="count">{moment?.likedUser?.length}</span>
+            <span className="count">{moment?.likedUser?.length + userLike}</span>
             <span>좋아요</span>
           </li>
         </ul>

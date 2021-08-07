@@ -16,7 +16,7 @@ const PostAsideNav: FC<IProps> = () => {
   const [hdClassList, setHdClassList] = useState<string[]>([]);
   const { data: postData } = useSWR<IStory | IArticle>(
     query?.storyId
-      ? `/story/${query?.code}/${query?.storyId}/0`
+      ? `/story/${query?.code}/${query?.storyId}`
       : query?.articleId
       ? `/article/${query?.articleId}`
       : null,

@@ -3,8 +3,6 @@ import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
 import { noRevalidate } from "config";
-import { useSelector } from "react-redux";
-import { RootState } from "slices";
 import MomentList from "@sections/MainPage/MomentList";
 import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
 import MommentPost from "@sections/MainPage/MomentPost";
@@ -23,10 +21,10 @@ interface IProps {
 
 const index: FC<IProps> = ({ initialMoments, initialCountry, initialMoment }) => {
   const { query } = useRouter();
-  const [ip, setIP] = useState("");
+  const [uuid, setUUID] = useState("");
   const [filter, setFilter] = useState("");
   const { data: moment, revalidate: revalidateMoment } = useSWR<IMoment>(
-    `/moment/${query?.code}/${query?.momentId}/0`,
+    `/moment/${query?.code}/${query?.momentId}?uuid=${uuid}`,
     fetcher,
     {
       initialData: initialMoment,
@@ -52,6 +50,12 @@ const index: FC<IProps> = ({ initialMoments, initialCountry, initialMoment }) =>
     initialData: initialCountry,
     ...noRevalidate,
   });
+
+  useEffect(() => {
+    if (localStorage.getItem("client_identifier")) {
+      setUUID(localStorage.getItem("client_identifier")!);
+    }
+  }, []);
 
   return (
     <MainLayout>
@@ -80,7 +84,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         axios.defaults.headers.Cookie = cookie;
       }
       await store.dispatch(getUserInfoAction());
-      const initialMoment = await fetcher(`/moment/${params?.code}/${params?.momentId}/0`);
+      const initialMoment = await fetcher(`/moment/${params?.code}/${params?.momentId}`);
       let initialMoments = await fetcher(`/moment?code=${params?.code}&page=1`);
       initialMoments = [initialMoments];
       const initialCountry = await fetcher(`/country/${params?.code}`);

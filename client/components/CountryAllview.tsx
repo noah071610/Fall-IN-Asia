@@ -3,7 +3,7 @@ import { ICountry } from "@typings/db";
 import CountryListCard from "@components/Cards/CountryListCard";
 import styled from "@emotion/styled";
 import tw from "twin.macro";
-import { XLG_SIZE } from "config";
+import { SM_SIZE, XLG_SIZE } from "config";
 const CountryAllviewWrapper = styled.div`
   ${tw`w-full rounded-2xl bg-white p-4 pb-8 mt-4`}
   .country-card-wrapper {
@@ -18,6 +18,9 @@ const CountryAllviewWrapper = styled.div`
   }
   @media (max-width: ${XLG_SIZE}) {
     ${tw`px-0`}
+    h3 {
+      ${tw`pl-4`}
+    }
   }
 `;
 

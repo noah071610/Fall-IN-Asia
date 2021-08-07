@@ -10,6 +10,7 @@ import bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Follow } from 'src/entities/Follow';
 import { Notices } from 'src/entities/Notices';
+import { AuthNum } from 'src/entities/AuthNum';
 
 @Injectable()
 export class UsersService {
@@ -18,6 +19,8 @@ export class UsersService {
     @InjectRepository(Follow) private FollowRepository: Repository<Follow>,
     @InjectRepository(Notices)
     private NoticesRepository: Repository<Notices>,
+    @InjectRepository(AuthNum)
+    private AuthNumRepository: Repository<AuthNum>,
   ) {}
 
   async findUserInfoByEmail(email: string) {
@@ -30,18 +33,8 @@ export class UsersService {
       .leftJoin('users.likeStory', 'likeStory')
       .leftJoin('users.likeMoment', 'likeMoment')
       .leftJoin('users.likeComment', 'likeComment')
-      .leftJoinAndSelect('users.stories', 'stories')
       .leftJoinAndSelect('users.notices', 'notices')
       .leftJoinAndSelect('users.followings', 'followings')
-      .leftJoinAndSelect('users.followers', 'followers')
-      .leftJoinAndSelect('stories.comments', 'comments')
-      .leftJoinAndSelect('stories.likedUser', 'likedUser')
-      .leftJoinAndSelect('stories.country', 's_country')
-      .leftJoinAndSelect('stories.user', 's_user')
-      .leftJoinAndSelect('users.moments', 'moments')
-      .leftJoinAndSelect('moments.country', 'm_country')
-      .leftJoinAndSelect('followings.following', 'following')
-      .leftJoinAndSelect('followers.follower', 'follower')
       .where('users.email= :email', { email })
       .getOne();
 
@@ -101,7 +94,7 @@ export class UsersService {
     return user;
   }
 
-  async signUp(email: string, name: string, password: string) {
+  async signUp(email: string, name: string, password: string, authNum: string) {
     if (!email) {
       throw new BadRequestException('이메일을 작성해주세요.');
     }
@@ -115,6 +108,16 @@ export class UsersService {
     if (user) {
       throw new UnauthorizedException('누군가 사용하고있는 이메일입니다.');
     }
+    const emailAuthNum = await this.AuthNumRepository.findOne({
+      where: { email, authNum: parseInt(authNum) },
+    });
+    if (!emailAuthNum) {
+      throw new BadRequestException(
+        '이메일과 인증번호가 다릅니다. 다시한번 확인해주세요.',
+      );
+    } else {
+      await this.AuthNumRepository.delete(emailAuthNum);
+    }
     const hashedPassword = await bcrypt.hash(password, 12);
     await this.UserRepository.save({
       email,
@@ -122,6 +125,43 @@ export class UsersService {
       password: hashedPassword,
       introduce: `안녕하세요. ${name} 입니다.`,
     });
+    return true;
+  }
+
+  async googleLogin(req) {
+    const user = await this.UserRepository.findOne({
+      where: { email: req.email },
+      select: ['id', 'icon', 'email'],
+    });
+    if (!user) {
+      const newUser = new Users();
+      newUser.email = req.email;
+      newUser.icon = req.photo;
+      newUser.name = req.name;
+      await this.UserRepository.save(newUser);
+      return newUser;
+    }
+    return user;
+  }
+
+  async checkPossibleEmail(email: string) {
+    if (!email) {
+      throw new BadRequestException('이메일을 작성해주세요.');
+    }
+    const user = await this.UserRepository.findOne({ where: { email: email } });
+    if (user) {
+      throw new UnauthorizedException('누군가 사용하고있는 이메일입니다.');
+    }
+    const generateRandom = function (min: number, max: number) {
+      const ranNum = Math.floor(Math.random() * (max - min + 1)) + min;
+      return ranNum;
+    };
+    const authNum: number = generateRandom(111111, 999999);
+    await this.AuthNumRepository.save({
+      email,
+      authNum,
+    });
+    return authNum;
   }
 
   async addUserIcon(userId: number, file: Express.Multer.File) {

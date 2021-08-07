@@ -24,6 +24,7 @@ export const CommentWrapper = styled.div`
     }
   }
   .more-subComment {
+    ${tw`cursor-pointer`}
     padding: 1rem 0.5rem 0 3.7rem;
     ${FLEX_STYLE("flex-start", "center")};
     .count {
@@ -31,7 +32,7 @@ export const CommentWrapper = styled.div`
       color: ${BLUE_COLOR};
     }
     .more-subComment-btn {
-      ${tw`cursor-pointer text-sm p-0`}
+      ${tw`text-sm p-0`}
       .anticon {
         font-size: 0.9rem;
         margin-left: 0.5rem;

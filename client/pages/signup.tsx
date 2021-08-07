@@ -241,10 +241,4 @@ const about: FC<IProps> = () => {
   );
 };
 
-export const getStaticProps = wrapper.getStaticProps(() => async ({}) => {
-  return {
-    props: {},
-  };
-});
-
 export default about;

@@ -14,7 +14,7 @@ import {
   MomentCreateRequestDto,
   MomentModifyRequestDto,
 } from 'src/dto/moment.request.dto';
-const viewObj = new Object();
+const viewer = new Object();
 
 @Injectable()
 export class MomentsService {
@@ -82,7 +82,7 @@ export class MomentsService {
     return true;
   }
 
-  async getOnePost(momentId: number, code: string, ip: number) {
+  async getOnePost(momentId: number, code: string, uuid: string) {
     const post = await this.MomentsRepository.createQueryBuilder('moments')
       .addSelect([
         'images.image_src',
@@ -100,25 +100,25 @@ export class MomentsService {
       .andWhere('moments.code= :code', { code })
       .orderBy('moments.id', 'DESC')
       .getOne();
+
     if (!post) {
       throw new NotFoundException('가져올 게시물이 없습니다.');
     }
-    if (post && ip !== 0) {
-      if (!viewObj[momentId]) {
-        viewObj[momentId] = [];
+    if (post && uuid) {
+      if (!viewer[momentId]) {
+        viewer[momentId] = [];
       }
-      if (viewObj[momentId].indexOf(ip) == -1) {
-        viewObj[momentId].push(ip);
+      if (viewer[momentId].indexOf(uuid) == -1) {
+        viewer[momentId].push(uuid);
         await this.MomentsRepository.createQueryBuilder('moments')
-          .update('moments')
+          .update()
           .set({
             hit: () => 'hit + 1',
           })
-          .where('moments.id = :id', { id: momentId })
-          .andWhere('moments.code= :code', { code })
+          .where('id = :id', { id: momentId })
           .execute();
         setTimeout(() => {
-          viewObj[momentId].splice(viewObj[momentId].indexOf(ip), 1);
+          viewer[momentId].splice(viewer[momentId].indexOf(uuid), 1);
         }, 600000);
       }
     }
@@ -204,6 +204,9 @@ export class MomentsService {
       .take(10)
       .getMany();
 
+    if (!posts) {
+      throw new NotFoundException('모멘트를 찾을 수 없습니다.');
+    }
     return posts;
   }
 
@@ -219,13 +222,24 @@ export class MomentsService {
       where: { id: form.momentId },
     });
     editPost.content = form.content;
+    editPost.type = form.type;
+
+    await this.ImagesRepository.delete({
+      moment: <any>editPost.id,
+    });
+
     if (files) {
-      await this.ImagesRepository.delete({
-        moment: <any>editPost.id,
-      });
       for (let i = 0; i < files.length; i++) {
         const newImage = new Images();
         newImage.image_src = process.env.BACK_URL + files[i].path;
+        newImage.moment = <any>editPost.id;
+        await this.ImagesRepository.save(newImage);
+      }
+    }
+    if (form.prevImage) {
+      for (let i = 0; i < form.prevImage.length; i++) {
+        const newImage = new Images();
+        newImage.image_src = form.prevImage[i];
         newImage.moment = <any>editPost.id;
         await this.ImagesRepository.save(newImage);
       }

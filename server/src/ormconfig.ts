@@ -13,6 +13,7 @@ import { StoryLike } from './entities/StoryLike';
 import { Follow } from './entities/Follow';
 import { Articles } from './entities/Articles';
 import { CommentLike } from './entities/CommentLike';
+import { AuthNum } from './entities/AuthNum';
 
 dotenv.config();
 const config: TypeOrmModuleOptions = {
@@ -36,6 +37,7 @@ const config: TypeOrmModuleOptions = {
     Follow,
     Articles,
     CommentLike,
+    AuthNum,
   ],
   charset: 'utf8mb4',
   synchronize: false,

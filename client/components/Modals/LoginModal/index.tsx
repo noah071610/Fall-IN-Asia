@@ -32,6 +32,10 @@ const LoginModal: FC<IProps> = () => {
       toastErrorMessage("이메일을 입력해주세요.");
       return;
     }
+    if (!values.authNum || !values.authNum?.trim()) {
+      toastErrorMessage("이메일 인증번호가 필요합니다.");
+      return;
+    }
     if (!values.password || !values.password?.trim()) {
       toastErrorMessage("비밀번호를 입력해주세요.");
       return;
@@ -45,6 +49,7 @@ const LoginModal: FC<IProps> = () => {
       email: values.email,
       name,
       password: values.password,
+      authNum: values.authNum,
     };
     dispatch(signupAction(form));
   }, []);

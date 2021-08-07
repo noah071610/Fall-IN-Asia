@@ -24,6 +24,7 @@ import tw from "twin.macro";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
 import { wrapper } from "configureStore";
+import { UploadFile } from "antd/lib/upload/interface";
 
 export const StoryPostWrapper = styled.div`
   .title-input {
@@ -55,12 +56,14 @@ const post: FC<IProps> = () => {
   const { user } = useSelector((state: RootState) => state.user);
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher, noRevalidate);
   const { data: editStory } = useSWR<IStory>(
-    query?.storyId ? `/story/${query?.code}/${query?.storyId}/0` : null,
+    query?.storyId ? `/story/${query?.code}/${query?.storyId}` : null,
     fetcher,
     noRevalidate
   );
   const [selectedCountry, setCountry] = useState("");
   const [title, onChangeTitle, setTitle] = useInput("");
+  const [prevThumbnail, setPrevThumbnail] = useState<string>();
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [region, setRegion] = useState("이름모를 어딘가");
   const [upImg, setUpImg] = useState("");
   const [content, setContent] = useState("");
@@ -87,6 +90,10 @@ const post: FC<IProps> = () => {
         latitude: editStory?.lat,
         longitude: editStory?.lng,
       });
+      if (editStory?.thumbnail) {
+        setFileList([{ uid: `1`, name: `썸네일`, status: "done", url: editStory.thumbnail }]);
+        setPrevThumbnail(editStory.thumbnail);
+      }
     }
   }, [editStory]);
 
@@ -186,10 +193,14 @@ const post: FC<IProps> = () => {
         <h3>{region}</h3>
         <h2 className="main-title">내용작성</h2>
         <Editor prevContent={editStory?.content} setContent={setContent} isStory={true} />
-        <h2 className="main-title">
-          {editStory ? "썸네일 변경 (미선택시 기존 썸네일 사용)" : "썸네일 업로드"}
-        </h2>
-        <ImageDragger setUpImg={setUpImg} single={true} />
+        <h2 className="main-title">{editStory ? "썸네일 변경" : "썸네일 업로드"}</h2>
+        <ImageDragger
+          fileList={fileList}
+          setFileList={setFileList}
+          setPrevImageList={setPrevThumbnail}
+          setUpImg={setUpImg}
+          single={true}
+        />
         <div className="editor-btn-wrapper">
           <button onClick={() => router.back()}>뒤로가기</button>
           <button

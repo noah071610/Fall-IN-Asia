@@ -198,7 +198,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   await store.dispatch(getUserInfoAction());
   let initialArticles = await fetcher(`/article?page=1`);
   initialArticles = [initialArticles];
-  const initialAsideArticle = await fetcher(`/article/aside`);
+  const initialAsideArticle = await fetcher(`/article/popular`);
   return {
     props: { initialArticles, initialAsideArticle },
   };

@@ -25,6 +25,7 @@ import { Select } from "antd";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
+import { UploadFile } from "antd/lib/upload/interface";
 const { Option } = Select;
 
 export const ArticlePostWrapper = styled.div`
@@ -68,6 +69,8 @@ const post: FC<IProps> = () => {
   const [selectedCountry, setCountry] = useState("");
   const [title, onChangeTitle, setTitle] = useInput("");
   const [label, onChangeLabel, setLabel] = useInput<Number | string>("");
+  const [prevThumbnail, setPrevThumbnail] = useState<string>();
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [ranking, onChangeRanking, setRanking] = useInput("");
   const [region, setRegion] = useState("이름모를 어딘가");
   const [upImg, setUpImg] = useState("");
@@ -100,6 +103,10 @@ const post: FC<IProps> = () => {
       });
       setLabel(editArticle?.label || "");
       setRanking(editArticle?.ranking || "");
+      if (editArticle?.thumbnail) {
+        setFileList([{ uid: `1`, name: `썸네일`, status: "done", url: editArticle.thumbnail }]);
+        setPrevThumbnail(editArticle.thumbnail);
+      }
     }
   }, [editArticle]);
 
@@ -260,7 +267,13 @@ const post: FC<IProps> = () => {
         <h2 className="main-title">
           {editPostId ? "썸네일 변경 (미선택시 기존 썸네일 사용)" : "썸네일 업로드"}
         </h2>
-        <ImageDragger setUpImg={setUpImg} single={true} />
+        <ImageDragger
+          fileList={fileList}
+          setFileList={setFileList}
+          setPrevImageList={setPrevThumbnail}
+          setUpImg={setUpImg}
+          single={true}
+        />
         <div className="editor-btn-wrapper">
           <button onClick={() => router.back()}>뒤로가기</button>
           <button

@@ -8,6 +8,8 @@ import {
   Patch,
   Post,
   Query,
+  Redirect,
+  Res,
   UploadedFile,
   UploadedFiles,
   UseGuards,
@@ -25,6 +27,7 @@ import {
   MomentCreateRequestDto,
   MomentModifyRequestDto,
 } from 'src/dto/moment.request.dto';
+import { Response } from 'express';
 
 @UseInterceptors(JsonResponeGenerator)
 @ApiTags('Moments')
@@ -90,7 +93,7 @@ export class MomentsController {
     await this.MomentsService.deletePost(momentId);
   }
 
-  @ApiOperation({ summary: 'Get preview posts for main page' })
+  @ApiOperation({ summary: 'save image for post' })
   @UseInterceptors(
     FileInterceptor('image', {
       storage: multer.diskStorage({
@@ -138,13 +141,13 @@ export class MomentsController {
   }
 
   @ApiOperation({ summary: 'Get one post for post page' })
-  @Get(':code/:momentId/:ip')
+  @Get(':code/:momentId')
   async getOnePost(
     @Param('code') code: string,
     @Param('momentId', ParseIntPipe) momentId: number,
-    @Param('ip', ParseIntPipe) ip: number,
+    @Query('uuid') uuid: string,
   ) {
-    const post = await this.MomentsService.getOnePost(momentId, code, ip);
+    const post = await this.MomentsService.getOnePost(momentId, code, uuid);
     return post;
   }
 

@@ -8,11 +8,12 @@ import { MomentPostingFormWrapper } from "./styles";
 import router, { useRouter } from "next/router";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
-import { ICountry, IMoment } from "@typings/db";
+import { ICountry, IMoment, IPrevImage } from "@typings/db";
 import AutoCompleteForm from "@components/AutoCompleteForm";
 import { RootState } from "slices";
 import dynamic from "next/dynamic";
 import axios from "axios";
+import { UploadFile } from "antd/lib/upload/interface";
 const { Option } = Select;
 
 const EditorWithoutImage = dynamic(import("@components/Editor/EditorWithoutImage"));
@@ -28,6 +29,8 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
   const [content, setContent] = useState("");
   const [type, setType] = useState("키워드 선택");
   const [selectedCountry, setCountry] = useState("");
+  const [prevImageList, setPrevImageList] = useState<string[]>([]);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [onPostingForm, setOnPostingForm] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
 
@@ -36,6 +39,13 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
       setContent(editMoment?.content);
       setType(editMoment?.type);
       setCountry(editMoment?.country?.name);
+      if (editMoment?.images.length > 0) {
+        const editMomentImageList: UploadFile[] = editMoment.images.map((v, i) => {
+          return { uid: `${i + 1}`, name: `이미지 ${i + 1}번`, status: "done", url: v.image_src };
+        });
+        setFileList(editMomentImageList);
+        setPrevImageList(editMoment?.images.map((v) => v.image_src));
+      }
     }
   }, [editMoment]);
 
@@ -66,6 +76,9 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
     let form: FormData = new FormData();
     upImg?.forEach((v) => {
       form.append("image", v);
+    });
+    prevImageList?.forEach((v) => {
+      form.append("prevImage", v);
     });
     form.append("content", String(content));
     form.append("type", String(type));
@@ -100,7 +113,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
         toastErrorMessage(error);
         throw error;
       });
-  }, [upImg, content, type, selectedCountry, editMoment]);
+  }, [upImg, content, type, selectedCountry, editMoment, prevImageList]);
 
   const onClickOpenPostingForm = useCallback(() => {
     if (!user) {
@@ -121,8 +134,6 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
   const handleTypeChange = useCallback((value: string) => {
     setType(value);
   }, []);
-  console.log(upImg);
-
   return (
     <MomentPostingFormWrapper>
       {!onPostingForm && !editMoment && (
@@ -146,7 +157,6 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
               <Select
                 className="type-selector"
                 value={type}
-                disabled={editMoment ? true : false}
                 onChange={handleTypeChange}
                 style={{ width: "180px" }}
               >
@@ -157,7 +167,12 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
               </Select>
             </div>
             <EditorWithoutImage content={content} setContent={setContent} />{" "}
-            <ImageDragger setUpImg={setUpImg} />
+            <ImageDragger
+              fileList={fileList}
+              setUpImg={setUpImg}
+              setFileList={setFileList}
+              setPrevImageList={setPrevImageList}
+            />
             <div className="editor-btn-wrapper">
               <button onClick={onClickSubmit}>모멘트 올리기</button>
               <button onClick={onClickPostingCancle}>취소</button>

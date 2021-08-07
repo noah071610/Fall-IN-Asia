@@ -92,7 +92,13 @@ export const MobileSlideMenuWrapper = styled.nav`
       }
     }
   }
-  .license {
-    ${tw`absolute bottom-8 left-4 pr-12 leading-5 text-xs`}
+  .slide-menu-footer {
+    ${tw`absolute bottom-8 left-4 pr-16`}
+    h4 {
+      ${tw`leading-7 text-xs mb-3`}
+    }
+    a {
+      ${tw`mr-4`}
+    }
   }
 `;

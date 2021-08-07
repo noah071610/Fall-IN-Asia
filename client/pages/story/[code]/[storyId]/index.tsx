@@ -48,12 +48,12 @@ interface IProps {
 const index: FC<IProps> = ({ initialStories, initialStory }) => {
   const dispatch = useDispatch();
   const { query } = useRouter();
-  // const [ip, setIP] = useState("");
+  const [uuid, setUUID] = useState("");
   const [isOwner, setIsOwner] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
 
   const { data: story, revalidate: revalidateStory } = useSWR<IStory>(
-    `/story/${query?.code}/${query?.storyId}/0`,
+    `/story/${query?.code}/${query?.storyId}?uuid=${uuid}`,
     fetcher,
     {
       initialData: initialStory,
@@ -69,25 +69,11 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
     }
   );
 
-  // const getClientIp = async () => {
-  //   await fetch("https://jsonip.com", { mode: "cors" })
-  //     .then((resp) => resp.json())
-  //     .then((ip) => {
-  //       localStorage.setItem("client_ip", ip.ip.replaceAll(".", "").slice(3));
-  //       setIP(ip.ip.replaceAll(".", "").slice(3));
-  //     })
-  //     .catch(() => {
-  //       setIP("00000000");
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   if (localStorage.getItem("client_ip")) {
-  //     setIP(JSON.parse(localStorage.getItem("client_ip")!));
-  //   } else {
-  //     getClientIp();
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (localStorage.getItem("client_identifier")) {
+      setUUID(localStorage.getItem("client_identifier")!);
+    }
+  }, []);
 
   useEffect(() => {
     if (story) {
@@ -191,7 +177,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     axios.defaults.headers.Cookie = cookie;
   }
   await store.dispatch(getUserInfoAction());
-  const initialStory = await fetcher(`/story/${params?.code}/${params?.storyId}/0`);
+  const initialStory = await fetcher(`/story/${params?.code}/${params?.storyId}`);
   let initialStories = await fetcher(`/story?code=${params?.code}&page=1`);
   initialStories = [initialStories];
   return {
