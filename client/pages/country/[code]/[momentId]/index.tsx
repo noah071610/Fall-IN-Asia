@@ -12,6 +12,7 @@ import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
 import { useRouter } from "next/router";
 import { ICountry, IMoment } from "@typings/db";
+import Head from "next/head";
 
 interface IProps {
   initialMoments: IMoment[][];
@@ -58,20 +59,27 @@ const index: FC<IProps> = ({ initialMoments, initialCountry, initialMoment }) =>
   }, []);
 
   return (
-    <MainLayout>
-      {moment && <MommentPost revalidateMoment={revalidateMoment} moment={moment} />}
-      <h2 className="main-title">{country?.name} 인기 연대기</h2>
-      <MainTopArticleSlide country={country} />
-      <h2 className="main-title">포스팅</h2>
-      <MomentPostingForm />
-      <MomentList
-        revalidateMoments={revalidateMoments}
-        filter={filter}
-        setFilter={setFilter}
-        setSize={setSize}
-        moments={moments}
-      />
-    </MainLayout>
+    <>
+      <Head>
+        <title>
+          {moment?.country?.name}/{moment?.id}번모멘트 - Love Asia
+        </title>
+      </Head>
+      <MainLayout>
+        {moment && <MommentPost revalidateMoment={revalidateMoment} moment={moment} />}
+        <h2 className="main-title">{country?.name} 인기 연대기</h2>
+        <MainTopArticleSlide country={country} />
+        <h2 className="main-title">포스팅</h2>
+        <MomentPostingForm />
+        <MomentList
+          revalidateMoments={revalidateMoments}
+          filter={filter}
+          setFilter={setFilter}
+          setSize={setSize}
+          moments={moments}
+        />
+      </MainLayout>
+    </>
   );
 };
 

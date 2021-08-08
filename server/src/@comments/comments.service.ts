@@ -7,7 +7,7 @@ import { Comments } from 'src/entities/Comments';
 import { Repository } from 'typeorm';
 import { SubComments } from 'src/entities/SubComments';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CommentRequestDto } from 'src/dto/comment.request.dto';
+import { CommentCreateDto } from 'src/@comments/comments.dto';
 import { CommentLike } from 'src/entities/CommentLike';
 import { Notices } from 'src/entities/Notices';
 import { Moments } from 'src/entities/Moments';
@@ -30,7 +30,7 @@ export class CommentsService {
     private StoriesRepository: Repository<Stories>,
   ) {}
 
-  async createComment(form: CommentRequestDto, userId: number) {
+  async createComment(form: CommentCreateDto, userId: number) {
     const newComment = new Comments();
     newComment.content = form.content;
     newComment.user = <any>{ id: userId };

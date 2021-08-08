@@ -26,8 +26,6 @@ interface IProps {
 
 const index: FC<IProps> = ({ searchPosts }) => {
   const { query } = useRouter();
-  const [onMoreMoments, setOnMoreMoments] = useState(false);
-  const [onMoreNews, setOnMoreNews] = useState(false);
   const { data: searchPostsData } = useSWR<{
     searchWord: string;
     moments: IMoment[];
@@ -37,13 +35,6 @@ const index: FC<IProps> = ({ searchPosts }) => {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   });
-
-  const onClickMoreMoments = useCallback(() => {
-    setOnMoreMoments((prev) => !prev);
-  }, []);
-  const onClickMoreNews = useCallback(() => {
-    setOnMoreNews((prev) => !prev);
-  }, []);
 
   return (
     <>

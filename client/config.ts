@@ -6,10 +6,7 @@ export const BLACK_COLOR = "black" as const;
 export const WHITE_COLOR = "white" as const;
 export const BLUE_COLOR = "#1187cf" as const;
 export const RED_COLOR = "#C02E4C" as const;
-export const SKY_COLOR = "#7B9ACC" as const;
 export const GRAY_COLOR = "rgba(243, 244, 246)" as const;
-export const DEEP_BLUE_COLOR = "#5A66D7" as const;
-export const PINK_COLOR = "#f6d6d6" as const;
 
 export const SM_SIZE = "576px" as const;
 export const MD_SIZE = "768px" as const;

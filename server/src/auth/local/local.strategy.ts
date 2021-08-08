@@ -1,7 +1,7 @@
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -17,8 +17,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         '이메일주소가 일치하지 않습니다. 다시한번 확인해주세요.',
       );
     }
-    console.log(`validate done (strategy => local-auth.guard)`);
-
+    console.log(`### validate done (strategy => local-auth.guard)`);
     return done(null, user);
   }
 }

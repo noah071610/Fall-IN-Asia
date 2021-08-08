@@ -8,8 +8,6 @@ import {
   Patch,
   Post,
   Query,
-  Redirect,
-  Res,
   UploadedFile,
   UploadedFiles,
   UseGuards,
@@ -23,11 +21,7 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import multer from 'multer';
 import path from 'path';
 import { User } from 'src/decorators/user.decorator';
-import {
-  MomentCreateRequestDto,
-  MomentModifyRequestDto,
-} from 'src/dto/moment.request.dto';
-import { Response } from 'express';
+import { MomentCreateRequestDto, MomentModifyRequestDto } from './moments.dto';
 
 @UseInterceptors(JsonResponeGenerator)
 @ApiTags('Moments')

@@ -3,7 +3,7 @@ import { NO_IMAGE_URL } from "config";
 import React, { FC, useCallback, useState } from "react";
 import { NewsCardWrapper } from "./styles";
 import router from "next/router";
-import useHtmlConverter from "@hooks/useHtmlConverter";
+import html2textConverter from "utils/html2textConverter";
 
 interface IProps {
   article: IArticle;
@@ -25,7 +25,7 @@ const NewsCard: FC<IProps> = ({ article }) => {
       </div>
       <div className="news-main">
         <h2>{article?.title}</h2>
-        <p className="news-content">{useHtmlConverter(article?.content)}</p>
+        <p className="news-content">{html2textConverter(article?.content)}</p>
       </div>
     </NewsCardWrapper>
   );

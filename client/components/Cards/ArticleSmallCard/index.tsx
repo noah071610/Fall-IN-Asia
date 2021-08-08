@@ -1,4 +1,4 @@
-import useHtmlConverter from "@hooks/useHtmlConverter";
+import html2textConverter from "utils/html2textConverter";
 import { IArticle, IMoment, IStory } from "@typings/db";
 import router from "next/router";
 import React, { FC, useCallback, useMemo } from "react";
@@ -40,7 +40,7 @@ const ArticleSmallCard: FC<IProps> = ({ isSearchPage, moment, story, article }) 
           <span>{dayjs((moment || story || article)?.createdAt).format("YYYY/MM/DD")}</span>
         </div>
       </div>
-      <h2>{useHtmlConverter(moment?.content || story?.title || article?.title)}</h2>
+      <h2>{html2textConverter(moment?.content || story?.title || article?.title)}</h2>
     </div>
   );
 };

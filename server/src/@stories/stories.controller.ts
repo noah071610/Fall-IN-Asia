@@ -21,7 +21,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import multer from 'multer';
 import path from 'path';
 import { User } from 'src/decorators/user.decorator';
-import { StoryRequestDto } from 'src/dto/story.request.dto';
+import { StoryCreateDto, StoryEditDto } from 'src/@stories/stories.dto';
 import { RealIP } from 'nestjs-real-ip';
 
 @UseInterceptors(JsonResponeGenerator)
@@ -49,7 +49,7 @@ export class StoriesController {
   )
   @Post()
   async createPost(
-    @Body() form: StoryRequestDto,
+    @Body() form: StoryCreateDto,
     @User() user,
     @UploadedFile() file: Express.Multer.File,
   ) {
@@ -74,7 +74,7 @@ export class StoriesController {
   )
   @Post('edit')
   async editPost(
-    @Body() form: StoryRequestDto,
+    @Body() form: StoryEditDto,
     @UploadedFile() file: Express.Multer.File,
     @User() user,
   ) {

@@ -22,6 +22,7 @@ import CountryMap from "@components/Maps/CountryMap";
 import PostProfile from "@components/Post/PostProfile";
 import PostPagination from "@components/Post/PostPagination";
 import PostComment from "@components/Post/PostComment";
+import Head from "next/head";
 
 const StoryPostWrapper = styled.div`
   padding-top: 6rem;
@@ -120,53 +121,58 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
   }, [user, isOwner, story]);
 
   return (
-    <StoryPostWrapper>
-      <PostLayout>
-        {story && (
-          <>
-            <PostThubnail story={story} />
-            {isOwner && (
-              <>
-                <h2 className="main-title">연대기 관리 (작성자 전용)</h2>
-                <div className="story-manage-wrapper">
-                  <button onClick={onClickEditBtn} className="edit-btn">
-                    <EditOutlined />
-                    연대기 수정
-                  </button>
-                  <button
-                    onClick={() =>
-                      toastConfirmMessage(
-                        onClickConfirmDelete,
-                        "정말 이 연대기를 삭제할까요?",
-                        "삭제해주세요."
-                      )
-                    }
-                    className="delete-btn"
-                  >
-                    <DeleteOutlined />
-                    연대기 삭제
-                  </button>
-                </div>
-              </>
-            )}
-            <h2 className="main-title">
-              연대기 위치 <span>{story?.region}</span>
-            </h2>
-            <CountryMap lat={story?.lat} lng={story?.lng} />
-            <Divider />
-            <div className="post-content">
-              <span id="main_post" className="anchor-offset-controller" />
-              {ReactHtmlParser(story?.content as string)}
-            </div>
-            <PostProfile story={story} />
-            <PostPagination userId={story?.user.id} />
-            <PostComment revalidateStory={revalidateStory} story={story} />
-          </>
-        )}
-        <div style={{ height: "3rem" }} />
-        <StoryArticleList grid={3} gap="1rem" setSize={setSize} stories={stories} />
-      </PostLayout>
-    </StoryPostWrapper>
+    <>
+      <Head>
+        <title>{story?.title} - Love Asia</title>
+      </Head>
+      <StoryPostWrapper>
+        <PostLayout>
+          {story && (
+            <>
+              <PostThubnail story={story} />
+              {isOwner && (
+                <>
+                  <h2 className="main-title">연대기 관리 (작성자 전용)</h2>
+                  <div className="story-manage-wrapper">
+                    <button onClick={onClickEditBtn} className="edit-btn">
+                      <EditOutlined />
+                      연대기 수정
+                    </button>
+                    <button
+                      onClick={() =>
+                        toastConfirmMessage(
+                          onClickConfirmDelete,
+                          "정말 이 연대기를 삭제할까요?",
+                          "삭제해주세요."
+                        )
+                      }
+                      className="delete-btn"
+                    >
+                      <DeleteOutlined />
+                      연대기 삭제
+                    </button>
+                  </div>
+                </>
+              )}
+              <h2 className="main-title">
+                연대기 위치 <span>{story?.region}</span>
+              </h2>
+              <CountryMap lat={story?.lat} lng={story?.lng} />
+              <Divider />
+              <div className="post-content">
+                <span id="main_post" className="anchor-offset-controller" />
+                {ReactHtmlParser(story?.content as string)}
+              </div>
+              <PostProfile story={story} />
+              <PostPagination userId={story?.user.id} />
+              <PostComment revalidateStory={revalidateStory} story={story} />
+            </>
+          )}
+          <div style={{ height: "3rem" }} />
+          <StoryArticleList grid={3} gap="1rem" setSize={setSize} stories={stories} />
+        </PostLayout>
+      </StoryPostWrapper>
+    </>
   );
 };
 

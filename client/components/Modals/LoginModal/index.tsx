@@ -120,13 +120,19 @@ const LoginModal: FC<IProps> = () => {
             </Divider>
             <ul className="social-login-wrapper">
               <li className="google-icon">
-                <img src="https://img.icons8.com/color/144/000000/google-logo.png" />
+                <a href="http://localhost:3060/api/auth/google">
+                  <img src="https://img.icons8.com/color/144/000000/google-logo.png" />
+                </a>
               </li>
               <li style={{ background: "#FAE301" }}>
-                <img src="https://user-images.githubusercontent.com/74864925/127008226-4ea6ec83-e82d-4e7f-bc9a-95b508f750cc.png" />
+                <a href="http://localhost:3060/api/auth/kakao">
+                  <img src="https://user-images.githubusercontent.com/74864925/127008226-4ea6ec83-e82d-4e7f-bc9a-95b508f750cc.png" />
+                </a>
               </li>
               <li style={{ background: "#54BA5C" }}>
-                <img src="https://user-images.githubusercontent.com/74864925/127008231-213a4559-d3e8-488d-9901-0fe3f78b58c1.png" />
+                <a href="http://localhost:3060/api/auth/naver">
+                  <img src="https://user-images.githubusercontent.com/74864925/127008231-213a4559-d3e8-488d-9901-0fe3f78b58c1.png" />
+                </a>
               </li>
             </ul>
           </>

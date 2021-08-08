@@ -6,7 +6,7 @@ import { Users } from '../entities/Users';
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class LocalSerializer extends PassportSerializer {
+export class Serializer extends PassportSerializer {
   constructor(
     private readonly authService: AuthService,
     @InjectRepository(Users) private usersRepository: Repository<Users>,

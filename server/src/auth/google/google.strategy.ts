@@ -1,17 +1,19 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { config } from 'dotenv';
 import { Strategy, VerifyCallback } from 'passport-google-oauth20';
+import { SocialProfileDto } from '../auth.dto';
+import { AuthService } from '../auth.service';
 
 config();
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
-  constructor() {
+  constructor(private authService: AuthService) {
     super({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-      callbackURL: 'http://localhost:3060/api/user/google/redirect',
+      callbackURL: 'http://localhost:3060/api/auth/google/redirect',
       scope: ['email', 'profile'],
     });
   }
@@ -22,17 +24,15 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     profile: any,
     done: VerifyCallback,
   ): Promise<any> {
-    const { name, emails, photos } = profile;
-    const user = {
+    const { displayName, emails, photos, id } = profile;
+    const user: SocialProfileDto = {
+      socialId: id,
+      provider: 'google',
       email: emails[0].value,
-      name: name.familyName
-        ? name.familyName
-        : '' + name.givenName
-        ? name.givenName
-        : '',
+      name: displayName,
       icon: photos[0].value,
-      accessToken,
     };
-    done(null, user);
+    const googleUser = await this.authService.validateSocialUser(user);
+    return done(null, googleUser);
   }
 }

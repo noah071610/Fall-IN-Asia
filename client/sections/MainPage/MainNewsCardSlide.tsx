@@ -11,7 +11,7 @@ import tw from "twin.macro";
 import Slider from "react-slick";
 import { useRouter } from "next/router";
 
-const MainCountryAnnouncementWrapper = styled(Slider)`
+const MainNewsCardSlideWrapper = styled(Slider)`
   .news-card-wrapper {
     box-shadow: none;
     border-radius: 15px;
@@ -53,14 +53,14 @@ const slideSettings = {
   prevArrow: <PrevArrow />,
 };
 
-const MainCountryAnnouncement: FC<IProps> = ({ news }) => {
+const MainNewsCardSlide: FC<IProps> = ({ news }) => {
   return (
-    <MainCountryAnnouncementWrapper {...slideSettings}>
+    <MainNewsCardSlideWrapper {...slideSettings}>
       {news?.map((v, i) => {
         return <NewsCard key={i} article={v} />;
       })}
-    </MainCountryAnnouncementWrapper>
+    </MainNewsCardSlideWrapper>
   );
 };
 
-export default memo(MainCountryAnnouncement);
+export default memo(MainNewsCardSlide);

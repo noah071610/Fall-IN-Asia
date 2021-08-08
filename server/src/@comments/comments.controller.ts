@@ -14,7 +14,7 @@ import {
 import { ApiCookieAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { LoggedInGuard } from 'src/auth/logged-in.guard';
 import { User } from 'src/decorators/user.decorator';
-import { CommentRequestDto } from 'src/dto/comment.request.dto';
+import { CommentCreateDto } from 'src/@comments/comments.dto';
 import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
 import { CommentsService } from './comments.service';
 
@@ -37,7 +37,7 @@ export class CommentsController {
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Create Comment' })
   @Post()
-  async createComment(@Body() form: CommentRequestDto, @User() user) {
+  async createComment(@Body() form: CommentCreateDto, @User() user) {
     return await this.CommentService.createComment(form, user.id);
   }
 
@@ -51,7 +51,7 @@ export class CommentsController {
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Create SubComment' })
   @Post('/subComment')
-  async createSubComment(@Body() form: CommentRequestDto, @User() user) {
+  async createSubComment(@Body() form: CommentCreateDto, @User() user) {
     const createdSubComment = await this.CommentService.createSubComment(
       form.content,
       user.id,

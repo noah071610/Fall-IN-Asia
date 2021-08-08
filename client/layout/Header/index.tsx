@@ -17,7 +17,7 @@ import useInput from "@hooks/useInput";
 import router from "next/router";
 import { throttle } from "lodash";
 import { INotice } from "@typings/db";
-import MobileSlideMenu from "@components/MobileSlideMenu";
+import MobileSlideMenu from "@layout/MobileSlideMenu";
 
 interface HeaderProps {}
 
@@ -29,8 +29,7 @@ const Header: FC<HeaderProps> = () => {
   const [headerDownSize, setHeaderDownSize] = useState(false);
   const [isAllReadNotices, setIsAllReadNotices] = useState(true);
   const { user, logoutDone, readNoticeDone } = useSelector((state: RootState) => state.user);
-
-  const { onLoginModal, onProfilePopUp, onNoticePopUp, onSearchPopUp, onSlideMenu } = useSelector(
+  const { onLoginModal, onProfilePopUp, onNoticePopUp, onSearchPopUp } = useSelector(
     (state: RootState) => state.main
   );
 
@@ -242,8 +241,6 @@ const Header: FC<HeaderProps> = () => {
           <Overlay />
         </>
       )}
-      <MobileSlideMenu />
-      {onSlideMenu && <Overlay />}
     </header>
   );
 };

@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Images } from 'src/entities/Images';
 import { Repository } from 'typeorm';
 import { Countries } from 'src/entities/Countries';
-import { ArticleRequestDto } from 'src/dto/article.request.dto';
+import { ArticleCreateDto, ArticleEditDto } from 'src/@articles/articles.dto';
 import { Articles } from 'src/entities/Articles';
 import { Users } from 'src/entities/Users';
 @Injectable()
@@ -24,7 +24,7 @@ export class ArticlesService {
   ) {}
 
   async createPost(
-    form: ArticleRequestDto,
+    form: ArticleCreateDto,
     userId: number,
     file: Express.Multer.File,
   ) {
@@ -126,9 +126,9 @@ export class ArticlesService {
   }
 
   async editPost(
-    form: ArticleRequestDto,
+    form: ArticleEditDto,
     file: Express.Multer.File,
-    userId: boolean,
+    userId: number,
   ) {
     if (!userId) {
       throw new UnauthorizedException('운영자만 작성 할 수 있습니다.');

@@ -1,7 +1,6 @@
 import type { AppProps } from "next/app";
 import { Global } from "@emotion/react";
 import { resetStyles } from "@styles/resetStyles";
-import AOS from "aos";
 import { useCallback, useEffect } from "react";
 import { wrapper } from "configureStore";
 import "antd/dist/antd.css";
@@ -9,34 +8,25 @@ import "swiper/swiper.min.css";
 import "animate.css/animate.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "aos/dist/aos.css";
 import "react-toastify/dist/ReactToastify.css";
 import "react-quill/dist/quill.snow.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { ToastContainer } from "react-toastify";
-import Header from "@sections/Header";
-import Footer from "@sections/Footer";
+import Header from "@layout/Header";
+import Footer from "@layout/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { mainSlice } from "slices/main";
 import Head from "next/head";
-import faker from "faker";
+import MobileSlideMenu from "@layout/MobileSlideMenu";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    AOS.init({ startEvent: "load" });
-  }, []);
   const { onProfilePopUp, onNoticePopUp, onSearchPopUp } = useSelector(
     (state: RootState) => state.main
   );
 
-  useEffect(() => {
-    if (!localStorage.getItem("client_identifier")) {
-      localStorage.setItem("client_identifier", faker.datatype.uuid());
-    }
-  }, []);
   const onClickBody = useCallback(
     (e) => {
       if (onProfilePopUp) {
@@ -63,6 +53,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <Component {...pageProps} />
         <Footer />
         <ToastContainer />
+        <MobileSlideMenu />
       </div>
     </>
   );

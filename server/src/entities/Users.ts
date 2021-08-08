@@ -35,24 +35,43 @@ export class Users {
   id: number;
 
   @ApiProperty({
-    example: 394823049802,
-    description: 'googleID',
+    example: '394823049802',
+    description: 'socialId',
   })
-  @Column('int', {
+  @Column('varchar', {
     unique: true,
     select: false,
-    name: 'googleId',
+    name: 'socialId',
     nullable: true,
   })
-  googleId: number | null;
+  socialId: string;
+
+  @ApiProperty({
+    example: 'google',
+    description: 'provider from social media',
+  })
+  @Column('varchar', {
+    select: false,
+    name: 'provider',
+    nullable: true,
+  })
+  provider: string;
 
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
     example: 'noah071610@naver.com',
-    description: 'email',
+    description:
+      'email (if they login or signup with social, it`s not necessary)',
+    nullable: true,
   })
-  @Column('varchar', { name: 'email', select: false, unique: true, length: 30 })
+  @Column('varchar', {
+    name: 'email',
+    select: false,
+    unique: true,
+    length: 30,
+    nullable: true,
+  })
   email: string;
 
   @IsString()
@@ -61,7 +80,7 @@ export class Users {
     example: '장현수',
     description: 'name',
   })
-  @Column('varchar', { name: 'name', length: 30 })
+  @Column('varchar', { name: 'name', length: 15 })
   name: string;
 
   @IsString()
@@ -90,8 +109,14 @@ export class Users {
   @ApiProperty({
     example: '320sd8f78f2300dsa',
     description: 'Password',
+    nullable: true,
   })
-  @Column('varchar', { name: 'password', length: 100, select: false })
+  @Column('varchar', {
+    name: 'password',
+    length: 100,
+    select: false,
+    nullable: true,
+  })
   password: string;
 
   @IsBoolean()

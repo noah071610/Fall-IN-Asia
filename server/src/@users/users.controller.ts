@@ -19,26 +19,19 @@ import { ApiCookieAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import multer from 'multer';
 import path from 'path';
-import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { LocalAuthGuard } from 'src/auth/local/local-auth.guard';
 import { LoggedInGuard } from 'src/auth/logged-in.guard';
 import { NotLoggedInGuard } from 'src/auth/not-logged-in.guard';
 import { User } from 'src/decorators/user.decorator';
-import { UserRequestDto } from 'src/dto/user.request.dto';
+import { UserSignUpDto } from 'src/@users/users.dto';
 import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
 import { UsersService } from './users.service';
-import { MailerService } from '@nestjs-modules/mailer';
-import dotenv from 'dotenv';
-import { AuthGuard } from '@nestjs/passport';
-dotenv.config();
 
 @UseInterceptors(JsonResponeGenerator)
 @ApiTags('User')
 @Controller('/api/user')
 export class UsersController {
-  constructor(
-    private readonly usersService: UsersService,
-    private readonly MailerService: MailerService,
-  ) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @ApiOperation({ summary: 'get the user infomation' })
   @Get()
@@ -55,27 +48,13 @@ export class UsersController {
   @UseGuards(new NotLoggedInGuard())
   @ApiOperation({ summary: 'Sign up' })
   @Post()
-  async signUp(@Body() data: UserRequestDto) {
+  async signUp(@Body() data: UserSignUpDto) {
     return await this.usersService.signUp(
       data.email,
       data.name,
       data.password,
       data.authNum,
     );
-  }
-
-  @UseGuards(new NotLoggedInGuard())
-  @ApiOperation({ summary: 'send auth number for signup' })
-  @Post(`/email/auth`)
-  async sendEmailAuthNumber(@Body() data) {
-    const authNum = await this.usersService.checkPossibleEmail(data.email);
-    this.MailerService.sendMail({
-      to: data.email,
-      from: process.env.EMAIL_ID,
-      subject: 'Love Asia 이메일 인증 요청 메일입니다.',
-      html: `<p>안녕하세요. Love Asia 입니다. 인증번호를 보내드립니다. 인증번호를 입력하고 회원가입을 진행해주세요</p><br/><p>인증번호 : <b>${authNum}</b></p>`,
-    });
-    return true;
   }
 
   @UseGuards(new LocalAuthGuard())
@@ -155,12 +134,6 @@ export class UsersController {
       res.send('success');
       return true;
     }
-  }
-
-  @Get('google/redirect')
-  @UseGuards(AuthGuard('google'))
-  async googleAuthRedirect(@Req() req) {
-    return this.usersService.googleLogin(req.user);
   }
 
   @UseGuards(new LoggedInGuard())

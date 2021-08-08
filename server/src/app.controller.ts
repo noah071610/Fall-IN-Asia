@@ -24,8 +24,4 @@ export class AppController {
   async getSearchPosts(@Param('searchWord') searchWord: string) {
     return await this.appService.getSearchPosts(decodeURIComponent(searchWord));
   }
-
-  @Get('google')
-  @UseGuards(AuthGuard('google'))
-  async googleAuth(@Req() req) {}
 }

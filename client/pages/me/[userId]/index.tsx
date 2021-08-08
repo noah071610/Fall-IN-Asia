@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import MoreButton from "@components/MoreButton";
+import Head from "next/head";
 
 interface IProps {
   initialUserInfo: IUserInfo;
@@ -59,106 +60,111 @@ const index: FC<IProps> = ({ initialUserInfo }) => {
   }, []);
 
   return (
-    <UserInfoLayout>
-      {isOwner && userInfo && userInfo?.notices.length > 0 ? (
-        <>
-          <h2 className="main-title">알림</h2>
-          <ul className="notice-list">
-            {userInfo?.notices?.slice(0, noticePage).map((v: INotice, i) => (
+    <>
+      <Head>
+        <title>{userInfo?.name}님의 프로필 - Love Asia</title>
+      </Head>
+      <UserInfoLayout>
+        {isOwner && userInfo && userInfo?.notices.length > 0 ? (
+          <>
+            <h2 className="main-title">알림</h2>
+            <ul className="notice-list">
+              {userInfo?.notices?.slice(0, noticePage).map((v: INotice, i) => (
+                <ListCard
+                  onClickListCard={() => onClickNoticeList(v)}
+                  key={i}
+                  title={v.header}
+                  content={v.content}
+                  noticeId={v.id}
+                  revalidateUserInfo={revalidateUserInfo}
+                />
+              ))}
+            </ul>
+            {userInfo?.notices?.length > 5 && (
+              <div className="notice-more-btn">
+                <button onClick={onClickMoreNotice}>
+                  <span>더보기</span>
+                  <PlusCircleOutlined />
+                </button>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            <h2 className="main-title">알림이 없습니다</h2>
+            <p className="no-notice-wrapper">
+              유저님이 모멘트,연대기,코멘트 작성 및 수정등 활동을 하면 저희가 알려줄게요!
+            </p>
+          </>
+        )}
+        <h2 className="main-title">{userInfo?.name}님의 연대기 지도</h2>
+        <div className="route-map-wrapper">
+          <CountryRouteMap stories={userInfo?.stories || []} />
+        </div>
+        <h2 className="main-title">다녀온 국가 리스트</h2>
+        {userInfo && userInfo?.stories.length > 0 ? (
+          <VisitedCountryList stories={userInfo?.stories} />
+        ) : (
+          <h4 className="no-countries">
+            아직 다녀온 국가가 없어요, 연대기를 작성하면 자동으로 갱신되요.😉
+          </h4>
+        )}
+        <h2 className="main-title">
+          {userInfo?.name}님의 작성 연대기 {userInfo?.stories?.length || 0}개
+        </h2>
+        {userInfo && userInfo?.stories.length > 0 ? (
+          <>
+            <div className="post-slider">
+              {userInfo?.stories?.slice(0, storyPageNumber).map((v, i) => (
+                <ArticleColumnCard key={i} story={v} />
+              ))}
+            </div>
+            {userInfo?.stories.length > storyPageNumber && (
+              <div className="more-btn-wrapper">
+                <MoreButton
+                  onClickMoreBtn={() => {
+                    setStoryPageNumber((prev) => prev + 6);
+                  }}
+                />
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="no-post-wrapper">
+            <img src={NO_POST_URL} alt="no-post" />
+            <h4>아직 작성한 연대기가 없습니다.</h4>
+          </div>
+        )}
+
+        <h2 className="main-title">
+          {userInfo?.name}님의 작성 모멘트 {userInfo?.moments?.length || 0}개
+        </h2>
+        {userInfo && userInfo?.moments.length > 0 ? (
+          <ul className="moment-list">
+            {userInfo?.moments?.slice(0, momentPageNumber).map((v, i) => (
               <ListCard
-                onClickListCard={() => onClickNoticeList(v)}
+                onClickListCard={() => router.push(`/country/${v.code}/${v.id}`)}
                 key={i}
-                title={v.header}
+                title={`${v.country.name}/${v.type}/${v.id}번째모멘트`}
                 content={v.content}
-                noticeId={v.id}
-                revalidateUserInfo={revalidateUserInfo}
               />
             ))}
-          </ul>
-          {userInfo?.notices?.length > 5 && (
-            <div className="notice-more-btn">
-              <button onClick={onClickMoreNotice}>
-                <span>더보기</span>
-                <PlusCircleOutlined />
-              </button>
-            </div>
-          )}
-        </>
-      ) : (
-        <>
-          <h2 className="main-title">알림이 없습니다</h2>
-          <p className="no-notice-wrapper">
-            유저님이 모멘트,연대기,코멘트 작성 및 수정등 활동을 하면 저희가 알려줄게요!
-          </p>
-        </>
-      )}
-      <h2 className="main-title">{userInfo?.name}님의 연대기 지도</h2>
-      <div className="route-map-wrapper">
-        <CountryRouteMap stories={userInfo?.stories || []} />
-      </div>
-      <h2 className="main-title">다녀온 국가 리스트</h2>
-      {userInfo && userInfo?.stories.length > 0 ? (
-        <VisitedCountryList stories={userInfo?.stories} />
-      ) : (
-        <h4 className="no-countries">
-          아직 다녀온 국가가 없어요, 연대기를 작성하면 자동으로 갱신되요.😉
-        </h4>
-      )}
-      <h2 className="main-title">
-        {userInfo?.name}님의 작성 연대기 {userInfo?.stories?.length || 0}개
-      </h2>
-      {userInfo && userInfo?.stories.length > 0 ? (
-        <>
-          <div className="post-slider">
-            {userInfo?.stories?.slice(0, storyPageNumber).map((v, i) => (
-              <ArticleColumnCard key={i} story={v} />
-            ))}
-          </div>
-          {userInfo?.stories.length > storyPageNumber && (
-            <div className="more-btn-wrapper">
+            {userInfo?.moments.length > momentPageNumber && (
               <MoreButton
                 onClickMoreBtn={() => {
-                  setStoryPageNumber((prev) => prev + 6);
+                  setMomentPageNumber((prev) => prev + 5);
                 }}
               />
-            </div>
-          )}
-        </>
-      ) : (
-        <div className="no-post-wrapper">
-          <img src={NO_POST_URL} alt="no-post" />
-          <h4>아직 작성한 연대기가 없습니다.</h4>
-        </div>
-      )}
-
-      <h2 className="main-title">
-        {userInfo?.name}님의 작성 모멘트 {userInfo?.moments?.length || 0}개
-      </h2>
-      {userInfo && userInfo?.moments.length > 0 ? (
-        <ul className="moment-list">
-          {userInfo?.moments?.slice(0, momentPageNumber).map((v, i) => (
-            <ListCard
-              onClickListCard={() => router.push(`/country/${v.code}/${v.id}`)}
-              key={i}
-              title={`${v.country.name}/${v.type}/${v.id}번째모멘트`}
-              content={v.content}
-            />
-          ))}
-          {userInfo?.moments.length > momentPageNumber && (
-            <MoreButton
-              onClickMoreBtn={() => {
-                setMomentPageNumber((prev) => prev + 5);
-              }}
-            />
-          )}
-        </ul>
-      ) : (
-        <div className="no-post-wrapper">
-          <img src={NO_POST_URL} alt="no-post" />
-          <h4>아직 작성한 모멘트가 없습니다.</h4>
-        </div>
-      )}
-    </UserInfoLayout>
+            )}
+          </ul>
+        ) : (
+          <div className="no-post-wrapper">
+            <img src={NO_POST_URL} alt="no-post" />
+            <h4>아직 작성한 모멘트가 없습니다.</h4>
+          </div>
+        )}
+      </UserInfoLayout>
+    </>
   );
 };
 

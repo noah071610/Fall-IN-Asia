@@ -11,7 +11,8 @@ import MainLayout from "@layout/MainLayout";
 import MainTopArticleSlide from "@sections/MainPage/MainPopularArticleSlide";
 import { useRouter } from "next/router";
 import { IArticle, ICountry, IMoment } from "@typings/db";
-import MainCountryAnnouncement from "@sections/MainPage/MainCountryAnnouncement";
+import MainNewsCardSlide from "@sections/MainPage/MainNewsCardSlide";
+import Head from "next/head";
 
 interface IProps {
   initialMoments: IMoment[][];
@@ -51,25 +52,30 @@ const index: FC<IProps> = ({ initialMoments, initialCountry, initialNews }) => {
   });
 
   return (
-    <MainLayout>
-      {news && news.length > 0 && (
-        <>
-          <h2 className="main-title">{country?.name + " 관련 소식 📢"}</h2>
-          <MainCountryAnnouncement news={news} />
-        </>
-      )}
-      <h2 className="main-title">{country?.name + " 인기 연대기"}</h2>
-      <MainTopArticleSlide country={country} />
-      <h2 className="main-title">포스팅</h2>
-      <MomentPostingForm />
-      <MomentList
-        revalidateMoments={revalidateMoments}
-        filter={filter}
-        setFilter={setFilter}
-        setSize={setSize}
-        moments={moments}
-      />
-    </MainLayout>
+    <>
+      <Head>
+        <title>Love Asia - {country?.name}</title>
+      </Head>
+      <MainLayout>
+        {news && news.length > 0 && (
+          <>
+            <h2 className="main-title">{country?.name + " 관련 소식 📢"}</h2>
+            <MainNewsCardSlide news={news} />
+          </>
+        )}
+        <h2 className="main-title">{country?.name + " 인기 연대기"}</h2>
+        <MainTopArticleSlide country={country} />
+        <h2 className="main-title">포스팅</h2>
+        <MomentPostingForm />
+        <MomentList
+          revalidateMoments={revalidateMoments}
+          filter={filter}
+          setFilter={setFilter}
+          setSize={setSize}
+          moments={moments}
+        />
+      </MainLayout>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import router from "next/router";
 import tw from "twin.macro";
@@ -6,6 +6,7 @@ import { FLEX_STYLE } from "config";
 import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import Head from "next/head";
+import { useDispatch } from "react-redux";
 
 export const NotFoundWrapper = styled.div`
   ${tw`pt-16`}
@@ -22,6 +23,10 @@ export const NotFoundWrapper = styled.div`
 interface IProps {}
 
 const notFound: FC<IProps> = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserInfoAction());
+  }, []);
   return (
     <>
       <Head>
@@ -37,7 +42,6 @@ const notFound: FC<IProps> = () => {
 };
 
 export const getStaticProps = wrapper.getStaticProps((store) => async () => {
-  await store.dispatch(getUserInfoAction());
   return {
     props: {},
   };

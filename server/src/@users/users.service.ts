@@ -128,42 +128,6 @@ export class UsersService {
     return true;
   }
 
-  async googleLogin(req) {
-    const user = await this.UserRepository.findOne({
-      where: { email: req.email },
-      select: ['id', 'icon', 'email'],
-    });
-    if (!user) {
-      const newUser = new Users();
-      newUser.email = req.email;
-      newUser.icon = req.photo;
-      newUser.name = req.name;
-      await this.UserRepository.save(newUser);
-      return newUser;
-    }
-    return user;
-  }
-
-  async checkPossibleEmail(email: string) {
-    if (!email) {
-      throw new BadRequestException('이메일을 작성해주세요.');
-    }
-    const user = await this.UserRepository.findOne({ where: { email: email } });
-    if (user) {
-      throw new UnauthorizedException('누군가 사용하고있는 이메일입니다.');
-    }
-    const generateRandom = function (min: number, max: number) {
-      const ranNum = Math.floor(Math.random() * (max - min + 1)) + min;
-      return ranNum;
-    };
-    const authNum: number = generateRandom(111111, 999999);
-    await this.AuthNumRepository.save({
-      email,
-      authNum,
-    });
-    return authNum;
-  }
-
   async addUserIcon(userId: number, file: Express.Multer.File) {
     const user = await this.UserRepository.findOne({
       where: { id: userId },

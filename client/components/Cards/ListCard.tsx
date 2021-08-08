@@ -1,4 +1,4 @@
-import useHtmlConverter from "@hooks/useHtmlConverter";
+import html2textConverter from "utils/html2textConverter";
 import React, { FC, ReactNode, useCallback, useState } from "react";
 import styled from "@emotion/styled";
 import tw from "twin.macro";
@@ -64,7 +64,7 @@ const ListCard: FC<IProps> = ({
   return (
     <ListCardWrapper onClick={onClickListCard} className="list-card-wrapper">
       <h4>{title}</h4>
-      <p>{useHtmlConverter(content)}</p>
+      <p>{html2textConverter(content)}</p>
       {noticeId && (
         <a onClick={(e) => onClickDeleteNotice(e, noticeId)}>
           <DeleteOutlined />

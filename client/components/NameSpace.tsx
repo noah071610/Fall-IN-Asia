@@ -1,11 +1,10 @@
 import { IUser } from "@typings/db";
 import React, { FC, memo, useCallback } from "react";
-import dayjs from "dayjs";
 import { DEFAULT_ICON_URL, FLEX_STYLE, RGB_BLACK } from "config";
 import styled from "@emotion/styled";
 import tw from "twin.macro";
 import router from "next/router";
-import useCalcDate from "@hooks/useCalcDate";
+import dateCalculator from "utils/dateCalculator";
 
 export const NameSpaceWrapper = styled.div`
   ${FLEX_STYLE("flex-start", "center")};
@@ -66,9 +65,9 @@ const NameSpace: FC<IProps> = ({ user, date, comment }) => {
       <div className="user-info">
         <div className="name-title" onClick={onClickGotoProfile}>
           <span className="name">{user?.name}</span>
-          {comment && <span className="comment-date">{useCalcDate(date)}</span>}
+          {comment && <span className="comment-date">{dateCalculator(date)}</span>}
         </div>
-        {comment ? <p>{comment}</p> : <span className="date">{useCalcDate(date)}</span>}
+        {comment ? <p>{comment}</p> : <span className="date">{dateCalculator(date)}</span>}
       </div>
     </NameSpaceWrapper>
   );

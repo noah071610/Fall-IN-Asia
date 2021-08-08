@@ -28,6 +28,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
 import MoreButton from "@components/MoreButton";
+import Head from "next/head";
 
 const Wrapper = styled.div`
   padding-top: 4rem;
@@ -162,62 +163,67 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
   }, []);
 
   return (
-    <Wrapper>
-      <StoryMainPoster name={country?.name} image={country?.image_src} />
-      {!query?.country && (
-        <div className="country-list-wrapper">
-          <CountryPreviewSlide slidesPerView={6.2} isMain={false} />
-        </div>
-      )}
-      <TopNavigation filter={filter} onClickList={onClickList} list={storyPageNav} />
-      <XLGLayout>
-        {user && (
-          <div className="story-post-btn-wrapper">
-            <button className="story-post-btn" onClick={() => router.push("/story/post")}>
-              연대기 올리기
-            </button>
+    <>
+      <Head>
+        <title>Love Asia - story</title>
+      </Head>
+      <Wrapper>
+        <StoryMainPoster name={country?.name} image={country?.image_src} />
+        {!query?.country && (
+          <div className="country-list-wrapper">
+            <CountryPreviewSlide slidesPerView={6.2} isMain={false} />
           </div>
         )}
-        {onAllCountries && (
-          <>
-            <h2 className="main-title">국가선택</h2>
-            <MainCountryAllview isMain={false} countries={countries} />
-          </>
-        )}
-        <h2 className="main-title">인기연대기</h2>
-        {popularStories && (
-          <>
-            <div className="popular-story-wrapper">
-              <ArticleCard story={popularStories[0]} />
-              <ArticleColumnCard story={popularStories[0]} />
-              {onMorePopularStory &&
-                popularStories?.slice(1).map((v, i) => {
-                  return <ArticleCard key={i} story={v} />;
-                })}
-              {onMorePopularStory &&
-                popularStories?.slice(1).map((v, i) => {
-                  return <ArticleColumnCard key={i} story={v} />;
-                })}
-              {!onMorePopularStory && popularStories?.length > 1 && (
-                <MoreButton onClickMoreBtn={onClickMorePopularStoryBtn} />
-              )}
+        <TopNavigation filter={filter} onClickList={onClickList} list={storyPageNav} />
+        <XLGLayout>
+          {user && (
+            <div className="story-post-btn-wrapper">
+              <button className="story-post-btn" onClick={() => router.push("/story/post")}>
+                연대기 올리기
+              </button>
             </div>
-          </>
-        )}
-        <h2 className="main-title">연대기</h2>
-        {stories && stories?.flat().length > 0 ? (
-          <StoryArticleList grid={4} gap="1.5rem" setSize={setSize} stories={stories} />
-        ) : (
-          <div className="no-story-wrapper">
-            <img src={NO_POST_URL} alt="no-post-img" />
-            <h2>연대기가 없습니다. 첫 연대기에 주인공이 되어주세요!</h2>
-            <button className="story-post-btn" onClick={() => router.push("/story/post")}>
-              연대기 올리기
-            </button>
-          </div>
-        )}
-      </XLGLayout>
-    </Wrapper>
+          )}
+          {onAllCountries && (
+            <>
+              <h2 className="main-title">국가선택</h2>
+              <MainCountryAllview isMain={false} countries={countries} />
+            </>
+          )}
+          <h2 className="main-title">인기연대기</h2>
+          {popularStories && (
+            <>
+              <div className="popular-story-wrapper">
+                <ArticleCard story={popularStories[0]} />
+                <ArticleColumnCard story={popularStories[0]} />
+                {onMorePopularStory &&
+                  popularStories?.slice(1).map((v, i) => {
+                    return <ArticleCard key={i} story={v} />;
+                  })}
+                {onMorePopularStory &&
+                  popularStories?.slice(1).map((v, i) => {
+                    return <ArticleColumnCard key={i} story={v} />;
+                  })}
+                {!onMorePopularStory && popularStories?.length > 1 && (
+                  <MoreButton onClickMoreBtn={onClickMorePopularStoryBtn} />
+                )}
+              </div>
+            </>
+          )}
+          <h2 className="main-title">연대기</h2>
+          {stories && stories?.flat().length > 0 ? (
+            <StoryArticleList grid={4} gap="1.5rem" setSize={setSize} stories={stories} />
+          ) : (
+            <div className="no-story-wrapper">
+              <img src={NO_POST_URL} alt="no-post-img" />
+              <h2>연대기가 없습니다. 첫 연대기에 주인공이 되어주세요!</h2>
+              <button className="story-post-btn" onClick={() => router.push("/story/post")}>
+                연대기 올리기
+              </button>
+            </div>
+          )}
+        </XLGLayout>
+      </Wrapper>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import { PickType } from '@nestjs/swagger';
 import { Articles } from 'src/entities/Articles';
 
-export class ArticleRequestDto extends PickType(Articles, [
+export class ArticleCreateDto extends PickType(Articles, [
   'content',
   'title',
   'region',
@@ -9,8 +9,11 @@ export class ArticleRequestDto extends PickType(Articles, [
   'type',
   'lng',
 ] as const) {
-  articleId?: string;
   ranking?: string;
   label?: string;
   code: string;
+}
+
+export class ArticleEditDto extends ArticleCreateDto {
+  articleId: string;
 }

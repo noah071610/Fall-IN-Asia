@@ -10,8 +10,7 @@ import router from "next/router";
 import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import Head from "next/head";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "slices";
+import { useDispatch } from "react-redux";
 
 const AboutPageWrapper = styled.div`
   background: white;

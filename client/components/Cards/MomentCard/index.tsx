@@ -7,7 +7,7 @@ import { toastErrorMessage, toastSuccessMessage } from "config";
 import router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
-import useHtmlConverter from "@hooks/useHtmlConverter";
+import html2textConverter from "utils/html2textConverter";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
 
@@ -97,7 +97,7 @@ const MomentCard: FC<IProps> = ({ revalidateMoments, moment, isLast }) => {
           onClick={() => router.push(`/country/${moment?.code}/${moment?.id}`)}
           className="content"
         >
-          {useHtmlConverter(moment?.content as string)}
+          {html2textConverter(moment?.content as string)}
         </div>
         <ul className="article-footer">
           <li onClick={onClickGotoPost}>

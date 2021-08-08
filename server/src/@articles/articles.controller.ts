@@ -5,7 +5,6 @@ import {
   Get,
   Param,
   ParseIntPipe,
-  Patch,
   Post,
   Query,
   UploadedFile,
@@ -20,7 +19,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import multer from 'multer';
 import path from 'path';
 import { User } from 'src/decorators/user.decorator';
-import { ArticleRequestDto } from 'src/dto/article.request.dto';
+import { ArticleCreateDto, ArticleEditDto } from 'src/@articles/articles.dto';
 
 @UseInterceptors(JsonResponeGenerator)
 @ApiTags('Articles')
@@ -47,7 +46,7 @@ export class ArticlesController {
   )
   @Post()
   async createPost(
-    @Body() form: ArticleRequestDto,
+    @Body() form: ArticleCreateDto,
     @User() user,
     @UploadedFile() file: Express.Multer.File,
   ) {
@@ -72,7 +71,7 @@ export class ArticlesController {
   )
   @Post('edit')
   async editPost(
-    @Body() form: ArticleRequestDto,
+    @Body() form: ArticleEditDto,
     @UploadedFile() file: Express.Multer.File,
     @User() user,
   ) {

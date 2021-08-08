@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, LG_SIZE, SKY_COLOR } from "config";
+import { BLUE_COLOR, GRAY_COLOR, LG_SIZE } from "config";
 import tw from "twin.macro";
 
 export const PostAsideNavWrapper = styled.aside`

@@ -5,7 +5,7 @@ import { NO_IMAGE_URL } from "config";
 import { FC, useCallback } from "react";
 import { ArticleCardWrapper } from "./styles";
 import router from "next/router";
-import useHtmlConverter from "@hooks/useHtmlConverter";
+import html2textConverter from "utils/html2textConverter";
 
 interface IProps {
   story: IStory;
@@ -36,7 +36,7 @@ const ArticleCard: FC<IProps> = ({ story }) => {
         <div className="story-info">
           <NameSpace date={story?.createdAt} user={story?.user} />
         </div>
-        <div className="story-content">{useHtmlConverter(story?.content)}</div>
+        <div className="story-content">{html2textConverter(story?.content)}</div>
       </div>
     </div>
   );

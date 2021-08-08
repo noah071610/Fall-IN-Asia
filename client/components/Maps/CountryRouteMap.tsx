@@ -17,7 +17,7 @@ const CountryRouteMap: FC<IProps> = ({ stories }) => {
     zoom: 1,
   });
 
-  const route1 = useMemo(() => {
+  const route = useMemo(() => {
     return {
       type: "Feature",
       properties: {},
@@ -44,7 +44,7 @@ const CountryRouteMap: FC<IProps> = ({ stories }) => {
       asyncRender={true}
       transitionInterpolator={new FlyToInterpolator()}
     >
-      <Source type="geojson" data={route1}>
+      <Source type="geojson" data={route as any}>
         <Layer
           id="route"
           type="line"

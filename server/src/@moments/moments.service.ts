@@ -10,10 +10,7 @@ import { Moments } from 'src/entities/Moments';
 import { Countries } from 'src/entities/Countries';
 import { MomentLike } from 'src/entities/MomentLike';
 import { InjectRepository } from '@nestjs/typeorm';
-import {
-  MomentCreateRequestDto,
-  MomentModifyRequestDto,
-} from 'src/dto/moment.request.dto';
+import { MomentCreateRequestDto, MomentModifyRequestDto } from './moments.dto';
 const viewer = new Object();
 
 @Injectable()

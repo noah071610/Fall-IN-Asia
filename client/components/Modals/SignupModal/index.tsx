@@ -53,7 +53,7 @@ const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSig
         return;
       }
       axios
-        .post("/user/email/auth", { email })
+        .post("/auth/email", { email })
         .then(() => {
           setOnEmailCheckForm(true);
           toastSuccessMessage(`${email}로 이메일이 발송되었습니다. 인증번호를 확인해주세요.`);

@@ -27,9 +27,10 @@ import ArticleImageCard from "@components/Cards/ArticleImageCard";
 import TopNavigation from "@components/TopNavigation";
 import ArticleSmallCard from "@components/Cards/ArticleSmallCard";
 import NewsArticleList from "@sections/NewsPage/NewsArticleList";
+import Head from "next/head";
 SwiperCore.use([EffectFade, Pagination, Autoplay]);
 
-const GuidePageWrapper = styled.div`
+const NewsPageWrapper = styled.div`
   padding-top: 4rem;
   .news-layout {
     width: ${LG_SIZE};
@@ -132,58 +133,63 @@ const index: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
     setType(value);
   }, []);
   return (
-    <GuidePageWrapper>
-      <Swiper
-        autoplay={{
-          pauseOnMouseEnter: true,
-          stopOnLastSlide: false,
-          disableOnInteraction: false,
-          delay: 5000,
-        }}
-        loop={true}
-        effect={"fade"}
-        slidesPerView={1}
-        className="mySwiper"
-        pagination={pagination}
-      >
-        <SwiperSlide>
-          <PosterCard image="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <PosterCard image="https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1189&q=80" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <PosterCard image="https://images.unsplash.com/photo-1492648272180-61e45a8d98a7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" />
-        </SwiperSlide>
-      </Swiper>
-      <TopNavigation onClickList={onClickList} filter={type} list={newsPageNavList} />
-      <div className="news-layout">
-        <h2 className="main-title">{type}</h2>
-        <div className="layout-divide">
-          {articles && articles?.flat().length > 0 ? (
-            <NewsArticleList setSize={setSize} articles={articles} />
-          ) : (
-            <div className="no-article-wrapper">
-              <img src={NO_POST_URL} alt="no-post-img" />
-              <h2>아직 {type} 소식이 없어요.😥</h2>
-            </div>
-          )}
-          {asideArticle && (
-            <aside className="news-aside">
-              {asideArticle?.length > 0 && (
-                <>
-                  <h2 className="aside-title">인기 소식</h2>
-                  <ArticleImageCard article={asideArticle[0]} />
-                  {asideArticle?.slice(1).map((v, i) => {
-                    return <ArticleSmallCard key={i} article={v} />;
-                  })}
-                </>
-              )}
-            </aside>
-          )}
+    <>
+      <Head>
+        <title>Love Asia - news</title>
+      </Head>
+      <NewsPageWrapper>
+        <Swiper
+          autoplay={{
+            pauseOnMouseEnter: true,
+            stopOnLastSlide: false,
+            disableOnInteraction: false,
+            delay: 5000,
+          }}
+          loop={true}
+          effect={"fade"}
+          slidesPerView={1}
+          className="mySwiper"
+          pagination={pagination}
+        >
+          <SwiperSlide>
+            <PosterCard image="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <PosterCard image="https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1189&q=80" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <PosterCard image="https://images.unsplash.com/photo-1492648272180-61e45a8d98a7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" />
+          </SwiperSlide>
+        </Swiper>
+        <TopNavigation onClickList={onClickList} filter={type} list={newsPageNavList} />
+        <div className="news-layout">
+          <h2 className="main-title">{type}</h2>
+          <div className="layout-divide">
+            {articles && articles?.flat().length > 0 ? (
+              <NewsArticleList setSize={setSize} articles={articles} />
+            ) : (
+              <div className="no-article-wrapper">
+                <img src={NO_POST_URL} alt="no-post-img" />
+                <h2>아직 {type} 소식이 없어요.😥</h2>
+              </div>
+            )}
+            {asideArticle && (
+              <aside className="news-aside">
+                {asideArticle?.length > 0 && (
+                  <>
+                    <h2 className="aside-title">인기 소식</h2>
+                    <ArticleImageCard article={asideArticle[0]} />
+                    {asideArticle?.slice(1).map((v, i) => {
+                      return <ArticleSmallCard key={i} article={v} />;
+                    })}
+                  </>
+                )}
+              </aside>
+            )}
+          </div>
         </div>
-      </div>
-    </GuidePageWrapper>
+      </NewsPageWrapper>
+    </>
   );
 };
 

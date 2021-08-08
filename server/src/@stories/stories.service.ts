@@ -10,7 +10,7 @@ import { LessThan, MoreThan, Repository } from 'typeorm';
 import { Notices } from 'src/entities/Notices';
 import { Countries } from 'src/entities/Countries';
 import { StoryLike } from 'src/entities/StoryLike';
-import { StoryRequestDto } from 'src/dto/story.request.dto';
+import { StoryCreateDto, StoryEditDto } from 'src/@stories/stories.dto';
 const viewObj = new Object();
 @Injectable()
 export class StoriesService {
@@ -28,7 +28,7 @@ export class StoriesService {
   ) {}
 
   async createPost(
-    form: StoryRequestDto,
+    form: StoryCreateDto,
     userId: number,
     file: Express.Multer.File,
   ) {
@@ -244,7 +244,7 @@ export class StoriesService {
   }
 
   async editPost(
-    form: StoryRequestDto,
+    form: StoryEditDto,
     file: Express.Multer.File,
     userId: number,
   ) {
