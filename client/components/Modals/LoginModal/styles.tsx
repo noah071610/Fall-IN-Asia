@@ -1,11 +1,10 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, FLEX_STYLE, GRID_STYLE, MD_SIZE, RGB_BLACK, SM_SIZE } from "config";
+import { BORDER_THIN, FLEX_STYLE, GRID_STYLE, RGB_BLACK } from "config";
 import tw from "twin.macro";
 
 export const LoginModalWrapper = styled.div`
   ${tw`fixed top-1/2 left-1/2 py-8 px-12 shadow-lg bg-white rounded-2xl`}
-  width:600px;
-  z-index: 90;
+  z-index:90;
   transform: translate(-50%, -50%);
   .image-wrapper {
     ${FLEX_STYLE("center", "center")};
@@ -14,7 +13,7 @@ export const LoginModalWrapper = styled.div`
     }
   }
   h4 {
-    .login-icon {
+    .icon {
       margin-right: 0.5rem;
     }
     margin: 1rem 0;
@@ -51,12 +50,5 @@ export const LoginModalWrapper = styled.div`
     li:last-of-type {
       ${tw`mr-0`}
     }
-  }
-  @media (max-width: ${MD_SIZE}) {
-    ${tw`w-11/12 px-8 py-12 `}
-  }
-  @media (max-width: ${SM_SIZE}) {
-    ${tw`px-4`}
-    width: 95%;
   }
 `;

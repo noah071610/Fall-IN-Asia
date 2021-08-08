@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { BORDER_THIN, FLEX_STYLE, MD_SIZE, SM_SIZE } from "config";
+import { BORDER_THIN, FLEX_STYLE, MD_SIZE } from "config";
 import tw from "twin.macro";
 
 export const HeaderWrapper = (headerDownSize: boolean) => css`

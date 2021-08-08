@@ -6,7 +6,7 @@ import LoginModal from "@components/Modals/LoginModal";
 import Link from "next/link";
 import { mainSlice } from "slices/main";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faBell, faCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
 import Overlay from "@components/Modals/Overlay";
 import SearchPopUp from "@components/Popups/SearchPopUp";
 import NoticePopUp from "@components/Popups/NoticePopUp";
@@ -17,13 +17,11 @@ import useInput from "@hooks/useInput";
 import router from "next/router";
 import { throttle } from "lodash";
 import { INotice } from "@typings/db";
-import MobileSlideMenu from "@layout/MobileSlideMenu";
 
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const mobileInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const [searchWord, onChangeSearchWord, setSearchWord] = useInput("");
   const [headerDownSize, setHeaderDownSize] = useState(false);
@@ -53,50 +51,26 @@ const Header: FC<HeaderProps> = () => {
       window.removeEventListener("scroll", scrollCallBack);
     };
   }, []);
-
-  useEffect(() => {
-    if (user) {
-      if (readNoticeDone) {
-        setIsAllReadNotices(true);
-        dispatch(userSlice.actions.readNoticeClear());
-      } else {
-        user?.notices?.find((v: INotice) => {
-          if (v.readAt === null) {
-            setIsAllReadNotices(false);
-            return;
-          }
-        });
-      }
-    }
-  }, [user, readNoticeDone]);
-
   useEffect(() => {
     if (onSearchPopUp) {
       inputRef?.current?.focus();
-      mobileInputRef?.current?.focus();
     }
-  }, [onSearchPopUp, inputRef, mobileInputRef]);
+  }, [onSearchPopUp, inputRef]);
 
-  const onClickMenu = useCallback((type: string) => {
-    switch (type) {
-      case "login":
-        dispatch(mainSlice.actions.toggleLoginModal());
-        break;
-      case "profile":
-        dispatch(mainSlice.actions.toggleProfilePopUp());
-        break;
-      case "notice":
-        dispatch(mainSlice.actions.toggleNoticePopUp());
-        break;
-      case "search":
-        dispatch(mainSlice.actions.toggleSearchPopUp());
-        break;
-      case "slideMenu":
-        dispatch(mainSlice.actions.toggleSlideMenu());
-        break;
-      default:
-        return;
-    }
+  const onClickLoginMenu = useCallback(() => {
+    dispatch(mainSlice.actions.toggleLoginModal());
+  }, []);
+
+  const onClickProfilePopUp = useCallback(() => {
+    dispatch(mainSlice.actions.toggleProfilePopUp());
+  }, []);
+
+  const onClickNoticePopUp = useCallback(() => {
+    dispatch(mainSlice.actions.toggleNoticePopUp());
+  }, []);
+
+  const onClickSearchPopUp = useCallback(() => {
+    dispatch(mainSlice.actions.toggleSearchPopUp());
   }, []);
 
   const onClickSearchWord = useCallback(() => {
@@ -120,75 +94,46 @@ const Header: FC<HeaderProps> = () => {
     [searchWord]
   );
 
+  useEffect(() => {
+    if (user) {
+      if (readNoticeDone) {
+        setIsAllReadNotices(true);
+        dispatch(userSlice.actions.readNoticeClear());
+      } else {
+        user?.notices?.find((v: INotice) => {
+          if (v.readAt === null) {
+            setIsAllReadNotices(false);
+            return;
+          }
+        });
+      }
+    }
+  }, [user, readNoticeDone]);
+
   return (
     <header css={HeaderWrapper(headerDownSize)}>
-      <ul className="header-small">
-        {!onSearchPopUp && (
-          <>
-            <li onClick={() => onClickMenu("slideMenu")}>
-              <a className="header-anchor">
-                <FontAwesomeIcon className="icon" icon={faBars} />
-              </a>
-            </li>
-            <Link href="/">
-              <a className="header-anchor">
-                <li>
-                  <img
-                    className="logo"
-                    src="https://user-images.githubusercontent.com/74864925/123951789-21ecc980-d9e0-11eb-9f3c-421cbea7d9cf.png"
-                    alt="logo"
-                  />
-                </li>
-              </a>
-            </Link>
-          </>
-        )}
-        {onSearchPopUp && (
-          <SearchPopUp
-            inputRef={mobileInputRef}
-            onPressEnter={onPressEnter}
-            searchWord={searchWord}
-            width="100%"
-            setSearchWord={setSearchWord}
-            onChangeSearchWord={onChangeSearchWord}
-          />
-        )}
-        <li style={onSearchPopUp ? { height: "40px" } : {}}>
-          <a
-            className="header-anchor"
-            onClick={onSearchPopUp ? onClickSearchWord : () => onClickMenu("search")}
-          >
-            <FontAwesomeIcon className="icon" icon={faSearch} />
-          </a>
-        </li>
-      </ul>
       <ul className="header-left">
         <Link href="/">
-          <a className="header-anchor">
-            <img
-              className="logo"
-              src="https://user-images.githubusercontent.com/74864925/123951789-21ecc980-d9e0-11eb-9f3c-421cbea7d9cf.png"
-              alt="logo"
-            />
+          <a>
+            <img src="https://user-images.githubusercontent.com/74864925/123951789-21ecc980-d9e0-11eb-9f3c-421cbea7d9cf.png" />
           </a>
         </Link>
         <li className="header-list">
           <Link href="/">
-            <a className="header-anchor">모멘트</a>
+            <a>모멘트</a>
           </Link>
         </li>
         <li className="header-list">
           <Link href="/story">
-            <a className="header-anchor">연대기</a>
+            <a>연대기</a>
           </Link>
         </li>
         <li className="header-list">
           <Link href="/news">
-            <a className="header-anchor">여행소식</a>
+            <a>여행소식</a>
           </Link>
         </li>
       </ul>
-
       <ul className="header-right">
         <li
           style={onSearchPopUp ? { background: GRAY_COLOR, display: "flex" } : { display: "flex" }}
@@ -196,7 +141,6 @@ const Header: FC<HeaderProps> = () => {
         >
           {onSearchPopUp && (
             <SearchPopUp
-              width="200px"
               inputRef={inputRef}
               onPressEnter={onPressEnter}
               searchWord={searchWord}
@@ -204,24 +148,21 @@ const Header: FC<HeaderProps> = () => {
               onChangeSearchWord={onChangeSearchWord}
             />
           )}
-          <a
-            className="header-anchor"
-            onClick={onSearchPopUp ? onClickSearchWord : () => onClickMenu("search")}
-          >
-            <FontAwesomeIcon className="icon" icon={faSearch} />
+          <a onClick={onSearchPopUp ? onClickSearchWord : onClickSearchPopUp}>
+            <FontAwesomeIcon className="anticon" icon={faSearch} />
           </a>
         </li>
         {user ? (
           <>
             <li className="header-list list-icon notice-icon">
-              <a className="header-anchor" onClick={() => onClickMenu("notice")}>
-                <FontAwesomeIcon className="icon" icon={faBell} />
+              <a onClick={onClickNoticePopUp}>
+                <FontAwesomeIcon className="anticon" icon={faBell} />
                 {!isAllReadNotices && <FontAwesomeIcon className="circle" icon={faCircle} />}
               </a>
               {onNoticePopUp && <NoticePopUp />}
             </li>
             <li className="header-list" style={{ padding: 0, marginLeft: "1.2rem" }}>
-              <a className="header-anchor" onClick={() => onClickMenu("profile")}>
+              <a onClick={onClickProfilePopUp}>
                 <img className="user-icon" src={user?.icon} alt={user?.name} />
               </a>
               {onProfilePopUp && <ProfilePopUp />}
@@ -229,9 +170,7 @@ const Header: FC<HeaderProps> = () => {
           </>
         ) : (
           <li className="header-list">
-            <a className="header-anchor" onClick={() => onClickMenu("login")}>
-              로그인
-            </a>
+            <a onClick={onClickLoginMenu}>로그인</a>
           </li>
         )}
       </ul>
