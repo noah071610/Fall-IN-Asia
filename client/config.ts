@@ -14,7 +14,7 @@ export const LG_SIZE = "1024px" as const;
 export const XLG_SIZE = "1280px" as const;
 
 export const FALL_IN_ASIA_LOGO =
-  "https://user-images.githubusercontent.com/74864925/128807447-9ffba20c-cb89-4b60-a10a-5f545b6b0c7a.png" as const;
+  "https://user-images.githubusercontent.com/74864925/129451908-bc29b915-98b1-4da4-bdcb-80f96b3210bf.png" as const;
 
 export const WORLD_IMAGE =
   "https://user-images.githubusercontent.com/74864925/126495159-2e4438ad-6efb-458a-b314-8f92823babc7.jpg" as const;
@@ -197,8 +197,6 @@ export const imageHandler = (quillInstance: any, isStory?: boolean) => {
       data: form,
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
-      console.log(res);
-
       const range = quillInstance?.current?.getSelection(true);
       quillInstance?.current?.insertEmbed(range.index, "image", `${res.data.data}`);
       quillInstance?.current?.setSelection(range.index + 1);

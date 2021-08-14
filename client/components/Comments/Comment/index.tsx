@@ -18,7 +18,6 @@ import SubComment from "../SubComment";
 import SubCommentForm from "../SubCommentForm";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
-import { reverse } from "lodash";
 interface IProps {
   comment: IComment;
   revalidateComments: () => Promise<boolean>;

@@ -1,10 +1,15 @@
-FROM node:10 AS builder
-WORKDIR /usr/src/app
-COPY package*.json ./
+FROM node:alpine AS builder
+WORKDIR /app
+COPY ./package.json ./
 RUN npm install
 COPY . .
+RUN npm run schema:sync
+RUN npm run seed:run
 RUN npm run build
 
-EXPOSE 3060
+FROM nginx
+EXPOSE 80
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /usr/src/app/build /usr/share/nginx/html
 
 CMD ["npm", "run", "start:prod"]

@@ -19,6 +19,11 @@ import { KakaoAuthGuard } from './kakao/kakao-auth.guard';
 import { NaverAuthGuard } from './naver/naver-auth.guard';
 dotenv.config();
 
+const client_url =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000'
+    : process.env.CLIENT_URL;
+
 @UseInterceptors(JsonResponeGenerator)
 @ApiTags('Auth')
 @Controller('/api/auth')
@@ -51,7 +56,7 @@ export class AuthController {
   @ApiOperation({ summary: 'goolge login redirect after auth' })
   @UseGuards(new GoogleAuthGuard())
   async googleAuthRedirect(@Req() req, @Res() res) {
-    res.redirect('http://localhost:3000');
+    res.redirect(client_url);
   }
 
   @Get('kakao')
@@ -63,7 +68,7 @@ export class AuthController {
   @ApiOperation({ summary: 'kakao login redirect after auth' })
   @UseGuards(new KakaoAuthGuard())
   async kakaoAuthRedirect(@Req() req, @Res() res) {
-    res.redirect('http://localhost:3000');
+    res.redirect(client_url);
   }
 
   @Get('naver')
@@ -75,6 +80,6 @@ export class AuthController {
   @ApiOperation({ summary: 'naver login redirect after auth' })
   @UseGuards(new NaverAuthGuard())
   async naverAuthRedirect(@Req() req, @Res() res) {
-    res.redirect('http://localhost:3000');
+    res.redirect(client_url);
   }
 }

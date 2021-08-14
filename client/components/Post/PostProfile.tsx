@@ -7,7 +7,7 @@ import styled from "@emotion/styled/macro";
 import { FLEX_STYLE } from "config";
 
 const PostProfileWrapper = styled.section`
-  ${tw`mt-12 mb-8 w-full`}
+  ${tw`mt-32 mb-16 w-full`}
   ${FLEX_STYLE("center", "center")};
   .owner-info-wrapper {
     ${FLEX_STYLE("center", "center")};

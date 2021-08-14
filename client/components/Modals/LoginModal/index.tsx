@@ -15,6 +15,8 @@ import { IUserRequestForm } from "@typings/db";
 
 interface IProps {}
 
+const prod: boolean = process.env.NODE_ENV === "production";
+
 const LoginModal: FC<IProps> = () => {
   const dispatch = useDispatch();
   const { logInDone, user } = useSelector((state: RootState) => state.user);
@@ -117,17 +119,35 @@ const LoginModal: FC<IProps> = () => {
             </Divider>
             <ul className="social-login-wrapper">
               <li className="google-icon">
-                <a href="http://localhost:3060/api/auth/google">
+                <a
+                  href={
+                    process.env.NODE_ENV === "development"
+                      ? "http://localhost:3060/api"
+                      : process.env.NEXT_PUBLIC_BASE_URL + "/auth/google"
+                  }
+                >
                   <img src="https://img.icons8.com/color/144/000000/google-logo.png" />
                 </a>
               </li>
               <li style={{ background: "#FAE301" }}>
-                <a href="http://localhost:3060/api/auth/kakao">
+                <a
+                  href={
+                    process.env.NODE_ENV === "development"
+                      ? "http://localhost:3060/api"
+                      : process.env.NEXT_PUBLIC_BASE_URL + "/auth/kakao"
+                  }
+                >
                   <img src="https://user-images.githubusercontent.com/74864925/127008226-4ea6ec83-e82d-4e7f-bc9a-95b508f750cc.png" />
                 </a>
               </li>
               <li style={{ background: "#54BA5C" }}>
-                <a href="http://localhost:3060/api/auth/naver">
+                <a
+                  href={
+                    process.env.NODE_ENV === "development"
+                      ? "http://localhost:3060/api"
+                      : process.env.NEXT_PUBLIC_BASE_URL + "/auth/naver"
+                  }
+                >
                   <img src="https://user-images.githubusercontent.com/74864925/127008231-213a4559-d3e8-488d-9901-0fe3f78b58c1.png" />
                 </a>
               </li>

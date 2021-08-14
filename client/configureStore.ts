@@ -5,7 +5,9 @@ import { reducer } from "slices";
 import axios from "axios";
 
 axios.defaults.baseURL =
-  process.env.NODE_ENV === "development" ? "http://localhost:3060/api" : process.env.BASE_URL;
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3060/api"
+    : process.env.NEXT_PUBLIC_BASE_URL;
 axios.defaults.withCredentials = true;
 
 const makeStore = () =>

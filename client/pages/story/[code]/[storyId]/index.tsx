@@ -122,10 +122,6 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
     }
   }, [user, isOwner, story]);
 
-  const onClickStoryPost = useCallback((e) => {
-    e.preventDefault();
-    console.log(e);
-  }, []);
   return (
     <>
       <Head>

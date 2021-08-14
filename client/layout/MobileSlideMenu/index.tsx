@@ -10,7 +10,6 @@ import { logoutAction } from "actions/user";
 import { Divider } from "antd";
 import { useRouter } from "next/router";
 import { mainSlice } from "slices/main";
-import Overlay from "@components/Modals/Overlay";
 
 interface IProps {}
 
@@ -142,7 +141,7 @@ const MobileSlideMenu: FC<IProps> = () => {
           </Link>
         </ul>
         <div className="slide-menu-footer">
-          <h4 className="license">ⓒ JANG HYUN SOO (Noah) All Rights Resrved.</h4>
+          <h4 className="license">ⓒ 2021 JANG HYUN SOO (Noah) All Rights Resrved.</h4>
           <div>
             <Link href="/about">
               <a>About us</a>

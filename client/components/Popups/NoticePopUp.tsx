@@ -14,7 +14,6 @@ const NoticePopUpWrapper = styled.ul`
     ${tw`pt-4 px-4 pb-2 text-sm font-bold`}
   }
   .notices-wrapper {
-    ${tw`divide-y divide-solid divide-gray-100`}
     .list-card-wrapper {
       ${tw`border-none rounded-none px-4 py-2 m-0 `}
       box-shadow: none;

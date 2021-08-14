@@ -7,6 +7,9 @@ import passport from 'passport';
 import session from 'express-session';
 import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import helmet from 'helmet';
+import csurf from 'csurf';
+import hpp from 'hpp';
 declare const module: any;
 
 async function bootstrap() {
@@ -15,11 +18,9 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
-  app.enableCors({
-    origin: true,
-    credentials: true,
-  });
   const port = process.env.PORT || 3060;
+  const prod: boolean = process.env.NODE_ENV === 'production';
+
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
   const config = new DocumentBuilder()
@@ -30,6 +31,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+
   app.use(cookieParser(process.env.COOKIE_SECRET));
   app.use(
     session({
@@ -38,13 +40,38 @@ async function bootstrap() {
       secret: process.env.COOKIE_SECRET,
       cookie: {
         httpOnly: true,
+        secure: prod ? true : false,
+        domain: prod && process.env.BACK_URL,
       },
+      proxy: prod ? true : false,
     }),
   );
+
+  if (prod) {
+    app.set('trust proxy', 1);
+    app.use(helmet({ contentSecurityPolicy: false }));
+    app.use(csurf());
+    app.use(hpp());
+    app.enableCors({
+      origin: process.env.BACK_URL,
+      credentials: true,
+    });
+    setTimeout(() => {
+      console.log('############### production on');
+    }, 3000);
+  } else {
+    app.enableCors({
+      origin: true,
+      credentials: true,
+    });
+    setTimeout(() => {
+      console.log('############### production off');
+    }, 3000);
+  }
+
   app.use(passport.initialize());
   app.use(passport.session());
-  app.set('trust proxy', true);
   await app.listen(port);
-  console.log(`Port number ${port}`);
+  console.log(`################## Port number ${port}`);
 }
 bootstrap();

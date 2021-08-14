@@ -68,7 +68,7 @@ const MainPopularArticleSlide: FC<IProps> = ({ country }) => {
     noRevalidate
   );
   const onClickMoreCard = useCallback(() => {
-    router.push(`/story/${country?.code || ""}`);
+    router.push(`/story`);
   }, [country]);
   return (
     <>

@@ -11,13 +11,13 @@ const PosterCardWrapper = (isMain?: boolean) => css`
   background-position: center;
   background-size: 100% 100%;
   .poster-content {
-    ${tw`absolute z-10 bottom-6 left-8 pr-8`}
+    ${tw`absolute z-10 bottom-6 left-8`}
     h1 {
       ${tw`text-white mb-4 text-5xl`}
       font-family: 'Shadows Into Light', cursive;
     }
     p {
-      ${tw`text-white`}
+      ${tw`text-white pr-16`}
     }
   }
   .poster-overlay {
@@ -25,12 +25,15 @@ const PosterCardWrapper = (isMain?: boolean) => css`
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.25) 32%, rgba(23, 21, 21, 0) 48%);
   }
   @media (max-width: ${SM_SIZE}) {
-    ${isMain ? tw`rounded-none h-60` : tw`h-48`}
+    ${isMain ? tw`rounded-none h-48` : tw`h-48`}
 
     .poster-content {
       ${tw`bottom-8 left-4`}
       h1 {
-        ${tw`text-3xl mb-2`}
+        ${tw`text-2xl mb-2`}
+      }
+      p {
+        ${tw`text-xs`}
       }
     }
   }
@@ -49,8 +52,13 @@ const PosterCard: FC<IProps> = ({ isMain, image, title, desc, link, path }) => {
   const onClickPoster = useCallback(() => {
     if (path) {
       router.push(path);
+      return;
     }
-  }, [path]);
+    if (link) {
+      window.open(link, "_blank");
+      return;
+    }
+  }, [path, link]);
   return (
     <div
       onClick={onClickPoster}

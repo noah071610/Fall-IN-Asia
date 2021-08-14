@@ -1,16 +1,15 @@
-FROM node:12
+FROM node:16.6.2-alpine as builder
 
-ENV PORT 3000
+WORKDIR /app
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-
-COPY package*.json /usr/src/app/
+COPY ./package.json ./
 RUN npm install
 
-COPY . /usr/src/app
+COPY . .
 
 RUN npm run build
-EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+FROM nginx
+EXPOSE 80
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /usr/src/app/build /usr/share/nginx/html

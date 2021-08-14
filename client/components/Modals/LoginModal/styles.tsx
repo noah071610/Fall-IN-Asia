@@ -60,5 +60,11 @@ export const LoginModalWrapper = styled.div`
   @media (max-width: ${SM_SIZE}) {
     ${tw`px-4`}
     width: 95%;
+    .image-wrapper {
+      ${tw`py-3`}
+      img {
+        height: 50px;
+      }
+    }
   }
 `;

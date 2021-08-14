@@ -4,7 +4,7 @@ import tw from "twin.macro";
 
 export const HeaderWrapper = (headerDownSize: boolean) => css`
   ${tw`w-full bg-white fixed`}
-  ${headerDownSize ? tw`py-2 px-10` : tw`py-4 px-8`}
+  ${headerDownSize ? tw`py-2 px-6` : tw`py-4 px-8`}
   z-index:60;
   transition: 0.3s all;
   ${BORDER_THIN("border-bottom")};

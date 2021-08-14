@@ -11,24 +11,26 @@ import Overlay from "@components/Modals/Overlay";
 import SearchPopUp from "@components/Popups/SearchPopUp";
 import NoticePopUp from "@components/Popups/NoticePopUp";
 import ProfilePopUp from "@components/Popups/ProfilePopUp";
-import { FALL_IN_ASIA_LOGO, GRAY_COLOR, toastSuccessMessage } from "config";
+import { BLUE_COLOR, FALL_IN_ASIA_LOGO, GRAY_COLOR, toastSuccessMessage } from "config";
 import { userSlice } from "slices/user";
 import useInput from "@hooks/useInput";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import { throttle } from "lodash";
 import { INotice } from "@typings/db";
 
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
+  const { asPath } = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const mobileInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const [searchWord, onChangeSearchWord, setSearchWord] = useInput("");
   const [headerDownSize, setHeaderDownSize] = useState(false);
   const [isAllReadNotices, setIsAllReadNotices] = useState(true);
+  const [activePath, setActivePath] = useState("");
   const { user, logoutDone, readNoticeDone } = useSelector((state: RootState) => state.user);
-  const { onLoginModal, onProfilePopUp, onNoticePopUp, onSearchPopUp, onSlideMenu } = useSelector(
+  const { onLoginModal, onProfilePopUp, onNoticePopUp, onSearchPopUp } = useSelector(
     (state: RootState) => state.main
   );
 
@@ -58,6 +60,29 @@ const Header: FC<HeaderProps> = () => {
       mobileInputRef?.current?.focus();
     }
   }, [onSearchPopUp, inputRef]);
+
+  useEffect(() => {
+    const pathChecker = asPath?.split("/")[1];
+    switch (pathChecker) {
+      case "":
+        setActivePath("moment");
+        break;
+      case "country":
+        setActivePath("moment");
+        break;
+      case "story":
+        setActivePath("story");
+        break;
+      case "news":
+        setActivePath("news");
+        break;
+      case "me":
+        setActivePath("me");
+        break;
+      default:
+        return;
+    }
+  }, [asPath]);
 
   const onClickMenu = useCallback((type: string) => {
     switch (type) {
@@ -164,17 +189,29 @@ const Header: FC<HeaderProps> = () => {
         </Link>
         <li className="header-list">
           <Link href="/">
-            <a className="header-anchor">모멘트</a>
+            <a
+              style={activePath === "moment" ? { color: BLUE_COLOR } : {}}
+              className="header-anchor"
+            >
+              모멘트
+            </a>
           </Link>
         </li>
         <li className="header-list">
           <Link href="/story">
-            <a className="header-anchor">연대기</a>
+            <a
+              style={activePath === "story" ? { color: BLUE_COLOR } : {}}
+              className="header-anchor"
+            >
+              연대기
+            </a>
           </Link>
         </li>
         <li className="header-list">
           <Link href="/news">
-            <a className="header-anchor">여행소식</a>
+            <a style={activePath === "news" ? { color: BLUE_COLOR } : {}} className="header-anchor">
+              여행소식
+            </a>
           </Link>
         </li>
       </ul>

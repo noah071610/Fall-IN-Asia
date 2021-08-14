@@ -73,8 +73,6 @@ const ImageDragger: FC<IProps> = ({
     [single, fileList]
   );
 
-  console.log("fileList#", fileList);
-
   return (
     <ImageDraggerWrapper>
       <Dragger

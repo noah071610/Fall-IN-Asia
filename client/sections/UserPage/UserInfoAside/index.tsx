@@ -169,6 +169,7 @@ const UserInfoAside: FC<IProps> = () => {
   const onClickFollowBtn = useCallback(() => {
     if (!user) {
       toastErrorMessage("로그인 후 이용 가능합니다.");
+      dispatch(mainSlice.actions.toggleLoginModal());
       return;
     }
     if (!userInfo?.id) {

@@ -31,7 +31,7 @@ import MoreButton from "@components/MoreButton";
 import Head from "next/head";
 
 const StoryMainWrapper = styled.div`
-  padding-top: 4.25rem;
+  padding-top: 4rem;
   .country-list-wrapper {
     ${tw`mx-auto py-4`}
     width:${XLG_SIZE};

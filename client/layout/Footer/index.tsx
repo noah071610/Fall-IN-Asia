@@ -2,7 +2,7 @@ import { GithubFilled, InstagramFilled } from "@ant-design/icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { FooterWrapper } from "./styles";
 
 interface IProps {}
@@ -80,7 +80,7 @@ const Footer: FC<IProps> = () => {
             </ul>
           </div>
         </div>
-        <h4 className="license">ⓒ JANG HYUN SOO (Noah) All Rights Resrved.</h4>
+        <h4 className="license">ⓒ 2021 JANG HYUN SOO (Noah) All Rights Resrved.</h4>
       </div>
     </FooterWrapper>
   );

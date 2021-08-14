@@ -106,12 +106,18 @@ export class CommentsService {
     if (postType === 'moment') {
       return await comments
         .where('comments.moment= :moment', { moment: postId })
-        .orderBy('comments.id', 'ASC')
+        .orderBy({
+          'comments.id': 'ASC',
+          'subComments_user.id': 'ASC',
+        })
         .getMany();
     } else if (postType === 'story') {
       return await comments
         .where('comments.story= :story', { story: postId })
-        .orderBy('comments.id', 'ASC')
+        .orderBy({
+          'comments.id': 'ASC',
+          'subComments_user.id': 'ASC',
+        })
         .getMany();
     }
   }
