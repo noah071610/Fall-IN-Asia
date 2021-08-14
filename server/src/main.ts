@@ -23,7 +23,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
   const config = new DocumentBuilder()
-    .setTitle('love asia')
+    .setTitle('Fall IN Asia')
     .setDescription('우리들만의 작은 여행 커뮤니티')
     .setVersion('1.0')
     .addCookieAuth('connect.sid')

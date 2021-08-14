@@ -30,8 +30,8 @@ import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
 import MoreButton from "@components/MoreButton";
 import Head from "next/head";
 
-const Wrapper = styled.div`
-  padding-top: 4rem;
+const StoryMainWrapper = styled.div`
+  padding-top: 4.25rem;
   .country-list-wrapper {
     ${tw`mx-auto py-4`}
     width:${XLG_SIZE};
@@ -165,9 +165,9 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
   return (
     <>
       <Head>
-        <title>Love Asia - story</title>
+        <title>Fall IN Asia - story</title>
       </Head>
-      <Wrapper>
+      <StoryMainWrapper>
         <StoryMainPoster name={country?.name} image={country?.image_src} />
         {!query?.country && (
           <div className="country-list-wrapper">
@@ -222,7 +222,7 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
             </div>
           )}
         </XLGLayout>
-      </Wrapper>
+      </StoryMainWrapper>
     </>
   );
 };

@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { FLEX_STYLE, RED_COLOR } from "config";
 import tw from "twin.macro";
 
-export const PostCommentWrapper = styled.div`
+export const PostCommentWrapper = styled.section`
   position: relative;
   .comment-header {
     ${tw`mt-12`}

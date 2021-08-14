@@ -16,7 +16,7 @@ const NewsCard: FC<IProps> = ({ article }) => {
   return (
     <NewsCardWrapper className="news-card-wrapper" onClick={onClickNewsCard}>
       <div className="image-wrapper">
-        <img src={article?.thumbnail ? article.thumbnail : NO_IMAGE_URL} alt="thai" />
+        <img src={article?.thumbnail ? article.thumbnail : NO_IMAGE_URL} alt="news-thumbnail" />
         {article?.label && (
           <div className="guide-label">
             <span>{article?.label}</span>

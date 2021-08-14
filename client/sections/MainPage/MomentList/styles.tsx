@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { BLUE_COLOR, FLEX_STYLE } from "config";
 import tw from "twin.macro";
 
-export const MomentListWrapper = styled.div`
+export const MomentListWrapper = styled.section`
   .content-wrapper {
     ${tw`mt-4 pb-4 rounded-2xl bg-white`}
     .content-filter {

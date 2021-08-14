@@ -12,7 +12,7 @@ import {
 import { Comments } from './Comments';
 import { Users } from './Users';
 
-@Entity({ schema: 'travelover', name: 'subComments' })
+@Entity({ schema: 'fall-in-asia', name: 'subComments' })
 export class SubComments {
   @IsNumber()
   @IsNotEmpty()

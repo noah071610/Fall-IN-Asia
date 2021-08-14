@@ -4,7 +4,7 @@ import tw from "twin.macro";
 
 export const HeaderWrapper = (headerDownSize: boolean) => css`
   ${tw`w-full bg-white fixed`}
-  ${headerDownSize ? tw`py-2 px-10` : tw`py-3 px-8`}
+  ${headerDownSize ? tw`py-2 px-10` : tw`py-4 px-8`}
   z-index:60;
   transition: 0.3s all;
   ${BORDER_THIN("border-bottom")};
@@ -14,12 +14,16 @@ export const HeaderWrapper = (headerDownSize: boolean) => css`
     ${tw`font-bold`}
     ${headerDownSize ? tw`text-sm` : "font-size:1.05rem"}
   }
-  .logo {
-    ${tw`w-32 h-10 mr-8`}
+  .header-logo-anchor {
+    ${tw`w-40 h-8 mr-6`}
     transition: 0.3s all;
-    ${headerDownSize && `transform:scale(0.8)`}
+    ${headerDownSize && `transform:scale(0.8);`}
+    .logo {
+      ${tw`w-full h-full`}
+    }
   }
   .header-left {
+    ${FLEX_STYLE("flex-start", "center")};
     li {
       transition: 0.3s all;
       ${tw`mr-6`}
@@ -66,7 +70,7 @@ export const HeaderWrapper = (headerDownSize: boolean) => css`
       li {
         ${FLEX_STYLE("center", "center")};
       }
-      .logo {
+      .header-logo-anchor {
         ${tw`m-0`}
       }
     }

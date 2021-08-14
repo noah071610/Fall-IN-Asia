@@ -22,6 +22,7 @@ import { RootState } from "slices";
 export const NewsArticleWrapper = styled.div`
   padding-top: 6rem;
   .post-content {
+    user-select: none;
     ${tw`pb-16 relative`}
   }
   .article-manage-wrapper {
@@ -130,10 +131,10 @@ const index: FC<IProps> = ({ initialArticle, initialArticles }) => {
             </h2>
             <CountryMap lat={article?.lat} lng={article?.lng} />
             <Divider />
-            <div className="post-content">
+            <article className="post-content">
               <span id="main_post" className="anchor-offset-controller" />
               {ReactHtmlParser(article?.content as string)}
-            </div>
+            </article>
           </>
         )}
         <div style={{ marginBottom: "2rem" }} />

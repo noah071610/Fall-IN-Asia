@@ -1,11 +1,12 @@
-import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 import { AutoComplete } from "antd";
 import { searchOptions } from "config";
 import { LegacyRef, memo, useCallback } from "react";
 import { FC, KeyboardEvent } from "react";
 import tw from "twin.macro";
 
-const SearchPopUpWrapper = styled.div`
+const SearchPopUpWrapper = (width: string) => css`
+  width: ${width};
   input,
   .ant-select-selector {
     ${tw`bg-transparent h-full px-1`}
@@ -27,6 +28,7 @@ interface IProps {
   setSearchWord: (value: string) => void;
   onPressEnter: (e: KeyboardEvent<Element>) => void;
   inputRef: LegacyRef<HTMLInputElement> | null;
+  width: string;
 }
 
 const SearchPopUp: FC<IProps> = ({
@@ -34,13 +36,15 @@ const SearchPopUp: FC<IProps> = ({
   onChangeSearchWord,
   onPressEnter,
   inputRef,
+  width,
   setSearchWord,
 }) => {
   const onSelectSearchWord = useCallback((value: string) => {
     setSearchWord(value);
   }, []);
   return (
-    <SearchPopUpWrapper
+    <div
+      css={SearchPopUpWrapper(width)}
       onClick={(e) => {
         e.stopPropagation();
       }}
@@ -61,7 +65,7 @@ const SearchPopUp: FC<IProps> = ({
           option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
         }
       />
-    </SearchPopUpWrapper>
+    </div>
   );
 };
 

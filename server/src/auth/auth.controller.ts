@@ -36,8 +36,8 @@ export class AuthController {
     this.MailerService.sendMail({
       to: data.email,
       from: process.env.EMAIL_ID,
-      subject: 'Love Asia 이메일 인증 요청 메일입니다.',
-      html: `<p>안녕하세요. Love Asia 입니다. 인증번호를 보내드립니다. 인증번호를 입력하고 회원가입을 진행해주세요</p><br/><p>인증번호 : <b>${authNum}</b></p>`,
+      subject: 'Fall IN Asia 이메일 인증 요청 메일입니다.',
+      html: `<p>안녕하세요. Fall IN Asia 입니다. 인증번호를 보내드립니다. 인증번호를 입력하고 회원가입을 진행해주세요</p><br/><p>인증번호 : <b>${authNum}</b></p>`,
     });
     return true;
   }

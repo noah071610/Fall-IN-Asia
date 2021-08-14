@@ -62,7 +62,7 @@ const index: FC<IProps> = ({ initialUserInfo }) => {
   return (
     <>
       <Head>
-        <title>{userInfo?.name}님의 프로필 - Love Asia</title>
+        <title>{userInfo?.name}님의 프로필 - Fall In Asia</title>
       </Head>
       <UserInfoLayout>
         {isOwner && userInfo && userInfo?.notices.length > 0 ? (

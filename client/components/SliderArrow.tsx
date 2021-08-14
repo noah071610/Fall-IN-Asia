@@ -5,12 +5,12 @@ import { BLUE_COLOR, SM_SIZE } from "config";
 import tw from "twin.macro";
 
 const SliderRightArrow = styled.a`
-  ${tw`block z-10 top-1/2 -right-4 absolute text-4xl text-white p-4 `}
+  ${tw`block z-10 top-1/2 right-0 absolute text-4xl text-white p-4 opacity-50 `}
   transform: translateY(-50%);
   transition: 0.3s all;
   &:hover {
+    ${tw`text-white opacity-100`}
     transform: translate(10%, -50%);
-    color: ${BLUE_COLOR};
   }
   @media (max-width: ${SM_SIZE}) {
     ${tw`right-0 pr-0`}
@@ -18,12 +18,12 @@ const SliderRightArrow = styled.a`
 `;
 
 const SliderLeftArrow = styled.a`
-  ${tw`block z-10 top-1/2 -left-4 absolute text-4xl text-white p-4`}
+  ${tw`block z-10 top-1/2 left-0 absolute text-4xl text-white p-4 opacity-50`}
   transform: translateY(-50%);
   transition: 0.3s all;
   &:hover {
     transform: translate(-10%, -50%);
-    color: ${BLUE_COLOR};
+    ${tw`text-white opacity-100`}
   }
   @media (max-width: ${SM_SIZE}) {
     ${tw`left-0 pl-0`}

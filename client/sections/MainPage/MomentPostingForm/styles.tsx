@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RGB_BLACK, SM_SIZE } from "config";
 import tw from "twin.macro";
 
-export const MomentPostingFormWrapper = styled.div`
+export const MomentPostingFormWrapper = styled.section`
   ${tw`rounded-2xl bg-white p-2`}
   .selector-wrapper {
     ${FLEX_STYLE("flex-start", "center")};

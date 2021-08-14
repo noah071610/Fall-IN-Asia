@@ -10,7 +10,7 @@ import {
 import { Moments } from './Moments';
 import { Users } from './Users';
 
-@Entity({ schema: 'travelover', name: 'momentLike' })
+@Entity({ schema: 'fall-in-asia', name: 'momentLike' })
 export class MomentLike {
   @IsNumber()
   @IsNotEmpty()

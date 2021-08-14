@@ -7,7 +7,7 @@ interface IProps {
   image?: string;
   name?: string;
 }
-const StoryPosterWrapper = styled.div`
+const StoryPosterWrapper = styled.section`
   ${tw`relative w-full h-80`}
   background-repeat: no-repeat;
   ${FLEX_STYLE("center", "center")};

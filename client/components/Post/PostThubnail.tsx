@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 import { FLEX_STYLE, SM_SIZE } from "config";
 import tw from "twin.macro";
 
-export const PostThubnailWrapper = styled.div`
+export const PostThubnailWrapper = styled.section`
   ${FLEX_STYLE("center", "center", "column")};
   ${tw`mb-16`}
   .thumbnail {

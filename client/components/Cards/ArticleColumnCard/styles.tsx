@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { ELLIPSIS_STYLE, FLEX_STYLE, GRAY_COLOR, SM_SIZE } from "config";
 import tw from "twin.macro";
 
-export const ArticleColumnCardWrapper = styled.div`
+export const ArticleColumnCardWrapper = styled.article`
   ${tw`bg-white cursor-pointer pb-8 shadow-md`}
   transition:0.3s all;
   &:hover {

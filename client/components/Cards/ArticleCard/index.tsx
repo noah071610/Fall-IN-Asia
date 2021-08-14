@@ -17,9 +17,13 @@ const ArticleCard: FC<IProps> = ({ story }) => {
   }, [story]);
 
   return (
-    <div className="article-card-wrapper" css={ArticleCardWrapper()} onClick={onClickArticleCard}>
+    <article
+      className="article-card-wrapper"
+      css={ArticleCardWrapper()}
+      onClick={onClickArticleCard}
+    >
       <div className="image-wrapper">
-        <img src={story?.thumbnail ? story.thumbnail : NO_IMAGE_URL} alt="thai" />
+        <img src={story?.thumbnail ? story.thumbnail : NO_IMAGE_URL} alt="article-thumbnail" />
         <ul className="like-comment">
           <li>
             <CommentOutlined />
@@ -38,7 +42,7 @@ const ArticleCard: FC<IProps> = ({ story }) => {
         </div>
         <div className="story-content">{html2textConverter(story?.content)}</div>
       </div>
-    </div>
+    </article>
   );
 };
 

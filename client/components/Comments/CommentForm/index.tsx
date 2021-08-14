@@ -59,6 +59,7 @@ const CommentForm: FC<IProps> = ({ isStory, revalidateComments }) => {
 
   const onClickCommentForm = useCallback(() => {
     if (!user) {
+      toastErrorMessage("로그인이 필요합니다.");
       dispatch(mainSlice.actions.toggleLoginModal());
       return;
     }
@@ -80,7 +81,7 @@ const CommentForm: FC<IProps> = ({ isStory, revalidateComments }) => {
           className="comment-input"
         >
           <div className="icon">
-            <img src={user ? user.icon : DEFAULT_ICON_URL} alt="" />
+            <img src={user ? user.icon : DEFAULT_ICON_URL} alt="user-icon" />
           </div>
           <TextareaAutosize
             placeholder={user ? "댓글 작성하기." : "로그인이 필요합니다."}

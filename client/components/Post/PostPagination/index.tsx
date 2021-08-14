@@ -34,7 +34,7 @@ const PostPagination: FC<IProps> = ({ userId }) => {
           className="side-post prev-post"
         >
           <div className="image-wrapper">
-            <img src={sidePosts?.prevPost?.thumbnail || NO_IMAGE_URL} alt="" />
+            <img src={sidePosts?.prevPost?.thumbnail || NO_IMAGE_URL} alt="pagination_image" />
           </div>
           <div className="post-desc">
             <LeftOutlined />
@@ -53,7 +53,7 @@ const PostPagination: FC<IProps> = ({ userId }) => {
           className="side-post next-post"
         >
           <div className="image-wrapper">
-            <img src={sidePosts?.nextPost?.thumbnail || NO_IMAGE_URL} alt="" />
+            <img src={sidePosts?.nextPost?.thumbnail || NO_IMAGE_URL} alt="pagination_image" />
           </div>
           <div className="post-desc">
             <div>

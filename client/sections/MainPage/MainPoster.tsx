@@ -4,10 +4,12 @@ import Slider from "react-slick";
 import styled from "@emotion/styled";
 import { SM_SIZE, XLG_SIZE } from "config";
 import tw from "twin.macro";
+import { NextArrow, PrevArrow } from "@components/SliderArrow";
 
-const MainPosterWrapper = styled.div`
+const MainPosterWrapper = styled.section`
   width: ${XLG_SIZE};
-  ${tw`mx-auto rounded-2xl pt-24`}
+  ${tw`mx-auto rounded-2xl`}
+  padding-top:6.5rem;
   .slick-arrow {
     display: none !important;
   }
@@ -25,9 +27,11 @@ const settings = {
   infinite: true,
   speed: 300,
   autoplay: true,
-  autoplaySpeed: 2500,
+  autoplaySpeed: 5000,
   slidesToShow: 1,
   slidesToScroll: 1,
+  nextArrow: <NextArrow />,
+  prevArrow: <PrevArrow />,
 };
 
 interface IProps {}
@@ -37,12 +41,18 @@ const MainPoster: FC<IProps> = () => {
     <MainPosterWrapper>
       <Slider {...settings}>
         <PosterCard
-          image="https://images.unsplash.com/photo-1539755530862-00f623c00f52?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+          image="https://user-images.githubusercontent.com/74864925/129447142-48c58d87-d5e8-46ba-9052-8d1b8e1c383e.png"
           isMain={true}
+          path="/"
+          title="Share your infomation"
+          desc="모멘트 : 여행이라는 망망대해에서 길을 잃었나요? 물어봐요! 돈드는거 아니잖아요~"
         />
         <PosterCard
-          image="https://images.unsplash.com/photo-1512617835784-a92626c0a554?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80"
+          image="https://user-images.githubusercontent.com/74864925/129446624-f357679e-af98-41f7-a9ac-4f3dc434a551.png"
           isMain={true}
+          path="/story"
+          title="Leave and Share your memory"
+          desc="연대기 : 당신의 여정에는 어떤 일이 있었나요?"
         />
       </Slider>
     </MainPosterWrapper>

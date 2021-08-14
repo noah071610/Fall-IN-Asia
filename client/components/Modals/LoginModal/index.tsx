@@ -9,7 +9,7 @@ import { mainSlice } from "slices/main";
 import { logInAction, signupAction } from "actions/user";
 import { RootState } from "slices";
 import { userSlice } from "slices/user";
-import { toastErrorMessage, toastSuccessMessage } from "config";
+import { FALL_IN_ASIA_LOGO, toastErrorMessage, toastSuccessMessage } from "config";
 import SignupModal from "../SignupModal";
 import { IUserRequestForm } from "@typings/db";
 
@@ -77,10 +77,7 @@ const LoginModal: FC<IProps> = () => {
     <>
       <LoginModalWrapper>
         <div className="image-wrapper">
-          <img
-            src="https://mblogthumb-phinf.pstatic.net/20160607_89/bany87_1465308357582hemN3_PNG/%BD%BA%C5%A9%B8%B0%BC%A6_2016-06-07_%BF%C0%C8%C4_10.56.58.png?type=w2"
-            alt="logo-image"
-          />
+          <img src={FALL_IN_ASIA_LOGO} alt="logo-image" />
         </div>
         {onSignUp ? (
           <SignupModal
@@ -91,12 +88,12 @@ const LoginModal: FC<IProps> = () => {
         ) : (
           <form onSubmit={onSubmitLogin}>
             <h4>
-              <FontAwesomeIcon className="icon" icon={faUser} />
+              <FontAwesomeIcon className="login-icon" icon={faUser} />
               <span>이메일</span>
             </h4>
             <input className="basic-input" value={email} onChange={onChangeEmail} type="email" />
             <h4>
-              <FontAwesomeIcon className="icon" icon={faKey} />
+              <FontAwesomeIcon className="login-icon" icon={faKey} />
               <span>패스워드</span>
             </h4>
             <input

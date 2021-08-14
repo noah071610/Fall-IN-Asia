@@ -104,7 +104,7 @@ const about: FC<IProps> = () => {
   return (
     <>
       <Head>
-        <title>Love Asia - About us</title>
+        <title>Fall IN Asia - About us</title>
       </Head>
       <AboutPageWrapper>
         <div className="layout">
@@ -115,7 +115,7 @@ const about: FC<IProps> = () => {
             <div className="image-wrapper">
               <img
                 src="https://user-images.githubusercontent.com/74864925/127884325-018d43e0-881c-4d70-baa8-145fc9098514.jpg"
-                alt=""
+                alt="profile-image"
               />
               <div className="aboutme-btn-wrapper">
                 <button onClick={() => router.push("/news/post")}>기사 올리기</button>
@@ -157,10 +157,10 @@ const about: FC<IProps> = () => {
           </Divider>
           <div className="policy">
             <h2>
-              제1조(개인정보의 처리 목적) 장현수('www.loveasia.co.kr'이하 'Love Asia') 은(는) 다음의
-              목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의
-              용도로는 이용되지 않으며 이용 목적이 변경되는 겨우에는 「개인정보 보호법」 제18조에
-              따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.
+              제1조(개인정보의 처리 목적) 장현수('www.fallinasia.com'이하 'Fall IN Asia') 은(는)
+              다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적
+              이외의 용도로는 이용되지 않으며 이용 목적이 변경되는 겨우에는 「개인정보 보호법」
+              제18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.
             </h2>
             <br />
             1. 홈페이지 회원가입 및 관리 댓글 및 좋아요 서비스 이용 목적으로 개인정보를 처리합니다.{" "}

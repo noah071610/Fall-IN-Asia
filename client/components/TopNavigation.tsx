@@ -6,7 +6,7 @@ import { SwiperSlide, Swiper } from "swiper/react";
 
 const TopNavigationWrapper = styled.nav`
   ${tw`sticky`}
-  top:57px;
+  top:3rem;
   z-index: 1;
   ${BORDER_THIN("border-bottom")};
   .nav-outer {

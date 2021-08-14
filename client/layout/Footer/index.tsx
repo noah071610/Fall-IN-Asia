@@ -12,7 +12,7 @@ const Footer: FC<IProps> = () => {
     <FooterWrapper>
       <div className="footer-inner">
         <div className="footer-top">
-          <h1>Loveasia.co.kr</h1>
+          <h1>fallinasia.com</h1>
           <span>아시아를 사랑하는 여행자들의 작은 커뮤니티</span>
         </div>
         <div className="footer-list-wrapper">

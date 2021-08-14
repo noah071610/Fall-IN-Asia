@@ -1,12 +1,9 @@
-import { BLUE_COLOR, BORDER_THIN, GRAY_COLOR, RGB_BLACK, WHITE_COLOR } from "config";
+import { BLUE_COLOR, BORDER_THIN, GRAY_COLOR, MD_SIZE, RGB_BLACK, WHITE_COLOR } from "config";
 import tw from "twin.macro";
 
-export const resetStyles = `
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=Sawarabi+Gothic&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
+export const globalStyle = `
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
 
 *::-webkit-scrollbar {
   width: 5px;
@@ -33,7 +30,7 @@ export const resetStyles = `
 body,
 html {
   line-height: 1.2;
-  font-family: 'Sawarabi Gothic', sans-serif;
+  font-family: 'Spoqa Han Sans Neo', 'sans-serif';
 }
 
 body{
@@ -242,6 +239,13 @@ textarea {
   width: 100%;
   height: 100%;
   background: ${RGB_BLACK(0.4)};
+}
+
+.mobile-overlay {
+  display:none;
+  @media (max-width: ${MD_SIZE}) {
+    display:block;
+  }
 }
 
 .post-content{

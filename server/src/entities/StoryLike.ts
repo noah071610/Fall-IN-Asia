@@ -10,7 +10,7 @@ import {
 import { Stories } from './Stories';
 import { Users } from './Users';
 
-@Entity({ schema: 'travelover', name: 'storyLike' })
+@Entity({ schema: 'fall-in-asia', name: 'storyLike' })
 export class StoryLike {
   @IsNumber()
   @IsNotEmpty()

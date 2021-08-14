@@ -4,7 +4,7 @@ import tw from "twin.macro";
 
 export const SignupModalWrapper = styled.div`
   .email-wrapper {
-    ${GRID_STYLE("1rem", "calc(100% - 180px - 1rem) 180px")}
+    ${GRID_STYLE("1rem", "calc(100% - 120px - 1rem) 120px")}
     .ant-form-item-control-input-content {
       height: 100%;
       button {

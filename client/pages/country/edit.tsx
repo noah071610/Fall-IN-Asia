@@ -50,7 +50,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     axios.defaults.headers.Cookie = cookie;
   }
   await store.dispatch(getUserInfoAction());
-  const initialMoment = await fetcher(query && `/moment/${query?.code}/${query?.momentId}/0`);
+  const initialMoment = await fetcher(query && `/moment/${query?.code}/${query?.momentId}?uuid=0`);
   return {
     props: { initialMoment },
   };

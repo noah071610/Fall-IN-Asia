@@ -90,7 +90,7 @@ const MomentPost: FC<IProps> = ({ moment, revalidateMoment }) => {
                     key={i}
                     preview={{ mask: <ZoomInOutlined /> }}
                     src={v.image_src}
-                    alt="goods-image"
+                    alt="moment-image"
                   />
                 );
               })}

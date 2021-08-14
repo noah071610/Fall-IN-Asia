@@ -15,7 +15,7 @@ import { AppService } from './app.service';
 import { JsonResponeGenerator } from './intersepter/json.respone.middleware';
 
 @UseInterceptors(JsonResponeGenerator)
-@ApiTags('Travelover')
+@ApiTags('fall IN Asia')
 @Controller('/api')
 export class AppController {
   constructor(private readonly appService: AppService) {}

@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { RED_COLOR, SM_SIZE } from "config";
 import tw from "twin.macro";
 
-export const MomentPostWrapper = styled.div`
+export const MomentPostWrapper = styled.section`
   ${tw`mb-8 p-8 rounded-2xl bg-white`}
   .image-wrapper {
     ${tw`py-8 cursor-pointer rounded-xl`}

@@ -1,4 +1,4 @@
-import React, { FC, memo, useCallback, useEffect, useState } from "react";
+import React, { FC, memo, useEffect, useState } from "react";
 import { useRef } from "react";
 import { IMoment } from "@typings/db";
 import { MomentListWrapper } from "./styles";

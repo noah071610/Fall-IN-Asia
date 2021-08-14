@@ -11,9 +11,9 @@ import {
 } from "config";
 import tw from "twin.macro";
 import UserInfoAside from "@sections/UserPage/UserInfoAside";
-const UserInfoLayoutWrapper = styled.div`
+const UserInfoLayoutWrapper = styled.main`
   background: ${GRAY_COLOR};
-  padding: 6rem 0;
+  padding: 6.5rem 0;
   .layout {
     width: ${XLG_SIZE};
     ${tw`mx-auto`};

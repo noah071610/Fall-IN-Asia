@@ -6,7 +6,7 @@ import MainAsideLeftNav from "@sections/MainPage/MainAsideLeftNav";
 import MainAsideRightList from "@sections/MainPage/MainAsideRightList";
 import MainPoster from "@sections/MainPage/MainPoster";
 
-const MainLayoutWrapper = styled.div`
+const MainLayoutWrapper = styled.main`
   ${tw`bg-gray-100`}
   .layout {
     width: ${XLG_SIZE};

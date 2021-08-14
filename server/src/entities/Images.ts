@@ -13,7 +13,7 @@ import { Articles } from './Articles';
 import { Moments } from './Moments';
 import { Stories } from './Stories';
 
-@Entity({ schema: 'travelover', name: 'images' })
+@Entity({ schema: 'fall-in-asia', name: 'images' })
 export class Images {
   @IsNumber()
   @IsNotEmpty()

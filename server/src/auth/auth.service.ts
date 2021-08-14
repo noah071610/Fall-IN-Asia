@@ -36,7 +36,7 @@ export class AuthService {
 
   async validateSocialUser(profile: SocialProfileDto) {
     const user = await this.UserRepository.findOne({
-      where: { socialId: profile.socialId, provider: profile.provider },
+      where: [{ email: profile.email }, { socialId: profile.socialId }],
       select: ['id', 'icon'],
     });
     if (!user) {

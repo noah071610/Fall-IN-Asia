@@ -18,7 +18,7 @@ import { Images } from './Images';
 import { StoryLike } from './StoryLike';
 import { Users } from './Users';
 
-@Entity({ schema: 'travelover', name: 'stories' })
+@Entity({ schema: 'fall-in-asia', name: 'stories' })
 export class Stories {
   @IsNumber()
   @IsNotEmpty()

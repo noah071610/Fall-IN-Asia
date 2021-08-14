@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 import { Global } from "@emotion/react";
-import { resetStyles } from "@styles/resetStyles";
-import { useCallback, useEffect } from "react";
+import { globalStyle } from "@styles/styles";
+import { useCallback } from "react";
 import { wrapper } from "configureStore";
 import "antd/dist/antd.css";
 import "swiper/swiper.min.css";
@@ -20,10 +20,11 @@ import { RootState } from "slices";
 import { mainSlice } from "slices/main";
 import Head from "next/head";
 import MobileSlideMenu from "@layout/MobileSlideMenu";
+import Overlay from "@components/Modals/Overlay";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useDispatch();
-  const { onProfilePopUp, onNoticePopUp, onSearchPopUp } = useSelector(
+  const { onProfilePopUp, onNoticePopUp, onSearchPopUp, onSlideMenu } = useSelector(
     (state: RootState) => state.main
   );
 
@@ -48,12 +49,13 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <div onClick={onClickBody}>
-        <Global styles={resetStyles} />
+        <Global styles={globalStyle} />
         <Header />
         <Component {...pageProps} />
         <Footer />
         <ToastContainer />
         <MobileSlideMenu />
+        {onSlideMenu && <Overlay isMobile={true} />}
       </div>
     </>
   );

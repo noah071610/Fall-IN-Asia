@@ -1,15 +1,11 @@
-import XLGLayout from "@layout/XLGLayout";
+import React, { FC, useCallback, useState } from "react";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
 import { wrapper } from "configureStore";
-import React, { FC, useCallback, useMemo, useState } from "react";
-import { SwiperSlide, Swiper } from "swiper/react";
-import SwiperCore, { Pagination, EffectFade, Autoplay } from "swiper/core";
+
 import PosterCard from "@components/Cards/PosterCard";
-import "swiper/components/effect-fade/effect-fade.min.css";
-import "swiper/components/pagination/pagination.min.css";
 import useSWR, { useSWRInfinite } from "swr";
-import { IArticle, IStory } from "@typings/db";
+import { IArticle } from "@typings/db";
 import fetcher from "utils/fetcher";
 import {
   FLEX_STYLE,
@@ -28,7 +24,8 @@ import TopNavigation from "@components/TopNavigation";
 import ArticleSmallCard from "@components/Cards/ArticleSmallCard";
 import NewsArticleList from "@sections/NewsPage/NewsArticleList";
 import Head from "next/head";
-SwiperCore.use([EffectFade, Pagination, Autoplay]);
+import { NextArrow, PrevArrow } from "@components/SliderArrow";
+import Slider from "react-slick";
 
 const NewsPageWrapper = styled.div`
   padding-top: 4rem;
@@ -44,10 +41,6 @@ const NewsPageWrapper = styled.div`
     .layout-divide {
       ${GRID_STYLE("2rem", "3fr 1fr")};
     }
-  }
-  .swiper-pagination-bullet {
-    ${tw`rounded-none w-auto h-auto inline-block py-2 px-4 bg-white opacity-70 hover:opacity-100 mx-1 font-bold`}
-    transition:0.3s all;
   }
   .news-aside {
     .aside-title {
@@ -65,9 +58,6 @@ const NewsPageWrapper = styled.div`
       ${tw`text-base font-bold mb-4`}
     }
   }
-  .swiper-pagination {
-    ${tw`block`}
-  }
   @media (max-width: ${MD_SIZE}) {
     .news-layout {
       ${tw`w-full px-2`};
@@ -80,9 +70,6 @@ const NewsPageWrapper = styled.div`
     }
   }
   @media (max-width: ${SM_SIZE}) {
-    .swiper-pagination {
-      ${tw`hidden`}
-    }
     .no-article-wrapper {
       ${tw`p-0 mt-6`}
       height:300px;
@@ -98,7 +85,18 @@ interface IProps {
   initialAsideArticle: IArticle[];
 }
 
-const bulletTextByIndex = ["아름다운동행", "태국음식체험전", "러브캠핑"];
+const settings = {
+  dots: false,
+  fade: true,
+  infinite: true,
+  speed: 300,
+  autoplay: true,
+  autoplaySpeed: 5000,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  nextArrow: <NextArrow />,
+  prevArrow: <PrevArrow />,
+};
 
 const index: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
   const [type, setType] = useState("관광뉴스");
@@ -120,49 +118,31 @@ const index: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
     ...noRevalidate,
   });
 
-  const pagination = useMemo(() => {
-    return {
-      clickable: true,
-      renderBullet: (index: number) => {
-        return `<button class="swiper-pagination-bullet">${bulletTextByIndex[index]}</button>`;
-      },
-    };
-  }, []);
-
   const onClickList = useCallback((value: string) => {
     setType(value);
   }, []);
   return (
     <>
       <Head>
-        <title>Love Asia - news</title>
+        <title>Fall IN Asia - news</title>
       </Head>
       <NewsPageWrapper>
-        <Swiper
-          autoplay={{
-            pauseOnMouseEnter: true,
-            stopOnLastSlide: false,
-            disableOnInteraction: false,
-            delay: 5000,
-          }}
-          loop={true}
-          effect={"fade"}
-          slidesPerView={1}
-          className="mySwiper"
-          pagination={pagination}
-        >
-          <SwiperSlide>
-            <PosterCard image="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <PosterCard image="https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1189&q=80" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <PosterCard image="https://images.unsplash.com/photo-1492648272180-61e45a8d98a7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" />
-          </SwiperSlide>
-        </Swiper>
+        <Slider {...settings}>
+          <PosterCard
+            image="https://user-images.githubusercontent.com/74864925/129447142-48c58d87-d5e8-46ba-9052-8d1b8e1c383e.png"
+            path="/"
+            title="Share your infomation"
+            desc="모멘트 : 여행이라는 망망대해에서 길을 잃었나요? 물어봐요! 돈드는거 아니잖아요~"
+          />
+          <PosterCard
+            image="https://user-images.githubusercontent.com/74864925/129446624-f357679e-af98-41f7-a9ac-4f3dc434a551.png"
+            path="/story"
+            title="Leave and Share your memory"
+            desc="연대기 : 당신의 여정에는 어떤 일이 있었나요?"
+          />
+        </Slider>
         <TopNavigation onClickList={onClickList} filter={type} list={newsPageNavList} />
-        <div className="news-layout">
+        <main className="news-layout">
           <h2 className="main-title">{type}</h2>
           <div className="layout-divide">
             {articles && articles?.flat().length > 0 ? (
@@ -187,7 +167,7 @@ const index: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
               </aside>
             )}
           </div>
-        </div>
+        </main>
       </NewsPageWrapper>
     </>
   );

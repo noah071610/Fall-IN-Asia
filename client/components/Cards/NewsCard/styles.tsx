@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, ELLIPSIS_STYLE, SM_SIZE } from "config";
+import { ELLIPSIS_STYLE, SM_SIZE } from "config";
 import tw from "twin.macro";
 
-export const NewsCardWrapper = styled.div`
+export const NewsCardWrapper = styled.article`
   ${tw`cursor-pointer mb-4 flex shadow-md bg-white`}
   gap:0 1rem;
   &:hover {

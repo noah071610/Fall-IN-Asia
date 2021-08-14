@@ -37,7 +37,7 @@ const index: FC<IProps> = ({ initialMoments }) => {
   return (
     <>
       <Head>
-        <title>Love Asia</title>
+        <title>Fall IN Asia</title>
       </Head>
       <MainLayout>
         <h2 className="main-title">인기 여행지</h2>

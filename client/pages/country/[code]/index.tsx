@@ -54,7 +54,7 @@ const index: FC<IProps> = ({ initialMoments, initialCountry, initialNews }) => {
   return (
     <>
       <Head>
-        <title>Love Asia - {country?.name}</title>
+        <title>Fall IN Asia - {country?.name}</title>
       </Head>
       <MainLayout>
         {news && news.length > 0 && (

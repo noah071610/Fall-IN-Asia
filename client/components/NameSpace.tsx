@@ -15,9 +15,24 @@ export const NameSpaceWrapper = styled.div`
     }
   }
   .icon {
-    ${tw`cursor-pointer mr-3`};
+    ${tw`relative cursor-pointer mr-3`};
     img {
       ${tw`w-10 h-10 rounded-full`};
+    }
+    .profile-popup {
+      ${tw`absolute py-1 px-3 -left-7 -top-8 bg-gray-500 rounded shadow-lg hidden`}
+      width: 90px;
+      span {
+        ${tw`block w-full text-center text-xs font-bold text-white`}
+      }
+    }
+    &:hover {
+      img {
+        ${tw`opacity-30`};
+      }
+      .profile-popup {
+        ${tw`block`}
+      }
     }
   }
   p {
@@ -60,10 +75,13 @@ const NameSpace: FC<IProps> = ({ user, date, comment }) => {
   return (
     <NameSpaceWrapper className="name-space-wrapper">
       <div onClick={onClickGotoProfile} className="icon">
-        <img src={user?.icon ? user?.icon : DEFAULT_ICON_URL} alt="" />
+        <img src={user?.icon ? user?.icon : DEFAULT_ICON_URL} alt="user-icon" />
+        <div className="profile-popup">
+          <span>프로필 보기</span>
+        </div>
       </div>
       <div className="user-info">
-        <div className="name-title" onClick={onClickGotoProfile}>
+        <div className="name-title">
           <span className="name">{user?.name}</span>
           {comment && <span className="comment-date">{dateCalculator(date)}</span>}
         </div>

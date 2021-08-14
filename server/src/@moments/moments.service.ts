@@ -95,7 +95,6 @@ export class MomentsService {
       .leftJoin('moments.likedUser', 'likedUser')
       .where('moments.id= :id', { id: momentId })
       .andWhere('moments.code= :code', { code })
-      .orderBy('moments.id', 'DESC')
       .getOne();
 
     if (!post) {
@@ -220,6 +219,9 @@ export class MomentsService {
     });
     editPost.content = form.content;
     editPost.type = form.type;
+    if (!editPost) {
+      throw new NotFoundException('수정 할 게시물이 없습니다.');
+    }
 
     await this.ImagesRepository.delete({
       moment: <any>editPost.id,
@@ -241,9 +243,7 @@ export class MomentsService {
         await this.ImagesRepository.save(newImage);
       }
     }
-    if (!editPost) {
-      throw new NotFoundException('수정 할 게시물이 없습니다.');
-    }
+    await this.MomentsRepository.save(editPost);
     await this.NoticesRepository.save({
       header: `${country.name}/모멘트`,
       code: form.code,

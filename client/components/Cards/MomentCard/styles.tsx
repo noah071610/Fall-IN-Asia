@@ -2,12 +2,14 @@ import styled from "@emotion/styled";
 import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RED_COLOR, SM_SIZE } from "config";
 import tw from "twin.macro";
 
-export const MomentCardWrapper = styled.div`
+export const MomentCardWrapper = styled.article`
   ${tw`py-8 mx-6`}
   ${BORDER_THIN("border-bottom")};
   .article-header {
     a {
+      transition: none;
       &:hover {
+        ${tw`font-bold`}
         color: ${BLUE_COLOR};
       }
     }

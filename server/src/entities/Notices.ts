@@ -22,7 +22,7 @@ import { Moments } from './Moments';
 import { Stories } from './Stories';
 import { Users } from './Users';
 
-@Entity({ schema: 'travelover', name: 'notice' })
+@Entity({ schema: 'fall-in-asia', name: 'notice' })
 export class Notices {
   @IsNumber()
   @IsNotEmpty()

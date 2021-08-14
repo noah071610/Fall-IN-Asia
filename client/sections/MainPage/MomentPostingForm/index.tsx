@@ -3,7 +3,7 @@ import ImageDragger from "@components/Editor/ImageDragger";
 import { Select } from "antd";
 import { noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
 import React, { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MomentPostingFormWrapper } from "./styles";
 import router, { useRouter } from "next/router";
 import useSWR from "swr";
@@ -14,6 +14,7 @@ import { RootState } from "slices";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { UploadFile } from "antd/lib/upload/interface";
+import { mainSlice } from "slices/main";
 const { Option } = Select;
 
 const EditorWithoutImage = dynamic(import("@components/Editor/EditorWithoutImage"));
@@ -24,6 +25,7 @@ interface IProps {
 
 const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
   const { query } = useRouter();
+  const dispatch = useDispatch();
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher, noRevalidate);
   const [upImg, setUpImg] = useState<File[]>([]);
   const [content, setContent] = useState("");
@@ -118,6 +120,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
   const onClickOpenPostingForm = useCallback(() => {
     if (!user) {
       toastErrorMessage("로그인이 필요합니다.");
+      dispatch(mainSlice.actions.toggleLoginModal());
       return;
     }
     setOnPostingForm(true);

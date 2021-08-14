@@ -21,7 +21,7 @@ const ArticleSmallCard: FC<IProps> = ({ isSearchPage, moment, story, article }) 
   }, []);
 
   return (
-    <div css={ArticleSmallCardWrapper(isSearchPage)} onClick={onClickArticleSmallCard}>
+    <article css={ArticleSmallCardWrapper(isSearchPage)} onClick={onClickArticleSmallCard}>
       <div className="memont-small-top">
         <div className="image-wrapper">
           <img
@@ -41,7 +41,7 @@ const ArticleSmallCard: FC<IProps> = ({ isSearchPage, moment, story, article }) 
         </div>
       </div>
       <h2>{html2textConverter(moment?.content || story?.title || article?.title)}</h2>
-    </div>
+    </article>
   );
 };
 

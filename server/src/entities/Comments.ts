@@ -17,7 +17,7 @@ import { SubComments } from './SubComments';
 import { Users } from './Users';
 import { CommentLike } from './CommentLike';
 
-@Entity({ schema: 'travelover', name: 'comments' })
+@Entity({ schema: 'fall-in-asia', name: 'comments' })
 export class Comments {
   @IsNumber()
   @IsNotEmpty()

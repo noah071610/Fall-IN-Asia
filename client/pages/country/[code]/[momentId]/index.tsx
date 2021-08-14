@@ -62,7 +62,7 @@ const index: FC<IProps> = ({ initialMoments, initialCountry, initialMoment }) =>
     <>
       <Head>
         <title>
-          {moment?.country?.name}/{moment?.id}번모멘트 - Love Asia
+          {moment?.country?.name}/{moment?.id}번모멘트 - Fall IN Asia
         </title>
       </Head>
       <MainLayout>

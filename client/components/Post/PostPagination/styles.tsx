@@ -2,7 +2,7 @@ import styled from "@emotion/styled/macro";
 import { ELLIPSIS_STYLE, FLEX_STYLE, GRID_STYLE, MD_SIZE } from "config";
 import tw from "twin.macro";
 
-export const PostPaginationWrapper = styled.div`
+export const PostPaginationWrapper = styled.section`
   ${tw`w-2/3 mx-auto mt-4 mb-20`}
   .ant-divider {
     margin: 1rem 0;

@@ -13,8 +13,8 @@ export class AppService {
     private StoriesRepository: Repository<Stories>,
   ) {}
 
-  welcomeTravelover(): string {
-    return 'Hello Travelover! 코로나 끝나면 우리 모두 여행가자~!';
+  welcomeFallInAsia(): string {
+    return 'Hello Fall IN Asia! 코로나 끝나면 우리 모두 여행가자~!';
   }
   async getSearchPosts(searchWord: string) {
     const moments = await this.MomentsRepository.createQueryBuilder('moments')

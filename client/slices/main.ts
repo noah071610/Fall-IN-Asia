@@ -12,6 +12,7 @@ export interface MainState {
   searchWordLoading: boolean;
   searchWordDone: boolean;
   searchWordError: boolean;
+  onSlideMenu: boolean;
 }
 
 const mainState: MainState = {
@@ -25,6 +26,7 @@ const mainState: MainState = {
   searchWordLoading: false,
   searchWordDone: false,
   searchWordError: false,
+  onSlideMenu: false,
 };
 
 export const mainSlice = createSlice({
@@ -36,18 +38,21 @@ export const mainSlice = createSlice({
       state.onProfilePopUp = false;
       state.onNoticePopUp = false;
       state.onSearchPopUp = false;
+      state.onSlideMenu = false;
     },
     toggleIconCropperModal(state) {
       state.onIconCropperModal = !state.onIconCropperModal;
       state.onProfilePopUp = false;
       state.onNoticePopUp = false;
       state.onSearchPopUp = false;
+      state.onSlideMenu = false;
     },
     toggleWithdrawalModal(state) {
       state.onWithdrawalModal = !state.onWithdrawalModal;
       state.onProfilePopUp = false;
       state.onNoticePopUp = false;
       state.onSearchPopUp = false;
+      state.onSlideMenu = false;
     },
     toggleProfilePopUp(state) {
       state.onProfilePopUp = !state.onProfilePopUp;
@@ -56,6 +61,11 @@ export const mainSlice = createSlice({
     },
     toggleNoticePopUp(state) {
       state.onNoticePopUp = !state.onNoticePopUp;
+      state.onLoginModal = false;
+      state.onSearchPopUp = false;
+    },
+    toggleSlideMenu(state) {
+      state.onSlideMenu = !state.onSlideMenu;
       state.onLoginModal = false;
       state.onSearchPopUp = false;
     },
@@ -77,6 +87,9 @@ export const mainSlice = createSlice({
     closeSearchPopUp(state) {
       state.onSearchPopUp = false;
     },
+    closeSlideMenu(state) {
+      state.onSlideMenu = false;
+    },
     closeModal(state) {
       state.onLoginModal = false;
       state.onIconCropperModal = false;
@@ -84,6 +97,7 @@ export const mainSlice = createSlice({
       state.onNoticePopUp = false;
       state.onProfilePopUp = false;
       state.onSearchPopUp = false;
+      state.onSlideMenu = false;
     },
     clearSearchWord(state) {
       state.searchWordLoading = false;

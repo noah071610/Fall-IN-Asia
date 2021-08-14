@@ -135,7 +135,7 @@ export class MomentsController {
   }
 
   @ApiOperation({ summary: 'Get one post for post page' })
-  @Get(':code/:momentId')
+  @Get('/:code/:momentId')
   async getOnePost(
     @Param('code') code: string,
     @Param('momentId', ParseIntPipe) momentId: number,

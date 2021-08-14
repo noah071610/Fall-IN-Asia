@@ -6,7 +6,7 @@ import tw from "twin.macro";
 import styled from "@emotion/styled/macro";
 import { FLEX_STYLE } from "config";
 
-const PostProfileWrapper = styled.div`
+const PostProfileWrapper = styled.section`
   ${tw`mt-12 mb-8 w-full`}
   ${FLEX_STYLE("center", "center")};
   .owner-info-wrapper {
@@ -24,7 +24,7 @@ const PostProfileWrapper = styled.div`
       ${tw`mt-4 text-center font-bold`}
     }
     .introduce {
-      ${tw`mt-2 text-xs`}
+      ${tw`mt-3 text-xs leading-6 text-center`}
     }
   }
   .links {
@@ -57,11 +57,11 @@ const PostProfile: FC<IProps> = ({ story }) => {
       <div className="owner-info-wrapper">
         <span id="user_info" className="anchor-offset-controller" />
         <div onClick={onClickGotoProfile} className="icon">
-          <img src={story?.user?.icon ? story.user.icon : DEFAULT_ICON_URL} alt="" />
+          <img src={story?.user?.icon ? story.user.icon : DEFAULT_ICON_URL} alt="user_icon" />
         </div>
         <div className="info">
           <h2 className="name">{story?.user.name}</h2>
-          <p className="introduce">여행이 너무 즐겁고 설레는 노아입니다.</p>
+          <p className="introduce">{story?.user.introduce}</p>
         </div>
         <div className="links">
           <button onClick={onClickGotoProfile}>프로필 구경가기</button>

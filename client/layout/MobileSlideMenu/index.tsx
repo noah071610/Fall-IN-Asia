@@ -1,20 +1,14 @@
-import {
-  faEdit,
-  faSignInAlt,
-  faSignOutAlt,
-  faTimes,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faSignOutAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { BLUE_COLOR, DEFAULT_ICON_URL, WHITE_COLOR } from "config";
+import { BLUE_COLOR, DEFAULT_ICON_URL, FALL_IN_ASIA_LOGO, WHITE_COLOR } from "config";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { MobileSlideMenuWrapper } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import Link from "next/link";
 import { logoutAction } from "actions/user";
-import { Divider, Avatar } from "antd";
-import router, { useRouter } from "next/router";
+import { Divider } from "antd";
+import { useRouter } from "next/router";
 import { mainSlice } from "slices/main";
 import Overlay from "@components/Modals/Overlay";
 
@@ -59,11 +53,7 @@ const MobileSlideMenu: FC<IProps> = () => {
       >
         <div>
           <a>
-            <img
-              className="slide-menu-logo"
-              src="https://user-images.githubusercontent.com/74864925/123951789-21ecc980-d9e0-11eb-9f3c-421cbea7d9cf.png"
-              alt="logo"
-            />
+            <img className="slide-menu-logo" src={FALL_IN_ASIA_LOGO} alt="logo" />
           </a>
         </div>
         <Divider className="slide-menu-divider" orientation="left">
@@ -163,7 +153,6 @@ const MobileSlideMenu: FC<IProps> = () => {
           </div>
         </div>
       </MobileSlideMenuWrapper>
-      <Overlay />
     </>
   );
 };

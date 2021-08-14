@@ -3,7 +3,7 @@ import styled from "@emotion/styled/macro";
 import { GRID_STYLE, LG_SIZE, XLG_SIZE } from "config";
 import tw from "twin.macro";
 import PostAsideNav from "@components/Post/PostAsideNav";
-const PostLayoutWrapper = styled.div`
+const PostLayoutWrapper = styled.main`
   width: ${XLG_SIZE};
   ${tw`mx-auto p-8`};
   ${GRID_STYLE("2rem", "4fr 1fr")};

@@ -15,7 +15,7 @@ import { Countries } from './Countries';
 import { Images } from './Images';
 import { Users } from './Users';
 
-@Entity({ schema: 'travelover', name: 'articles' })
+@Entity({ schema: 'fall-in-asia', name: 'articles' })
 export class Articles {
   @Index()
   @IsNumber()

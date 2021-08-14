@@ -22,7 +22,7 @@ import { CommentLike } from './CommentLike';
 import { Articles } from './Articles';
 
 @Index('email', ['email'], { unique: true })
-@Entity({ schema: 'travelover', name: 'users' })
+@Entity({ schema: 'fall-in-asia', name: 'users' })
 export class Users {
   @Index()
   @IsNumber()
@@ -69,7 +69,7 @@ export class Users {
     name: 'email',
     select: false,
     unique: true,
-    length: 30,
+    length: 50,
     nullable: true,
   })
   email: string;
@@ -80,7 +80,7 @@ export class Users {
     example: '장현수',
     description: 'name',
   })
-  @Column('varchar', { name: 'name', length: 15 })
+  @Column('varchar', { name: 'name', length: 30 })
   name: string;
 
   @IsString()

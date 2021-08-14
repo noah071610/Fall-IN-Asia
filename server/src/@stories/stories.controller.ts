@@ -22,7 +22,6 @@ import multer from 'multer';
 import path from 'path';
 import { User } from 'src/decorators/user.decorator';
 import { StoryCreateDto, StoryEditDto } from 'src/@stories/stories.dto';
-import { RealIP } from 'nestjs-real-ip';
 
 @UseInterceptors(JsonResponeGenerator)
 @ApiTags('Story')
@@ -174,7 +173,6 @@ export class StoriesController {
     @Param('code') code: string,
     @Param('storyId', ParseIntPipe) storyId: number,
     @Query('uuid') uuid: string,
-    @RealIP() ip: string,
   ) {
     const post = await this.StoriesService.getOnePost(storyId, code, uuid);
     return post;

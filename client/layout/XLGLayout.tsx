@@ -2,7 +2,7 @@ import { FC, RefObject } from "react";
 import styled from "@emotion/styled/macro";
 import { XLG_SIZE } from "config";
 import tw from "twin.macro";
-const XLGLayoutWrapper = styled.div`
+const XLGLayoutWrapper = styled.main`
   width: ${XLG_SIZE};
   ${tw`mx-auto py-8`};
   .main-title {

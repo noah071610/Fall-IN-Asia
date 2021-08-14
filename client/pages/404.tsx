@@ -30,7 +30,7 @@ const notFound: FC<IProps> = () => {
   return (
     <>
       <Head>
-        <title>Love Asia - Not Found</title>
+        <title>Fall IN Asia - Not Found</title>
       </Head>
       <NotFoundWrapper>
         <h1>NOT FOUND</h1>

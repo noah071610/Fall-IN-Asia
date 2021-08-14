@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import styled from "@emotion/styled";
 import { GRAY_COLOR, LG_SIZE } from "config";
 import tw from "twin.macro";
-const Wrapper = styled.div`
+const LGLayoutWrapper = styled.main`
   ${tw`pt-16`}
   background-color: ${GRAY_COLOR};
   .layout {
@@ -24,9 +24,9 @@ interface LGLayout {}
 
 const LGLayout: FC<LGLayout> = ({ children }) => {
   return (
-    <Wrapper>
+    <LGLayoutWrapper>
       <div className="layout">{children}</div>
-    </Wrapper>
+    </LGLayoutWrapper>
   );
 };
 

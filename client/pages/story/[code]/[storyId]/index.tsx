@@ -39,6 +39,9 @@ const StoryPostWrapper = styled.div`
   .post-content {
     ${tw`pb-16 relative`}
   }
+  .main-story-article {
+    user-select: none;
+  }
 `;
 
 interface IProps {
@@ -47,7 +50,6 @@ interface IProps {
 }
 
 const index: FC<IProps> = ({ initialStories, initialStory }) => {
-  const dispatch = useDispatch();
   const { query } = useRouter();
   const [uuid, setUUID] = useState("");
   const [isOwner, setIsOwner] = useState(false);
@@ -120,10 +122,14 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
     }
   }, [user, isOwner, story]);
 
+  const onClickStoryPost = useCallback((e) => {
+    e.preventDefault();
+    console.log(e);
+  }, []);
   return (
     <>
       <Head>
-        <title>{story?.title} - Love Asia</title>
+        <title>{story?.title} - Fall IN Asia</title>
       </Head>
       <StoryPostWrapper>
         <PostLayout>
@@ -159,10 +165,10 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
               </h2>
               <CountryMap lat={story?.lat} lng={story?.lng} />
               <Divider />
-              <div className="post-content">
+              <article className="main-story-article">
                 <span id="main_post" className="anchor-offset-controller" />
                 {ReactHtmlParser(story?.content as string)}
-              </div>
+              </article>
               <PostProfile story={story} />
               <PostPagination userId={story?.user.id} />
               <PostComment revalidateStory={revalidateStory} story={story} />

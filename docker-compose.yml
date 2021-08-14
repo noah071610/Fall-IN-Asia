@@ -1,0 +1,33 @@
+version: "3"
+services:
+  database:
+    build:
+      dockerfile: Dockerfile
+      context: ./database
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+
+  server:
+    build:
+      dockerfile: Dockerfile
+      context: ./server
+    volumes:
+      - /usr/src/app/node_modules
+      - ./server:/usr/src/app
+    ports:
+      - "3060:3060"
+    environment:
+      - DBHOST=database
+
+  client:
+    build:
+      dockerfile: Dockerfile
+      context: ./client
+    volumes:
+      - /usr/src/app/node_modules
+      - ./client:/usr/src/app
+    ports:
+      - "3000:3000"
+    stdin_open: true
