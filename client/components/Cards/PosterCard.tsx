@@ -49,19 +49,24 @@ interface IProps {
 }
 
 const PosterCard: FC<IProps> = ({ isMain, image, title, desc, link, path }) => {
-  const onClickPoster = useCallback(() => {
-    if (path) {
-      router.push(path);
-      return;
-    }
-    if (link) {
-      window.open(link, "_blank");
-      return;
-    }
-  }, [path, link]);
+  const onClickPoster = useCallback(
+    (e) => {
+      e.stopPropagation();
+      if (path) {
+        router.push(path);
+        return;
+      }
+      if (link) {
+        window.open(link, "_blank");
+        return;
+      }
+    },
+    [path, link]
+  );
+
   return (
     <div
-      onClick={onClickPoster}
+      onClick={(e) => onClickPoster(e)}
       css={PosterCardWrapper(isMain)}
       style={{
         backgroundImage: `url(${image || WORLD_IMAGE}

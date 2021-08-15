@@ -58,6 +58,9 @@ const NewsPageWrapper = styled.div`
       ${tw`text-base font-bold mb-4`}
     }
   }
+  .slick-active {
+    z-index: 999;
+  }
   @media (max-width: ${MD_SIZE}) {
     .news-layout {
       ${tw`w-full px-2`};

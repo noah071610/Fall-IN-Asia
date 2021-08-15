@@ -19,7 +19,7 @@ export const NameSpaceWrapper = styled.div`
     img {
       ${tw`w-10 h-10 rounded-full`};
     }
-    .profile-popup {
+    .goto-profile-popup {
       ${tw`absolute py-1 px-2 -left-5 -top-8 bg-gray-500 rounded shadow-lg hidden text-center text-xs font-bold text-white`}
       white-space: nowrap;
     }
@@ -73,7 +73,7 @@ const NameSpace: FC<IProps> = ({ user, date, comment }) => {
     <NameSpaceWrapper className="name-space-wrapper">
       <div onClick={onClickGotoProfile} className="icon">
         <img src={user?.icon ? user?.icon : DEFAULT_ICON_URL} alt="user-icon" />
-        <span className="profile-popup">프로필 보기</span>
+        <span className="goto-profile-popup">프로필 보기</span>
       </div>
       <div className="user-info">
         <div className="name-title">

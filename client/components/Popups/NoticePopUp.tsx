@@ -8,8 +8,9 @@ import { INotice } from "@typings/db";
 import router from "next/router";
 import { readNoticeAction } from "actions/user";
 const NoticePopUpWrapper = styled.ul`
-  ${tw`absolute top-10 right-0 bg-white shadow-md rounded-xl overflow-hidden w-80`}
-  z-index:80;
+  ${tw`absolute right-0 bg-white shadow-md rounded-xl overflow-hidden w-80`}
+  top:130%;
+  z-index: 80;
   h2 {
     ${tw`pt-4 px-4 pb-2 text-sm font-bold`}
   }
