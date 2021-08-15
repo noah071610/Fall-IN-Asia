@@ -10,6 +10,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import helmet from 'helmet';
 import csurf from 'csurf';
 import hpp from 'hpp';
+
 declare const module: any;
 
 async function bootstrap() {
@@ -42,6 +43,7 @@ async function bootstrap() {
         httpOnly: true,
         secure: prod ? true : false,
         domain: prod && process.env.BACK_URL,
+        maxAge: 1000 * 60 * 60,
       },
       proxy: prod ? true : false,
     }),
@@ -53,7 +55,7 @@ async function bootstrap() {
     app.use(csurf());
     app.use(hpp());
     app.enableCors({
-      origin: process.env.BACK_URL,
+      origin: process.env.CLIENT_URL,
       credentials: true,
     });
     setTimeout(() => {

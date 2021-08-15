@@ -7,7 +7,6 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  Query,
   Req,
   Res,
   UploadedFile,
@@ -26,6 +25,7 @@ import { User } from 'src/decorators/user.decorator';
 import { UserSignUpDto } from 'src/@users/users.dto';
 import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
 import { UsersService } from './users.service';
+import { SessionData } from 'express-session';
 
 @UseInterceptors(JsonResponeGenerator)
 @ApiTags('User')
@@ -35,7 +35,7 @@ export class UsersController {
 
   @ApiOperation({ summary: 'get the user infomation' })
   @Get()
-  getUserInfo(@User() user) {
+  getUserInfo(@Req() req, @User() user) {
     return user || false;
   }
 
