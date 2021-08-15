@@ -8,7 +8,7 @@ import { getUserInfoAction } from "actions/user";
 import Head from "next/head";
 import { useDispatch } from "react-redux";
 
-export const NotFoundWrapper = styled.div`
+export const NotFoundWrapper = styled.main`
   ${tw`pt-16`}
   height: 80vh;
   ${FLEX_STYLE("center", "center", "column")};
@@ -41,7 +41,7 @@ const notFound: FC<IProps> = () => {
   );
 };
 
-export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+export const getStaticProps = wrapper.getStaticProps(() => async () => {
   return {
     props: {},
   };

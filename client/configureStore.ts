@@ -14,7 +14,6 @@ const makeStore = () =>
   configureStore({
     reducer,
     devTools: process.env.NODE_ENV !== "production",
-    middleware: getDefaultMiddleware(),
   });
 
 export type AppStore = ReturnType<typeof makeStore>;

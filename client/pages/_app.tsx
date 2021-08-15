@@ -28,7 +28,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     (state: RootState) => state.main
   );
 
-  const onClickBody = useCallback(
+  const onClickClosePopup = useCallback(
     (e) => {
       if (onProfilePopUp) {
         dispatch(mainSlice.actions.closeProfilePopUp());
@@ -48,7 +48,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <div onClick={onClickBody}>
+      <div onClick={onClickClosePopup}>
         <Global styles={globalStyle} />
         <Header />
         <Component {...pageProps} />

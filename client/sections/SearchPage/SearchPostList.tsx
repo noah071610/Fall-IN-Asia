@@ -5,10 +5,10 @@ import { IMoment, IStory } from "@typings/db";
 import { Divider } from "antd";
 import React, { FC, useCallback, useState } from "react";
 import styled from "@emotion/styled";
-import { GRID_STYLE, SM_SIZE } from "config";
+import { GRID_STYLE } from "config";
 import tw from "twin.macro";
 
-const SearchPostListWrapper = styled.div`
+const SearchPostListWrapper = styled.section`
   .searched-post-wrapper {
     ${GRID_STYLE("1rem", "repeat(4,1fr)")}
     @media (max-width: 1000px) {

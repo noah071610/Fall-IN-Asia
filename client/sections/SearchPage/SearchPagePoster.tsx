@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { FLEX_STYLE, SM_SIZE, XLG_SIZE } from "config";
 import tw from "twin.macro";
 
-const SearchPagePosterWrapper = styled.div`
+const SearchPagePosterWrapper = styled.section`
   ${tw`w-full h-60`}
   background-repeat: no-repeat;
   background-position: center;
@@ -46,7 +46,6 @@ interface IProps {
 
 const SearchPagePoster: FC<IProps> = ({ searchWord }) => {
   const dispatch = useDispatch();
-
   const onClickSearchAnotherBtn = useCallback((e) => {
     e.stopPropagation();
     dispatch(mainSlice.actions.openSearchPopUp());

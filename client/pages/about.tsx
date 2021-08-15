@@ -107,11 +107,11 @@ const about: FC<IProps> = () => {
         <title>Fall IN Asia - About us</title>
       </Head>
       <AboutPageWrapper>
-        <div className="layout">
+        <main className="layout">
           <Divider style={{ marginBottom: "2rem" }} orientation="left">
             <h2>About us</h2>
           </Divider>
-          <div className="aboutme">
+          <section className="aboutme">
             <div className="image-wrapper">
               <img
                 src="https://user-images.githubusercontent.com/74864925/127884325-018d43e0-881c-4d70-baa8-145fc9098514.jpg"
@@ -151,11 +151,11 @@ const about: FC<IProps> = () => {
                 </li>
               </ul>
             </div>
-          </div>
+          </section>
           <Divider style={{ marginBottom: "2rem" }} orientation="left">
             <h2 id="policy">Policy</h2>
           </Divider>
-          <div className="policy">
+          <section className="policy">
             <h2>
               제1조(개인정보의 처리 목적) 장현수('www.fallinasia.com'이하 'Fall IN Asia') 은(는)
               다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적
@@ -233,8 +233,8 @@ const about: FC<IProps> = () => {
             <br />• ▶ 개인정보 보호책임자
             <br /> • 성명 :장현수 <br />• 연락처 :010-5672-3486,
             <br />• noah071610@naver.com,
-          </div>
-        </div>
+          </section>
+        </main>
       </AboutPageWrapper>
     </>
   );
