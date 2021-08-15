@@ -9,7 +9,7 @@ import { logoutAction } from "actions/user";
 import { mainSlice } from "slices/main";
 
 const ProfilePopUpWrapper = styled.ul`
-  ${tw`absolute top-12 right-0 bg-white shadow-md rounded-xl overflow-hidden w-auto`}
+  ${tw`absolute top-10 right-0 bg-white shadow-md rounded-xl overflow-hidden w-auto`}
   z-index:80;
   white-space: nowrap;
   li {

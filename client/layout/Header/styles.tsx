@@ -4,7 +4,7 @@ import tw from "twin.macro";
 
 export const HeaderWrapper = (headerDownSize: boolean) => css`
   ${tw`w-full bg-white fixed`}
-  ${headerDownSize ? tw`py-2 px-6` : tw`py-4 px-8`}
+  ${headerDownSize ? tw`py-2 px-4` : tw`py-4 px-8`}
   z-index:60;
   transition: 0.3s all;
   ${BORDER_THIN("border-bottom")};
@@ -22,7 +22,6 @@ export const HeaderWrapper = (headerDownSize: boolean) => css`
     transition: 0.3s all;
     ${tw`ml-3 relative`}
     padding: 0.3rem 0.5rem;
-
     &-anchor {
       transition: 0.3s all;
       ${tw`font-bold`}
@@ -31,11 +30,14 @@ export const HeaderWrapper = (headerDownSize: boolean) => css`
   }
 
   .notice-icon,
-  .search-icon {
+  .search-icon,
+  .menu-icon {
     ${headerDownSize ? tw`text-base` : tw`text-2xl`}
   }
   .user-icon {
-    ${headerDownSize && `transform:scale(0.8)`}
+    ${tw`w-10 h-10 rounded-full`}
+    transition: 0.3s all;
+    ${headerDownSize && tw`w-8 h-8`}
   }
 
   @media (max-width: ${MD_SIZE}) {

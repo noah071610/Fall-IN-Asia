@@ -21,11 +21,15 @@ const HeaderRightWrapper = styled.ul`
     ${tw`rounded-full hover:bg-gray-100 relative`}
     transition: 0.3s all;
     .circle-icon {
-      ${tw`absolute bottom-0 right-0 text-2xs text-green-300`}
+      ${tw`absolute bottom-0 right-0 text-xs text-green-300`}
     }
-    .user-icon {
-      ${tw`w-10 h-10 rounded-full`}
+    &-anchor {
+      ${FLEX_STYLE("center", "center")};
+    }
+    &-login {
       transition: 0.3s all;
+      ${tw`ml-3 relative`}
+      padding: 0.3rem 0.5rem;
     }
   }
   @media (max-width: ${MD_SIZE}) {
@@ -95,7 +99,7 @@ const HeaderRight: FC<IProps> = ({ onClickSearchWord, children }) => {
       >
         {children}
         <a
-          className="header-anchor"
+          className="header-list-anchor"
           onClick={onSearchPopUp ? onClickSearchWord : () => onClickMenuPopup("search")}
         >
           <FontAwesomeIcon className="search-icon" icon={faSearch} />
@@ -104,22 +108,22 @@ const HeaderRight: FC<IProps> = ({ onClickSearchWord, children }) => {
       {user ? (
         <>
           <li className="header-list">
-            <a className="header-anchor" onClick={() => onClickMenuPopup("notice")}>
+            <a className="header-list-anchor" onClick={() => onClickMenuPopup("notice")}>
               <FontAwesomeIcon className="notice-icon" icon={faBell} />
               {!isAllReadNotices && <FontAwesomeIcon className="circle-icon" icon={faCircle} />}
             </a>
             {onNoticePopUp && <NoticePopUp />}
           </li>
           <li className="header-list" style={{ padding: 0, marginLeft: "1.2rem" }}>
-            <a className="header-anchor" onClick={() => onClickMenuPopup("profile")}>
+            <a className="header-list-anchor" onClick={() => onClickMenuPopup("profile")}>
               <img className="user-icon" src={user?.icon} alt={user?.name} />
             </a>
             {onProfilePopUp && <ProfilePopUp />}
           </li>
         </>
       ) : (
-        <li className="header-list">
-          <a className="header-anchor" onClick={() => onClickMenuPopup("login")}>
+        <li className="header-list-login">
+          <a className="header-list-anchor" onClick={() => onClickMenuPopup("login")}>
             로그인
           </a>
         </li>

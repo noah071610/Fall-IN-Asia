@@ -8,10 +8,6 @@ import styled from "@emotion/styled";
 
 const HeaderLeftWrapper = styled.ul`
   ${FLEX_STYLE("flex-start", "center")};
-  .header-list {
-    transition: 0.3s all;
-    ${tw`mr-6`}
-  }
   @media (max-width: ${MD_SIZE}) {
     ${tw`hidden`}
   }

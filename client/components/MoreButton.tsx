@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, memo } from "react";
 import styled from "@emotion/styled";
 import tw from "twin.macro";
 import { BORDER_THIN, FLEX_STYLE } from "config";
@@ -20,4 +20,4 @@ const MoreButton: FC<IProps> = ({ onClickMoreBtn }) => {
   );
 };
 
-export default MoreButton;
+export default memo(MoreButton);

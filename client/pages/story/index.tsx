@@ -27,7 +27,6 @@ import ArticleCard from "@components/Cards/ArticleCard";
 import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
-import MoreButton from "@components/MoreButton";
 import Head from "next/head";
 
 const StoryMainWrapper = styled.div`
@@ -39,19 +38,9 @@ const StoryMainWrapper = styled.div`
   .story-top-section {
     ${tw`pt-16`}
   }
-  .story-post-btn-wrapper {
-    ${FLEX_STYLE("flex-end", "center")};
-  }
-  .more-icon {
-    font-size: 2rem;
-    color: ${RGB_BLACK(0.15)};
-  }
-  .story-post-btn {
-    ${tw`p-2 w-32 rounded-xl`}
+  .more-story-btn {
+    ${tw`py-1 px-3 ml-4 rounded-lg text-xs font-bold hover:shadow-md`}
     ${BORDER_THIN("border")};
-    &:hover {
-      ${tw`shadow-md`}
-    }
   }
   .popular-story-wrapper {
     .article-card-wrapper {
@@ -128,8 +117,11 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
     } else {
       nav_list.push({ name: "국가선택", value: "country" });
     }
+    if (user) {
+      nav_list.push({ name: "연대기올리기", value: "post" });
+    }
     return nav_list;
-  }, [query]);
+  }, [query, user]);
 
   const { data: countries } = useSWR<ICountry[]>(`/country`, fetcher, noRevalidate);
 
@@ -147,6 +139,10 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
   const onClickList = useCallback((value: string) => {
     if (value === "all_country") {
       router.push("/story");
+      return;
+    }
+    if (value === "post") {
+      router.push("/story/post");
       return;
     }
     setFilter(value);
@@ -176,20 +172,20 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
         )}
         <TopNavigation filter={filter} onClickList={onClickList} list={storyPageNav} />
         <XLGLayout>
-          {user && (
-            <div className="story-post-btn-wrapper">
-              <button className="story-post-btn" onClick={() => router.push("/story/post")}>
-                연대기 올리기
-              </button>
-            </div>
-          )}
           {onAllCountries && (
             <>
               <h2 className="main-title">국가선택</h2>
               <MainCountryAllview isMain={false} countries={countries} />
             </>
           )}
-          <h2 className="main-title">인기연대기</h2>
+          <h2 style={{ display: "flex", alignItems: "center" }} className="main-title">
+            인기연대기
+            {popularStories && !onMorePopularStory && popularStories?.length > 1 && (
+              <button className="more-story-btn" onClick={onClickMorePopularStoryBtn}>
+                더보기
+              </button>
+            )}
+          </h2>
           {popularStories && (
             <>
               <div className="popular-story-wrapper">
@@ -203,9 +199,6 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
                   popularStories?.slice(1).map((v, i) => {
                     return <ArticleColumnCard key={i} story={v} />;
                   })}
-                {!onMorePopularStory && popularStories?.length > 1 && (
-                  <MoreButton onClickMoreBtn={onClickMorePopularStoryBtn} />
-                )}
               </div>
             </>
           )}

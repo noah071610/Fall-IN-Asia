@@ -19,8 +19,13 @@ const HeaderSmallWrapper = styled.ul`
     li {
       ${FLEX_STYLE("center", "center")};
     }
+    .header {
+      &-list {
+        margin: 0;
+      }
+    }
     .header-logo {
-      ${tw`m-0`}
+      margin: 0 !important;
     }
   }
 `;
@@ -43,9 +48,9 @@ const HeaderSmall: FC<IProps> = ({ onClickSearchWord, children }) => {
     <HeaderSmallWrapper>
       {!onSearchPopUp && (
         <>
-          <li onClick={onClickSlideMenu}>
-            <a className="header-anchor">
-              <FontAwesomeIcon className="icon" icon={faBars} />
+          <li className="header-list" onClick={onClickSlideMenu}>
+            <a className="header-list-anchor">
+              <FontAwesomeIcon className="menu-icon" icon={faBars} />
             </a>
           </li>
           <li>
@@ -58,12 +63,12 @@ const HeaderSmall: FC<IProps> = ({ onClickSearchWord, children }) => {
         </>
       )}
       {children}
-      <li style={onSearchPopUp ? { height: "40px" } : {}}>
+      <li className="header-list" style={onSearchPopUp ? { height: "40px" } : {}}>
         <a
-          className="header-anchor"
-          onClick={onSearchPopUp ? onClickSearchWord : () => onClickSearchPopup}
+          className="header-list-anchor"
+          onClick={onSearchPopUp ? onClickSearchWord : onClickSearchPopup}
         >
-          <FontAwesomeIcon className="icon" icon={faSearch} />
+          <FontAwesomeIcon className="notice-icon" icon={faSearch} />
         </a>
       </li>
     </HeaderSmallWrapper>
