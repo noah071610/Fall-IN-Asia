@@ -1,0 +1,35 @@
+import { Moments } from './Moments';
+import { Comments } from './Comments';
+import { Stories } from './Stories';
+import { MomentLike } from './MomentLike';
+import { Notices } from './Notices';
+import { SubComments } from './SubComments';
+import { StoryLike } from './StoryLike';
+import { Follow } from './Follow';
+import { CommentLike } from './CommentLike';
+import { Articles } from './Articles';
+export declare class Users {
+    id: number;
+    socialId: string;
+    provider: string;
+    email: string;
+    name: string;
+    introduce: string;
+    icon: string;
+    password: string;
+    admin: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date | null;
+    followers: Follow[];
+    followings: Follow[];
+    moments: Moments[];
+    stories: Stories[];
+    articles: Articles[];
+    comments: Comments[];
+    subComments: SubComments[];
+    likeMoment: MomentLike[];
+    likeComment: CommentLike[];
+    likeStory: StoryLike[];
+    notices: Notices[];
+}
