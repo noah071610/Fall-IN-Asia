@@ -2,3 +2,5 @@
 .next/* filter=lfs diff=lfs merge=lfs -text
 client/.next filter=lfs diff=lfs merge=lfs -text
 client/.next/* filter=lfs diff=lfs merge=lfs -text
+0.pack filter=lfs diff=lfs merge=lfs -text
+client-production filter=lfs diff=lfs merge=lfs -text
