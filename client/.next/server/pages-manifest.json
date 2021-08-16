@@ -1,0 +1,20 @@
+{
+  "/404": "pages/404.js",
+  "/_app": "pages/_app.js",
+  "/about": "pages/about.js",
+  "/country/[code]/[momentId]": "pages/country/[code]/[momentId].js",
+  "/country/[code]": "pages/country/[code].js",
+  "/country/edit": "pages/country/edit.js",
+  "/country/select": "pages/country/select.js",
+  "/": "pages/index.js",
+  "/me/[userId]": "pages/me/[userId].js",
+  "/news/[articleId]": "pages/news/[articleId].js",
+  "/news": "pages/news.js",
+  "/news/post": "pages/news/post.js",
+  "/search": "pages/search.js",
+  "/story/[code]/[storyId]": "pages/story/[code]/[storyId].js",
+  "/story": "pages/story.js",
+  "/story/post": "pages/story/post.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js"
+}
