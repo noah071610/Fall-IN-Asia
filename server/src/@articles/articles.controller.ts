@@ -21,6 +21,8 @@ import { User } from 'src/decorators/user.decorator';
 import { ArticleCreateDto, ArticleEditDto } from 'src/@articles/articles.dto';
 import multerS3 from 'multer-s3';
 import AWS from 'aws-sdk';
+import dotenv from 'dotenv';
+dotenv.config();
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
