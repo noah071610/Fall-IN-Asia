@@ -52,7 +52,10 @@ export class StoriesService {
     newPostCreate.country = <any>{ id: country.id };
     newPostCreate.user = <any>{ id: userId };
     if (file) {
-      newPostCreate.thumbnail = file.location;
+      newPostCreate.thumbnail = file.location.replace(
+        /\/original\//,
+        '/thumb/',
+      );
     }
     const newPost = await this.StoriesRepository.save(newPostCreate);
     await this.NoticesRepository.save({
@@ -70,7 +73,7 @@ export class StoriesService {
       throw new NotFoundException('사용 할 이미지가 없습니다.');
     }
     const newImage = new Images();
-    newImage.image_src = file.location;
+    newImage.image_src = file.location.replace(/\/original\//, '/thumb/');
     await this.ImagesRepository.save(newImage);
     return newImage.image_src;
   }
@@ -265,7 +268,7 @@ export class StoriesService {
     editPost.lng = form.lng;
     editPost.country = <any>{ id: country.id };
     if (file) {
-      editPost.thumbnail = file.location;
+      editPost.thumbnail = file.location.replace(/\/original\//, '/thumb/');
     }
     await this.StoriesRepository.save(editPost);
 

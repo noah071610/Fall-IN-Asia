@@ -81,7 +81,7 @@ export class MomentsService {
       throw new NotFoundException('사용 할 이미지가 없습니다.');
     }
     const newImage = new Images();
-    newImage.image_src = file.location;
+    newImage.image_src = file.location.replace(/\/original\//, '/thumb/');
     await this.ImagesRepository.save(newImage);
     return true;
   }

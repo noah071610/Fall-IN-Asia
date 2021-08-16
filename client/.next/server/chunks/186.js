@@ -124,7 +124,7 @@ const PostThubnail = ({
       })]
     }), _emotion_react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_3__.Divider, {}), _emotion_react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("img", {
       className: "thumbnail",
-      src: (_ref4 = story || article) === null || _ref4 === void 0 ? void 0 : _ref4.thumbnail
+      src: (_ref4 = story || article) === null || _ref4 === void 0 ? void 0 : _ref4.thumbnail.replace(/\/thumb\//, "/original/")
     })]
   });
 };

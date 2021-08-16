@@ -44,7 +44,10 @@ const PostThubnail: FC<IProps> = ({ story, article }) => {
         <NameSpace date={(story || article)?.createdAt!} user={(story || article)?.user!} />
       </div>
       <Divider />
-      <img className="thumbnail" src={(story || article)?.thumbnail} />
+      <img
+        className="thumbnail"
+        src={(story || article)?.thumbnail.replace(/\/thumb\//, "/original/")}
+      />
     </PostThubnailWrapper>
   );
 };

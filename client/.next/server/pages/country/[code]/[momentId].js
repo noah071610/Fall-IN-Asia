@@ -256,7 +256,7 @@ const MomentPost = ({
               preview: {
                 mask: jsx_runtime_.jsx(icons_.ZoomInOutlined, {})
               },
-              src: v.image_src,
+              src: v.image_src.replace(/\/thumb\//, "/original/"),
               alt: "moment-image"
             }, i);
           })
