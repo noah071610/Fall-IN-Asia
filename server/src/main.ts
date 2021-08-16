@@ -42,7 +42,7 @@ async function bootstrap() {
       cookie: {
         httpOnly: true,
         secure: prod ? true : false,
-        domain: prod && process.env.BACK_URL,
+        domain: prod && process.env.CLIENT_DOMAIN_URL,
         maxAge: 1000 * 60 * 60,
       },
       proxy: prod ? true : false,

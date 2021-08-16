@@ -15,8 +15,8 @@ export class KaKaoStrategy extends PassportStrategy(Strategy, 'kakao') {
       clientSecret: '',
       callbackURL:
         process.env.NODE_ENV === 'development'
-          ? 'http://localhost:3060/api'
-          : process.env.BACK_URL + '/auth/kakao/redirect',
+          ? 'http://localhost:3060'
+          : process.env.BACK_URL + '/api/auth/kakao/redirect',
     });
   }
 

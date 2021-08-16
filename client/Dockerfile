@@ -1,15 +1,15 @@
-FROM node:16.6.2-alpine as builder
+FROM node:alpine as builder
 
 WORKDIR /app
 
 COPY ./package.json ./
-RUN npm install
+
+RUN npm install -g npm@7.20.6
+
+RUN npm install --force
 
 COPY . .
 
 RUN npm run build
 
-FROM nginx
-EXPOSE 80
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /usr/src/app/build /usr/share/nginx/html
+CMD ["npm","run","start"]

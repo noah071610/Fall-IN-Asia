@@ -128,11 +128,11 @@ export class UsersService {
     return true;
   }
 
-  async addUserIcon(userId: number, file: Express.Multer.File) {
+  async addUserIcon(userId: number, file: Express.MulterS3.File) {
     const user = await this.UserRepository.findOne({
       where: { id: userId },
     });
-    user.icon = process.env.BACK_URL + file.path;
+    user.icon = file.location;
     return await this.UserRepository.save(user);
   }
 

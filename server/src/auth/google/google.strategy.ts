@@ -15,8 +15,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       clientSecret: process.env.GOOGLE_SECRET,
       callbackURL:
         process.env.NODE_ENV === 'development'
-          ? 'http://localhost:3060/api'
-          : process.env.BACK_URL + '/auth/google/redirect',
+          ? 'http://localhost:3060'
+          : process.env.BACK_URL + '/api/auth/google/redirect',
       scope: ['email', 'profile'],
     });
   }

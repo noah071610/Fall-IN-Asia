@@ -14,8 +14,8 @@ export class NaverStrategy extends PassportStrategy(Strategy, 'naver') {
       clientSecret: process.env.NAVER_SECRET,
       callbackURL:
         process.env.NODE_ENV === 'development'
-          ? 'http://localhost:3060/api'
-          : process.env.BACK_URL + '/auth/naver/redirect',
+          ? 'http://localhost:3060'
+          : process.env.BACK_URL + '/api/auth/naver/redirect',
     });
   }
 

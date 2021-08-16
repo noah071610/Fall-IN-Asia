@@ -11,18 +11,6 @@ services:
       - "3000:3000"
     stdin_open: true
 
-  server:
-    build:
-      dockerfile: Dockerfile
-      context: ./server
-    volumes:
-      - /app/node_modules
-      - ./server:/app
-    ports:
-      - "3060:3060"
-    environment:
-      - DBHOST=database
-
   database:
     build:
       dockerfile: Dockerfile

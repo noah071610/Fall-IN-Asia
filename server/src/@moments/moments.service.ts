@@ -12,6 +12,13 @@ import { MomentLike } from 'src/entities/MomentLike';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MomentCreateRequestDto, MomentModifyRequestDto } from './moments.dto';
 const viewer = new Object();
+import AWS from 'aws-sdk';
+
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: 'ap-northeast-2',
+});
 
 @Injectable()
 export class MomentsService {
@@ -31,7 +38,7 @@ export class MomentsService {
   async createPost(
     form: MomentCreateRequestDto,
     userId: number,
-    files: Express.Multer.File[],
+    files: Express.MulterS3.File[],
   ) {
     if (!form) {
       throw new NotFoundException('작성 할 데이터가 없습니다.');
@@ -51,7 +58,7 @@ export class MomentsService {
     const newPost = await this.MomentsRepository.save(newPostCreate);
     for (let i = 0; i < files.length; i++) {
       const newImage = new Images();
-      newImage.image_src = process.env.BACK_URL + files[i].path;
+      newImage.image_src = files[i].location;
       newImage.moment = <any>newPost.id;
       await this.ImagesRepository.save(newImage);
     }
@@ -69,12 +76,12 @@ export class MomentsService {
     return { momentId: newPost.id };
   }
 
-  async saveImage(file: Express.Multer.File) {
+  async saveImage(file: Express.MulterS3.File) {
     if (!file) {
       throw new NotFoundException('사용 할 이미지가 없습니다.');
     }
     const newImage = new Images();
-    newImage.image_src = process.env.BACK_URL + file.path;
+    newImage.image_src = file.location;
     await this.ImagesRepository.save(newImage);
     return true;
   }
@@ -208,7 +215,7 @@ export class MomentsService {
 
   async editPost(
     form: MomentModifyRequestDto,
-    files: Express.Multer.File[],
+    files: Express.MulterS3.File[],
     userId: number,
   ) {
     const country = await this.CountriesRepository.findOne({
@@ -230,7 +237,7 @@ export class MomentsService {
     if (files) {
       for (let i = 0; i < files.length; i++) {
         const newImage = new Images();
-        newImage.image_src = process.env.BACK_URL + files[i].path;
+        newImage.image_src = files[i].location;
         newImage.moment = <any>editPost.id;
         await this.ImagesRepository.save(newImage);
       }

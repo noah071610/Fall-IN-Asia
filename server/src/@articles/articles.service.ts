@@ -26,7 +26,7 @@ export class ArticlesService {
   async createPost(
     form: ArticleCreateDto,
     userId: number,
-    file: Express.Multer.File,
+    file: Express.MulterS3.File,
   ) {
     if (!form) {
       throw new NotFoundException('작성 할 데이터가 없습니다.');
@@ -60,18 +60,18 @@ export class ArticlesService {
       newPost.label = form.label;
     }
     if (file) {
-      newPost.thumbnail = process.env.BACK_URL + file.path.replace('\\', '/');
+      newPost.thumbnail = file.location;
     }
     await this.ArticlesRepository.save(newPost);
     return { articleId: newPost.id };
   }
 
-  async saveImage(file: Express.Multer.File) {
+  async saveImage(file: Express.MulterS3.File) {
     if (!file) {
       throw new NotFoundException('사용 할 이미지가 없습니다.');
     }
     const newImage = new Images();
-    newImage.image_src = process.env.BACK_URL + file.path.replace('\\', '/');
+    newImage.image_src = file.location;
     await this.ImagesRepository.save(newImage);
     return newImage.image_src;
   }
@@ -127,7 +127,7 @@ export class ArticlesService {
 
   async editPost(
     form: ArticleEditDto,
-    file: Express.Multer.File,
+    file: Express.MulterS3.File,
     userId: number,
   ) {
     if (!userId) {
@@ -163,7 +163,7 @@ export class ArticlesService {
     editPost.lng = form.lng;
     editPost.country = <any>{ id: country.id };
     if (file) {
-      editPost.thumbnail = process.env.BACK_URL + file.path.replace('\\', '/');
+      editPost.thumbnail = file.location;
     }
     await this.ArticlesRepository.save(editPost);
     return { articleId: parseInt(form.articleId) };

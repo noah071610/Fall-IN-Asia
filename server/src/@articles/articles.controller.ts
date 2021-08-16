@@ -20,6 +20,14 @@ import multer from 'multer';
 import path from 'path';
 import { User } from 'src/decorators/user.decorator';
 import { ArticleCreateDto, ArticleEditDto } from 'src/@articles/articles.dto';
+import multerS3 from 'multer-s3';
+import AWS from 'aws-sdk';
+
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: 'ap-northeast-2',
+});
 
 @UseInterceptors(JsonResponeGenerator)
 @ApiTags('Articles')
@@ -32,23 +40,24 @@ export class ArticlesController {
   @ApiOperation({ summary: 'Create article post' })
   @UseInterceptors(
     FileInterceptor('image', {
-      storage: multer.diskStorage({
-        destination(req, file, cb) {
-          cb(null, 'uploads/');
-        },
-        filename(req, file, cb) {
-          const ext = path.extname(file.originalname);
-          cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+      storage: multerS3({
+        s3: new AWS.S3(),
+        bucket: process.env.S3_BUCKET_NAME,
+        key(req, file, cb) {
+          cb(
+            null,
+            `original/${Date.now()}_${path.basename(file.originalname)}`,
+          );
         },
       }),
-      limits: { fileSize: 5 * 1024 * 1024 },
+      limits: { fileSize: 20 * 1024 * 1024 },
     }),
   )
   @Post()
   async createPost(
     @Body() form: ArticleCreateDto,
     @User() user,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile() file: Express.MulterS3.File,
   ) {
     return await this.ArticlesService.createPost(form, user.id, file);
   }
@@ -57,22 +66,23 @@ export class ArticlesController {
   @ApiOperation({ summary: 'Edit post' })
   @UseInterceptors(
     FileInterceptor('image', {
-      storage: multer.diskStorage({
-        destination(req, file, cb) {
-          cb(null, 'uploads/');
-        },
-        filename(req, file, cb) {
-          const ext = path.extname(file.originalname);
-          cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+      storage: multerS3({
+        s3: new AWS.S3(),
+        bucket: process.env.S3_BUCKET_NAME,
+        key(req, file, cb) {
+          cb(
+            null,
+            `original/${Date.now()}_${path.basename(file.originalname)}`,
+          );
         },
       }),
-      limits: { fileSize: 5 * 1024 * 1024 },
+      limits: { fileSize: 20 * 1024 * 1024 },
     }),
   )
   @Post('edit')
   async editPost(
     @Body() form: ArticleEditDto,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile() file: Express.MulterS3.File,
     @User() user,
   ) {
     return await this.ArticlesService.editPost(form, file, user.id);
@@ -91,20 +101,21 @@ export class ArticlesController {
   @ApiOperation({ summary: 'save image for article' })
   @UseInterceptors(
     FileInterceptor('image', {
-      storage: multer.diskStorage({
-        destination(req, file, cb) {
-          cb(null, 'uploads/');
-        },
-        filename(req, file, cb) {
-          const ext = path.extname(file.originalname);
-          cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+      storage: multerS3({
+        s3: new AWS.S3(),
+        bucket: process.env.S3_BUCKET_NAME,
+        key(req, file, cb) {
+          cb(
+            null,
+            `original/${Date.now()}_${path.basename(file.originalname)}`,
+          );
         },
       }),
-      limits: { fileSize: 5 * 1024 * 1024 },
+      limits: { fileSize: 20 * 1024 * 1024 },
     }),
   )
   @Post('image')
-  async saveImage(@UploadedFile() file: Express.Multer.File) {
+  async saveImage(@UploadedFile() file: Express.MulterS3.File) {
     const image = await this.ArticlesService.saveImage(file);
     return image;
   }

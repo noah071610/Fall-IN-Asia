@@ -12,6 +12,7 @@ import { Countries } from 'src/entities/Countries';
 import { StoryLike } from 'src/entities/StoryLike';
 import { StoryCreateDto, StoryEditDto } from 'src/@stories/stories.dto';
 const viewObj = new Object();
+
 @Injectable()
 export class StoriesService {
   constructor(
@@ -30,7 +31,7 @@ export class StoriesService {
   async createPost(
     form: StoryCreateDto,
     userId: number,
-    file: Express.Multer.File,
+    file: Express.MulterS3.File,
   ) {
     if (!form) {
       throw new NotFoundException('작성 할 데이터가 없습니다.');
@@ -51,8 +52,7 @@ export class StoriesService {
     newPostCreate.country = <any>{ id: country.id };
     newPostCreate.user = <any>{ id: userId };
     if (file) {
-      newPostCreate.thumbnail =
-        process.env.BACK_URL + file.path.replace('\\', '/');
+      newPostCreate.thumbnail = file.location;
     }
     const newPost = await this.StoriesRepository.save(newPostCreate);
     await this.NoticesRepository.save({
@@ -65,12 +65,12 @@ export class StoriesService {
     return { storyId: newPost.id };
   }
 
-  async saveImage(file: Express.Multer.File) {
+  async saveImage(file: Express.MulterS3.File) {
     if (!file) {
       throw new NotFoundException('사용 할 이미지가 없습니다.');
     }
     const newImage = new Images();
-    newImage.image_src = process.env.BACK_URL + file.path.replace('\\', '/');
+    newImage.image_src = file.location;
     await this.ImagesRepository.save(newImage);
     return newImage.image_src;
   }
@@ -245,7 +245,7 @@ export class StoriesService {
 
   async editPost(
     form: StoryEditDto,
-    file: Express.Multer.File,
+    file: Express.MulterS3.File,
     userId: number,
   ) {
     const country = await this.CountriesRepository.findOne({
@@ -265,7 +265,7 @@ export class StoriesService {
     editPost.lng = form.lng;
     editPost.country = <any>{ id: country.id };
     if (file) {
-      editPost.thumbnail = process.env.BACK_URL + file.path.replace('\\', '/');
+      editPost.thumbnail = file.location;
     }
     await this.StoriesRepository.save(editPost);
 

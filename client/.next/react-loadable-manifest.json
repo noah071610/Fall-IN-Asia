@@ -1,0 +1,17 @@
+{
+  "..\\components\\Editor\\EditorWithoutImage.tsx -> react-quill": {
+    "id": 71167,
+    "files": [
+      "static/chunks/framework-b5f3c897a40b4b93d7e6.js",
+      "static/chunks/eabe11fc-a074d6c9d59e160ccde4.js",
+      "static/chunks/764-98c99c61f67ca61e79c3.js",
+      "static/chunks/167.77ce215fc015ac7d23a9.js"
+    ]
+  },
+  "..\\sections\\MainPage\\MomentPostingForm\\index.tsx -> @components/Editor/EditorWithoutImage": {
+    "id": 85821,
+    "files": [
+      "static/chunks/297.4223d8ef165695710598.js"
+    ]
+  }
+}
