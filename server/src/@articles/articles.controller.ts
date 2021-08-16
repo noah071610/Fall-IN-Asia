@@ -16,7 +16,6 @@ import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
 import { LoggedInGuard } from 'src/auth/logged-in.guard';
 import { ArticlesService } from './articles.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import multer from 'multer';
 import path from 'path';
 import { User } from 'src/decorators/user.decorator';
 import { ArticleCreateDto, ArticleEditDto } from 'src/@articles/articles.dto';
