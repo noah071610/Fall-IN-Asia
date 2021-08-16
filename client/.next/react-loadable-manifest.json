@@ -1,17 +1,3 @@
-{
-  "..\\components\\Editor\\EditorWithoutImage.tsx -> react-quill": {
-    "id": 71167,
-    "files": [
-      "static/chunks/framework-b5f3c897a40b4b93d7e6.js",
-      "static/chunks/eabe11fc-a074d6c9d59e160ccde4.js",
-      "static/chunks/764-98c99c61f67ca61e79c3.js",
-      "static/chunks/167.77ce215fc015ac7d23a9.js"
-    ]
-  },
-  "..\\sections\\MainPage\\MomentPostingForm\\index.tsx -> @components/Editor/EditorWithoutImage": {
-    "id": 85821,
-    "files": [
-      "static/chunks/297.4223d8ef165695710598.js"
-    ]
-  }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:293763801b6f9a1373b1d34d791491724c238766a30743d8eebc2c7e130e1006
+size 522

@@ -1,1 +1,3 @@
-{"version":3,"routes":{"/about":{"initialRevalidateSeconds":false,"srcRoute":null,"dataRoute":"/_next/data/ov4lI0wwJcjtKku0lJPng/about.json"},"/404":{"initialRevalidateSeconds":false,"srcRoute":null,"dataRoute":"/_next/data/ov4lI0wwJcjtKku0lJPng/404.json"}},"dynamicRoutes":{},"notFoundRoutes":[],"preview":{"previewModeId":"98a881367fe7cc0fc46023f8efb65a56","previewModeSigningKey":"a25464ac4ee5ec93eda0633ba56df7865dff23eb90941d9e794028c8a37c9998","previewModeEncryptionKey":"29dd3a3399352537d7c2c6aa5bb2e2379bfaf7f5ad707653b5607264ca7b8cad"}}
+version https://git-lfs.github.com/spec/v1
+oid sha256:bce7ece035569aa74fb417679a79b1d65fe67c94aa39f58cf99da9f3e311d67c
+size 545
