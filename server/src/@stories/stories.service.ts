@@ -52,10 +52,14 @@ export class StoriesService {
     newPostCreate.country = <any>{ id: country.id };
     newPostCreate.user = <any>{ id: userId };
     if (file) {
+<<<<<<< HEAD
       newPostCreate.thumbnail = file.location.replace(
         /\/original\//,
         '/thumb/',
       );
+=======
+      newPostCreate.thumbnail = file.location;
+>>>>>>> 8f71fa750c0f8c9c84697c5ea1142b96df06ac6a
     }
     const newPost = await this.StoriesRepository.save(newPostCreate);
     await this.NoticesRepository.save({
@@ -73,7 +77,11 @@ export class StoriesService {
       throw new NotFoundException('사용 할 이미지가 없습니다.');
     }
     const newImage = new Images();
+<<<<<<< HEAD
     newImage.image_src = file.location.replace(/\/original\//, '/thumb/');
+=======
+    newImage.image_src = file.location;
+>>>>>>> 8f71fa750c0f8c9c84697c5ea1142b96df06ac6a
     await this.ImagesRepository.save(newImage);
     return newImage.image_src;
   }
@@ -268,7 +276,11 @@ export class StoriesService {
     editPost.lng = form.lng;
     editPost.country = <any>{ id: country.id };
     if (file) {
+<<<<<<< HEAD
       editPost.thumbnail = file.location.replace(/\/original\//, '/thumb/');
+=======
+      editPost.thumbnail = file.location;
+>>>>>>> 8f71fa750c0f8c9c84697c5ea1142b96df06ac6a
     }
     await this.StoriesRepository.save(editPost);
 

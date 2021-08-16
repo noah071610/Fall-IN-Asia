@@ -124,7 +124,11 @@ const PostThubnail = ({
       })]
     }), _emotion_react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(antd__WEBPACK_IMPORTED_MODULE_3__.Divider, {}), _emotion_react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("img", {
       className: "thumbnail",
+<<<<<<< HEAD
       src: (_ref4 = story || article) === null || _ref4 === void 0 ? void 0 : _ref4.thumbnail.replace(/\/thumb\//, "/original/")
+=======
+      src: (_ref4 = story || article) === null || _ref4 === void 0 ? void 0 : _ref4.thumbnail
+>>>>>>> 8f71fa750c0f8c9c84697c5ea1142b96df06ac6a
     })]
   });
 };

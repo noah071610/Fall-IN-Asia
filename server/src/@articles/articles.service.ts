@@ -60,7 +60,11 @@ export class ArticlesService {
       newPost.label = form.label;
     }
     if (file) {
+<<<<<<< HEAD
       newPost.thumbnail = file.location.replace(/\/original\//, '/thumb/');
+=======
+      newPost.thumbnail = file.location;
+>>>>>>> 8f71fa750c0f8c9c84697c5ea1142b96df06ac6a
     }
     await this.ArticlesRepository.save(newPost);
     return { articleId: newPost.id };
@@ -71,7 +75,11 @@ export class ArticlesService {
       throw new NotFoundException('사용 할 이미지가 없습니다.');
     }
     const newImage = new Images();
+<<<<<<< HEAD
     newImage.image_src = file.location.replace(/\/original\//, '/thumb/');
+=======
+    newImage.image_src = file.location;
+>>>>>>> 8f71fa750c0f8c9c84697c5ea1142b96df06ac6a
     await this.ImagesRepository.save(newImage);
     return newImage.image_src;
   }
@@ -163,7 +171,11 @@ export class ArticlesService {
     editPost.lng = form.lng;
     editPost.country = <any>{ id: country.id };
     if (file) {
+<<<<<<< HEAD
       editPost.thumbnail = file.location.replace(/\/original\//, '/thumb/');
+=======
+      editPost.thumbnail = file.location;
+>>>>>>> 8f71fa750c0f8c9c84697c5ea1142b96df06ac6a
     }
     await this.ArticlesRepository.save(editPost);
     return { articleId: parseInt(form.articleId) };
