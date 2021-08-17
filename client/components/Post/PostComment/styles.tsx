@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { FLEX_STYLE, RED_COLOR } from "config";
+import { FLEX_STYLE, RED_COLOR, SM_SIZE } from "config";
 import tw from "twin.macro";
 
 export const PostCommentWrapper = styled.section`
@@ -18,6 +18,15 @@ export const PostCommentWrapper = styled.section`
     .liked {
       .anticon {
         color: ${RED_COLOR};
+      }
+    }
+    @media (max-width: ${SM_SIZE}) {
+      li {
+        ${tw`text-sm p-1 mr-1`}
+        .anticon,
+        .count {
+          margin-right: 0.3rem;
+        }
       }
     }
   }

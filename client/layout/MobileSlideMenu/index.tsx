@@ -131,7 +131,7 @@ const MobileSlideMenu: FC<IProps> = () => {
                     style={activePath === "moment" ? { borderLeft: `3px solid ${BLUE_COLOR}` } : {}}
                     className="link-menu-list"
                   >
-                    모멘트{country && ` > ${country?.name}`}
+                    모멘트{country && activePath !== "story" && ` > ${country?.name}`}
                   </li>
                 </a>
               </Link>

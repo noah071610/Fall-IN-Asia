@@ -38,7 +38,7 @@ export const MomentCardWrapper = styled.article`
   }
   .article-footer {
     li {
-      ${tw`cursor-pointer p-1`}
+      ${tw`cursor-pointer p-1 text-xs`}
       .count {
         ${tw`mx-1`}
       }

@@ -1,10 +1,11 @@
-import { CommentOutlined, HeartOutlined } from "@ant-design/icons";
+import { CommentOutlined, EyeOutlined, HeartOutlined } from "@ant-design/icons";
 import NameSpace from "@components/NameSpace";
 import React, { FC, useCallback } from "react";
 import { ArticleColumnCardWrapper } from "./styles";
 import { IStory } from "@typings/db";
 import router from "next/router";
 import { NO_IMAGE_URL } from "config";
+import { kmtb_Formatter } from "utils/kmbtFormatter";
 
 interface IProps {
   story: IStory;
@@ -31,14 +32,18 @@ const ArticleColumnCard: FC<IProps> = ({ story, isMain }) => {
           src={story?.thumbnail || NO_IMAGE_URL}
           alt="story-image"
         />
-        <ul className="like-comment">
+        <ul className="article-info-list">
           <li>
             <CommentOutlined />
             <span className="count">{story?.comments?.length}</span>
           </li>
           <li>
             <HeartOutlined />
-            <span className="count">{story?.likedUser?.length}</span>
+            <span className="count">{story && kmtb_Formatter(story?.likedUser?.length)}</span>
+          </li>
+          <li>
+            <EyeOutlined />
+            <span className="count">{story?.hit ? kmtb_Formatter(story?.hit) : 0}</span>
           </li>
         </ul>
       </div>

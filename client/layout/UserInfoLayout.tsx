@@ -37,13 +37,13 @@ const UserInfoLayoutWrapper = styled.main`
   .notice-list,
   .route-map-wrapper,
   .post-slider,
-  .no-notice-wrapper,
-  .no-post-wrapper {
+  .no-notice-wrapper {
     ${tw`p-4`}
     @media (max-width: 1000px) {
       ${tw`px-0`}
     }
   }
+
   .post-slider {
     ${GRID_STYLE("1rem", "repeat(3,1fr)")};
     @media (max-width: 1000px) {
@@ -84,6 +84,10 @@ const UserInfoLayoutWrapper = styled.main`
     ${FLEX_STYLE("center", "center", "column")};
     img {
       ${tw`w-20 h-20 opacity-30 mb-4`}
+    }
+
+    @media (max-width: 768px) {
+      ${tw`m-0`}
     }
   }
   @media (max-width: ${MD_SIZE}) {

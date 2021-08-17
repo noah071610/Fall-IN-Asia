@@ -21,6 +21,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import path from 'path';
 import { User } from 'src/decorators/user.decorator';
 import { StoryCreateDto, StoryEditDto } from 'src/@stories/stories.dto';
+import { RealIP } from 'nestjs-real-ip';
 import multerS3 from 'multer-s3';
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
@@ -188,9 +189,10 @@ export class StoriesController {
   async getOnePost(
     @Param('code') code: string,
     @Param('storyId', ParseIntPipe) storyId: number,
-    @Query('uuid') uuid: string,
+    @Query('getIp') getIp: string,
+    @RealIP() ip: string,
   ) {
-    const post = await this.StoriesService.getOnePost(storyId, code, uuid);
+    const post = await this.StoriesService.getOnePost(storyId, code, getIp, ip);
     return post;
   }
 }

@@ -1,4 +1,10 @@
-import { CommentOutlined, HeartFilled, HeartOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import {
+  CommentOutlined,
+  EyeOutlined,
+  HeartFilled,
+  HeartOutlined,
+  PlusCircleOutlined,
+} from "@ant-design/icons";
 import NameSpace from "@components/NameSpace";
 import { IMoment } from "@typings/db";
 import React, { FC, memo, useCallback, useEffect, useState } from "react";
@@ -10,6 +16,7 @@ import { RootState } from "slices";
 import html2textConverter from "utils/html2textConverter";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
+import { kmtb_Formatter } from "utils/kmbtFormatter";
 
 interface IProps {
   moment: IMoment;
@@ -112,8 +119,17 @@ const MomentCard: FC<IProps> = ({ revalidateMoments, moment, isLast }) => {
             className={liked ? "liked" : ""}
           >
             {liked ? <HeartFilled /> : <HeartOutlined />}
-            <span className="count">{moment?.likedUser?.length + userLike}</span>
+            <span className="count">
+              {moment?.likedUser?.length < 999
+                ? (kmtb_Formatter(moment?.likedUser?.length) as number) + userLike
+                : kmtb_Formatter(moment?.likedUser?.length)}
+            </span>
             <span>좋아요</span>
+          </li>
+          <li onClick={onClickGotoPost}>
+            <EyeOutlined />
+            <span className="count">{moment?.hit ? kmtb_Formatter(moment?.hit) : 0}</span>
+            <span>조회</span>
           </li>
         </ul>
       </div>

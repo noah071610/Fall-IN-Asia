@@ -21,6 +21,7 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import path from 'path';
 import { User } from 'src/decorators/user.decorator';
 import { MomentCreateRequestDto, MomentModifyRequestDto } from './moments.dto';
+import { RealIP } from 'nestjs-real-ip';
 import multerS3 from 'multer-s3';
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
@@ -151,9 +152,16 @@ export class MomentsController {
   async getOnePost(
     @Param('code') code: string,
     @Param('momentId', ParseIntPipe) momentId: number,
-    @Query('uuid') uuid: string,
+    @Query('getIp') getIp: string,
+    @RealIP() ip: string,
   ) {
-    const post = await this.MomentsService.getOnePost(momentId, code, uuid);
+    console.log('############ Im here!!! #############', ip);
+    const post = await this.MomentsService.getOnePost(
+      momentId,
+      code,
+      getIp,
+      ip,
+    );
     return post;
   }
 

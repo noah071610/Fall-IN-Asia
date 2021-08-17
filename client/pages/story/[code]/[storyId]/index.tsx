@@ -54,12 +54,11 @@ interface IProps {
 
 const index: FC<IProps> = ({ initialStories, initialStory }) => {
   const { query } = useRouter();
-  const [uuid, setUUID] = useState("");
   const [isOwner, setIsOwner] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
 
   const { data: story, revalidate: revalidateStory } = useSWR<IStory>(
-    `/story/${query?.code}/${query?.storyId}?uuid=${uuid}`,
+    `/story/${query?.code}/${query?.storyId}`,
     fetcher,
     {
       initialData: initialStory,
@@ -74,12 +73,6 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
       ...noRevalidate,
     }
   );
-
-  useEffect(() => {
-    if (localStorage.getItem("client_identifier")) {
-      setUUID(localStorage.getItem("client_identifier")!);
-    }
-  }, []);
 
   useEffect(() => {
     if (story) {
@@ -188,7 +181,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     axios.defaults.headers.Cookie = cookie;
   }
   await store.dispatch(getUserInfoAction());
-  const initialStory = await fetcher(`/story/${params?.code}/${params?.storyId}`);
+  const initialStory = await fetcher(`/story/${params?.code}/${params?.storyId}?getIp=true`);
   let initialStories = await fetcher(`/story?page=1&storyId=${params?.storyId}`);
   initialStories = [initialStories];
   return {

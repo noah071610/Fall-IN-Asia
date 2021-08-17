@@ -108,7 +108,7 @@ export class StoriesService {
     return { prevPost, nextPost };
   }
 
-  async getOnePost(storyId: number, code: string, uuid: string) {
+  async getOnePost(storyId: number, code: string, getIp: string, ip: string) {
     const post = await this.StoriesRepository.findOne({
       where: {
         id: storyId,
@@ -130,12 +130,12 @@ export class StoriesService {
       throw new NotFoundException('가져올 게시물이 없습니다.');
     }
 
-    if (post && uuid) {
+    if (post && getIp && ip) {
       if (!viewObj[storyId]) {
         viewObj[storyId] = [];
       }
-      if (viewObj[storyId].indexOf(uuid) == -1) {
-        viewObj[storyId].push(uuid);
+      if (viewObj[storyId].indexOf(ip) == -1) {
+        viewObj[storyId].push(ip);
         await this.StoriesRepository.createQueryBuilder('stories')
           .update()
           .set({
@@ -144,7 +144,7 @@ export class StoriesService {
           .where('id = :id', { id: storyId })
           .execute();
         setTimeout(() => {
-          viewObj[storyId].splice(viewObj[storyId].indexOf(uuid), 1);
+          viewObj[storyId].splice(viewObj[storyId].indexOf(ip), 1);
         }, 600000);
       }
     }

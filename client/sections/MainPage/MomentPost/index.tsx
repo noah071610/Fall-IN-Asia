@@ -4,7 +4,13 @@ import MomentPostTitle from "@sections/MainPage/MomentPostTitle";
 import Comment from "@components/Comments/Comment";
 import { IComment, IImage, IMoment } from "@typings/db";
 import ReactHtmlParser from "react-html-parser";
-import { CommentOutlined, HeartFilled, HeartOutlined, ZoomInOutlined } from "@ant-design/icons";
+import {
+  CommentOutlined,
+  EyeOutlined,
+  HeartFilled,
+  HeartOutlined,
+  ZoomInOutlined,
+} from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
@@ -16,6 +22,7 @@ import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
+import { kmtb_Formatter } from "utils/kmbtFormatter";
 
 interface IProps {
   moment: IMoment;
@@ -102,7 +109,7 @@ const MomentPost: FC<IProps> = ({ moment, revalidateMoment }) => {
       <ul className="post-footer">
         <li>
           <CommentOutlined />
-          <span className="count">{comments?.length}</span>
+          <span className="count">{comments && kmtb_Formatter(comments?.length)}</span>
           <span>댓글</span>
         </li>
         <li
@@ -112,8 +119,13 @@ const MomentPost: FC<IProps> = ({ moment, revalidateMoment }) => {
           className={liked ? "liked" : ""}
         >
           {liked ? <HeartFilled /> : <HeartOutlined />}
-          <span className="count">{moment?.likedUser?.length}</span>
+          <span className="count">{kmtb_Formatter(moment?.likedUser?.length)}</span>
           <span>좋아요</span>
+        </li>
+        <li>
+          <EyeOutlined />
+          <span className="count">{kmtb_Formatter(moment?.hit)}</span>
+          <span>조회</span>
         </li>
       </ul>
       <CommentForm revalidateComments={revalidateComments} isStory={false} />

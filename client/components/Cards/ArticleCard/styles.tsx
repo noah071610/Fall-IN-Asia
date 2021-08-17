@@ -18,15 +18,16 @@ export const ArticleCardWrapper = () => css`
       ${tw`rounded-md h-60 w-full`};
       transition: 0.3s all;
     }
-    .like-comment {
-      ${tw`absolute bottom-4 right-4 bg-white py-1 px-2 opacity-50 rounded-xl`}
+    .article-info-list {
+      ${tw`absolute bottom-4 right-4 bg-white opacity-50 rounded-lg`}
+      padding: 0.25rem 0.5rem;
       li {
-        ${tw`p-1 cursor-pointer`}
+        ${tw`p-1 cursor-pointer text-xs`}
         .count {
-          margin: 0 0.3rem;
+          margin: 0 0.1rem;
         }
         .anticon {
-          font-size: 1.2rem;
+          font-size: 1rem;
         }
       }
     }

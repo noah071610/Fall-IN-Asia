@@ -22,10 +22,9 @@ interface IProps {
 
 const index: FC<IProps> = ({ initialMoments, initialCountry, initialMoment }) => {
   const { query } = useRouter();
-  const [uuid, setUUID] = useState("");
   const [filter, setFilter] = useState("");
   const { data: moment, revalidate: revalidateMoment } = useSWR<IMoment>(
-    `/moment/${query?.code}/${query?.momentId}?uuid=${uuid}`,
+    `/moment/${query?.code}/${query?.momentId}`,
     fetcher,
     {
       initialData: initialMoment,
@@ -51,12 +50,6 @@ const index: FC<IProps> = ({ initialMoments, initialCountry, initialMoment }) =>
     initialData: initialCountry,
     ...noRevalidate,
   });
-
-  useEffect(() => {
-    if (localStorage.getItem("client_identifier")) {
-      setUUID(localStorage.getItem("client_identifier")!);
-    }
-  }, []);
 
   return (
     <>
@@ -92,7 +85,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         axios.defaults.headers.Cookie = cookie;
       }
       await store.dispatch(getUserInfoAction());
-      const initialMoment = await fetcher(`/moment/${params?.code}/${params?.momentId}`);
+      const initialMoment = await fetcher(`/moment/${params?.code}/${params?.momentId}?getIp=true`);
       let initialMoments = await fetcher(
         `/moment?code=${params?.code}&momentId=${params?.momentId}&page=1`
       );

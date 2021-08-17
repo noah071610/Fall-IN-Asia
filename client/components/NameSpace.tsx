@@ -27,7 +27,7 @@ export const NameSpaceWrapper = styled.div`
       img {
         ${tw`opacity-30`};
       }
-      .profile-popup {
+      .goto-profile-popup {
         ${tw`block`}
       }
     }

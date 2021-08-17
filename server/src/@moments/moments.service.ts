@@ -86,7 +86,7 @@ export class MomentsService {
     return true;
   }
 
-  async getOnePost(momentId: number, code: string, uuid: string) {
+  async getOnePost(momentId: number, code: string, getIp: string, ip: string) {
     const post = await this.MomentsRepository.createQueryBuilder('moments')
       .addSelect([
         'images.image_src',
@@ -107,12 +107,12 @@ export class MomentsService {
     if (!post) {
       throw new NotFoundException('가져올 게시물이 없습니다.');
     }
-    if (post && uuid) {
+    if (post && getIp && ip) {
       if (!viewer[momentId]) {
         viewer[momentId] = [];
       }
-      if (viewer[momentId].indexOf(uuid) == -1) {
-        viewer[momentId].push(uuid);
+      if (viewer[momentId].indexOf(ip) == -1) {
+        viewer[momentId].push(ip);
         await this.MomentsRepository.createQueryBuilder('moments')
           .update()
           .set({
@@ -121,7 +121,7 @@ export class MomentsService {
           .where('id = :id', { id: momentId })
           .execute();
         setTimeout(() => {
-          viewer[momentId].splice(viewer[momentId].indexOf(uuid), 1);
+          viewer[momentId].splice(viewer[momentId].indexOf(ip), 1);
         }, 600000);
       }
     }

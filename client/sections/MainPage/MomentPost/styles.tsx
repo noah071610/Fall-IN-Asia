@@ -31,7 +31,7 @@ export const MomentPostWrapper = styled.section`
   }
   .post-footer {
     li {
-      ${tw`py-1 px-2 mr-1 cursor-pointer rounded-xl hover:bg-gray-100`}
+      ${tw`p-1 cursor-pointer rounded-xl hover:bg-gray-100`}
       .count {
         margin: 0 0.3rem;
       }
@@ -41,6 +41,13 @@ export const MomentPostWrapper = styled.section`
     }
   }
   @media (max-width: ${SM_SIZE}) {
-    ${tw`py-4 px-2`}
+    ${tw`py-6 px-4`}
+    .post-footer {
+      li {
+        .anticon {
+          font-size: 0.9rem;
+        }
+      }
+    }
   }
 `;
