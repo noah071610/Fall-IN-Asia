@@ -157,7 +157,7 @@ export class MomentsController {
     @Req() req: Request,
   ) {
     const ip = req.headers['x-forwarded-for'];
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@', req.connection.remoteAddress);
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@', req.socket.remoteAddress);
 
     console.log('############ Im here!!! #############', ip);
     const post = await this.MomentsService.getOnePost(
