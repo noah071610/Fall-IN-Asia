@@ -132,7 +132,7 @@ export class UsersService {
     const user = await this.UserRepository.findOne({
       where: { id: userId },
     });
-    user.icon = file.location.replace(/\/original\//, '/thumb/');
+    user.icon = file.location;
     return await this.UserRepository.save(user);
   }
 

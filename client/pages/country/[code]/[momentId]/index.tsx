@@ -40,7 +40,7 @@ const index: FC<IProps> = ({ initialMoments, initialCountry, initialMoment }) =>
     (index) =>
       `/moment?code=${query?.code || ""}&page=${index + 1}&filter=${filter}&type=${
         query?.type || ""
-      }`,
+      }&momentId=${query?.momentId}`,
     fetcher,
     {
       initialData: initialMoments,
@@ -93,7 +93,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
       await store.dispatch(getUserInfoAction());
       const initialMoment = await fetcher(`/moment/${params?.code}/${params?.momentId}`);
-      let initialMoments = await fetcher(`/moment?code=${params?.code}&page=1`);
+      let initialMoments = await fetcher(
+        `/moment?code=${params?.code}&momentId=${params?.momentId}&page=1`
+      );
       initialMoments = [initialMoments];
       const initialCountry = await fetcher(`/country/${params?.code}`);
       return {

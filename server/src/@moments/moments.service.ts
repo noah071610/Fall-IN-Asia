@@ -213,6 +213,33 @@ export class MomentsService {
     return posts;
   }
 
+  async getPostsById(code: string, page: number, id: string) {
+    const posts = await this.MomentsRepository.createQueryBuilder('moments')
+      .where('moments.code= :code', { code })
+      .andWhere('moments.id < :id', { id })
+      .addSelect([
+        'country.name',
+        'user.id',
+        'user.icon',
+        'user.name',
+        'likedUser.id',
+        'comments.id',
+      ])
+      .leftJoin('moments.country', 'country')
+      .leftJoin('moments.user', 'user')
+      .leftJoin('moments.likedUser', 'likedUser')
+      .leftJoin('moments.comments', 'comments')
+      .leftJoinAndSelect('moments.images', 'images')
+      .orderBy('moments.id', 'DESC')
+      .skip((page - 1) * 10)
+      .take(10)
+      .getMany();
+    if (!posts) {
+      throw new NotFoundException('모멘트를 찾을 수 없습니다.');
+    }
+    return posts;
+  }
+
   async editPost(
     form: MomentModifyRequestDto,
     files: Express.MulterS3.File[],

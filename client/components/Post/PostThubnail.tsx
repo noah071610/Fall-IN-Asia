@@ -3,7 +3,7 @@ import { IArticle, IStory } from "@typings/db";
 import { Divider } from "antd";
 import React, { FC, memo } from "react";
 import styled from "@emotion/styled";
-import { FLEX_STYLE, SM_SIZE } from "config";
+import { FLEX_STYLE, NO_IMAGE_URL, SM_SIZE } from "config";
 import tw from "twin.macro";
 
 export const PostThubnailWrapper = styled.section`
@@ -46,7 +46,11 @@ const PostThubnail: FC<IProps> = ({ story, article }) => {
       <Divider />
       <img
         className="thumbnail"
-        src={(story || article)?.thumbnail.replace(/\/thumb\//, "/original/")}
+        src={
+          story?.thumbnail || article?.thumbnail
+            ? (story || article)?.thumbnail.replace(/\/thumb\//, "/original/")
+            : NO_IMAGE_URL
+        }
       />
     </PostThubnailWrapper>
   );

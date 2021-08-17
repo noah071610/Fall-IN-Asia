@@ -4,6 +4,7 @@ import React, { FC, useCallback } from "react";
 import { ArticleColumnCardWrapper } from "./styles";
 import { IStory } from "@typings/db";
 import router from "next/router";
+import { NO_IMAGE_URL } from "config";
 
 interface IProps {
   story: IStory;
@@ -27,7 +28,7 @@ const ArticleColumnCard: FC<IProps> = ({ story, isMain }) => {
       >
         <img
           style={isMain ? { borderTopLeftRadius: "15px", borderTopRightRadius: "15px" } : {}}
-          src={story?.thumbnail}
+          src={story?.thumbnail || NO_IMAGE_URL}
           alt="story-image"
         />
         <ul className="like-comment">

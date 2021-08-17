@@ -164,6 +164,7 @@ export class MomentsController {
     @Query('page', ParseIntPipe) page: number,
     @Query('type') type: string,
     @Query('filter') filter: string,
+    @Query('momentId') momentId: string,
   ) {
     if (type) {
       switch (type) {
@@ -183,9 +184,13 @@ export class MomentsController {
           break;
       }
     }
+    if (!filter && !type && momentId) {
+      return await this.MomentsService.getPostsById(code, page, momentId);
+    }
     if (filter) {
       return await this.MomentsService.getFilterPosts(filter, code, type, page);
     }
+
     return await this.MomentsService.getPosts(code, page, type);
   }
 }

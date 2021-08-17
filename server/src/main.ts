@@ -8,7 +8,6 @@ import session from 'express-session';
 import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import helmet from 'helmet';
-import csurf from 'csurf';
 import hpp from 'hpp';
 
 declare const module: any;
@@ -52,7 +51,6 @@ async function bootstrap() {
   if (prod) {
     app.set('trust proxy', 1);
     app.use(helmet({ contentSecurityPolicy: false }));
-    app.use(csurf());
     app.use(hpp());
     app.enableCors({
       origin: process.env.CLIENT_URL,

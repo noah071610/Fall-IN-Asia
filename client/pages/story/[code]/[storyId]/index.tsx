@@ -186,7 +186,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   }
   await store.dispatch(getUserInfoAction());
   const initialStory = await fetcher(`/story/${params?.code}/${params?.storyId}`);
-  let initialStories = await fetcher(`/story?code=${params?.code}&page=1`);
+  let initialStories = await fetcher(`/story?page=1`);
   initialStories = [initialStories];
   return {
     props: { initialStory, initialStories },

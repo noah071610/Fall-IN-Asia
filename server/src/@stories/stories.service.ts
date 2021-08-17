@@ -155,7 +155,7 @@ export class StoriesService {
     const latestPosts = await this.StoriesRepository.find({
       relations: ['country', 'user'],
       order: { id: 'DESC' },
-      take: 3,
+      take: 2,
     });
     if (!latestPosts) {
       throw new NotFoundException('가져올 게시물이 없습니다.');

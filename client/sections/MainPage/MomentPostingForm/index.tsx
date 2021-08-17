@@ -8,7 +8,7 @@ import { MomentPostingFormWrapper } from "./styles";
 import router, { useRouter } from "next/router";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
-import { ICountry, IMoment, IPrevImage } from "@typings/db";
+import { ICountry, IMoment } from "@typings/db";
 import AutoCompleteForm from "@components/AutoCompleteForm";
 import { RootState } from "slices";
 import dynamic from "next/dynamic";
@@ -103,6 +103,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
         scrollTo({ top: 0 });
         setContent("");
         setUpImg([]);
+        setFileList([]);
         setType("키워드 선택");
         setOnPostingForm(false);
         if (editMoment) {
