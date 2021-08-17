@@ -62,17 +62,17 @@ interface IProps {
 }
 
 const MainPopularArticleSlide: FC<IProps> = ({ country }) => {
-  const { data: popularArticles } = useSWR<IStory[]>(
-    `/story/popular?code=${country?.code || ""}`,
-    fetcher,
-    noRevalidate
-  );
+  // const { data: popularArticles } = useSWR<IStory[]>(
+  //   `/story/popular?code=${country?.code || ""}`,
+  //   fetcher,
+  //   noRevalidate
+  // );
   const onClickMoreCard = useCallback(() => {
     router.push(`/story`);
   }, [country]);
   return (
     <>
-      {popularArticles && popularArticles.length > 0 ? (
+      {/* {popularArticles && popularArticles.length > 0 ? (
         <MainPopularArticleSlideWrapper {...popularSlideSettings}>
           {popularArticles?.map((v, i) => {
             return <ArticleColumnCard key={i} isMain={true} story={v} />;
@@ -84,9 +84,9 @@ const MainPopularArticleSlide: FC<IProps> = ({ country }) => {
             </div>
           </div>
         </MainPopularArticleSlideWrapper>
-      ) : (
-        <NoStoryWrapper>아직 {country?.name}관련 연대기가 없어요.😰</NoStoryWrapper>
-      )}
+      ) : ( */}
+      <NoStoryWrapper>아직 {country?.name}관련 연대기가 없어요.😰</NoStoryWrapper>
+      {/* )} */}
     </>
   );
 };

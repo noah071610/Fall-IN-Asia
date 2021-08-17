@@ -24,11 +24,11 @@ interface IProps {
 }
 
 const CountryPreviewSlide: FC<IProps> = ({ slidesPerView, isMain }) => {
-  const { data: countries } = useSWR<ICountry[]>(
-    isMain ? "/country/popular" : "/country",
-    fetcher,
-    noRevalidate
-  );
+  // const { data: countries } = useSWR<ICountry[]>(
+  //   isMain ? "/country/popular" : "/country",
+  //   fetcher,
+  //   noRevalidate
+  // );
 
   const breakPoints = {
     1024: {
@@ -65,13 +65,13 @@ const CountryPreviewSlide: FC<IProps> = ({ slidesPerView, isMain }) => {
       spaceBetween={16}
       css={CountryPreviewSlideWrapper(isMain)}
     >
-      {countries?.map((v, i) => {
+      {/* {countries?.map((v, i) => {
         return (
           <SwiperSlide key={i}>
             <ImageCard isMain={isMain} country={v} />
           </SwiperSlide>
         );
-      })}
+      })} */}
     </Swiper>
   );
 };
