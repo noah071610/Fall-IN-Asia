@@ -4,6 +4,8 @@ import Pin from "./Pin";
 //@ts-ignore
 import Geocoder from "react-map-gl-geocoder";
 import { ICoordinate } from "@typings/db";
+import "mapbox-gl/dist/mapbox-gl.css";
+import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 interface IProps {
   setRegion: (value: string) => void;

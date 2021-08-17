@@ -14,12 +14,10 @@ export const globalStyle = `
   background: #f1f1f1;
 }
 
-/* Handle */
 *::-webkit-scrollbar-thumb {
   background: rgb(185, 185, 185);
 }
 
-/* Handle on hover */
 *::-webkit-scrollbar-thumb:hover {
   background: rgb(153, 153, 153);
 }
