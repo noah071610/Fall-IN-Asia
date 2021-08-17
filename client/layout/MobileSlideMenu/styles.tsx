@@ -7,7 +7,7 @@ export const MobileSlideMenuWrapper = styled.nav`
   z-index:100;
   transition: 0.15s all;
   .slide-menu {
-    ${tw`h-full overflow-y-auto`}
+    ${tw`w-full px-1 h-full overflow-y-auto`}
     ${FLEX_STYLE("space-between", "flex-start", "column")};
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -101,7 +101,7 @@ export const MobileSlideMenuWrapper = styled.nav`
     }
   }
   .slide-menu-footer {
-    ${tw`pt-16 pb-4 pl-4 pr-16`}
+    ${tw`pt-16 pb-4 pr-16`}
     h4 {
       ${tw`leading-7 text-xs mb-3`}
     }
