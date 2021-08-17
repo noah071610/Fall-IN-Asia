@@ -2,7 +2,7 @@ import ImageCard from "@components/Cards/CountryImageCard";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { ICountry } from "@typings/db";
 import { noRevalidate, SM_SIZE } from "config";
-import React, { FC, useState } from "react";
+import React, { FC, memo, useState } from "react";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { css } from "@emotion/react";
@@ -24,11 +24,7 @@ interface IProps {
 }
 
 const CountryPreviewSlide: FC<IProps> = ({ slidesPerView, isMain }) => {
-  // const { data: countries } = useSWR<ICountry[]>(
-  //   isMain ? "/country/popular" : "/country",
-  //   fetcher,
-  //   noRevalidate
-  // );
+  const { data: countries } = useSWR<ICountry[]>("/country", fetcher, noRevalidate);
 
   const breakPoints = {
     1024: {
@@ -65,15 +61,15 @@ const CountryPreviewSlide: FC<IProps> = ({ slidesPerView, isMain }) => {
       spaceBetween={16}
       css={CountryPreviewSlideWrapper(isMain)}
     >
-      {/* {countries?.map((v, i) => {
+      {countries?.map((v, i) => {
         return (
           <SwiperSlide key={i}>
             <ImageCard isMain={isMain} country={v} />
           </SwiperSlide>
         );
-      })} */}
+      })}
     </Swiper>
   );
 };
 
-export default CountryPreviewSlide;
+export default memo(CountryPreviewSlide);

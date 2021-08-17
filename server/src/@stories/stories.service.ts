@@ -194,7 +194,7 @@ export class StoriesService {
       .leftJoinAndSelect('stories.comments', 'comments')
       .where(code ? `stories.code = :code` : '1=1', { code })
       .orderBy('stories.id', 'DESC')
-      .take(50)
+      .take(10)
       .getMany()
       .then((res) => {
         return res
