@@ -156,7 +156,9 @@ export class MomentsController {
     @Query('getIp') getIp: string,
     @Req() req: Request,
   ) {
-    const ip = req.headers['x-real-ip'];
+    const ip = req.headers['x-forwarded-for'];
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@', req.headers);
+
     console.log('############ Im here!!! #############', ip);
     const post = await this.MomentsService.getOnePost(
       momentId,
