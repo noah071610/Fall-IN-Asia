@@ -146,9 +146,13 @@ export class StoriesController {
     @Query('code') code: string,
     @Query('page', ParseIntPipe) page: number,
     @Query('filter') filter: string,
+    @Query('storyId') storyId: string,
   ) {
     if (filter) {
       return await this.StoriesService.getFilterPosts(filter, code, page);
+    }
+    if (!filter && storyId) {
+      return await this.StoriesService.getPostsById(code, page, storyId);
     }
     return await this.StoriesService.getPosts(code, page);
   }

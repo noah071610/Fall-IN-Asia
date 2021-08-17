@@ -73,7 +73,7 @@ export class StoriesService {
       throw new NotFoundException('사용 할 이미지가 없습니다.');
     }
     const newImage = new Images();
-    newImage.image_src = file.location.replace(/\/original\//, '/thumb/');
+    newImage.image_src = file.location;
     await this.ImagesRepository.save(newImage);
     return newImage.image_src;
   }
@@ -178,15 +178,15 @@ export class StoriesService {
       case 'popular':
         return filterPosts
           .sort((a, b) => b.likedUser.length - a.likedUser.length)
-          .slice((page - 1) * 10, page * 10);
+          .slice((page - 1) * 12, page * 12);
       case 'comment':
         return filterPosts
           .sort((a, b) => b.comments.length - a.comments.length)
-          .slice((page - 1) * 10, page * 10);
+          .slice((page - 1) * 12, page * 12);
       case 'view':
         return filterPosts
           .sort((a, b) => b.hit - a.hit)
-          .slice((page - 1) * 10, page * 10);
+          .slice((page - 1) * 12, page * 12);
     }
   }
 
@@ -239,10 +239,29 @@ export class StoriesService {
       .leftJoinAndSelect('stories.images', 'images')
       .where(code ? `stories.code = :code` : '1=1', { code })
       .orderBy('stories.id', 'DESC')
-      .skip((page - 1) * 10)
-      .take(10)
+      .skip((page - 1) * 12)
+      .take(12)
       .getMany();
 
+    return posts;
+  }
+
+  async getPostsById(code: string, page: number, id: string) {
+    const posts = await this.StoriesRepository.createQueryBuilder('stories')
+      .where('stories.code= :code', { code })
+      .andWhere('stories.id < :id', { id })
+      .leftJoinAndSelect('stories.country', 'country')
+      .leftJoinAndSelect('stories.user', 'user')
+      .leftJoinAndSelect('stories.likedUser', 'likedUser')
+      .leftJoinAndSelect('stories.comments', 'comments')
+      .leftJoinAndSelect('stories.images', 'images')
+      .orderBy('stories.id', 'DESC')
+      .skip((page - 1) * 12)
+      .take(12)
+      .getMany();
+    if (!posts) {
+      throw new NotFoundException('모멘트를 찾을 수 없습니다.');
+    }
     return posts;
   }
 
