@@ -8,6 +8,7 @@ import {
   noRevalidate,
   NO_POST_URL,
   RGB_BLACK,
+  toastErrorMessage,
   XLG_SIZE,
 } from "config";
 import { wrapper } from "configureStore";
@@ -24,10 +25,11 @@ import MainCountryAllview from "@components/CountryAllview";
 import TopNavigation from "@components/TopNavigation";
 import StoryArticleList from "@sections/StoryPage/StoryArticleList";
 import ArticleCard from "@components/Cards/ArticleCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
 import Head from "next/head";
+import { mainSlice } from "slices/main";
 
 const StoryMainWrapper = styled.div`
   padding-top: 4rem;
@@ -84,6 +86,7 @@ interface IProps {
 }
 
 const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
+  const dispatch = useDispatch();
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
   const [filter, setFilter] = useState("");
@@ -158,6 +161,15 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
     setOnMorePopularStory(true);
   }, []);
 
+  const onClickPostStoryBtn = useCallback(() => {
+    if (!user) {
+      toastErrorMessage("로그인이 필요합니다.");
+      dispatch(mainSlice.actions.toggleLoginModal());
+    } else {
+      router.push("/story/post");
+    }
+  }, [user]);
+
   return (
     <>
       <Head>
@@ -209,7 +221,7 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
             <div className="no-story-wrapper">
               <img src={NO_POST_URL} alt="no-post-img" />
               <h2>연대기가 없습니다. 첫 연대기에 주인공이 되어주세요!</h2>
-              <button className="story-post-btn" onClick={() => router.push("/story/post")}>
+              <button className="story-post-btn" onClick={onClickPostStoryBtn}>
                 연대기 올리기
               </button>
             </div>

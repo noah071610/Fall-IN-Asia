@@ -10,6 +10,8 @@ import { throttle } from "lodash";
 import HeaderLeft from "./HeaderLeft";
 import HeaderRight from "./HeaderRight";
 import HeaderSmall from "./HeaderSmall";
+import LoginModal from "@components/Modals/LoginModal";
+import Overlay from "@components/Modals/Overlay";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const Header = () => {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const mobileSearchInputRef = useRef<HTMLInputElement>(null);
   const [headerDownSize, setHeaderDownSize] = useState(false);
-  const { onSearchPopUp } = useSelector((state: RootState) => state.main);
+  const { onSearchPopUp, onLoginModal } = useSelector((state: RootState) => state.main);
 
   useEffect(() => {
     const scrollCallBack = () => {
@@ -91,6 +93,12 @@ const Header = () => {
           />
         )}
       </HeaderRight>
+      {onLoginModal && (
+        <>
+          <LoginModal />
+          <Overlay />
+        </>
+      )}
     </header>
   );
 };

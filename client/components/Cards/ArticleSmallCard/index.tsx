@@ -4,6 +4,7 @@ import router from "next/router";
 import React, { FC, useCallback, useMemo } from "react";
 import { ArticleSmallCardWrapper } from "./styles";
 import dayjs from "dayjs";
+import { NO_IMAGE_URL } from "config";
 
 interface IProps {
   moment?: IMoment;
@@ -26,7 +27,7 @@ const ArticleSmallCard: FC<IProps> = ({ isSearchPage, moment, story, article }) 
         <div className="image-wrapper">
           <img
             style={story || article ? { borderRadius: "5px" } : {}}
-            src={moment?.user?.icon || (story || article)?.thumbnail}
+            src={moment?.user?.icon || (story || article)?.thumbnail || NO_IMAGE_URL}
             alt="card-image"
           />
         </div>

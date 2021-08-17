@@ -6,14 +6,26 @@ export const MobileSlideMenuWrapper = styled.nav`
   ${tw`fixed top-0 left-0 h-screen bg-white w-5/6 p-4 hidden`}
   z-index:100;
   transition: 0.15s all;
-  .slide-menu-logo {
-    ${tw`w-48 h-10 mb-4`}
-    transition: 0.3s all;
-  }
-  .slide-menu-divider {
-    ${tw`mt-0 mb-4`}
-    span {
-      ${tw`text-sm font-bold`}
+  .slide-menu {
+    ${tw`h-full overflow-y-auto`}
+    ${FLEX_STYLE("space-between", "flex-start", "column")};
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera*/
+    }
+    &-logo {
+      ${tw`w-36 h-8 mb-4`}
+      transition: 0.3s all;
+    }
+    &-divider {
+      ${tw`mt-0 mb-4`}
+      span {
+        ${tw`text-sm font-bold`}
+      }
+    }
+    &-sub-title {
+      ${tw`pl-1 text-xs font-bold`}
     }
   }
   .user-profile-wrapper {
@@ -51,9 +63,6 @@ export const MobileSlideMenuWrapper = styled.nav`
       border-right: none;
     }
   }
-  .slide-menu-sub-title {
-    ${tw`pl-1 text-xs font-bold`}
-  }
   .login-btn {
     ${tw`w-full rounded-md block p-3 font-bold text-sm mt-4 mb-6 shadow-md`}
     ${FLEX_STYLE("flex-start", "center")};
@@ -70,9 +79,9 @@ export const MobileSlideMenuWrapper = styled.nav`
       }
     }
   }
-  .link-menu-list {
+  .link-menu-wrapper {
     ${tw`pt-2`}
-    li {
+    .link-menu-list {
       ${tw`block py-3 font-bold pl-3 text-base `}
       ${FLEX_STYLE("space-between", "center")};
       border-left: 3px solid ${GRAY_COLOR};
@@ -84,9 +93,15 @@ export const MobileSlideMenuWrapper = styled.nav`
         ${tw`text-lg pl-4`}
       }
     }
+    .moment-link-wrapper {
+      ${tw`py-2 pl-6`}
+      li {
+        ${tw`block py-3`}
+      }
+    }
   }
   .slide-menu-footer {
-    ${tw`absolute bottom-8 left-4 pr-16`}
+    ${tw`pt-16 pb-4 pl-4 pr-16`}
     h4 {
       ${tw`leading-7 text-xs mb-3`}
     }

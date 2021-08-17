@@ -8,11 +8,11 @@ export const LoginModalWrapper = styled.div`
   z-index: 90;
   transform: translate(-50%, -50%);
   .image-wrapper {
-    ${tw`py-4`}
+    ${tw`py-8`}
     ${FLEX_STYLE("center", "center")};
     img {
-      width: 70%;
-      height: 85px;
+      width: 230px;
+      height: 50px;
     }
   }
   h4 {
@@ -55,15 +55,16 @@ export const LoginModalWrapper = styled.div`
     }
   }
   @media (max-width: ${MD_SIZE}) {
-    ${tw`w-11/12 px-8 py-12 `}
+    ${tw`w-11/12`}
   }
   @media (max-width: ${SM_SIZE}) {
     ${tw`px-4`}
     width: 95%;
     .image-wrapper {
-      ${tw`py-3`}
+      ${tw`py-6`}
       img {
-        height: 50px;
+        width: 180px;
+        height: 40px;
       }
     }
   }

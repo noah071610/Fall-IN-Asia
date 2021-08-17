@@ -246,9 +246,8 @@ export class StoriesService {
     return posts;
   }
 
-  async getPostsById(code: string, page: number, id: string) {
+  async getPostsById(page: number, id: string) {
     const posts = await this.StoriesRepository.createQueryBuilder('stories')
-      .where('stories.code= :code', { code })
       .andWhere('stories.id < :id', { id })
       .leftJoinAndSelect('stories.country', 'country')
       .leftJoinAndSelect('stories.user', 'user')

@@ -37,7 +37,8 @@ const UserInfoLayoutWrapper = styled.main`
   .notice-list,
   .route-map-wrapper,
   .post-slider,
-  .no-notice-wrapper {
+  .no-notice-wrapper,
+  .no-post-wrapper {
     ${tw`p-4`}
     @media (max-width: 1000px) {
       ${tw`px-0`}

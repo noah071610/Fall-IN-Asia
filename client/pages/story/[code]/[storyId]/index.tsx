@@ -67,7 +67,7 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
     }
   );
   const { data: stories, setSize } = useSWRInfinite<IStory[]>(
-    (index) => `/story?page=${index + 1}&code=${query?.code}&storyId=${query?.storyId}`,
+    (index) => `/story?page=${index + 1}&storyId=${query?.storyId}`,
     fetcher,
     {
       initialData: initialStories,

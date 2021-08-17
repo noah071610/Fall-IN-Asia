@@ -152,7 +152,7 @@ export class StoriesController {
       return await this.StoriesService.getFilterPosts(filter, code, page);
     }
     if (!filter && storyId) {
-      return await this.StoriesService.getPostsById(code, page, storyId);
+      return await this.StoriesService.getPostsById(page, storyId);
     }
     return await this.StoriesService.getPosts(code, page);
   }

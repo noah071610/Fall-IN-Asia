@@ -53,16 +53,16 @@ const MainPoster: FC<IProps> = () => {
         <PosterCard
           image="/images/poster/story_poster.png"
           isMain={true}
-          link="https://www.0404.go.kr/dev/newest_list.mofa"
-          title="I trust We can get over covid-19"
-          desc="해외안전여행 : 외교부에서 코로나19 입국제한 여부를 확인하세요."
+          path="/story"
+          title="Leave and Share your memory"
+          desc="연대기 : 당신의 여정에는 어떤 일이 있었나요?"
         />
         <PosterCard
           image="/images/poster/covid_poster.png"
           isMain={true}
-          path="/story"
-          title="Leave and Share your memory"
-          desc="연대기 : 당신의 여정에는 어떤 일이 있었나요?"
+          link="https://www.0404.go.kr/dev/newest_list.mofa"
+          title="I trust We can get over covid-19"
+          desc="해외안전여행 : 외교부에서 코로나19 입국제한 여부를 확인하세요."
         />
       </Slider>
     </MainPosterWrapper>

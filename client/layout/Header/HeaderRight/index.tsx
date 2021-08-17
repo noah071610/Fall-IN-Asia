@@ -1,6 +1,4 @@
 import React, { FC, memo, ReactNode, useCallback, useEffect, useState } from "react";
-import LoginModal from "@components/Modals/LoginModal";
-import Overlay from "@components/Modals/Overlay";
 import NoticePopUp from "@components/Popups/NoticePopUp";
 import ProfilePopUp from "@components/Popups/ProfilePopUp";
 import { faBell, faCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -44,7 +42,7 @@ interface IProps {
 
 const HeaderRight: FC<IProps> = ({ onClickSearchWord, children }) => {
   const dispatch = useDispatch();
-  const { onProfilePopUp, onNoticePopUp, onSearchPopUp, onLoginModal } = useSelector(
+  const { onProfilePopUp, onNoticePopUp, onSearchPopUp } = useSelector(
     (state: RootState) => state.main
   );
   const { user, readNoticeDone, logoutDone } = useSelector((state: RootState) => state.user);
@@ -127,12 +125,6 @@ const HeaderRight: FC<IProps> = ({ onClickSearchWord, children }) => {
             로그인
           </a>
         </li>
-      )}
-      {onLoginModal && (
-        <>
-          <LoginModal />
-          <Overlay />
-        </>
       )}
     </HeaderRightWrapper>
   );
