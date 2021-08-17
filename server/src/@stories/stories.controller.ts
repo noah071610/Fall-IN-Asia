@@ -190,12 +190,9 @@ export class StoriesController {
   async getOnePost(
     @Param('code') code: string,
     @Param('storyId', ParseIntPipe) storyId: number,
-    @Query('getIp') getIp: string,
-    @Req() req,
+    @Query('viewCount') viewCount: string,
   ) {
-    const ip = req.headers['x-forwarded-for'];
-    console.log('############ Im here!!! #############', ip);
-    const post = await this.StoriesService.getOnePost(storyId, code, getIp, ip);
+    const post = await this.StoriesService.getOnePost(storyId, code, viewCount);
     return post;
   }
 }

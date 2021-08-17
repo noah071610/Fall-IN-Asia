@@ -11,7 +11,6 @@ import { Countries } from 'src/entities/Countries';
 import { MomentLike } from 'src/entities/MomentLike';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MomentCreateRequestDto, MomentModifyRequestDto } from './moments.dto';
-const viewer = new Object();
 import AWS from 'aws-sdk';
 
 AWS.config.update({
@@ -86,7 +85,7 @@ export class MomentsService {
     return true;
   }
 
-  async getOnePost(momentId: number, code: string, getIp: string, ip: string) {
+  async getOnePost(momentId: number, code: string, viewCount?: string) {
     const post = await this.MomentsRepository.createQueryBuilder('moments')
       .addSelect([
         'images.image_src',
@@ -107,23 +106,14 @@ export class MomentsService {
     if (!post) {
       throw new NotFoundException('가져올 게시물이 없습니다.');
     }
-    if (post && getIp && ip) {
-      if (!viewer[momentId]) {
-        viewer[momentId] = [];
-      }
-      if (viewer[momentId].indexOf(ip) == -1) {
-        viewer[momentId].push(ip);
-        await this.MomentsRepository.createQueryBuilder('moments')
-          .update()
-          .set({
-            hit: () => 'hit + 1',
-          })
-          .where('id = :id', { id: momentId })
-          .execute();
-        setTimeout(() => {
-          viewer[momentId].splice(viewer[momentId].indexOf(ip), 1);
-        }, 600000);
-      }
+    if (post && viewCount) {
+      await this.MomentsRepository.createQueryBuilder('moments')
+        .update()
+        .set({
+          hit: () => 'hit + 1',
+        })
+        .where('id = :id', { id: momentId })
+        .execute();
     }
     return post;
   }

@@ -11,7 +11,6 @@ import { Notices } from 'src/entities/Notices';
 import { Countries } from 'src/entities/Countries';
 import { StoryLike } from 'src/entities/StoryLike';
 import { StoryCreateDto, StoryEditDto } from 'src/@stories/stories.dto';
-const viewObj = new Object();
 
 @Injectable()
 export class StoriesService {
@@ -108,7 +107,7 @@ export class StoriesService {
     return { prevPost, nextPost };
   }
 
-  async getOnePost(storyId: number, code: string, getIp: string, ip: string) {
+  async getOnePost(storyId: number, code: string, viewCount?: string) {
     const post = await this.StoriesRepository.findOne({
       where: {
         id: storyId,
@@ -130,23 +129,14 @@ export class StoriesService {
       throw new NotFoundException('가져올 게시물이 없습니다.');
     }
 
-    if (post && getIp && ip) {
-      if (!viewObj[storyId]) {
-        viewObj[storyId] = [];
-      }
-      if (viewObj[storyId].indexOf(ip) == -1) {
-        viewObj[storyId].push(ip);
-        await this.StoriesRepository.createQueryBuilder('stories')
-          .update()
-          .set({
-            hit: () => 'hit + 1',
-          })
-          .where('id = :id', { id: storyId })
-          .execute();
-        setTimeout(() => {
-          viewObj[storyId].splice(viewObj[storyId].indexOf(ip), 1);
-        }, 600000);
-      }
+    if (post && viewCount) {
+      await this.StoriesRepository.createQueryBuilder('stories')
+        .update()
+        .set({
+          hit: () => 'hit + 1',
+        })
+        .where('id = :id', { id: storyId })
+        .execute();
     }
     return post;
   }

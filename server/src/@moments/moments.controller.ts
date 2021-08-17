@@ -153,18 +153,12 @@ export class MomentsController {
   async getOnePost(
     @Param('code') code: string,
     @Param('momentId', ParseIntPipe) momentId: number,
-    @Query('getIp') getIp: string,
-    @Req() req: Request,
+    @Query('viewCount') viewCount: string,
   ) {
-    const ip = req.headers['x-forwarded-for'];
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@', req.socket.remoteAddress);
-
-    console.log('############ Im here!!! #############', ip);
     const post = await this.MomentsService.getOnePost(
       momentId,
       code,
-      getIp,
-      '0',
+      viewCount,
     );
     return post;
   }

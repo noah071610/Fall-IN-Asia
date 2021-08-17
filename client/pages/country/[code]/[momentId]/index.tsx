@@ -85,7 +85,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         axios.defaults.headers.Cookie = cookie;
       }
       await store.dispatch(getUserInfoAction());
-      const initialMoment = await fetcher(`/moment/${params?.code}/${params?.momentId}?getIp=true`);
+      const initialMoment = await fetcher(
+        `/moment/${params?.code}/${params?.momentId}?viewCount=true`
+      );
       let initialMoments = await fetcher(
         `/moment?code=${params?.code}&momentId=${params?.momentId}&page=1`
       );

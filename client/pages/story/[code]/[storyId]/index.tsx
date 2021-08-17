@@ -181,7 +181,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     axios.defaults.headers.Cookie = cookie;
   }
   await store.dispatch(getUserInfoAction());
-  const initialStory = await fetcher(`/story/${params?.code}/${params?.storyId}?getIp=true`);
+  const initialStory = await fetcher(`/story/${params?.code}/${params?.storyId}?viewCount=true`);
   let initialStories = await fetcher(`/story?page=1&storyId=${params?.storyId}`);
   initialStories = [initialStories];
   return {
