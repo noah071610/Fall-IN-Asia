@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Query,
+  Req,
   UploadedFile,
   UploadedFiles,
   UseGuards,
@@ -21,7 +22,7 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import path from 'path';
 import { User } from 'src/decorators/user.decorator';
 import { MomentCreateRequestDto, MomentModifyRequestDto } from './moments.dto';
-import { RealIP } from 'nestjs-real-ip';
+import { Request } from 'express';
 import multerS3 from 'multer-s3';
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
@@ -153,14 +154,15 @@ export class MomentsController {
     @Param('code') code: string,
     @Param('momentId', ParseIntPipe) momentId: number,
     @Query('getIp') getIp: string,
-    @RealIP() ip: string,
+    @Req() req: Request,
   ) {
+    const ip = req.headers['x-forwarded-for'];
     console.log('############ Im here!!! #############', ip);
     const post = await this.MomentsService.getOnePost(
       momentId,
       code,
       getIp,
-      ip,
+      '0',
     );
     return post;
   }
