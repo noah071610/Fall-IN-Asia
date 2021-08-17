@@ -44,20 +44,15 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 
   return (
-    <>
-      <Head>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
-      <div onClick={onClickClosePopup}>
-        <Global styles={globalStyle} />
-        <Header />
-        <Component {...pageProps} />
-        <Footer />
-        <ToastContainer />
-        <MobileSlideMenu />
-        {onSlideMenu && <Overlay isMobile={true} />}
-      </div>
-    </>
+    <div onClick={onClickClosePopup}>
+      <Global styles={globalStyle} />
+      <Header />
+      <Component {...pageProps} />
+      <Footer />
+      <ToastContainer />
+      <MobileSlideMenu />
+      {onSlideMenu && <Overlay isMobile={true} />}
+    </div>
   );
 };
 
