@@ -154,7 +154,7 @@ export class MomentsController {
     @Param('code') code: string,
     @Param('momentId', ParseIntPipe) momentId: number,
     @Query('getIp') getIp: string,
-    @Req() req: Request,
+    @Req() req,
   ) {
     const ip = req.headers['x-forwarded-for'];
     console.log('############ Im here!!! #############', ip);
