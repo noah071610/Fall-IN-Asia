@@ -7,7 +7,7 @@ import axios from "axios";
 axios.defaults.baseURL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3060/api"
-    : process.env.NEXT_PUBLIC_BASE_URL;
+    : "https://api.fallinasia.com/api";
 axios.defaults.withCredentials = true;
 
 const makeStore = () =>
