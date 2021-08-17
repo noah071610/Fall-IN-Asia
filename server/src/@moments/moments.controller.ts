@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Query,
+  Req,
   UploadedFile,
   UploadedFiles,
   UseGuards,
@@ -153,8 +154,9 @@ export class MomentsController {
     @Param('code') code: string,
     @Param('momentId', ParseIntPipe) momentId: number,
     @Query('getIp') getIp: string,
-    @RealIP() ip: string,
+    @Req() req: Request,
   ) {
+    const ip = req.headers['x-forwarded-for'];
     console.log('############ Im here!!! #############', ip);
     const post = await this.MomentsService.getOnePost(
       momentId,

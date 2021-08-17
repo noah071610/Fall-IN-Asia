@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Query,
+  Req,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -190,8 +191,10 @@ export class StoriesController {
     @Param('code') code: string,
     @Param('storyId', ParseIntPipe) storyId: number,
     @Query('getIp') getIp: string,
-    @RealIP() ip: string,
+    @Req() req: Request,
   ) {
+    const ip = req.headers['x-forwarded-for'];
+    console.log('############ Im here!!! #############', ip);
     const post = await this.StoriesService.getOnePost(storyId, code, getIp, ip);
     return post;
   }
