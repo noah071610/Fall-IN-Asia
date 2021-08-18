@@ -1,7 +1,4 @@
 import React, { FC, useEffect, useState } from "react";
-import { wrapper } from "configureStore";
-import axios from "axios";
-import { getUserInfoAction } from "actions/user";
 import { noRevalidate } from "config";
 import MomentList from "@sections/MainPage/MomentList";
 import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
@@ -14,11 +11,7 @@ import CountryList from "@components/CountryPreviewSlide";
 import MainPopularArticleSlide from "@sections/MainPage/MainPopularArticleSlide";
 import Head from "next/head";
 
-interface IProps {
-  initialMoments: IMoment[][];
-}
-
-const index: FC<IProps> = ({ initialMoments }) => {
+const index = () => {
   const { query } = useRouter();
   const [filter, setFilter] = useState("");
   const {
@@ -28,10 +21,7 @@ const index: FC<IProps> = ({ initialMoments }) => {
   } = useSWRInfinite<IMoment[]>(
     (index) => `/moment?page=${index + 1}&filter=${filter}&type=${query?.type || ""}`,
     fetcher,
-    {
-      initialData: initialMoments,
-      ...noRevalidate,
-    }
+    noRevalidate
   );
 
   return (
@@ -57,19 +47,5 @@ const index: FC<IProps> = ({ initialMoments }) => {
     </>
   );
 };
-
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
-  const cookie = req ? req.headers.cookie : "";
-  axios.defaults.headers.Cookie = "";
-  if (req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
-  }
-  await store.dispatch(getUserInfoAction());
-  let initialMoments = await fetcher(`/moment?page=1`);
-  initialMoments = [initialMoments];
-  return {
-    props: { initialMoments },
-  };
-});
 
 export default index;
