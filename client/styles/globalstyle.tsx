@@ -20,97 +20,13 @@ const style = css`
     background: rgb(153, 153, 153);
   }
 
-  html,
-  body,
-  div,
-  span,
-  applet,
-  object,
-  iframe,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  blockquote,
-  pre,
-  a,
-  abbr,
-  acronym,
-  address,
-  big,
-  cite,
-  code,
-  del,
-  dfn,
-  em,
-  img,
-  ins,
-  kbd,
-  q,
-  s,
-  samp,
-  small,
-  strike,
-  strong,
-  sub,
-  sup,
-  tt,
-  var,
-  b,
-  u,
-  i,
-  center,
-  dl,
-  dt,
-  dd,
-  ol,
-  ul,
-  li,
-  fieldset,
-  form,
-  label,
-  legend,
-  table,
-  caption,
-  tbody,
-  tfoot,
-  thead,
-  tr,
-  th,
-  td,
-  article,
-  aside,
-  canvas,
-  details,
-  embed,
-  figure,
-  figcaption,
-  footer,
-  header,
-  hgroup,
-  menu,
-  nav,
-  output,
-  ruby,
-  section,
-  summary,
-  time,
-  mark,
-  audio,
-  video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    vertical-align: baseline;
+  * {
     box-sizing: border-box;
-    font-family: "Spoqa Han Sans Neo", "sans-serif";
   }
   body,
   html {
     line-height: 1.2;
+    font-family: "Spoqa Han Sans Neo", "sans-serif";
   }
   html {
     overflow-x: hidden;
@@ -164,6 +80,13 @@ const style = css`
   p {
     margin: 0;
   }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    margin: 0;
+  }
   .map-gl {
     border-radius: 15px;
     border: 1px solid rgba(0, 0, 0, 0.08);
@@ -199,6 +122,15 @@ const style = css`
     &:hover {
       box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25) !important;
     }
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active,
+  input:-internal-autofill-selected,
+  input:-internal-autofill-previewed {
+    background-color: white !important;
+    box-shadow: 0 0 0 30px white inset, 0px 0px 5px rgba(0, 0, 0, 0.15) !important;
   }
 
   textarea {
