@@ -3,7 +3,6 @@ import { Global, css } from "@emotion/react";
 export const GlobalStyle = () => (
   <Global
     styles={css`
-      @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
       @import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap");
 
       *::-webkit-scrollbar {
@@ -31,7 +30,7 @@ export const GlobalStyle = () => (
         font-family: "Spoqa Han Sans Neo", "sans-serif";
       }
 
-      body {
+      html {
         overflow-x: hidden;
       }
       blockquote,
@@ -329,9 +328,6 @@ export const GlobalStyle = () => (
         border-top: 1px solid rgba(0, 0, 0, 0.2);
       }
 
-      .track-vertical {
-        z-index: 100;
-      }
     `}
   />
 );
