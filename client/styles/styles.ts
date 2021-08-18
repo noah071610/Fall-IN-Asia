@@ -246,7 +246,7 @@ textarea {
   }
 }
 
-.main-story-article{
+.post-content{
   ${tw`pt-16 pb-24`}
   font-size:1rem;
   line-height: 1.7;

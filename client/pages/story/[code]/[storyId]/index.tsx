@@ -38,8 +38,6 @@ const StoryPostWrapper = styled.div`
   }
   .post-content {
     ${tw`pb-16 relative`}
-  }
-  .main-story-article {
     user-select: none;
   }
 `;
@@ -72,9 +70,7 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
 
   useEffect(() => {
     if (story) {
-      let contentHeaders = document.querySelectorAll(
-        ".main-story-article > h1 , .main-story-article > h2"
-      );
+      let contentHeaders = document.querySelectorAll(".post-content > h1 , .post-content > h2");
       contentHeaders.forEach((v, i) => {
         const span = document.createElement("span");
         span.setAttribute("id", `header_${i + 1}`);
@@ -153,7 +149,7 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
               </h2>
               {story?.lat && story?.lng && <CountryMap lat={story.lat} lng={story.lng} />}
               <Divider />
-              <article className="main-story-article">
+              <article className="post-content">
                 <span id="main_post" className="anchor-offset-controller" />
                 {ReactHtmlParser(story?.content as string)}
               </article>

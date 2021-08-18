@@ -16,10 +16,12 @@ const ArticleSmallCard: FC<IProps> = ({ isSearchPage, moment, story, article }) 
   const onClickArticleSmallCard = useCallback(() => {
     if (moment) {
       router.push(`/country/${moment?.code}/${moment?.id}`);
-    } else {
+    } else if (story) {
       router.push(`/story/${story?.code}/${story?.id}`);
+    } else {
+      router.push(`/news/${article?.id}`);
     }
-  }, []);
+  }, [moment, story, article]);
 
   return (
     <article css={ArticleSmallCardWrapper(isSearchPage)} onClick={onClickArticleSmallCard}>
