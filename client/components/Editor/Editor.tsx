@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { imageHandler, quillSetting } from "config";
 import React, { FC, useEffect, useRef } from "react";
 import { memo } from "react";
-import "react-quill/dist/quill.snow.css";
 
 const EditorWrapper = styled.div`
   .ql-editor {

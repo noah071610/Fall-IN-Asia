@@ -92,6 +92,9 @@ export const UserInfoAsideWrapper = styled.aside`
         ${tw`m-0`}
         .icon {
           ${tw`w-full`}
+          img {
+            aspect-ratio: 1/1;
+          }
         }
       }
     }

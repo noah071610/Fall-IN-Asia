@@ -41,9 +41,6 @@ const StoryPostWrapper = styled.div`
   }
   .main-story-article {
     user-select: none;
-    img {
-      width: 100%;
-    }
   }
 `;
 
@@ -66,7 +63,7 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
     }
   );
   const { data: stories, setSize } = useSWRInfinite<IStory[]>(
-    (index) => `/story?page=${index + 1}&storyId=${query?.storyId}`,
+    (index) => `/story?page=${index + 1}`,
     fetcher,
     {
       initialData: initialStories,
@@ -182,7 +179,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   }
   await store.dispatch(getUserInfoAction());
   const initialStory = await fetcher(`/story/${params?.code}/${params?.storyId}?viewCount=true`);
-  let initialStories = await fetcher(`/story?page=1&storyId=${params?.storyId}`);
+  let initialStories = await fetcher(`/story?page=1`);
   initialStories = [initialStories];
   return {
     props: { initialStory, initialStories },

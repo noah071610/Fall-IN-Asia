@@ -3,7 +3,6 @@ import { BLACK_COLOR, GRAY_COLOR, quillModules, qullFormats } from "config";
 import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
 import { memo } from "react";
-import "react-quill/dist/quill.snow.css";
 
 const EditorWrapper = styled.div`
   margin-bottom: 2rem;

@@ -80,7 +80,11 @@ const PostAsideNav: FC<IProps> = () => {
             </a>
           )}
           <a href="#article_list">{query?.storyId ? <h2>다른 연대기</h2> : <h1>다른 기사</h1>}</a>
-          <a onClick={() => router.back()}>
+          <a
+            onClick={() => {
+              query?.storyId ? router.push(`/story`) : router.push(`/news`);
+            }}
+          >
             <h1>뒤로가기</h1>
           </a>
         </Scrollspy>

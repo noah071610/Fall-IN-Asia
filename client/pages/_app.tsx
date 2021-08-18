@@ -8,6 +8,7 @@ import "swiper/swiper.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "react-toastify/dist/ReactToastify.css";
+import "react-quill/dist/quill.snow.css";
 import { ToastContainer } from "react-toastify";
 import Header from "@layout/Header";
 import Footer from "@layout/Footer";

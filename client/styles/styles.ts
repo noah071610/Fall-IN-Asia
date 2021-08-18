@@ -246,12 +246,12 @@ textarea {
   }
 }
 
-.post-content{
+.main-story-article{
   ${tw`pt-16 pb-24`}
   font-size:1rem;
   line-height: 1.7;
   img {
-    width: 50%;
+    width: 70%;
   }
   .ql-size-large {
     ${tw`text-2xl font-bold`}

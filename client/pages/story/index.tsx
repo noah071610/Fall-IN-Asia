@@ -46,7 +46,7 @@ const StoryMainWrapper = styled.div`
   }
   .popular-story-wrapper {
     .article-card-wrapper {
-      ${tw`grid`}
+      ${tw`grid mb-8`}
     }
     .article-card-column-wrapper {
       ${tw`hidden`}
