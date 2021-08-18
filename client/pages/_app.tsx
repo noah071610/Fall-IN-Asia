@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 import { useCallback } from "react";
 import { wrapper } from "configureStore";
 import "antd/dist/antd.css";
-import "../styles/globalstyle.css";
+import "../styles/globalstyle.scss";
 import "swiper/swiper.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -45,11 +45,13 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta charSet="utf-8" />
       </Head>
       <Header />
-      <Component onClick={onClickClosePopup} {...pageProps} />
-      <Footer />
-      <ToastContainer />
-      <MobileSlideMenu />
-      {onSlideMenu && <Overlay isMobile={true} />}
+      <div onClick={onClickClosePopup}>
+        <Component {...pageProps} />
+        <Footer />
+        <ToastContainer />
+        <MobileSlideMenu />
+        {onSlideMenu && <Overlay isMobile={true} />}
+      </div>
     </>
   );
 };
