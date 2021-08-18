@@ -25,13 +25,6 @@ export const PostAsideNavWrapper = styled.aside`
       ${tw`text-sm pb-2 pl-8`}
     }
   }
-  .is-current {
-    h1,
-    h2,
-    h3 {
-      border-left: 2px solid ${BLUE_COLOR};
-    }
-  }
   @media (max-width: ${LG_SIZE}) {
     ${tw`hidden`}
   }

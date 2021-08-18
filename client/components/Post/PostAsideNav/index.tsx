@@ -28,7 +28,7 @@ const PostAsideNav: FC<IProps> = () => {
     if (postData) {
       const headers =
         postData?.content
-          ?.match(/<h1([^])*?.*?<\/h1>|<h2([^])*?.*?<\/h2>|<h3([^])*?.*?<\/h3>/g)
+          ?.match(/<h1([^])*?.*?<\/h1>|<h2([^])*?.*?<\/h2>/g)
           ?.join(",")
           .split(",") || [];
       setHdClassList(Array.from({ length: headers.length }, (v, i) => "header_" + (i + 1)));
