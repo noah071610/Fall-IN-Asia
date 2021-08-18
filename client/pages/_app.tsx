@@ -1,6 +1,5 @@
 import type { AppProps } from "next/app";
-import { Global } from "@emotion/react";
-import { globalStyle } from "@styles/styles";
+import { GlobalStyle } from "@styles/globalstyle";
 import { useCallback } from "react";
 import { wrapper } from "configureStore";
 import "antd/dist/antd.css";
@@ -46,6 +45,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta charSet="utf-8" />
       </Head>
       <div onClick={onClickClosePopup}>
+        <GlobalStyle />
         <Header />
         <Component {...pageProps} />
         <Footer />
