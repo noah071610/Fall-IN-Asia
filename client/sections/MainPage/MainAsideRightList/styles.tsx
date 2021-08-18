@@ -11,7 +11,7 @@ export const MainAsideRightListWrapper = styled.aside`
   width: 22%;
   .aside-title {
     ${tw`text-sm font-bold`};
-    ${tw`mt-12 mb-4`}
+    ${tw`mt-4 mb-4`}
   }
   .aside-title:first-of-type {
     ${tw`mt-0 mb-4`}

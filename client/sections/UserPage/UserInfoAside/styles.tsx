@@ -19,7 +19,8 @@ export const UserInfoAsideWrapper = styled.aside`
       .icon {
         ${tw`w-2/3 relative rounded-full cursor-pointer`}
         img {
-          ${tw`w-full h-full rounded-full`}
+          ${tw` w-full h-full rounded-full`}
+          aspect-ratio: 1/1;
         }
         .icon-changer {
           ${tw`w-full h-full absolute top-0 left-0 text-white cursor-pointer opacity-0 rounded-full text-4xl`}
@@ -92,9 +93,6 @@ export const UserInfoAsideWrapper = styled.aside`
         ${tw`m-0`}
         .icon {
           ${tw`w-full`}
-          img {
-            aspect-ratio: 1/1;
-          }
         }
       }
     }

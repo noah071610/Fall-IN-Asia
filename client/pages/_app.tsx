@@ -8,6 +8,8 @@ import "swiper/swiper.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "react-toastify/dist/ReactToastify.css";
+import "mapbox-gl/dist/mapbox-gl.css";
+import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import "react-quill/dist/quill.snow.css";
 import { ToastContainer } from "react-toastify";
 import Header from "@layout/Header";

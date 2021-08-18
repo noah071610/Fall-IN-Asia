@@ -2,8 +2,6 @@ import React, { FC, useCallback, useMemo, useRef, useState } from "react";
 import ReactMapGL, { Marker, FlyToInterpolator, Source, Layer, MapRef } from "react-map-gl";
 import Pin from "./Pin";
 import { IStory } from "@typings/db";
-import "mapbox-gl/dist/mapbox-gl.css";
-import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 interface IProps {
   stories: IStory[];

@@ -1,4 +1,4 @@
-import React, { FC, memo, useMemo, useState } from "react";
+import React, { FC, memo, useMemo } from "react";
 import { IStory } from "@typings/db";
 import styled from "@emotion/styled";
 import { BORDER_THIN } from "config";
@@ -7,7 +7,7 @@ import tw from "twin.macro";
 const VisitedCountryListWrapper = styled.ul`
   ${tw`p-4`}
   li {
-    ${tw`mr-4`}
+    ${tw`mr-4 mb-4`}
     .image-wrapper {
       ${tw`w-6 h-4 inline-block`}
       img {

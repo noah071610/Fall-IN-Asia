@@ -45,7 +45,7 @@ const ArticleCard: FC<IProps> = ({ story }) => {
         <div className="story-info">
           <NameSpace date={story?.createdAt} user={story?.user} />
         </div>
-        <div className="story-content">{html2textConverter(story?.content)}</div>
+        <div className="story-content">{html2textConverter(story?.content)?.slice(0, 350)}</div>
       </div>
     </article>
   );

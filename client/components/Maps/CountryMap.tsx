@@ -1,8 +1,6 @@
 import React, { FC, useCallback, useState } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
 import Pin from "./Pin";
-import "mapbox-gl/dist/mapbox-gl.css";
-import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 interface IProps {
   lat: number;

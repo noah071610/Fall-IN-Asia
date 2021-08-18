@@ -33,7 +33,7 @@ export const NameSpaceWrapper = styled.div`
     }
   }
   p {
-    ${tw`mt-2 leading-7`}
+    ${tw`mt-2 leading-5`}
     font-size:0.83rem;
   }
   span {

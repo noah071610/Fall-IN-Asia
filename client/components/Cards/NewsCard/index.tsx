@@ -25,7 +25,7 @@ const NewsCard: FC<IProps> = ({ article }) => {
       </div>
       <div className="news-main">
         <h2>{article?.title}</h2>
-        <p className="news-content">{html2textConverter(article?.content)}</p>
+        <p className="news-content">{html2textConverter(article?.content)?.slice(0, 150)}</p>
       </div>
     </NewsCardWrapper>
   );

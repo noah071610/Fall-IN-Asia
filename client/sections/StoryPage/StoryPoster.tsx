@@ -15,7 +15,7 @@ const StoryPosterWrapper = styled.section`
     ${tw`text-3xl font-bold text-white cursor-pointer z-10`};
   }
   @media (max-width: ${SM_SIZE}) {
-    ${tw`h-52`}
+    ${tw`h-40`}
     .title {
       ${tw`text-lg px-4 text-center`}
     }

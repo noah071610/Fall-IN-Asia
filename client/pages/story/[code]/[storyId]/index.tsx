@@ -53,7 +53,6 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
   const { query } = useRouter();
   const [isOwner, setIsOwner] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
-
   const { data: story, revalidate: revalidateStory } = useSWR<IStory>(
     `/story/${query?.code}/${query?.storyId}`,
     fetcher,
@@ -152,7 +151,7 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
               <h2 className="main-title">
                 연대기 위치 <span>{story?.region}</span>
               </h2>
-              <CountryMap lat={story?.lat} lng={story?.lng} />
+              {story?.lat && story?.lng && <CountryMap lat={story.lat} lng={story.lng} />}
               <Divider />
               <article className="main-story-article">
                 <span id="main_post" className="anchor-offset-controller" />
