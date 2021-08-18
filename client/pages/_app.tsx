@@ -45,7 +45,6 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Head>
         <meta charSet="utf-8" />
       </Head>
-      <Global styles={globalStyle} />
       <div onClick={onClickClosePopup}>
         <Header />
         <Component {...pageProps} />
