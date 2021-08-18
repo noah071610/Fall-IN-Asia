@@ -76,7 +76,7 @@ export const GlobalStyle = () => (
           outline: none;
         }
         &::placeholder {
-          color: rgba(0, 0, 0,0.3);
+          color: rgba(0, 0, 0, 0.3);
         }
       }
       p {
@@ -91,7 +91,7 @@ export const GlobalStyle = () => (
       }
       .map-gl {
         border-radius: 15px;
-        border: 1px solid rgba(0, 0, 0,0.08);
+        border: 1px solid rgba(0, 0, 0, 0.08);
       }
       .suggestions {
         li {
@@ -106,23 +106,23 @@ export const GlobalStyle = () => (
           outline: none;
           border: none;
           border-radius: 10px;
-          box-shadow: 0px 0px 8px rgba(0, 0, 0,0.3);
+          box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
         }
       }
       .basic-input {
         background: white;
         border-radius: 10px;
-        border:1px solid rgba(0,0,0,0.15);
+        border: 1px solid rgba(0, 0, 0, 0.15);
         &::placeholder {
-          color: rgba(0, 0, 0,0.25);
+          color: rgba(0, 0, 0, 0.25);
         }
         padding: 0.5rem 1rem;
         transition: 0.3s all;
         &:focus {
-          box-shadow: 0px 0px 5px rgba(0, 0, 0,0.25) !important;
+          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25) !important;
         }
         &:hover {
-          box-shadow: 0px 0px 5px rgba(0, 0, 0,0.25) !important;
+          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25) !important;
         }
       }
       input:-webkit-autofill,
@@ -132,7 +132,7 @@ export const GlobalStyle = () => (
       input:-internal-autofill-selected,
       input:-internal-autofill-previewed {
         background-color: white !important;
-        -webkit-box-shadow: 0 0 0 30px white inset, 0px 0px 5px rgba(0, 0, 0,0.15) !important;
+        box-shadow: 0 0 0 30px white inset, 0px 0px 5px rgba(0, 0, 0, 0.15) !important;
       }
 
       textarea {
@@ -145,7 +145,7 @@ export const GlobalStyle = () => (
           outline: none;
         }
         &::placeholder {
-          color: rgba(0, 0, 0,0.25);
+          color: rgba(0, 0, 0, 0.25);
         }
         &::-webkit-scrollbar {
           display: none;
@@ -159,7 +159,7 @@ export const GlobalStyle = () => (
         overflow: visible;
         cursor: pointer;
         background-color: inherit;
-        border:1px solid rgba(0,0,0,0.15);
+        border: 1px solid rgba(0, 0, 0, 0.15);
         border-radius: 3px;
         &:hover {
           box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
@@ -182,7 +182,7 @@ export const GlobalStyle = () => (
         border-top-right-radius: 15px;
         border-bottom: none;
         background: white;
-        border: 1px solid rgba(0,0,0,0.15);
+        border: 1px solid rgba(0, 0, 0, 0.15);
       }
       .ql-container {
         border-bottom-left-radius: 15px;
@@ -190,18 +190,18 @@ export const GlobalStyle = () => (
         background: white;
         height: 250px;
         padding-bottom: 1rem;
-        border: 1px solid rgba(0,0,0,0.15);
+        border: 1px solid rgba(0, 0, 0, 0.15);
       }
 
       .ant-select-selector {
         border-radius: 10px !important;
         &:focus {
-          border: 1px solid rgba(0,0,0,0.08) !important;
-          box-shadow: 0px 0px 5px rgba(0,0,0,0.15);!important;
+          border: 1px solid rgba(0, 0, 0, 0.08) !important;
+          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15) !important;
         }
         &:hover {
-          border: 1px solid rgba(0,0,0,0.08) !important;
-          box-shadow: 0px 0px 5px rgba(0,0,0,0.15);!important;
+          border: 1px solid rgba(0, 0, 0, 0.08) !important;
+          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15) !important;
         }
       }
 
@@ -238,7 +238,7 @@ export const GlobalStyle = () => (
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0,0,0,0.4);
+        background: rgba(0, 0, 0, 0.4);
       }
 
       .mobile-overlay {
@@ -327,7 +327,6 @@ export const GlobalStyle = () => (
       .ant-divider-horizontal.ant-divider-with-text::after {
         border-top: 1px solid rgba(0, 0, 0, 0.2);
       }
-
     `}
   />
 );
