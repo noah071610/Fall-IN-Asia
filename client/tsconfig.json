@@ -26,6 +26,7 @@
       "@layout/*": ["layout/*"]
     }
   },
+  "files": ["./typings/twin.d.ts"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js"],
   "exclude": ["node_modules"]
 }

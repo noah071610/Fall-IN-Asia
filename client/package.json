@@ -48,7 +48,9 @@
     "twin.macro": "^2.6.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.15.0",
     "@emotion/babel-plugin": "^11.3.0",
+    "@emotion/babel-preset-css-prop": "^11.2.0",
     "@next/bundle-analyzer": "^11.1.0",
     "@types/antd": "^1.0.0",
     "@types/lodash": "^4.14.172",

@@ -10,5 +10,5 @@
       }
     ]
   ],
-  "plugins": ["babel-plugin-macros", "@emotion/babel-plugin"]
+  "plugins": ["@emotion/babel-plugin", "babel-plugin-macros"]
 }

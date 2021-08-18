@@ -23,8 +23,10 @@ export default class MyDocument extends Document {
   }
   render() {
     return (
-      <Html>
-        <Head />
+      <Html lang="ko">
+        <Head>
+          <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+        </Head>
         <body>
           <script src="https://polyfill.io/v3/polyfill.min.js?features=default%2Ces2015%2Ces2016%2Ces2017%2Ces2018%2Ces2019" />
           <Main />

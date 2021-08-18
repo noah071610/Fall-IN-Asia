@@ -20,6 +20,7 @@ import { mainSlice } from "slices/main";
 import MobileSlideMenu from "@layout/MobileSlideMenu";
 import Overlay from "@components/Modals/Overlay";
 import Head from "next/head";
+import { GlobalStyles } from "twin.macro";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useDispatch();
@@ -47,8 +48,8 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Head>
         <meta charSet="utf-8" />
       </Head>
+      <Global styles={globalStyle} />
       <div onClick={onClickClosePopup}>
-        <Global styles={globalStyle} />
         <Header />
         <Component {...pageProps} />
         <Footer />

@@ -1,7 +1,7 @@
 import { IArticle, IStory } from "@typings/db";
 import { NO_IMAGE_URL } from "config";
 import router from "next/router";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback } from "react";
 import { ArticleImageCardWrapper } from "./styles";
 
 interface IProps {
