@@ -25,6 +25,9 @@ export const NewsArticleWrapper = styled.div`
     user-select: none;
     ${tw`pb-16 relative`}
     @media (max-width: ${SM_SIZE}) {
+      p {
+        line-height: 2.3;
+      }
       img {
         width: 100%;
       }

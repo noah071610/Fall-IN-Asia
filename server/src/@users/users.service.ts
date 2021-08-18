@@ -50,6 +50,7 @@ export class UsersService {
     const user = await this.UserRepository.createQueryBuilder('users')
       .addSelect([
         'stories.code',
+        'stories.createdAt',
         'stories.title',
         'stories.lat',
         'stories.lng',

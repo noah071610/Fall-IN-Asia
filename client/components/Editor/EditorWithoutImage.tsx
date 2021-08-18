@@ -1,11 +1,14 @@
 import React, { FC } from "react";
-import { BLACK_COLOR, GRAY_COLOR, quillModules, qullFormats } from "config";
+import { GRAY_COLOR, quillModules, qullFormats } from "config";
 import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
 import { memo } from "react";
 
 const EditorWrapper = styled.div`
   margin-bottom: 2rem;
+  .ql-container {
+    height: 250px;
+  }
   button {
     &:hover {
       border-radius: 5px;

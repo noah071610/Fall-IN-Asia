@@ -1,18 +1,11 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RED_COLOR, RGB_BLACK } from "config";
+import tw from "twin.macro";
 
 export const SubCommentWrapper = styled.div`
   padding: 1rem 2rem 1rem 3.7rem;
   position: relative;
   .delete-btn {
-    position: absolute;
-    top: 0.5rem;
-    right: 0;
-    border-radius: 50%;
-    padding: 0.5rem;
-    &:hover {
-      background: ${GRAY_COLOR};
-    }
+    ${tw`absolute top-2 right-0 py-1 px-2 rounded-full hover:bg-gray-100`}
   }
   .icon {
     img {

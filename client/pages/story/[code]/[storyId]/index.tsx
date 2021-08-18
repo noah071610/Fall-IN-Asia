@@ -40,6 +40,9 @@ const StoryPostWrapper = styled.div`
     ${tw`pb-16 relative`}
     user-select: none;
     @media (max-width: ${SM_SIZE}) {
+      p {
+        line-height: 2.3;
+      }
       img {
         width: 100%;
       }

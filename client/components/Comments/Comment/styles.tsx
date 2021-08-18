@@ -9,7 +9,7 @@ export const CommentWrapper = styled.div`
     transition: 0.3s all;
     .btn-wrapper {
       ${tw`absolute right-0 `}
-      top:0.25rem;
+      top:-0.25rem;
       a {
         ${tw`rounded-full px-2 py-1 hover:bg-gray-100`}
         .count {

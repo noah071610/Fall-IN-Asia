@@ -27,12 +27,16 @@ export const IconCropperModalWrapper = (upImg: ArrayBuffer | string | null) => c
       ${tw`rounded-xl`}
     }
     .name-space-preview {
-      ${tw`w-full h-full flex justify-center`}
+      ${tw`my-4 w-full h-full flex justify-center`}
       .icon {
         ${tw`w-24 h-24 rounded-full`}
       }
       .cropped-image {
         ${tw`w-full h-full rounded-full`}
+      }
+      .user-info {
+        display: flex;
+        flex-direction: column;
       }
     }
     .btn-wrapper {

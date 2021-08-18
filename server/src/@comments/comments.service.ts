@@ -108,7 +108,7 @@ export class CommentsService {
         .where('comments.moment= :moment', { moment: postId })
         .orderBy({
           'comments.id': 'ASC',
-          'subComments_user.id': 'ASC',
+          'subComments.id': 'ASC',
         })
         .getMany();
     } else if (postType === 'story') {
@@ -116,7 +116,7 @@ export class CommentsService {
         .where('comments.story= :story', { story: postId })
         .orderBy({
           'comments.id': 'ASC',
-          'subComments_user.id': 'ASC',
+          'subComments.id': 'ASC',
         })
         .getMany();
     }
