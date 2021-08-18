@@ -9,6 +9,7 @@ import "../styles/styles.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import "react-quill/dist/quill.snow.css";
+import "antd/dist/antd.css";
 import { ToastContainer } from "react-toastify";
 import Header from "@layout/Header";
 import Footer from "@layout/Footer";
