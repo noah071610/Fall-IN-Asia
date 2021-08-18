@@ -1,6 +1,3 @@
-import { BLUE_COLOR, BORDER_THIN, GRAY_COLOR, MD_SIZE, RGB_BLACK, WHITE_COLOR } from "config";
-import tw from "twin.macro";
-
 export const globalStyle = `
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
@@ -77,7 +74,7 @@ input {
     outline: none;
   }
   &::placeholder {
-    color: ${RGB_BLACK(0.3)};
+    color: rgba(0,0,0,0.3);
   }
 }
 p {
@@ -88,7 +85,7 @@ h1,h2,h3,h4,h5{
 }
 .map-gl{
   border-radius:15px;
-  border:1px solid ${RGB_BLACK(0.08)};
+  border:1px solid rgba(0,0,0,0.08);
 }
 .suggestions{
   li{
@@ -103,24 +100,24 @@ h1,h2,h3,h4,h5{
     outline:none;
     border:none;
     border-radius:10px ;
-    box-shadow:0px 0px 8px ${RGB_BLACK(0.3)};
+    box-shadow:0px 0px 8px rgba(0,0,0,0.3);
 
   }
 }
 .basic-input {
-  background: ${WHITE_COLOR};
+  background: white;
   border-radius:10px;
-  ${BORDER_THIN("border")};
+  border: 1px solid rgba(0,0,0,0.15);
   &::placeholder {
-    color: ${RGB_BLACK(0.25)};
+    color: rgba(0,0,0,0.25);
   }
   padding: 0.5rem 1rem;
   transition:0.3s all;
   &:focus {
-    box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.15)} !important;
   }
   &:hover {
-    box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.15)} !important;
   }
 }
 input:-webkit-autofill,
@@ -130,7 +127,7 @@ input:-webkit-autofill:active,
 input:-internal-autofill-selected,
 input:-internal-autofill-previewed {
   background-color: white !important;
-  -webkit-box-shadow: 0 0 0 30px white inset, 0px 0px 5px ${RGB_BLACK(0.15)} !important;
+  -webkit-box-shadow: 0 0 0 30px white inset, 0px 0px 5px rgba(0,0,0,0.15)} !important;
 }
 
 textarea {
@@ -143,7 +140,7 @@ textarea {
     outline: none;
   }
   &::placeholder {
-    color: ${RGB_BLACK(0.25)};
+    color: rgba(0,0,0,0.25);
   }
   &::-webkit-scrollbar {
     display: none;
@@ -157,17 +154,17 @@ textarea {
   overflow: visible;
   cursor:pointer;
   background-color:inherit;
-  ${BORDER_THIN("border")};
+  border: 1px solid rgba(0,0,0,0.15);
   border-radius:3px;
   &:hover{
-    box-shadow:0px 0px 5px ${RGB_BLACK(0.15)};
+    box-shadow:0px 0px 5px rgba(0,0,0,0.15);
   }
 }
 
 .ant-divider {
   background-color: white;
   .ant-divider-inner-text {
-    color: ${RGB_BLACK(0.6)};
+    color: rgba(0,0,0,0.6);
   }
 }
 
@@ -180,7 +177,7 @@ textarea {
   border-top-right-radius: 15px;
   border-bottom: none;
   background:white;
-  border: 1px solid ${RGB_BLACK(0.15)};
+  border: 1px solid rgba(0,0,0,0.15);
 }
 .ql-container {
   border-bottom-left-radius: 15px;
@@ -188,18 +185,18 @@ textarea {
   background:white;
   height:250px;
   padding-bottom:1rem;
-  border: 1px solid ${RGB_BLACK(0.15)};
+  border: 1px solid rgba(0,0,0,0.15);
 }
 
 .ant-select-selector {
   border-radius: 10px !important;
   &:focus {
-    border: 1px solid ${RGB_BLACK(0.08)} !important;
-    box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
+    border: 1px solid rgba(0,0,0,0.08)} !important;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.15)} !important;
   }
   &:hover {
-    border: 1px solid ${RGB_BLACK(0.08)} !important;
-    box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
+    border: 1px solid rgba(0,0,0,0.08)} !important;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.15)} !important;
   }
 }
 
@@ -220,7 +217,7 @@ textarea {
     padding:0.2rem 0.4rem;
     border-radius:10px;
     &:hover{
-      background:${GRAY_COLOR};
+      background:rgba(243, 244, 246);
     }
   }
   button:first-of-type {
@@ -236,31 +233,36 @@ textarea {
   left: 0;
   width: 100%;
   height: 100%;
-  background: ${RGB_BLACK(0.4)};
+  background: rgba(0,0,0,0.4);
 }
 
 .mobile-overlay {
   display:none;
-  @media (max-width: ${MD_SIZE}) {
+  @media (max-width: 768px) {
     display:block;
   }
 }
 
 .post-content{
-  ${tw`pt-16 pb-24`}
+  padding-top:4rem;
+  padding-bottom:6rem;
   font-size:1rem;
   line-height: 1.7;
   img {
     width: 70%;
   }
   .ql-size-large {
-    ${tw`text-2xl font-bold`}
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight:bold;
   }
   .ql-size-huge {
-    ${tw`text-4xl font-bold`}
+    font-size: 2.25rem;
+    line-height: 2.5rem;
   }
   .ql-size-small {
-    ${tw`text-sm`}
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
   ul {
     list-style-type: disc;
@@ -288,7 +290,7 @@ textarea {
     margin-right: 0px;
     padding-left: 20px;
     padding-right: 20px;
-    border-left: 10px solid ${GRAY_COLOR};
+    border-left: 10px solid rgba(243, 244, 246);
   }
   .ql-indent-1 {
     margin-left: 4rem;
