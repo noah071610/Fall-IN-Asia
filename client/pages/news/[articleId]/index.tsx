@@ -62,9 +62,7 @@ const index: FC<IProps> = ({ initialArticle, initialArticles }) => {
 
   useEffect(() => {
     if (article) {
-      let contentHeaders = document.querySelectorAll(
-        ".post-content > h1 , .post-content > h2 ,.post-content > h3"
-      );
+      let contentHeaders = document.querySelectorAll(".post-content > h1 , .post-content > h2");
       contentHeaders.forEach((v, i) => {
         const span = document.createElement("span");
         span.setAttribute("id", `header_${i + 1}`);

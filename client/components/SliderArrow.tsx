@@ -14,6 +14,10 @@ const SliderRightArrow = styled.a`
   }
   @media (max-width: ${SM_SIZE}) {
     ${tw`right-0 pr-0`}
+    &:hover {
+      ${tw`text-white opacity-100`}
+      transform: translate(0, -50%);
+    }
   }
 `;
 
@@ -27,6 +31,10 @@ const SliderLeftArrow = styled.a`
   }
   @media (max-width: ${SM_SIZE}) {
     ${tw`left-0 pl-0`}
+    &:hover {
+      ${tw`text-white opacity-100`}
+      transform: translate(0, -50%);
+    }
   }
 `;
 
