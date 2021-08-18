@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import ReactHtmlParser from "react-html-parser";
-import { FLEX_STYLE, noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
+import { FLEX_STYLE, noRevalidate, SM_SIZE, toastErrorMessage, toastSuccessMessage } from "config";
 import router, { useRouter } from "next/router";
 import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "utils/fetcher";
@@ -24,6 +24,11 @@ export const NewsArticleWrapper = styled.div`
   .post-content {
     user-select: none;
     ${tw`pb-16 relative`}
+    @media (max-width: ${SM_SIZE}) {
+      img {
+        width: 100%;
+      }
+    }
   }
   .article-manage-wrapper {
     ${FLEX_STYLE("center", "center")};

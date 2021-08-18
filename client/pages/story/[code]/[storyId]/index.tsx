@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
-import { FLEX_STYLE, noRevalidate, toastErrorMessage, toastSuccessMessage } from "config";
+import { FLEX_STYLE, noRevalidate, SM_SIZE, toastErrorMessage, toastSuccessMessage } from "config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import router, { useRouter } from "next/router";
@@ -39,6 +39,11 @@ const StoryPostWrapper = styled.div`
   .post-content {
     ${tw`pb-16 relative`}
     user-select: none;
+    @media (max-width: ${SM_SIZE}) {
+      img {
+        width: 100%;
+      }
+    }
   }
 `;
 

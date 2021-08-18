@@ -20,7 +20,7 @@ export const MomentCardWrapper = styled.article`
   }
   .article {
     .content {
-      ${tw`cursor-pointer font-bold pl-1 pb-4 leading-7 hover:underline`}
+      ${tw`cursor-pointer font-bold pl-1 pr-8 pb-4 leading-7 hover:underline`}
     }
     .moment-image-wrapper {
       ${tw`cursor-pointer mb-4 flex`}

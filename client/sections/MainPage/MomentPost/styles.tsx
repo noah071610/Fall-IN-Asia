@@ -23,7 +23,7 @@ export const MomentPostWrapper = styled.section`
     }
   }
   .post-content {
-    ${tw`pt-8 pb-12`}
+    ${tw`pt-8 pb-12 text-sm`}
     min-height: 200px;
     img {
       width: 70%;
@@ -42,6 +42,18 @@ export const MomentPostWrapper = styled.section`
   }
   @media (max-width: ${SM_SIZE}) {
     ${tw`py-6 px-4`}
+    .image-wrapper {
+      .ant-image {
+        .ant-image-img {
+          height: 250px;
+        }
+      }
+    }
+    .post-content {
+      img {
+        width: 100%;
+      }
+    }
     .post-footer {
       li {
         .anticon {
