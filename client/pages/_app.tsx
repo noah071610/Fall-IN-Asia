@@ -5,6 +5,7 @@ import "swiper/swiper.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "react-toastify/dist/ReactToastify.css";
+import "../styles/styles.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import "react-quill/dist/quill.snow.css";
@@ -17,7 +18,6 @@ import { mainSlice } from "slices/main";
 import MobileSlideMenu from "@layout/MobileSlideMenu";
 import Overlay from "@components/Modals/Overlay";
 import Head from "next/head";
-import { GlobalStyle } from "@styles/globalStyle";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useDispatch();
@@ -43,7 +43,6 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Head>
         <meta charSet="utf-8" />
       </Head>
-      <GlobalStyle />
       <Header />
       <div onClick={onClickClosePopup}>
         <Component {...pageProps} />
