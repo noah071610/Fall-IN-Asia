@@ -1,75 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap");
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
-*::-webkit-scrollbar {
-  width: 5px;
-}
-
-*::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: #b9b9b9;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background: #999999;
-}
-
-* {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-body,
-html {
-  line-height: 1.2;
-  margin: 0;
-  font-family: "Spoqa Han Sans Neo", "sans-serif";
-}
-
-html {
-  overflow-x: hidden;
-}
-
-blockquote,
-q {
-  quotes: none;
-}
-
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-  content: "";
-  content: none;
-}
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-ol,
-ul,
-li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-}
-
-a {
-  color: black;
-}
-
-a:hover {
-  color: black;
-}
-
 button {
   background: none;
   border: none;
@@ -99,18 +29,6 @@ input::-ms-input-placeholder {
 
 input::placeholder {
   color: rgba(0, 0, 0, 0.3);
-}
-
-p {
-  margin: 0;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5 {
-  margin: 0;
 }
 
 .map-gl {

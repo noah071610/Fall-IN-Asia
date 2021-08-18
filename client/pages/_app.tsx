@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app";
 import { useCallback } from "react";
 import { wrapper } from "configureStore";
+import "../styles/styles.css";
 import "swiper/swiper.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -18,7 +19,38 @@ import { mainSlice } from "slices/main";
 import MobileSlideMenu from "@layout/MobileSlideMenu";
 import Overlay from "@components/Modals/Overlay";
 import Head from "next/head";
-import "../styles/styles.css";
+import { css, Global } from "@emotion/react";
+
+const resetStyle = css`
+  body {
+    font-family: "Spoqa Han Sans Neo", "sans-serif";
+  }
+  a {
+    color: black;
+    &:hover {
+      color: black;
+    }
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  p {
+    margin: 0;
+  }
+
+  ol,
+  ul,
+  li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    display: inline-block;
+  }
+`;
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useDispatch();
@@ -45,6 +77,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta charSet="utf-8" />
       </Head>
       <Header />
+      <Global styles={resetStyle} />
       <div onClick={onClickClosePopup}>
         <Component {...pageProps} />
         <Footer />
