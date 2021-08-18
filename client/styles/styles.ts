@@ -1,3 +1,5 @@
+import { BORDER_THIN, GRAY_COLOR, RGB_BLACK, WHITE_COLOR } from "config";
+
 export const globalStyle = `
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
@@ -74,7 +76,7 @@ input {
     outline: none;
   }
   &::placeholder {
-    color: rgba(0,0,0,0.3);
+    color: ${RGB_BLACK(0.3)};
   }
 }
 p {
@@ -85,7 +87,7 @@ h1,h2,h3,h4,h5{
 }
 .map-gl{
   border-radius:15px;
-  border:1px solid rgba(0,0,0,0.08);
+  border:1px solid ${RGB_BLACK(0.08)};
 }
 .suggestions{
   li{
@@ -100,24 +102,24 @@ h1,h2,h3,h4,h5{
     outline:none;
     border:none;
     border-radius:10px ;
-    box-shadow:0px 0px 8px rgba(0,0,0,0.3);
+    box-shadow:0px 0px 8px ${RGB_BLACK(0.3)};
 
   }
 }
 .basic-input {
-  background: white;
+  background: ${WHITE_COLOR};
   border-radius:10px;
-  border: 1px solid rgba(0,0,0,0.15);
+  ${BORDER_THIN("border")};
   &::placeholder {
-    color: rgba(0,0,0,0.25);
+    color: ${RGB_BLACK(0.25)};
   }
   padding: 0.5rem 1rem;
   transition:0.3s all;
   &:focus {
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.15)} !important;
+    box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
   }
   &:hover {
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.15)} !important;
+    box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
   }
 }
 input:-webkit-autofill,
@@ -127,7 +129,7 @@ input:-webkit-autofill:active,
 input:-internal-autofill-selected,
 input:-internal-autofill-previewed {
   background-color: white !important;
-  -webkit-box-shadow: 0 0 0 30px white inset, 0px 0px 5px rgba(0,0,0,0.15)} !important;
+  -webkit-box-shadow: 0 0 0 30px white inset, 0px 0px 5px ${RGB_BLACK(0.15)} !important;
 }
 
 textarea {
@@ -140,7 +142,7 @@ textarea {
     outline: none;
   }
   &::placeholder {
-    color: rgba(0,0,0,0.25);
+    color: ${RGB_BLACK(0.25)};
   }
   &::-webkit-scrollbar {
     display: none;
@@ -154,17 +156,17 @@ textarea {
   overflow: visible;
   cursor:pointer;
   background-color:inherit;
-  border: 1px solid rgba(0,0,0,0.15);
+  ${BORDER_THIN("border")};
   border-radius:3px;
   &:hover{
-    box-shadow:0px 0px 5px rgba(0,0,0,0.15);
+    box-shadow:0px 0px 5px ${RGB_BLACK(0.15)};
   }
 }
 
 .ant-divider {
   background-color: white;
   .ant-divider-inner-text {
-    color: rgba(0,0,0,0.6);
+    color: ${RGB_BLACK(0.6)};
   }
 }
 
@@ -177,7 +179,7 @@ textarea {
   border-top-right-radius: 15px;
   border-bottom: none;
   background:white;
-  border: 1px solid rgba(0,0,0,0.15);
+  border: 1px solid ${RGB_BLACK(0.15)};
 }
 .ql-container {
   border-bottom-left-radius: 15px;
@@ -185,18 +187,18 @@ textarea {
   background:white;
   height:250px;
   padding-bottom:1rem;
-  border: 1px solid rgba(0,0,0,0.15);
+  border: 1px solid ${RGB_BLACK(0.15)};
 }
 
 .ant-select-selector {
   border-radius: 10px !important;
   &:focus {
-    border: 1px solid rgba(0,0,0,0.08)} !important;
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.15)} !important;
+    border: 1px solid ${RGB_BLACK(0.08)} !important;
+    box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
   }
   &:hover {
-    border: 1px solid rgba(0,0,0,0.08)} !important;
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.15)} !important;
+    border: 1px solid ${RGB_BLACK(0.08)} !important;
+    box-shadow: 0px 0px 5px ${RGB_BLACK(0.15)} !important;
   }
 }
 
@@ -217,7 +219,7 @@ textarea {
     padding:0.2rem 0.4rem;
     border-radius:10px;
     &:hover{
-      background:rgba(243, 244, 246);
+      background:${GRAY_COLOR};
     }
   }
   button:first-of-type {
@@ -233,7 +235,7 @@ textarea {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.4);
+  background: ${RGB_BLACK(0.4)};
 }
 
 .mobile-overlay {
@@ -290,7 +292,7 @@ textarea {
     margin-right: 0px;
     padding-left: 20px;
     padding-right: 20px;
-    border-left: 10px solid rgba(243, 244, 246);
+    border-left: 10px solid ${GRAY_COLOR};
   }
   .ql-indent-1 {
     margin-left: 4rem;
