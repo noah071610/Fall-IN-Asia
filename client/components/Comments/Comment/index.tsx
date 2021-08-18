@@ -1,12 +1,6 @@
-import React, { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
+import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import { CommentWrapper } from "./styles";
-import {
-  DeleteOutlined,
-  DownCircleOutlined,
-  HeartFilled,
-  HeartOutlined,
-  MoreOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, DownCircleOutlined, HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { IComment } from "@typings/db";
@@ -128,7 +122,7 @@ const Comment: FC<IProps> = ({ comment, revalidateComments }) => {
       )}
       {onSubCommentList &&
         comment?.subComments?.map((v, i) => {
-          return <SubComment revalidateComments={revalidateComments} subComment={v} key={i} />;
+          return <SubComment key={i} revalidateComments={revalidateComments} subComment={v} />;
         })}
     </CommentWrapper>
   );

@@ -57,7 +57,7 @@ export const FooterWrapper = styled.div`
         }
       }
       .footer-list-wrapper {
-        ${GRID_STYLE("0.5rem", "1fr 2fr 1fr")}
+        ${GRID_STYLE("0.5rem", "1fr 2.3fr 1fr")}
         ${tw`mb-6`}
         .footer-list {
           ${tw`m-0`}

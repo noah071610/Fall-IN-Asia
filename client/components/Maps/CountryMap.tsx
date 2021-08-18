@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
 import Pin from "./Pin";
 
@@ -9,14 +9,14 @@ interface IProps {
 
 const CountryMap: FC<IProps> = ({ lat, lng }) => {
   const [marker, setMarker] = useState({
-    latitude: lat || 37.50529626491968,
-    longitude: lng || 126.98047832475031,
+    latitude: 37.50529626491968,
+    longitude: 126.98047832475031,
   });
   const [viewport, setViewport] = useState({
     width: "100%",
     height: 400,
-    latitude: lat || 37.50529626491968,
-    longitude: lng || 126.98047832475031,
+    latitude: 37.50529626491968,
+    longitude: 126.98047832475031,
     zoom: 6,
   });
 
@@ -27,6 +27,17 @@ const CountryMap: FC<IProps> = ({ lat, lng }) => {
       }),
     []
   );
+
+  useEffect(() => {
+    setMarker({
+      latitude: lat,
+      longitude: lng,
+    });
+    setViewport((prev) => {
+      return { ...prev, latitude: lat, longitude: lng };
+    });
+  }, [lat, lng]);
+
   return (
     <ReactMapGL
       className="map-gl"
@@ -48,4 +59,4 @@ const CountryMap: FC<IProps> = ({ lat, lng }) => {
   );
 };
 
-export default CountryMap;
+export default memo(CountryMap);

@@ -19,6 +19,7 @@ import { RootState } from "slices";
 import { mainSlice } from "slices/main";
 import MobileSlideMenu from "@layout/MobileSlideMenu";
 import Overlay from "@components/Modals/Overlay";
+import Head from "next/head";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useDispatch();
@@ -42,15 +43,20 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 
   return (
-    <div onClick={onClickClosePopup}>
-      <Global styles={globalStyle} />
-      <Header />
-      <Component {...pageProps} />
-      <Footer />
-      <ToastContainer />
-      <MobileSlideMenu />
-      {onSlideMenu && <Overlay isMobile={true} />}
-    </div>
+    <>
+      <Head>
+        <meta charSet="utf-8" />
+      </Head>
+      <div onClick={onClickClosePopup}>
+        <Global styles={globalStyle} />
+        <Header />
+        <Component {...pageProps} />
+        <Footer />
+        <ToastContainer />
+        <MobileSlideMenu />
+        {onSlideMenu && <Overlay isMobile={true} />}
+      </div>
+    </>
   );
 };
 

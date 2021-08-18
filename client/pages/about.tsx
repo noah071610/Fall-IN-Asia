@@ -240,7 +240,7 @@ const about: FC<IProps> = () => {
   );
 };
 
-export const getStaticProps = wrapper.getStaticProps(() => async ({}) => {
+export const getStaticProps = wrapper.getStaticProps(() => async () => {
   return {
     props: {},
   };

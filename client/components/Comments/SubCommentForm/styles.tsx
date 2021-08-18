@@ -8,7 +8,7 @@ export const SubCommentFormWrapper = styled.div`
   ${FLEX_STYLE("flex-start", "center")};
   .icon {
     img {
-      ${tw`w-8 rounded-full mr-2`}
+      ${tw`w-8 h-8 rounded-full mr-2`}
     }
   }
   button {

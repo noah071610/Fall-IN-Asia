@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo, useRef, useState } from "react";
+import React, { FC, memo, useCallback, useMemo, useRef, useState } from "react";
 import ReactMapGL, { Marker, FlyToInterpolator, Source, Layer, MapRef } from "react-map-gl";
 import Pin from "./Pin";
 import { IStory } from "@typings/db";
@@ -69,4 +69,4 @@ const CountryRouteMap: FC<IProps> = ({ stories }) => {
   );
 };
 
-export default CountryRouteMap;
+export default memo(CountryRouteMap);
