@@ -3,14 +3,6 @@ import { Global } from "@emotion/react";
 import { globalStyle } from "@styles/styles";
 import { useCallback } from "react";
 import { wrapper } from "configureStore";
-import "antd/dist/antd.css";
-import "swiper/swiper.min.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import "react-toastify/dist/ReactToastify.css";
-import "mapbox-gl/dist/mapbox-gl.css";
-import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
-import "react-quill/dist/quill.snow.css";
 import { ToastContainer } from "react-toastify";
 import Header from "@layout/Header";
 import Footer from "@layout/Footer";
@@ -20,7 +12,6 @@ import { mainSlice } from "slices/main";
 import MobileSlideMenu from "@layout/MobileSlideMenu";
 import Overlay from "@components/Modals/Overlay";
 import Head from "next/head";
-import { GlobalStyles } from "twin.macro";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useDispatch();
@@ -48,16 +39,11 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Head>
         <meta charSet="utf-8" />
       </Head>
-      <GlobalStyles />
-      <Global styles={globalStyle} />
-      <div onClick={onClickClosePopup}>
+      <>
         <Header />
         <Component {...pageProps} />
         <Footer />
-        <ToastContainer />
-        <MobileSlideMenu />
-        {onSlideMenu && <Overlay isMobile={true} />}
-      </div>
+      </>
     </>
   );
 };
