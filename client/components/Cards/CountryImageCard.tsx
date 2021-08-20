@@ -1,6 +1,6 @@
 import { ICountry } from "@typings/db";
 import router from "next/router";
-import React, { FC, useCallback } from "react";
+import React, { FC, memo, useCallback } from "react";
 import styled from "@emotion/styled";
 import { FLEX_STYLE, SM_SIZE } from "config";
 import tw from "twin.macro";
@@ -58,4 +58,4 @@ const CountryImageCard: FC<IProps> = ({ country, isMain }) => {
   );
 };
 
-export default CountryImageCard;
+export default memo(CountryImageCard);

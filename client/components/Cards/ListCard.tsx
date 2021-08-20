@@ -1,5 +1,5 @@
 import html2textConverter from "utils/html2textConverter";
-import React, { FC, ReactNode, useCallback, useState } from "react";
+import React, { FC, memo, ReactNode, useCallback, useState } from "react";
 import styled from "@emotion/styled";
 import tw from "twin.macro";
 import { DeleteOutlined } from "@ant-design/icons";
@@ -74,4 +74,4 @@ const ListCard: FC<IProps> = ({
   );
 };
 
-export default ListCard;
+export default memo(ListCard);

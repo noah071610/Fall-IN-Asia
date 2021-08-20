@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import { SM_SIZE, WORLD_IMAGE } from "config";
 import router from "next/router";
-import React, { FC, useCallback } from "react";
+import React, { FC, memo, useCallback } from "react";
 import tw from "twin.macro";
 
 const PosterCardWrapper = (isMain?: boolean) => css`
@@ -82,4 +82,4 @@ const PosterCard: FC<IProps> = ({ isMain, image, title, desc, link, path }) => {
   );
 };
 
-export default PosterCard;
+export default memo(PosterCard);

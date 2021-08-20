@@ -103,18 +103,18 @@ export class UsersService {
       throw new BadRequestException('이름을 입력해주세요.');
     }
     if (!password) {
-      throw new BadRequestException('비밀번호를 작성해주세요.');
+      throw new BadRequestException('비밀번호를 입력해주세요.');
     }
     const user = await this.UserRepository.findOne({ where: { email } });
     if (user) {
-      throw new UnauthorizedException('누군가 사용하고있는 이메일입니다.');
+      throw new BadRequestException('누군가 사용하고있는 이메일입니다.');
     }
     const emailAuthNum = await this.AuthNumRepository.findOne({
       where: { email, authNum: parseInt(authNum) },
     });
     if (!emailAuthNum) {
       throw new BadRequestException(
-        '이메일과 인증번호가 다릅니다. 다시한번 확인해주세요.',
+        '이메일 인증번호가 다릅니다. 다시한번 확인해주세요.',
       );
     } else {
       await this.AuthNumRepository.delete(emailAuthNum);

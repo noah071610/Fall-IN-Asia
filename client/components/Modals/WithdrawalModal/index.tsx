@@ -55,8 +55,8 @@ const WithdrawalModal: FC<IProps> = () => {
         type="password"
       />
       <p>
-        등록된 모멘트 및 연대기는 탈퇴 후에도 삭제되지 않습니다. 게시물 등의 삭제를 원하시는
-        경우에는 반드시 탈퇴 전 삭제하시기 바랍니다.
+        등록된 모멘트 및 연대기는 탈퇴 후에 자동으로 삭제됩니다. 게시물 등의 삭제를 원치 않으시는
+        경우에는 반드시 탈퇴 전 확인하시길 바랍니다.
       </p>
       <div className="btn-wrapper">
         <button onClick={() => dispatch(mainSlice.actions.closeModal())}>취소</button>

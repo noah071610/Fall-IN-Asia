@@ -16,9 +16,7 @@ export const PostAsideNavWrapper = styled.aside`
       border-left: 2px solid ${GRAY_COLOR};
     }
     h1 {
-      ${tw`py-3 pl-4`}
-      font-size: 0.9rem;
-      font-weight: bold;
+      ${tw`py-3 pl-4 font-bold text-sm`}
     }
     h2,
     h3 {

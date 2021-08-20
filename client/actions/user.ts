@@ -23,7 +23,7 @@ export const logInAction = createAsyncThunk<any, IUserRequestForm>("user/login",
   }
 });
 
-export const logoutAction = createAsyncThunk<any>("user/logout", async () => {
+export const logoutAction = createAsyncThunk("user/logout", async () => {
   try {
     const response = await axios.post("/user/logout");
     return response.data;

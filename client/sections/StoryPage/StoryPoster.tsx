@@ -7,6 +7,7 @@ interface IProps {
   image?: string;
   name?: string;
 }
+
 const StoryPosterWrapper = styled.section`
   ${tw`relative w-full h-80`}
   background-repeat: no-repeat;
@@ -21,6 +22,7 @@ const StoryPosterWrapper = styled.section`
     }
   }
 `;
+
 const StoryPoster: FC<IProps> = ({ name, image }) => {
   return (
     <StoryPosterWrapper

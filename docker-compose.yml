@@ -9,6 +9,8 @@ services:
       - ./client:/app
     ports:
       - "3000:3000"
+    environment:
+      NODE_OPTIONS: "--max-old-space-size=8192"
     stdin_open: true
 
   database:
@@ -21,3 +23,15 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
+
+  server:
+    build:
+      dockerfile: Dockerfile
+      context: ./server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    ports:
+      - "3060:3060"
+    environment:
+      NODE_OPTIONS: "--max-old-space-size=8192"

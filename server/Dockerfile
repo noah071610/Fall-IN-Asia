@@ -13,4 +13,4 @@ EXPOSE 80
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
 
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start"]

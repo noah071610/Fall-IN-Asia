@@ -133,38 +133,32 @@ const UserInfoAside: FC<IProps> = () => {
     }
   }, [changeUserPasswordDone]);
 
-  const onClickConfirm = useCallback(() => {
-    if (!isOwner) {
-      toastErrorMessage("본인프로필만 변경 가능합니다.");
-      return;
-    }
-    dispatch(deleteUserIconAction());
-  }, [isOwner]);
-
-  const onClickChangeUserInfo = useCallback(() => {
-    if (!isOwner) {
-      toastErrorMessage("본인프로필만 변경 가능합니다.");
-      return;
-    }
-    dispatch(changeUserInfoAction({ userName, introduce }));
-    setUserInfoEdit(false);
-  }, [userName, introduce, isOwner]);
-
-  const onClickChangePassword = useCallback(() => {
-    if (!isOwner) {
-      toastErrorMessage("본인프로필만 변경 가능합니다.");
-      return;
-    }
-    dispatch(changeUserPasswordAction({ prevPassword, newPassword }));
-  }, [prevPassword, newPassword, isOwner]);
-
-  const onClickWithdrawal = useCallback(() => {
-    if (!isOwner) {
-      toastErrorMessage("본인프로필만 변경 가능합니다.");
-      return;
-    }
-    dispatch(mainSlice.actions.toggleWithdrawalModal());
-  }, [isOwner]);
+  const onClickUserSetting = useCallback(
+    (type: string) => {
+      if (!isOwner) {
+        toastErrorMessage("본인프로필만 변경 가능합니다.");
+        return;
+      }
+      switch (type) {
+        case "remove_icon":
+          dispatch(deleteUserIconAction());
+          break;
+        case "user_info":
+          dispatch(changeUserInfoAction({ userName, introduce }));
+          setUserInfoEdit(false);
+          break;
+        case "password":
+          dispatch(changeUserPasswordAction({ prevPassword, newPassword }));
+          break;
+        case "withdrawal":
+          dispatch(mainSlice.actions.toggleWithdrawalModal());
+          break;
+        default:
+          return;
+      }
+    },
+    [isOwner, userName, introduce, prevPassword, newPassword]
+  );
 
   const onClickFollowBtn = useCallback(() => {
     if (!user) {
@@ -196,7 +190,7 @@ const UserInfoAside: FC<IProps> = () => {
                     ? () => dispatch(mainSlice.actions.toggleIconCropperModal())
                     : () =>
                         toastConfirmMessage(
-                          onClickConfirm,
+                          () => onClickUserSetting("remove_icon"),
                           "정말 아이콘을 삭제하시겠어요?",
                           "삭제해주세요."
                         )
@@ -292,13 +286,13 @@ const UserInfoAside: FC<IProps> = () => {
           )}
           {isOwner && onUserInfoEdit && (
             <div className="btn-wrapper">
-              <button onClick={onClickChangeUserInfo}>프로필 수정 완료</button>
+              <button onClick={() => onClickUserSetting("user_info")}>프로필 수정 완료</button>
               <button onClick={() => setUserInfoEdit(false)}>취소</button>
             </div>
           )}
           {isOwner && onPasswordChange && (
             <div className="btn-wrapper">
-              <button onClick={onClickChangePassword}>비밀번호 변경 완료</button>
+              <button onClick={() => onClickUserSetting("passowrd")}>비밀번호 변경 완료</button>
               <button onClick={() => setPasswordChange(false)}>취소</button>
             </div>
           )}
@@ -306,7 +300,7 @@ const UserInfoAside: FC<IProps> = () => {
             <div className="btn-wrapper">
               <button onClick={onClickUserInfoEditBtn}>프로필 수정</button>
               <button onClick={onClickPasswordChange}>비밀번호 변경</button>
-              <button onClick={onClickWithdrawal}>회원탈퇴</button>
+              <button onClick={() => onClickUserSetting("withdrawal")}>회원탈퇴</button>
             </div>
           )}
           {!isOwner && (

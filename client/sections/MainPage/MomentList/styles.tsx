@@ -24,7 +24,4 @@ export const MomentListWrapper = styled.section`
       }
     }
   }
-  .article-card-wrapper:last-of-type {
-    background: red;
-  }
 `;

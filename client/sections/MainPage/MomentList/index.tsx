@@ -16,7 +16,7 @@ interface IProps {
 
 const MomentList: FC<IProps> = ({ revalidateMoments, filter, moments, setSize, setFilter }) => {
   const [isReachingEnd, setIsReachingEnd] = useState(true);
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const isVisible = useOnScreen(ref);
   const isEmpty = moments?.[0]?.length === 0;
 

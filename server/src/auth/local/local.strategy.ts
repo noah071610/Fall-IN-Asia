@@ -10,14 +10,12 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(email: string, password: string, done: CallableFunction) {
-    console.log('validate on (strategy => auth.service)');
     const user = await this.authService.validateUser(email, password);
     if (!user) {
       throw new UnauthorizedException(
         '이메일주소가 일치하지 않습니다. 다시한번 확인해주세요.',
       );
     }
-    console.log(`### validate done (strategy => local-auth.guard)`);
     return done(null, user);
   }
 }

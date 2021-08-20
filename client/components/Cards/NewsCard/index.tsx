@@ -1,6 +1,6 @@
 import { IArticle } from "@typings/db";
 import { NO_IMAGE_URL } from "config";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, memo, useCallback, useState } from "react";
 import { NewsCardWrapper } from "./styles";
 import router from "next/router";
 import html2textConverter from "utils/html2textConverter";
@@ -31,4 +31,4 @@ const NewsCard: FC<IProps> = ({ article }) => {
   );
 };
 
-export default NewsCard;
+export default memo(NewsCard);

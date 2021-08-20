@@ -26,6 +26,7 @@ const ConfirmToastForm = ({
     </div>
   </div>
 );
+
 export const toastConfirmMessage = (onClickConfirm: () => void, message: string, type: string) => {
   toast(<ConfirmToastForm onClickConfirm={onClickConfirm} message={message} type={type} />, {
     position: "top-center",

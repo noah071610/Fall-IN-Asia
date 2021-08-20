@@ -2,7 +2,7 @@ import { CommentOutlined, EyeOutlined, HeartOutlined } from "@ant-design/icons";
 import NameSpace from "@components/NameSpace";
 import { IStory } from "@typings/db";
 import { NO_IMAGE_URL } from "config";
-import { FC, useCallback } from "react";
+import { FC, memo, useCallback } from "react";
 import { ArticleCardWrapper } from "./styles";
 import router from "next/router";
 import html2textConverter from "utils/html2textConverter";
@@ -51,4 +51,4 @@ const ArticleCard: FC<IProps> = ({ story }) => {
   );
 };
 
-export default ArticleCard;
+export default memo(ArticleCard);

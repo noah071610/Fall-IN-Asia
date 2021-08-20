@@ -1,7 +1,7 @@
 import { IArticle, IStory } from "@typings/db";
 import { NO_IMAGE_URL } from "config";
 import router from "next/router";
-import React, { FC, useCallback } from "react";
+import React, { FC, memo, useCallback } from "react";
 import { ArticleImageCardWrapper } from "./styles";
 
 interface IProps {
@@ -26,4 +26,4 @@ const ArticleImageCard: FC<IProps> = ({ article }) => {
   );
 };
 
-export default ArticleImageCard;
+export default memo(ArticleImageCard);

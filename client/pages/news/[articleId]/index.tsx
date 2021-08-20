@@ -139,7 +139,7 @@ const index: FC<IProps> = ({ initialArticle, initialArticles }) => {
             <Divider />
             <article className="post-content">
               <span id="main_post" className="anchor-offset-controller" />
-              {ReactHtmlParser(article?.content as string)}
+              {ReactHtmlParser(article?.content)}
             </article>
           </>
         )}

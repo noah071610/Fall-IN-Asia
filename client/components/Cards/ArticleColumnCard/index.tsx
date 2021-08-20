@@ -1,6 +1,6 @@
 import { CommentOutlined, EyeOutlined, HeartOutlined } from "@ant-design/icons";
 import NameSpace from "@components/NameSpace";
-import React, { FC, useCallback } from "react";
+import React, { FC, memo, useCallback } from "react";
 import { ArticleColumnCardWrapper } from "./styles";
 import { IStory } from "@typings/db";
 import router from "next/router";
@@ -55,4 +55,4 @@ const ArticleColumnCard: FC<IProps> = ({ story, isMain }) => {
   );
 };
 
-export default ArticleColumnCard;
+export default memo(ArticleColumnCard);

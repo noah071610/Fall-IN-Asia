@@ -29,6 +29,7 @@ export class AppService {
       .leftJoinAndSelect('stories.comments', 'comments')
       .leftJoinAndSelect('stories.likedUser', 'likedUser')
       .leftJoinAndSelect('stories.user', 'user')
+      //BOOLEAN MODE 를 사용하고 전문검색으로 MATCH된 값을 사용합니다.
       .where(`MATCH(stories.content) AGAINST ('${searchWord}' IN BOOLEAN MODE)`)
       .orWhere(
         `MATCH(stories.region) AGAINST ('${searchWord}' IN BOOLEAN MODE)`,

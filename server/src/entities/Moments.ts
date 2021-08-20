@@ -20,7 +20,6 @@ import { Users } from './Users';
 
 @Entity({ schema: 'fall-in-asia', name: 'moment' })
 export class Moments {
-  @Index()
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty({
