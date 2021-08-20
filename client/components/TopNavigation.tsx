@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import styled from "@emotion/styled";
 import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, SM_SIZE } from "config";
 import tw from "twin.macro";
@@ -87,4 +87,4 @@ const TopNavigation: FC<IProps> = ({ filter, list, onClickList }) => {
   );
 };
 
-export default TopNavigation;
+export default memo(TopNavigation);
