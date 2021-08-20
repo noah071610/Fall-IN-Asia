@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import styled from "@emotion/styled";
 import { FLEX_STYLE, SM_SIZE } from "config";
 import tw from "twin.macro";
@@ -50,4 +50,4 @@ const StoryPoster: FC<IProps> = ({ name, image }) => {
   );
 };
 
-export default StoryPoster;
+export default memo(StoryPoster);

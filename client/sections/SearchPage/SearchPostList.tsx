@@ -3,7 +3,7 @@ import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
 import MomentSmallCard from "@components/Cards/ArticleSmallCard";
 import { IMoment, IStory } from "@typings/db";
 import { Divider } from "antd";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, memo, useCallback, useState } from "react";
 import styled from "@emotion/styled";
 import { GRID_STYLE } from "config";
 import tw from "twin.macro";
@@ -56,4 +56,4 @@ const SearchPostList: FC<IProps> = ({ stories, moments }) => {
   );
 };
 
-export default SearchPostList;
+export default memo(SearchPostList);

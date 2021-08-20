@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, memo, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { mainSlice } from "slices/main";
 import styled from "@emotion/styled";
@@ -65,4 +65,4 @@ const SearchPagePoster: FC<IProps> = ({ searchWord }) => {
   );
 };
 
-export default SearchPagePoster;
+export default memo(SearchPagePoster);

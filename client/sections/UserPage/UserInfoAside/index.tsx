@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { UserInfoAsideWrapper } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
@@ -18,7 +18,7 @@ import {
   getUserInfoAction,
   unfollowUserAction,
 } from "actions/user";
-import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import IconCropperModal from "@components/Modals/IconCropperModal";
 import useInput from "@hooks/useInput";
 import Overlay from "@components/Modals/Overlay";
@@ -29,9 +29,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserMinus, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import WithdrawalModal from "@components/Modals/WithdrawalModal";
 
-interface IProps {}
-
-const UserInfoAside: FC<IProps> = () => {
+const UserInfoAside = () => {
   const dispatch = useDispatch();
   const { query } = useRouter();
   const {
@@ -292,7 +290,7 @@ const UserInfoAside: FC<IProps> = () => {
           )}
           {isOwner && onPasswordChange && (
             <div className="btn-wrapper">
-              <button onClick={() => onClickUserSetting("passowrd")}>비밀번호 변경 완료</button>
+              <button onClick={() => onClickUserSetting("password")}>비밀번호 변경 완료</button>
               <button onClick={() => setPasswordChange(false)}>취소</button>
             </div>
           )}

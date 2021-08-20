@@ -1,9 +1,9 @@
 import { IStory } from "@typings/db";
-import React, { FC, memo, useCallback, useEffect, useState } from "react";
+import React, { FC, memo, useEffect, useState } from "react";
 import { useRef } from "react";
 import useOnScreen from "@hooks/useOnScreen";
 import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
-import { GRID_STYLE, SM_SIZE } from "config";
+import { GRID_STYLE } from "config";
 import tw from "twin.macro";
 import { css } from "@emotion/react";
 const StoryArticleListWrapper = (grid: number, gap: string) => css`
