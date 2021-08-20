@@ -13,12 +13,15 @@ import { getUserInfoAction } from "actions/user";
 import PostLayout from "@layout/PostLayout";
 import NewsArticleList from "@sections/NewsPage/NewsArticleList";
 import PostThubnail from "@components/Post/PostThubnail";
-import CountryMap from "@components/Maps/CountryMap";
 import tw from "twin.macro";
 import { toastConfirmMessage } from "@components/ConfirmToastify";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "slices";
+import dynamic from "next/dynamic";
+
+const CountryMap = dynamic(() => import("@components/Maps/CountryMap"));
+
 export const NewsArticleWrapper = styled.div`
   padding-top: 6rem;
   .post-content {

@@ -1,8 +1,7 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import styled from "@emotion/styled";
 import LGLayout from "@layout/LGLayout";
-import Editor from "@components/Editor/Editor";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import {
   BORDER_THIN,
@@ -12,7 +11,6 @@ import {
   toastSuccessMessage,
 } from "config";
 import router, { useRouter } from "next/router";
-import CountrySelectMap from "@components/Maps/CountrySelectMap";
 import AutoCompleteForm from "@components/AutoCompleteForm";
 import useSWR from "swr";
 import { ICoordinate, ICountry, IStory } from "@typings/db";
@@ -25,6 +23,9 @@ import { getUserInfoAction } from "actions/user";
 import axios from "axios";
 import { wrapper } from "configureStore";
 import { UploadFile } from "antd/lib/upload/interface";
+import dynamic from "next/dynamic";
+const CountrySelectMap = dynamic(() => import("@components/Maps/CountrySelectMap"));
+const Editor = dynamic(() => import("@components/Editor/Editor"));
 
 export const StoryPostWrapper = styled.div`
   .title-input {

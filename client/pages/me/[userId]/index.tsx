@@ -10,13 +10,15 @@ import fetcher from "utils/fetcher";
 import { noRevalidate, NO_POST_URL } from "config";
 import { INotice, IUserInfo } from "@typings/db";
 import ListCard from "@components/Cards/ListCard";
-import CountryRouteMap from "@components/Maps/CountryRouteMap";
 import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
 import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import MoreButton from "@components/MoreButton";
 import Head from "next/head";
+import dynamic from "next/dynamic";
+
+const CountryRouteMap = dynamic(() => import("@components/Maps/CountryRouteMap"));
 
 interface IProps {
   initialUserInfo: IUserInfo;

@@ -18,12 +18,12 @@ import PostLayout from "@layout/PostLayout";
 import StoryArticleList from "@sections/StoryPage/StoryArticleList";
 import ReactHtmlParser from "react-html-parser";
 import PostThubnail from "@components/Post/PostThubnail";
-import CountryMap from "@components/Maps/CountryMap";
 import PostProfile from "@components/Post/PostProfile";
 import PostPagination from "@components/Post/PostPagination";
 import PostComment from "@components/Post/PostComment";
 import Head from "next/head";
-
+import dynamic from "next/dynamic";
+const CountryMap = dynamic(() => import("@components/Maps/CountryMap"));
 const StoryPostWrapper = styled.div`
   padding-top: 6rem;
   .story-manage-wrapper {

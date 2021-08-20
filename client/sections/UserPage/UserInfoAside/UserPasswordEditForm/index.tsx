@@ -1,5 +1,4 @@
 import React, { FC, memo } from "react";
-import { UserPasswordEditFormWrapper } from "./styles";
 
 interface IProps {
   prevPassword: string;
@@ -10,7 +9,7 @@ interface IProps {
 
 const UserPasswordEditForm: FC<IProps> = (props) => {
   return (
-    <UserPasswordEditFormWrapper>
+    <div>
       <h4 className="edit-title">이전 비밀번호</h4>
       <input
         className="edit-input"
@@ -25,7 +24,7 @@ const UserPasswordEditForm: FC<IProps> = (props) => {
         onChange={props.onChangeNewPassword}
         type="password"
       />
-    </UserPasswordEditFormWrapper>
+    </div>
   );
 };
 
