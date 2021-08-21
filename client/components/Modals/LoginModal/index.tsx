@@ -126,7 +126,7 @@ const LoginModal: FC<IProps> = () => {
                       : process.env.NEXT_PUBLIC_BASE_URL + "/auth/google"
                   }
                 >
-                  <img src="https://img.icons8.com/color/144/000000/google-logo.png" />
+                  <img src="https://img.icons8.com/color/32/000000/google-logo.png" />
                 </a>
               </li>
               <li style={{ background: "#FAE301" }}>
@@ -137,7 +137,7 @@ const LoginModal: FC<IProps> = () => {
                       : process.env.NEXT_PUBLIC_BASE_URL + "/auth/kakao"
                   }
                 >
-                  <img src="https://user-images.githubusercontent.com/74864925/127008226-4ea6ec83-e82d-4e7f-bc9a-95b508f750cc.png" />
+                  <img src="https://user-images.githubusercontent.com/74864925/130333394-3e9f757f-f057-470b-ab4f-92afec6d8a5f.png" />
                 </a>
               </li>
               <li style={{ background: "#54BA5C" }}>
@@ -148,7 +148,7 @@ const LoginModal: FC<IProps> = () => {
                       : process.env.NEXT_PUBLIC_BASE_URL + "/auth/naver"
                   }
                 >
-                  <img src="https://user-images.githubusercontent.com/74864925/127008231-213a4559-d3e8-488d-9901-0fe3f78b58c1.png" />
+                  <img src="https://user-images.githubusercontent.com/74864925/130333396-c579626d-cc3f-414a-a32f-7e65f030f63c.png" />
                 </a>
               </li>
             </ul>

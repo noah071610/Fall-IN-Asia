@@ -132,19 +132,19 @@ const index: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
       <NewsPageWrapper>
         <Slider {...settings}>
           <PosterCard
-            image="/images/poster/moment_poster.png"
+            image="/images/poster/moment_poster.jpg"
             path="/"
             title="Share your infomation"
             desc="모멘트 : 여행이라는 망망대해에서 길을 잃었나요? 물어봐요! 돈드는거 아니잖아요~"
           />
           <PosterCard
-            image="/images/poster/story_poster.png"
+            image="/images/poster/story_poster.jpg"
             path="/story"
             title="Leave and Share your memory"
             desc="연대기 : 당신의 여정에는 어떤 일이 있었나요?"
           />
           <PosterCard
-            image="/images/poster/covid_poster.png"
+            image="/images/poster/covid_poster.jpg"
             link="https://www.0404.go.kr/dev/newest_list.mofa"
             title="I trust We can get over covid-19"
             desc="해외안전여행 : 외교부에서 코로나19 입국제한 여부를 확인하세요."

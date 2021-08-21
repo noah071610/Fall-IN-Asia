@@ -46,7 +46,10 @@ const CountryListCard: FC<IProps> = ({ country, isMain }) => {
   }, []);
   return (
     <CountryListCardWrapper onClick={onClickCountryListCard}>
-      <img src={country?.image_src} alt="country_image" />
+      <img
+        src={country?.image_src.replace("&w=200", "&w=80").replace("&p=80", "&p=100")}
+        alt="country_image"
+      />
       <div className="country-desc">
         <h4>{country?.name}</h4>
         <span className="count">포스팅: {country?.moments?.length + country?.stories?.length}</span>

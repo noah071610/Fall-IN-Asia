@@ -29,13 +29,13 @@ const StoryPoster: FC<IProps> = ({ name, image }) => {
       style={
         image
           ? {
-              background: `url(${image.replace(/\/thumb\//, "/original/")}
+              background: `url(${image.replace("&w=200", "&w=950")}
           )`,
               backgroundPosition: "10% 40%",
               backgroundSize: "100% 230%",
             }
           : {
-              background: `url("/images/poster/story_main_poster.png"
+              background: `url("/images/poster/story_main_poster.jpg"
         )`,
               backgroundPosition: "top left",
               backgroundSize: "100% 100%",

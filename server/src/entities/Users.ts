@@ -101,7 +101,7 @@ export class Users {
   @Column('varchar', {
     name: 'icon',
     default:
-      'https://user-images.githubusercontent.com/74864925/124331496-460bfe80-dbca-11eb-95dc-a5379a5750a6.png',
+      'https://user-images.githubusercontent.com/74864925/130333727-e625b505-a619-4e2d-844c-2bcd1cf9e47d.jpg',
   })
   icon: string;
 

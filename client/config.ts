@@ -14,16 +14,16 @@ export const LG_SIZE = "1024px" as const;
 export const XLG_SIZE = "1280px" as const;
 
 export const FALL_IN_ASIA_LOGO =
-  "https://user-images.githubusercontent.com/74864925/129451908-bc29b915-98b1-4da4-bdcb-80f96b3210bf.png" as const;
+  "https://user-images.githubusercontent.com/74864925/130333448-e193e689-6e75-479e-965a-17c258989a73.jpg" as const;
 
 export const WORLD_IMAGE =
-  "https://user-images.githubusercontent.com/74864925/126495159-2e4438ad-6efb-458a-b314-8f92823babc7.jpg" as const;
+  "https://images.unsplash.com/photo-1519354754184-e1d9c46182c0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" as const;
 
 export const DEFAULT_ICON_URL =
-  "https://user-images.githubusercontent.com/74864925/124331496-460bfe80-dbca-11eb-95dc-a5379a5750a6.png" as const;
+  "https://user-images.githubusercontent.com/74864925/130333727-e625b505-a619-4e2d-844c-2bcd1cf9e47d.jpg" as const;
 
 export const FALL_IN_ASIA_ICON =
-  "https://user-images.githubusercontent.com/74864925/128808184-d8c58485-0e4f-4d7c-acb4-4f4803ad2fe4.png" as const;
+  "https://user-images.githubusercontent.com/74864925/130333618-09441992-2977-423c-889d-e2b81d83833a.jpg" as const;
 
 export const NO_IMAGE_URL =
   "https://usagi-post.com/wp-content/uploads/2020/05/no-image-found-360x250-1.png" as const;
