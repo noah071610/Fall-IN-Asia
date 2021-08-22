@@ -7,7 +7,7 @@ import router from "next/router";
 import dateCalculator from "utils/dateCalculator";
 
 export const NameSpaceWrapper = styled.div`
-  ${FLEX_STYLE("flex-start", "center")};
+  ${FLEX_STYLE("flex-start", "flex-start")};
   ${tw`cursor-pointer`}
   &:hover {
     p {
