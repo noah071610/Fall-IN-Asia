@@ -10,7 +10,8 @@ import router from "next/router";
 import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import Head from "next/head";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "slices";
 
 const AboutPageWrapper = styled.div`
   background: white;
@@ -101,6 +102,7 @@ const about: FC<IProps> = () => {
   useEffect(() => {
     dispatch(getUserInfoAction());
   }, []);
+  const { user } = useSelector((state: RootState) => state.user);
   return (
     <>
       <Head>
@@ -117,9 +119,11 @@ const about: FC<IProps> = () => {
                 src="https://user-images.githubusercontent.com/74864925/127884325-018d43e0-881c-4d70-baa8-145fc9098514.jpg"
                 alt="profile-image"
               />
-              <div className="aboutme-btn-wrapper">
-                <button onClick={() => router.push("/news/post")}>기사 올리기</button>
-              </div>
+              {user?.name === "Fall IN Asia" && (
+                <div className="aboutme-btn-wrapper">
+                  <button onClick={() => router.push("/news/post")}>기사 올리기</button>
+                </div>
+              )}
             </div>
             <div>
               <h3>안녕하세요. 개발자 장현수 입니다.</h3>

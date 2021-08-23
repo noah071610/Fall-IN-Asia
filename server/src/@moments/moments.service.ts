@@ -126,7 +126,7 @@ export class MomentsService {
       .leftJoin('moments.country', 'country')
       .leftJoin('moments.user', 'user')
       .orderBy('moments.id', 'DESC')
-      .take(2)
+      .take(3)
       .getMany();
     if (!latestPosts) {
       throw new NotFoundException('가져올 게시물이 없습니다.');

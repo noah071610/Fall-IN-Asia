@@ -9,7 +9,7 @@ const UserFollowWrapper = styled.div`
     .follow-icon-wrapper {
       ${tw`mb-2 mt-3`}
       img {
-        ${tw`w-6 h-6 rounded-full border-solid border border-gray-100 mr-2`}
+        ${tw`w-6 h-6 rounded-full border-solid border border-gray-100 -mr-2`}
       }
     }
     span {

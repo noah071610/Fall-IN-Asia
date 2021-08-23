@@ -6,7 +6,7 @@ import { FLEX_STYLE, SM_SIZE } from "config";
 import tw from "twin.macro";
 
 const CountryImageCardWrapper = styled.div`
-  ${tw`relative rounded-xl w-full h-full cursor-pointer`}
+  ${tw`relative rounded-2xl w-full h-full cursor-pointer`}
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;

@@ -32,7 +32,7 @@ export const StoryPostWrapper = styled.div`
     padding: 0.63rem 1rem;
   }
   .autoComplete-form {
-    width: 20%;
+    width: 200px;
   }
   .editor-btn-wrapper {
     margin-top: 1rem;

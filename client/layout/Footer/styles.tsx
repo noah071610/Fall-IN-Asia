@@ -3,11 +3,11 @@ import { BORDER_THIN, GRID_STYLE, SM_SIZE, XLG_SIZE } from "config";
 import tw from "twin.macro";
 
 export const FooterWrapper = styled.div`
-  ${tw`py-8 px-3 bg-gray-700`}
+  ${tw`py-7 px-3 bg-gray-700`}
   ${BORDER_THIN("border-top")};
   .footer-inner {
     width: ${XLG_SIZE};
-    ${tw`mx-auto text-white px-8`}
+    ${tw`mx-auto text-white`}
     h1,h2,h3,h4,a {
       ${tw`text-white`}
     }
@@ -17,21 +17,24 @@ export const FooterWrapper = styled.div`
       ${tw`font-bold`}
     }
     .footer-top {
-      ${tw`mb-8`}
+      ${tw`mb-4`}
       h1 {
         ${tw`mb-2 text-3xl`}
       }
+      span {
+        ${tw`text-xs`}
+      }
     }
     .footer-list-wrapper {
-      ${tw`flex mb-2`}
+      ${tw`flex`}
       .footer-list {
-        ${tw`mr-12 mb-4`}
+        ${tw`mr-12 mb-3`}
         h2 {
-          ${tw`mb-4`}
+          ${tw`mb-4 text-xl`}
         }
         ul {
           li {
-            ${tw`block pb-3`}
+            ${tw`block pb-3 text-xs`}
           }
         }
         .anticon {
@@ -40,7 +43,7 @@ export const FooterWrapper = styled.div`
       }
     }
     .license {
-      ${tw`mb-4`}
+      ${tw`text-xs`}
     }
   }
   @media (max-width: 1300px) {

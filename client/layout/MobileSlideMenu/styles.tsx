@@ -12,7 +12,7 @@ export const MobileSlideMenuWrapper = styled.nav`
     -ms-overflow-style: none;
     scrollbar-width: none;
     &::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera*/
+      display: none;
     }
     &-main {
       ${tw`w-full`}

@@ -19,7 +19,8 @@ const HeaderRightWrapper = styled.ul`
     ${tw`rounded-full hover:bg-gray-100 relative`}
     transition: 0.3s all;
     .circle-icon {
-      ${tw`absolute bottom-0 right-0 text-xs text-green-300`}
+      ${tw`absolute bottom-1 right-1 text-green-400`}
+      font-size:0.55rem;
     }
     &-anchor {
       ${FLEX_STYLE("center", "center")};

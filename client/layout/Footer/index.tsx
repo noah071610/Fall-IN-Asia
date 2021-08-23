@@ -72,11 +72,6 @@ const Footer: FC<IProps> = () => {
                   <li>이용 약관</li>
                 </a>
               </Link>
-              <Link href="/about">
-                <a>
-                  <li>커피 사주기</li>
-                </a>
-              </Link>
             </ul>
           </div>
         </div>

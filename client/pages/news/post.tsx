@@ -112,7 +112,7 @@ const post: FC<IProps> = () => {
   }, [editArticle]);
 
   useEffect(() => {
-    if (!user) {
+    if (user.name !== "Fall IN Asia") {
       router.back();
     }
     if (editArticle) {

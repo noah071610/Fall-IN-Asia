@@ -80,7 +80,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
       form.append("image", v);
     });
     prevImageList?.forEach((v) => {
-      form.append("prevImage", v);
+      form.append("prevImage", String(v));
     });
     form.append("content", String(content));
     form.append("type", String(type));
