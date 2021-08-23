@@ -18,7 +18,7 @@ export const MobileSlideMenuWrapper = styled.nav`
       ${tw`w-full`}
     }
     &-logo {
-      ${tw`w-36 h-8 mb-4`}
+      ${tw`w-40 h-8 mb-4`}
       transition: 0.3s all;
     }
     &-divider {

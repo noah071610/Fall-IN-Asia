@@ -14,7 +14,7 @@ export const LG_SIZE = "1024px" as const;
 export const XLG_SIZE = "1280px" as const;
 
 export const FALL_IN_ASIA_LOGO =
-  "https://user-images.githubusercontent.com/74864925/130333448-e193e689-6e75-479e-965a-17c258989a73.jpg" as const;
+  "https://user-images.githubusercontent.com/74864925/130511602-0ad46bd4-2ffb-41db-8ca6-9b07971a1a9d.png" as const;
 
 export const WORLD_IMAGE =
   "https://images.unsplash.com/photo-1519354754184-e1d9c46182c0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" as const;

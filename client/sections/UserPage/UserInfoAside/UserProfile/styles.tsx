@@ -8,6 +8,7 @@ export const UserProfileWrapper = styled.div`
     ${FLEX_STYLE("center", "center")};
     .icon {
       ${tw`w-2/3 relative rounded-full cursor-pointer`}
+      aspect-ratio: 1/1;
       img {
         ${tw` w-full h-full rounded-full`}
         aspect-ratio: 1/1;
@@ -41,7 +42,7 @@ export const UserProfileWrapper = styled.div`
     .icon-wrapper {
       ${tw`m-0`}
       .icon {
-        ${tw`w-full`}
+        ${tw`w-full h-full`}
       }
     }
   }
@@ -49,7 +50,7 @@ export const UserProfileWrapper = styled.div`
     display: block;
     .icon-wrapper {
       .icon {
-        width: 50%;
+        ${tw`w-1/2 h-1/2`}
       }
     }
     .user-name {

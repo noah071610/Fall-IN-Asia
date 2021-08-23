@@ -60,9 +60,11 @@ const MobileSlideMenu: FC<IProps> = () => {
       >
         <div className="slide-menu">
           <section className="slide-menu-main">
-            <a>
-              <img className="slide-menu-logo" src={FALL_IN_ASIA_LOGO} alt="logo" />
-            </a>
+            <Link href="/">
+              <a>
+                <img className="slide-menu-logo" src={FALL_IN_ASIA_LOGO} alt="logo" />
+              </a>
+            </Link>
             <Divider className="slide-menu-divider" orientation="left">
               <span>{user ? "프로필" : "로그인"}</span>
             </Divider>
