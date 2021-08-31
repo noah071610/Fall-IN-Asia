@@ -19,38 +19,8 @@ import { mainSlice } from "slices/main";
 import MobileSlideMenu from "@layout/MobileSlideMenu";
 import Overlay from "@components/Modals/Overlay";
 import Head from "next/head";
-import { css, Global } from "@emotion/react";
-
-const resetStyle = css`
-  body {
-    font-family: "Spoqa Han Sans Neo", "sans-serif";
-  }
-  a {
-    color: black;
-    &:hover {
-      color: black;
-    }
-  }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  p {
-    margin: 0;
-  }
-
-  ol,
-  ul,
-  li {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  li {
-    display: inline-block;
-  }
-`;
+import { Global } from "@emotion/react";
+import { resetStyle } from "../styles/global";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const dispatch = useDispatch();
