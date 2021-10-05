@@ -1,4 +1,4 @@
-import { FC, KeyboardEvent, memo, useCallback, useEffect, useRef, useState } from "react";
+import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 import { HeaderWrapper } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "slices";

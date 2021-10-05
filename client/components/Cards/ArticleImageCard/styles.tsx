@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { RGB_BLACK, SM_SIZE } from "config";
+import { RGB_BLACK } from "config";
 import tw from "twin.macro";
 
 export const ArticleImageCardWrapper = styled.div`

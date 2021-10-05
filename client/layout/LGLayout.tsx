@@ -20,9 +20,7 @@ const LGLayoutWrapper = styled.main`
   }
 `;
 
-interface LGLayout {}
-
-const LGLayout: FC<LGLayout> = ({ children }) => {
+const LGLayout: FC = ({ children }) => {
   return (
     <LGLayoutWrapper>
       <div className="layout">{children}</div>

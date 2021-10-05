@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import Scrollspy from "react-scrollspy";
 import ReactHtmlParser from "react-html-parser";
 import { noRevalidate } from "config";
+import shortid from "shortid";
 interface IProps {}
 
 const PostAsideNav: FC<IProps> = () => {
@@ -58,7 +59,7 @@ const PostAsideNav: FC<IProps> = () => {
           </a>
           {headers?.map((v, i) => {
             return (
-              <a key={i} href={`#header_${i + 1}`}>
+              <a key={shortid.generate()} href={`#header_${i + 1}`}>
                 {ReactHtmlParser(v as string)}
               </a>
             );

@@ -7,7 +7,7 @@ import { noRevalidate, SM_SIZE } from "config";
 import { ICountry, IStory } from "@typings/db";
 import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
 import styled from "@emotion/styled";
-import { FLEX_STYLE, RGB_BLACK } from "config";
+import { FLEX_STYLE } from "config";
 import tw from "twin.macro";
 import Slider from "react-slick";
 import { NextArrow, PrevArrow } from "@components/SliderArrow";

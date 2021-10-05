@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { IStory } from "@typings/db";
 import React, { FC, memo, useEffect, useState } from "react";
 import { useRef } from "react";
@@ -6,6 +7,7 @@ import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
 import { GRID_STYLE } from "config";
 import tw from "twin.macro";
 import { css } from "@emotion/react";
+import shortid from "shortid";
 const StoryArticleListWrapper = (grid: number, gap: string) => css`
   @media (max-width: 1000px) {
     grid-template-columns: repeat(3, 1fr);
@@ -52,8 +54,8 @@ const StoryArticleList: FC<IProps> = ({ stories, grid, gap, setSize }) => {
     <>
       <div css={StoryArticleListWrapper(grid, gap)}>
         <span id="article_list" className="anchor-offset-controller" />
-        {storiesData?.map((v: IStory, i) => {
-          return <ArticleColumnCard key={i} story={v} />;
+        {storiesData?.map((v: IStory) => {
+          return <ArticleColumnCard key={shortid.generate()} story={v} />;
         })}
       </div>
       <div ref={ref} />

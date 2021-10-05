@@ -1,4 +1,4 @@
-import React, { FC, memo, useCallback, useState } from "react";
+import React, { FC, memo, useCallback } from "react";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { IStory } from "@typings/db";
 import router, { useRouter } from "next/router";

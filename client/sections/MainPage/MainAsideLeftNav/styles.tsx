@@ -10,10 +10,10 @@ export const MainAsideLeftNavWrapper = styled.nav`
   top:5rem;
   width: 18%;
   .country {
-    .country-img {
+    .country-img-wrapper {
       ${tw`cursor-pointer inline-block w-full rounded-2xl`}
-      img {
-        ${tw`w-full h-28 shadow-md rounded-2xl`}
+      .country-img {
+        ${tw`shadow-md rounded-2xl`}
       }
     }
     .country-desc {

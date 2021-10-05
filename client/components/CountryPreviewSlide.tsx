@@ -2,12 +2,14 @@ import ImageCard from "@components/Cards/CountryImageCard";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { ICountry } from "@typings/db";
 import { noRevalidate, SM_SIZE } from "config";
-import React, { FC, memo, useState } from "react";
+import React, { FC, memo } from "react";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { css } from "@emotion/react";
-import SwiperCore, { Autoplay } from "swiper/core";
+import SwiperCore, { Autoplay } from "swiper";
+
 import tw from "twin.macro";
+import shortid from "shortid";
 
 SwiperCore.use([Autoplay]);
 
@@ -61,9 +63,9 @@ const CountryPreviewSlide: FC<IProps> = ({ slidesPerView, isMain }) => {
       spaceBetween={16}
       css={CountryPreviewSlideWrapper(isMain)}
     >
-      {countries?.map((v, i) => {
+      {countries?.map((v) => {
         return (
-          <SwiperSlide key={i}>
+          <SwiperSlide key={shortid.generate()}>
             <ImageCard isMain={isMain} country={v} />
           </SwiperSlide>
         );

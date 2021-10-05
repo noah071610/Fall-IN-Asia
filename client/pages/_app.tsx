@@ -1,8 +1,8 @@
 import type { AppProps } from "next/app";
 import { useCallback } from "react";
 import { wrapper } from "configureStore";
-import "../styles/styles.css";
-import "swiper/swiper.min.css";
+import "../styles/font.css";
+import "swiper/css/bundle";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "react-toastify/dist/ReactToastify.css";

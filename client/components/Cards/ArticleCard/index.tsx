@@ -7,6 +7,7 @@ import { ArticleCardWrapper } from "./styles";
 import router from "next/router";
 import html2textConverter from "utils/html2textConverter";
 import { kmtb_Formatter } from "utils/kmbtFormatter";
+import Image from "next/image";
 
 interface IProps {
   story: IStory;
@@ -24,7 +25,11 @@ const ArticleCard: FC<IProps> = ({ story }) => {
       onClick={onClickArticleCard}
     >
       <div className="image-wrapper">
-        <img src={story?.thumbnail ? story.thumbnail : NO_IMAGE_URL} alt="article-thumbnail" />
+        <Image
+          layout="fill"
+          src={story?.thumbnail ? story.thumbnail : NO_IMAGE_URL}
+          alt="article-thumbnail"
+        />
         <ul className="article-info-list">
           <li>
             <CommentOutlined />

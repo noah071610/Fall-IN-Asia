@@ -4,6 +4,7 @@ import CountryListCard from "@components/Cards/CountryListCard";
 import styled from "@emotion/styled";
 import tw from "twin.macro";
 import { SM_SIZE, XLG_SIZE } from "config";
+import shortid from "shortid";
 const CountryAllviewWrapper = styled.div`
   ${tw`w-full rounded-2xl bg-white p-4 pb-8 mt-4`}
   .country-card-wrapper {
@@ -36,24 +37,24 @@ const CountryAllview: FC<IProps> = ({ countries, isMain }) => {
       <div className="country-card-wrapper">
         {countries
           ?.filter((v) => v.continent === "동북아시아")
-          .map((v, i) => {
-            return <CountryListCard isMain={isMain} country={v} key={i} />;
+          .map((v) => {
+            return <CountryListCard isMain={isMain} country={v} key={shortid.generate()} />;
           })}
       </div>
       <h3>동남아시아</h3>
       <div className="country-card-wrapper">
         {countries
           ?.filter((v) => v.continent === "동남아시아")
-          .map((v, i) => {
-            return <CountryListCard isMain={isMain} country={v} key={i} />;
+          .map((v) => {
+            return <CountryListCard isMain={isMain} country={v} key={shortid.generate()} />;
           })}
       </div>
       <h3>남아시아</h3>
       <div className="country-card-wrapper">
         {countries
           ?.filter((v) => v.continent === "남아시아")
-          .map((v, i) => {
-            return <CountryListCard isMain={isMain} country={v} key={i} />;
+          .map((v) => {
+            return <CountryListCard isMain={isMain} country={v} key={shortid.generate()} />;
           })}
       </div>
     </CountryAllviewWrapper>

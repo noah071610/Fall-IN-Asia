@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { BLUE_COLOR, BORDER_THIN, FLEX_STYLE, SM_SIZE } from "config";
 import tw from "twin.macro";
 import { SwiperSlide, Swiper } from "swiper/react";
+import shortid from "shortid";
 
 const TopNavigationWrapper = styled.nav`
   ${tw`sticky`}
@@ -57,12 +58,12 @@ const TopNavigation: FC<IProps> = ({ filter, list, onClickList }) => {
     <TopNavigationWrapper>
       <div className="nav-outer">
         <div className="nav-inner-list">
-          {list?.map((v, i) => {
+          {list?.map((v) => {
             return (
               <li
                 className={filter === v.value ? "active-list" : ""}
                 onClick={() => onClickList(v.value)}
-                key={i}
+                key={shortid.generate()}
               >
                 {v.name}
               </li>
@@ -71,12 +72,12 @@ const TopNavigation: FC<IProps> = ({ filter, list, onClickList }) => {
         </div>
       </div>
       <Swiper slidesPerView={4.4} freeMode={true} className="nav-outer-small">
-        {list?.map((v, i) => {
+        {list?.map((v) => {
           return (
             <SwiperSlide
               className={filter === v.value ? "active-list" : ""}
               onClick={() => onClickList(v.value)}
-              key={i}
+              key={shortid.generate()}
             >
               <span>{v.name}</span>
             </SwiperSlide>

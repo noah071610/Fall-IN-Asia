@@ -14,7 +14,8 @@ import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
 import router, { useRouter } from "next/router";
-import useSWR, { useSWRInfinite } from "swr";
+import useSWR from "swr";
+import useSWRInfinite from "swr/infinite";
 import { ICountry, IStory } from "@typings/db";
 import fetcher from "utils/fetcher";
 import CountryPreviewSlide from "@components/CountryPreviewSlide";
@@ -94,7 +95,7 @@ const StoryMainPage: FC<IProps> = ({ initiaStories, initialPopularStories }) => 
   const [onAllCountries, setAllCountries] = useState(false);
   const [onMorePopularStory, setOnMorePopularStory] = useState(false);
   const { data: popularStories } = useSWR<IStory[]>("/story/popular", fetcher, {
-    initialData: initialPopularStories,
+    fallbackData: initialPopularStories,
     ...noRevalidate,
   });
   const { data: stories, setSize } = useSWRInfinite<IStory[]>(
@@ -104,7 +105,7 @@ const StoryMainPage: FC<IProps> = ({ initiaStories, initialPopularStories }) => 
       }`,
     fetcher,
     {
-      initialData: initiaStories,
+      fallbackData: initiaStories,
       ...noRevalidate,
     }
   );
@@ -220,7 +221,7 @@ const StoryMainPage: FC<IProps> = ({ initiaStories, initialPopularStories }) => 
             <StoryArticleList grid={4} gap="1.5rem" setSize={setSize} stories={stories} />
           ) : (
             <div className="no-story-wrapper">
-              <Image src={NO_POST_URL} alt="no-post-img" />
+              <Image layout="fill" src={NO_POST_URL} alt="no-post-img" />
               <h2>연대기가 없습니다. 첫 연대기에 주인공이 되어주세요!</h2>
               <button className="story-post-btn" onClick={onClickPostStoryBtn}>
                 연대기 올리기
@@ -237,9 +238,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
-      axios.defaults.headers.Cookie = "";
-      if (req && cookie) {
-        axios.defaults.headers.Cookie = cookie;
+      if (axios.defaults.headers) {
+        axios.defaults.headers.Cookie = "";
+        if (req && cookie) {
+          axios.defaults.headers.Cookie = cookie;
+        }
       }
       await store.dispatch(getUserInfoAction());
       let initialStories = await fetcher(`/story?page=1`);

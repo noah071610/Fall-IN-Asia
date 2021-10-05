@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { searchWordAction } from "actions/main";
 
 export interface MainState {
@@ -113,7 +113,7 @@ export const mainSlice = createSlice({
       .addCase(searchWordAction.fulfilled, (state, action) => {
         state.searchWordLoading = false;
         state.searchWordDone = true;
-        state.searchWord = action.payload.data.searchWord;
+        state.searchWord = action.payload.data?.searchWord;
       })
       .addCase(searchWordAction.rejected, (state) => {
         state.searchWordLoading = false;

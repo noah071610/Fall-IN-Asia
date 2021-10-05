@@ -51,7 +51,7 @@ interface IProps {
 
 const CountrySelectPage: FC<IProps> = ({ initialCountries }) => {
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher, {
-    initialData: initialCountries,
+    fallbackData: initialCountries,
     ...noRevalidate,
   });
   const [selectedCountry, setCountry] = useState("");
@@ -100,9 +100,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
-      axios.defaults.headers.Cookie = "";
-      if (req && cookie) {
-        axios.defaults.headers.Cookie = cookie;
+      if (axios.defaults.headers) {
+        axios.defaults.headers.Cookie = "";
+        if (req && cookie) {
+          axios.defaults.headers.Cookie = cookie;
+        }
       }
       await store.dispatch(getUserInfoAction());
       const initialCountries = await fetcher(`/country`);

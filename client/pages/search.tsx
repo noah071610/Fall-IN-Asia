@@ -32,7 +32,7 @@ const SearchPage: FC<IProps> = ({ searchPosts }) => {
     moments: IMoment[];
     stories: IStory[];
   }>(`/search/${encodeURIComponent(query?.keyword as string)}`, fetcher, {
-    initialData: searchPosts,
+    fallbackData: searchPosts,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   });
@@ -68,9 +68,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, query }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
-      axios.defaults.headers.Cookie = "";
-      if (req && cookie) {
-        axios.defaults.headers.Cookie = cookie;
+      if (axios.defaults.headers) {
+        axios.defaults.headers.Cookie = "";
+        if (req && cookie) {
+          axios.defaults.headers.Cookie = cookie;
+        }
       }
       await store.dispatch(getUserInfoAction());
       const searchPosts = await fetcher(`/search/${encodeURIComponent(query?.keyword as string)}`);

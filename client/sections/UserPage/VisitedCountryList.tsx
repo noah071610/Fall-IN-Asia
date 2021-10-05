@@ -38,7 +38,7 @@ const VisitedCountryList: FC<IProps> = ({ stories }) => {
       {storiesWithoutSame?.map((v, i) => (
         <li key={i}>
           <div className="image-wrapper">
-            <img src={v.country.flag_src} alt="flag_image" />
+            <img src={v.country.flag_src} alt="country-flag-image" />
           </div>
           <span>{v.country.name}</span>
         </li>

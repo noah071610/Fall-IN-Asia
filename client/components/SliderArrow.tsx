@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { faArrowCircleLeft, faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { BLUE_COLOR, SM_SIZE } from "config";
+import { SM_SIZE } from "config";
 import tw from "twin.macro";
 
 const SliderRightArrow = styled.a`

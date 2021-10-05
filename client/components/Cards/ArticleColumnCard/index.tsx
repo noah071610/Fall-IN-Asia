@@ -6,6 +6,7 @@ import { IStory } from "@typings/db";
 import router from "next/router";
 import { NO_IMAGE_URL } from "config";
 import { kmtb_Formatter } from "utils/kmbtFormatter";
+import html2textConverter from "utils/html2textConverter";
 
 interface IProps {
   story: IStory;
@@ -50,7 +51,8 @@ const ArticleColumnCard: FC<IProps> = ({ story, isMain }) => {
       <div className="box-card-info">
         <NameSpace date={story?.createdAt} user={story?.user} />
       </div>
-      <p>{story?.title}</p>
+      <h1>{story?.title}</h1>
+      <p>{html2textConverter(story?.content).slice(0, 100)}</p>
     </ArticleColumnCardWrapper>
   );
 };

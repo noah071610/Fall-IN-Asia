@@ -115,7 +115,7 @@ const HeaderRight: FC<IProps> = ({ onClickSearchWord, children }) => {
           </li>
           <li className="header-list" style={{ padding: 0, marginLeft: "1.2rem" }}>
             <a className="header-list-anchor" onClick={() => onClickMenuPopup("profile")}>
-              <img className="user-icon" src={user?.icon} alt={user?.name} />
+              <img className="user-icon" src={user?.icon} alt={user?.name + "-icon"} />
             </a>
             {onProfilePopUp && <ProfilePopUp />}
           </li>

@@ -13,7 +13,7 @@ import {
 import router, { useRouter } from "next/router";
 import AutoCompleteForm from "@components/AutoCompleteForm";
 import useSWR from "swr";
-import { ICoordinate, ICountry, IArticle } from "@typings/db";
+import { ICoordinate, ICountry, IArticle, DataResponse } from "@typings/db";
 import fetcher from "utils/fetcher";
 import ImageDragger from "@components/Editor/ImageDragger";
 import useInput from "@hooks/useInput";
@@ -113,7 +113,7 @@ const NewsPostingPage = () => {
   }, [editArticle, setLabel, setRanking, setTitle]);
 
   useEffect(() => {
-    if (user.name !== "Fall IN Asia") {
+    if (user?.name !== "Fall IN Asia") {
       router.back();
     }
     if (editArticle) {
@@ -169,7 +169,7 @@ const NewsPostingPage = () => {
     }
     axios
       .post(`/article/${editArticle ? "edit" : ""}`, form)
-      .then((res) => {
+      .then((res: DataResponse) => {
         const { articleId } = res.data.data;
         router.push(`/news/${articleId}`);
         setRegion("");
@@ -306,9 +306,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
-      axios.defaults.headers.Cookie = "";
-      if (req && cookie) {
-        axios.defaults.headers.Cookie = cookie;
+      if (axios.defaults.headers) {
+        axios.defaults.headers.Cookie = "";
+        if (req && cookie) {
+          axios.defaults.headers.Cookie = cookie;
+        }
       }
       await store.dispatch(getUserInfoAction());
       return {

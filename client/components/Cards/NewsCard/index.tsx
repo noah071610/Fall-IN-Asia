@@ -1,6 +1,6 @@
 import { IArticle } from "@typings/db";
 import { NO_IMAGE_URL } from "config";
-import React, { FC, memo, useCallback, useState } from "react";
+import React, { FC, memo, useCallback } from "react";
 import { NewsCardWrapper } from "./styles";
 import router from "next/router";
 import html2textConverter from "utils/html2textConverter";

@@ -2,7 +2,7 @@ import React, { FC, useCallback } from "react";
 import { SubCommentFormWrapper } from "./styles";
 import useInput from "@hooks/useInput";
 import { DEFAULT_ICON_URL, toastErrorMessage, toastSuccessMessage } from "config";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import { memo } from "react";
 import axios from "axios";

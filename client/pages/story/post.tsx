@@ -13,7 +13,7 @@ import {
 import router, { useRouter } from "next/router";
 import AutoCompleteForm from "@components/AutoCompleteForm";
 import useSWR from "swr";
-import { ICoordinate, ICountry, IStory } from "@typings/db";
+import { DataResponse, ICoordinate, ICountry, IStory } from "@typings/db";
 import fetcher from "utils/fetcher";
 import ImageDragger from "@components/Editor/ImageDragger";
 import useInput from "@hooks/useInput";
@@ -146,7 +146,7 @@ const StoryPostingPage: FC<IProps> = () => {
     }
     axios
       .post(`/story/${editStory ? "edit" : ""}`, form)
-      .then((res) => {
+      .then((res: DataResponse) => {
         const { storyId } = res.data.data;
         router.push(`/story/${pickCountry?.code}/${storyId}`);
         scrollTo({ top: 0 });
@@ -234,9 +234,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
-      axios.defaults.headers.Cookie = "";
-      if (req && cookie) {
-        axios.defaults.headers.Cookie = cookie;
+      if (axios.defaults.headers) {
+        axios.defaults.headers.Cookie = "";
+        if (req && cookie) {
+          axios.defaults.headers.Cookie = cookie;
+        }
       }
       await store.dispatch(getUserInfoAction());
       return {

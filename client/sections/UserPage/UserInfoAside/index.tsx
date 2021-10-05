@@ -32,7 +32,7 @@ import UserPasswordEditForm from "./UserPasswordEditForm";
 const UserInfoAside = () => {
   const dispatch = useDispatch();
   const { query } = useRouter();
-  const { data: userInfo, revalidate } = useSWR<IUserInfo>(
+  const { data: userInfo, mutate } = useSWR<IUserInfo>(
     `/user/${query?.userId}`,
     fetcher,
     noRevalidate
@@ -76,7 +76,7 @@ const UserInfoAside = () => {
   useEffect(() => {
     if (addUserIconDone) {
       toastSuccessMessage("아이콘을 성공적으로 바꿨습니다!");
-      revalidate();
+      mutate();
       dispatch(userSlice.actions.addUserIconClear());
       dispatch(mainSlice.actions.closeModal());
     }
@@ -85,7 +85,7 @@ const UserInfoAside = () => {
   useEffect(() => {
     if (followUserDone) {
       toastSuccessMessage("이 유저를 팔로우 합니다.");
-      revalidate();
+      mutate();
       dispatch(getUserInfoAction());
       dispatch(userSlice.actions.followUserClear());
     }
@@ -94,7 +94,7 @@ const UserInfoAside = () => {
   useEffect(() => {
     if (unfollowUserDone) {
       toastSuccessMessage("이 유저를 언팔로우 했습니다.");
-      revalidate();
+      mutate();
       dispatch(getUserInfoAction());
       dispatch(userSlice.actions.unfollowUserClear());
     }
@@ -103,7 +103,7 @@ const UserInfoAside = () => {
   useEffect(() => {
     if (deleteUserIconDone) {
       toastSuccessMessage("아이콘을 삭제했습니다.");
-      revalidate();
+      mutate();
       dispatch(userSlice.actions.deleteUserIconClear());
     }
   }, [deleteUserIconDone]);
@@ -111,7 +111,7 @@ const UserInfoAside = () => {
   useEffect(() => {
     if (changeUserInfoDone) {
       toastSuccessMessage("프로필을 성공적으로 수정했습니다.");
-      revalidate();
+      mutate();
       dispatch(userSlice.actions.addUserIconClear());
       return;
     }

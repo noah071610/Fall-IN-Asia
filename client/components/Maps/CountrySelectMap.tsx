@@ -1,5 +1,5 @@
 import React, { FC, memo, useCallback, useRef, useState } from "react";
-import ReactMapGL, { Marker, FlyToInterpolator, Source, Layer, MapRef } from "react-map-gl";
+import ReactMapGL, { Marker, FlyToInterpolator, MapRef } from "react-map-gl";
 import Pin from "./Pin";
 //@ts-ignore
 import Geocoder from "react-map-gl-geocoder";

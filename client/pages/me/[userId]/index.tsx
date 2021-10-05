@@ -33,11 +33,11 @@ const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
   const [storyPageNumber, setStoryPageNumber] = useState(6);
   const [momentPageNumber, setMomentPageNumber] = useState(5);
   const { user } = useSelector((state: RootState) => state.user);
-  const { data: userInfo, revalidate: revalidateUserInfo } = useSWR<IUserInfo>(
+  const { data: userInfo, mutate: revalidateUserInfo } = useSWR<IUserInfo>(
     `/user/${query?.userId}`,
     fetcher,
     {
-      initialData: initialUserInfo,
+      fallbackData: initialUserInfo,
       ...noRevalidate,
     }
   );
@@ -135,7 +135,7 @@ const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
           </>
         ) : (
           <div className="no-post-wrapper">
-            <Image src={NO_POST_URL} alt="no-post" />
+            <Image layout="fill" src={NO_POST_URL} alt="no-post" />
             <h4>아직 작성한 연대기가 없습니다.</h4>
           </div>
         )}
@@ -163,7 +163,7 @@ const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
           </ul>
         ) : (
           <div className="no-post-wrapper">
-            <Image src={NO_POST_URL} alt="no-post" />
+            <Image layout="fill" src={NO_POST_URL} alt="no-post" />
             <h4>아직 작성한 모멘트가 없습니다.</h4>
           </div>
         )}
@@ -176,9 +176,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, params }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
-      axios.defaults.headers.Cookie = "";
-      if (req && cookie) {
-        axios.defaults.headers.Cookie = cookie;
+      if (axios.defaults.headers) {
+        axios.defaults.headers.Cookie = "";
+        if (req && cookie) {
+          axios.defaults.headers.Cookie = cookie;
+        }
       }
       await store.dispatch(getUserInfoAction());
       const initialUserInfo = await fetcher(`/user/${params?.userId}`);

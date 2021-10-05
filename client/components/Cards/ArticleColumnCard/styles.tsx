@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import { ELLIPSIS_STYLE, FLEX_STYLE, GRAY_COLOR, SM_SIZE } from "config";
+import { ELLIPSIS_STYLE, SM_SIZE } from "config";
 import tw from "twin.macro";
 
 export const ArticleColumnCardWrapper = styled.article`
-  ${tw`bg-white cursor-pointer pb-8 shadow-md`}
+  ${tw`bg-white cursor-pointer pb-6 shadow-md`}
   transition:0.3s all;
   &:hover {
     ${tw`shadow-lg`}
@@ -37,10 +37,15 @@ export const ArticleColumnCardWrapper = styled.article`
   .box-card-info {
     padding: 0 1rem;
   }
-  p {
+  h1 {
     ${tw`m-4 mb-0 overflow-hidden`};
     ${tw`text-sm font-bold`}
-    ${ELLIPSIS_STYLE(1.7, 2, "46px")}
+    ${ELLIPSIS_STYLE(1.7, 1, "auto")}
+  }
+  p {
+    ${tw`mx-4 mt-2 overflow-hidden`};
+    ${tw`text-xs`}
+    ${ELLIPSIS_STYLE(1.7, 2, "auto")}
   }
   @media (max-width: ${SM_SIZE}) {
     ${tw`pb-6 mb-3`}

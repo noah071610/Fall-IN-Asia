@@ -2,6 +2,7 @@ import React, { FC, memo, useCallback, useMemo, useRef, useState } from "react";
 import ReactMapGL, { Marker, FlyToInterpolator, Source, Layer, MapRef } from "react-map-gl";
 import Pin from "./Pin";
 import { IStory } from "@typings/db";
+import shortid from "shortid";
 
 interface IProps {
   stories: IStory[];
@@ -53,9 +54,9 @@ const CountryRouteMap: FC<IProps> = ({ stories }) => {
           paint={{ "line-color": "red", "line-width": 2 }}
         />
       </Source>
-      {stories?.map((v, i) => (
+      {stories?.map((v) => (
         <Marker
-          key={i}
+          key={shortid.generate()}
           longitude={v.lng}
           latitude={v.lat}
           offsetTop={-20}

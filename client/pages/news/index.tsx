@@ -3,7 +3,8 @@ import { getUserInfoAction } from "actions/user";
 import axios from "axios";
 import { wrapper } from "configureStore";
 import PosterCard from "@components/Cards/PosterCard";
-import useSWR, { useSWRInfinite } from "swr";
+import useSWR from "swr";
+import useSWRInfinite from "swr/infinite";
 import { IArticle } from "@typings/db";
 import fetcher from "utils/fetcher";
 import {
@@ -108,13 +109,13 @@ const NewsMainPage: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
     (index) => `/article?page=${index + 1}&type=${type ? encodeURIComponent(type) : ""}`,
     fetcher,
     {
-      initialData: initialArticles,
+      fallbackData: initialArticles,
       ...noRevalidate,
     }
   );
 
   const { data: asideArticle } = useSWR<IArticle[]>(`/article/popular`, fetcher, {
-    initialData: initialAsideArticle,
+    fallbackData: initialAsideArticle,
     ...noRevalidate,
   });
 
@@ -155,7 +156,7 @@ const NewsMainPage: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
               <NewsArticleList setSize={setSize} articles={articles} />
             ) : (
               <div className="no-article-wrapper">
-                <Image src={NO_POST_URL} alt="no-news-img" />
+                <Image width="160" height="160" src={NO_POST_URL} alt="no-news-img" />
                 <h2>아직 {type} 소식이 없어요.😥</h2>
               </div>
             )}
@@ -185,9 +186,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
-      axios.defaults.headers.Cookie = "";
-      if (req && cookie) {
-        axios.defaults.headers.Cookie = cookie;
+      if (axios.defaults.headers) {
+        axios.defaults.headers.Cookie = "";
+        if (req && cookie) {
+          axios.defaults.headers.Cookie = cookie;
+        }
       }
       await store.dispatch(getUserInfoAction());
       let initialArticles = await fetcher(`/article?page=1`);

@@ -18,7 +18,7 @@ import { Image } from "antd";
 import Slider from "react-slick";
 import CommentForm from "@components/Comments/CommentForm";
 import { NextArrow, PrevArrow } from "@components/SliderArrow";
-import useSWR from "swr";
+import useSWR, { KeyedMutator } from "swr";
 import fetcher from "utils/fetcher";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
@@ -26,7 +26,7 @@ import { kmtb_Formatter } from "utils/kmbtFormatter";
 
 interface IProps {
   moment: IMoment;
-  revalidateMoment: () => Promise<boolean>;
+  revalidateMoment: () => Promise<IMoment | undefined>;
 }
 
 const momentImageSettings = {
@@ -44,7 +44,7 @@ const MomentPost: FC<IProps> = ({ moment, revalidateMoment }) => {
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
-  const { data: comments, revalidate: revalidateComments } = useSWR<IComment[]>(
+  const { data: comments, mutate: revalidateComments } = useSWR<IComment[]>(
     `/comment/${moment?.id}?postType=moment`,
     fetcher,
     noRevalidate

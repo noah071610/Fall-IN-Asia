@@ -8,7 +8,8 @@ import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
 import MommentPost from "@sections/MainPage/MomentPost";
 import MainLayout from "@layout/MainLayout";
 import MainTopArticleSlide from "@sections/MainPage/MainPopularArticleSlide";
-import useSWR, { useSWRInfinite } from "swr";
+import useSWR from "swr";
+import useSWRInfinite from "swr/infinite";
 import fetcher from "utils/fetcher";
 import { useRouter } from "next/router";
 import { ICountry, IMoment } from "@typings/db";
@@ -24,31 +25,27 @@ interface IProps {
 const MomentPostPage: FC<IProps> = ({ initialMoments, initialCountry, initialMoment }) => {
   const { query } = useRouter();
   const [filter, setFilter] = useState("");
-  const { data: moment, revalidate: revalidateMoment } = useSWR<IMoment>(
+  const { data: moment, mutate: revalidateMoment } = useSWR<IMoment>(
     `/moment/${query?.code}/${query?.momentId}`,
     fetcher,
     {
-      initialData: initialMoment,
+      fallbackData: initialMoment,
       ...noRevalidate,
     }
   );
-  const {
-    data: moments,
-    revalidate: revalidateMoments,
-    setSize,
-  } = useSWRInfinite<IMoment[]>(
+  const { data: moments, setSize } = useSWRInfinite<IMoment[]>(
     (index) =>
       `/moment?code=${query?.code || ""}&page=${index + 1}&filter=${filter}&type=${
         query?.type || ""
       }&momentId=${query?.momentId}`,
     fetcher,
     {
-      initialData: initialMoments,
+      fallbackData: initialMoments,
       ...noRevalidate,
     }
   );
   const { data: country } = useSWR<ICountry>(`/country/${query?.code}`, fetcher, {
-    initialData: initialCountry,
+    fallbackData: initialCountry,
     ...noRevalidate,
   });
 
@@ -65,13 +62,7 @@ const MomentPostPage: FC<IProps> = ({ initialMoments, initialCountry, initialMom
         <MainTopArticleSlide country={country} />
         <h2 className="main-title">포스팅</h2>
         <MomentPostingForm />
-        <MomentList
-          revalidateMoments={revalidateMoments}
-          filter={filter}
-          setFilter={setFilter}
-          setSize={setSize}
-          moments={moments}
-        />
+        <MomentList filter={filter} setFilter={setFilter} setSize={setSize} moments={moments} />
       </MainLayout>
     </>
   );
@@ -81,9 +72,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, params }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
-      axios.defaults.headers.Cookie = "";
-      if (req && cookie) {
-        axios.defaults.headers.Cookie = cookie;
+      if (axios.defaults.headers) {
+        axios.defaults.headers.Cookie = "";
+        if (req && cookie) {
+          axios.defaults.headers.Cookie = cookie;
+        }
       }
       await store.dispatch(getUserInfoAction());
       const initialMoment = await fetcher(

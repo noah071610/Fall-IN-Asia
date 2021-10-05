@@ -1,4 +1,4 @@
-import React, { FC, memo, useCallback, useState } from "react";
+import React, { FC, memo, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { mainSlice } from "slices/main";
 import styled from "@emotion/styled";

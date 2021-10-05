@@ -12,9 +12,10 @@ import SubComment from "../SubComment";
 import SubCommentForm from "../SubCommentForm";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
+import shortid from "shortid";
 interface IProps {
   comment: IComment;
-  revalidateComments: () => Promise<boolean>;
+  revalidateComments: () => Promise<IComment[] | undefined>;
 }
 
 const Comment: FC<IProps> = ({ comment, revalidateComments }) => {
@@ -30,7 +31,7 @@ const Comment: FC<IProps> = ({ comment, revalidateComments }) => {
       setIsOwner(true);
     }
     if (user) {
-      if (user.likeComment?.find((v: any) => v.commentId === comment?.id)) {
+      if (user?.likeComment?.find((v) => v.commentId === comment?.id)) {
         setLiked(true);
       } else {
         setLiked(false);
@@ -121,8 +122,14 @@ const Comment: FC<IProps> = ({ comment, revalidateComments }) => {
         </div>
       )}
       {onSubCommentList &&
-        comment?.subComments?.map((v, i) => {
-          return <SubComment key={i} revalidateComments={revalidateComments} subComment={v} />;
+        comment?.subComments?.map((v) => {
+          return (
+            <SubComment
+              key={shortid.generate()}
+              revalidateComments={revalidateComments}
+              subComment={v}
+            />
+          );
         })}
     </CommentWrapper>
   );

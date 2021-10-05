@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import router from "next/router";
 import tw from "twin.macro";
@@ -21,7 +21,7 @@ export const NotFoundWrapper = styled.main`
   }
 `;
 
-const NotFound: FC = () => {
+const NotFound = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserInfoAction());

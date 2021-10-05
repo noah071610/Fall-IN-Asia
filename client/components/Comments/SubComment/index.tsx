@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { SubCommentWrapper } from "./styles";
 import { DeleteOutlined } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import { ISubComment } from "@typings/db";
 import NameSpace from "@components/NameSpace";

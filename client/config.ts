@@ -1,3 +1,4 @@
+import { DataResponse } from "@typings/db";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -196,7 +197,7 @@ export const imageHandler = (quillInstance: any, isStory?: boolean) => {
       url: isStory ? "/story/image" : "/moment/image",
       data: form,
       headers: { "Content-Type": "multipart/form-data" },
-    }).then((res) => {
+    }).then((res: DataResponse) => {
       const range = quillInstance?.current?.getSelection(true);
       quillInstance?.current?.insertEmbed(range.index, "image", `${res.data.data}`);
       quillInstance?.current?.setSelection(range.index + 1);

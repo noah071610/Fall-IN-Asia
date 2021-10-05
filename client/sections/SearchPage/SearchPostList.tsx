@@ -7,6 +7,7 @@ import React, { FC, memo, useCallback, useState } from "react";
 import styled from "@emotion/styled";
 import { GRID_STYLE } from "config";
 import tw from "twin.macro";
+import shortid from "shortid";
 
 const SearchPostListWrapper = styled.section`
   .searched-post-wrapper {
@@ -38,11 +39,13 @@ const SearchPostList: FC<IProps> = ({ stories, moments }) => {
     <SearchPostListWrapper>
       <div className="searched-post-wrapper">
         {stories?.length! > 0 &&
-          stories?.slice(0, 9).map((v, i) => <ArticleColumnCard key={i} story={v} />)}
+          stories?.slice(0, 9).map((v) => <ArticleColumnCard key={shortid.generate()} story={v} />)}
         {moments?.length! > 0 &&
           moments
             ?.slice(0, 9)
-            .map((v, i) => <MomentSmallCard isSearchPage={true} moment={v} key={i} />)}
+            .map((v) => (
+              <MomentSmallCard isSearchPage={true} moment={v} key={shortid.generate()} />
+            ))}
       </div>
       {stories?.length! > 8 ||
         (moments?.length! > 8 && (

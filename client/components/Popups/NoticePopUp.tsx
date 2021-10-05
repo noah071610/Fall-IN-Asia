@@ -7,6 +7,7 @@ import ListCard from "@components/Cards/ListCard";
 import { INotice } from "@typings/db";
 import router from "next/router";
 import { readNoticeAction } from "actions/user";
+import shortid from "shortid";
 const NoticePopUpWrapper = styled.ul`
   ${tw`absolute right-0 bg-white shadow-md rounded-xl overflow-hidden w-80`}
   top:130%;
@@ -64,14 +65,14 @@ const NoticePopUp: FC<IProps> = () => {
         e.stopPropagation();
       }}
     >
-      <h2>{user?.notices?.length > 0 ? "알림" : "알림이 없습니다."}</h2>
-      {user?.notices?.length > 0 ? (
+      <h2>{user && user.notices.length > 0 ? "알림" : "알림이 없습니다."}</h2>
+      {user && user.notices.length > 0 ? (
         <>
           <ul className="notices-wrapper">
-            {user?.notices.slice(0, 5).map((v: INotice, i: number) => (
+            {user?.notices.slice(0, 5).map((v: INotice) => (
               <ListCard
                 onClickListCard={() => onClickListCard(v)}
-                key={i}
+                key={shortid.generate()}
                 title={v.header + " 알림"}
                 content={v.content}
                 noticeId={v.id}

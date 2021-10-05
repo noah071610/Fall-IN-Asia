@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from "axios";
+
 const continent = {
   동북아시아: "동북아시아",
   동남아시아: "동남아시아",
@@ -26,6 +28,16 @@ export interface ICoordinate {
   latitude: number;
   longitude: number;
 }
+
+export interface DataResponse {
+  data: any;
+  status: number;
+  statusText: string;
+  headers: Record<string, string>;
+  config: AxiosRequestConfig;
+  request?: any;
+}
+
 export interface IUser {
   id: number;
   name: string;
@@ -34,6 +46,7 @@ export interface IUser {
   stories: IStory[];
   notices: INotice[];
   likeMoment: ILikeMoment[];
+  likeComment: ILikeComment[];
   likeStory: ILikeStory[];
   followers: IFollow[];
   followings: IFollow[];

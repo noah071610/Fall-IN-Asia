@@ -12,19 +12,19 @@ import { MomentCardWrapper } from "./styles";
 import { toastErrorMessage, toastSuccessMessage } from "config";
 import router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "slices";
 import html2textConverter from "utils/html2textConverter";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
 import { kmtb_Formatter } from "utils/kmbtFormatter";
+import shortid from "shortid";
+import { RootState } from "slices";
 
 interface IProps {
   moment: IMoment;
   isLast?: boolean;
-  revalidateMoments: () => void;
 }
 
-const MomentCard: FC<IProps> = ({ revalidateMoments, moment, isLast }) => {
+const MomentCard: FC<IProps> = ({ moment, isLast }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
   const [userLike, setUserLike] = useState(0);
@@ -90,8 +90,15 @@ const MomentCard: FC<IProps> = ({ revalidateMoments, moment, isLast }) => {
             onClick={() => router.push(`/country/${moment?.code}/${moment?.id}`)}
             className="moment-image-wrapper"
           >
-            {moment?.images?.slice(0, 2).map((v, i) => {
-              return <img className="moment-image" key={i} src={v.image_src} />;
+            {moment?.images?.slice(0, 2).map((v) => {
+              return (
+                <img
+                  className="moment-image"
+                  key={shortid.generate()}
+                  src={v.image_src}
+                  alt="moment-card-image"
+                />
+              );
             })}
             {moment?.images?.length > 2 && (
               <div className="moment-more-image">

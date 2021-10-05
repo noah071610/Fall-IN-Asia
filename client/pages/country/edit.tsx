@@ -21,7 +21,7 @@ const MomentEditPage: FC<IProps> = ({ initialMoment }) => {
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
   const { data: moment } = useSWR<IMoment>(`/moment/${query?.code}/${query?.momentId}/0`, fetcher, {
-    initialData: initialMoment,
+    fallbackData: initialMoment,
     ...noRevalidate,
   });
 
@@ -48,9 +48,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, query }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
-      axios.defaults.headers.Cookie = "";
-      if (req && cookie) {
-        axios.defaults.headers.Cookie = cookie;
+      if (axios.defaults.headers) {
+        axios.defaults.headers.Cookie = "";
+        if (req && cookie) {
+          axios.defaults.headers.Cookie = cookie;
+        }
       }
       await store.dispatch(getUserInfoAction());
       const initialMoment = await fetcher(

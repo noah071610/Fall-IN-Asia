@@ -1,3 +1,4 @@
+import { DataResponse } from "@typings/db";
 import axios from "axios";
 
 const fetcher = (url: string) =>
@@ -5,6 +6,6 @@ const fetcher = (url: string) =>
     .get(url, {
       withCredentials: true,
     })
-    .then((response) => response.data.data);
+    .then((response: DataResponse) => response.data.data);
 
 export default fetcher;

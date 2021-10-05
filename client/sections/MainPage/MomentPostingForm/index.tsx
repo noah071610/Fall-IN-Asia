@@ -12,7 +12,7 @@ import { ICountry, IMoment } from "@typings/db";
 import AutoCompleteForm from "@components/AutoCompleteForm";
 import { RootState } from "slices";
 import dynamic from "next/dynamic";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { UploadFile } from "antd/lib/upload/interface";
 import { mainSlice } from "slices/main";
 const { Option } = Select;
@@ -53,7 +53,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
 
   const countryOptions = useMemo(
     () =>
-      countries?.map((v, i) => {
+      countries?.map((v) => {
         return { value: v.name, code: v.code };
       }),
     [countries]
@@ -97,7 +97,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
     }
     axios
       .post(`/moment/${editMoment ? "edit" : ""}`, form)
-      .then((res) => {
+      .then((res: AxiosResponse<any>) => {
         const { momentId } = res.data.data;
         router.push(`/country/${pickCountry?.code}/${momentId}`);
         scrollTo({ top: 0 });

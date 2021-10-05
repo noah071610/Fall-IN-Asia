@@ -4,7 +4,8 @@ import { FLEX_STYLE, noRevalidate, SM_SIZE, toastErrorMessage, toastSuccessMessa
 import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import router, { useRouter } from "next/router";
-import useSWR, { useSWRInfinite } from "swr";
+import useSWR from "swr";
+import useSWRInfinite from "swr/infinite";
 import fetcher from "utils/fetcher";
 import { IStory } from "@typings/db";
 import { Divider } from "antd";
@@ -60,11 +61,11 @@ const StoryPostPage: FC<IProps> = ({ initialStories, initialStory }) => {
   const { query } = useRouter();
   const [isOwner, setIsOwner] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
-  const { data: story, revalidate: revalidateStory } = useSWR<IStory>(
+  const { data: story, mutate: revalidateStory } = useSWR<IStory>(
     `/story/${query?.code}/${query?.storyId}`,
     fetcher,
     {
-      initialData: initialStory,
+      fallbackData: initialStory,
       ...noRevalidate,
     }
   );
@@ -72,7 +73,7 @@ const StoryPostPage: FC<IProps> = ({ initialStories, initialStory }) => {
     (index) => `/story?page=${index + 1}`,
     fetcher,
     {
-      initialData: initialStories,
+      fallbackData: initialStories,
       ...noRevalidate,
     }
   );
@@ -179,9 +180,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, params }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
-      axios.defaults.headers.Cookie = "";
-      if (req && cookie) {
-        axios.defaults.headers.Cookie = cookie;
+      if (axios.defaults.headers) {
+        axios.defaults.headers.Cookie = "";
+        if (req && cookie) {
+          axios.defaults.headers.Cookie = cookie;
+        }
       }
       await store.dispatch(getUserInfoAction());
       const initialStory = await fetcher(

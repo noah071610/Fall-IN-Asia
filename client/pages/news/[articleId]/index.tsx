@@ -3,7 +3,8 @@ import styled from "@emotion/styled";
 import ReactHtmlParser from "react-html-parser";
 import { FLEX_STYLE, noRevalidate, SM_SIZE, toastErrorMessage, toastSuccessMessage } from "config";
 import router, { useRouter } from "next/router";
-import useSWR, { useSWRInfinite } from "swr";
+import useSWR from "swr";
+import useSWRInfinite from "swr/infinite";
 import fetcher from "utils/fetcher";
 import { IArticle } from "@typings/db";
 import { Divider } from "antd";
@@ -51,7 +52,7 @@ const NewsPostPage: FC<IProps> = ({ initialArticle, initialArticles }) => {
   const [isOwner, setIsOwner] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
   const { data: article } = useSWR<IArticle>(`/article/${query?.articleId}`, fetcher, {
-    initialData: initialArticle,
+    fallbackData: initialArticle,
     ...noRevalidate,
   });
 
@@ -59,7 +60,7 @@ const NewsPostPage: FC<IProps> = ({ initialArticle, initialArticles }) => {
     (index) => `/article?page=${index + 1}`,
     fetcher,
     {
-      initialData: initialArticles,
+      fallbackData: initialArticles,
       ...noRevalidate,
     }
   );
@@ -158,9 +159,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, params }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
-      axios.defaults.headers.Cookie = "";
-      if (req && cookie) {
-        axios.defaults.headers.Cookie = cookie;
+      if (axios.defaults.headers) {
+        axios.defaults.headers.Cookie = "";
+        if (req && cookie) {
+          axios.defaults.headers.Cookie = cookie;
+        }
       }
       await store.dispatch(getUserInfoAction());
       let initialArticles = await fetcher(`/article?page=1`);

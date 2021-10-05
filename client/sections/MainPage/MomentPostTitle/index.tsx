@@ -3,7 +3,7 @@ import { MomentPostTitleWrapper } from "./styles";
 import { Divider } from "antd";
 import { IMoment } from "@typings/db";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import NameSpace from "@components/NameSpace";
 import router from "next/router";
@@ -16,7 +16,6 @@ interface IProps {
 }
 
 const MomentPostTitle: FC<IProps> = ({ moment }) => {
-  const dispatch = useDispatch();
   const [isOwner, setIsOwner] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
 

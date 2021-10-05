@@ -2,7 +2,7 @@ import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { toastConfirmMessage } from "@components/ConfirmToastify";
 import { IUserInfo } from "@typings/db";
 import { DEFAULT_ICON_URL } from "config";
-import React, { FC, memo, useState } from "react";
+import React, { FC, memo } from "react";
 import { useDispatch } from "react-redux";
 import { mainSlice } from "slices/main";
 import { UserProfileWrapper } from "./styles";
@@ -11,6 +11,7 @@ import TextareaAutosize from "react-textarea-autosize";
 interface IProps {
   userInfo: IUserInfo;
   onUserProfileEdit: boolean;
+  // eslint-disable-next-line no-unused-vars
   onClickUserSetting: (type: string) => void;
   userName: string;
   introduce: string;
@@ -24,7 +25,7 @@ const UserProfile: FC<IProps> = (props) => {
     <UserProfileWrapper>
       <div className="icon-wrapper">
         <div className="icon">
-          <img src={props.userInfo?.icon} alt="icon-image" />
+          <img src={props.userInfo?.icon} alt="user-icon-image" />
           <div
             onClick={
               props.userInfo?.icon === DEFAULT_ICON_URL

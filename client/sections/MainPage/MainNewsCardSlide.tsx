@@ -1,15 +1,11 @@
-import { IArticle, ICountry } from "@typings/db";
-import { FC, memo, useCallback, useState } from "react";
-import useSWR from "swr";
-import fetcher from "utils/fetcher";
-import { noRevalidate, SM_SIZE } from "config";
+import { IArticle } from "@typings/db";
+import { FC, memo } from "react";
+import { SM_SIZE } from "config";
 import NewsCard from "@components/Cards/NewsCard";
 import { NextArrow, PrevArrow } from "@components/SliderArrow";
 import styled from "@emotion/styled";
-import { FLEX_STYLE } from "config";
 import tw from "twin.macro";
 import Slider from "react-slick";
-import { useRouter } from "next/router";
 
 const MainNewsCardSlideWrapper = styled(Slider)`
   .news-card-wrapper {

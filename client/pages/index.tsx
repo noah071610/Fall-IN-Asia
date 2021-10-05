@@ -5,7 +5,7 @@ import { getUserInfoAction } from "actions/user";
 import { noRevalidate } from "config";
 import MomentList from "@sections/MainPage/MomentList";
 import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
-import { useSWRInfinite } from "swr";
+import useSWRInfinite from "swr/infinite";
 import fetcher from "utils/fetcher";
 import MainLayout from "@layout/MainLayout";
 import { useRouter } from "next/router";
@@ -22,15 +22,11 @@ interface IProps {
 const MomentMainPage: FC<IProps> = ({ initialMoments }) => {
   const { query } = useRouter();
   const [filter, setFilter] = useState("");
-  const {
-    data: moments,
-    revalidate: revalidateMoments,
-    setSize,
-  } = useSWRInfinite<IMoment[]>(
+  const { data: moments, setSize } = useSWRInfinite(
     (index) => `/moment?page=${index + 1}&filter=${filter}&type=${query?.type || ""}`,
     fetcher,
     {
-      initialData: initialMoments,
+      fallbackData: initialMoments,
       ...noRevalidate,
     }
   );
@@ -47,13 +43,7 @@ const MomentMainPage: FC<IProps> = ({ initialMoments }) => {
         <MainPopularArticleSlide />
         <h2 className="main-title">포스팅</h2>
         <MomentPostingForm />
-        <MomentList
-          revalidateMoments={revalidateMoments}
-          filter={filter}
-          setFilter={setFilter}
-          setSize={setSize}
-          moments={moments}
-        />
+        <MomentList filter={filter} setFilter={setFilter} setSize={setSize} moments={moments} />
       </MainLayout>
     </>
   );
@@ -63,9 +53,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
-      axios.defaults.headers.Cookie = "";
-      if (req && cookie) {
-        axios.defaults.headers.Cookie = cookie;
+      if (axios.defaults.headers) {
+        axios.defaults.headers.Cookie = "";
+        if (req && cookie) {
+          axios.defaults.headers.Cookie = cookie;
+        }
       }
       await store.dispatch(getUserInfoAction());
       let initialMoments = await fetcher(`/moment?page=1`);

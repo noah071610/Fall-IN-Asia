@@ -12,6 +12,7 @@ import { getUserInfoAction } from "actions/user";
 import fetcher from "utils/fetcher";
 import useSWR from "swr";
 import { kmtb_Formatter } from "utils/kmbtFormatter";
+import shortid from "shortid";
 interface IProps {
   story: IStory;
   revalidateStory: () => void;
@@ -21,7 +22,7 @@ const PostComment: FC<IProps> = ({ story, revalidateStory }) => {
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
-  const { data: comments, revalidate: revalidateComments } = useSWR<IComment[]>(
+  const { data: comments, mutate: revalidateComments } = useSWR<IComment[]>(
     `/comment/${story?.id}?postType=story`,
     fetcher,
     noRevalidate
@@ -87,8 +88,10 @@ const PostComment: FC<IProps> = ({ story, revalidateStory }) => {
         </li>
       </ul>
       <CommentForm revalidateComments={revalidateComments} isStory={true} />
-      {comments?.map((v, i) => {
-        return <Comment revalidateComments={revalidateComments} key={i} comment={v} />;
+      {comments?.map((v) => {
+        return (
+          <Comment revalidateComments={revalidateComments} key={shortid.generate()} comment={v} />
+        );
       })}
     </PostCommentWrapper>
   );

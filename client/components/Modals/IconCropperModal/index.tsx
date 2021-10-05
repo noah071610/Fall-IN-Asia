@@ -1,12 +1,12 @@
 import React, { FC, memo, useCallback, useEffect, useRef, useState } from "react";
-import { Button, Input, Upload } from "antd";
+import { Upload } from "antd";
 import ReactCrop, { Crop } from "react-image-crop";
 import router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import "react-image-crop/dist/ReactCrop.css";
 import { IconCropperModalWrapper } from "./styles";
-import { NameSpaceWrapper } from "@components/NameSpace";
+import { NameSpaceWrapper } from "@components/NameSpace/styles";
 import { changeUserIconAction } from "actions/user";
 import { toastErrorMessage } from "config";
 const { Dragger } = Upload;
@@ -20,7 +20,14 @@ const IconCropperModalper: FC<IProps> = () => {
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
   const [completedCrop, setCompletedCrop] = useState<any>(null);
-  const [crop, setCrop] = useState<Crop>({ unit: "%", width: 100, height: 100, aspect: 1 / 1 });
+  const [crop, setCrop] = useState<Crop>({
+    unit: "%",
+    width: 100,
+    height: 100,
+    aspect: 1 / 1,
+    x: 0,
+    y: 0,
+  });
   const { user } = useSelector((state: RootState) => state.user);
   useEffect(() => {
     if (!user) {

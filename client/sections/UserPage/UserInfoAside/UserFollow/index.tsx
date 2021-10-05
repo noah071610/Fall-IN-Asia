@@ -2,6 +2,7 @@ import { IUserInfo } from "@typings/db";
 import React, { FC, memo } from "react";
 import styled from "@emotion/styled";
 import tw from "twin.macro";
+import shortid from "shortid";
 
 const UserFollowWrapper = styled.div`
   .follow-wrapper {
@@ -28,8 +29,8 @@ const UserFollow: FC<IProps> = ({ userInfo }) => {
       <h3>팔로워</h3>
       <div className="follow-wrapper">
         <div className="follow-icon-wrapper">
-          {userInfo?.followers.slice(0, 6).map((v, i) => (
-            <img key={i} src={v.follower.icon} alt="follow-icon" />
+          {userInfo?.followers.slice(0, 6).map((v) => (
+            <img key={shortid.generate()} src={v.follower.icon} alt="followers-icon" />
           ))}
         </div>
         <span>
@@ -43,8 +44,8 @@ const UserFollow: FC<IProps> = ({ userInfo }) => {
       <h3>팔로잉</h3>
       <div className="follow-wrapper">
         <div className="follow-icon-wrapper">
-          {userInfo?.followings.slice(0, 6).map((v, i) => (
-            <img key={i} src={v.following.icon} alt="follow-icon" />
+          {userInfo?.followings.slice(0, 6).map((v) => (
+            <img key={shortid.generate()} src={v.following.icon} alt="followings-icon" />
           ))}
         </div>
         <span>

@@ -14,7 +14,6 @@ import {
   withdrawalUserAction,
   readNoticeAction,
 } from "actions/user";
-import { toastErrorMessage } from "config";
 export interface UserState {
   user: IUser | null;
   getUserInfoLoading: boolean;

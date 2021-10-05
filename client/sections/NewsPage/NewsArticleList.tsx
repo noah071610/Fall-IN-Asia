@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import NewsCard from "@components/Cards/NewsCard";
 import styled from "@emotion/styled";
 import useOnScreen from "@hooks/useOnScreen";

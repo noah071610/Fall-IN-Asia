@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import { CommentFormWrapper } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
@@ -9,10 +9,11 @@ import { useRouter } from "next/router";
 import { memo } from "react";
 import { mainSlice } from "slices/main";
 import axios from "axios";
+import { IComment } from "@typings/db";
 
 interface IProps {
   isStory: boolean;
-  revalidateComments: () => Promise<boolean>;
+  revalidateComments: () => Promise<IComment[] | undefined>;
 }
 
 const CommentForm: FC<IProps> = ({ isStory, revalidateComments }) => {
