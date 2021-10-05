@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import styled from "@emotion/styled";
 import LGLayout from "@layout/LGLayout";
 import { useSelector } from "react-redux";
@@ -25,11 +25,12 @@ import axios from "axios";
 import { getUserInfoAction } from "actions/user";
 import { UploadFile } from "antd/lib/upload/interface";
 import dynamic from "next/dynamic";
+import { GetServerSidePropsContext } from "next";
 const { Option } = Select;
 const CountrySelectMap = dynamic(() => import("@components/Maps/CountrySelectMap"));
 const Editor = dynamic(() => import("@components/Editor/Editor"));
 
-export const ArticlePostWrapper = styled.div`
+export const NewsPostingWrapper = styled.div`
   .title-input {
     padding: 0.63rem 1rem;
   }
@@ -55,9 +56,8 @@ export const ArticlePostWrapper = styled.div`
     height: 40vh;
   }
 `;
-interface IProps {}
 
-const post: FC<IProps> = () => {
+const NewsPostingPage = () => {
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
   const { data: editArticle } = useSWR<IArticle>(
@@ -70,6 +70,7 @@ const post: FC<IProps> = () => {
   const [selectedCountry, setCountry] = useState("");
   const [title, onChangeTitle, setTitle] = useInput("");
   const [label, onChangeLabel, setLabel] = useInput<Number | string>("");
+  // eslint-disable-next-line no-unused-vars
   const [prevThumbnail, setPrevThumbnail] = useState<string>();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [ranking, onChangeRanking, setRanking] = useInput("");
@@ -84,7 +85,7 @@ const post: FC<IProps> = () => {
 
   const countryOptions = useMemo(
     () =>
-      countries?.map((v, i) => {
+      countries?.map((v) => {
         return { value: v.name, code: v.code };
       }),
     [countries]
@@ -109,7 +110,7 @@ const post: FC<IProps> = () => {
         setPrevThumbnail(editArticle.thumbnail);
       }
     }
-  }, [editArticle]);
+  }, [editArticle, setLabel, setRanking, setTitle]);
 
   useEffect(() => {
     if (user.name !== "Fall IN Asia") {
@@ -208,7 +209,7 @@ const post: FC<IProps> = () => {
   }, []);
 
   return (
-    <ArticlePostWrapper>
+    <NewsPostingWrapper>
       <LGLayout>
         <h2 className="main-title">제목</h2>
         <input
@@ -297,20 +298,23 @@ const post: FC<IProps> = () => {
           </button>
         </div>
       </LGLayout>
-    </ArticlePostWrapper>
+    </NewsPostingWrapper>
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
-  const cookie = req ? req.headers.cookie : "";
-  axios.defaults.headers.Cookie = "";
-  if (req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
-  }
-  await store.dispatch(getUserInfoAction());
-  return {
-    props: {},
-  };
-});
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req }: GetServerSidePropsContext) => {
+      const cookie = req ? req.headers.cookie : "";
+      axios.defaults.headers.Cookie = "";
+      if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+      }
+      await store.dispatch(getUserInfoAction());
+      return {
+        props: {},
+      };
+    }
+);
 
-export default post;
+export default NewsPostingPage;

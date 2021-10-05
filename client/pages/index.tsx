@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
@@ -13,12 +13,13 @@ import { IMoment } from "@typings/db";
 import CountryList from "@components/CountryPreviewSlide";
 import MainPopularArticleSlide from "@sections/MainPage/MainPopularArticleSlide";
 import Head from "next/head";
+import { GetServerSidePropsContext } from "next";
 
 interface IProps {
   initialMoments: IMoment[][];
 }
 
-const index: FC<IProps> = ({ initialMoments }) => {
+const MomentMainPage: FC<IProps> = ({ initialMoments }) => {
   const { query } = useRouter();
   const [filter, setFilter] = useState("");
   const {
@@ -58,18 +59,21 @@ const index: FC<IProps> = ({ initialMoments }) => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
-  const cookie = req ? req.headers.cookie : "";
-  axios.defaults.headers.Cookie = "";
-  if (req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
-  }
-  await store.dispatch(getUserInfoAction());
-  let initialMoments = await fetcher(`/moment?page=1`);
-  initialMoments = [initialMoments];
-  return {
-    props: { initialMoments },
-  };
-});
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req }: GetServerSidePropsContext) => {
+      const cookie = req ? req.headers.cookie : "";
+      axios.defaults.headers.Cookie = "";
+      if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+      }
+      await store.dispatch(getUserInfoAction());
+      let initialMoments = await fetcher(`/moment?page=1`);
+      initialMoments = [initialMoments];
+      return {
+        props: { initialMoments },
+      };
+    }
+);
 
-export default index;
+export default MomentMainPage;

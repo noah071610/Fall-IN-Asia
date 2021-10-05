@@ -1,7 +1,7 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { FLEX_STYLE, noRevalidate, SM_SIZE, toastErrorMessage, toastSuccessMessage } from "config";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import router, { useRouter } from "next/router";
 import useSWR, { useSWRInfinite } from "swr";
@@ -23,6 +23,7 @@ import PostPagination from "@components/Post/PostPagination";
 import PostComment from "@components/Post/PostComment";
 import Head from "next/head";
 import dynamic from "next/dynamic";
+import { GetServerSidePropsContext } from "next";
 const CountryMap = dynamic(() => import("@components/Maps/CountryMap"));
 const StoryPostWrapper = styled.div`
   padding-top: 6rem;
@@ -55,7 +56,7 @@ interface IProps {
   initialStory: IStory;
 }
 
-const index: FC<IProps> = ({ initialStories, initialStory }) => {
+const StoryPostPage: FC<IProps> = ({ initialStories, initialStory }) => {
   const { query } = useRouter();
   const [isOwner, setIsOwner] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
@@ -174,19 +175,24 @@ const index: FC<IProps> = ({ initialStories, initialStory }) => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, params }) => {
-  const cookie = req ? req.headers.cookie : "";
-  axios.defaults.headers.Cookie = "";
-  if (req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
-  }
-  await store.dispatch(getUserInfoAction());
-  const initialStory = await fetcher(`/story/${params?.code}/${params?.storyId}?viewCount=true`);
-  let initialStories = await fetcher(`/story?page=1`);
-  initialStories = [initialStories];
-  return {
-    props: { initialStory, initialStories },
-  };
-});
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req, params }: GetServerSidePropsContext) => {
+      const cookie = req ? req.headers.cookie : "";
+      axios.defaults.headers.Cookie = "";
+      if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+      }
+      await store.dispatch(getUserInfoAction());
+      const initialStory = await fetcher(
+        `/story/${params?.code}/${params?.storyId}?viewCount=true`
+      );
+      let initialStories = await fetcher(`/story?page=1`);
+      initialStories = [initialStories];
+      return {
+        props: { initialStory, initialStories },
+      };
+    }
+);
 
-export default index;
+export default StoryPostPage;

@@ -16,7 +16,9 @@ import { RootState } from "slices";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import MoreButton from "@components/MoreButton";
 import Head from "next/head";
+import Image from "next/image";
 import dynamic from "next/dynamic";
+import { GetServerSidePropsContext } from "next";
 
 const CountryRouteMap = dynamic(() => import("@components/Maps/CountryRouteMap"));
 
@@ -24,7 +26,7 @@ interface IProps {
   initialUserInfo: IUserInfo;
 }
 
-const index: FC<IProps> = ({ initialUserInfo }) => {
+const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
   const { query } = useRouter();
   const [noticePage, setNoticePage] = useState(5);
   const [isOwner, setIsOwner] = useState(false);
@@ -133,7 +135,7 @@ const index: FC<IProps> = ({ initialUserInfo }) => {
           </>
         ) : (
           <div className="no-post-wrapper">
-            <img src={NO_POST_URL} alt="no-post" />
+            <Image src={NO_POST_URL} alt="no-post" />
             <h4>아직 작성한 연대기가 없습니다.</h4>
           </div>
         )}
@@ -161,7 +163,7 @@ const index: FC<IProps> = ({ initialUserInfo }) => {
           </ul>
         ) : (
           <div className="no-post-wrapper">
-            <img src={NO_POST_URL} alt="no-post" />
+            <Image src={NO_POST_URL} alt="no-post" />
             <h4>아직 작성한 모멘트가 없습니다.</h4>
           </div>
         )}
@@ -172,7 +174,7 @@ const index: FC<IProps> = ({ initialUserInfo }) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, res, params }) => {
+    async ({ req, params }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       axios.defaults.headers.Cookie = "";
       if (req && cookie) {
@@ -186,4 +188,4 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
 );
 
-export default index;
+export default UserInfoMainPage;

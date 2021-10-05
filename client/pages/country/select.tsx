@@ -13,6 +13,7 @@ import axios from "axios";
 import { getUserInfoAction } from "actions/user";
 import MainCountryAllview from "@components/CountryAllview";
 import tw from "twin.macro";
+import { GetServerSidePropsContext } from "next";
 
 const GobackBtn = styled.div`
   ${FLEX_STYLE("flex-end", "center")};
@@ -48,7 +49,7 @@ interface IProps {
   initialCountries: ICountry[];
 }
 
-const select: FC<IProps> = ({ initialCountries }) => {
+const CountrySelectPage: FC<IProps> = ({ initialCountries }) => {
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher, {
     initialData: initialCountries,
     ...noRevalidate,
@@ -56,7 +57,7 @@ const select: FC<IProps> = ({ initialCountries }) => {
   const [selectedCountry, setCountry] = useState("");
   const countryOptions = useMemo(
     () =>
-      countries?.map((v, i) => {
+      countries?.map((v) => {
         return { value: v.name, code: v.code };
       }),
     [countries]
@@ -95,17 +96,20 @@ const select: FC<IProps> = ({ initialCountries }) => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, res }) => {
-  const cookie = req ? req.headers.cookie : "";
-  axios.defaults.headers.Cookie = "";
-  if (req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
-  }
-  await store.dispatch(getUserInfoAction());
-  const initialCountries = await fetcher(`/country`);
-  return {
-    props: { initialCountries },
-  };
-});
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req }: GetServerSidePropsContext) => {
+      const cookie = req ? req.headers.cookie : "";
+      axios.defaults.headers.Cookie = "";
+      if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+      }
+      await store.dispatch(getUserInfoAction());
+      const initialCountries = await fetcher(`/country`);
+      return {
+        props: { initialCountries },
+      };
+    }
+);
 
-export default select;
+export default CountrySelectPage;

@@ -1,7 +1,7 @@
 import html2textConverter from "utils/html2textConverter";
 import { IArticle, IMoment, IStory } from "@typings/db";
 import router from "next/router";
-import React, { FC, memo, useCallback, useMemo } from "react";
+import React, { FC, memo, useCallback } from "react";
 import { ArticleSmallCardWrapper } from "./styles";
 import dayjs from "dayjs";
 import { NO_IMAGE_URL } from "config";

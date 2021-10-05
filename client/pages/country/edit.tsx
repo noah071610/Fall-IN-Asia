@@ -11,12 +11,13 @@ import { getUserInfoAction } from "actions/user";
 import fetcher from "utils/fetcher";
 import { IMoment } from "@typings/db";
 import useSWR from "swr";
+import { GetServerSidePropsContext } from "next";
 
 interface IProps {
   initialMoment: IMoment;
 }
 
-const edit: FC<IProps> = ({ initialMoment }) => {
+const MomentEditPage: FC<IProps> = ({ initialMoment }) => {
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
   const { data: moment } = useSWR<IMoment>(`/moment/${query?.code}/${query?.momentId}/0`, fetcher, {
@@ -43,17 +44,22 @@ const edit: FC<IProps> = ({ initialMoment }) => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
-  const cookie = req ? req.headers.cookie : "";
-  axios.defaults.headers.Cookie = "";
-  if (req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
-  }
-  await store.dispatch(getUserInfoAction());
-  const initialMoment = await fetcher(query && `/moment/${query?.code}/${query?.momentId}?uuid=0`);
-  return {
-    props: { initialMoment },
-  };
-});
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req, query }: GetServerSidePropsContext) => {
+      const cookie = req ? req.headers.cookie : "";
+      axios.defaults.headers.Cookie = "";
+      if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+      }
+      await store.dispatch(getUserInfoAction());
+      const initialMoment = await fetcher(
+        query && `/moment/${query?.code}/${query?.momentId}?uuid=0`
+      );
+      return {
+        props: { initialMoment },
+      };
+    }
+);
 
-export default edit;
+export default MomentEditPage;

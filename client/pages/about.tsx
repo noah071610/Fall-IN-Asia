@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { BORDER_THIN, FLEX_STYLE, LG_SIZE, SM_SIZE } from "config";
 import tw from "twin.macro";
@@ -10,6 +10,7 @@ import router from "next/router";
 import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import Head from "next/head";
+import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 
@@ -95,13 +96,12 @@ const AboutPageWrapper = styled.div`
     }
   }
 `;
-interface IProps {}
 
-const about: FC<IProps> = () => {
+const About = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserInfoAction());
-  }, []);
+  });
   const { user } = useSelector((state: RootState) => state.user);
   return (
     <>
@@ -115,9 +115,9 @@ const about: FC<IProps> = () => {
           </Divider>
           <section className="aboutme">
             <div className="image-wrapper">
-              <img
+              <Image
                 src="https://user-images.githubusercontent.com/74864925/127884325-018d43e0-881c-4d70-baa8-145fc9098514.jpg"
-                alt="profile-image"
+                alt="host-profile-image"
               />
               {user?.name === "Fall IN Asia" && (
                 <div className="aboutme-btn-wrapper">
@@ -161,10 +161,11 @@ const about: FC<IProps> = () => {
           </Divider>
           <section className="policy">
             <h2>
-              제1조(개인정보의 처리 목적) 장현수('www.fallinasia.com'이하 'Fall IN Asia') 은(는)
-              다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적
-              이외의 용도로는 이용되지 않으며 이용 목적이 변경되는 겨우에는 「개인정보 보호법」
-              제18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.
+              제1조(개인정보의 처리 목적) 장현수(&apos;www.fallinasia.com&apos;이하 &apos;Fall IN
+              Asia&apos;) 은(는) 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는
+              개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며 이용 목적이 변경되는 겨우에는
+              「개인정보 보호법」 제18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할
+              예정입니다.
             </h2>
             <br />
             1. 홈페이지 회원가입 및 관리 댓글 및 좋아요 서비스 이용 목적으로 개인정보를 처리합니다.{" "}
@@ -250,4 +251,4 @@ export const getStaticProps = wrapper.getStaticProps(() => async () => {
   };
 });
 
-export default about;
+export default About;

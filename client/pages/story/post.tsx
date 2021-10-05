@@ -24,10 +24,11 @@ import axios from "axios";
 import { wrapper } from "configureStore";
 import { UploadFile } from "antd/lib/upload/interface";
 import dynamic from "next/dynamic";
+import { GetServerSidePropsContext } from "next";
 const CountrySelectMap = dynamic(() => import("@components/Maps/CountrySelectMap"));
 const Editor = dynamic(() => import("@components/Editor/Editor"));
 
-export const StoryPostWrapper = styled.div`
+export const StoryPostingWrapper = styled.div`
   .title-input {
     padding: 0.63rem 1rem;
   }
@@ -52,7 +53,7 @@ export const StoryPostWrapper = styled.div`
 `;
 interface IProps {}
 
-const post: FC<IProps> = () => {
+const StoryPostingPage: FC<IProps> = () => {
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher, noRevalidate);
@@ -63,6 +64,7 @@ const post: FC<IProps> = () => {
   );
   const [selectedCountry, setCountry] = useState("");
   const [title, onChangeTitle, setTitle] = useInput("");
+  // eslint-disable-next-line no-unused-vars
   const [prevThumbnail, setPrevThumbnail] = useState<string>();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [region, setRegion] = useState("이름모를 어딘가");
@@ -75,7 +77,7 @@ const post: FC<IProps> = () => {
 
   const countryOptions = useMemo(
     () =>
-      countries?.map((v, i) => {
+      countries?.map((v) => {
         return { value: v.name, code: v.code };
       }),
     [countries]
@@ -166,7 +168,7 @@ const post: FC<IProps> = () => {
   }, [title, region, countryOptions, selectedCountry, content, upImg, marker, editStory]);
 
   return (
-    <StoryPostWrapper>
+    <StoryPostingWrapper>
       <LGLayout>
         <h2 className="main-title">제목</h2>
         <input
@@ -224,20 +226,23 @@ const post: FC<IProps> = () => {
           </button>
         </div>
       </LGLayout>
-    </StoryPostWrapper>
+    </StoryPostingWrapper>
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
-  const cookie = req ? req.headers.cookie : "";
-  axios.defaults.headers.Cookie = "";
-  if (req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
-  }
-  await store.dispatch(getUserInfoAction());
-  return {
-    props: {},
-  };
-});
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req }: GetServerSidePropsContext) => {
+      const cookie = req ? req.headers.cookie : "";
+      axios.defaults.headers.Cookie = "";
+      if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+      }
+      await store.dispatch(getUserInfoAction());
+      return {
+        props: {},
+      };
+    }
+);
 
-export default post;
+export default StoryPostingPage;

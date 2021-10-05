@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC } from "react";
 import styled from "@emotion/styled";
 import XLGLayout from "@layout/XLGLayout";
 import SearchPagePoster from "@sections/SearchPage/SearchPagePoster";
@@ -12,6 +12,7 @@ import useSWR from "swr";
 import tw from "twin.macro";
 import fetcher from "utils/fetcher";
 import Head from "next/head";
+import { GetServerSidePropsContext } from "next";
 
 const SearchPageWrapper = styled.div`
   ${tw`bg-white pb-60 pt-16`}
@@ -24,7 +25,7 @@ interface IProps {
   searchPosts: { searchWord: string; moments: IMoment[]; stories: IStory[] };
 }
 
-const index: FC<IProps> = ({ searchPosts }) => {
+const SearchPage: FC<IProps> = ({ searchPosts }) => {
   const { query } = useRouter();
   const { data: searchPostsData } = useSWR<{
     searchWord: string;
@@ -65,7 +66,7 @@ const index: FC<IProps> = ({ searchPosts }) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, res, query }) => {
+    async ({ req, query }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       axios.defaults.headers.Cookie = "";
       if (req && cookie) {
@@ -79,4 +80,4 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
 );
 
-export default index;
+export default SearchPage;

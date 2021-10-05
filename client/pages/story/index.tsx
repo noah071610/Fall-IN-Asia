@@ -7,7 +7,6 @@ import {
   LG_SIZE,
   noRevalidate,
   NO_POST_URL,
-  RGB_BLACK,
   toastErrorMessage,
   XLG_SIZE,
 } from "config";
@@ -29,7 +28,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
 import Head from "next/head";
+import Image from "next/image";
 import { mainSlice } from "slices/main";
+import { GetServerSidePropsContext } from "next";
 
 const StoryMainWrapper = styled.div`
   padding-top: 4rem;
@@ -85,7 +86,7 @@ interface IProps {
   initialPopularStories: IStory[];
 }
 
-const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
+const StoryMainPage: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
   const dispatch = useDispatch();
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
@@ -168,7 +169,7 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
     } else {
       router.push("/story/post");
     }
-  }, [user]);
+  }, [dispatch, user]);
 
   return (
     <>
@@ -219,7 +220,7 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
             <StoryArticleList grid={4} gap="1.5rem" setSize={setSize} stories={stories} />
           ) : (
             <div className="no-story-wrapper">
-              <img src={NO_POST_URL} alt="no-post-img" />
+              <Image src={NO_POST_URL} alt="no-post-img" />
               <h2>연대기가 없습니다. 첫 연대기에 주인공이 되어주세요!</h2>
               <button className="story-post-btn" onClick={onClickPostStoryBtn}>
                 연대기 올리기
@@ -234,7 +235,7 @@ const index: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, res, ...etc }) => {
+    async ({ req }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       axios.defaults.headers.Cookie = "";
       if (req && cookie) {
@@ -250,4 +251,4 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
 );
 
-export default index;
+export default StoryMainPage;

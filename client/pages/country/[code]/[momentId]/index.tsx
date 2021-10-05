@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
@@ -13,6 +13,7 @@ import fetcher from "utils/fetcher";
 import { useRouter } from "next/router";
 import { ICountry, IMoment } from "@typings/db";
 import Head from "next/head";
+import { GetServerSidePropsContext } from "next";
 
 interface IProps {
   initialMoments: IMoment[][];
@@ -20,7 +21,7 @@ interface IProps {
   initialCountry: ICountry;
 }
 
-const index: FC<IProps> = ({ initialMoments, initialCountry, initialMoment }) => {
+const MomentPostPage: FC<IProps> = ({ initialMoments, initialCountry, initialMoment }) => {
   const { query } = useRouter();
   const [filter, setFilter] = useState("");
   const { data: moment, revalidate: revalidateMoment } = useSWR<IMoment>(
@@ -78,7 +79,7 @@ const index: FC<IProps> = ({ initialMoments, initialCountry, initialMoment }) =>
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, res, params }) => {
+    async ({ req, params }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       axios.defaults.headers.Cookie = "";
       if (req && cookie) {
@@ -99,4 +100,4 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
 );
 
-export default index;
+export default MomentPostPage;

@@ -19,6 +19,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import dynamic from "next/dynamic";
+import { GetServerSidePropsContext } from "next";
 
 const CountryMap = dynamic(() => import("@components/Maps/CountryMap"));
 
@@ -45,7 +46,7 @@ interface IProps {
   initialArticles: IArticle[][];
   initialArticle: IArticle;
 }
-const index: FC<IProps> = ({ initialArticle, initialArticles }) => {
+const NewsPostPage: FC<IProps> = ({ initialArticle, initialArticles }) => {
   const { query } = useRouter();
   const [isOwner, setIsOwner] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
@@ -155,7 +156,7 @@ const index: FC<IProps> = ({ initialArticle, initialArticles }) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, res, params }) => {
+    async ({ req, params }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       axios.defaults.headers.Cookie = "";
       if (req && cookie) {
@@ -171,4 +172,4 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
 );
 
-export default index;
+export default NewsPostPage;

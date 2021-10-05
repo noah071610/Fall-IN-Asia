@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, RGB_BLACK, SM_SIZE } from "config";
+import { BORDER_THIN, FLEX_STYLE, GRAY_COLOR, SM_SIZE } from "config";
 import tw from "twin.macro";
 
 export const MomentPostingFormWrapper = styled.section`

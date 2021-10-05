@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { IArticle, ICountry, IMoment } from "@typings/db";
 import MainNewsCardSlide from "@sections/MainPage/MainNewsCardSlide";
 import Head from "next/head";
+import { GetServerSidePropsContext } from "next";
 
 interface IProps {
   initialMoments: IMoment[][];
@@ -20,7 +21,7 @@ interface IProps {
   initialNews: IArticle[];
 }
 
-const index: FC<IProps> = ({ initialMoments, initialCountry, initialNews }) => {
+const CountryMomentMainPage: FC<IProps> = ({ initialMoments, initialCountry, initialNews }) => {
   const { query } = useRouter();
   const [filter, setFilter] = useState("");
   const {
@@ -79,20 +80,23 @@ const index: FC<IProps> = ({ initialMoments, initialCountry, initialNews }) => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, params }) => {
-  const cookie = req ? req.headers.cookie : "";
-  axios.defaults.headers.Cookie = "";
-  if (req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
-  }
-  await store.dispatch(getUserInfoAction());
-  let initialMoments = await fetcher(`/moment?code=${params?.code}&page=1`);
-  initialMoments = [initialMoments];
-  const initialCountry = await fetcher(`/country/${params?.code}`);
-  const initialNews = await fetcher(`/article/popular?code=${params?.code}`);
-  return {
-    props: { initialMoments, initialCountry, initialNews },
-  };
-});
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req, params }: GetServerSidePropsContext) => {
+      const cookie = req ? req.headers.cookie : "";
+      axios.defaults.headers.Cookie = "";
+      if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+      }
+      await store.dispatch(getUserInfoAction());
+      let initialMoments = await fetcher(`/moment?code=${params?.code}&page=1`);
+      initialMoments = [initialMoments];
+      const initialCountry = await fetcher(`/country/${params?.code}`);
+      const initialNews = await fetcher(`/article/popular?code=${params?.code}`);
+      return {
+        props: { initialMoments, initialCountry, initialNews },
+      };
+    }
+);
 
-export default index;
+export default CountryMomentMainPage;

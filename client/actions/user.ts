@@ -132,10 +132,6 @@ export const unfollowUserAction = createAsyncThunk<any, number>(
 );
 
 export const readNoticeAction = createAsyncThunk<any>("/notice/read", async () => {
-  try {
-    const response = await axios.patch(`/user/notice`);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axios.patch(`/user/notice`);
+  return response.data;
 });

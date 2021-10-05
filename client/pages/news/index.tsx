@@ -2,7 +2,6 @@ import React, { FC, useCallback, useState } from "react";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
 import { wrapper } from "configureStore";
-
 import PosterCard from "@components/Cards/PosterCard";
 import useSWR, { useSWRInfinite } from "swr";
 import { IArticle } from "@typings/db";
@@ -19,6 +18,7 @@ import {
 } from "config";
 import styled from "@emotion/styled";
 import tw from "twin.macro";
+import Image from "next/image";
 import ArticleImageCard from "@components/Cards/ArticleImageCard";
 import TopNavigation from "@components/TopNavigation";
 import ArticleSmallCard from "@components/Cards/ArticleSmallCard";
@@ -26,6 +26,7 @@ import NewsArticleList from "@sections/NewsPage/NewsArticleList";
 import Head from "next/head";
 import { NextArrow, PrevArrow } from "@components/SliderArrow";
 import Slider from "react-slick";
+import { GetServerSidePropsContext } from "next";
 
 const NewsPageWrapper = styled.div`
   padding-top: 4rem;
@@ -101,13 +102,9 @@ const settings = {
   prevArrow: <PrevArrow />,
 };
 
-const index: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
+const NewsMainPage: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
   const [type, setType] = useState("관광뉴스");
-  const {
-    data: articles,
-    revalidate: revalidateArticles,
-    setSize,
-  } = useSWRInfinite<IArticle[]>(
+  const { data: articles, setSize } = useSWRInfinite<IArticle[]>(
     (index) => `/article?page=${index + 1}&type=${type ? encodeURIComponent(type) : ""}`,
     fetcher,
     {
@@ -158,7 +155,7 @@ const index: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
               <NewsArticleList setSize={setSize} articles={articles} />
             ) : (
               <div className="no-article-wrapper">
-                <img src={NO_POST_URL} alt="no-post-img" />
+                <Image src={NO_POST_URL} alt="no-news-img" />
                 <h2>아직 {type} 소식이 없어요.😥</h2>
               </div>
             )}
@@ -182,19 +179,22 @@ const index: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
   );
 };
 
-export default index;
+export default NewsMainPage;
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
-  const cookie = req ? req.headers.cookie : "";
-  axios.defaults.headers.Cookie = "";
-  if (req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
-  }
-  await store.dispatch(getUserInfoAction());
-  let initialArticles = await fetcher(`/article?page=1`);
-  initialArticles = [initialArticles];
-  const initialAsideArticle = await fetcher(`/article/popular`);
-  return {
-    props: { initialArticles, initialAsideArticle },
-  };
-});
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req }: GetServerSidePropsContext) => {
+      const cookie = req ? req.headers.cookie : "";
+      axios.defaults.headers.Cookie = "";
+      if (req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+      }
+      await store.dispatch(getUserInfoAction());
+      let initialArticles = await fetcher(`/article?page=1`);
+      initialArticles = [initialArticles];
+      const initialAsideArticle = await fetcher(`/article/popular`);
+      return {
+        props: { initialArticles, initialAsideArticle },
+      };
+    }
+);

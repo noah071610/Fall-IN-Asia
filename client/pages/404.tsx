@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import styled from "@emotion/styled";
 import router from "next/router";
 import tw from "twin.macro";
@@ -20,13 +20,12 @@ export const NotFoundWrapper = styled.main`
     ${tw`mt-6 rounded-xl shadow-md py-3 px-8`}
   }
 `;
-interface IProps {}
 
-const notFound: FC<IProps> = () => {
+const NotFound: FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserInfoAction());
-  }, []);
+  });
   return (
     <>
       <Head>
@@ -47,4 +46,4 @@ export const getStaticProps = wrapper.getStaticProps(() => async () => {
   };
 });
 
-export default notFound;
+export default NotFound;
