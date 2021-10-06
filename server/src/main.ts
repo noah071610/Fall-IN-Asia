@@ -9,6 +9,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import helmet from 'helmet';
 import hpp from 'hpp';
+import csurf from 'csurf';
+import rateLimit from 'express-rate-limit';
 
 declare const module: any;
 
@@ -50,14 +52,21 @@ async function bootstrap() {
 
   if (prod) {
     app.set('trust proxy', 1);
-    app.use(helmet({ contentSecurityPolicy: false }));
+    app.use(helmet());
     app.use(hpp());
+    app.use(csurf());
+    app.use(
+      rateLimit({
+        windowMs: 15 * 60 * 1000,
+        max: 100,
+      }),
+    );
     app.enableCors({
       origin: process.env.CLIENT_URL,
       credentials: true,
     });
     setTimeout(() => {
-      console.log('############### production on');
+      console.log('====== FALL IN ASIA production ON ======');
     }, 3000);
   } else {
     app.enableCors({
@@ -65,13 +74,13 @@ async function bootstrap() {
       credentials: true,
     });
     setTimeout(() => {
-      console.log('############### production off');
+      console.log('====== FALL IN ASIA production OFF ======');
     }, 3000);
   }
 
   app.use(passport.initialize());
   app.use(passport.session());
   await app.listen(port);
-  console.log(`################## Port number ${port}`);
+  console.log(`====== Port number : ${port} ======`);
 }
 bootstrap();
