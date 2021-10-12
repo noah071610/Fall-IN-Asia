@@ -1,7 +1,6 @@
 import React, { FC, useCallback } from "react";
 import { MainAsideLeftNavWrapper } from "./styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Image from "next/image";
 import {
   faExclamationCircle,
   faGlobe,
@@ -37,13 +36,7 @@ const MainAsideLeftNav: FC<IProps> = () => {
     <MainAsideLeftNavWrapper>
       <div className="country">
         <div onClick={onClickCountry} className="country-img-wrapper">
-          <Image
-            className="country-img"
-            width="200"
-            height="120"
-            src={country?.image_src || WORLD_IMAGE}
-            alt="world-image"
-          />
+          <img className="country-img" src={country?.image_src || WORLD_IMAGE} alt="world-image" />
         </div>
         <div className="country-desc">
           <a onClick={onClickCountry}>{country?.name || "아시아 전체"}</a>

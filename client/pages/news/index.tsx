@@ -20,7 +20,6 @@ import {
 } from "config";
 import styled from "@emotion/styled";
 import tw from "twin.macro";
-import Image from "next/image";
 import ArticleImageCard from "@components/Cards/ArticleImageCard";
 import TopNavigation from "@components/TopNavigation";
 import ArticleSmallCard from "@components/Cards/ArticleSmallCard";
@@ -168,7 +167,7 @@ const NewsMainPage: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
               <NewsArticleList setSize={setSize} articles={articles} />
             ) : (
               <div className="no-article-wrapper">
-                <Image width="160" height="160" src={NO_POST_URL} alt="no-news-img" />
+                <img src={NO_POST_URL} alt="no-news-img" />
                 <h2>아직 {type} 소식이 없어요.😥</h2>
               </div>
             )}

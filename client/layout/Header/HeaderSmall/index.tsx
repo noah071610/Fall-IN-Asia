@@ -3,7 +3,6 @@ import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FALL_IN_ASIA_LOGO } from "config";
 import Link from "next/link";
-import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import { mainSlice } from "slices/main";
@@ -57,12 +56,7 @@ const HeaderSmall: FC<IProps> = ({ onClickSearchWord, children }) => {
           <li>
             <Link href="/">
               <a className="header-logo">
-                <Image
-                  width="160"
-                  height="32"
-                  src={FALL_IN_ASIA_LOGO}
-                  alt="fall-in-asia-header-logo"
-                />
+                <img src={FALL_IN_ASIA_LOGO} alt="fall-in-asia-header-logo" />
               </a>
             </Link>
           </li>

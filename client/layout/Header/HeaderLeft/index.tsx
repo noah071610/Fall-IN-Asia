@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { FLEX_STYLE, MD_SIZE } from "config";
 import tw from "twin.macro";
-import Image from "next/image";
 import styled from "@emotion/styled";
 
 const HeaderLeftWrapper = styled.ul`
@@ -49,7 +48,7 @@ const HeaderLeft = () => {
     <HeaderLeftWrapper>
       <Link href="/">
         <a className="header-logo">
-          <Image width="160" height="32" src={FALL_IN_ASIA_LOGO} alt="fall-in-asia-header-logo" />
+          <img src={FALL_IN_ASIA_LOGO} alt="fall-in-asia-header-logo" />
         </a>
       </Link>
       {leftHeaderLists.map((v, i) => {
