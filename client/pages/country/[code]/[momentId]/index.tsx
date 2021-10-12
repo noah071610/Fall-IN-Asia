@@ -69,7 +69,10 @@ const MomentPostPage: FC<IProps> = ({ initialMoments, initialCountry, initialMom
           property="og:description"
           content={html2textConverter(moment?.content).slice(0, 100)}
         />
-        <meta property="og:image" content={moment?.images[0].image_src || WORLD_IMAGE} />
+        <meta
+          property="og:image"
+          content={moment?.images ? moment?.images[0].image_src : WORLD_IMAGE}
+        />
         <meta
           property="og:url"
           content={`https://fallinasia.com/country/${moment?.code}/${moment?.id}`}

@@ -18,7 +18,7 @@ import { Image } from "antd";
 import Slider from "react-slick";
 import CommentForm from "@components/Comments/CommentForm";
 import { NextArrow, PrevArrow } from "@components/SliderArrow";
-import useSWR, { KeyedMutator } from "swr";
+import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";

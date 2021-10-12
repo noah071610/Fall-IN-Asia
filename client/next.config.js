@@ -1,22 +1,9 @@
 const webpack = require("webpack");
-const withPlugins = require("next-compose-plugins");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
-const withImages = require("next-images");
-const nextConfig = {
-  images: {
-    domains: [
-      "localhost",
-      "user-images.githubusercontent.com",
-      "images.unsplash.com",
-      "icons.iconarchive.com",
-      "fallinasia.com",
-      "api.fallinasia.com",
-      "img.icons8.com",
-      "fall-in-asia.s3.ap-northeast-2.amazonaws.com",
-    ],
-  },
+
+module.exports = withBundleAnalyzer({
   compress: true,
   optimization: {
     minimize: true,
@@ -31,6 +18,4 @@ const nextConfig = {
       plugins: plugins,
     };
   },
-};
-
-module.exports = withPlugins([[withImages], [withBundleAnalyzer]], nextConfig);
+});
