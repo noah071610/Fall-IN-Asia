@@ -94,10 +94,13 @@
 - 좋은 디자인의 웹사이트는 심지어 신뢰성까지 높인다는 분석에 인상깊어, 최대한 깔끔한 디자인으로 이용자를 잡기위해 노력했습니다.
 
 <br/>
-
+<div align=center>
+  
 ![fallinasia_main](https://user-images.githubusercontent.com/74864925/130349185-ad01e0d0-5786-4e77-86bc-6a25f974c4fe.png)
 ![fallinasia_news_main](https://user-images.githubusercontent.com/74864925/130349229-7ca37190-871c-4b4b-a064-efd4f041b358.png)
 ![fallinasia_story_main](https://user-images.githubusercontent.com/74864925/130349226-c87f34e1-a869-417a-a081-a98369fab2bf.png)
+  
+</div>
 
 <br/>
 
@@ -106,7 +109,11 @@
 
 <br/>
 
+<div align=center>
+
 ![fallinasia_country_select](https://user-images.githubusercontent.com/74864925/130349356-1e3004c1-8707-4927-a1c2-0e56a3e5ccb4.gif)
+  
+  </div>
 
 <br/>
 
@@ -115,6 +122,8 @@
 
 <br/>
 
+<div align=center>
+
 ![fallinasia_story_thumb](https://user-images.githubusercontent.com/74864925/130349410-0392ce16-795e-4880-9253-bd02a5ad9bf8.png)
 
 ![fallinasia_story_map](https://user-images.githubusercontent.com/74864925/130349412-e3a87df2-e1fd-4632-9c8d-27783eac3a20.png)
@@ -122,6 +131,8 @@
 ![fallinasia_story_article](https://user-images.githubusercontent.com/74864925/130349415-6e00b5d4-65d5-40ee-9f03-866004ba84ac.png)
 
 ![fallinasia_story_pagination](https://user-images.githubusercontent.com/74864925/130349419-771114a4-4db5-4291-a9bb-6a1bdaa7a48d.png)
+  
+  </div>
 
 ```javascript
 
@@ -249,7 +260,11 @@
 
 <br/>
 
+<div align=center>
+
 ![fallinasia_user_map](https://user-images.githubusercontent.com/74864925/130349463-abe5f706-96d0-4315-9e29-9fde7f2b5c39.gif)
+  
+  </div>
 
 ```javascript
 
@@ -365,7 +380,11 @@
 
 <br/>
 
+<div align=center>
+
 ![fallinasia_user_crop](https://user-images.githubusercontent.com/74864925/130349485-b07e35c9-ff4e-4e17-96aa-2e87146681ca.gif)
+  
+  </div>
 
 ```javascript
 
@@ -504,9 +523,13 @@
 
 <br/>
 
+<div align=center>
+
 ![fallinasia_main_mobile](https://user-images.githubusercontent.com/74864925/130349515-f4596e82-b927-4853-acdc-2b8a643958e1.gif)
 
 ![fallinasia_story_mobile](https://user-images.githubusercontent.com/74864925/130349517-ad87d49d-1b91-4c7a-baff-79eddcd21ec5.gif)
+  
+  </div>
 
 <br/>
 
@@ -515,7 +538,11 @@
 
 <br/>
 
+<div align=center>
+
 ![fallinasia_infinite](https://user-images.githubusercontent.com/74864925/130349543-a89b7c2b-a4b4-4ad8-8b09-138f62415e94.gif)
+  
+  </div>
 
 ```javascript
 
@@ -688,7 +715,11 @@
 
 <br/>
 
+<div align=center>
+
 ![fallinasia_signup](https://user-images.githubusercontent.com/74864925/130349569-9fe8143b-2e5a-4f65-863f-9528672f1ea1.png)
+  
+  </div>
 
 ```javascript
 
@@ -1420,11 +1451,15 @@
 
 <br/>
 
+<div align=center>
+
 ![fallinasia_apidocs](https://user-images.githubusercontent.com/74864925/130349713-1a292a03-f401-4878-ac45-4c3929aedc94.png)
 
 ![fallinasia_slack](https://user-images.githubusercontent.com/74864925/130349715-780190a1-b9b4-48d4-acba-6bc5100898f2.jpg)
 
 ![fallinasia_trello](https://user-images.githubusercontent.com/74864925/130349716-a0654450-6964-4638-b693-254652dd7aa9.jpg)
+  
+  </div>
 
 <br/><br/><br/>
 
