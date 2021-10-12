@@ -14,6 +14,9 @@ export const HeaderWrapper = (headerDownSize: boolean) => css`
     ${tw`w-40 h-8 mr-6`}
     transition: 0.3s all;
     ${headerDownSize && `transform:scale(0.8);`}
+    img {
+      width: 100%;
+    }
   }
   .header-list {
     transition: 0.3s all;

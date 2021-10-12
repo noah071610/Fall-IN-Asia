@@ -71,7 +71,7 @@ const MomentPostPage: FC<IProps> = ({ initialMoments, initialCountry, initialMom
         />
         <meta
           property="og:image"
-          content={moment?.images ? moment?.images[0].image_src : WORLD_IMAGE}
+          content={moment?.images.length! > 0 ? moment?.images[0].image_src : WORLD_IMAGE}
         />
         <meta
           property="og:url"
