@@ -122,7 +122,7 @@ const LoginModal: FC<IProps> = () => {
                 <a
                   href={
                     process.env.NODE_ENV === "development"
-                      ? "http://localhost:3060/api"
+                      ? "http://localhost:3060/api/auth/google"
                       : process.env.NEXT_PUBLIC_BASE_URL + "/auth/google"
                   }
                 >
@@ -133,7 +133,7 @@ const LoginModal: FC<IProps> = () => {
                 <a
                   href={
                     process.env.NODE_ENV === "development"
-                      ? "http://localhost:3060/api"
+                      ? "http://localhost:3060/api/auth/kakao"
                       : process.env.NEXT_PUBLIC_BASE_URL + "/auth/kakao"
                   }
                 >
@@ -144,7 +144,7 @@ const LoginModal: FC<IProps> = () => {
                 <a
                   href={
                     process.env.NODE_ENV === "development"
-                      ? "http://localhost:3060/api"
+                      ? "http://localhost:3060/api/auth/naver"
                       : process.env.NEXT_PUBLIC_BASE_URL + "/auth/naver"
                   }
                 >

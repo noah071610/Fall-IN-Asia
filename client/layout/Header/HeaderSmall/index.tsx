@@ -25,7 +25,6 @@ const HeaderSmallWrapper = styled.ul`
       }
     }
     .header-logo {
-      width: 100%;
       margin: 0 !important;
     }
   }

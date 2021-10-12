@@ -1,13 +1,13 @@
 import { HYDRATE } from "next-redux-wrapper";
-import { combineReducers, PayloadAction } from "@reduxjs/toolkit";
+import { combineReducers } from "@reduxjs/toolkit";
 import { mainSlice, MainState } from "./main";
 import { userSlice, UserState } from "./user";
 
-export const reducer = (state: any = {}, action: PayloadAction) => {
+export const reducer = (state: any = {}, action: any) => {
   if (action.type === HYDRATE) {
     return {
       ...state,
-      ...action,
+      ...action.payload,
     };
   }
   return combineReducers({

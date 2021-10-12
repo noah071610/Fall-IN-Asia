@@ -9,7 +9,6 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import helmet from 'helmet';
 import hpp from 'hpp';
-import csurf from 'csurf';
 import rateLimit from 'express-rate-limit';
 
 declare const module: any;
@@ -54,7 +53,6 @@ async function bootstrap() {
     app.set('trust proxy', 1);
     app.use(helmet());
     app.use(hpp());
-    app.use(csurf());
     app.use(
       rateLimit({
         windowMs: 15 * 60 * 1000,

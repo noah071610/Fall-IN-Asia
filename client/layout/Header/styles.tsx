@@ -16,6 +16,7 @@ export const HeaderWrapper = (headerDownSize: boolean) => css`
     ${headerDownSize && `transform:scale(0.8);`}
     img {
       width: 100%;
+      height: 100%;
     }
   }
   .header-list {
