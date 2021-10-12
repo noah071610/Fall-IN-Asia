@@ -66,7 +66,21 @@ const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
   return (
     <>
       <Head>
-        <title>{userInfo?.name}님의 프로필 - Fall In Asia</title>
+        <title>{userInfo?.name}님의 프로필 | Fall In Asia</title>
+        <meta
+          name="description"
+          content={`${userInfo?.name}님의 프로필 - ${userInfo?.introduce} | 여행 관광 투어 아시아여행 일본 대만 태국 베트남`}
+        />
+        <meta
+          property="og:title"
+          content={`${userInfo?.name}님의 프로필 - ${userInfo?.introduce} | Fall IN Asia`}
+        />
+        <meta
+          property="og:description"
+          content={`${userInfo?.name}님의 프로필 - ${userInfo?.introduce} | 여행 관광 투어 아시아여행 일본 대만 태국 베트남`}
+        />
+        <meta property="og:image" content={userInfo?.icon} />
+        <meta property="og:url" content={`https://fallinasia.com/me/${userInfo?.id}`} />
       </Head>
       <UserInfoLayout>
         {isOwner && userInfo && userInfo?.notices.length > 0 ? (

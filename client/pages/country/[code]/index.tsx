@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
-import { noRevalidate } from "config";
+import { noRevalidate, WORLD_IMAGE } from "config";
 import MomentList from "@sections/MainPage/MomentList";
 import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
 import useSWR from "swr";
@@ -52,7 +52,18 @@ const CountryMomentMainPage: FC<IProps> = ({ initialMoments, initialCountry, ini
   return (
     <>
       <Head>
-        <title>Fall IN Asia - {country?.name}</title>
+        <title>{country?.name} Moments | Fall IN Asia</title>
+        <meta
+          name="description"
+          content={`${country?.name}의 한인 커뮤니티, 여행정보, 동행자 정보 공유! Creators With : FAll IN Asia : 지금 아시아속으로 들어가봐요! | 여행 관광 투어 아시아여행 일본 대만 태국 베트남`}
+        />
+        <meta property="og:title" content="Fall IN Asia" />
+        <meta
+          property="og:description"
+          content={`${country?.name}의 한인 커뮤니티, 여행정보, 동행자 정보 공유! Creators With : FAll IN Asia : 지금 아시아속으로 들어가봐요! | 여행 관광 투어 아시아여행 일본 대만 태국 베트남`}
+        />
+        <meta property="og:image" content={country?.image_src} />
+        <meta property="og:url" content={`https://fallinasia.com/country/${country?.code}`} />
       </Head>
       <MainLayout>
         {news && news.length > 0 && (

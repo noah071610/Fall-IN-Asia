@@ -48,7 +48,7 @@ const CountryListCard: FC<IProps> = ({ country, isMain }) => {
     <CountryListCardWrapper onClick={onClickCountryListCard}>
       <img
         src={country?.image_src.replace("&w=200", "&w=80").replace("&p=80", "&p=100")}
-        alt="country_image"
+        alt={country?.name + "_card_image"}
       />
       <div className="country-desc">
         <h4>{country?.name}</h4>

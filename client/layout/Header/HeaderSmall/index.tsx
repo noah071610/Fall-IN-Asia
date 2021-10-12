@@ -57,7 +57,12 @@ const HeaderSmall: FC<IProps> = ({ onClickSearchWord, children }) => {
           <li>
             <Link href="/">
               <a className="header-logo">
-                <Image layout="fill" src={FALL_IN_ASIA_LOGO} alt="fall-in-asia-header-logo" />
+                <Image
+                  width="160"
+                  height="32"
+                  src={FALL_IN_ASIA_LOGO}
+                  alt="fall-in-asia-header-logo"
+                />
               </a>
             </Link>
           </li>

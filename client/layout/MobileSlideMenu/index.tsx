@@ -63,12 +63,7 @@ const MobileSlideMenu: FC<IProps> = () => {
           <section className="slide-menu-main">
             <Link href="/">
               <a>
-                <Image
-                  layout="fill"
-                  className="slide-menu-logo"
-                  src={FALL_IN_ASIA_LOGO}
-                  alt="fall-in-asia-logo"
-                />
+                <img className="slide-menu-logo" src={FALL_IN_ASIA_LOGO} alt="fall-in-asia-logo" />
               </a>
             </Link>
             <Divider className="slide-menu-divider" orientation="left">
@@ -117,22 +112,19 @@ const MobileSlideMenu: FC<IProps> = () => {
                   <span>간편로그인</span>
                   <ul className="social-icon-wrapper">
                     <li style={{ background: WHITE_COLOR }}>
-                      <Image
-                        layout="fill"
+                      <img
                         src="https://img.icons8.com/color/144/000000/google-logo.png"
                         alt="google-logo"
                       />
                     </li>
                     <li style={{ background: "#FAE301" }}>
-                      <Image
-                        layout="fill"
+                      <img
                         src="https://user-images.githubusercontent.com/74864925/127008226-4ea6ec83-e82d-4e7f-bc9a-95b508f750cc.png"
                         alt="kakao-logo"
                       />
                     </li>
                     <li style={{ background: "#54BA5C" }}>
-                      <Image
-                        layout="fill"
+                      <img
                         src="https://user-images.githubusercontent.com/74864925/127008231-213a4559-d3e8-488d-9901-0fe3f78b58c1.png"
                         alt="naver-logo"
                       />

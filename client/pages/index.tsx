@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
-import { noRevalidate } from "config";
+import { noRevalidate, WORLD_IMAGE } from "config";
 import MomentList from "@sections/MainPage/MomentList";
 import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
 import useSWRInfinite from "swr/infinite";
@@ -35,6 +35,11 @@ const MomentMainPage: FC<IProps> = ({ initialMoments }) => {
     <>
       <Head>
         <title>Fall IN Asia</title>
+        <meta name="description" content="우리들만의 작은 여행 커뮤니티 FAll IN Asia" />
+        <meta property="og:title" content="Fall IN Asia" />
+        <meta property="og:description" content="우리들만의 작은 여행 커뮤니티 FAll IN Asia" />
+        <meta property="og:image" content={WORLD_IMAGE} />
+        <meta property="og:url" content="https://fallinasia.com" />
       </Head>
       <MainLayout>
         <h2 className="main-title">인기 여행지</h2>

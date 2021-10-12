@@ -105,7 +105,7 @@ const MomentPost: FC<IProps> = ({ moment, revalidateMoment }) => {
           </Image.PreviewGroup>
         </div>
       )}
-      <div className="post-content">{ReactHtmlParser(moment?.content as string)}</div>
+      <article className="post-content">{ReactHtmlParser(moment?.content as string)}</article>
       <ul className="post-footer">
         <li>
           <CommentOutlined />

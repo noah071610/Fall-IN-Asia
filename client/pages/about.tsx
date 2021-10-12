@@ -101,12 +101,12 @@ const About = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserInfoAction());
-  });
+  }, []);
   const { user } = useSelector((state: RootState) => state.user);
   return (
     <>
       <Head>
-        <title>Fall IN Asia - About us</title>
+        <title>About us | Fall IN Asia</title>
       </Head>
       <AboutPageWrapper>
         <main className="layout">
@@ -115,7 +115,7 @@ const About = () => {
           </Divider>
           <section className="aboutme">
             <div className="image-wrapper">
-              <Image
+              <img
                 src="https://user-images.githubusercontent.com/74864925/127884325-018d43e0-881c-4d70-baa8-145fc9098514.jpg"
                 alt="host-profile-image"
               />
@@ -141,7 +141,7 @@ const About = () => {
                 <li>
                   <a
                     href="https://www.instagram.com/salmonchobab/"
-                    target="_blac
+                    target="_blank
                 "
                     rel="noreferrer"
                   >

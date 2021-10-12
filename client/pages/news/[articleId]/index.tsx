@@ -1,7 +1,14 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import ReactHtmlParser from "react-html-parser";
-import { FLEX_STYLE, noRevalidate, SM_SIZE, toastErrorMessage, toastSuccessMessage } from "config";
+import {
+  FLEX_STYLE,
+  noRevalidate,
+  SM_SIZE,
+  toastErrorMessage,
+  toastSuccessMessage,
+  WORLD_IMAGE,
+} from "config";
 import router, { useRouter } from "next/router";
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
@@ -21,6 +28,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import dynamic from "next/dynamic";
 import { GetServerSidePropsContext } from "next";
+import Head from "next/head";
+import html2textConverter from "utils/html2textConverter";
 
 const CountryMap = dynamic(() => import("@components/Maps/CountryMap"));
 
@@ -108,50 +117,68 @@ const NewsPostPage: FC<IProps> = ({ initialArticle, initialArticles }) => {
   }, [user, isOwner, query]);
 
   return (
-    <NewsArticleWrapper>
-      <PostLayout>
-        {article && (
-          <>
-            <PostThubnail article={article} />
-            {isOwner && (
-              <>
-                <h2 className="main-title">관리 (운영자 전용)</h2>
-                <div className="article-manage-wrapper">
-                  <button onClick={onClickEditBtn} className="edit-btn">
-                    <EditOutlined />
-                    기사 수정
-                  </button>
-                  <button
-                    onClick={() =>
-                      toastConfirmMessage(
-                        onClickConfirmDelete,
-                        "정말 이 기사를 삭제할까요?",
-                        "삭제해주세요."
-                      )
-                    }
-                    className="delete-btn"
-                  >
-                    <DeleteOutlined />
-                    기사 삭제
-                  </button>
-                </div>
-              </>
-            )}
-            <h2 className="main-title">
-              위치 <span>{article?.region}</span>
-            </h2>
-            <CountryMap lat={article?.lat} lng={article?.lng} />
-            <Divider />
-            <article className="post-content">
-              <span id="main_post" className="anchor-offset-controller" />
-              {ReactHtmlParser(article?.content)}
-            </article>
-          </>
-        )}
-        <div style={{ marginBottom: "2rem" }} />
-        <NewsArticleList setSize={setSize} articles={articles} />
-      </PostLayout>
-    </NewsArticleWrapper>
+    <>
+      <Head>
+        <title>
+          {article?.title} - {article?.id}번뉴스 | Fall IN Asia
+        </title>
+        <meta name="description" content={html2textConverter(article?.content).slice(0, 100)} />
+        <meta
+          property="og:title"
+          content={`${article?.title}... - ${article?.id}번뉴스 | Fall IN Asia`}
+        />
+        <meta
+          property="og:description"
+          content={html2textConverter(article?.content).slice(0, 100)}
+        />
+        <meta property="og:image" content={article?.thumbnail || WORLD_IMAGE} />
+        <meta property="og:url" content={`https://fallinasia.com/country/${article?.id}`} />
+      </Head>
+      <NewsArticleWrapper>
+        <PostLayout>
+          {article && (
+            <>
+              <PostThubnail article={article} />
+              {isOwner && (
+                <>
+                  <h2 className="main-title">관리 (운영자 전용)</h2>
+                  <div className="article-manage-wrapper">
+                    <button onClick={onClickEditBtn} className="edit-btn">
+                      <EditOutlined />
+                      기사 수정
+                    </button>
+                    <button
+                      onClick={() =>
+                        toastConfirmMessage(
+                          onClickConfirmDelete,
+                          "정말 이 기사를 삭제할까요?",
+                          "삭제해주세요."
+                        )
+                      }
+                      className="delete-btn"
+                    >
+                      <DeleteOutlined />
+                      기사 삭제
+                    </button>
+                  </div>
+                </>
+              )}
+              <h2 className="main-title">
+                위치 <span>{article?.region}</span>
+              </h2>
+              <CountryMap lat={article?.lat} lng={article?.lng} />
+              <Divider />
+              <article className="post-content">
+                <span id="main_post" className="anchor-offset-controller" />
+                {ReactHtmlParser(article?.content)}
+              </article>
+            </>
+          )}
+          <div style={{ marginBottom: "2rem" }} />
+          <NewsArticleList setSize={setSize} articles={articles} />
+        </PostLayout>
+      </NewsArticleWrapper>
+    </>
   );
 };
 

@@ -8,6 +8,7 @@ import {
   noRevalidate,
   NO_POST_URL,
   toastErrorMessage,
+  WORLD_IMAGE,
   XLG_SIZE,
 } from "config";
 import { wrapper } from "configureStore";
@@ -175,7 +176,22 @@ const StoryMainPage: FC<IProps> = ({ initiaStories, initialPopularStories }) => 
   return (
     <>
       <Head>
-        <title>Fall IN Asia - story</title>
+        <title>{country?.name ? country?.name + " Stories" : "Story"} | Fall IN Asia </title>
+        <meta
+          name="description"
+          content={`${
+            country?.name ? country?.name + "의" : "아시아"
+          } 여행일지와 후기를 담는 연대기! Creators With : FAll IN Asia , 지금 아시아속으로 들어가봐요! | 여행 관광 투어 아시아여행 일본 대만 태국 베트남`}
+        />
+        <meta property="og:title" content="Fall IN Asia" />
+        <meta
+          property="og:description"
+          content={`${
+            country?.name ? country?.name + "의" : "아시아"
+          } 여행일지와 후기를 담는 연대기! Creators With : FAll IN Asia , 지금 아시아속으로 들어가봐요! | 여행 관광 투어 아시아여행 일본 대만 태국 베트남`}
+        />
+        <meta property="og:image" content={country?.image_src || WORLD_IMAGE} />
+        <meta property="og:url" content={`https://fallinasia.com/story`} />
       </Head>
       <StoryMainWrapper>
         <StoryMainPoster name={country?.name} image={country?.image_src} />

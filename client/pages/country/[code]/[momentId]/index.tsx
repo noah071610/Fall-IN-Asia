@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { wrapper } from "configureStore";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
-import { noRevalidate } from "config";
+import { noRevalidate, WORLD_IMAGE } from "config";
 import MomentList from "@sections/MainPage/MomentList";
 import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
 import MommentPost from "@sections/MainPage/MomentPost";
@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import { ICountry, IMoment } from "@typings/db";
 import Head from "next/head";
 import { GetServerSidePropsContext } from "next";
+import html2textConverter from "utils/html2textConverter";
 
 interface IProps {
   initialMoments: IMoment[][];
@@ -53,8 +54,26 @@ const MomentPostPage: FC<IProps> = ({ initialMoments, initialCountry, initialMom
     <>
       <Head>
         <title>
-          {moment?.country?.name}/{moment?.id}번모멘트 - Fall IN Asia
+          {html2textConverter(moment?.content).slice(0, 20)}... - {moment?.country?.name}/
+          {moment?.id}번모멘트 | Fall IN Asia
         </title>
+        <meta name="description" content={html2textConverter(moment?.content).slice(0, 100)} />
+        <meta
+          property="og:title"
+          content={`${html2textConverter(moment?.content).slice(0, 20)}... - ${
+            moment?.country?.name
+          }/
+          ${moment?.id}번모멘트 | Fall IN Asia`}
+        />
+        <meta
+          property="og:description"
+          content={html2textConverter(moment?.content).slice(0, 100)}
+        />
+        <meta property="og:image" content={moment?.images[0].image_src || WORLD_IMAGE} />
+        <meta
+          property="og:url"
+          content={`https://fallinasia.com/country/${moment?.code}/${moment?.id}`}
+        />
       </Head>
       <MainLayout>
         {moment && <MommentPost revalidateMoment={revalidateMoment} moment={moment} />}

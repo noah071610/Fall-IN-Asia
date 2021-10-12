@@ -16,6 +16,7 @@ import {
   noRevalidate,
   NO_POST_URL,
   SM_SIZE,
+  WORLD_IMAGE,
 } from "config";
 import styled from "@emotion/styled";
 import tw from "twin.macro";
@@ -125,7 +126,18 @@ const NewsMainPage: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
   return (
     <>
       <Head>
-        <title>Fall IN Asia - news</title>
+        <title>News | Fall IN Asia</title>
+        <meta
+          name="description"
+          content={`아시아 여행관련 뉴스, 관광소식 Creators With : FAll IN Asia , 지금 아시아속으로 들어가봐요! | 여행 관광 투어 아시아여행 일본 대만 태국 베트남`}
+        />
+        <meta property="og:title" content="Fall IN Asia" />
+        <meta
+          property="og:description"
+          content={`아시아 여행관련 뉴스, 관광소식 Creators With : FAll IN Asia , 지금 아시아속으로 들어가봐요! | 여행 관광 투어 아시아여행 일본 대만 태국 베트남`}
+        />
+        <meta property="og:image" content={WORLD_IMAGE} />
+        <meta property="og:url" content={`https://fallinasia.com/news`} />
       </Head>
       <NewsPageWrapper>
         <Slider {...settings}>

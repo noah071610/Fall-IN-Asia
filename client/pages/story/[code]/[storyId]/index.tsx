@@ -1,6 +1,13 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { FLEX_STYLE, noRevalidate, SM_SIZE, toastErrorMessage, toastSuccessMessage } from "config";
+import {
+  FLEX_STYLE,
+  noRevalidate,
+  SM_SIZE,
+  toastErrorMessage,
+  toastSuccessMessage,
+  WORLD_IMAGE,
+} from "config";
 import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import router, { useRouter } from "next/router";
@@ -25,6 +32,7 @@ import PostComment from "@components/Post/PostComment";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import { GetServerSidePropsContext } from "next";
+import html2textConverter from "utils/html2textConverter";
 const CountryMap = dynamic(() => import("@components/Maps/CountryMap"));
 const StoryPostWrapper = styled.div`
   padding-top: 6rem;
@@ -123,7 +131,24 @@ const StoryPostPage: FC<IProps> = ({ initialStories, initialStory }) => {
   return (
     <>
       <Head>
-        <title>{story?.title} - Fall IN Asia</title>
+        <title>
+          {story?.title} - {story?.country?.name}/{story?.id}번스토리 | Fall IN Asia
+        </title>
+        <meta name="description" content={html2textConverter(story?.content).slice(0, 100)} />
+        <meta
+          property="og:title"
+          content={`${story?.title}... - ${story?.country?.name}/
+          ${story?.id}번스토리 | Fall IN Asia`}
+        />
+        <meta
+          property="og:description"
+          content={html2textConverter(story?.content).slice(0, 100)}
+        />
+        <meta property="og:image" content={story?.thumbnail || WORLD_IMAGE} />
+        <meta
+          property="og:url"
+          content={`https://fallinasia.com/country/${story?.code}/${story?.id}`}
+        />
       </Head>
       <StoryPostWrapper>
         <PostLayout>
