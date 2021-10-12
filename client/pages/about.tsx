@@ -10,7 +10,6 @@ import router from "next/router";
 import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import Head from "next/head";
-import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 

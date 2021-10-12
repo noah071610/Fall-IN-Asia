@@ -30,7 +30,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
 import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
 import Head from "next/head";
-import Image from "next/image";
 import { mainSlice } from "slices/main";
 import { GetServerSidePropsContext } from "next";
 
@@ -237,7 +236,7 @@ const StoryMainPage: FC<IProps> = ({ initiaStories, initialPopularStories }) => 
             <StoryArticleList grid={4} gap="1.5rem" setSize={setSize} stories={stories} />
           ) : (
             <div className="no-story-wrapper">
-              <Image layout="fill" src={NO_POST_URL} alt="no-post-img" />
+              <img src={NO_POST_URL} alt="no-post-img" />
               <h2>연대기가 없습니다. 첫 연대기에 주인공이 되어주세요!</h2>
               <button className="story-post-btn" onClick={onClickPostStoryBtn}>
                 연대기 올리기

@@ -16,7 +16,6 @@ import { RootState } from "slices";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import MoreButton from "@components/MoreButton";
 import Head from "next/head";
-import Image from "next/image";
 import dynamic from "next/dynamic";
 import { GetServerSidePropsContext } from "next";
 
@@ -149,7 +148,7 @@ const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
           </>
         ) : (
           <div className="no-post-wrapper">
-            <Image layout="fill" src={NO_POST_URL} alt="no-post" />
+            <img src={NO_POST_URL} alt="no-post" />
             <h4>아직 작성한 연대기가 없습니다.</h4>
           </div>
         )}
@@ -177,7 +176,7 @@ const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
           </ul>
         ) : (
           <div className="no-post-wrapper">
-            <Image layout="fill" src={NO_POST_URL} alt="no-post" />
+            <img src={NO_POST_URL} alt="no-post" />
             <h4>아직 작성한 모멘트가 없습니다.</h4>
           </div>
         )}

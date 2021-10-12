@@ -11,6 +11,8 @@ const nextConfig = {
       "user-images.githubusercontent.com",
       "images.unsplash.com",
       "icons.iconarchive.com",
+      "fallinasia.com",
+      "api.fallinasia.com",
       "img.icons8.com",
       "fall-in-asia.s3.ap-northeast-2.amazonaws.com",
     ],

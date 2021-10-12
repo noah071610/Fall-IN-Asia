@@ -6,7 +6,6 @@ import { MomentListWrapper } from "./styles";
 import useOnScreen from "@hooks/useOnScreen";
 import MomentCard from "@components/Cards/MomentCard";
 import { BLUE_COLOR, NO_POST_URL } from "config";
-import Image from "next/image";
 import shortid from "shortid";
 
 interface IProps {
@@ -73,7 +72,7 @@ const MomentList: FC<IProps> = ({ filter, moments, setSize, setFilter }) => {
           })
         ) : (
           <div className="no-post">
-            <Image layout="fill" src={NO_POST_URL} alt="no-post-image" />
+            <img src={NO_POST_URL} alt="no-post-image" />
             <h4>아직 모멘트가 없어요😥</h4>
           </div>
         )}

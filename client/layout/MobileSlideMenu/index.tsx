@@ -8,7 +8,6 @@ import { RootState } from "slices";
 import Link from "next/link";
 import { logoutAction } from "actions/user";
 import { Divider } from "antd";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { mainSlice } from "slices/main";
 import fetcher from "utils/fetcher";
