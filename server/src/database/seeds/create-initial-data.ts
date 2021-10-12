@@ -199,7 +199,6 @@ export class CreateInitialData implements Seeder {
           icon: 'https://user-images.githubusercontent.com/74864925/129441338-e5013a60-20c8-4e19-8149-012bea46163f.png',
           introduce:
             '안녕하세요 Fall IN Asia 공식계정입니다. Fall IN Asia에서 관광,여행에 관한 많은 정보를 공유하고 얻어가요~🥰 (관광통역안내사 일본어와 영어🥇 , 그리고 국외여행인솔자 자격증 보유🥈 , 통역가이드 및 관광여행업 종사경험有🥉)',
-          email: '',
         },
         {
           id: 2,
@@ -277,7 +276,6 @@ export class CreateInitialData implements Seeder {
           id: 11,
           socialId: '',
           provider: 'google',
-          email: '',
           name: 'Cho',
           admin: false,
           introduce: '안녕하세요 Cho입니다.',
@@ -287,7 +285,6 @@ export class CreateInitialData implements Seeder {
           id: 12,
           socialId: '',
           provider: 'google',
-          email: '',
           name: 'rakkun Pom',
           admin: false,
           introduce: '안녕하세요 rakkun Pom입니다.',
@@ -305,7 +302,6 @@ export class CreateInitialData implements Seeder {
           id: 14,
           socialId: '',
           provider: 'kakao',
-          email: '',
           name: '성민',
           admin: false,
           introduce: '안녕하세요 성민입니다.',
