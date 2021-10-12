@@ -283,7 +283,7 @@ export class CreateInitialData implements Seeder {
         },
         {
           id: 12,
-          socialId: '',
+          socialId: '1212',
           provider: 'google',
           name: 'rakkun Pom',
           admin: false,
@@ -300,7 +300,7 @@ export class CreateInitialData implements Seeder {
         },
         {
           id: 14,
-          socialId: '',
+          socialId: '1414',
           provider: 'kakao',
           name: '성민',
           admin: false,
@@ -309,7 +309,7 @@ export class CreateInitialData implements Seeder {
         },
         {
           id: 15,
-          socialId: '',
+          socialId: '1515',
           provider: 'kakao',
           name: '짱필수',
           admin: false,
