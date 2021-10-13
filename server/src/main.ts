@@ -9,7 +9,6 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import helmet from 'helmet';
 import hpp from 'hpp';
-import rateLimit from 'express-rate-limit';
 
 declare const module: any;
 
@@ -53,12 +52,6 @@ async function bootstrap() {
     app.set('trust proxy', 1);
     app.use(helmet());
     app.use(hpp());
-    app.use(
-      rateLimit({
-        windowMs: 15 * 60 * 1000,
-        max: 100,
-      }),
-    );
     app.enableCors({
       origin: process.env.CLIENT_URL,
       credentials: true,

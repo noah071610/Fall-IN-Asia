@@ -325,182 +325,182 @@ export class CreateInitialData implements Seeder {
         {
           id: 2,
           code: 'KR',
-          hit: 0,
+          hit: 34,
           content:
             '<p>여수에서 놀만한곳 여수 관광지 좋은곳 여수 돌산공원 근처 괜찮은곳 추천해주세요!</p> <br> 여수 여행 코스 제발좀 알려주세요 여행자님들.',
           country: <any>1,
           user: <any>2,
           type: '여행정보 공유',
-          createdAt: '2021-08-14 15:51:03.869619',
-          updatedAt: '2021-08-14 15:51:03.869619',
+          createdAt: '2021-08-22 15:51:03.869619',
+          updatedAt: '2021-08-22 15:51:03.869619',
         },
         {
           id: 3,
           code: 'JP',
-          hit: 0,
+          hit: 45,
           content:
             '일본 여행갈때 기내에서 작성하는 표에서 일본에 체류할 기간을 ~정확히~ 표기하셔야합니다.<br>만약 나중에 워킹홀리데이비자를 할때 문제가될수있습니다 😥😥😥<br><br>반드시 숙지하세요!!',
           country: <any>2,
           user: <any>1,
           type: '여행정보 공유',
-          createdAt: '2021-08-17 12:51:03.869619',
-          updatedAt: '2021-08-17 12:51:03.869619',
+          createdAt: '2021-08-25 12:51:03.869619',
+          updatedAt: '2021-08-25 12:51:03.869619',
         },
         {
           id: 4,
           code: 'KR',
-          hit: 0,
+          hit: 15,
           content:
             '<h2>누가 도움좀 주세요!</h2>친구들이랑 제주도놀러갈때 미리 정해둘려고<br>제주도숙박 알아보고 있는데 싼곳있으면 바로 픽할려구용!<br>호텔이나 펜션, 모텔 제주도숙박으로 괜찮은 곳이면 다 좋아요<br>숙소안이 깔끔하거나 접근성좋은 위치면 좋겠어요! <br>제주도숙박하기 좋은 곳 다양하게 알려주세요~<br>',
           country: <any>1,
           user: <any>3,
           type: '여행정보 공유',
-          createdAt: '2021-08-17 12:51:03.869619',
-          updatedAt: '2021-08-17 12:51:03.869619',
+          createdAt: '2021-08-26 12:51:03.869619',
+          updatedAt: '2021-08-26 12:51:03.869619',
         },
         {
           id: 5,
           code: 'JP',
-          hit: 0,
+          hit: 26,
           content:
             '학교졸업전에 일본취업비자를 받으려고하는데요 비자변경 신청을 하는건가요? <br>취업비자 신청을 하면되는건가요?출입국관리소에 들어가서 봐도 비자에 대해 잘몰라서 어렵네요..',
           country: <any>2,
           user: <any>5,
           type: '한인 커뮤니티',
-          createdAt: '2021-08-18 12:51:03.869619',
-          updatedAt: '2021-08-18 12:51:03.869619',
+          createdAt: '2021-09-02 12:51:03.869619',
+          updatedAt: '2021-09-02 12:51:03.869619',
         },
         {
           id: 6,
           code: 'TH',
-          hit: 0,
+          hit: 15,
           content:
             '<h2>태국 가서 할일</h2><p>1. gmm 빌딩 스타벅스에서 커피마시기</p><br/><p>2. gmm 올라가서 애들 굿즈사기</p><br/><p>3. 투게더 대학 탐방 하고 사진찍기</p><br/><p>4. 애들이 간 밥집 가서 밥먹기</p><br/><p>5. 드럭스 스토어가서 해들 화장품 사기</p><br/><p>6. 편의점 가서 오이시 마마 먹기</p><br/><p>7. 애들 행사에 놀러가기</p><br/><p>8. 애들 사진찍기</p><br/><p>9. 애들한테 말걸기</p>',
           country: <any>6,
           user: <any>4,
           type: '여행정보 공유',
-          createdAt: '2021-08-19 11:35:03.869619',
-          updatedAt: '2021-08-19 11:35:03.869619',
+          createdAt: '2021-09-04 11:35:03.869619',
+          updatedAt: '2021-09-04 11:35:03.869619',
         },
         {
           id: 7,
-          hit: 0,
+          hit: 32,
           code: 'TH',
           content:
             '태국여행 관련 사기,보이스피싱이 급증하고 있습니다. 항상 여행시에는 안전이 우선입니다. http://ozzye.blog.me/30188224296',
           country: <any>6,
           user: <any>1,
           type: '사기 경보',
-          createdAt: '2021-08-19 11:35:03.869619',
-          updatedAt: '2021-08-19 11:35:03.869619',
+          createdAt: '2021-09-10 11:35:03.869619',
+          updatedAt: '2021-09-10 11:35:03.869619',
         },
         {
           id: 8,
           code: 'VN',
-          hit: 0,
+          hit: 15,
           type: '여행정보 공유',
           content:
             '<p><strong>혹시 베트남 다낭 추천하시나요? 코로나 끝나면 가보고싶은데 정보가 없네요</strong></p><p><br></p><p>다낭 vs 하노이 vs 호치민 셋중에 고민중이에요..</p><p><br></p><p>그리고 쌀국수 맛집도 있으면 알려주세요!!!!</p>',
           country: <any>7,
           user: <any>9,
-          createdAt: '2021-08-20 11:35:03.869619',
-          updatedAt: '2021-08-20 11:35:03.869619',
+          createdAt: '2021-09-12 11:35:03.869619',
+          updatedAt: '2021-09-12 11:35:03.869619',
         },
         {
           id: 9,
           code: 'JP',
-          hit: 0,
+          hit: 13,
           type: '한인 커뮤니티',
           content:
             '<p>도쿄 맛집 알려주세요!!!!!</p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p>',
           country: <any>2,
           user: <any>8,
-          createdAt: '2021-08-20 11:35:03.869619',
-          updatedAt: '2021-08-20 11:35:03.869619',
+          createdAt: '2021-09-17 11:35:03.869619',
+          updatedAt: '2021-09-17 11:35:03.869619',
         },
         {
           id: 10,
           code: 'TH',
-          hit: 0,
+          hit: 55,
           type: '여행정보 공유',
           content:
             '<p>태국 푸켓 백신접종 증명서랑 음성반응(?) 확인서 있으면 여행가도 괜찮다는데 사실인가요???????</p>',
           country: <any>6,
           user: <any>10,
-          createdAt: '2021-08-20 11:35:03.869619',
-          updatedAt: '2021-08-20 11:35:03.869619',
+          createdAt: '2021-09-20 11:35:03.869619',
+          updatedAt: '2021-09-20 11:35:03.869619',
         },
         {
           id: 11,
           code: 'KR',
-          hit: 0,
+          hit: 14,
           type: '여행정보 공유',
           content:
             '<p>제주도 여행가면 인식 좋을까요? </p><p><br></p><p>제주도민이 별로 안반긴다는 느낌이 없지않아 있어서 ^^;;</p><p><br></p><p>간다면 바이크타고 천천히 산책하고싶네요~~~</p>',
           country: <any>1,
           user: <any>6,
-          createdAt: '2021-08-20 11:35:03.869619',
-          updatedAt: '2021-08-20 11:35:03.869619',
+          createdAt: '2021-09-20 11:35:03.869619',
+          updatedAt: '2021-09-20 11:35:03.869619',
         },
         {
           id: 12,
           code: 'VN',
-          hit: 0,
+          hit: 21,
           type: '한인 커뮤니티',
           content:
             '<p>하노이 에그커피 드셔보셨나유? <a href="https://www.travelrain.com/1171" rel="noopener noreferrer" target="_blank" style="background-color: rgb(255, 255, 255); color: rgb(26, 13, 171);">cafe dinh</a>  여기가 보석같은 숨은 맛집입니다! 지금은 코로나로 휴업중이지만요 ㅠㅠㅠ</p>',
           country: <any>7,
           user: <any>7,
-          createdAt: '2021-08-20 11:35:03.869619',
-          updatedAt: '2021-08-20 11:35:03.869619',
+          createdAt: '2021-09-24 11:35:03.869619',
+          updatedAt: '2021-09-24 11:35:03.869619',
         },
         {
           id: 13,
           code: 'JP',
-          hit: 0,
+          hit: 9,
           type: '한인 커뮤니티',
           content:
             '<p>일본 입국금지 언제 풀려 ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ</p>',
           country: <any>2,
           user: <any>8,
-          createdAt: '2021-08-21 11:35:03.869619',
-          updatedAt: '2021-08-21 11:35:03.869619',
+          createdAt: '2021-09-28 11:35:03.869619',
+          updatedAt: '2021-09-28 11:35:03.869619',
         },
         {
           id: 14,
           code: 'JP',
-          hit: 0,
+          hit: 44,
           type: '한인 커뮤니티',
           content:
             '<p>일본 입국금지 현황을 관광소식 페이지에 업로드 했습니다.</p><p><br></p><p>일본 입국에 관련 궁금한게 있으신분들은 관광소식에 일본 입국금지 현황을 참고해주시고</p><p><br></p><p><strong>대한민국 외교부와 일본 외무성 공지가 가장 정확하니 지속적으로 모니터링 해주세요.</strong></p><p><br></p><p>https://fallinasia.com/news/2</p>',
           country: <any>2,
           user: <any>1,
-          createdAt: '2021-08-21 11:35:03.869619',
-          updatedAt: '2021-08-21 11:35:03.869619',
+          createdAt: '2021-10-03 11:35:03.869619',
+          updatedAt: '2021-10-03 11:35:03.869619',
         },
         {
           id: 15,
           code: 'KR',
-          hit: 0,
+          hit: 12,
           type: '한인 커뮤니티',
           content:
             '<p>여수 횟집 추천할만한곳 있나요? 묘도대교 근처가 좋습니다 ㅎㅎ</p>',
           country: <any>1,
           user: <any>2,
-          createdAt: '2021-08-22 11:35:03.869619',
-          updatedAt: '2021-08-22 11:35:03.869619',
+          createdAt: '2021-10-07 11:35:03.869619',
+          updatedAt: '2021-10-07 11:35:03.869619',
         },
         {
           id: 18,
           code: 'VN',
-          hit: 0,
+          hit: 9,
           type: '한인 커뮤니티',
           content:
             '<p>베트남 요즘 코로나 어떤가요?</p><p><br></p><p>비지니스때문에 출장가야되는데 많이 걱정되네요...😭</p><p><br></p><p>또 삼성 등 한국기업이 잇다라 베트남에서 철수준비중이거나 진행중인데</p><p><br></p><p>그거때문에 언론에서 베트남 여론을 많이 흔들고있나봐요</p><p><br></p><p>관계가 조금 안좋아진거 같아서 걱정되네요🥺</p><p><br></p>',
           country: <any>7,
           user: <any>11,
-          createdAt: '2021-08-23 11:35:03.869619',
-          updatedAt: '2021-08-23 11:35:03.869619',
+          createdAt: '2021-10-11 11:35:03.869619',
+          updatedAt: '2021-10-11 11:35:03.869619',
         },
       ])
       .execute();
@@ -518,8 +518,8 @@ export class CreateInitialData implements Seeder {
           thumbnail:
             'https://fall-in-asia.s3.ap-northeast-2.amazonaws.com/thumb/1629250308732_Bangkok-food-boat-noodles.jpg',
           title: '방콕여행 명소 맛집 베스트7 : 태국 방콕여행 일정',
-          hit: 0,
-          content: `<h1><br></h1><h1><strong>방콕의 길거리 음식</strong></h1><p><br></p><p><a href="https://www.agoda.com/ko-kr/city/bangkok-th.html?cid=1844104" rel="noopener noreferrer" target="_blank" style="color: rgb(240, 87, 0);"><strong>방콕</strong></a>에는 태국 
+          hit: 96,
+          content: `<h1><strong>방콕의 길거리 음식</strong></h1><p><br></p><p><a href="https://www.agoda.com/ko-kr/city/bangkok-th.html?cid=1844104" rel="noopener noreferrer" target="_blank" style="color: rgb(240, 87, 0);"><strong>방콕</strong></a>에는 태국 
           최고의 맛과 향이 가득한 유명한 맛집 골목이 많다. </p><p><br></p><p>인파로 북적이는 이 도시의 어디를 가도 리어카, 트럭, 가판대에서 파는 맛있는 팟타이꿍(새우 팟타이), 쏨땀, 스프링롤, 카오팟(볶음밥)이 넘쳐난다.&nbsp;<a href="https://www.agoda.com/ko-kr/city/bangkok-th.html?cid=1844104" rel="noopener noreferrer" target="_blank" style="color: rgb(240, 87, 0);"><strong>방콕</strong></a>은 먹으러만 와도 좋은 곳이라는 말이 있을 정도다.</p><p><br></p><p><br></p><p><br></p><h1><strong>길거리 음식 
           을 맛볼 수 있는 최고의 장소</strong></h1><p><br></p><p><a href="https://www.agoda.com/ko-kr/city/bangkok-th.html?cid=1844104" rel="noopener noreferrer" target="_blank" style="color: rgb(240, 87, 0);"><strong>방콕</strong></a>은 맛집을 찾는 인파로 항상 북적인다.&nbsp;<a href="https://www.agoda.com/ko-kr/city/bangkok-th.html?cid=1844104" rel="noopener noreferrer" target="_blank" style="color: rgb(240, 87, 0);"><strong>방콕</strong></a>에서는 전통의 맛집은 물론 새롭고 색다른 요리도 맛볼 수 
           있다. </p><p><br></p><p>어디를 가도 맛집이 넘쳐나지만, 특히 기차역 주변이나 대학가에 유명한 곳이 많다. </p><p><br></p><p>그러나 여행자에게 추천하는 장소는 차이나타 
@@ -571,8 +571,8 @@ export class CreateInitialData implements Seeder {
           리의 맛있는 음식을 즐겨보자</strong></h4><p><br></p><p><br></p><p>
                       </p>
             `,
-          createdAt: '2021-08-17 12:51:03.906384',
-          updatedAt: '2021-08-17 12:51:03.906384',
+          createdAt: '2021-08-22 12:51:03.906384',
+          updatedAt: '2021-08-22 12:51:03.906384',
           country: <any>6,
           user: <any>1,
         },
@@ -586,7 +586,7 @@ export class CreateInitialData implements Seeder {
             'https://fall-in-asia.s3.ap-northeast-2.amazonaws.com/thumb/1629252501143_kyoto.jpg',
           title:
             '바쁜 직장인들을 위한 일본 교토여행코스 1일차 부터 4일차까지 꽉꽉 채워서 놀자',
-          hit: 0,
+          hit: 142,
           content: `<h1>옛의멋과 현대의아름다 
           움이 공존하는 교토</h1><p><br></p><p><br></p><p>일본의 수많은 도시들 중에서 가장 여행 매력도가 높은 도시는 단연 교토라고 할 수 있을 것입니다. 도쿠가
           와 이에야스가 수도를 도쿄(에도)로 이전하기 전까지 약 천년간 일본의 수도였던 교토는 가장 일본다운 전통과 문화를 고스란히 간직하고 있기에 일본여행에서
@@ -683,56 +683,9 @@ export class CreateInitialData implements Seeder {
           일정을 소화하신다면 시간의 허비는 크게 줄일 수 있을 것입니다.</p><p><br></p><p>그리고 개인적으로 사진을 좋아하는 만큼 가장 시각적으로 인상적이고 아 
           름다운 곳 위주로 소개했기에 교토로 사진여행을 떠나신다면 더 효과적인 코스일 것입니다. 아무쪼록 교토여행을 계획 중인 분들께 조금이나마 도움이 되길 바
           라며 지난한 포스팅을 마무리합니다.</p><p><br></p>`,
-          createdAt: '2021-08-18 02:08:21.275116',
-          updatedAt: '2021-08-18 02:08:21.275116',
+          createdAt: '2021-08-25 02:08:21.275116',
+          updatedAt: '2021-08-25 02:08:21.275116',
           country: <any>2,
-          user: <any>1,
-        },
-        {
-          id: 6,
-          code: 'IN',
-          region:
-            'University of Mumbai, Vidyanagari, Kalina Campus, Mumbai, Maharashtra, India',
-          lat: 19.0715,
-          lng: 72.8574,
-          thumbnail:
-            'https://fall-in-asia.s3.ap-northeast-2.amazonaws.com/thumb/1629253174673_00502015_20180130.jpg',
-          hit: 0,
-          title: '인도의 말간 첫 인상, 뭄바이',
-          content: `<h1>인도의 말간 첫인상</h1><p><br></p><p>&nbsp;밤 10시, 뭄바이로 가는 비행기는 인도 사람들이 대부분이었다. 옆 자리에 앉은 아저씨는 코치에 있는 집으로 가는 길이란다. 아주 멋진
-          휴양지이니 꼭 와보라는 말과 함께 명함을 주었다. </p><p><br></p><p>인도 사람은 아시안에 가까울 줄 알았는데 덩치가 크고 까맣고 눈이 부리부리하다. 체 
-         취까지도 웨스턴에 가깝다.&nbsp;&nbsp;</p><p><br></p><p><br></p><p class="ql-align-justify"><a href="http://image14.hanatour.com/uploads/2017/04/2010%EC%9D%B8%EB%8F%84_017.jpg" rel="noopener noreferrer" target="_blank" style="color: rgb(124, 124, 124);"><img src="http://cfd.tourtips.com/@ext/2017041822/gjffn8/2010%EC%9D%B8%EB%8F%84_017.jpg" alt="2010인도_017" height="525" width="700"></a></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><strong>인도에서의 첫 끼니, 맥도날드 맛살라 햄버거. 시장이 반찬이라 꾸역꾸역 먹을만 했어요.&nbsp;</strong></p><p>&nbsp;</p><p>&nbsp;&nbsp;</p><p><br></p><p class="ql-align-justify"><a href="http://image14.hanatour.com/uploads/2017/04/2010%EC%9D%B8%EB%8F%84_019.jpg" rel="noopener noreferrer" target="_blank" style="color: rgb(124, 124, 124);"><img src="http://cfd.tourtips.com/@ext/2017041899/gjffn9/2010%EC%9D%B8%EB%8F%84_019.jpg" alt="2010인도_019" height="525" width="700"></a></p><p class="ql-align-justify"><br></p><p class="ql-align-center"><strong> 타즈마할 호텔, 폭탄테 
-         러로 공사중이에요. 외국인 관광객을 노리고 론리플래닛에 소개된 곳들을 폭파했다는군요.&nbsp;</strong></p><p class="ql-align-center"><strong>이 얘기를 
-         들은 한국인들은 그러게 론리보다는 백배를 보고 다니는 게 낫겠다며 한숨 쉬었어요.</strong></p><p class="ql-align-center">&nbsp;</p><p class="ql-align-center">&nbsp;</p><p class="ql-align-justify">&nbsp;새벽 4시, 비행기에서 내린 이들 모두 각자의 집으로 가는 가운데, 공항 벤치에 앉아 아침을 기다리는&nbsp;사람은 나 뿐이다. </p><p class="ql-align-justify"><br></p><p class="ql-align-justify">쿵- 지나는 남자들이 발을 굴러 장난을 건다. 깜짝 놀라면 깔
-         깔 웃으며 지나간다. 여자 화장실로 숨어 본다. 공항 여자 직원이 다가와 볼 일을 다 봤으면 나가라고 한다. </p><p class="ql-align-justify"><br></p><p class="ql-align-justify">무슨 배짱인지 차라리 빨리 역으로 가 첫 기차를 잡아 타는 게 낫겠다 싶어 택시를 탔다. </p><p class="ql-align-justify"><br></p><p class="ql-align-justify">새벽 6시의 뭄바이 기차역은 개, 소, 사람이 한데 엉켜 누워 있는 난민 수용소 같았다. 구석진 곳보다 가운데가 더 안전할 것 같아
-          기둥 하나에 등을 대고 앉았다. </p><p class="ql-align-justify"><br></p><p class="ql-align-justify">사방이 고요한 가운데 주머니를 뒤져 부스럭대자 어 
-         둠 속에서 날 향한 눈들이 빛났다. 비행기에서 가져 온 물을 꺼내 먹으려다 화장실은 가지 않는 게 좋을 것 같아 집어 넣었다. 배낭을 끌어 안고 얼굴을 파묻 
-         어 버렸다. </p><p class="ql-align-justify"><br></p><p class="ql-align-justify">휴우, 날이 밝으면 좀 나아지려나.</p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><a href="http://image14.hanatour.com/uploads/2017/04/2010%EC%9D%B8%EB%8F%84_021.jpg" rel="noopener noreferrer" target="_blank" style="color: rgb(124, 124, 124);"><img src="http://cfd.tourtips.com/@ext/2017041817/gjffna/2010%EC%9D%B8%EB%8F%84_021.jpg" alt="2010인도_021" height="525" width="700"></a></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><strong>게이트웨이 오브 인디아</strong></p><p class="ql-align-justify">&nbsp;</p><p class="ql-align-justify">&nbsp;</p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><a href="http://image14.hanatour.com/uploads/2017/04/2010%EC%9D%B8%EB%8F%84_023.jpg" rel="noopener noreferrer" target="_blank" style="color: rgb(124, 124, 124);"><img src="http://cfd.tourtips.com/@ext/2017041884/gjffnb/2010%EC%9D%B8%EB%8F%84_023.jpg" alt="2010인도_023" height="525" width="700"></a></p><p class="ql-align-justify"><br></p><p class="ql-align-center"><strong>가장 낮은 계급의 빨래 노동자들이 일하는 도비가트에요. 냄새가 아주 역합니다.</strong></p><p class="ql-align-center"><br></p><p class="ql-align-center">&nbsp;</p><p class="ql-align-justify">&nbsp;</p><p class="ql-align-justify">&nbsp;&nbsp;1월의 뭄바이에서 아우랑가바드로
-          가는 기차는 종일 만석이었다. 밤 9시 기차에 대기예약 1번을 받았다. </p><p class="ql-align-justify"><br></p><p class="ql-align-justify">인도의 기차역
-         은 소문대로 꽤 자랑할만한 시스템이었다. 짐검사에 외국인 전용 대기실에, 역무원 식당까지 차라리 저 바깥보다는 역 안이 안전하고 깨끗했다.&nbsp;</p><p class="ql-align-justify"><br></p><p class="ql-align-justify">3A이상 대기실의 인도인들은 유창한 영어에 매너가 좋았다. 기차는 깨끗한 린넨이 제공되었다. 얼마만에 허리를 눕히는 것인지 여자는 함부로 만지고 지나간다 하여 곤두선 채로 버텼지만 이내 깊은 잠에 들었다.&nbsp;</p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><a href="http://image14.hanatour.com/uploads/2017/04/2010%EC%9D%B8%EB%8F%84_025.jpg" rel="noopener noreferrer" target="_blank" style="color: rgb(124, 124, 124);"><img src="http://cfd.tourtips.com/@ext/2017041879/gjffnc/2010%EC%9D%B8%EB%8F%84_025.jpg" alt="2010인도_025" height="525" width="700"></a></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><strong>"인도에 가면 도착하자마자 반지를 하나 사서 끼고 아이가 있는 유부녀라고 해." 좌판에서 산 반지는 한달 간 유용했 
-         습니다.</strong></p><p class="ql-align-justify"><br></p><p class="ql-align-center">&nbsp;</p><p>&nbsp;</p><p><br></p><p class="ql-align-justify"><a 
-         href="http://image14.hanatour.com/uploads/2017/04/2010%EC%9D%B8%EB%8F%84_027.jpg" rel="noopener noreferrer" target="_blank" style="color: rgb(124, 124, 124);"><img src="http://cfd.tourtips.com/@ext/2017041825/gjffnd/2010%EC%9D%B8%EB%8F%84_027.jpg" alt="2010인도_027" height="525" width="700"></a></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><strong>힌두교의 나라이지만 무슬림도 반이에요. 이슬람 성지라고 하네요. </strong></p><p class="ql-align-justify"><strong>이 모스크의 문도 안잠기는 화장실에서 바지를 버리고 몸을 씻었어요.</strong></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"> 한 손으로 문고리를 잡고 한 손으로 양동이의 물을 끼얹으면서요.&nbsp;칸마다 있 
-         는&nbsp;손 씻는 수도가 얼마나 고맙던지(웃음)&nbsp;&nbsp;<strong>​</strong>아, 바지는 두개였어요. 청바지 위에 인도 바지를 입었거든요.</p><p class="ql
-         -align-center">&nbsp;</p><p class="ql-align-justify">&nbsp;</p><p class="ql-align-center">&nbsp;</p><p class="ql-align-center"><br></p><p class="ql-align-justify"><a href="http://image14.hanatour.com/uploads/2017/04/2010%EC%9D%B8%EB%8F%84_030.jpg" rel="noopener noreferrer" target="_blank" style="color: rgb(124, 124, 124);"><img src="http://cfd.tourtips.com/@ext/2017041837/gjffne/2010%EC%9D%B8%EB%8F%84_030.jpg" alt="2010인도_030" height="525" width="700"></a></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><strong>길에서는 통 볼 수 없었던 여자들을 여기에서 보았어요.  
-         한낮의 길거리는 온통 수염 기른 남자들 뿐이라 조금 무섭습니다.</strong></p><p>&nbsp;</p><p class="ql-align-justify">&nbsp;</p><p class="ql-align-justify">&nbsp;&nbsp;불길한 예감에 눈을 번쩍 떠보니 내릴 역을 지나쳐 버렸다. 인도의 기차는 내릴 곳을 알려주지 않는다. </p><p class="ql-align-justify"><br></p><p class="ql-align-justify">차장에게 물어보니 다음 역에서 내려 거꾸로 타라고 한다.&nbsp;새벽5시, 이름 모를&nbsp;작은 역에 내려 거꾸로 가려면  
-         어디로 가야 하는지를 물었다. </p><p class="ql-align-justify"><br></p><p class="ql-align-justify">플랫폼은 세 개인데 대답하는 이마다 다른 곳을 가리킨
-         다. 전광판에는 WELCOME이라는 글씨뿐이다.&nbsp;</p><p class="ql-align-justify"><br></p><p class="ql-align-justify">다행히 역내 방송으로 다음 도착할  
-         기차의 플랫폼 넘버와 도시를 정확하게 알려준다. </p><p class="ql-align-justify"><br></p><p class="ql-align-justify">집중하여 아무리 들어도 내가 가는 
-         도시는 나오지 않는다. 몇 시간쯤 지났나 갑자기 사람들이 우르르 줄을 선다. </p><p class="ql-align-justify"><br></p><p class="ql-align-justify">덩달아 
-         줄을 섰다. 가격은 10Rs(1Rs=17원), 통근 기차인 모양이다. 며칠 밤을 자는 둥 마는 둥 했더니 정신이 아스라이 멀어진다. 아우랑가바드역에 도착해 가까운 호
-         텔에 체크인 한 뒤 정신을 놓아버렸다.&nbsp;</p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><a href="http://image14.hanatour.com/uploads/2017/04/2010%EC%9D%B8%EB%8F%84_033.jpg" rel="noopener noreferrer" target="_blank" style="color: rgb(124, 124, 124);"><img src="http://cfd.tourtips.com/@ext/2017041823/gjffnf/2010%EC%9D%B8%EB%8F%84_033.jpg" alt="2010인
-         도_033" height="525" width="700"></a></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><strong>인도에 왔으니 라씨를 먹어봐야지, 여
-         기서 라씨를 사먹고 10분도 되지 않아 바지에 설사를 하고 말았어요.&nbsp;</strong></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"> 
-         옷에다 똥 싼 얘기를 뭐 이리 담담하게 하느냐구요? 인도에서 이런 얘기는 고생담 축에도 못낀답니다.(웃음)</p><p>&nbsp;</p><p><br></p><p>&nbsp;</p><p><br></p><p class="ql-align-justify"><a href="http://image14.hanatour.com/uploads/2017/04/2010%EC%9D%B8%EB%8F%84_037.jpg" rel="noopener noreferrer" target="_blank" style="color: rgb(124, 124, 124);"><img src="http://cfd.tourtips.com/@ext/2017041840/gjffng/2010%EC%9D%B8%EB%8F%84_037.jpg" alt="2010인 
-         도_037" height="525" width="700"></a></p><p class="ql-align-justify"><br></p><p class="ql-align-center"><strong>뭄바이역 앞은 우리나라 역전처럼 길거
-         리 음식이 많아요. 로컬푸드 절대로 먹지 말라고 했지만 맛보지 않을 수 있나요.</strong></p><p>&nbsp;</p><p>&nbsp;</p><p><br></p><p class="ql-align-justify"><a href="http://image14.hanatour.com/uploads/2017/04/2010%EC%9D%B8%EB%8F%84_038.jpg" rel="noopener noreferrer" target="_blank" style="color: rgb(124, 124, 124);"><img src="http://cfd.tourtips.com/@ext/2017041833/gjffnh/2010%EC%9D%B8%EB%8F%84_038.jpg" alt="2010인도_038" height="525" width="700"></a></p><p class="ql-align-justify"><br></p><p class="ql-align-center"><strong>신문으로 싼 건 사모사에요. 맛살라 맛이 나는 튀긴 만두랄까. 맛살라
-          냄새는 정말이지, 인도에서 돌아온 후에도 계속 몸에서 나더라구요.</strong></p><p class="ql-align-center">&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p><strong>INFORMATION</strong></p><p>&nbsp;</p><p><strong>게이트웨이 오브 인디아</strong>&nbsp;뭄바이역에서 도보 20분</p><p><br></p><p><strong>타즈마할호텔
-         </strong>&nbsp;게이트웨이 오브&nbsp;인디아 맞은 편/</p><p><br></p><p><strong>하지 알리의 무덤</strong>&nbsp;무료/ 도비가트에서 도보 20분/ 둑을 따라 
-         걷는 동안 좌판 구경이 쏠쏠함/ 소매치기 주의</p><p><br></p><p><strong>꼴라바 지역</strong>&nbsp;여행자들의 레스토랑 밀집 지역 /노천카페 및 각국 음식 
-         가능/ 인도 물가가 아님/ 발리우드 극장 다수 영화 30~100루피</p><p><br></p><p><strong>도비가트</strong>&nbsp;여행자들이 뭄바이에 오는 큰 이유 중 하나/사진만 찍고 넘어가도 무방함</p><p><br></p><p>한국에서 북인도 델리로 들어가는 것보다 문화적 충격의 차이가 적음</p><p><br></p><p><br></p><p><br></p><p>출처 :  https://info.hanatour.com/getabout/content/?contentID=1000072663101</p><p><br></p><p><br></p>`,
-          createdAt: '2021-08-18 02:19:34.809250',
-          updatedAt: '2021-08-18 02:19:34.809250',
-          country: <any>15,
           user: <any>1,
         },
         {
@@ -744,7 +697,7 @@ export class CreateInitialData implements Seeder {
           thumbnail:
             'https://fall-in-asia.s3.ap-northeast-2.amazonaws.com/thumb/1629253905584_hssss.jpg',
           title: '하노이에 여행한다면 꼭 해봐야 할 리스트',
-          hit: 0,
+          hit: 103,
           content: `<h1><strong>여행을 하기 전
           에 알아 두면 좋은 팁</strong></h1><p><br></p><p><br></p><p>무엇보다도 꼭 알아 둬야 할 사실은, 하노이는 교통이라는 측면에서 바라보면 엄청나게 붐비는 
           도시입니다. </p><p><br></p><p>자동차를 이용해서 여행하는 것도 좋은 선택이지만 최적의 옵션이라고 볼 순 없습니다. </p><p><br></p><p>도시 여행의 경우, 
@@ -798,8 +751,8 @@ export class CreateInitialData implements Seeder {
           설한 수력발전소를 여행할 수 있습니다.</p><p><br></p><p>둘째 날에는 본격적인 사파 트레킹(Sapa trekking)이 시작됩니다. </p><p><br></p><p>호앙 린 손(Hoang Lien Son)산의 장엄한 풍경을 감상하면서 산간 지역에서 쌀을 재배하는 주요 방법 인 계단식 논을 거닐 수도 있죠. 트레킹 코스는 약 10-12km이기 때문에 
           3~4시간 동안 걸어야 합니다. 편한 워킹화를 챙겨오는 것을 잊지 마세요!</p><p><br></p><p>사파에서의 트레킹을 마지막으로 환상적인 하노이에서의 1주일 휴 
           가도 끝이 나게 됩니다. 제 포스팅의 투어 가이드를 통해서 하노이에서의 휴가를 계획하시는데 많은 도움이 되길 바라요! 베트남을 즐기세요!</p><p><br></p><p><br></p><p>출처 : https://inspitrip.com/blog/kr/289/one-week-in-hanoi-travel-guide/</p><p><br></p><p><br></p><p><br></p><p><br></p>`,
-          createdAt: '2021-08-23 03:59:24.000000',
-          updatedAt: '2021-08-23 03:59:24.000000',
+          createdAt: '2021-09-01 03:59:24.000000',
+          updatedAt: '2021-09-01 03:59:24.000000',
           country: <any>7,
           user: <any>1,
         },
@@ -812,7 +765,7 @@ export class CreateInitialData implements Seeder {
           thumbnail:
             'https://fall-in-asia.s3.ap-northeast-2.amazonaws.com/thumb/1629256166167_pattaya.jpg',
           title: '낭만 가득한 휴양지, 태국 파타야 여행을 100배 즐기는 방법!',
-          hit: 0,
+          hit: 86,
           content: `<h1><strong>낭만 가득한 휴
           양지! 태국 파타야 여행즐기기</strong></h1><p><br></p><p><br></p><p>일년 내내 전 세계에서 찾아오는 관광객을 넘쳐나는 파타야는 태국에서도 손꼽히는 휴 
           양지에요. </p><p><br></p><p>열대의 낭만이 가득한 해변에서 아늑한 휴식을 취할수있고 아이들과 깨끗한 바다에서 해양스포츠를 즐기며 휴식을 취할수있는곳 
@@ -829,8 +782,8 @@ export class CreateInitialData implements Seeder {
           height="532" width="750"></p><p><br></p><p><br></p><p><strong>▶워킹스트리트</strong></p><p><br></p><p>워킹스트리트는 파타야 여행의 하이라이트에요.  
           한낮의 열기가 식으면 화려한 네온사인이 불을 밝혀요.노천카페에서 다양한 즉석공연을 즐길수있고 특히 세계3대 공연으로 이름난 파타야의 알카자쇼나 티파니
           쇼도 꼭보시는게 좋습니다</p><iframe class="ql-video ql-align-center" frameborder="0" allowfullscreen="true" src="https://googleads.g.doubleclick.net/pagead/ads?client=ca-pub-8817221168972778&amp;output=html&amp;h=280&amp;slotname=6500194444&amp;adk=3263304653&amp;adf=2574719475&amp;pi=t.ma~as.6500194444&amp;w=336&amp;lmt=1629255967&amp;psa=0&amp;format=336x280&amp;url=https%3A%2F%2Ftravelgo.tistory.com%2F142&amp;flash=0&amp;host=ca-host-pub-9691043933427338&amp;wgl=1&amp;adsid=ChEI8LztiAYQh_rLr4WVmJCsARJIAICnqJ0oB280QlHH1MYFWPay7zPh8dEVmR3H7jpInGKky5tJc30S0Yrsjxq1RJ74_qrwqUkWU7UEkRX-xVfXX52bY9qPqByK&amp;uach=WyJXaW5kb3dzIiwiMTAuMCIsIng4NiIsIiIsIjkyLjAuNDUxNS4xMzEiLFtdLG51bGwsbnVsbCxudWxsXQ..&amp;tt_state=W3siaXNzdWVyT3JpZ2luIjoiaHR0cHM6Ly9hdHRlc3RhdGlvbi5hbmRyb2lkLmNvbSIsInN0YXRlIjo3fV0.&amp;dt=1629255964988&amp;bpp=1&amp;bdt=773&amp;idt=254&amp;shv=r20210812&amp;mjsv=m202108100101&amp;ptt=9&amp;saldr=aa&amp;abxe=1&amp;cookie=ID%3D77800430013dd960-229ad2dd39c90030%3AT%3D1622832627%3ART%3D1622832627%3AS%3DALNI_MaiAOCSZairbpvG1u0MyWzcfHKa_A&amp;prev_fmts=336x280%2C336x280%2C0x0&amp;nras=1&amp;correlator=7016533932676&amp;frm=20&amp;pv=1&amp;ga_vid=848680836.1622832791&amp;ga_sid=1629255965&amp;ga_hid=1804795327&amp;ga_fc=0&amp;ga_cid=922480695.1629044162&amp;u_tz=540&amp;u_his=49&amp;u_java=0&amp;u_h=1080&amp;u_w=1920&amp;u_ah=1040&amp;u_aw=1920&amp;u_cd=24&amp;u_nplug=3&amp;u_nmime=4&amp;adx=630&amp;ady=4778&amp;biw=1903&amp;bih=880&amp;scr_x=0&amp;scr_y=1426&amp;eid=182982000%2C182982200%2C20211866%2C21067496%2C31062297%2C31062093&amp;oid=3&amp;pvsid=3189419433651362&amp;pem=507&amp;ref=https%3A%2F%2Fwww.google.com%2F&amp;eae=0&amp;fc=896&amp;brdim=-1919%2C3%2C-1919%2C3%2C1920%2C2%2C1918%2C1038%2C1920%2C880&amp;vis=1&amp;rsz=%7C%7CoeEbr%7C&amp;abl=CS&amp;pfx=0&amp;fu=0&amp;bc=31&amp;jar=2021-07-31-04&amp;ifi=3&amp;uci=a!3&amp;btvi=2&amp;fsb=1&amp;xpc=9WjPOf2ozO&amp;p=https%3A//travelgo.tistory.com&amp;dtd=2995" height="0" width="336"></iframe><p class="ql-align-center"><br></p><p><br></p><p><br></p><p><br></p><p><span style="background-color: rgb(241, 242, 246); color: rgb(67, 74, 84);">출처:&nbsp;</span><a href="https://travelgo.tistory.com/142" rel="noopener noreferrer" target="_blank" style="background-color: rgb(241, 242, 246); color: rgb(59, 175, 218);">https://travelgo.tistory.com/142</a><span style="background-color: rgb(241, 242, 246); color: rgb(67, 74, 84);">&nbsp;[여기가봤어?]</span></p>`,
-          createdAt: '2021-08-18 03:09:26.334458',
-          updatedAt: '2021-08-21 02:35:36.000000',
+          createdAt: '2021-09-11 03:09:26.334458',
+          updatedAt: '2021-09-11 02:35:36.000000',
           country: <any>6,
           user: <any>1,
         },
@@ -844,7 +797,7 @@ export class CreateInitialData implements Seeder {
           thumbnail:
             'https://fall-in-asia.s3.ap-northeast-2.amazonaws.com/thumb/1629256532402_FxX5caie56yqUbvo2DTJv1i6qm8z4ixTabBTrjod5ybTuNoXSgULp1VYMEf7QsD4Djo8y9eYnWSScpHWwPobaMktW6Q6ksMNWWVS2cUsMpKx.jpg',
           title: '대만 유명 맛집, 키키레스토랑을 가다 - 대만여행기',
-          hit: 0,
+          hit: 75,
           content: `<p><br></p><p>안녕하세요? 
           오늘은 지지난주에 가족과 함께 다녀온&nbsp;대만 여행의 후기를 남겨보려고 합니다.</p><p><br></p><p>맛집/관광지/호텔편으로 나누어 소개해드릴 테니 혹시 
           대만 여행을 앞두고 계신 분들께 많은 도움이 되었으면 좋겠습니다.</p><p><br></p><p>이번 여행은 대만에 갈때는 대한항공 돌아올때는 타이항공을 이용했습니
@@ -878,8 +831,8 @@ export class CreateInitialData implements Seeder {
           권에 포함되어 나오는&nbsp;맥주(Taiwan beer)입니다 타이완 맥주들은 대체적으로 맛있는 것 같습니다. </span></p><p><br></p><p><span style="color: rgb(51, 51, 51);">사천요리가 약간 기름기가 있어 맥주와도 잘 맞아요.</span>2~3인용 식사권에 나오는 세트는 2명이서 먹기에는 좀 양이 많았고 파 볶음과 같이 먹
           을 쌀밥이 나오지 않아 아쉬웠습니다. </p><p><br></p><p>하지만 예약을 따로 할 필요 없이 인기 메뉴를 골고루 먹어 볼 수 있다는 장점이 있었습니다. </p><p><br></p><p>다음에 다시 간다면&nbsp;파볶음과 연두부튀김은 기본적으로 시키고 다른 메뉴에도 한번 도전을 해 보고 싶네요.</p><p><br></p><p>대만에 가시는
            분들 여유가 되신다면&nbsp;키키 레스토랑에 한번 꼭 들려보세요 !</p><p><br></p><p>다음번 포스팅에서는 대만의 대표 음식&nbsp;샤오롱바오&nbsp;리뷰와&nbsp;딘다이펑 본점에서 편하게 먹는 방법 알려드리겠습니다!</p><p><br></p><p>출처 : https://steemit.com/kr/@radiologist/3gpy7q</p><p><br></p><p>작성자 :  <span style="color: rgb(48, 69, 63);">radiologist&nbsp;</span></p><p><br></p>`,
-          createdAt: '2021-08-18 03:15:32.619665',
-          updatedAt: '2021-08-18 03:15:32.619665',
+          createdAt: '2021-09-21 03:15:32.619665',
+          updatedAt: '2021-09-21 03:15:32.619665',
           country: <any>4,
           user: <any>1,
         },
@@ -893,7 +846,7 @@ export class CreateInitialData implements Seeder {
             'https://fall-in-asia.s3.ap-northeast-2.amazonaws.com/thumb/1629257172235_201603231331-Reissue-Shanghai-Trip-01.jpg',
           title:
             '중국 발전과 중국 경제 그리고 교통의 중심지 상해. 상해 상해의 여행 명소 BEST 6',
-          hit: 0,
+          hit: 56,
           content: `<p><span style="color: rgb(116, 116, 116);"><img src="https://blog.hmgjournal.com/images/contents/article/201603231331-Reissue-Shanghai-Trip-01.jpg" alt="상해를 상징하는 상해
           환구금융센터 전경"></span></p><p><br></p><p><span style="color: rgb(153, 153, 153);">l 교통중심지이자 주요 여행항구인 상해는 ‘동방의 빛’, ‘동방의 진
           주’라 불립니다</span></p><p><br></p><p><span style="color: rgb(109, 109, 109);">중국 남북 해안선의 중심지에 있는 상해는 동쪽으로는 태평양, 남쪽으로 
@@ -925,27 +878,10 @@ export class CreateInitialData implements Seeder {
            강희황제 때 쉬쟈후이라는 명칭을 얻게 됐습니다. </span></p><p><br></p><p><span style="color: rgb(109, 109, 109);">1847년 천주교 강남 교구는 예수회를
            설립하여 서광계, 마테오 리치(Matteo Ricci)가 창설한 서학동점, 중학서전을 계승했습니다. </span></p><p><br></p><p><span style="color: rgb(109, 109, 109);">그 후 과학, 기술, 문화, 교육, 출판, 자선 및 종교 등과 관련된 다양한 단체들이 하나둘씩 만들어지기 시작했죠. </span></p><p><br></p><p><span style="color: rgb(109, 109, 109);">20세기 초에 와서 중요한 문화의 요지를 형성하게 됐습니다. 명소로는 주로 서광계 묘지, 천주당, 관상대, 장서루, 서회공학 
           옛집, 백대공사옛터, 토산만 박물관 등이 있습니다.</span></p><p><br></p><p><br></p><p><span style="color: rgb(102, 102, 102);">글. 여행작가 윤은지</span></p><p><br></p><p>출처 : https://news.hmgjournal.com/TALK/Story/Reissue-Shanghai-Trip</p><p class="ql-align-right"><br></p><p><br></p>`,
-          createdAt: '2021-08-18 03:26:12.489813',
-          updatedAt: '2021-08-18 03:26:12.489813',
+          createdAt: '2021-10-08 03:26:12.489813',
+          updatedAt: '2021-10-08 03:26:12.489813',
           country: <any>3,
           user: <any>1,
-        },
-        {
-          id: 11,
-          code: 'KR',
-          region: '괌',
-          lat: 13.4436,
-          lng: 144.776,
-          thumbnail:
-            'https://fall-in-asia.s3.ap-northeast-2.amazonaws.com/thumb/1629682158192_KakaoTalk_20210823_111406300_05.jpg',
-          title: 'Guam',
-          hit: 0,
-          content: `<p>요새 코로나라서 그런지 
-          괌에 한국인들이 보이지 않네요.</p><p>언젠가는 자유로이 해외여행 할 수 있는 날이 오겠죠~<img src="https://fall-in-asia.s3.ap-northeast-2.amazonaws.com/original/1629681394566_KakaoTalk_20210823_111406300.jpg"><img src="https://fall-in-asia.s3.ap-northeast-2.amazonaws.com/original/1629681405204_KakaoTalk_20210823_111406300_01.jpg"><img src="https://fall-in-asia.s3.ap-northeast-2.amazonaws.com/original/1629681413117_KakaoTalk_20210823_111406300_02.jpg"><img src="https://fall-in-asia.s3.ap-northeast-2.amazonaws.com/original/1629681419251_KakaoTalk_20210823_111406300_04.jpg"><img src="https://fall-in-asia.s3.ap-northeast-2.amazonaws.com/original/1629681426471_KakaoTalk_20210823_111406300_05.jpg"></p>`,
-          createdAt: '2021-08-23 01:21:38.102005',
-          updatedAt: '2021-08-23 01:21:38.102005',
-          country: <any>1,
-          user: <any>14,
         },
       ])
       .execute();
@@ -1034,8 +970,8 @@ export class CreateInitialData implements Seeder {
             선을 점검할 수 있는 어플리케이션을 휴대 전화에 깔아야만 한다. </span></p><p><br></p><p><br></p><p><span style="color: rgb(34, 34, 34);">입국 14일 뒤
             에는 본토도 방문할 수 있는데 그러려면 적어도 세 차례 바이러스 검사를 받아 음성 판정을 받아야만 한다.</span></p><p><br></p><p><br></p><p><span style="color: rgb(34, 34, 34);">한편 우리 정부도 사이판과 트래블 버블 협약을 맺어 백신 접종을 마치고 음성 판정을 받은 우리 국민은 격리 없이 관광 일정을 즐
             길 수 있게 됐다. 이르면 이달 말과 8월 초 사이에 우리 관광객들이 처음으로 사이판을 향해 떠날 수 있을 전망이다.</span></p><p><br></p><p><br></p><p><br></p><p><span style="color: rgb(34, 34, 34);">출처 : </span>https://www.seoul.co.kr/news/newsView.php?id=20210701500164 (<span style="color: rgb(34, 34, 34);">임병선 평화연구소 사무국장 bsnim@seoul.co.kr</span>)</p>`,
-          createdAt: '2021-08-18 09:02:37.066830',
-          updatedAt: '2021-08-18 09:02:37.066830',
+          createdAt: '2021-08-31 09:02:37.066830',
+          updatedAt: '2021-08-31 09:02:37.066830',
           country: <any>6,
           user: <any>1,
         },
@@ -1057,8 +993,8 @@ export class CreateInitialData implements Seeder {
           흥시설(유흥주점, 단란주점, 클럽나이트, 감성주점, 헌팅포차) 집합금지 ('21.7.15~)</span></p><p><br></p><p><span style="color: rgb(88, 89, 91);">- 노래
           연습장, 목욕장업, 식당·카페, 수영장(식당·카페는 22시 이후 포장배달만 가능)</span></p><p><br></p><p><br></p><p><span style="color: rgb(88, 89, 91);">④ 종교시설 및 활동</span></p><p><br></p><p><span style="color: rgb(88, 89, 91);">- 정규예배, 미사, 법회 등은 좌석 수의 20%이내(네 칸 띄우기)로 제한 
           운영</span></p><p><br></p><p><span style="color: rgb(88, 89, 91);">- 종교시설 주관 모임 활동 및 행사 금지(식사 및 숙박 포함)</span></p><p><br></p><p><br></p><p><span style="color: rgb(88, 89, 91);">⑤ 마스크 착용 의무화 : 실내는 전체, 실외의 경우 2m이상 거리 유지가 어려운 경우</span></p><p><br></p><p><br></p><p><span style="color: rgb(88, 89, 91);">⑥ 버스,택시 등 교통시설 : 교통수단 이용 중 음식물 섭취(물, 무알콜 음료 제외) 금지</span></p><p><br></p><p><br></p><p><span style="color: rgb(88, 89, 91);">4. 처분기관 : 시설 관련 소관(지도,점검,유관)부서</span></p><p><br></p><p><br></p><p><span style="color: rgb(88, 89, 91);">5. 처분근거 : 「감염병의 예방 및 관리에 관한 법률」 제49조 제1항 제2호 및 제2의2 내지 4호 및 제3항</span></p><p><br></p><p><br></p><p>출처 : 제주관광협회</p>`,
-          createdAt: '2021-08-18 09:02:37.066830',
-          updatedAt: '2021-08-18 09:02:37.066830',
+          createdAt: '2021-09-11 09:02:37.066830',
+          updatedAt: '2021-09-11 09:02:37.066830',
           country: <any>1,
           user: <any>1,
         },
@@ -1073,8 +1009,8 @@ export class CreateInitialData implements Seeder {
           id: 1,
           content:
             '백신접종 증명서가 있으면 가능하지만 14일동안 추적관리됩니다. 14일동안 3번 바이러스 검사에 통과하면 본토 여행도 승인됩니다',
-          createdAt: '2021-08-18 08:20:52.430130',
-          updatedAt: '2021-08-18 08:20:52.430130',
+          createdAt: '2021-09-21 08:20:52.430130',
+          updatedAt: '2021-09-21 08:20:52.430130',
           user: <any>1,
           moment: <any>10,
         },
@@ -1082,16 +1018,16 @@ export class CreateInitialData implements Seeder {
           id: 2,
           content:
             '제가 도쿄에서 회사생활을 했는데 야키니쿠노테츠진 히나타(焼肉の鉄人 ひなた) 가 싸고 2017년기준 3000엔 (3만원) 이면 술 고기 무한리필이 가능했습니다. 이정도에 가성비에 맛있고 양많은 가게를 본적없습니다. 일끝나면 맨날 갔습니다. 어떤 맛집보다 추천합니다.',
-          createdAt: '2021-08-18 08:20:52.430130',
-          updatedAt: '2021-08-18 08:20:52.430130',
+          createdAt: '2021-09-18 08:20:52.430130',
+          updatedAt: '2021-09-18 08:20:52.430130',
           user: <any>1,
           moment: <any>9,
         },
         {
           id: 3,
           content: '교토 또 가고 싶네요 ㅠ',
-          createdAt: '2021-08-18 08:20:52.430130',
-          updatedAt: '2021-08-18 08:20:52.430130',
+          createdAt: '2021-09-15 08:20:52.430130',
+          updatedAt: '2021-09-15 08:20:52.430130',
           user: <any>2,
           story: <any>5,
         },
@@ -1099,24 +1035,24 @@ export class CreateInitialData implements Seeder {
           id: 4,
           content:
             '하노이 에그커피는 기찻길마을에서 먹어봤는데 나중에 저곳도 꼭 가봐야겠네요',
-          createdAt: '2021-08-18 08:20:52.430130',
-          updatedAt: '2021-08-18 08:20:52.430130',
+          createdAt: '2021-09-27 08:20:52.430130',
+          updatedAt: '2021-09-27 08:20:52.430130',
           user: <any>1,
           moment: <any>12,
         },
         {
           id: 5,
           content: '다모아횟집은 돌산대교랑 가까운데 묘도대교는 모르겠네여',
-          createdAt: '2021-08-18 08:20:52.430130',
-          updatedAt: '2021-08-18 08:20:52.430130',
+          createdAt: '2021-10-10 08:20:52.430130',
+          updatedAt: '2021-10-10 08:20:52.430130',
           user: <any>11,
           moment: <any>15,
         },
         {
           id: 9,
           content: '츠키지 시장 스시 잔마이 추천해요',
-          createdAt: '2021-08-18 08:20:52.430130',
-          updatedAt: '2021-08-18 08:20:52.430130',
+          createdAt: '2021-09-18 08:20:52.430130',
+          updatedAt: '2021-09-18 08:20:52.430130',
           user: <any>13,
           moment: <any>9,
         },
@@ -1124,25 +1060,17 @@ export class CreateInitialData implements Seeder {
           id: 10,
           content:
             '그거 학교 졸업하면 就活할 수 있게 취활비자 내줍니다. 그리고 취업하면 회사에서 비자내줘요 구지 졸업하고나서 부랴부랴 취업비자 신청 할 필요 없어요 가비님',
-          createdAt: '2021-08-22 08:20:52.430130',
-          updatedAt: '2021-08-22 08:20:52.430130',
+          createdAt: '2021-09-02 08:20:52.430130',
+          updatedAt: '2021-09-02 08:20:52.430130',
           user: <any>1,
           moment: <any>5,
-        },
-        {
-          id: 11,
-          content: '괌에서도 삼겹살인가요~! 🤣',
-          createdAt: '2021-08-23 08:20:52.430130',
-          updatedAt: '2021-08-23 08:20:52.430130',
-          user: <any>1,
-          story: <any>11,
         },
         {
           id: 13,
           content:
             '베트남 확진자는 점차 오르고있고 백신보급률도 높은편은 아닙니다. 그리고 한베관계 악화에 대해선 아 다르고 어 다를수있습니다 2019년  한일관계가 최악이었을때도 비즈니스나 사적으로나 서로 교류는 여느때처럼 활발했던 것 처럼요',
-          createdAt: '2021-08-24 08:20:52.430130',
-          updatedAt: '2021-08-24 08:20:52.430130',
+          createdAt: '2021-10-13 08:20:52.430130',
+          updatedAt: '2021-10-13 08:20:52.430130',
           user: <any>1,
           moment: <any>18,
         },
@@ -1150,16 +1078,16 @@ export class CreateInitialData implements Seeder {
           id: 14,
           content:
             '휴양목적이면 다낭이 좋습니다 호치민은 도시느낌이고 동남아틱한 기후죠. 하노이는 사파 하롱베이 이 연계빼고는 하노이자체는 별거없습니다. 취향껏 선택하시면 좋을거같아요.',
-          createdAt: '2021-08-24 08:20:52.430130',
-          updatedAt: '2021-08-24 08:20:52.430130',
+          createdAt: '2021-09-13 08:20:52.430130',
+          updatedAt: '2021-09-13 08:20:52.430130',
           user: <any>1,
           moment: <any>8,
         },
         {
           id: 15,
           content: '저도 갑자기 오사카마렵네요.. 휴 ㅠ',
-          createdAt: '2021-08-24 08:20:52.430130',
-          updatedAt: '2021-08-24 08:20:52.430130',
+          createdAt: '2021-10-03 08:20:52.430130',
+          updatedAt: '2021-10-03 08:20:52.430130',
           user: <any>1,
           moment: <any>13,
         },
@@ -1173,40 +1101,40 @@ export class CreateInitialData implements Seeder {
         {
           id: 1,
           content: '코로나가 끝나면 참았던 만큼  2배 아니 3배 더 즐겨야겠죠 😊',
-          createdAt: '2021-08-18 08:20:52.430130',
-          updatedAt: '2021-08-18 08:20:52.430130',
+          createdAt: '2021-09-17 08:20:52.430130',
+          updatedAt: '2021-09-17 08:20:52.430130',
           comment: <any>3,
           user: <any>1,
         },
         {
           id: 2,
           content: '진짜 맛있습니다!!! 꼭 가보세요 ^^',
-          createdAt: '2021-08-18 08:20:52.430130',
-          updatedAt: '2021-08-18 08:20:52.430130',
+          createdAt: '2021-09-28 08:20:52.430130',
+          updatedAt: '2021-09-28 08:20:52.430130',
           comment: <any>4,
           user: <any>7,
         },
         {
           id: 3,
           content: '고마웤ㅋㅋ ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ ',
-          createdAt: '2021-08-18 08:20:52.430130',
-          updatedAt: '2021-08-18 08:20:52.430130',
+          createdAt: '2021-09-02 08:20:52.430130',
+          updatedAt: '2021-09-02 08:20:52.430130',
           comment: <any>1,
           user: <any>10,
         },
         {
           id: 5,
           content: '아닙니다!',
-          createdAt: '2021-08-18 08:20:52.430130',
-          updatedAt: '2021-08-18 08:20:52.430130',
+          createdAt: '2021-09-02 08:20:52.430130',
+          updatedAt: '2021-09-02 08:20:52.430130',
           comment: <any>1,
           user: <any>1,
         },
         {
           id: 6,
           content: '나중에 베트남 여행갈때 참고하겠습니다~ 💯',
-          createdAt: '2021-08-20 08:20:52.430130',
-          updatedAt: '2021-08-20 08:20:52.430130',
+          createdAt: '2021-10-10 08:20:52.430130',
+          updatedAt: '2021-10-10 08:20:52.430130',
           comment: <any>4,
           user: <any>1,
         },
