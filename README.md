@@ -867,7 +867,54 @@
 
 <br/>
 
-### 9. 필요에따라 모듈을 직접 구현하여 프로젝트에 자체적으로 사용했습니다.
+
+### 9. SEO 최적화를 위해 노력했습니다.
+- 메타태그를 세심하고 효율적이게 작성하며 (title , description ...) 시맨틱마크업 준수와 헤더태그를 적절히 사용해 최적화했습니다.
+
+<br/>
+
+```javascript
+
+  📁pages/country/[code]/[id]
+
+  ...
+
+  // 문득보면 Next의 Head태그가 번거로워 보이지만 SEO에 있어서 메타태그는 중요하기 때문에 최대한 깊고 세세하게 작성했습니다.
+
+  <Head>
+    <title>
+      {html2textConverter(moment?.content).slice(0, 20)}... - {moment?.country?.name}/
+      {moment?.id}번모멘트 | Fall IN Asia
+    </title>
+    <meta name="description" content={html2textConverter(moment?.content).slice(0, 100)} />
+    <meta
+      property="og:title"
+      content={\`\${html2textConverter(moment?.content).slice(0, 20)}... - \${
+        moment?.country?.name
+      }/
+      \${moment?.id}번모멘트 | Fall IN Asia\`}
+    />
+    <meta
+      property="og:description"
+      content={html2textConverter(moment?.content).slice(0, 100)}
+    />
+    <meta
+      property="og:image"
+      content={moment?.images.length! > 0 ? moment?.images[0].image_src : WORLD_IMAGE}
+    />
+    <meta
+      property="og:url"
+      content={\`https://fallinasia.com/country/\${moment?.code}/\${moment?.id}\`}
+    />
+  </Head>
+
+  ...
+  
+```
+
+<br/>
+
+### 10. 필요에따라 모듈을 직접 구현하여 프로젝트에 자체적으로 사용했습니다.
 - Dayjs를 이용한 날짜계산 formatter , KMBT formatter (17.3K , 2M 같은 형식), Html to Text Converter 등을 직접 구현했습니다.
 
 <br/>
@@ -968,7 +1015,7 @@
 
 <br/>
 
-### 10. 자주사용하는 컴포넌트는 따로 분리하여 재사용성을 향상시켰습니다.
+### 11. 자주사용하는 컴포넌트는 따로 분리하여 재사용성을 향상시켰습니다.
 - component / layout / section / pages 등으로 체계적이게 분리해 개발했습니다. 예시로 네, 아니오로 구성된 confirm 메세지같은 경우에는 많은곳에서 사용되기 때문에 개별적인 컴포넌트로 분리해, 알맞는 props를 그때그때 넣어주는 방식으로 만들었습니다.
 
 <br/>
@@ -1021,7 +1068,7 @@
 
 <br/>
 
-### 11. 코드의 가독성을 최대한 고려하며 중복방지를 위해 힘썼습니다.
+### 12. 코드의 가독성을 최대한 고려하며 중복방지를 위해 힘썼습니다.
 - 보여드리는 코드는 중복 최소화 작업을 진행한 코드의 예시입니다. 중복제거도 좋지만 그것이 가독성이 떨어지는 요인이 된다면 중복 최소화 작업을 일단 고려하거나 보류합니다.
 
 <br/>
@@ -1104,7 +1151,7 @@
 
 <br/>
 
-### 12. CSS styling을 체계적으로 작성하고 custom CSS를 사용해 가능한 한 중복을 줄이고 능률을 높였습니다.
+### 13. CSS styling을 체계적으로 작성하고 custom CSS를 사용해 가능한 한 중복을 줄이고 능률을 높였습니다.
 - 개별적으로 styles.tsx 파일을 두며 tailwindCSS 와 emotion을 적용했습니다. ellipsis처리와 flex 스타일등은 라이브러리로도 반복된 작업이 많아 custom CSS로 만들어 해결했습니다.
 
 <br/>
@@ -1190,7 +1237,7 @@
 
 <br/>
 
-### 13. 데이터베이스 ER 다이어그램
+### 14. 데이터베이스 ER 다이어그램
 - 모든 중심은 User Table로 돌아가며 하위엔티티에는 Cascade를 적용합니다. Comment와 Notice는 역정규화로 하나의 테이블을 이용하고있습니다. 1:1, 1:N, N:M 관계를 이해합니다.
 
 <br/>
@@ -1199,7 +1246,7 @@
 
 <br/>
 
-### 14. NestJS의 라이프사이클을 이해하며 적극적으로 사용했습니다.
+### 15. NestJS의 라이프사이클을 이해하며 적극적으로 사용했습니다.
 - Middleware (ex/ session,multer ...) , Guard , Intersepter , Decorators 등을 이해합니다.
 
 <br/>
@@ -1270,7 +1317,7 @@
 
 <br/>
 
-### 15. Mysql의 ngram Full-text검색과 인덱싱을 이용해 DB 검색 성능을 향상시켰습니다.
+### 16. Mysql의 ngram Full-text검색과 인덱싱을 이용해 DB 검색 성능을 향상시켰습니다.
 - 이전 프로젝트(Noahworld)에서 Like '%키워드%'의 풀스캔을 사용했을때보다 5~10배정도 속도를 향상시켰습니다.
 
 <br/>
@@ -1323,7 +1370,7 @@
 
 <br/>
 
-### 16. 실시간 인기 게시글 기능을 구현했습니다.
+### 17. 실시간 인기 게시글 기능을 구현했습니다.
 - 자체적으로 점수를 매겨 뽑아낸 인기 게시글 4개를 프론트로 전달합니다.
 
 <br/>
@@ -1380,7 +1427,7 @@
 
 <br/>
 
-### 17. 조회수 중복방지 기능을 구현했습니다.
+### 18. 조회수 중복방지 기능을 구현했습니다.
 - 현재는 사이트가 조회수 어뷰징을 할만한 규모의 사이트도 아니며 되려 오버엔지니어링의 느낌을 받아 삭제했습니다. 이런 기능을 구현하고 공부를 했다는 사실에 만족합니다.
 
 <br/>
@@ -1446,7 +1493,7 @@
 
 <br/>
 
-### 18. 협업을 대비해 Swagger를 이용한 API docs 와 git Branch,Trello,Slack등을 사용했습니다.
+### 19. 협업을 대비해 Swagger를 이용한 API docs 와 git Branch,Trello,Slack등을 사용했습니다.
 - 저는 프론트,서버,배포를 혼자서 작업했기때문에 협업을 미리 경험해 대비하는게 옳다고 생각하여 협업툴을 혼자 사용해봤습니다.
 
 <br/>
@@ -1531,6 +1578,7 @@ Express가 자유분방한 "나는 자연인이다" 느낌이라면 NestJS는 �
 | Date | Version | Update |
 | ------ | ------ | ------ |
 | 2020/08/13 | v1.0 | Final Update for first deployment through AWS |
+| 2020/10/13 | v1.1 | SEO Optimization |
 
 <br/>
 
