@@ -144,11 +144,14 @@ export const searchPageNavList = [
 // Toast Message
 
 export const toastErrorMessage = (error: any) => {
-  let message = error;
+  let errorMessage = error;
   if (typeof error !== "string") {
-    message = error.response?.data?.data?.message;
+    errorMessage = error.response?.data?.data;
+    if (errorMessage.message) {
+      errorMessage = errorMessage.message;
+    }
   }
-  toast.error(message, {
+  toast.error(errorMessage, {
     position: "top-center",
     autoClose: 2300,
     hideProgressBar: false,

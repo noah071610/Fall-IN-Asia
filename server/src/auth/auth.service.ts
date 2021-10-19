@@ -25,6 +25,9 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('유효하지 않은 이메일입니다.');
     }
+    if (!password) {
+      throw new UnauthorizedException('비밀번호를 입력해주세요.');
+    }
     const result = await bcrypt.compare(password, user.password);
     if (result) {
       const { password, ...userWithoutPassword } = user;

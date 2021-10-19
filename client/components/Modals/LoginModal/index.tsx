@@ -59,6 +59,14 @@ const LoginModal: FC<IProps> = () => {
   const onSubmitLogin = useCallback(
     (e) => {
       e.preventDefault();
+      if (!email || !email?.trim()) {
+        toastErrorMessage("이메일을 입력해주세요.");
+        return;
+      }
+      if (!password || !password?.trim()) {
+        toastErrorMessage("비밀번호를 입력해주세요.");
+        return;
+      }
       let form: IUserRequestForm = {
         email,
         password,

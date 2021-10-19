@@ -162,7 +162,7 @@ const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSig
           {...tailFormItemLayout}
         >
           <Checkbox>
-            백패커스의 이용약관, 개인정보취급방침 에 동의합니다.{" "}
+            Fall IN Asia의 이용약관, 개인정보취급방침 에 동의합니다.{" "}
             <a onClick={() => router.push("/about#policy")} className="term">
               약관보기
             </a>

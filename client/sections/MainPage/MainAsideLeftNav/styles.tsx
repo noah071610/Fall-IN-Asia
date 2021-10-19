@@ -13,6 +13,7 @@ export const MainAsideLeftNavWrapper = styled.nav`
     .country-img-wrapper {
       ${tw`cursor-pointer inline-block w-full rounded-2xl`}
       .country-img {
+        width: 100%;
         ${tw`shadow-md rounded-2xl`}
       }
     }
