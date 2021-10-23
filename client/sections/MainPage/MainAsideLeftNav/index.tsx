@@ -34,9 +34,13 @@ const MainAsideLeftNav: FC<IProps> = () => {
   }, [query]);
   return (
     <MainAsideLeftNavWrapper>
-      <div className="country">
+      <div className="country-info">
         <div onClick={onClickCountry} className="country-img-wrapper">
-          <img className="country-img" src={country?.image_src || WORLD_IMAGE} alt="world-image" />
+          <img
+            className="country-img"
+            src={country?.image_src || WORLD_IMAGE}
+            alt={country ? `${country?.name + "_img"}` : "world-img"}
+          />
         </div>
         <div className="country-desc">
           <a onClick={onClickCountry}>{country?.name || "아시아 전체"}</a>

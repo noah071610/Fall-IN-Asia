@@ -9,12 +9,11 @@ export const MainAsideLeftNavWrapper = styled.nav`
   ${tw`bg-white rounded-2xl h-full p-4 sticky`}
   top:5rem;
   width: 18%;
-  .country {
+  .country-info {
     .country-img-wrapper {
       ${tw`cursor-pointer inline-block w-full rounded-2xl`}
       .country-img {
-        width: 100%;
-        ${tw`shadow-md rounded-2xl`}
+        ${tw`w-full shadow-md rounded-2xl`}
       }
     }
     .country-desc {
