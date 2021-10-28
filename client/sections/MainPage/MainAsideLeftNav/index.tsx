@@ -14,10 +14,12 @@ import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { ICountry } from "@typings/db";
 import { noRevalidate, WORLD_IMAGE } from "config";
+import { useTranslation } from "next-i18next";
 
 interface IProps {}
 
 const MainAsideLeftNav: FC<IProps> = () => {
+  const { t } = useTranslation("main");
   const { query } = useRouter();
   const { data: country } = useSWR<ICountry>(
     query?.code ? `/country/${query?.code}` : null,
@@ -43,7 +45,7 @@ const MainAsideLeftNav: FC<IProps> = () => {
           />
         </div>
         <div className="country-desc">
-          <a onClick={onClickCountry}>{country?.name || "아시아 전체"}</a>
+          <a onClick={onClickCountry}>{country?.name || t("allCountry")}</a>
           {country && (
             <div>
               <span>포스팅수 : {country?.moments?.length + country?.stories?.length}</span>
@@ -56,7 +58,7 @@ const MainAsideLeftNav: FC<IProps> = () => {
           <a>
             <li className={query?.type === "community" ? "menu-active" : ""}>
               <FontAwesomeIcon className="icon" icon={faHandshake} />
-              <span>한인 커뮤니티</span>
+              <span>{t("community")}</span>
             </li>
           </a>
         </Link>
@@ -64,7 +66,7 @@ const MainAsideLeftNav: FC<IProps> = () => {
           <a>
             <li className={query?.type === "trip" ? "menu-active" : ""}>
               <FontAwesomeIcon className="icon" icon={faPlaneDeparture} />
-              <span>여행정보 공유</span>
+              <span>{t("shareInfo")}</span>
             </li>
           </a>
         </Link>
@@ -72,7 +74,7 @@ const MainAsideLeftNav: FC<IProps> = () => {
           <a>
             <li className={query?.type === "scam alert" ? "menu-active" : ""}>
               <FontAwesomeIcon className="icon" icon={faExclamationCircle} />
-              <span>사기 경보</span>
+              <span>{t("scam")}</span>
             </li>
           </a>
         </Link>
@@ -80,7 +82,7 @@ const MainAsideLeftNav: FC<IProps> = () => {
           <a>
             <li className={query?.type === "accompany" ? "menu-active" : ""}>
               <FontAwesomeIcon className="icon" icon={faUsers} />
-              <span>동행자 모집</span>
+              <span>{t("accompany")}</span>
             </li>
           </a>
         </Link>
@@ -89,7 +91,7 @@ const MainAsideLeftNav: FC<IProps> = () => {
             <a>
               <li>
                 <FontAwesomeIcon className="icon" icon={faGlobe} />
-                <span>아시아 전체</span>
+                <span>{t("allCountry")}</span>
               </li>
             </a>
           </Link>
@@ -98,7 +100,7 @@ const MainAsideLeftNav: FC<IProps> = () => {
             <a>
               <li>
                 <FontAwesomeIcon className="icon" icon={faGlobe} />
-                <span>국가선택</span>
+                <span>{t("selectCountry")}</span>
               </li>
             </a>
           </Link>

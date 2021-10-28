@@ -51,9 +51,9 @@ export class Countries {
   })
   @Column('enum', {
     name: 'continent',
-    enum: ['동북아시아', '동남아시아', '남아시아'],
+    enum: ['northEastAsia', 'southEastAsia', 'southAsia'],
   })
-  continent: '동북아시아' | '동남아시아' | '남아시아';
+  continent: 'northEastAsia' | 'southEastAsia' | 'southAsia';
 
   @IsString()
   @IsNotEmpty()

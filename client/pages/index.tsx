@@ -14,6 +14,8 @@ import CountryList from "@components/CountryPreviewSlide";
 import MainPopularArticleSlide from "@sections/MainPage/MainPopularArticleSlide";
 import Head from "next/head";
 import { GetServerSidePropsContext } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   initialMoments: IMoment[][];
@@ -21,6 +23,7 @@ interface IProps {
 
 const MomentMainPage: FC<IProps> = ({ initialMoments }) => {
   const { query } = useRouter();
+  const { t } = useTranslation("main");
   const [filter, setFilter] = useState("");
   const { data: moments, setSize } = useSWRInfinite(
     (index) => `/moment?page=${index + 1}&filter=${filter}&type=${query?.type || ""}`,
@@ -42,11 +45,11 @@ const MomentMainPage: FC<IProps> = ({ initialMoments }) => {
         <meta property="og:url" content="https://fallinasia.com" />
       </Head>
       <MainLayout>
-        <h2 className="main-title">인기 여행지</h2>
+        <h2 className="main-title">{t("popularCountry")}</h2>
         <CountryList slidesPerView={3.2} isMain={true} />
-        <h2 className="main-title">인기 연대기</h2>
+        <h2 className="main-title">{t("popularStory")}</h2>
         <MainPopularArticleSlide />
-        <h2 className="main-title">포스팅</h2>
+        <h2 className="main-title">{t("moment")}</h2>
         <MomentPostingForm />
         <MomentList filter={filter} setFilter={setFilter} setSize={setSize} moments={moments} />
       </MainLayout>
@@ -56,7 +59,7 @@ const MomentMainPage: FC<IProps> = ({ initialMoments }) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req }: GetServerSidePropsContext) => {
+    async ({ req, locale }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       if (axios.defaults.headers) {
         axios.defaults.headers.Cookie = "";
@@ -68,7 +71,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       let initialMoments = await fetcher(`/moment?page=1`);
       initialMoments = [initialMoments];
       return {
-        props: { initialMoments },
+        props: {
+          initialMoments,
+          ...(await serverSideTranslations(locale!, ["common", "main", "post"])),
+        },
       };
     }
 );

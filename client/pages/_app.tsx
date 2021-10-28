@@ -21,8 +21,9 @@ import Overlay from "@components/Modals/Overlay";
 import Head from "next/head";
 import { Global } from "@emotion/react";
 import { resetStyle } from "../styles/global";
+import { appWithTranslation } from "next-i18next";
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App = appWithTranslation(({ Component, pageProps }: AppProps) => {
   const dispatch = useDispatch();
   const { onProfilePopUp, onNoticePopUp, onSearchPopUp, onSlideMenu } = useSelector(
     (state: RootState) => state.main
@@ -57,5 +58,6 @@ const App = ({ Component, pageProps }: AppProps) => {
       </div>
     </>
   );
-};
+});
+
 export default wrapper.withRedux(App);

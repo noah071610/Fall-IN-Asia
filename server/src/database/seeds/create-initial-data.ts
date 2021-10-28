@@ -19,8 +19,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 1,
           code: 'KR',
-          name: '대한민국',
-          continent: '동북아시아',
+          name: 'korea',
+          continent: 'northEastAsia',
           image_src:
             'https://images.unsplash.com/photo-1535188584454-744758d916e5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80',
           flag_src:
@@ -29,8 +29,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 2,
           code: 'JP',
-          name: '일본',
-          continent: '동북아시아',
+          name: 'japan',
+          continent: 'northEastAsia',
           image_src:
             'https://images.unsplash.com/photo-1542640244-7e672d6cef4e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80',
           flag_src:
@@ -39,8 +39,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 3,
           code: 'CN',
-          name: '중국',
-          continent: '동북아시아',
+          name: 'china',
+          continent: 'northEastAsia',
           image_src:
             'https://images.unsplash.com/photo-1474181487882-5abf3f0ba6c2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80',
           flag_src:
@@ -49,8 +49,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 4,
           code: 'TW',
-          name: '대만',
-          continent: '동북아시아',
+          name: 'taiwan',
+          continent: 'northEastAsia',
           image_src:
             'https://images.unsplash.com/photo-1598935898639-81586f7d2129?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80',
           flag_src:
@@ -59,8 +59,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 5,
           code: 'HK',
-          name: '홍콩',
-          continent: '동북아시아',
+          name: 'hongkong',
+          continent: 'northEastAsia',
           image_src:
             'https://images.unsplash.com/photo-1594973782943-3314fe063f68?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80',
           flag_src:
@@ -69,8 +69,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 6,
           code: 'TH',
-          name: '태국',
-          continent: '동남아시아',
+          name: 'thailand',
+          continent: 'southEastAsia',
           image_src:
             'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1023&q=80',
           flag_src:
@@ -79,8 +79,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 7,
           code: 'VN',
-          name: '베트남',
-          continent: '동남아시아',
+          name: 'vietnam',
+          continent: 'southEastAsia',
           image_src:
             'https://images.unsplash.com/photo-1555921015-5532091f6026?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80',
           flag_src:
@@ -89,8 +89,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 8,
           code: 'SG',
-          name: '싱가포르',
-          continent: '동남아시아',
+          name: 'singapore',
+          continent: 'southEastAsia',
           image_src:
             'https://images.unsplash.com/flagged/photo-1562503542-2a1e6f03b16b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80',
           flag_src:
@@ -99,8 +99,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 9,
           code: 'MY',
-          name: '말레이시아',
-          continent: '동남아시아',
+          name: 'malaysia',
+          continent: 'southEastAsia',
           image_src:
             'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80',
           flag_src:
@@ -109,8 +109,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 10,
           code: 'ID',
-          name: '인도네시아',
-          continent: '동남아시아',
+          name: 'indonesia',
+          continent: 'southEastAsia',
           image_src:
             'https://images.unsplash.com/photo-1577547476482-63dc54e36e26?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80',
           flag_src:
@@ -119,8 +119,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 11,
           code: 'KH',
-          name: '캄보디아',
-          continent: '동남아시아',
+          name: 'cambodia',
+          continent: 'southEastAsia',
           image_src:
             'https://images.unsplash.com/photo-1594903717283-2b96af6d65f3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80',
           flag_src:
@@ -129,8 +129,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 12,
           code: 'PH',
-          name: '필리핀',
-          continent: '동남아시아',
+          name: 'philippines',
+          continent: 'southEastAsia',
           image_src:
             'https://images.unsplash.com/photo-1573191055128-94ca66d6efb7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80',
           flag_src:
@@ -139,8 +139,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 13,
           code: 'LA',
-          name: '라오스',
-          continent: '동남아시아',
+          name: 'laos',
+          continent: 'southEastAsia',
           image_src:
             'https://images.unsplash.com/photo-1552058185-b7e8f6744229?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80',
           flag_src:
@@ -149,8 +149,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 14,
           code: 'MM',
-          name: '미얀마',
-          continent: '동남아시아',
+          name: 'myanmar',
+          continent: 'southEastAsia',
           image_src:
             'https://images.unsplash.com/photo-1490077476659-095159692ab5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80',
           flag_src:
@@ -159,8 +159,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 15,
           code: 'IN',
-          name: '인도',
-          continent: '남아시아',
+          name: 'india',
+          continent: 'southAsia',
           image_src:
             'https://images.unsplash.com/photo-1564507592333-c60657eea523?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80',
           flag_src:
@@ -169,8 +169,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 16,
           code: 'LK',
-          name: '스리랑카',
-          continent: '남아시아',
+          name: 'srilanka',
+          continent: 'southAsia',
           image_src:
             'https://images.unsplash.com/photo-1612862862126-865765df2ded?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80',
           flag_src:
@@ -179,8 +179,8 @@ export class CreateInitialData implements Seeder {
         {
           id: 17,
           code: 'NP',
-          name: '네팔',
-          continent: '남아시아',
+          name: 'nepal',
+          continent: 'southAsia',
           image_src:
             'https://images.unsplash.com/photo-1617469165786-8007eda3caa7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80',
           flag_src:

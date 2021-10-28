@@ -15,6 +15,7 @@ import dynamic from "next/dynamic";
 import axios, { AxiosResponse } from "axios";
 import { UploadFile } from "antd/lib/upload/interface";
 import { mainSlice } from "slices/main";
+import { useTranslation } from "react-i18next";
 const { Option } = Select;
 
 const EditorWithoutImage = dynamic(import("@components/Editor/EditorWithoutImage"));
@@ -24,6 +25,7 @@ interface IProps {
 }
 
 const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
+  const { t } = useTranslation("common");
   const { query } = useRouter();
   const dispatch = useDispatch();
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher, noRevalidate);
@@ -142,7 +144,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
     <MomentPostingFormWrapper>
       {!onPostingForm && !editMoment && (
         <div onClick={onClickOpenPostingForm} className="posting-form-preview">
-          <span className="placeholder">당신의 여행은 어땠나요?</span>
+          <span className="placeholder">{t("main.postingMention") + "🛫"}</span>
           <a>
             <EditOutlined />
           </a>
@@ -164,10 +166,10 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
                 onChange={handleTypeChange}
                 style={{ width: "180px" }}
               >
-                <Option value="한인 커뮤니티">한인 커뮤니티</Option>
-                <Option value="여행정보 공유">여행정보 공유</Option>
-                <Option value="사기 경보">사기 경보</Option>
-                <Option value="동행자 모집">동행자 모집</Option>
+                <Option value="한인 커뮤니티">{t("main.community")}</Option>
+                <Option value="여행정보 공유">{t("main.shareInfo")}</Option>
+                <Option value="사기 경보">{t("main.scam")}</Option>
+                <Option value="동행자 모집">{t("main.accompany")}</Option>
               </Select>
             </div>
             <EditorWithoutImage content={content} setContent={setContent} />{" "}
@@ -178,8 +180,8 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
               setPrevImageList={setPrevImageList}
             />
             <div className="editor-btn-wrapper">
-              <button onClick={onClickSubmit}>모멘트 올리기</button>
-              <button onClick={onClickPostingCancle}>취소</button>
+              <button onClick={onClickSubmit}>{t("post.uploadMoment")}</button>
+              <button onClick={onClickPostingCancle}>{t("post.cancel")}</button>
             </div>
           </div>
         </>
