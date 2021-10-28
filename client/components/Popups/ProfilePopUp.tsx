@@ -33,12 +33,12 @@ const ProfilePopUp: FC<IProps> = () => {
     >
       <Link href={`/me/${user?.id}`}>
         <a>
-          <li>{t("modal.profile")}</li>
+          <li>{t("popup.profile")}</li>
         </a>
       </Link>
       <Link href={`/story/post`}>
         <a>
-          <li>{t("modal.newStory")}</li>
+          <li>{t("popup.newStory")}</li>
         </a>
       </Link>
       <li
@@ -47,9 +47,9 @@ const ProfilePopUp: FC<IProps> = () => {
           dispatch(mainSlice.actions.toggleNoticePopUp());
         }}
       >
-        {t("modal.notice")}
+        {t("popup.notice")}
       </li>
-      <li onClick={() => dispatch(logoutAction())}>{t("modal.logout")}</li>
+      <li onClick={() => dispatch(logoutAction())}>{t("popup.logout")}</li>
     </ProfilePopUpWrapper>
   );
 };

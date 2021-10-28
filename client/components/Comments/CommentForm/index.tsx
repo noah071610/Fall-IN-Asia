@@ -27,11 +27,11 @@ const CommentForm: FC<IProps> = ({ isStory, revalidateComments }) => {
 
   const onSubmitComment = useCallback(() => {
     if (content === "" || !content?.trim()) {
-      toastErrorMessage("댓글을 입력해주세요.");
+      toastErrorMessage(t("message.comment.fail"));
       return;
     }
     if (!user) {
-      toastErrorMessage("로그인이 필요합니다.");
+      toastErrorMessage(t("message.needToLogin"));
       return;
     }
     let form: { [key: string]: any; content: string } = {
@@ -46,7 +46,7 @@ const CommentForm: FC<IProps> = ({ isStory, revalidateComments }) => {
       .post("/comment", form, { withCredentials: true })
       .then(() => {
         revalidateComments();
-        toastSuccessMessage("댓글을 성공적으로 작성했습니다.");
+        toastSuccessMessage(t("message.comment.done"));
         setContent("");
       })
       .catch((error) => {
@@ -62,7 +62,7 @@ const CommentForm: FC<IProps> = ({ isStory, revalidateComments }) => {
 
   const onClickCommentForm = useCallback(() => {
     if (!user) {
-      toastErrorMessage("로그인이 필요합니다.");
+      toastErrorMessage(t("message.needToLogin"));
       dispatch(mainSlice.actions.toggleLoginModal());
       return;
     }
@@ -87,7 +87,7 @@ const CommentForm: FC<IProps> = ({ isStory, revalidateComments }) => {
             <img src={user ? user.icon : DEFAULT_ICON_URL} alt="user-icon" />
           </div>
           <TextareaAutosize
-            placeholder={user ? t("post.uploadComment") : t("message.needToLogin")}
+            placeholder={user ? t("post.commentPlaceHolder") : t("message.needToLogin")}
             disabled={user ? false : true}
             value={content}
             onChange={onChangeContent}
@@ -95,8 +95,8 @@ const CommentForm: FC<IProps> = ({ isStory, revalidateComments }) => {
         </div>
         <div className="comment-submit-wrapper">
           <div className={onCommentForm ? "drop-down" : "roll-up"}>
-            <button onClick={onSubmitComment}>코멘트</button>
-            <button onClick={onClickCommentCancle}>취소</button>
+            <button onClick={onSubmitComment}>{t("post.uploadComment")}</button>
+            <button onClick={onClickCommentCancle}>{t("post.cancel")}</button>
           </div>
         </div>
       </div>

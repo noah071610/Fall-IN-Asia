@@ -6,15 +6,39 @@
   },
   "message": {
     "needToLogin": "ログインが必要です。",
-    "doneComment": "コメントしました。",
-    "failComment": "コメントを書いてください。"
+    "removeIt": "削除してください。",
+    "comment": {
+      "done": "コメント致しました。",
+      "fail": "コメントを書いてください。",
+      "remove": "コメントを削除致しました。",
+      "confirmRemove": "コメントを削除してもいいですか？"
+    },
+    "reply": {
+      "done": "返信致しました。",
+      "fail": "返信を書いてください。",
+      "remove": "返信を削除致しました。",
+      "confirmRemove": "返信を削除してもいいですか？"
+    },
+    "story": {
+      "done": "Posted story.",
+      "fail": "Please enter reply.",
+      "remove": "ポストを削除致しました。",
+      "confirmRemove": "Do you realy want to remove this story?"
+    },
+    "like": "いいね!💓",
+    "dislike": "いいね取り消し💔"
   },
   "post": {
+    "counting": "個の",
     "wrongCountry": "正しくない国の名前です。もう一度確認してください。",
     "goToProfile": "プロフィール一覧",
     "prevStory": "以前のストリー",
     "nextStory": "次のストリー",
     "storyInfo": "ストリー情報",
+    "storyRegion": "地域",
+    "storyDelete": "ストリー削除",
+    "storyManagement": "ストリー管理",
+    "storyEdit": "ストリー修正",
     "postTop": "本文",
     "userProfile": "作成者プロフィール",
     "commentView": "コメント",
@@ -31,11 +55,19 @@
     "writeContent": "作成",
     "writeContentPlaceHolder": "内容を書いてください。",
     "thumbnailUpload": "サムネイルアップロード",
+    "thumbnailChange": "サムネイル変更",
     "imageDrag": "イメージドラッグ",
     "uploadStory": "ストリー投稿",
+    "editStory": "ストリー修正",
     "uploadMoment": "モメント投稿",
     "uploadComment": "コメント",
-    "selectKeyword": "カテゴリー選択"
+    "commentPlaceHolder": "コメント作成",
+    "uploadReply": "返信",
+    "replyPlaceHolder": "返信作成",
+    "selectKeyword": "カテゴリー選択",
+    "noKeyword": "キーワードを選択してください。",
+    "noRegion": "地域を選択してください。",
+    "confirmWithoutRegion": "地域をせんたくしてないです。大丈夫ですか？ (基本設定の地域 : 大韓民国、ソウル)"
   },
   "main": {
     "world": "全世界",
@@ -46,13 +78,19 @@
     "latestMoment": "新規モメント",
     "postingMention": "貴方の旅はいかがでしたか？",
     "moment": "モメント",
+    "story": "ストリー",
+    "news": "観光ニュース",
     "postCount": "ポスト数",
     "comment": "コメント",
     "like": "いいね",
     "view": "照会",
-    "news": "観光ニュース",
     "more": "もっと見る",
-    "back": "戻るボタン"
+    "back": "戻るボタン",
+    "noMoment": "モメントがまだありません😥",
+    "noStory": "ストリーがまだありません😰",
+    "noPost": "ポストがまだありません😥",
+    "yes": "はい",
+    "no": "いいえ"
   },
   "country": {
     "country": "国家",
@@ -108,7 +146,7 @@
   },
   "popup": {
     "viewProfile": "プロフィール",
-    "newStory": "ストリー登録",
+    "newStory": "ストリー投稿",
     "login": "ログイン",
     "profile": "プロフィール",
     "logout": "ログアウト",
@@ -135,7 +173,7 @@
     "newStory": "ストリー登録",
     "moment": "モメント",
     "story": "ストリー",
-    "news": "ニュース"
+    "news": "観光ニュース"
   },
   "poster": {
     "moment": "モメント : 旅の途中で道を迷いましたか？聞いて見て！",

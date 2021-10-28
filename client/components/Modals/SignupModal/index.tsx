@@ -176,7 +176,7 @@ const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSig
           <button className="btn-point" onSubmit={onFinishSignUp}>
             {t("modal.login.signup")}
           </button>
-          <button onClick={onClickSignUpToggle}>{t("modal.login.back")}</button>
+          <button onClick={onClickSignUpToggle}>{t("main.back")}</button>
         </div>
       </Form>
     </SignupModalWrapper>

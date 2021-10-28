@@ -239,7 +239,7 @@ export const quillMomentModules = () => {
 export const quillSetting = (isNoImageModule: boolean) => {
   return {
     theme: "snow",
-    placeholder: "내용을 작성해주세요.",
+    placeholder: "Write content here.",
     modules: quillModules(isNoImageModule),
   };
 };

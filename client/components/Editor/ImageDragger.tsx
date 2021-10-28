@@ -5,6 +5,7 @@ import { RGB_BLACK } from "config";
 import { memo } from "react";
 import { IPrevImage } from "@typings/db";
 import { UploadFile } from "antd/lib/upload/interface";
+import { useTranslation } from "react-i18next";
 const { Dragger } = Upload;
 const ImageDraggerWrapper = styled.div`
   .dragger {
@@ -37,6 +38,7 @@ const ImageDragger: FC<IProps> = ({
   setPrevImageList,
   setFileList,
 }) => {
+  const { t } = useTranslation("common");
   const handleChange = useCallback(
     (info: any) => {
       setFileList(info.fileList);
@@ -88,7 +90,7 @@ const ImageDragger: FC<IProps> = ({
           src="https://user-images.githubusercontent.com/74864925/124657825-f38a5500-dedd-11eb-8de9-6ed70a512f24.png"
           alt="drag"
         />
-        <h4>이미지 드래그 또는 선택</h4>
+        <h4>{t("post.imageDrag")}</h4>
       </Dragger>
     </ImageDraggerWrapper>
   );

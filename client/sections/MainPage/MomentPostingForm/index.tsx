@@ -56,7 +56,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
   const countryOptions = useMemo(
     () =>
       countries?.map((v) => {
-        return { value: v.name, code: v.code };
+        return { value: t(`country.${v.name}`), code: v.code };
       }),
     [countries]
   );
@@ -70,11 +70,11 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
 
   const onClickSubmit = useCallback(() => {
     if (type === t("post.selectKeyword")) {
-      toastErrorMessage("키워드를 선택해주세요.");
+      toastErrorMessage(t("post.noKeyword"));
       return;
     }
     if (!content) {
-      toastErrorMessage("내용을 작성해주세요.");
+      toastErrorMessage("post.writeContentPlaceHolder");
       return;
     }
     let form: FormData = new FormData();
@@ -91,7 +91,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
     if (pickCountry) {
       form.append("code", String(pickCountry.code));
     } else {
-      toastErrorMessage("유효하지 않은 국가입니다. 다시 확인해주세요.");
+      toastErrorMessage(t("post.wrongCountry"));
       return;
     }
     if (editMoment) {
@@ -106,7 +106,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
         setContent("");
         setUpImg([]);
         setFileList([]);
-        setType("키워드 선택");
+        setType(t("post.selectKeyword"));
         setOnPostingForm(false);
         if (editMoment) {
           toastSuccessMessage("모멘트를 수정했습니다.");
@@ -122,7 +122,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
 
   const onClickOpenPostingForm = useCallback(() => {
     if (!user) {
-      toastErrorMessage("로그인이 필요합니다.");
+      toastErrorMessage(t("message.needToLogin"));
       dispatch(mainSlice.actions.toggleLoginModal());
       return;
     }

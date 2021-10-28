@@ -6,12 +6,14 @@ import { PostPaginationWrapper } from "./styles";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { GRAY_COLOR, noRevalidate, NO_IMAGE_URL } from "config";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   userId: number;
 }
 
 const PostPagination: FC<IProps> = ({ userId }) => {
+  const { t } = useTranslation("common");
   const { query } = useRouter();
   const { data: sidePosts } = useSWR<{ prevPost: IStory; nextPost: IStory }>(
     `/story/side/${query?.storyId}/${userId}`,
@@ -39,8 +41,8 @@ const PostPagination: FC<IProps> = ({ userId }) => {
           <div className="post-desc">
             <LeftOutlined />
             <div>
-              <h3>이전연대기</h3>
-              <h4 className="post-title">{sidePosts?.prevPost?.title || "연대기가 없습니다"}</h4>
+              <h3>{t("post.prevStory")}</h3>
+              <h4 className="post-title">{sidePosts?.prevPost?.title || t("main.noStory")}</h4>
             </div>
           </div>
         </div>
@@ -57,8 +59,8 @@ const PostPagination: FC<IProps> = ({ userId }) => {
           </div>
           <div className="post-desc">
             <div>
-              <h3>다음연대기</h3>
-              <h4 className="post-title">{sidePosts?.nextPost?.title || "연대기가 없습니다"}</h4>
+              <h3>{t("post.nextStory")}</h3>
+              <h4 className="post-title">{sidePosts?.nextPost?.title || t("main.noStory")}</h4>
             </div>
             <RightOutlined />
           </div>

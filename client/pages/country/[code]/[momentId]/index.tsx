@@ -83,9 +83,7 @@ const MomentPostPage: FC<IProps> = ({ initialMoments, initialCountry, initialMom
       </Head>
       <MainLayout>
         {moment && <MommentPost revalidateMoment={revalidateMoment} moment={moment} />}
-        <h2 className="main-title">
-          {country?.name} | {t("main.popularStory")}
-        </h2>
+        <h2 className="main-title">{t("main.popularStory")}</h2>
         <MainTopArticleSlide country={country} />
         <h2 className="main-title">{t("main.moment")}</h2>
         <MomentPostingForm />

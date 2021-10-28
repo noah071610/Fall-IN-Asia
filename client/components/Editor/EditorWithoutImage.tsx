@@ -19,7 +19,7 @@ const EditorWrapper = styled.div`
 
 const QuillEditor = dynamic(import("react-quill"), {
   ssr: false,
-  loading: () => <p>에디터 불러오는중 ...</p>,
+  loading: () => <p>Loading ...</p>,
 });
 
 interface IProps {

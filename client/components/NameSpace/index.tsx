@@ -4,6 +4,7 @@ import { DEFAULT_ICON_URL } from "config";
 import router from "next/router";
 import dateCalculator from "utils/dateCalculator";
 import { NameSpaceWrapper } from "./styles";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   user: IUser;
@@ -12,6 +13,7 @@ interface IProps {
 }
 
 const NameSpace: FC<IProps> = ({ user, date, comment }) => {
+  const { t } = useTranslation("common");
   const onClickGotoProfile = useCallback(
     (e) => {
       e.stopPropagation();
@@ -23,7 +25,7 @@ const NameSpace: FC<IProps> = ({ user, date, comment }) => {
     <NameSpaceWrapper className="name-space-wrapper">
       <div onClick={onClickGotoProfile} className="icon">
         <img src={user?.icon ? user?.icon : DEFAULT_ICON_URL} alt="user-icon" />
-        <span className="goto-profile-popup">프로필 보기</span>
+        <span className="goto-profile-popup">{t("popup.viewProfile")}</span>
       </div>
       <div className="user-info">
         <div className="name-title">

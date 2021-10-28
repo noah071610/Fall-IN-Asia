@@ -61,7 +61,7 @@ const CountrySelectPage: FC<IProps> = ({ initialCountries }) => {
   const countryOptions = useMemo(
     () =>
       countries?.map((v) => {
-        return { value: v.name, code: v.code };
+        return { value: t(`country.${v.name}`), code: v.code };
       }),
     [countries]
   );
@@ -77,7 +77,7 @@ const CountrySelectPage: FC<IProps> = ({ initialCountries }) => {
   return (
     <LGLayout>
       <GobackBtn>
-        <button onClick={() => router.back()}>{t("post.back")}</button>
+        <button onClick={() => router.back()}>{t("main.back")}</button>
       </GobackBtn>
       <h2 className="main-title">{t("main.popularCountry")}</h2>
       <CountryList isMain={true} slidesPerView={4.7} />

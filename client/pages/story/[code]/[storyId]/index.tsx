@@ -33,6 +33,8 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 import { GetServerSidePropsContext } from "next";
 import html2textConverter from "utils/html2textConverter";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 const CountryMap = dynamic(() => import("@components/Maps/CountryMap"));
 const StoryPostWrapper = styled.div`
   padding-top: 6rem;
@@ -66,6 +68,7 @@ interface IProps {
 }
 
 const StoryPostPage: FC<IProps> = ({ initialStories, initialStory }) => {
+  const { t } = useTranslation("common");
   const { query } = useRouter();
   const [isOwner, setIsOwner] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
@@ -118,7 +121,7 @@ const StoryPostPage: FC<IProps> = ({ initialStories, initialStory }) => {
       axios
         .delete(`/story/${story?.id}`)
         .then(() => {
-          toastSuccessMessage("연대기를 성공적으로 삭제했습니다.");
+          toastSuccessMessage(t("message.story.remove"));
           router.push(`/story`);
         })
         .catch((error) => {
@@ -132,13 +135,14 @@ const StoryPostPage: FC<IProps> = ({ initialStories, initialStory }) => {
     <>
       <Head>
         <title>
-          {story?.title} - {story?.country?.name}/{story?.id}번스토리 | Fall IN Asia
+          {story?.title} - {story?.country?.name}/{story?.id}
+          {t("post.counting") + t("post.story")} | Fall IN Asia
         </title>
         <meta name="description" content={html2textConverter(story?.content).slice(0, 100)} />
         <meta
           property="og:title"
           content={`${story?.title}... - ${story?.country?.name}/
-          ${story?.id}번스토리 | Fall IN Asia`}
+          ${story?.id}${t("post.counting") + t("post.story")} | Fall IN Asia`}
         />
         <meta
           property="og:description"
@@ -157,30 +161,31 @@ const StoryPostPage: FC<IProps> = ({ initialStories, initialStory }) => {
               <PostThubnail story={story} />
               {isOwner && (
                 <>
-                  <h2 className="main-title">연대기 관리 (작성자 전용)</h2>
+                  <h2 className="main-title">{t("post.storyManagement")}</h2>
                   <div className="story-manage-wrapper">
                     <button onClick={onClickEditBtn} className="edit-btn">
                       <EditOutlined />
-                      연대기 수정
+                      {t("post.storyEdit")}
                     </button>
                     <button
                       onClick={() =>
                         toastConfirmMessage(
                           onClickConfirmDelete,
-                          "정말 이 연대기를 삭제할까요?",
-                          "삭제해주세요."
+                          t("message.comment.confirmRemove"),
+                          `${t("main.yes")} ${t("message.removeIt")}`,
+                          t("main.no")
                         )
                       }
                       className="delete-btn"
                     >
                       <DeleteOutlined />
-                      연대기 삭제
+                      {t("post.storyDelete")}
                     </button>
                   </div>
                 </>
               )}
               <h2 className="main-title">
-                연대기 위치 <span>{story?.region}</span>
+                {t("post.storyRegion")} <span>{story?.region}</span>
               </h2>
               {story?.lat && story?.lng && <CountryMap lat={story.lat} lng={story.lng} />}
               <Divider />
@@ -203,7 +208,7 @@ const StoryPostPage: FC<IProps> = ({ initialStories, initialStory }) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, params }: GetServerSidePropsContext) => {
+    async ({ req, params, locale }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       if (axios.defaults.headers) {
         axios.defaults.headers.Cookie = "";
@@ -218,7 +223,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       let initialStories = await fetcher(`/story?page=1`);
       initialStories = [initialStories];
       return {
-        props: { initialStory, initialStories },
+        props: {
+          initialStory,
+          initialStories,
+          ...(await serverSideTranslations(locale as string, ["common"])),
+        },
       };
     }
 );

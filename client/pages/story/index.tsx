@@ -168,7 +168,7 @@ const StoryMainPage: FC<IProps> = ({ initiaStories, initialPopularStories }) => 
 
   const onClickPostStoryBtn = useCallback(() => {
     if (!user) {
-      toastErrorMessage("로그인이 필요합니다.");
+      toastErrorMessage(t("message.needToLogin"));
       dispatch(mainSlice.actions.toggleLoginModal());
     } else {
       router.push("/story/post");
@@ -196,7 +196,10 @@ const StoryMainPage: FC<IProps> = ({ initiaStories, initialPopularStories }) => 
         <meta property="og:url" content={`https://fallinasia.com/story`} />
       </Head>
       <StoryMainWrapper>
-        <StoryMainPoster name={country?.name} image={country?.image_src} />
+        <StoryMainPoster
+          name={country ? t(`country.${country?.name}`) : null}
+          image={country?.image_src}
+        />
         {!query?.country && (
           <div className="country-list-wrapper">
             <CountryPreviewSlide slidesPerView={6.2} isMain={false} />
@@ -240,9 +243,9 @@ const StoryMainPage: FC<IProps> = ({ initiaStories, initialPopularStories }) => 
           ) : (
             <div className="no-story-wrapper">
               <img src={NO_POST_URL} alt="no-post-img" />
-              <h2>연대기가 없습니다. 첫 연대기에 주인공이 되어주세요!</h2>
+              <h2>{t("main.noStory")}</h2>
               <button className="story-post-btn" onClick={onClickPostStoryBtn}>
-                연대기 올리기
+                {t("post.uploadStory")}
               </button>
             </div>
           )}

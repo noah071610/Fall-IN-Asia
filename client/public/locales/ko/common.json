@@ -6,8 +6,28 @@
   },
   "message": {
     "needToLogin": "로그인이 필요합니다.",
-    "doneComment": "댓글을 성공적으로 작성했습니다.",
-    "failComment": "댓글을 입력해주세요."
+    "removeIt": "삭제해주세요.",
+    "comment": {
+      "done": "댓글을 성공적으로 작성했습니다.",
+      "fail": "댓글을 입력해주세요.",
+      "remove": "댓글을 삭제했습니다.",
+      "confirmRemove": "정말로 이 댓글을 삭제할까요?"
+    },
+    "reply": {
+      "done": "답글을 성공적으로 작성했습니다.",
+      "fail": "답글을 입력해주세요.",
+      "remove": "답글을 삭제했습니다.",
+      "confirmRemove": "정말로 이 답글을 삭제할까요?"
+    },
+    "story": {
+      "done": "연대기를 성공적으로 작성했습니다.",
+      "edit": "연대기를 수정했습니다.",
+      "fail": "Please enter reply.",
+      "remove": "연대기를 성공적으로 삭제했습니다.",
+      "confirmRemove": "Do you realy want to delete this story?"
+    },
+    "like": "좋아요! 💓",
+    "dislike": "좋아요 취소 💔"
   },
   "post": {
     "wrongCountry": "유효하지 않은 국가입니다. 다시 확인해주세요.",
@@ -15,11 +35,15 @@
     "prevStory": "이전 연대기",
     "nextStory": "다음 연대기",
     "storyInfo": "연대기 정보",
+    "storyRegion": "연대기 위치",
+    "storyDelete": "연대기 삭제",
+    "storyManagement": "연대기 관리",
+    "storyEdit": "연대기 수정",
+    "counting": "번",
     "postTop": "본문",
     "userProfile": "작성자 프로필",
     "commentView": "댓글 보기",
-    "anotherPost": "다른 연대기",
-    "back": "뒤로가기",
+    "anotherPost": "다른 포스트",
     "cancel": "취소",
     "story": "연대기",
     "title": "제목",
@@ -32,11 +56,19 @@
     "writeContent": "내용 작성",
     "writeContentPlaceHolder": "내용을 작성해주세요.",
     "thumbnailUpload": "썸네일 업로드",
+    "thumbnailChange": "썸네일 변경",
     "imageDrag": "이미지 드래그 또는 선택",
-    "uploadStory": "스토리 올리기",
+    "uploadStory": "연대기 올리기",
+    "editStory": "연대기 수정",
     "uploadMoment": "모멘트 올리기",
-    "uploadComment": "댓글 작성",
-    "selectKeyword": "키워드 선택"
+    "uploadComment": "코멘트",
+    "commentPlaceHolder": "매너있는 코멘트 작성하기.",
+    "uploadReply": "답장",
+    "replyPlaceHolder": "답글 작성하기.",
+    "selectKeyword": "키워드 선택",
+    "noKeyword": "키워드를 선택해주세요.",
+    "noRegion": "지도에서 지역을 선택해주세요.",
+    "confirmWithoutRegion": "지역 좌표를 입력하지 않으셨어요, 이상태로 진행할까요? (현재 좌표 : 대한민국 서울 , 이름모를 어딘가)"
   },
   "main": {
     "world": "전세계",
@@ -47,12 +79,19 @@
     "latestMoment": "최근 모멘트",
     "postingMention": "당신의 여행은 어땠나요?",
     "moment": "모멘트",
+    "story": "연대기",
+    "news": "관광소식",
     "postCount": "포스팅수",
     "comment": "댓글",
     "like": "좋아요",
     "view": "조회",
-    "news": "관련 소식",
-    "more": "더보기"
+    "more": "더보기",
+    "back": "뒤로가기",
+    "noMoment": "아직 모멘트가 없어요. 😥",
+    "noStory": "아직 연대기가 없어요. 😰",
+    "noPost": "아직 포스트가 없어요. 😥",
+    "yes": "네",
+    "no": "아니오"
   },
   "country": {
     "country": "국가",
@@ -93,7 +132,6 @@
       "send": "인증번호 발송",
       "sendCertification": "로 이메일이 발송되었습니다. 인증번호를 확인해주세요.",
       "noCertification": "이메일 인증번호가 필요합니다.",
-      "back": "뒤로가기",
       "noFirstName": "성을 적어주세요.",
       "noLastName": "이름을 적어주세요.",
       "noName": "이름을 적어주세요.",

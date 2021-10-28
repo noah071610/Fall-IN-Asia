@@ -26,11 +26,7 @@ const AutoCompleteForm: FC<IProps> = ({
       allowClear={true}
       disabled={disabled}
       className="autoComplete-form"
-      options={
-        selectedCountry !== ""
-          ? countryOptions
-          : countryOptions?.slice(0, 8).concat([{ value: "...", code: "" }])
-      }
+      options={countryOptions}
       value={selectedCountry}
       onChange={onChangeCountry}
       placeholder={t("post.selectCountryPlaceHolder")}

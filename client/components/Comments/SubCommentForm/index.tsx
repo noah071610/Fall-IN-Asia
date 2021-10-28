@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import { memo } from "react";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   commentId: number;
@@ -13,15 +14,16 @@ interface IProps {
 }
 
 const SubCommentForm: FC<IProps> = ({ commentId, revalidateComments }) => {
+  const { t } = useTranslation("common");
   const [content, onChangeContent, setContent] = useInput("");
   const { user } = useSelector((state: RootState) => state.user);
   const onSubmitSubComment = useCallback(() => {
     if (content === "" || !content?.trim()) {
-      toastErrorMessage("내용을 적어주세요");
+      toastErrorMessage(t("post.writeContentPlaceHolder"));
       return;
     }
     if (!user) {
-      toastErrorMessage("로그인이 필요합니다.");
+      toastErrorMessage(t("message.needToLogin"));
       return;
     }
     let form = {
@@ -32,7 +34,7 @@ const SubCommentForm: FC<IProps> = ({ commentId, revalidateComments }) => {
       .post("/comment/subComment", form)
       .then(() => {
         revalidateComments();
-        toastSuccessMessage("답글을 성공적으로 작성했습니다.");
+        toastSuccessMessage(t("message.reply.done"));
         setContent("");
       })
       .catch((error) => {
@@ -50,12 +52,12 @@ const SubCommentForm: FC<IProps> = ({ commentId, revalidateComments }) => {
         )}
       </div>
       <input
-        placeholder={user ? "답글 작성하기." : "로그인이 필요합니다."}
+        placeholder={user ? t("post.replyPlaceHolder") : t("message.needToLogin")}
         value={content}
         onChange={onChangeContent}
       />
       <button disabled={user ? false : true} onClick={onSubmitSubComment}>
-        답장
+        {t("post.uploadReply")}
       </button>
     </SubCommentFormWrapper>
   );

@@ -11,6 +11,7 @@ import { FLEX_STYLE } from "config";
 import tw from "twin.macro";
 import Slider from "react-slick";
 import { NextArrow, PrevArrow } from "@components/SliderArrow";
+import { useTranslation } from "react-i18next";
 
 const popularSlideSettings = {
   dots: false,
@@ -62,6 +63,7 @@ interface IProps {
 }
 
 const MainPopularArticleSlide: FC<IProps> = ({ country }) => {
+  const { t } = useTranslation("common");
   const { data: popularArticles } = useSWR<IStory[]>(
     `/story/popular?code=${country?.code || ""}`,
     fetcher,
@@ -80,12 +82,12 @@ const MainPopularArticleSlide: FC<IProps> = ({ country }) => {
           <div onClick={onClickMoreCard} className="more-card">
             <div className="more-icon">
               <PlusCircleOutlined />
-              <span>더보기</span>
+              <span>{t("main.more")}</span>
             </div>
           </div>
         </MainPopularArticleSlideWrapper>
       ) : (
-        <NoStoryWrapper>아직 {country?.name}관련 연대기가 없어요.😰</NoStoryWrapper>
+        <NoStoryWrapper>{t("main.noStory")}</NoStoryWrapper>
       )}
     </>
   );

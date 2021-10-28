@@ -72,7 +72,7 @@ const MomentList: FC<IProps> = ({ filter, moments, setSize, setFilter }) => {
         ) : (
           <div className="no-post">
             <img src={NO_POST_URL} alt="no-post-image" />
-            <h4>아직 모멘트가 없어요😥</h4>
+            <h4>{t("main.noMoment")}</h4>
           </div>
         )}
         <div ref={ref} />

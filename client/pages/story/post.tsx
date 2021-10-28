@@ -25,6 +25,8 @@ import { wrapper } from "configureStore";
 import { UploadFile } from "antd/lib/upload/interface";
 import dynamic from "next/dynamic";
 import { GetServerSidePropsContext } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 const CountrySelectMap = dynamic(() => import("@components/Maps/CountrySelectMap"));
 const Editor = dynamic(() => import("@components/Editor/Editor"));
 
@@ -54,6 +56,7 @@ export const StoryPostingWrapper = styled.div`
 interface IProps {}
 
 const StoryPostingPage: FC<IProps> = () => {
+  const { t } = useTranslation("common");
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher, noRevalidate);
@@ -67,7 +70,7 @@ const StoryPostingPage: FC<IProps> = () => {
   // eslint-disable-next-line no-unused-vars
   const [prevThumbnail, setPrevThumbnail] = useState<string>();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [region, setRegion] = useState("이름모를 어딘가");
+  const [region, setRegion] = useState((t("post.somewhere") as string) || "Somewhere");
   const [upImg, setUpImg] = useState("");
   const [content, setContent] = useState("");
   const [marker, setMarker] = useState<ICoordinate>({
@@ -113,15 +116,15 @@ const StoryPostingPage: FC<IProps> = () => {
 
   const onClickSubmit = useCallback(() => {
     if (!title) {
-      toastErrorMessage("제목을 작성해주세요.");
+      toastErrorMessage(t("post.titlePlaceHolder"));
       return;
     }
     if (!region) {
-      toastErrorMessage("지도에서 지역을 선택해주세요.");
+      toastErrorMessage(t("post.noRegion"));
       return;
     }
     if (!content) {
-      toastErrorMessage("내용을 작성해주세요.");
+      toastErrorMessage(t("post.writeContentPlaceHolder"));
       return;
     }
     let form: FormData = new FormData();
@@ -138,7 +141,7 @@ const StoryPostingPage: FC<IProps> = () => {
     if (pickCountry) {
       form.append("code", String(pickCountry.code));
     } else {
-      toastErrorMessage("유효하지 않은 국가입니다. 다시 확인해주세요.");
+      toastErrorMessage(t("post.wrongCountry"));
       return;
     }
     if (editStory) {
@@ -156,9 +159,9 @@ const StoryPostingPage: FC<IProps> = () => {
         setContent("");
         setCountry("");
         if (editStory) {
-          toastSuccessMessage("연대기를 수정했습니다.");
+          toastSuccessMessage(t("story.edit"));
         } else {
-          toastSuccessMessage("연대기를 성공적으로 작성했습니다.");
+          toastSuccessMessage(t("story.done"));
         }
       })
       .catch((error) => {
@@ -170,21 +173,21 @@ const StoryPostingPage: FC<IProps> = () => {
   return (
     <StoryPostingWrapper>
       <LGLayout>
-        <h2 className="main-title">제목</h2>
+        <h2 className="main-title">{t("post.title")}</h2>
         <input
           value={title}
           onChange={onChangeTitle}
-          placeholder="연대기 제목 입력"
+          placeholder={t("post.titlePlaceHolder")}
           className="basic-input title-input"
           type="text"
         />
-        <h2 className="main-title">국가 지정</h2>
+        <h2 className="main-title">{t("post.selectCountry")}</h2>
         <AutoCompleteForm
           countryOptions={countryOptions}
           selectedCountry={selectedCountry}
           setCountry={setCountry}
         />
-        <h2 className="main-title">지역 지정</h2>
+        <h2 className="main-title">{t("post.selectRegion")}</h2>
         <CountrySelectMap
           lat={editStory?.lat}
           lng={editStory?.lng}
@@ -192,11 +195,13 @@ const StoryPostingPage: FC<IProps> = () => {
           setMarker={setMarker}
           setRegion={setRegion}
         />
-        <h2 className="main-title">선택 지역</h2>
+        <h2 className="main-title">{t("post.region")}</h2>
         <h3>{region}</h3>
-        <h2 className="main-title">내용작성</h2>
+        <h2 className="main-title">{t("post.writeContent")}</h2>
         <Editor prevContent={editStory?.content} setContent={setContent} isStory={true} />
-        <h2 className="main-title">{editStory ? "썸네일 변경" : "썸네일 업로드"}</h2>
+        <h2 className="main-title">
+          {editStory ? t("post.thumbnailChange") : t("post.thumbnailUpload")}
+        </h2>
         <ImageDragger
           fileList={fileList}
           setFileList={setFileList}
@@ -205,7 +210,7 @@ const StoryPostingPage: FC<IProps> = () => {
           single={true}
         />
         <div className="editor-btn-wrapper">
-          <button onClick={() => router.back()}>뒤로가기</button>
+          <button onClick={() => router.back()}>{t("main.back")}</button>
           <button
             onClick={() => {
               if (
@@ -214,15 +219,16 @@ const StoryPostingPage: FC<IProps> = () => {
               ) {
                 toastConfirmMessage(
                   onClickSubmit,
-                  "지역 좌표를 입력하지 않으셨어요, 이상태로 진행할까요? (현재 좌표 : 대한민국 서울 , 이름모를 어딘가)",
-                  "진행해주세요"
+                  t("post.confirmWithoutRegion"),
+                  t("main.yes"),
+                  t("main.no")
                 );
               } else {
                 onClickSubmit();
               }
             }}
           >
-            {editStory ? "연대기 수정" : "연대기 업로드"}
+            {editStory ? t("post.editStory") : t("post.uploadStory")}
           </button>
         </div>
       </LGLayout>
@@ -232,7 +238,7 @@ const StoryPostingPage: FC<IProps> = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req }: GetServerSidePropsContext) => {
+    async ({ req, locale }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       if (axios.defaults.headers) {
         axios.defaults.headers.Cookie = "";
@@ -242,7 +248,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
       await store.dispatch(getUserInfoAction());
       return {
-        props: {},
+        props: {
+          ...(await serverSideTranslations(locale as string, ["common"])),
+        },
       };
     }
 );

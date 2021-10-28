@@ -13,12 +13,14 @@ import SubCommentForm from "../SubCommentForm";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
 import shortid from "shortid";
+import { useTranslation } from "react-i18next";
 interface IProps {
   comment: IComment;
   revalidateComments: () => Promise<IComment[] | undefined>;
 }
 
 const Comment: FC<IProps> = ({ comment, revalidateComments }) => {
+  const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const [onSubCommentForm, onChangeSubCommentForm, setSubCommentForm] = useToggle(false);
   const [onSubCommentList, onChangeSubCommentList, setSubCommentList] = useToggle(true);
@@ -49,7 +51,7 @@ const Comment: FC<IProps> = ({ comment, revalidateComments }) => {
         .delete(`/comment/${comment?.id}`)
         .then(() => {
           revalidateComments();
-          toastSuccessMessage("댓글을 성공적으로 삭제했습니다.");
+          toastSuccessMessage(t("message.comment.remove"));
         })
         .catch((error) => {
           toastErrorMessage(error);
@@ -61,16 +63,16 @@ const Comment: FC<IProps> = ({ comment, revalidateComments }) => {
   const onClickLikeOrDisLike = useCallback(
     (value: string) => {
       if (!user) {
-        toastErrorMessage("로그인이 필요합니다.");
+        toastErrorMessage(t("message.needToLogin"));
         return;
       }
       axios
         .patch(`/comment/${value}/${comment?.id}`)
         .then(() => {
           if (value === "like") {
-            toastSuccessMessage("댓글 좋아요!💓");
+            toastSuccessMessage(t("message.like"));
           } else {
-            toastSuccessMessage("댓글 좋아요 취소💔");
+            toastSuccessMessage(t("message.dislike"));
           }
           revalidateComments();
           dispatch(getUserInfoAction());
@@ -101,7 +103,12 @@ const Comment: FC<IProps> = ({ comment, revalidateComments }) => {
           {isOwner && (
             <a
               onClick={() => {
-                toastConfirmMessage(onClickConfirmDelete, "이 댓글을 삭제할까요?", "삭제해주세요.");
+                toastConfirmMessage(
+                  onClickConfirmDelete,
+                  t("message.comment.confirmRemove"),
+                  `${t("main.yes")} ${t("message.removeIt")}`,
+                  t("main.no")
+                );
               }}
             >
               <DeleteOutlined />
@@ -116,7 +123,7 @@ const Comment: FC<IProps> = ({ comment, revalidateComments }) => {
         <div onClick={onChangeSubCommentList} className="more-subComment">
           <button className="more-subComment-btn">
             <span className="count">{comment?.subComments?.length}</span>
-            개의 답글
+            {t("post.counting")}
             <DownCircleOutlined rotate={onSubCommentList ? 180 : 0} />
           </button>
         </div>

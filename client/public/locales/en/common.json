@@ -6,10 +6,27 @@
   },
   "message": {
     "needToLogin": "You need to login to access.",
-    "doneComment": "Add Comment.",
-    "failComment": "Please enter comment.",
-    "editMomment": "",
-    "postMomment": ""
+    "removeIt": "Delete it",
+    "comment": {
+      "done": "Leave a comment.",
+      "fail": "Please enter comment.",
+      "remove": "deleted comment.",
+      "confirmRemove": "Do you realy want to delete this comment?"
+    },
+    "reply": {
+      "done": "Leave a reply.",
+      "fail": "Please enter reply.",
+      "remove": "deleted reply.",
+      "confirmRemove": "Do you realy want to delete this reply?"
+    },
+    "story": {
+      "done": "Posted story.",
+      "fail": "Please enter reply.",
+      "remove": "deleted story.",
+      "confirmRemove": "Do you realy want to delete this story?"
+    },
+    "like": "Like it! 💓",
+    "dislike": "Dislike 💔"
   },
   "post": {
     "wrongCountry": "That's wrong country name. Please check it one's again.",
@@ -17,11 +34,14 @@
     "prevStory": "Previous Story",
     "nextStory": "Next Story",
     "storyInfo": "Story Information",
+    "storyRegion": "Region",
+    "storyDelete": "Delete Story",
+    "storyManagement": "Post Management",
+    "storyEdit": "Edit Story",
     "postTop": "Post Top",
     "userProfile": "User Profile",
     "commentView": "View Comments",
     "anotherPost": "Another Posts",
-    "back": "Go back",
     "cancel": "Cancel",
     "story": "Story",
     "title": "Title",
@@ -33,12 +53,20 @@
     "somewhere": "Somewhere",
     "writeContent": "Write Content",
     "writeContentPlaceHolder": "Please Enter content here.",
-    "thumbnailUpload": "Thumbnail Upload",
+    "thumbnailUpload": "Upload Thumbnail",
+    "thumbnailChange": "Change Thumbnail",
     "imageDrag": "Image drag or select",
-    "uploadStory": "Upload Story",
-    "uploadMoment": "Upload Moment",
+    "uploadStory": "Post Story",
+    "editStory": "Edit Story",
+    "uploadMoment": "Post Moment",
     "uploadComment": "Comment",
-    "selectKeyword": "Select Keyword"
+    "commentPlaceHolder": "Write Comment",
+    "uploadReply": "Reply",
+    "replyPlaceHolder": "Write Reply",
+    "selectKeyword": "Select Keyword",
+    "noKeyword": "Please select Keyword.",
+    "noRegion": "Please select Region on map.",
+    "confirmWithoutRegion": "You didn't mark your story region on map. Is't all right? (Default Coordinate : Seoul, South Korea)"
   },
   "main": {
     "world": "Entire World",
@@ -49,12 +77,19 @@
     "latestMoment": "Latest Moments",
     "postingMention": "How about your trip?",
     "moment": "Moments",
+    "story": "Story",
+    "news": "Travel News",
     "postCount": "Posts",
     "comment": "Comments",
     "like": "Likes",
     "view": "Views",
-    "news": "Travel News",
-    "more": "More"
+    "more": "More",
+    "back": "Go back",
+    "noMoment": "No Momment 😥",
+    "noStory": "No Story 😰",
+    "noPost": "No Post 😥",
+    "yes": "Yes",
+    "no": "No"
   },
   "country": {
     "country": "Country",
@@ -95,7 +130,6 @@
       "send": "Send",
       "sendCertification": ", We send Certification Number to your email. Check it and write number.",
       "noCertification": "Please write Certification Number.",
-      "back": "Go back",
       "noFirstName": "Please write first name down.",
       "noLastName": "Please write last name down.",
       "noName": "Please write name down.",
@@ -137,12 +171,12 @@
     "newStory": "New Story",
     "moment": "Moment",
     "story": "Story",
-    "news": "News"
+    "news": "Travel News"
   },
   "poster": {
     "moment": "Moment : Are you losing your way while trip? Why don't you ask us!",
-    "story": "Story : What happend your trip?",
+    "story": "Story : Could you tell us your beautiful story?",
     "covid": "Safe Travel : You can check countries which we can go to trip.",
-    "storyMain": "Can you tell us your story?"
+    "storyMain": "Could you tell us your beautiful story?"
   }
 }

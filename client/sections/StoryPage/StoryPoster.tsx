@@ -2,10 +2,11 @@ import React, { FC, memo } from "react";
 import styled from "@emotion/styled";
 import { FLEX_STYLE, SM_SIZE } from "config";
 import tw from "twin.macro";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   image?: string;
-  name?: string;
+  name: string | null;
 }
 
 const StoryPosterWrapper = styled.section`
@@ -24,6 +25,7 @@ const StoryPosterWrapper = styled.section`
 `;
 
 const StoryPoster: FC<IProps> = ({ name, image }) => {
+  const { t } = useTranslation("common");
   return (
     <StoryPosterWrapper
       style={
@@ -43,9 +45,7 @@ const StoryPoster: FC<IProps> = ({ name, image }) => {
       }
     >
       <div className="overlay" />
-      <h1 className="title">
-        {name ? name + " 연대기" : "당신의 여행에는 어떤 스토리가 있었나요?"}
-      </h1>
+      <h1 className="title">{name ? name + ` ${t("nav.story")}` : t("poster.storyMain")}</h1>
     </StoryPosterWrapper>
   );
 };

@@ -9,12 +9,14 @@ import { memo } from "react";
 import { toastConfirmMessage } from "@components/ConfirmToastify";
 import axios from "axios";
 import { toastErrorMessage, toastSuccessMessage } from "config";
+import { useTranslation } from "react-i18next";
 interface IProps {
   subComment: ISubComment;
   revalidateComments: () => void;
 }
 
 const SubComment: FC<IProps> = ({ subComment, revalidateComments }) => {
+  const { t } = useTranslation("common");
   const { user } = useSelector((state: RootState) => state.user);
   const [isOwner, setIsOwner] = useState(false);
   useEffect(() => {
@@ -29,7 +31,7 @@ const SubComment: FC<IProps> = ({ subComment, revalidateComments }) => {
         .delete(`/comment/subComment/${subComment?.id}`)
         .then(() => {
           revalidateComments();
-          toastSuccessMessage("답글을 성공적으로 삭제했습니다.");
+          toastSuccessMessage(t("message.reply.remove"));
         })
         .catch((error) => {
           toastErrorMessage(error);
@@ -49,7 +51,12 @@ const SubComment: FC<IProps> = ({ subComment, revalidateComments }) => {
         <a
           className="delete-btn"
           onClick={() => {
-            toastConfirmMessage(onClickConfirmDelete, "이 답글을 삭제할까요?", "삭제해주세요.");
+            toastConfirmMessage(
+              onClickConfirmDelete,
+              t("message.comment.confirmRemove"),
+              `${t("main.yes")} ${t("message.removeIt")}`,
+              t("main.no")
+            );
           }}
         >
           <DeleteOutlined />

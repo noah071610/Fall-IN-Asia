@@ -9,9 +9,11 @@ import Scrollspy from "react-scrollspy";
 import ReactHtmlParser from "react-html-parser";
 import { noRevalidate } from "config";
 import shortid from "shortid";
+import { useTranslation } from "react-i18next";
 interface IProps {}
 
 const PostAsideNav: FC<IProps> = () => {
+  const { t } = useTranslation("common");
   const { query } = useRouter();
   const [headers, setHeaders] = useState<string[]>([]);
   const [hdClassList, setHdClassList] = useState<string[]>([]);
@@ -55,7 +57,7 @@ const PostAsideNav: FC<IProps> = () => {
           offset={100}
         >
           <a href="#main_post">
-            <h1>본문</h1>
+            <h1>{t("post.postTop")}</h1>
           </a>
           {headers?.map((v, i) => {
             return (
@@ -67,26 +69,28 @@ const PostAsideNav: FC<IProps> = () => {
 
           {query?.storyId && (
             <a href="#user_info">
-              <h1>연기대 정보</h1>
+              <h1>{t("post.storyInfo")}</h1>
             </a>
           )}
           {query?.storyId && (
             <a href="#user_info">
-              <h2>작성자 프로필</h2>
+              <h2>{t("post.userProfile")}</h2>
             </a>
           )}
           {query?.storyId && (
             <a href="#comment">
-              <h2>댓글 보기</h2>
+              <h2>{t("post.commentView")}</h2>
             </a>
           )}
-          <a href="#article_list">{query?.storyId ? <h2>다른 연대기</h2> : <h1>다른 기사</h1>}</a>
+          <a href="#article_list">
+            <h2>{t("post.anotherPost")}</h2>
+          </a>
           <a
             onClick={() => {
               query?.storyId ? router.push(`/story`) : router.push(`/news`);
             }}
           >
-            <h1>뒤로가기</h1>
+            <h1>{t("main.back")}</h1>
           </a>
         </Scrollspy>
       </div>
