@@ -10,6 +10,7 @@ import { memo } from "react";
 import { mainSlice } from "slices/main";
 import axios from "axios";
 import { IComment } from "@typings/db";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   isStory: boolean;
@@ -17,6 +18,7 @@ interface IProps {
 }
 
 const CommentForm: FC<IProps> = ({ isStory, revalidateComments }) => {
+  const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
@@ -85,7 +87,7 @@ const CommentForm: FC<IProps> = ({ isStory, revalidateComments }) => {
             <img src={user ? user.icon : DEFAULT_ICON_URL} alt="user-icon" />
           </div>
           <TextareaAutosize
-            placeholder={user ? "댓글 작성하기." : "로그인이 필요합니다."}
+            placeholder={user ? t("post.uploadComment") : t("message.needToLogin")}
             disabled={user ? false : true}
             value={content}
             onChange={onChangeContent}

@@ -13,12 +13,14 @@ import fetcher from "utils/fetcher";
 import useSWR from "swr";
 import { kmtb_Formatter } from "utils/kmbtFormatter";
 import shortid from "shortid";
+import { useTranslation } from "react-i18next";
 interface IProps {
   story: IStory;
   revalidateStory: () => void;
 }
 
 const PostComment: FC<IProps> = ({ story, revalidateStory }) => {
+  const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
@@ -69,7 +71,7 @@ const PostComment: FC<IProps> = ({ story, revalidateStory }) => {
         <li>
           <CommentOutlined />
           <span className="count">{comments && kmtb_Formatter(comments?.length)}</span>
-          <span>댓글</span>
+          <span>{t("main.comment")}</span>
         </li>
         <li
           onClick={
@@ -79,12 +81,12 @@ const PostComment: FC<IProps> = ({ story, revalidateStory }) => {
         >
           {liked ? <HeartFilled /> : <HeartOutlined />}
           <span className="count">{kmtb_Formatter(story?.likedUser?.length)}</span>
-          <span>좋아요</span>
+          <span>{t("main.like")}</span>
         </li>
         <li>
           <EyeOutlined />
           <span className="count">{kmtb_Formatter(story?.hit || 0)}</span>
-          <span>조회</span>
+          <span>{t("main.view")}</span>
         </li>
       </ul>
       <CommentForm revalidateComments={revalidateComments} isStory={true} />

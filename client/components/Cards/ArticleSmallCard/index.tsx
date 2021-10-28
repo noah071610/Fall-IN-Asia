@@ -5,6 +5,7 @@ import React, { FC, memo, useCallback } from "react";
 import { ArticleSmallCardWrapper } from "./styles";
 import dayjs from "dayjs";
 import { NO_IMAGE_URL } from "config";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   moment?: IMoment;
@@ -13,6 +14,7 @@ interface IProps {
   isSearchPage?: boolean;
 }
 const ArticleSmallCard: FC<IProps> = ({ isSearchPage, moment, story, article }) => {
+  const { t } = useTranslation("common");
   const onClickArticleSmallCard = useCallback(() => {
     if (moment) {
       router.push(`/country/${moment?.code}/${moment?.id}`);
@@ -35,9 +37,9 @@ const ArticleSmallCard: FC<IProps> = ({ isSearchPage, moment, story, article }) 
         </div>
         <div className="small-card-info">
           <span>
-            {story && `${story?.country?.name}/연대기`}
-            {article && `${article?.country?.name}/${article?.type}`}
-            {moment && `${moment?.country?.name}/${moment?.type}`}
+            {story && t(`country.${story?.country?.name}`) + " / " + t(`nav.story`)}
+            {article && t(`country.${article?.country?.name}`) + " / " + t(`nav.${article?.type}`)}
+            {moment && t(`country.${moment?.country?.name}`) + " / " + t(`nav.${moment?.type}`)}
           </span>
           {(moment || story) && <span>{(moment || story)?.user?.name}</span>}
           <span>{dayjs((moment || story || article)?.createdAt).format("YYYY/MM/DD")}</span>

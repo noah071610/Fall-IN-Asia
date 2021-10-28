@@ -4,6 +4,7 @@ import React, { FC, memo, useCallback } from "react";
 import styled from "@emotion/styled";
 import { FLEX_STYLE, SM_SIZE } from "config";
 import tw from "twin.macro";
+import { useTranslation } from "react-i18next";
 
 const CountryImageCardWrapper = styled.div`
   ${tw`relative rounded-2xl w-full h-full cursor-pointer`}
@@ -40,6 +41,7 @@ interface IProps {
 }
 
 const CountryImageCard: FC<IProps> = ({ country, isMain }) => {
+  const { t } = useTranslation("common");
   const onClickArticleCountryImageCard = useCallback(() => {
     if (isMain) {
       router.push(`/country/${country?.code}`);
@@ -52,7 +54,7 @@ const CountryImageCard: FC<IProps> = ({ country, isMain }) => {
       onClick={onClickArticleCountryImageCard}
       style={{ backgroundImage: `url(${country.image_src})` }}
     >
-      <h3>{country.name}</h3>
+      <h3>{t(`country.${country.name}`)}</h3>
       <div className="overlay" />
     </CountryImageCardWrapper>
   );

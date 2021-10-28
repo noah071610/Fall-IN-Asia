@@ -9,7 +9,6 @@ export const MomentCardWrapper = styled.article`
     a {
       transition: none;
       &:hover {
-        ${tw`font-bold`}
         color: ${BLUE_COLOR};
       }
     }

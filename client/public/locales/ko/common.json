@@ -1,12 +1,16 @@
 {
-  "needToLogin": "로그인이 필요합니다.",
-  "viewProfile": "프로필 보기",
   "about": {
     "footerMention": "아시아를 사랑하는 여행자들의 작은 커뮤니티",
     "developer": "개발자 정보",
     "terms": "이용약관"
   },
+  "message": {
+    "needToLogin": "로그인이 필요합니다.",
+    "doneComment": "댓글을 성공적으로 작성했습니다.",
+    "failComment": "댓글을 입력해주세요."
+  },
   "post": {
+    "wrongCountry": "유효하지 않은 국가입니다. 다시 확인해주세요.",
     "goToProfile": "프로필 구경가기",
     "prevStory": "이전 연대기",
     "nextStory": "다음 연대기",
@@ -31,12 +35,13 @@
     "imageDrag": "이미지 드래그 또는 선택",
     "uploadStory": "스토리 올리기",
     "uploadMoment": "모멘트 올리기",
+    "uploadComment": "댓글 작성",
     "selectKeyword": "키워드 선택"
   },
   "main": {
     "world": "전세계",
-    "popularStory": "인기 여행지",
-    "popularCountry": "인기 연대기",
+    "popularStory": "인기 연대기",
+    "popularCountry": "인기 여행지",
     "popularNews": "인기 소식",
     "latestStory": "최근 연대기",
     "latestMoment": "최근 모멘트",
@@ -45,7 +50,9 @@
     "postCount": "포스팅수",
     "comment": "댓글",
     "like": "좋아요",
-    "view": "조회"
+    "view": "조회",
+    "news": "관련 소식",
+    "more": "더보기"
   },
   "country": {
     "country": "국가",
@@ -65,9 +72,42 @@
     "myanmar": "미얀마",
     "india": "인도",
     "srilanka": "스리랑카",
-    "nepal": "네팔"
+    "nepal": "네팔",
+    "northEastAsia": "동북아시아",
+    "southEastAsia": "동남아시아",
+    "southAsia": "남아시아"
   },
   "modal": {
+    "login": {
+      "sayhi": "님! 어서오세요.",
+      "email": "이메일",
+      "password": "비밀번호",
+      "socialLogin": "소셜 로그인",
+      "signup": "회원가입",
+      "signupDone": "회원가입을 완료했어요! 이제 로그인 할 수 있습니다.",
+      "firstName": "성",
+      "lastName": "이름",
+      "terms": "Fall IN Asia의 이용약관, 개인정보취급방침 에 동의합니다.",
+      "termsMore": "약관보기",
+      "certification": "인증번호 발송",
+      "send": "인증번호 발송",
+      "sendCertification": "로 이메일이 발송되었습니다. 인증번호를 확인해주세요.",
+      "noCertification": "이메일 인증번호가 필요합니다.",
+      "back": "뒤로가기",
+      "noFirstName": "성을 적어주세요.",
+      "noLastName": "이름을 적어주세요.",
+      "noName": "이름을 적어주세요.",
+      "noEmail": "이메일을 작성해주세요.",
+      "notEnoughEmail": "이메일을 정확히 적어주세요.",
+      "needCertification": "인증번호가 6자리가 필요합니다.",
+      "wrongEmail": "이메일의 형식을 올바르게 작성해주세요.",
+      "noPassword": "비밀번호를 작성해주세요.",
+      "notEnoughPassword": "비밀번호는 9자 이상이어야 합니다.",
+      "needToAgreeTerms": "약관에 동의해주세요."
+    }
+  },
+  "popup": {
+    "viewProfile": "프로필 보기",
     "newStory": "새 연대기",
     "login": "로그인",
     "profile": "내 프로필",
@@ -75,11 +115,13 @@
     "notice": "알림"
   },
   "nav": {
+    "move": "이동",
+    "login": "로그인",
     "community": "한인 커뮤니티",
-    "shareInfo": "여행정보 공유",
+    "travelInfo": "여행정보 공유",
     "scam": "사기 경보",
     "accompany": "동행자 모집",
-    "selectCountry": "국가선택",
+    "selectCountry": "국가 선택",
     "allCountry": "아시아전체",
     "popular": "인기순",
     "latest": "최신순",

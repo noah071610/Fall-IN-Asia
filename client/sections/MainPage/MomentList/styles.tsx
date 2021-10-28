@@ -11,7 +11,6 @@ export const MomentListWrapper = styled.section`
       button {
         ${tw`px-0 pb-1 mx-2`}
         &:hover {
-          font-weight: bold;
           color: ${BLUE_COLOR};
         }
       }

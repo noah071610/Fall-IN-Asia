@@ -31,7 +31,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher, noRevalidate);
   const [upImg, setUpImg] = useState<File[]>([]);
   const [content, setContent] = useState("");
-  const [type, setType] = useState("키워드 선택");
+  const [type, setType] = useState(t("post.selectKeyword") as string);
   const [selectedCountry, setCountry] = useState("");
   const [prevImageList, setPrevImageList] = useState<string[]>([]);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -69,7 +69,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
   }, [query, countryOptions]);
 
   const onClickSubmit = useCallback(() => {
-    if (type === "키워드 선택") {
+    if (type === t("post.selectKeyword")) {
       toastErrorMessage("키워드를 선택해주세요.");
       return;
     }
@@ -166,10 +166,10 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
                 onChange={handleTypeChange}
                 style={{ width: "180px" }}
               >
-                <Option value="한인 커뮤니티">{t("main.community")}</Option>
-                <Option value="여행정보 공유">{t("main.shareInfo")}</Option>
-                <Option value="사기 경보">{t("main.scam")}</Option>
-                <Option value="동행자 모집">{t("main.accompany")}</Option>
+                <Option value="community">{t("nav.community")}</Option>
+                <Option value="travelInfo">{t("nav.travelInfo")}</Option>
+                <Option value="scam">{t("nav.scam")}</Option>
+                <Option value="accompany">{t("nav.accompany")}</Option>
               </Select>
             </div>
             <EditorWithoutImage content={content} setContent={setContent} />{" "}

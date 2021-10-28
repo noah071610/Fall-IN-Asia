@@ -3,8 +3,9 @@ import { ICountry } from "@typings/db";
 import CountryListCard from "@components/Cards/CountryListCard";
 import styled from "@emotion/styled";
 import tw from "twin.macro";
-import { SM_SIZE, XLG_SIZE } from "config";
+import { XLG_SIZE } from "config";
 import shortid from "shortid";
+import { useTranslation } from "react-i18next";
 const CountryAllviewWrapper = styled.div`
   ${tw`w-full rounded-2xl bg-white p-4 pb-8 mt-4`}
   .country-card-wrapper {
@@ -31,28 +32,29 @@ interface IProps {
 }
 
 const CountryAllview: FC<IProps> = ({ countries, isMain }) => {
+  const { t } = useTranslation("common");
   return (
     <CountryAllviewWrapper style={isMain ? {} : { marginTop: 0, paddingTop: 0 }}>
-      <h3>동북아시아</h3>
+      <h3>{t("country.northEastAsia")}</h3>
       <div className="country-card-wrapper">
         {countries
-          ?.filter((v) => v.continent === "동북아시아")
+          ?.filter((v) => v.continent === "northEastAsia")
           .map((v) => {
             return <CountryListCard isMain={isMain} country={v} key={shortid.generate()} />;
           })}
       </div>
-      <h3>동남아시아</h3>
+      <h3>{t("country.southEastAsia")}</h3>
       <div className="country-card-wrapper">
         {countries
-          ?.filter((v) => v.continent === "동남아시아")
+          ?.filter((v) => v.continent === "southEastAsia")
           .map((v) => {
             return <CountryListCard isMain={isMain} country={v} key={shortid.generate()} />;
           })}
       </div>
-      <h3>남아시아</h3>
+      <h3>{t("country.southAsia")}</h3>
       <div className="country-card-wrapper">
         {countries
-          ?.filter((v) => v.continent === "남아시아")
+          ?.filter((v) => v.continent === "southAsia")
           .map((v) => {
             return <CountryListCard isMain={isMain} country={v} key={shortid.generate()} />;
           })}

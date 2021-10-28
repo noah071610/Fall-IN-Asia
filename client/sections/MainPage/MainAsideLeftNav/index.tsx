@@ -19,7 +19,7 @@ import { useTranslation } from "next-i18next";
 interface IProps {}
 
 const MainAsideLeftNav: FC<IProps> = () => {
-  const { t } = useTranslation("main");
+  const { t } = useTranslation("common");
   const { query } = useRouter();
   const { data: country } = useSWR<ICountry>(
     query?.code ? `/country/${query?.code}` : null,
@@ -45,10 +45,14 @@ const MainAsideLeftNav: FC<IProps> = () => {
           />
         </div>
         <div className="country-desc">
-          <a onClick={onClickCountry}>{country?.name || t("allCountry")}</a>
+          <a onClick={onClickCountry}>
+            {country?.name ? t(`country.${country?.name}`) : t("nav.allCountry")}
+          </a>
           {country && (
             <div>
-              <span>포스팅수 : {country?.moments?.length + country?.stories?.length}</span>
+              <span>
+                {t("main.postCount")} : {country?.moments?.length + country?.stories?.length}
+              </span>
             </div>
           )}
         </div>
@@ -58,7 +62,7 @@ const MainAsideLeftNav: FC<IProps> = () => {
           <a>
             <li className={query?.type === "community" ? "menu-active" : ""}>
               <FontAwesomeIcon className="icon" icon={faHandshake} />
-              <span>{t("community")}</span>
+              <span>{t("nav.community")}</span>
             </li>
           </a>
         </Link>
@@ -66,7 +70,7 @@ const MainAsideLeftNav: FC<IProps> = () => {
           <a>
             <li className={query?.type === "trip" ? "menu-active" : ""}>
               <FontAwesomeIcon className="icon" icon={faPlaneDeparture} />
-              <span>{t("shareInfo")}</span>
+              <span>{t("nav.travelInfo")}</span>
             </li>
           </a>
         </Link>
@@ -74,7 +78,7 @@ const MainAsideLeftNav: FC<IProps> = () => {
           <a>
             <li className={query?.type === "scam alert" ? "menu-active" : ""}>
               <FontAwesomeIcon className="icon" icon={faExclamationCircle} />
-              <span>{t("scam")}</span>
+              <span>{t("nav.scam")}</span>
             </li>
           </a>
         </Link>
@@ -82,7 +86,7 @@ const MainAsideLeftNav: FC<IProps> = () => {
           <a>
             <li className={query?.type === "accompany" ? "menu-active" : ""}>
               <FontAwesomeIcon className="icon" icon={faUsers} />
-              <span>{t("accompany")}</span>
+              <span>{t("nav.accompany")}</span>
             </li>
           </a>
         </Link>
@@ -91,7 +95,7 @@ const MainAsideLeftNav: FC<IProps> = () => {
             <a>
               <li>
                 <FontAwesomeIcon className="icon" icon={faGlobe} />
-                <span>{t("allCountry")}</span>
+                <span>{t("nav.allCountry")}</span>
               </li>
             </a>
           </Link>
@@ -100,7 +104,7 @@ const MainAsideLeftNav: FC<IProps> = () => {
             <a>
               <li>
                 <FontAwesomeIcon className="icon" icon={faGlobe} />
-                <span>{t("selectCountry")}</span>
+                <span>{t("nav.selectCountry")}</span>
               </li>
             </a>
           </Link>

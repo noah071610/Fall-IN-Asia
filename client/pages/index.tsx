@@ -23,7 +23,7 @@ interface IProps {
 
 const MomentMainPage: FC<IProps> = ({ initialMoments }) => {
   const { query } = useRouter();
-  const { t } = useTranslation("main");
+  const { t } = useTranslation("common");
   const [filter, setFilter] = useState("");
   const { data: moments, setSize } = useSWRInfinite(
     (index) => `/moment?page=${index + 1}&filter=${filter}&type=${query?.type || ""}`,
@@ -45,11 +45,11 @@ const MomentMainPage: FC<IProps> = ({ initialMoments }) => {
         <meta property="og:url" content="https://fallinasia.com" />
       </Head>
       <MainLayout>
-        <h2 className="main-title">{t("popularCountry")}</h2>
+        <h2 className="main-title">{t("main.popularCountry")}</h2>
         <CountryList slidesPerView={3.2} isMain={true} />
-        <h2 className="main-title">{t("popularStory")}</h2>
+        <h2 className="main-title">{t("main.popularStory")}</h2>
         <MainPopularArticleSlide />
-        <h2 className="main-title">{t("moment")}</h2>
+        <h2 className="main-title">{t("main.moment")}</h2>
         <MomentPostingForm />
         <MomentList filter={filter} setFilter={setFilter} setSize={setSize} moments={moments} />
       </MainLayout>
@@ -73,7 +73,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       return {
         props: {
           initialMoments,
-          ...(await serverSideTranslations(locale!, ["common", "main", "post"])),
+          ...(await serverSideTranslations(locale as string, ["common"])),
         },
       };
     }

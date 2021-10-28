@@ -1,12 +1,18 @@
 {
-  "needToLogin": "You need to login to access.",
-  "viewProfile": "View Profile",
   "about": {
     "footerMention": "Travel Community for traveler who loves Asia",
     "developer": "Who made it?",
     "terms": "Terms"
   },
+  "message": {
+    "needToLogin": "You need to login to access.",
+    "doneComment": "Add Comment.",
+    "failComment": "Please enter comment.",
+    "editMomment": "",
+    "postMomment": ""
+  },
   "post": {
+    "wrongCountry": "That's wrong country name. Please check it one's again.",
     "goToProfile": "Go to Profile",
     "prevStory": "Previous Story",
     "nextStory": "Next Story",
@@ -31,6 +37,7 @@
     "imageDrag": "Image drag or select",
     "uploadStory": "Upload Story",
     "uploadMoment": "Upload Moment",
+    "uploadComment": "Comment",
     "selectKeyword": "Select Keyword"
   },
   "main": {
@@ -45,7 +52,9 @@
     "postCount": "Posts",
     "comment": "Comments",
     "like": "Likes",
-    "view": "Views"
+    "view": "Views",
+    "news": "Travel News",
+    "more": "More"
   },
   "country": {
     "country": "Country",
@@ -65,9 +74,42 @@
     "myanmar": "Myanmar",
     "india": "India",
     "srilanka": "Sri Lanka",
-    "nepal": "Nepal"
+    "nepal": "Nepal",
+    "northEastAsia": "North East Asia",
+    "southEastAsia": "South East Asia",
+    "southAsia": "South Asia"
   },
   "modal": {
+    "login": {
+      "sayhi": ", Welcome!",
+      "email": "Email",
+      "password": "Password",
+      "socialLogin": "Social Login",
+      "signup": "Sign up",
+      "signupDone": "Welcome to Fall IN Asia! You can sign in from now on.",
+      "firstName": "Firstname",
+      "lastName": "Lastname",
+      "terms": "Creating an account means you’re okay with our Terms of Privacy Policy",
+      "termsMore": "More",
+      "certification": "Certification",
+      "send": "Send",
+      "sendCertification": ", We send Certification Number to your email. Check it and write number.",
+      "noCertification": "Please write Certification Number.",
+      "back": "Go back",
+      "noFirstName": "Please write first name down.",
+      "noLastName": "Please write last name down.",
+      "noName": "Please write name down.",
+      "noEmail": "Please write email.",
+      "notEnoughEmail": "Please write email right.",
+      "needCertification": "Please write Certification Number.",
+      "wrongEmail": "Please write email right.",
+      "noPassword": "Please write password.",
+      "notEnoughPassword": "Please write password more than 9",
+      "needToAgreeTerms": "Please agree Terms."
+    }
+  },
+  "popup": {
+    "viewProfile": "View Profile",
     "newStory": "New Story",
     "login": "Sign in",
     "profile": "My Profile",
@@ -75,8 +117,10 @@
     "notice": "Notification"
   },
   "nav": {
+    "move": "Move",
+    "login": "Sign in",
     "community": "Community",
-    "shareInfo": "Travel Information",
+    "travelInfo": "Travel Information",
     "scam": "Scam alert",
     "accompany": "Accompany",
     "selectCountry": "Select Country",

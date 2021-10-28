@@ -7,6 +7,7 @@ import useOnScreen from "@hooks/useOnScreen";
 import MomentCard from "@components/Cards/MomentCard";
 import { BLUE_COLOR, NO_POST_URL } from "config";
 import shortid from "shortid";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   moments: IMoment[][] | undefined;
@@ -16,6 +17,7 @@ interface IProps {
 }
 
 const MomentList: FC<IProps> = ({ filter, moments, setSize, setFilter }) => {
+  const { t } = useTranslation("common");
   const [isReachingEnd, setIsReachingEnd] = useState(true);
   const ref = useRef<HTMLDivElement>(null);
   const isVisible = useOnScreen(ref);
@@ -38,29 +40,26 @@ const MomentList: FC<IProps> = ({ filter, moments, setSize, setFilter }) => {
     <MomentListWrapper>
       <div className="content-wrapper">
         <div className="content-filter">
-          <button
-            style={filter === "" ? { fontWeight: "bold", color: BLUE_COLOR } : {}}
-            onClick={() => setFilter("")}
-          >
-            최신순
+          <button style={filter === "" ? { color: BLUE_COLOR } : {}} onClick={() => setFilter("")}>
+            {t("nav.latest")}
           </button>
           <button
-            style={filter === "popular" ? { fontWeight: "bold", color: BLUE_COLOR } : {}}
+            style={filter === "popular" ? { color: BLUE_COLOR } : {}}
             onClick={() => setFilter("popular")}
           >
-            인기순
+            {t("nav.popular")}
           </button>
           <button
-            style={filter === "view" ? { fontWeight: "bold", color: BLUE_COLOR } : {}}
+            style={filter === "view" ? { color: BLUE_COLOR } : {}}
             onClick={() => setFilter("view")}
           >
-            조회순
+            {t("nav.mostView")}
           </button>
           <button
-            style={filter === "comment" ? { fontWeight: "bold", color: BLUE_COLOR } : {}}
+            style={filter === "comment" ? { color: BLUE_COLOR } : {}}
             onClick={() => setFilter("comment")}
           >
-            댓글많은순
+            {t("nav.mostComment")}
           </button>
         </div>
         {momentsData.length > 0 ? (

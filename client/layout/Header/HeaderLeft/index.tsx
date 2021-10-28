@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { FLEX_STYLE, MD_SIZE } from "config";
 import tw from "twin.macro";
 import styled from "@emotion/styled";
+import { useTranslation } from "react-i18next";
 
 const HeaderLeftWrapper = styled.ul`
   ${FLEX_STYLE("flex-start", "center")};
@@ -13,13 +14,8 @@ const HeaderLeftWrapper = styled.ul`
   }
 `;
 
-const leftHeaderLists = [
-  { name: "모멘트", path: "/" },
-  { name: "연대기", path: "/story" },
-  { name: "관광소식", path: "/news" },
-];
-
 const HeaderLeft = () => {
+  const { t } = useTranslation("common");
   const { asPath } = useRouter();
   const [activePath, setActivePath] = useState("");
   useEffect(() => {
@@ -44,6 +40,12 @@ const HeaderLeft = () => {
         return;
     }
   }, [asPath]);
+
+  const leftHeaderLists = [
+    { name: t("nav.moment"), path: "/" },
+    { name: t("nav.story"), path: "/story" },
+    { name: t("nav.news"), path: "/news" },
+  ];
   return (
     <HeaderLeftWrapper>
       <Link href="/">

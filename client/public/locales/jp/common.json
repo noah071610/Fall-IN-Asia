@@ -1,12 +1,16 @@
 {
-  "needToLogin": "ログインが必要です。",
-  "viewProfile": "プロフィール",
   "about": {
     "footerMention": "私達の小さなアジア旅行コミュニティー",
     "developer": "開発者",
-    "terms": "規約"
+    "terms": "利用規約"
+  },
+  "message": {
+    "needToLogin": "ログインが必要です。",
+    "doneComment": "コメントしました。",
+    "failComment": "コメントを書いてください。"
   },
   "post": {
+    "wrongCountry": "正しくない国の名前です。もう一度確認してください。",
     "goToProfile": "プロフィール一覧",
     "prevStory": "以前のストリー",
     "nextStory": "次のストリー",
@@ -15,7 +19,6 @@
     "userProfile": "作成者プロフィール",
     "commentView": "コメント",
     "anotherPost": "他のポスト",
-    "back": "以前のページ",
     "cancel": "キャンセル",
     "story": "ストリー",
     "title": "タイトル",
@@ -31,6 +34,7 @@
     "imageDrag": "イメージドラッグ",
     "uploadStory": "ストリー投稿",
     "uploadMoment": "モメント投稿",
+    "uploadComment": "コメント",
     "selectKeyword": "カテゴリー選択"
   },
   "main": {
@@ -45,7 +49,10 @@
     "postCount": "ポスト数",
     "comment": "コメント",
     "like": "いいね",
-    "view": "照会"
+    "view": "照会",
+    "news": "観光ニュース",
+    "more": "もっと見る",
+    "back": "戻るボタン"
   },
   "country": {
     "country": "国家",
@@ -65,9 +72,42 @@
     "myanmar": "ミャンマー",
     "india": "インド",
     "srilanka": "スリランカ",
-    "nepal": "ネパール"
+    "nepal": "ネパール",
+    "northEastAsia": "東アジア",
+    "southEastAsia": "東南アジア",
+    "southAsia": "南アジア"
   },
   "modal": {
+    "login": {
+      "sayhi": "様！ようこそ",
+      "email": "メールアドレス",
+      "password": "パスワード",
+      "socialLogin": "ソーシャルログイン",
+      "signup": "新規登録",
+      "signupDone": "新規登録ありがとうございます。これからログインできます。",
+      "firstName": "名字",
+      "lastName": "名前",
+      "terms": "Fall IN Asiaの利用規約に同意します。",
+      "termsMore": "もっと見る",
+      "certification": "認証コード発送",
+      "send": "発送",
+      "sendCertification": "に認証コードを発送しました。確認してコードを書いてください。",
+      "noCertification": "認証コードを書いてください。",
+      "back": "戻るボタン",
+      "noFirstName": "名字を書いてください。",
+      "noLastName": "名前を書いてください。",
+      "noName": "名前を書いてください。",
+      "noEmail": "メールアドレスを書いてください。",
+      "notEnoughEmail": "メールアドレスを正しく書いてください。",
+      "needCertification": "認証コードが必要です。",
+      "wrongEmail": "メールアドレスを正しく書いてください。",
+      "noPassword": "パスワードを書いてください。",
+      "notEnoughPassword": "9文字以上書いてください。",
+      "needToAgreeTerms": "利用規約の同意が必要です。"
+    }
+  },
+  "popup": {
+    "viewProfile": "プロフィール",
     "newStory": "ストリー登録",
     "login": "ログイン",
     "profile": "プロフィール",
@@ -75,9 +115,11 @@
     "notice": "お知らせ"
   },
   "nav": {
+    "move": "移動",
+    "login": "ログイン",
     "community": "コミュニティー",
-    "shareInfo": "旅行情報",
-    "scam": "ぼったくり＆詐欺",
+    "travelInfo": "旅行情報",
+    "scam": "詐欺情報",
     "accompany": "仲間探し",
     "selectCountry": "国家選択",
     "allCountry": "アジア全体",

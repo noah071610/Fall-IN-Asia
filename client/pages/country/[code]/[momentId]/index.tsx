@@ -16,6 +16,8 @@ import { ICountry, IMoment } from "@typings/db";
 import Head from "next/head";
 import { GetServerSidePropsContext } from "next";
 import html2textConverter from "utils/html2textConverter";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   initialMoments: IMoment[][];
@@ -24,6 +26,7 @@ interface IProps {
 }
 
 const MomentPostPage: FC<IProps> = ({ initialMoments, initialCountry, initialMoment }) => {
+  const { t } = useTranslation("common");
   const { query } = useRouter();
   const [filter, setFilter] = useState("");
   const { data: moment, mutate: revalidateMoment } = useSWR<IMoment>(
@@ -80,9 +83,11 @@ const MomentPostPage: FC<IProps> = ({ initialMoments, initialCountry, initialMom
       </Head>
       <MainLayout>
         {moment && <MommentPost revalidateMoment={revalidateMoment} moment={moment} />}
-        <h2 className="main-title">{country?.name} 인기 연대기</h2>
+        <h2 className="main-title">
+          {country?.name} | {t("main.popularStory")}
+        </h2>
         <MainTopArticleSlide country={country} />
-        <h2 className="main-title">포스팅</h2>
+        <h2 className="main-title">{t("main.moment")}</h2>
         <MomentPostingForm />
         <MomentList filter={filter} setFilter={setFilter} setSize={setSize} moments={moments} />
       </MainLayout>
@@ -92,7 +97,7 @@ const MomentPostPage: FC<IProps> = ({ initialMoments, initialCountry, initialMom
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, params }: GetServerSidePropsContext) => {
+    async ({ req, params, locale }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       if (axios.defaults.headers) {
         axios.defaults.headers.Cookie = "";
@@ -110,7 +115,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
       initialMoments = [initialMoments];
       const initialCountry = await fetcher(`/country/${params?.code}`);
       return {
-        props: { initialMoment, initialMoments, initialCountry },
+        props: {
+          initialMoment,
+          initialMoments,
+          initialCountry,
+          ...(await serverSideTranslations(locale as string, ["common"])),
+        },
       };
     }
 );

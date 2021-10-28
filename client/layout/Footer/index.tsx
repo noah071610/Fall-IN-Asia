@@ -3,17 +3,19 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import React, { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { FooterWrapper } from "./styles";
 
 interface IProps {}
 
 const Footer: FC<IProps> = () => {
+  const { t } = useTranslation("common");
   return (
     <FooterWrapper>
       <div className="footer-inner">
         <div className="footer-top">
           <h1>fallinasia.com</h1>
-          <span>아시아를 사랑하는 여행자들의 작은 커뮤니티</span>
+          <span>{t("about.footerMention")}</span>
         </div>
         <div className="footer-list-wrapper">
           <div className="footer-list footer-sitemap">
@@ -21,17 +23,17 @@ const Footer: FC<IProps> = () => {
             <ul>
               <Link href="/">
                 <a>
-                  <li>모멘트</li>
+                  <li>{t("nav.moment")}</li>
                 </a>
               </Link>
               <Link href="/story">
                 <a>
-                  <li>연대기</li>
+                  <li>{t("nav.story")}</li>
                 </a>
               </Link>
               <Link href="/news">
                 <a>
-                  <li>관광뉴스</li>
+                  <li>{t("nav.news")}</li>
                 </a>
               </Link>
             </ul>
@@ -64,12 +66,12 @@ const Footer: FC<IProps> = () => {
             <ul>
               <Link href="/about">
                 <a>
-                  <li>개발자 정보</li>
+                  <li>{t("about.developer")}</li>
                 </a>
               </Link>
               <Link href="/about#policy">
                 <a>
-                  <li>이용 약관</li>
+                  <li>{t("about.terms")}</li>
                 </a>
               </Link>
             </ul>

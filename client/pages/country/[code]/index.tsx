@@ -15,6 +15,8 @@ import { IArticle, ICountry, IMoment } from "@typings/db";
 import MainNewsCardSlide from "@sections/MainPage/MainNewsCardSlide";
 import Head from "next/head";
 import { GetServerSidePropsContext } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   initialMoments: IMoment[][];
@@ -23,6 +25,7 @@ interface IProps {
 }
 
 const CountryMomentMainPage: FC<IProps> = ({ initialMoments, initialCountry, initialNews }) => {
+  const { t } = useTranslation("common");
   const { query } = useRouter();
   const [filter, setFilter] = useState("");
   const { data: moments, setSize } = useSWRInfinite<IMoment[]>(
@@ -52,7 +55,10 @@ const CountryMomentMainPage: FC<IProps> = ({ initialMoments, initialCountry, ini
   return (
     <>
       <Head>
-        <title>{country?.name} Moments | Fall IN Asia</title>
+        <title>
+          {country && country?.name.slice(0, 1).toUpperCase() + country?.name.slice(1)} Moments |
+          Fall IN Asia
+        </title>
         <meta
           name="description"
           content={`${country?.name}의 한인 커뮤니티, 여행정보, 동행자 정보 공유! Creators With : FAll IN Asia , 지금 아시아속으로 들어가봐요! | 여행 관광 투어 아시아여행 일본 대만 태국 베트남`}
@@ -68,13 +74,13 @@ const CountryMomentMainPage: FC<IProps> = ({ initialMoments, initialCountry, ini
       <MainLayout>
         {news && news.length > 0 && (
           <>
-            <h2 className="main-title">{country?.name + " 관련 소식 📢"}</h2>
+            <h2 className="main-title">{`${t(`country.${country?.name}`)}${t("main.news")} 📢`}</h2>
             <MainNewsCardSlide news={news} />
           </>
         )}
-        <h2 className="main-title">{country?.name + " 인기 연대기"}</h2>
+        <h2 className="main-title">{t("main.popularStory")}</h2>
         <MainTopArticleSlide country={country} />
-        <h2 className="main-title">포스팅</h2>
+        <h2 className="main-title">{t("main.moment")}</h2>
         <MomentPostingForm />
         <MomentList filter={filter} setFilter={setFilter} setSize={setSize} moments={moments} />
       </MainLayout>
@@ -84,7 +90,7 @@ const CountryMomentMainPage: FC<IProps> = ({ initialMoments, initialCountry, ini
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, params }: GetServerSidePropsContext) => {
+    async ({ req, params, locale }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       if (axios.defaults.headers) {
         axios.defaults.headers.Cookie = "";
@@ -98,7 +104,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const initialCountry = await fetcher(`/country/${params?.code}`);
       const initialNews = await fetcher(`/article/popular?code=${params?.code}`);
       return {
-        props: { initialMoments, initialCountry, initialNews },
+        props: {
+          initialMoments,
+          initialCountry,
+          initialNews,
+          ...(await serverSideTranslations(locale as string, ["common"])),
+        },
       };
     }
 );

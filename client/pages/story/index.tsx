@@ -32,6 +32,8 @@ import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
 import Head from "next/head";
 import { mainSlice } from "slices/main";
 import { GetServerSidePropsContext } from "next";
+import { useTranslation } from "react-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const StoryMainWrapper = styled.div`
   padding-top: 4rem;
@@ -88,6 +90,7 @@ interface IProps {
 }
 
 const StoryMainPage: FC<IProps> = ({ initiaStories, initialPopularStories }) => {
+  const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
@@ -112,18 +115,18 @@ const StoryMainPage: FC<IProps> = ({ initiaStories, initialPopularStories }) => 
 
   const storyPageNav = useMemo(() => {
     const nav_list = [
-      { name: "인기순", value: "popular" },
-      { name: "최신순", value: "" },
-      { name: "댓글많은순", value: "comment" },
-      { name: "조회순", value: "view" },
+      { name: t("nav.popular"), value: "popular" },
+      { name: t("nav.latest"), value: "" },
+      { name: t("nav.mostComment"), value: "comment" },
+      { name: t("nav.mostView"), value: "view" },
     ];
     if (query?.country) {
-      nav_list.push({ name: "국가전체보기", value: "all_country" });
+      nav_list.push({ name: t("nav.allCountry"), value: "all_country" });
     } else {
-      nav_list.push({ name: "국가선택", value: "country" });
+      nav_list.push({ name: t("nav.selectCountry"), value: "country" });
     }
     if (user) {
-      nav_list.push({ name: "연대기올리기", value: "post" });
+      nav_list.push({ name: t("nav.newStory"), value: "post" });
     }
     return nav_list;
   }, [query, user]);
@@ -203,15 +206,15 @@ const StoryMainPage: FC<IProps> = ({ initiaStories, initialPopularStories }) => 
         <XLGLayout>
           {onAllCountries && (
             <>
-              <h2 className="main-title">국가선택</h2>
+              <h2 className="main-title">{t("nav.selectCountry")}</h2>
               <MainCountryAllview isMain={false} countries={countries} />
             </>
           )}
           <h2 style={{ display: "flex", alignItems: "center" }} className="main-title">
-            인기연대기
+            {t("main.popularStory")}
             {popularStories && !onMorePopularStory && popularStories?.length > 1 && (
               <button className="more-story-btn" onClick={onClickMorePopularStoryBtn}>
-                더보기
+                {t("main.more")}
               </button>
             )}
           </h2>
@@ -231,7 +234,7 @@ const StoryMainPage: FC<IProps> = ({ initiaStories, initialPopularStories }) => 
               </div>
             </>
           )}
-          <h2 className="main-title">연대기</h2>
+          <h2 className="main-title">{t("post.story")}</h2>
           {stories && stories?.flat().length > 0 ? (
             <StoryArticleList grid={4} gap="1.5rem" setSize={setSize} stories={stories} />
           ) : (
@@ -251,7 +254,7 @@ const StoryMainPage: FC<IProps> = ({ initiaStories, initialPopularStories }) => 
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req }: GetServerSidePropsContext) => {
+    async ({ req, locale }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       if (axios.defaults.headers) {
         axios.defaults.headers.Cookie = "";
@@ -264,7 +267,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       initialStories = [initialStories];
       let initialPopularStories = await fetcher(`/story/popular`);
       return {
-        props: { initialStories, initialPopularStories },
+        props: {
+          initialStories,
+          initialPopularStories,
+          ...(await serverSideTranslations(locale as string, ["common"])),
+        },
       };
     }
 );

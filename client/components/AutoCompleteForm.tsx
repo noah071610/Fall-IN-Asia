@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { AutoComplete } from "antd";
 import { useCallback } from "react";
 import { memo } from "react";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   countryOptions: { value: string; code: string }[] | undefined;
@@ -16,6 +17,7 @@ const AutoCompleteForm: FC<IProps> = ({
   setCountry,
   disabled,
 }) => {
+  const { t } = useTranslation("common");
   const onChangeCountry = useCallback((value: string) => {
     setCountry(value);
   }, []);
@@ -31,7 +33,7 @@ const AutoCompleteForm: FC<IProps> = ({
       }
       value={selectedCountry}
       onChange={onChangeCountry}
-      placeholder="국가검색"
+      placeholder={t("post.selectCountryPlaceHolder")}
       filterOption={(inputValue, option) =>
         option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
       }

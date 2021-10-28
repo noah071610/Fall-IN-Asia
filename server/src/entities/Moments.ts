@@ -56,9 +56,9 @@ export class Moments {
   })
   @Column('enum', {
     name: 'type',
-    enum: ['한인 커뮤니티', '여행정보 공유', '사기 경보', '동행자 모집'],
+    enum: ['community', 'travelInfo', 'scam', 'accompany'],
   })
-  type: '한인 커뮤니티' | '여행정보 공유' | '사기 경보' | '동행자 모집';
+  type: 'community' | 'travelInfo' | 'scam' | 'accompany';
 
   @Index(['content'], { fulltext: true, parser: 'ngram' })
   @IsString()

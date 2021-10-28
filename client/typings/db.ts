@@ -1,17 +1,17 @@
 import { AxiosRequestConfig } from "axios";
 
 const continent = {
-  동북아시아: "동북아시아",
-  동남아시아: "동남아시아",
-  남아시아: "남아시아",
+  northEastAsia: "northEastAsia",
+  southEastAsia: "southEastAsia",
+  southAsia: "southAsia",
 } as const;
 type EContinent = typeof continent[keyof typeof continent];
 
 const momentType = {
-  커뮤니티: "한인 커뮤니티",
-  여행정보: "여행정보 공유",
-  사기경보: "사기 경보",
-  동행자모집: "동행자 모집",
+  community: "community",
+  travelInfo: "travelInfo",
+  scam: "scam",
+  accompany: "accompany",
 } as const;
 type EMomentType = typeof momentType[keyof typeof momentType];
 

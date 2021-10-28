@@ -18,6 +18,7 @@ import { getUserInfoAction } from "actions/user";
 import { kmtb_Formatter } from "utils/kmbtFormatter";
 import shortid from "shortid";
 import { RootState } from "slices";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   moment: IMoment;
@@ -25,6 +26,7 @@ interface IProps {
 }
 
 const MomentCard: FC<IProps> = ({ moment, isLast }) => {
+  const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
   const [userLike, setUserLike] = useState(0);
@@ -80,8 +82,9 @@ const MomentCard: FC<IProps> = ({ moment, isLast }) => {
       <div className="article-top">
         <NameSpace user={moment?.user} date={moment?.createdAt} />
         <div className="article-header">
-          <a onClick={onClickCountryTag}>{moment?.country?.name}</a>/
-          <a onClick={onClickTypeTag}>{moment?.type}</a>
+          <a onClick={onClickCountryTag}>{t(`country.${moment?.country?.name}`)}</a>
+          {" / "}
+          <a onClick={onClickTypeTag}>{t(`nav.${moment?.type}`)}</a>
         </div>
       </div>
       <div className="article">
@@ -117,7 +120,7 @@ const MomentCard: FC<IProps> = ({ moment, isLast }) => {
           <li onClick={onClickGotoPost}>
             <CommentOutlined />
             <span className="count">{moment?.comments?.length}</span>
-            <span>댓글</span>
+            <span>{t("main.comment")}</span>
           </li>
           <li
             onClick={
@@ -131,12 +134,12 @@ const MomentCard: FC<IProps> = ({ moment, isLast }) => {
                 ? (kmtb_Formatter(moment?.likedUser?.length) as number) + userLike
                 : kmtb_Formatter(moment?.likedUser?.length)}
             </span>
-            <span>좋아요</span>
+            <span>{t("main.like")}</span>
           </li>
           <li onClick={onClickGotoPost}>
             <EyeOutlined />
             <span className="count">{moment?.hit ? kmtb_Formatter(moment?.hit) : 0}</span>
-            <span>조회</span>
+            <span>{t("main.view")}</span>
           </li>
         </ul>
       </div>

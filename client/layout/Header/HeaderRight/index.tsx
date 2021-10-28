@@ -12,6 +12,7 @@ import { userSlice } from "slices/user";
 import styled from "@emotion/styled";
 import { FLEX_STYLE, MD_SIZE } from "config";
 import tw from "twin.macro";
+import { useTranslation } from "react-i18next";
 
 const HeaderRightWrapper = styled.ul`
   ${FLEX_STYLE("", "center")};
@@ -42,6 +43,7 @@ interface IProps {
 }
 
 const HeaderRight: FC<IProps> = ({ onClickSearchWord, children }) => {
+  const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const { onProfilePopUp, onNoticePopUp, onSearchPopUp } = useSelector(
     (state: RootState) => state.main
@@ -123,7 +125,7 @@ const HeaderRight: FC<IProps> = ({ onClickSearchWord, children }) => {
       ) : (
         <li className="header-list-login">
           <a className="header-list-anchor" onClick={() => onClickMenuPopup("login")}>
-            로그인
+            {t("nav.login")}
           </a>
         </li>
       )}

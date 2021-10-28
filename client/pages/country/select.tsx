@@ -14,6 +14,8 @@ import { getUserInfoAction } from "actions/user";
 import MainCountryAllview from "@components/CountryAllview";
 import tw from "twin.macro";
 import { GetServerSidePropsContext } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 
 const GobackBtn = styled.div`
   ${FLEX_STYLE("flex-end", "center")};
@@ -50,6 +52,7 @@ interface IProps {
 }
 
 const CountrySelectPage: FC<IProps> = ({ initialCountries }) => {
+  const { t } = useTranslation("common");
   const { data: countries } = useSWR<ICountry[]>("/country", fetcher, {
     fallbackData: initialCountries,
     ...noRevalidate,
@@ -67,18 +70,18 @@ const CountrySelectPage: FC<IProps> = ({ initialCountries }) => {
     if (pickCountry) {
       router.push(`/country/${pickCountry.code}`);
     } else {
-      toastErrorMessage("유효하지 않은 국가입니다. 다시 확인해주세요.");
+      toastErrorMessage(t("post.wrongCountry"));
       return;
     }
   }, [selectedCountry, countryOptions]);
   return (
     <LGLayout>
       <GobackBtn>
-        <button onClick={() => router.back()}>뒤로가기</button>
+        <button onClick={() => router.back()}>{t("post.back")}</button>
       </GobackBtn>
-      <h2 className="main-title">인기여행지</h2>
+      <h2 className="main-title">{t("main.popularCountry")}</h2>
       <CountryList isMain={true} slidesPerView={4.7} />
-      <h2 className="main-title">국가선택</h2>
+      <h2 className="main-title">{t("nav.selectCountry")}</h2>
       <AutoCompleteWrapper>
         <div className="search-bar">
           <AutoCompleteForm
@@ -88,7 +91,7 @@ const CountrySelectPage: FC<IProps> = ({ initialCountries }) => {
           />
         </div>
         <button className="search-btn" onClick={onClickGotoCountryPage}>
-          이동
+          {t("nav.move")}
         </button>
       </AutoCompleteWrapper>
       <MainCountryAllview isMain={true} countries={countries} />
@@ -98,7 +101,7 @@ const CountrySelectPage: FC<IProps> = ({ initialCountries }) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req }: GetServerSidePropsContext) => {
+    async ({ req, locale }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       if (axios.defaults.headers) {
         axios.defaults.headers.Cookie = "";
@@ -109,7 +112,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getUserInfoAction());
       const initialCountries = await fetcher(`/country`);
       return {
-        props: { initialCountries },
+        props: {
+          initialCountries,
+          ...(await serverSideTranslations(locale as string, ["common"])),
+        },
       };
     }
 );

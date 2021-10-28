@@ -8,6 +8,7 @@ import Checkbox from "antd/lib/checkbox/Checkbox";
 import router from "next/router";
 import useInput from "@hooks/useInput";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 interface IProps {
   onFinishSignUp: (values: any) => void;
   onClickSignUpToggle: (e: any) => void;
@@ -29,6 +30,7 @@ const tailFormItemLayout = {
 };
 
 const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSignUp }) => {
+  const { t } = useTranslation("common");
   const [form] = Form.useForm();
   const { signupDone } = useSelector((state: RootState) => state.user);
   const [email, onChangeEmail] = useInput("");
@@ -36,7 +38,7 @@ const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSig
 
   useEffect(() => {
     if (signupDone) {
-      toastSuccessMessage(`회원가입을 완료했어요! 로그인해주세요.`);
+      toastSuccessMessage(t("modal.login.signupDone"));
       setOnSignUp(false);
     }
   }, [signupDone]);
@@ -45,18 +47,18 @@ const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSig
     (e) => {
       e.preventDefault();
       if (!email || !email?.trim()) {
-        toastErrorMessage("이메일을 입력해주세요.");
+        toastErrorMessage(t("modal.login.noEmail"));
         return;
       }
       if (!email.match(/[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/)) {
-        toastErrorMessage("이메일을 형식을 올바르게 작성해주세요.");
+        toastErrorMessage(t("modal.login.wrongEmail"));
         return;
       }
       axios
         .post("/auth/email", { email })
         .then(() => {
           setOnEmailCheckForm(true);
-          toastSuccessMessage(`${email}로 이메일이 발송되었습니다. 인증번호를 확인해주세요.`);
+          toastSuccessMessage(`${email}${t("modal.login.sendCertification")}`);
         })
         .catch((error) => {
           toastErrorMessage(error);
@@ -81,23 +83,23 @@ const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSig
         <div className="email-wrapper">
           <Form.Item
             name="email"
-            label="이메일"
+            label={t("modal.login.email")}
             rules={[
               {
                 type: "email",
-                message: "이메일을 정확히 적어주세요.",
+                message: t("modal.login.notEnoughEmail"),
               },
               {
                 required: true,
-                message: "이메일을 작성해주세요.",
+                message: t("modal.login.noEmail"),
               },
             ]}
           >
             <input onChange={onChangeEmail} value={email} type="email" />
           </Form.Item>
-          <Form.Item label="인증번호 발송">
+          <Form.Item label={t("modal.login.certification")}>
             <button onClick={onClickSendEmailAuth}>
-              <span>인증번호 발송</span>
+              <span>{t("modal.login.send")}</span>
             </button>
           </Form.Item>
         </div>
@@ -105,11 +107,11 @@ const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSig
           <Form.Item
             className="email-check-wrapper"
             name="authNum"
-            label="인증번호입력"
+            label={t("modal.login.certification")}
             rules={[
               {
                 required: true,
-                message: "인증번호가 6자리가 필요합니다.",
+                message: t("modal.login.needCertification"),
               },
             ]}
           >
@@ -119,30 +121,30 @@ const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSig
         <div className="form-name">
           <Form.Item
             name="first_name"
-            label="성"
-            rules={[{ required: true, message: "성을 적어주세요.", whitespace: true }]}
+            label={t("modal.login.firstName")}
+            rules={[{ required: true, message: t("modal.login.noFirstName"), whitespace: true }]}
           >
             <input type="text" />
           </Form.Item>
           <Form.Item
             name="last_name"
-            label="이름"
-            rules={[{ required: true, message: "이름을 적어주세요.", whitespace: true }]}
+            label={t("modal.login.lastName")}
+            rules={[{ required: true, message: t("modal.login.noLastName"), whitespace: true }]}
           >
             <input type="text" />
           </Form.Item>
         </div>
         <Form.Item
           name="password"
-          label="비밀번호"
+          label={t("modal.login.password")}
           rules={[
             {
               required: true,
-              message: "비밀번호를 작성해주세요.",
+              message: t("modal.login.noPassword"),
             },
             {
               min: 9,
-              message: "비밀번호는 9자 이상이어야 합니다.",
+              message: t("modal.login.notEnoughPassword"),
             },
           ]}
           hasFeedback
@@ -156,23 +158,25 @@ const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSig
           rules={[
             {
               validator: (_, value) =>
-                value ? Promise.resolve() : Promise.reject(new Error("약관에 동의해주세요.")),
+                value
+                  ? Promise.resolve()
+                  : Promise.reject(new Error(t("modal.login.needCertification"))),
             },
           ]}
           {...tailFormItemLayout}
         >
           <Checkbox>
-            Fall IN Asia의 이용약관, 개인정보취급방침 에 동의합니다.{" "}
+            {t("modal.login.terms")}
             <a onClick={() => router.push("/about#policy")} className="term">
-              약관보기
+              {" " + t("modal.login.termsMore")}
             </a>
           </Checkbox>
         </Form.Item>
         <div className="btn-wrapper">
           <button className="btn-point" onSubmit={onFinishSignUp}>
-            회원가입
+            {t("modal.login.signup")}
           </button>
-          <button onClick={onClickSignUpToggle}>뒤로가기</button>
+          <button onClick={onClickSignUpToggle}>{t("modal.login.back")}</button>
         </div>
       </Form>
     </SignupModalWrapper>

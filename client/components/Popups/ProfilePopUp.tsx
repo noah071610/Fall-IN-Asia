@@ -7,6 +7,7 @@ import tw from "twin.macro";
 import styled from "@emotion/styled";
 import { logoutAction } from "actions/user";
 import { mainSlice } from "slices/main";
+import { useTranslation } from "react-i18next";
 
 const ProfilePopUpWrapper = styled.ul`
   ${tw`absolute right-0 bg-white shadow-md rounded-xl overflow-hidden w-auto`}
@@ -21,6 +22,7 @@ const ProfilePopUpWrapper = styled.ul`
 interface IProps {}
 
 const ProfilePopUp: FC<IProps> = () => {
+  const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
   return (
@@ -31,12 +33,12 @@ const ProfilePopUp: FC<IProps> = () => {
     >
       <Link href={`/me/${user?.id}`}>
         <a>
-          <li>내 프로필</li>
+          <li>{t("modal.profile")}</li>
         </a>
       </Link>
       <Link href={`/story/post`}>
         <a>
-          <li>새 연대기 작성</li>
+          <li>{t("modal.newStory")}</li>
         </a>
       </Link>
       <li
@@ -45,9 +47,9 @@ const ProfilePopUp: FC<IProps> = () => {
           dispatch(mainSlice.actions.toggleNoticePopUp());
         }}
       >
-        알림
+        {t("modal.notice")}
       </li>
-      <li onClick={() => dispatch(logoutAction())}>로그아웃</li>
+      <li onClick={() => dispatch(logoutAction())}>{t("modal.logout")}</li>
     </ProfilePopUpWrapper>
   );
 };

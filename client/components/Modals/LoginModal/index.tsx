@@ -12,12 +12,12 @@ import { userSlice } from "slices/user";
 import { FALL_IN_ASIA_LOGO, toastErrorMessage, toastSuccessMessage } from "config";
 import SignupModal from "../SignupModal";
 import { IUserRequestForm } from "@typings/db";
+import { useTranslation } from "react-i18next";
 
 interface IProps {}
 
-const prod: boolean = process.env.NODE_ENV === "production";
-
 const LoginModal: FC<IProps> = () => {
+  const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const { logInDone, user } = useSelector((state: RootState) => state.user);
   const [onSignUp, setOnSignUp] = useState(false);
@@ -31,20 +31,20 @@ const LoginModal: FC<IProps> = () => {
 
   const onFinishSignUp = useCallback((values: any) => {
     if (!values.email || !values.email?.trim()) {
-      toastErrorMessage("이메일을 입력해주세요.");
+      toastErrorMessage(t("modal.login.noEmail"));
       return;
     }
     if (!values.authNum || !values.authNum?.trim()) {
-      toastErrorMessage("이메일 인증번호가 필요합니다.");
+      toastErrorMessage(t("modal.login.noCertification"));
       return;
     }
     if (!values.password || !values.password?.trim()) {
-      toastErrorMessage("비밀번호를 입력해주세요.");
+      toastErrorMessage(t("modal.login.noPassword"));
       return;
     }
     let name = values?.first_name + values?.last_name;
     if (!name || !name?.trim()) {
-      toastErrorMessage("이름을 입력해주세요.");
+      toastErrorMessage(t("modal.login.noName"));
       return;
     }
     let form: IUserRequestForm = {
@@ -60,11 +60,11 @@ const LoginModal: FC<IProps> = () => {
     (e) => {
       e.preventDefault();
       if (!email || !email?.trim()) {
-        toastErrorMessage("이메일을 입력해주세요.");
+        toastErrorMessage(t("modal.login.noEmail"));
         return;
       }
       if (!password || !password?.trim()) {
-        toastErrorMessage("비밀번호를 입력해주세요.");
+        toastErrorMessage(t("modal.login.noPassword"));
         return;
       }
       let form: IUserRequestForm = {
@@ -77,7 +77,7 @@ const LoginModal: FC<IProps> = () => {
   );
   useEffect(() => {
     if (logInDone && user) {
-      toastSuccessMessage(`${user.name}님! 어서오세요.`);
+      toastSuccessMessage(`${user.name}${t("modal.login.sayhi")}`);
       dispatch(mainSlice.actions.toggleLoginModal());
       dispatch(userSlice.actions.logInClear());
     }
@@ -99,12 +99,12 @@ const LoginModal: FC<IProps> = () => {
           <form onSubmit={onSubmitLogin}>
             <h4>
               <FontAwesomeIcon className="login-icon" icon={faUser} />
-              <span>이메일</span>
+              <span>{t("modal.login.email")}</span>
             </h4>
             <input className="basic-input" value={email} onChange={onChangeEmail} type="email" />
             <h4>
               <FontAwesomeIcon className="login-icon" icon={faKey} />
-              <span>패스워드</span>
+              <span>{t("modal.login.password")}</span>
             </h4>
             <input
               className="basic-input"
@@ -114,16 +114,16 @@ const LoginModal: FC<IProps> = () => {
             />
             <div className="btn-wrapper">
               <button className="btn-point" onSubmit={onSubmitLogin}>
-                로그인
+                {t("nav.login")}
               </button>
-              <button onClick={onClickSignUpToggle}>간편회원가입</button>
+              <button onClick={onClickSignUpToggle}>{t("modal.login.signup")}</button>
             </div>
           </form>
         )}
         {!onSignUp && (
           <>
             <Divider className="social-login-divider" orientation="center">
-              소셜 로그인
+              {t("modal.login.socialLogin")}
             </Divider>
             <ul className="social-login-wrapper">
               <li className="google-icon">

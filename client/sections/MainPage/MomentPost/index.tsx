@@ -23,6 +23,7 @@ import fetcher from "utils/fetcher";
 import axios from "axios";
 import { getUserInfoAction } from "actions/user";
 import { kmtb_Formatter } from "utils/kmbtFormatter";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   moment: IMoment;
@@ -41,6 +42,7 @@ const momentImageSettings = {
 };
 
 const MomentPost: FC<IProps> = ({ moment, revalidateMoment }) => {
+  const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
@@ -110,7 +112,7 @@ const MomentPost: FC<IProps> = ({ moment, revalidateMoment }) => {
         <li>
           <CommentOutlined />
           <span className="count">{comments && kmtb_Formatter(comments?.length)}</span>
-          <span>댓글</span>
+          <span>{t("main.comment")}</span>
         </li>
         <li
           onClick={
@@ -120,12 +122,12 @@ const MomentPost: FC<IProps> = ({ moment, revalidateMoment }) => {
         >
           {liked ? <HeartFilled /> : <HeartOutlined />}
           <span className="count">{kmtb_Formatter(moment?.likedUser?.length)}</span>
-          <span>좋아요</span>
+          <span>{t("main.like")}</span>
         </li>
         <li>
           <EyeOutlined />
           <span className="count">{kmtb_Formatter(moment?.hit)}</span>
-          <span>조회</span>
+          <span>{t("main.view")}</span>
         </li>
       </ul>
       <CommentForm revalidateComments={revalidateComments} isStory={false} />
