@@ -72,7 +72,7 @@ const HeaderRight: FC<IProps> = ({ onClickSearchWord, children }) => {
 
   useEffect(() => {
     if (logoutDone) {
-      toastSuccessMessage("로그아웃 되었습니다.");
+      toastSuccessMessage(t("message.logout"));
       dispatch(userSlice.actions.logoutClear());
     }
   }, [logoutDone]);

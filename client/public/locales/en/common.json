@@ -4,25 +4,80 @@
     "developer": "Who made it?",
     "terms": "Terms"
   },
+  "search": {
+    "placeHolder": "Search",
+    "results": "Search Results",
+    "searchAgain": "Search Again"
+  },
+  "profile": {
+    "follow": "Followers",
+    "following": "Followings",
+    "noFollower": "Have no follower.",
+    "noFollowing": "Have no following.",
+    "followUser": "Follow user",
+    "unFollowUser": "Unfollow user",
+    "name": "Name",
+    "previous": "Previous ",
+    "new": "New ",
+    "password": "Password",
+    "introduce": "Introduce",
+    "or": " and ",
+    "people": "",
+    "changeProfileDone": "Change Profile",
+    "changePasswordDone": "Change password",
+    "editPorfile": "Edit Profile",
+    "changePassword": "Change Password",
+    "withdrawal": "Withdrawal",
+    "profile": "Profile",
+    "preposition": "'s ",
+    "count": "",
+    "number": "'s ",
+    "storyMap": "Story Map",
+    "countryList": "Visited Country List",
+    "noCountryList": "Opps! You've not been to country yet. we will place country list when you post story😉"
+  },
   "message": {
+    "logout": "Sign out",
     "needToLogin": "You need to login to access.",
     "removeIt": "Delete it",
+    "invalidEmail": "Invalid email address! Please check it again.",
+    "noUser": "Sorry, We couldn't find user information.",
+    "noImage": "Sorry, We couldn't find image.",
+    "withdrawal": "Successfully delete your account. Thank you for using our website.",
+    "profile": {
+      "notOwner": "Unauthorized Account. You can't access to another user profile.",
+      "follow": "Follow! :)",
+      "unFollow": "Unfollow! :(",
+      "editProfile": "Successfully Changed your Profile.",
+      "changePassword": "Successfully Changed your password."
+    },
+    "icon": {
+      "done": "Successfully Changed your Icon.",
+      "remove": "Successfully Remove your Icon.",
+      "confirmRemove": "Do you realy want to remove your icon?"
+    },
     "comment": {
-      "done": "Leave a comment.",
+      "done": "Successfully Leave a comment.",
       "fail": "Please enter comment.",
-      "remove": "deleted comment.",
+      "remove": "Successfully Delete a comment.",
       "confirmRemove": "Do you realy want to delete this comment?"
     },
     "reply": {
-      "done": "Leave a reply.",
+      "done": "Successfully Leave a reply.",
       "fail": "Please enter reply.",
-      "remove": "deleted reply.",
+      "remove": "Successfully Delete a reply.",
       "confirmRemove": "Do you realy want to delete this reply?"
     },
+    "moment": {
+      "done": "Successfully Post a moment.",
+      "edit": "Edited moment.",
+      "remove": "Successfully Delete a moment.",
+      "confirmRemove": "Do you realy want to delete this moment?"
+    },
     "story": {
-      "done": "Posted story.",
-      "fail": "Please enter reply.",
-      "remove": "deleted story.",
+      "done": "Successfully Post a story.",
+      "edit": "Edited story.",
+      "remove": "Successfully Delete a story.",
       "confirmRemove": "Do you realy want to delete this story?"
     },
     "like": "Like it! 💓",
@@ -43,6 +98,7 @@
     "commentView": "View Comments",
     "anotherPost": "Another Posts",
     "cancel": "Cancel",
+    "changeIcon": "Change Icon",
     "story": "Story",
     "title": "Title",
     "titlePlaceHolder": "Please Enter Title.",
@@ -59,6 +115,7 @@
     "uploadStory": "Post Story",
     "editStory": "Edit Story",
     "uploadMoment": "Post Moment",
+    "editMoment": "Edit Moment",
     "uploadComment": "Comment",
     "commentPlaceHolder": "Write Comment",
     "uploadReply": "Reply",
@@ -66,6 +123,7 @@
     "selectKeyword": "Select Keyword",
     "noKeyword": "Please select Keyword.",
     "noRegion": "Please select Region on map.",
+    "noTitle": "Please Enter Title.",
     "confirmWithoutRegion": "You didn't mark your story region on map. Is't all right? (Default Coordinate : Seoul, South Korea)"
   },
   "main": {
@@ -143,12 +201,16 @@
     }
   },
   "popup": {
+    "notice": {
+      "notice": "Notification",
+      "noNotice": "Empty Notification.",
+      "noNoticeDesc": "We will let you know when you post Moment, Story, comment. :)"
+    },
     "viewProfile": "View Profile",
     "newStory": "New Story",
     "login": "Sign in",
     "profile": "My Profile",
-    "logout": "Sign out",
-    "notice": "Notification"
+    "logout": "Sign out"
   },
   "nav": {
     "move": "Move",

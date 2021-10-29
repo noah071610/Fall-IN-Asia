@@ -16,11 +16,11 @@ const momentType = {
 type EMomentType = typeof momentType[keyof typeof momentType];
 
 const articleType = {
-  관광뉴스: "관광뉴스",
-  트렌드: "트렌드",
-  쇼핑: "쇼핑",
-  이색체험: "이색체험",
-  이벤트: "이벤트",
+  travelNews: "travelNews",
+  trand: "trand",
+  shopping: "shopping",
+  experience: "experience",
+  event: "event",
 } as const;
 type EArticleType = typeof articleType[keyof typeof articleType];
 

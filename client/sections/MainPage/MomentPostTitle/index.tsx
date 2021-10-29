@@ -10,12 +10,14 @@ import router from "next/router";
 import { toastConfirmMessage } from "@components/ConfirmToastify";
 import axios from "axios";
 import { toastErrorMessage, toastSuccessMessage } from "config";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   moment: IMoment;
 }
 
 const MomentPostTitle: FC<IProps> = ({ moment }) => {
+  const { t } = useTranslation("common");
   const [isOwner, setIsOwner] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
 
@@ -37,7 +39,7 @@ const MomentPostTitle: FC<IProps> = ({ moment }) => {
       axios
         .delete(`/moment/${moment?.id}`)
         .then(() => {
-          toastSuccessMessage("모멘트를 성공적으로 삭제했습니다.");
+          toastSuccessMessage(t("message.moment.remove"));
           router.push(`/country/${moment?.code}`);
         })
         .catch((error) => {
@@ -63,8 +65,9 @@ const MomentPostTitle: FC<IProps> = ({ moment }) => {
                 onClick={() =>
                   toastConfirmMessage(
                     onClickConfirmDelete,
-                    "정말 이 모멘트를 삭제할까요?",
-                    "삭제해주세요."
+                    t("message.moment.confirmRemove"),
+                    `${t("main.yes")} ${t("message.removeIt")}`,
+                    t("main.no")
                   )
                 }
               >

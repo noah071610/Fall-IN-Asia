@@ -28,8 +28,10 @@ import WithdrawalModal from "@components/Modals/WithdrawalModal";
 import UserProfile from "./UserProfile";
 import UserFollow from "./UserFollow";
 import UserPasswordEditForm from "./UserPasswordEditForm";
+import { useTranslation } from "react-i18next";
 
 const UserInfoAside = () => {
+  const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const { query } = useRouter();
   const { data: userInfo, mutate } = useSWR<IUserInfo>(
@@ -75,7 +77,7 @@ const UserInfoAside = () => {
 
   useEffect(() => {
     if (addUserIconDone) {
-      toastSuccessMessage("아이콘을 성공적으로 바꿨습니다!");
+      toastSuccessMessage(t("message.icon.done"));
       mutate();
       dispatch(userSlice.actions.addUserIconClear());
       dispatch(mainSlice.actions.closeModal());
@@ -84,7 +86,7 @@ const UserInfoAside = () => {
 
   useEffect(() => {
     if (followUserDone) {
-      toastSuccessMessage("이 유저를 팔로우 합니다.");
+      toastSuccessMessage(t("message.profile.follow"));
       mutate();
       dispatch(getUserInfoAction());
       dispatch(userSlice.actions.followUserClear());
@@ -93,7 +95,7 @@ const UserInfoAside = () => {
 
   useEffect(() => {
     if (unfollowUserDone) {
-      toastSuccessMessage("이 유저를 언팔로우 했습니다.");
+      toastSuccessMessage(t("message.profile.unFollow"));
       mutate();
       dispatch(getUserInfoAction());
       dispatch(userSlice.actions.unfollowUserClear());
@@ -102,7 +104,7 @@ const UserInfoAside = () => {
 
   useEffect(() => {
     if (deleteUserIconDone) {
-      toastSuccessMessage("아이콘을 삭제했습니다.");
+      toastSuccessMessage(t("message.icon.remove"));
       mutate();
       dispatch(userSlice.actions.deleteUserIconClear());
     }
@@ -110,7 +112,7 @@ const UserInfoAside = () => {
 
   useEffect(() => {
     if (changeUserInfoDone) {
-      toastSuccessMessage("프로필을 성공적으로 수정했습니다.");
+      toastSuccessMessage(t("message.profile.editProfile"));
       mutate();
       dispatch(userSlice.actions.addUserIconClear());
       return;
@@ -119,7 +121,7 @@ const UserInfoAside = () => {
 
   useEffect(() => {
     if (changeUserPasswordDone) {
-      toastSuccessMessage("비밀번호를 성공적으로 수정했습니다. 다시 로그인 해주세요.");
+      toastSuccessMessage(t("message.profile.changePassword"));
       router.push("/");
       dispatch(userSlice.actions.deleteUserIconClear());
     }
@@ -128,7 +130,7 @@ const UserInfoAside = () => {
   const onClickUserSetting = useCallback(
     (type: string) => {
       if (!isOwner) {
-        toastErrorMessage("본인프로필만 변경 가능합니다.");
+        toastErrorMessage(t("message.profile.notOwner"));
         return;
       }
       switch (type) {
@@ -154,12 +156,12 @@ const UserInfoAside = () => {
 
   const onClickFollowBtn = useCallback(() => {
     if (!user) {
-      toastErrorMessage("로그인 후 이용 가능합니다.");
+      toastErrorMessage(t("message.needToLogin"));
       dispatch(mainSlice.actions.toggleLoginModal());
       return;
     }
     if (!userInfo?.id) {
-      toastErrorMessage("유저를 찾을 수 없습니다.");
+      toastErrorMessage(t("message.noUser"));
       return;
     }
     if (isFollowed) {
@@ -203,21 +205,27 @@ const UserInfoAside = () => {
           )}
           {isOwner && onUserProfileEdit && (
             <div className="submit-btn-wrapper">
-              <button onClick={() => onClickUserSetting("user_info")}>프로필 수정 완료</button>
-              <button onClick={() => setUserProfileEdit(false)}>취소</button>
+              <button onClick={() => onClickUserSetting("user_info")}>
+                {t("profile.changeProfileDone")}
+              </button>
+              <button onClick={() => setUserProfileEdit(false)}>{t("post.cancel")}</button>
             </div>
           )}
           {isOwner && onPasswordChange && (
             <div className="submit-btn-wrapper">
-              <button onClick={() => onClickUserSetting("password")}>비밀번호 변경 완료</button>
-              <button onClick={() => setPasswordChange(false)}>취소</button>
+              <button onClick={() => onClickUserSetting("password")}>
+                {t("profile.changePasswordDone")}
+              </button>
+              <button onClick={() => setPasswordChange(false)}>{t("post.cancel")}</button>
             </div>
           )}
           {isOwner && !onUserProfileEdit && !onPasswordChange && (
             <div className="submit-btn-wrapper">
-              <button onClick={onClickUserInfoEditBtn}>프로필 수정</button>
-              <button onClick={onClickPasswordChange}>비밀번호 변경</button>
-              <button onClick={() => onClickUserSetting("withdrawal")}>회원탈퇴</button>
+              <button onClick={onClickUserInfoEditBtn}>{t("profile.editPorfile")}</button>
+              <button onClick={onClickPasswordChange}>{t("profile.changePassword")}</button>
+              <button onClick={() => onClickUserSetting("withdrawal")}>
+                {t("profile.withdrawal")}
+              </button>
             </div>
           )}
           {!isOwner && (
@@ -227,7 +235,7 @@ const UserInfoAside = () => {
                   icon={isFollowed ? faUserMinus : faUserPlus}
                   style={{ marginRight: "0.7rem" }}
                 />
-                유저 {isFollowed && "언"}팔로우
+                {isFollowed ? t("profile.unFollowUser") : t("profile.followUser")}
               </button>
             </div>
           )}

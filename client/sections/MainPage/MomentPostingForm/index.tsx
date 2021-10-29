@@ -109,9 +109,9 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
         setType(t("post.selectKeyword"));
         setOnPostingForm(false);
         if (editMoment) {
-          toastSuccessMessage("모멘트를 수정했습니다.");
+          toastSuccessMessage(t("message.moment.edit"));
         } else {
-          toastSuccessMessage("모멘트를 성공적으로 작성했습니다.");
+          toastSuccessMessage(t("message.moment.done"));
         }
       })
       .catch((error) => {

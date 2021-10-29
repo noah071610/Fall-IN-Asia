@@ -171,7 +171,7 @@ const StoryPostPage: FC<IProps> = ({ initialStories, initialStory }) => {
                       onClick={() =>
                         toastConfirmMessage(
                           onClickConfirmDelete,
-                          t("message.comment.confirmRemove"),
+                          t("message.story.confirmRemove"),
                           `${t("main.yes")} ${t("message.removeIt")}`,
                           t("main.no")
                         )

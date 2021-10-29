@@ -18,6 +18,8 @@ import MoreButton from "@components/MoreButton";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import { GetServerSidePropsContext } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 
 const CountryRouteMap = dynamic(() => import("@components/Maps/CountryRouteMap"));
 
@@ -26,6 +28,7 @@ interface IProps {
 }
 
 const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
+  const { t } = useTranslation("common");
   const { query } = useRouter();
   const [noticePage, setNoticePage] = useState(5);
   const [isOwner, setIsOwner] = useState(false);
@@ -65,18 +68,27 @@ const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
   return (
     <>
       <Head>
-        <title>{userInfo?.name}님의 프로필 | Fall In Asia</title>
+        <title>
+          {userInfo?.name}
+          {t("profile.preposition")} {t("profile.profile")} | Fall In Asia
+        </title>
         <meta
           name="description"
-          content={`${userInfo?.name}님의 프로필 - ${userInfo?.introduce} | 여행 관광 투어 아시아여행 일본 대만 태국 베트남`}
+          content={`${userInfo?.name}${t("profile.preposition")} ${t("profile.profile")} - ${
+            userInfo?.introduce
+          } | 여행 관광 투어 아시아여행 일본 대만 태국 베트남`}
         />
         <meta
           property="og:title"
-          content={`${userInfo?.name}님의 프로필 - ${userInfo?.introduce} | Fall IN Asia`}
+          content={`${userInfo?.name}${t("profile.preposition")} ${t("profile.profile")} - ${
+            userInfo?.introduce
+          } | Fall IN Asia`}
         />
         <meta
           property="og:description"
-          content={`${userInfo?.name}님의 프로필 - ${userInfo?.introduce} | 여행 관광 투어 아시아여행 일본 대만 태국 베트남`}
+          content={`${userInfo?.name}${t("profile.preposition")} ${t("profile.profile")} - ${
+            userInfo?.introduce
+          } | 여행 관광 투어 아시아여행 일본 대만 태국 베트남`}
         />
         <meta property="og:image" content={userInfo?.icon} />
         <meta property="og:url" content={`https://fallinasia.com/me/${userInfo?.id}`} />
@@ -84,7 +96,7 @@ const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
       <UserInfoLayout>
         {isOwner && userInfo && userInfo?.notices.length > 0 ? (
           <>
-            <h2 className="main-title">알림</h2>
+            <h2 className="main-title">{t("popup.notice.notice")}</h2>
             <ul className="notice-list">
               {userInfo?.notices?.slice(0, noticePage).map((v: INotice, i) => (
                 <ListCard
@@ -100,7 +112,7 @@ const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
             {userInfo?.notices?.length > 5 && (
               <div className="notice-more-btn">
                 <button onClick={onClickMoreNotice}>
-                  <span>더보기</span>
+                  <span>{t("main.more")}</span>
                   <PlusCircleOutlined />
                 </button>
               </div>
@@ -108,26 +120,29 @@ const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
           </>
         ) : (
           <>
-            <h2 className="main-title">알림이 없습니다</h2>
-            <p className="no-notice-wrapper">
-              유저님이 모멘트,연대기,코멘트 작성 및 수정등 활동을 하면 저희가 알려줄게요!
-            </p>
+            <h2 className="main-title">{t("popup.notice.noNotice")}</h2>
+            <p className="no-notice-wrapper">{t("popup.notice.noNoticeDesc")}</p>
           </>
         )}
-        <h2 className="main-title">{userInfo?.name}님의 연대기 지도</h2>
+        <h2 className="main-title">
+          {userInfo?.name}
+          {t("profile.preposition")}
+          {t("profile.storyMap")}
+        </h2>
         <div className="route-map-wrapper">
           <CountryRouteMap stories={userInfo?.stories || []} />
         </div>
-        <h2 className="main-title">다녀온 국가 리스트</h2>
+        <h2 className="main-title">{t("profile.countryList")}</h2>
         {userInfo && userInfo?.stories.length > 0 ? (
           <VisitedCountryList stories={userInfo?.stories} />
         ) : (
-          <h4 className="no-countries">
-            아직 다녀온 국가가 없어요, 연대기를 작성하면 자동으로 갱신되요.😉
-          </h4>
+          <h4 className="no-countries">{t("profile.noCountryList")}</h4>
         )}
         <h2 className="main-title">
-          {userInfo?.name}님의 작성 연대기 {userInfo?.stories?.length || 0}개
+          {userInfo?.name}
+          {t("profile.preposition")}
+          {t("main.story")} {userInfo?.stories?.length || 0}
+          {t("profile.count")}
         </h2>
         {userInfo && userInfo?.stories.length > 0 ? (
           <>
@@ -149,12 +164,15 @@ const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
         ) : (
           <div className="no-post-wrapper">
             <img src={NO_POST_URL} alt="no-post" />
-            <h4>아직 작성한 연대기가 없습니다.</h4>
+            <h4>{t("main.noStory")}</h4>
           </div>
         )}
 
         <h2 className="main-title">
-          {userInfo?.name}님의 작성 모멘트 {userInfo?.moments?.length || 0}개
+          {userInfo?.name}
+          {t("profile.preposition")}
+          {t("main.moment")} {userInfo?.moments?.length || 0}
+          {t("profile.count")}
         </h2>
         {userInfo && userInfo?.moments.length > 0 ? (
           <ul className="moment-list">
@@ -162,7 +180,9 @@ const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
               <ListCard
                 onClickListCard={() => router.push(`/country/${v.code}/${v.id}`)}
                 key={i}
-                title={`${v.country.name}/${v.type}/${v.id}번째모멘트`}
+                title={`${t(`country.${v.country.name}`)}/${t(`nav.${v.type}`)}/${v.id}${t(
+                  "profile.number"
+                )}${t("main.moment")}`}
                 content={v.content}
               />
             ))}
@@ -177,7 +197,7 @@ const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
         ) : (
           <div className="no-post-wrapper">
             <img src={NO_POST_URL} alt="no-post" />
-            <h4>아직 작성한 모멘트가 없습니다.</h4>
+            <h4>{t("main.noMoment")}</h4>
           </div>
         )}
       </UserInfoLayout>
@@ -187,7 +207,7 @@ const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, params }: GetServerSidePropsContext) => {
+    async ({ req, params, locale }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       if (axios.defaults.headers) {
         axios.defaults.headers.Cookie = "";
@@ -198,7 +218,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getUserInfoAction());
       const initialUserInfo = await fetcher(`/user/${params?.userId}`);
       return {
-        props: { initialUserInfo },
+        props: { initialUserInfo, ...(await serverSideTranslations(locale as string, ["common"])) },
       };
     }
 );

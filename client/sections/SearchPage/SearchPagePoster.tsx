@@ -4,6 +4,7 @@ import { mainSlice } from "slices/main";
 import styled from "@emotion/styled";
 import { FLEX_STYLE, SM_SIZE, XLG_SIZE } from "config";
 import tw from "twin.macro";
+import { useTranslation } from "react-i18next";
 
 const SearchPagePosterWrapper = styled.section`
   ${tw`w-full h-60`}
@@ -45,6 +46,7 @@ interface IProps {
 }
 
 const SearchPagePoster: FC<IProps> = ({ searchWord }) => {
+  const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const onClickSearchAnotherBtn = useCallback((e) => {
     e.stopPropagation();
@@ -58,8 +60,8 @@ const SearchPagePoster: FC<IProps> = ({ searchWord }) => {
       }}
     >
       <div className="poster-inner">
-        <h1>{`"${searchWord}" 키워드 검색 결과`}</h1>
-        <button onClick={onClickSearchAnotherBtn}>다시 검색하기</button>
+        <h1>{`"${searchWord}" ${t("search.results")}`}</h1>
+        <button onClick={onClickSearchAnotherBtn}>{t("search.searchAgain")}</button>
       </div>
     </SearchPagePosterWrapper>
   );

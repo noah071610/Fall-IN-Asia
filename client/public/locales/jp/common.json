@@ -4,26 +4,81 @@
     "developer": "開発者",
     "terms": "利用規約"
   },
+  "search": {
+    "placeHolder": "キーワード入力",
+    "results": "検索結果",
+    "searchAgain": "再び検索"
+  },
+  "profile": {
+    "follow": "フォロー",
+    "following": "フォロイング",
+    "noFollower": "まだフォロワーがいません。",
+    "noFollowing": "まだフォロイングがいません。",
+    "followUser": "フォロー",
+    "unFollowUser": "フォロー解除",
+    "name": "お名前",
+    "previous": "以前の",
+    "new": "新しい",
+    "password": "パスワード",
+    "introduce": "紹介",
+    "or": "様、後",
+    "people": "人が",
+    "changeProfileDone": "プロフィール変更",
+    "changePasswordDone": "パスワードを変更",
+    "editPorfile": "プロフィール変更",
+    "changePassword": "パスワード変更",
+    "withdrawal": "脱会",
+    "profile": "プロフィール",
+    "preposition": "様の",
+    "count": "個",
+    "number": "番の",
+    "storyMap": "ストリー地図",
+    "countryList": "訪ねた国",
+    "noCountryList": "まだ訪ねた国がありません。ストリーを投稿すると自動に更新します！😉"
+  },
   "message": {
+    "logout": "ログアウト致しました。",
     "needToLogin": "ログインが必要です。",
     "removeIt": "削除してください。",
+    "invalidEmail": "正しくないメールアドレスです。",
+    "noUser": "ユーザーがありませんでした。",
+    "noImage": "イメージがありません。もう一度確認してください。",
+    "withdrawal": "脱会致しました。どうもありがとうございました。",
+    "profile": {
+      "notOwner": "本人ではないと変更出来ません。",
+      "follow": "このユーザーをフォローします！",
+      "unFollow": "フォローを解除致しました。",
+      "editProfile": "プロフィールを変更致しました。",
+      "changePassword": "パスワードを成功的に変更しました。またログインしてください。"
+    },
+    "icon": {
+      "done": "アイコンを変えました。",
+      "remove": "アイコンを削除致しました。",
+      "confirmRemove": "アイコンを削除しても宜しいですか？"
+    },
     "comment": {
       "done": "コメント致しました。",
       "fail": "コメントを書いてください。",
       "remove": "コメントを削除致しました。",
-      "confirmRemove": "コメントを削除してもいいですか？"
+      "confirmRemove": "コメントを削除しても宜しいですか？"
     },
     "reply": {
       "done": "返信致しました。",
       "fail": "返信を書いてください。",
       "remove": "返信を削除致しました。",
-      "confirmRemove": "返信を削除してもいいですか？"
+      "confirmRemove": "返信を削除しても宜しいですか？"
+    },
+    "moment": {
+      "done": "モメントを投稿致しました。",
+      "edit": "モメントを修正致しました。",
+      "remove": "モメントを削除致しました。",
+      "confirmRemove": "モメントを削除しても宜しいですか？"
     },
     "story": {
-      "done": "Posted story.",
-      "fail": "Please enter reply.",
-      "remove": "ポストを削除致しました。",
-      "confirmRemove": "Do you realy want to remove this story?"
+      "done": "ストリーを投稿致しました。",
+      "edit": "ストリーを修正致しました。",
+      "remove": "ストリーを削除致しました。",
+      "confirmRemove": "ストリーを削除しても宜しいですか？"
     },
     "like": "いいね!💓",
     "dislike": "いいね取り消し💔"
@@ -44,6 +99,7 @@
     "commentView": "コメント",
     "anotherPost": "他のポスト",
     "cancel": "キャンセル",
+    "changeIcon": "アイコン変更",
     "story": "ストリー",
     "title": "タイトル",
     "titlePlaceHolder": "タイトルを入力してください",
@@ -60,6 +116,7 @@
     "uploadStory": "ストリー投稿",
     "editStory": "ストリー修正",
     "uploadMoment": "モメント投稿",
+    "editMoment": "モメント修正",
     "uploadComment": "コメント",
     "commentPlaceHolder": "コメント作成",
     "uploadReply": "返信",
@@ -67,7 +124,8 @@
     "selectKeyword": "カテゴリー選択",
     "noKeyword": "キーワードを選択してください。",
     "noRegion": "地域を選択してください。",
-    "confirmWithoutRegion": "地域をせんたくしてないです。大丈夫ですか？ (基本設定の地域 : 大韓民国、ソウル)"
+    "noTitle": "タイトルを書いてください。",
+    "confirmWithoutRegion": "地域を選択してないです。進みますか？ (基本設定の地域 : 大韓民国、ソウル)"
   },
   "main": {
     "world": "全世界",
@@ -145,12 +203,16 @@
     }
   },
   "popup": {
+    "notice": {
+      "notice": "お知らせ",
+      "noNotice": "お知らせがありません。",
+      "noNoticeDesc": "モメント、ストリー、コメントの投稿や直した時私達がお知らせいたします！"
+    },
     "viewProfile": "プロフィール",
     "newStory": "ストリー投稿",
     "login": "ログイン",
     "profile": "プロフィール",
-    "logout": "ログアウト",
-    "notice": "お知らせ"
+    "logout": "ログアウト"
   },
   "nav": {
     "move": "移動",
@@ -179,6 +241,6 @@
     "moment": "モメント : 旅の途中で道を迷いましたか？聞いて見て！",
     "story": "ストリー : 君の旅の喜怒哀楽を聞かせて！",
     "covid": "安全な旅行 : 入国禁止の国を予めチェックしよう。",
-    "storyMain": "君の旅の喜怒哀楽を聞きたい。"
+    "storyMain": "君の旅の喜怒哀楽が知りたい。"
   }
 }

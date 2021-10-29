@@ -12,12 +12,15 @@ import fetcher from "utils/fetcher";
 import { IMoment } from "@typings/db";
 import useSWR from "swr";
 import { GetServerSidePropsContext } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   initialMoment: IMoment;
 }
 
 const MomentEditPage: FC<IProps> = ({ initialMoment }) => {
+  const { t } = useTranslation("common");
   const { query } = useRouter();
   const { user } = useSelector((state: RootState) => state.user);
   const { data: moment } = useSWR<IMoment>(`/moment/${query?.code}/${query?.momentId}/0`, fetcher, {
@@ -38,7 +41,7 @@ const MomentEditPage: FC<IProps> = ({ initialMoment }) => {
 
   return (
     <LGLayout>
-      <h2 className="main-title">모멘트 수정</h2>
+      <h2 className="main-title">{t("post.editMoment")}</h2>
       <MomentPostingForm editMoment={moment} />
     </LGLayout>
   );
@@ -46,7 +49,7 @@ const MomentEditPage: FC<IProps> = ({ initialMoment }) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, query }: GetServerSidePropsContext) => {
+    async ({ req, query, locale }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       if (axios.defaults.headers) {
         axios.defaults.headers.Cookie = "";
@@ -59,7 +62,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         query && `/moment/${query?.code}/${query?.momentId}?uuid=0`
       );
       return {
-        props: { initialMoment },
+        props: { initialMoment, ...(await serverSideTranslations(locale as string, ["common"])) },
       };
     }
 );

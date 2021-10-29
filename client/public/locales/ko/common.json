@@ -4,9 +4,58 @@
     "developer": "개발자 정보",
     "terms": "이용약관"
   },
+  "search": {
+    "placeHolder": "검색어를 입력해주세요...",
+    "results": "검색 결과",
+    "searchAgain": "다시 검색하기"
+  },
+  "profile": {
+    "follow": "팔로우",
+    "following": "팔로잉",
+    "noFollower": "아직 팔로워가 없습니다.",
+    "noFollowing": "아직 팔로잉이 없습니다.",
+    "followUser": "유저 팔로우",
+    "unFollowUser": "유저 언팔로우",
+    "name": "이름",
+    "previous": "이전 ",
+    "new": "새로운 ",
+    "password": "비밀번호",
+    "introduce": "자기소개",
+    "or": "님 외",
+    "people": "명 ",
+    "changeProfileDone": "프로필 수정 완료",
+    "changePasswordDone": "비밀번호 변경 완료",
+    "editPorfile": "프로필 수정",
+    "changePassword": "비밀번호 변경",
+    "withdrawal": "회원탈퇴",
+    "profile": "프로필",
+    "preposition": "님의 ",
+    "count": "개",
+    "number": "번째 ",
+    "storyMap": "연대기 지도",
+    "countryList": "다녀온 국가 리스트",
+    "noCountryList": "아직 다녀온 국가가 없어요, 연대기를 작성하면 자동으로 갱신되요.😉"
+  },
   "message": {
-    "needToLogin": "로그인이 필요합니다.",
+    "logout": "로그아웃 했습니다.",
+    "needToLogin": "로그인 후 이용 필요합니다.",
     "removeIt": "삭제해주세요.",
+    "invalidEmail": "유효하지 않은 이메일입니다.",
+    "noUser": "유저를 찾을 수 없습니다.",
+    "noImage": "이미지를 찾을수없습니다. 다시 시도해주세요.",
+    "withdrawal": "회원탈퇴가 정상적으로 진행되었습니다. 이용해주셔서 감사합니다.",
+    "profile": {
+      "notOwner": "본인프로필만 변경 가능합니다.",
+      "follow": "이 유저를 팔로우 합니다.",
+      "unFollow": "이 유저를 언팔로우 했습니다.",
+      "editProfile": "프로필을 성공적으로 수정했습니다.",
+      "changePassword": "비밀번호를 성공적으로 수정했습니다. 다시 로그인 해주세요."
+    },
+    "icon": {
+      "done": "아이콘을 성공적으로 바꿨습니다.",
+      "remove": "아이콘을 삭제했습니다.",
+      "confirmRemove": "정말로 아이콘을 삭제할까요?"
+    },
     "comment": {
       "done": "댓글을 성공적으로 작성했습니다.",
       "fail": "댓글을 입력해주세요.",
@@ -22,9 +71,14 @@
     "story": {
       "done": "연대기를 성공적으로 작성했습니다.",
       "edit": "연대기를 수정했습니다.",
-      "fail": "Please enter reply.",
       "remove": "연대기를 성공적으로 삭제했습니다.",
-      "confirmRemove": "Do you realy want to delete this story?"
+      "confirmRemove": "정말로 이 연대기를 삭제할까요?"
+    },
+    "moment": {
+      "done": "모멘트를 성공적으로 작성했습니다.",
+      "edit": "모멘트를 수정했습니다.",
+      "remove": "모멘트를 성공적으로 삭제했습니다.",
+      "confirmRemove": "정말로 이 모멘트를 삭제할까요?"
     },
     "like": "좋아요! 💓",
     "dislike": "좋아요 취소 💔"
@@ -45,6 +99,7 @@
     "commentView": "댓글 보기",
     "anotherPost": "다른 포스트",
     "cancel": "취소",
+    "changeIcon": "아이콘 변경",
     "story": "연대기",
     "title": "제목",
     "titlePlaceHolder": "연대기 제목 입력",
@@ -61,6 +116,7 @@
     "uploadStory": "연대기 올리기",
     "editStory": "연대기 수정",
     "uploadMoment": "모멘트 올리기",
+    "editMoment": "모멘트 수정",
     "uploadComment": "코멘트",
     "commentPlaceHolder": "매너있는 코멘트 작성하기.",
     "uploadReply": "답장",
@@ -68,6 +124,7 @@
     "selectKeyword": "키워드 선택",
     "noKeyword": "키워드를 선택해주세요.",
     "noRegion": "지도에서 지역을 선택해주세요.",
+    "noTitle": "제목을 입력해주세요.",
     "confirmWithoutRegion": "지역 좌표를 입력하지 않으셨어요, 이상태로 진행할까요? (현재 좌표 : 대한민국 서울 , 이름모를 어딘가)"
   },
   "main": {
@@ -145,12 +202,16 @@
     }
   },
   "popup": {
+    "notice": {
+      "notice": "알림",
+      "noNotice": "알림이 없습니다.",
+      "noNoticeDesc": "유저님이 모멘트,연대기,코멘트 작성 및 수정등 활동을 하면 저희가 알려줄게요!"
+    },
     "viewProfile": "프로필 보기",
     "newStory": "새 연대기",
     "login": "로그인",
     "profile": "내 프로필",
-    "logout": "로그아웃",
-    "notice": "알림"
+    "logout": "로그아웃"
   },
   "nav": {
     "move": "이동",

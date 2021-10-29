@@ -47,7 +47,7 @@ const ProfilePopUp: FC<IProps> = () => {
           dispatch(mainSlice.actions.toggleNoticePopUp());
         }}
       >
-        {t("popup.notice")}
+        {t("popup.notice.notice")}
       </li>
       <li onClick={() => dispatch(logoutAction())}>{t("popup.logout")}</li>
     </ProfilePopUpWrapper>

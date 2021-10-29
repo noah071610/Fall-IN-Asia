@@ -3,6 +3,7 @@ import { IStory } from "@typings/db";
 import styled from "@emotion/styled";
 import { BORDER_THIN } from "config";
 import tw from "twin.macro";
+import { useTranslation } from "react-i18next";
 
 const VisitedCountryListWrapper = styled.ul`
   ${tw`p-4`}
@@ -29,6 +30,7 @@ interface IProps {
 }
 
 const VisitedCountryList: FC<IProps> = ({ stories }) => {
+  const { t } = useTranslation("common");
   const storiesWithoutSame = useMemo(() => {
     return stories?.filter((v, i, arr) => i === arr.findIndex((t) => v.code === t.code));
   }, [stories]);
@@ -40,7 +42,7 @@ const VisitedCountryList: FC<IProps> = ({ stories }) => {
           <div className="image-wrapper">
             <img src={v.country.flag_src} alt="country-flag-image" />
           </div>
-          <span>{v.country.name}</span>
+          <span>{t(`country.${v.country.name}`)}</span>
         </li>
       ))}
     </VisitedCountryListWrapper>

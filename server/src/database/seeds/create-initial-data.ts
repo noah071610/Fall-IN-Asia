@@ -74,7 +74,7 @@ export class CreateInitialData implements Seeder {
           image_src:
             'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1023&q=80',
           flag_src:
-            'https://opendata.mofa.go.kr:8444/fileDownload/images/country_images/flags/214/20201125_215627480.gif',
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Thailand.svg/188px-Flag_of_Thailand.svg.png',
         },
         {
           id: 7,
@@ -947,7 +947,7 @@ export class CreateInitialData implements Seeder {
       .values([
         {
           id: 1,
-          type: '관광뉴스',
+          type: 'travelNews',
           region:
             'Phuket International Airport, Thep Krasat Tri-Nai Yang Rd, Thalang, Phuket 83110, Thailand',
           lat: 8.11049,
@@ -977,7 +977,7 @@ export class CreateInitialData implements Seeder {
         },
         {
           id: 4,
-          type: '관광뉴스',
+          type: 'travelNews',
           region: 'Jeju-do, South Korea',
           lat: 33.3667,
           lng: 126.533,

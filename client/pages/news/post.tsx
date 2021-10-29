@@ -26,6 +26,8 @@ import { getUserInfoAction } from "actions/user";
 import { UploadFile } from "antd/lib/upload/interface";
 import dynamic from "next/dynamic";
 import { GetServerSidePropsContext } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 const { Option } = Select;
 const CountrySelectMap = dynamic(() => import("@components/Maps/CountrySelectMap"));
 const Editor = dynamic(() => import("@components/Editor/Editor"));
@@ -248,11 +250,11 @@ const NewsPostingPage = () => {
           onChange={handleTypeChange}
           style={{ width: "180px" }}
         >
-          <Option value="관광뉴스">관광뉴스</Option>
-          <Option value="트렌드">트렌드</Option>
-          <Option value="쇼핑">쇼핑</Option>
-          <Option value="이색체험">이색체험</Option>
-          <Option value="이벤트">이벤트</Option>
+          <Option value="travelNews">travelNews</Option>
+          <Option value="trand">trand</Option>
+          <Option value="shopping">shopping</Option>
+          <Option value="experience">experience</Option>
+          <Option value="event">event</Option>
         </Select>
         <h2 className="main-title">지역 지정</h2>
         <CountrySelectMap
@@ -287,7 +289,8 @@ const NewsPostingPage = () => {
                 toastConfirmMessage(
                   onClickSubmit,
                   "지역 좌표를 입력하지 않으셨어요, 이상태로 진행할까요? (현재 좌표 : 대한민국 서울 , 이름모를 어딘가)",
-                  "진행해주세요"
+                  "네",
+                  "아니오"
                 );
               } else {
                 onClickSubmit();
@@ -304,7 +307,7 @@ const NewsPostingPage = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req }: GetServerSidePropsContext) => {
+    async ({ req, locale }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       if (axios.defaults.headers) {
         axios.defaults.headers.Cookie = "";
@@ -314,7 +317,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
       await store.dispatch(getUserInfoAction());
       return {
-        props: {},
+        props: {
+          ...(await serverSideTranslations(locale as string, ["common"])),
+        },
       };
     }
 );

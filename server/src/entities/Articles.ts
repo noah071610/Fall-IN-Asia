@@ -53,9 +53,9 @@ export class Articles {
   })
   @Column('enum', {
     name: 'type',
-    enum: ['관광뉴스', '트렌드', '쇼핑', '이색체험', '이벤트'],
+    enum: ['travelNews', 'trand', 'shopping', 'experience', 'event'],
   })
-  type: '관광뉴스' | '트렌드' | '쇼핑' | '이색체험' | '이벤트';
+  type: 'travelNews' | 'trand' | 'shopping' | 'experience' | 'event';
 
   @Index(['region'], { fulltext: true, parser: 'ngram' })
   @IsString()

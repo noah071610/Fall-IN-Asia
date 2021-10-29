@@ -10,16 +10,18 @@ import { RootState } from "slices";
 import { toastSuccessMessage } from "config";
 import router from "next/router";
 import { userSlice } from "slices/user";
+import { useTranslation } from "react-i18next";
 
 interface IProps {}
 
 const WithdrawalModal: FC<IProps> = () => {
+  const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const [reason, setReason] = useState("");
   const { withdrawalUserDone } = useSelector((state: RootState) => state.user);
   useEffect(() => {
     if (withdrawalUserDone) {
-      toastSuccessMessage("회원탈퇴가 정상적으로 진행되었습니다. 이용해주셔서 감사합니다.");
+      toastSuccessMessage(t("message.withdrawal"));
       router.push("/");
       dispatch(userSlice.actions.withdrawalUserClear());
     }
@@ -33,7 +35,7 @@ const WithdrawalModal: FC<IProps> = () => {
   }, [reason, password]);
   return (
     <WithdrawalModalWrapper>
-      <h3>회원탈퇴 사유를 선택해주세요.</h3>
+      <h3>회원탈퇴 사유를 선택해주세요. (Korean Only)</h3>
       <Select
         value={reason}
         defaultValue="사유를 선택해주세요"
@@ -47,7 +49,7 @@ const WithdrawalModal: FC<IProps> = () => {
         <Option value="관심도 저하">관심도 저하</Option>
         <Option value="개인정보 누출 우려">개인정보 누출 우려</Option>
       </Select>
-      <h3>비밀번호를 입력해주세요</h3>
+      <h3>{t("modal.login.noPassword")}</h3>
       <input
         value={password}
         onChange={onChangePassword}
@@ -59,8 +61,8 @@ const WithdrawalModal: FC<IProps> = () => {
         경우에는 반드시 탈퇴 전 확인하시길 바랍니다.
       </p>
       <div className="btn-wrapper">
-        <button onClick={() => dispatch(mainSlice.actions.closeModal())}>취소</button>
-        <button onClick={onClickWithdrawal}>회원탈퇴</button>
+        <button onClick={() => dispatch(mainSlice.actions.closeModal())}>{t("post.cancel")}</button>
+        <button onClick={onClickWithdrawal}>{t("profile.withdrawal")}</button>
       </div>
     </WithdrawalModalWrapper>
   );

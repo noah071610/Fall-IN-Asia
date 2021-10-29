@@ -13,6 +13,8 @@ import tw from "twin.macro";
 import fetcher from "utils/fetcher";
 import Head from "next/head";
 import { GetServerSidePropsContext } from "next";
+import { useTranslation } from "react-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const SearchPageWrapper = styled.div`
   ${tw`bg-white pb-60 pt-16`}
@@ -26,6 +28,7 @@ interface IProps {
 }
 
 const SearchPage: FC<IProps> = ({ searchPosts }) => {
+  const { t } = useTranslation("common");
   const { query } = useRouter();
   const { data: searchPostsData } = useSWR<{
     searchWord: string;
@@ -45,19 +48,18 @@ const SearchPage: FC<IProps> = ({ searchPosts }) => {
       <SearchPageWrapper>
         <SearchPagePoster searchWord={searchPostsData?.searchWord || ""} />
         <XLGLayout>
-          <h3 className="main-title">연대기</h3>
+          <h3 className="main-title">{t("main.story")}</h3>
           {searchPostsData && searchPostsData?.stories?.length > 0 ? (
             <SearchPostList stories={searchPostsData?.stories} />
           ) : (
-            <div>연대기가 없습니다.</div>
+            <div>{t("main.noStory")}</div>
           )}
-          <h3 className="main-title">모멘트</h3>
+          <h3 className="main-title">{t("main.moment")}</h3>
           {searchPostsData && searchPostsData?.moments?.length > 0 ? (
             <SearchPostList moments={searchPostsData?.moments} />
           ) : (
-            <div>모멘트가 없습니다.</div>
+            <div>{t("main.noMoment")}</div>
           )}
-          <h3 className="main-title">여행소식</h3>
         </XLGLayout>
       </SearchPageWrapper>
     </>
@@ -66,7 +68,7 @@ const SearchPage: FC<IProps> = ({ searchPosts }) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, query }: GetServerSidePropsContext) => {
+    async ({ req, query, locale }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       if (axios.defaults.headers) {
         axios.defaults.headers.Cookie = "";
@@ -77,7 +79,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getUserInfoAction());
       const searchPosts = await fetcher(`/search/${encodeURIComponent(query?.keyword as string)}`);
       return {
-        props: { searchPosts },
+        props: { searchPosts, ...(await serverSideTranslations(locale as string, ["common"])) },
       };
     }
 );

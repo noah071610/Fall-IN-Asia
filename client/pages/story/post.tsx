@@ -81,7 +81,7 @@ const StoryPostingPage: FC<IProps> = () => {
   const countryOptions = useMemo(
     () =>
       countries?.map((v) => {
-        return { value: v.name, code: v.code };
+        return { value: t(`country.${v.name}`), code: v.code };
       }),
     [countries]
   );
@@ -91,7 +91,7 @@ const StoryPostingPage: FC<IProps> = () => {
       setRegion(editStory?.region);
       setTitle(editStory?.title);
       setContent(editStory?.content);
-      setCountry(editStory?.country?.name);
+      setCountry(t(`country.${editStory?.country?.name}`));
       setMarker({
         latitude: editStory?.lat,
         longitude: editStory?.lng,
@@ -115,7 +115,7 @@ const StoryPostingPage: FC<IProps> = () => {
   }, [user, editStory]);
 
   const onClickSubmit = useCallback(() => {
-    if (!title) {
+    if (!title || !title.trim()) {
       toastErrorMessage(t("post.titlePlaceHolder"));
       return;
     }
@@ -123,7 +123,7 @@ const StoryPostingPage: FC<IProps> = () => {
       toastErrorMessage(t("post.noRegion"));
       return;
     }
-    if (!content) {
+    if (!content || !content.trim() || content === "<p><br></p>") {
       toastErrorMessage(t("post.writeContentPlaceHolder"));
       return;
     }
@@ -138,6 +138,7 @@ const StoryPostingPage: FC<IProps> = () => {
     form.append("lng", String(marker.longitude));
 
     let pickCountry = countryOptions?.find((v) => v.value === selectedCountry);
+
     if (pickCountry) {
       form.append("code", String(pickCountry.code));
     } else {
@@ -159,9 +160,9 @@ const StoryPostingPage: FC<IProps> = () => {
         setContent("");
         setCountry("");
         if (editStory) {
-          toastSuccessMessage(t("story.edit"));
+          toastSuccessMessage(t("message.story.edit"));
         } else {
-          toastSuccessMessage(t("story.done"));
+          toastSuccessMessage(t("message.story.done"));
         }
       })
       .catch((error) => {

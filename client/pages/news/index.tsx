@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useMemo, useState } from "react";
 import { getUserInfoAction } from "actions/user";
 import axios from "axios";
 import { wrapper } from "configureStore";
@@ -12,7 +12,6 @@ import {
   GRID_STYLE,
   LG_SIZE,
   MD_SIZE,
-  newsPageNavList,
   noRevalidate,
   NO_POST_URL,
   SM_SIZE,
@@ -28,6 +27,8 @@ import Head from "next/head";
 import { NextArrow, PrevArrow } from "@components/SliderArrow";
 import Slider from "react-slick";
 import { GetServerSidePropsContext } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 
 const NewsPageWrapper = styled.div`
   padding-top: 4rem;
@@ -104,7 +105,8 @@ const settings = {
 };
 
 const NewsMainPage: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
-  const [type, setType] = useState("관광뉴스");
+  const { t } = useTranslation("common");
+  const [type, setType] = useState("travelNews");
   const { data: articles, setSize } = useSWRInfinite<IArticle[]>(
     (index) => `/article?page=${index + 1}&type=${type ? encodeURIComponent(type) : ""}`,
     fetcher,
@@ -113,6 +115,16 @@ const NewsMainPage: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
       ...noRevalidate,
     }
   );
+
+  const newsPageNavList = useMemo(() => {
+    return [
+      { name: t("nav.travelNews"), value: "travelNews" },
+      { name: t("nav.trand"), value: "trand" },
+      { name: t("nav.shopping"), value: "shopping" },
+      { name: t("nav.experience"), value: "experience" },
+      { name: t("nav.event"), value: "event" },
+    ];
+  }, []);
 
   const { data: asideArticle } = useSWR<IArticle[]>(`/article/popular`, fetcher, {
     fallbackData: initialAsideArticle,
@@ -144,38 +156,38 @@ const NewsMainPage: FC<IProps> = ({ initialArticles, initialAsideArticle }) => {
             image="/images/poster/moment_poster.jpg"
             path="/"
             title="Share your infomation"
-            desc="모멘트 : 여행이라는 망망대해에서 길을 잃었나요? 물어봐요! 돈드는거 아니잖아요~"
+            desc={t("poster.moment")}
           />
           <PosterCard
             image="/images/poster/story_poster.jpg"
             path="/story"
             title="Leave and Share your memory"
-            desc="연대기 : 당신의 여정에는 어떤 일이 있었나요?"
+            desc={t("poster.story")}
           />
           <PosterCard
             image="/images/poster/covid_poster.jpg"
             link="https://www.0404.go.kr/dev/newest_list.mofa"
             title="I trust We can get over covid-19"
-            desc="해외안전여행 : 외교부에서 코로나19 입국제한 여부를 확인하세요."
+            desc={t("poster.covid")}
           />
         </Slider>
         <TopNavigation onClickList={onClickList} filter={type} list={newsPageNavList} />
         <main className="news-layout">
-          <h2 className="main-title">{type}</h2>
+          <h2 className="main-title">{t(`nav.${type}`)}</h2>
           <div className="layout-divide">
             {articles && articles?.flat().length > 0 ? (
               <NewsArticleList setSize={setSize} articles={articles} />
             ) : (
               <div className="no-article-wrapper">
                 <img src={NO_POST_URL} alt="no-news-img" />
-                <h2>아직 {type} 소식이 없어요.😥</h2>
+                <h2>{t("main.noPost")}</h2>
               </div>
             )}
             {asideArticle && (
               <aside className="news-aside">
                 {asideArticle?.length > 0 && (
                   <>
-                    <h2 className="aside-title">인기 소식</h2>
+                    <h2 className="aside-title">{t("main.popularNews")}</h2>
                     <ArticleImageCard article={asideArticle[0]} />
                     {asideArticle?.slice(1).map((v, i) => {
                       return <ArticleSmallCard key={i} article={v} />;
@@ -195,7 +207,7 @@ export default NewsMainPage;
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req }: GetServerSidePropsContext) => {
+    async ({ req, locale }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       if (axios.defaults.headers) {
         axios.defaults.headers.Cookie = "";
@@ -208,7 +220,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       initialArticles = [initialArticles];
       const initialAsideArticle = await fetcher(`/article/popular`);
       return {
-        props: { initialArticles, initialAsideArticle },
+        props: {
+          initialArticles,
+          initialAsideArticle,
+          ...(await serverSideTranslations(locale as string, ["common"])),
+        },
       };
     }
 );

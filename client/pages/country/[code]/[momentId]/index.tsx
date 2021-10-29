@@ -58,7 +58,8 @@ const MomentPostPage: FC<IProps> = ({ initialMoments, initialCountry, initialMom
       <Head>
         <title>
           {html2textConverter(moment?.content).slice(0, 20)}... - {moment?.country?.name}/
-          {moment?.id}번모멘트 | Fall IN Asia
+          {moment?.id}
+          {t("post.counting") + t("nav.moment")} | Fall IN Asia
         </title>
         <meta name="description" content={html2textConverter(moment?.content).slice(0, 100)} />
         <meta
@@ -66,7 +67,7 @@ const MomentPostPage: FC<IProps> = ({ initialMoments, initialCountry, initialMom
           content={`${html2textConverter(moment?.content).slice(0, 20)}... - ${
             moment?.country?.name
           }/
-          ${moment?.id}번모멘트 | Fall IN Asia`}
+          ${moment?.id}${t("post.counting") + t("nav.moment")} | Fall IN Asia`}
         />
         <meta
           property="og:description"

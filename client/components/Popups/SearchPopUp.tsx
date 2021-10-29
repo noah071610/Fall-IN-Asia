@@ -3,6 +3,7 @@ import { AutoComplete } from "antd";
 import { searchOptions } from "config";
 import { LegacyRef, memo, useCallback } from "react";
 import { FC, KeyboardEvent } from "react";
+import { useTranslation } from "react-i18next";
 import tw from "twin.macro";
 
 const SearchPopUpWrapper = (width: string) => css`
@@ -39,6 +40,7 @@ const SearchPopUp: FC<IProps> = ({
   width,
   setSearchWord,
 }) => {
+  const { t } = useTranslation("common");
   const onSelectSearchWord = useCallback((value: string) => {
     setSearchWord(value);
   }, []);
@@ -54,7 +56,7 @@ const SearchPopUp: FC<IProps> = ({
           <input
             value={searchWord}
             onChange={onChangeSearchWord}
-            placeholder="검색어를 입력해주세요..."
+            placeholder={t("search.placeHolder")}
             onKeyPress={onPressEnter}
             ref={inputRef}
           />

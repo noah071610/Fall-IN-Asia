@@ -30,6 +30,8 @@ import dynamic from "next/dynamic";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import html2textConverter from "utils/html2textConverter";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 
 const CountryMap = dynamic(() => import("@components/Maps/CountryMap"));
 
@@ -57,6 +59,7 @@ interface IProps {
   initialArticle: IArticle;
 }
 const NewsPostPage: FC<IProps> = ({ initialArticle, initialArticles }) => {
+  const { t } = useTranslation("common");
   const { query } = useRouter();
   const [isOwner, setIsOwner] = useState(false);
   const { user } = useSelector((state: RootState) => state.user);
@@ -120,12 +123,15 @@ const NewsPostPage: FC<IProps> = ({ initialArticle, initialArticles }) => {
     <>
       <Head>
         <title>
-          {article?.title} - {article?.id}번뉴스 | Fall IN Asia
+          {article?.title} - {article?.id}
+          {t("post.counting") + t("nav.news")} | Fall IN Asia
         </title>
         <meta name="description" content={html2textConverter(article?.content).slice(0, 100)} />
         <meta
           property="og:title"
-          content={`${article?.title}... - ${article?.id}번뉴스 | Fall IN Asia`}
+          content={`${article?.title}... - ${article?.id}${
+            t("post.counting") + t("nav.news")
+          } | Fall IN Asia`}
         />
         <meta
           property="og:description"
@@ -152,7 +158,8 @@ const NewsPostPage: FC<IProps> = ({ initialArticle, initialArticles }) => {
                         toastConfirmMessage(
                           onClickConfirmDelete,
                           "정말 이 기사를 삭제할까요?",
-                          "삭제해주세요."
+                          "네 삭제해주세요.",
+                          "아니오"
                         )
                       }
                       className="delete-btn"
@@ -164,7 +171,7 @@ const NewsPostPage: FC<IProps> = ({ initialArticle, initialArticles }) => {
                 </>
               )}
               <h2 className="main-title">
-                위치 <span>{article?.region}</span>
+                {t("post.region")} <span>{article?.region}</span>
               </h2>
               <CountryMap lat={article?.lat} lng={article?.lng} />
               <Divider />
@@ -184,7 +191,7 @@ const NewsPostPage: FC<IProps> = ({ initialArticle, initialArticles }) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, params }: GetServerSidePropsContext) => {
+    async ({ req, params, locale }: GetServerSidePropsContext) => {
       const cookie = req ? req.headers.cookie : "";
       if (axios.defaults.headers) {
         axios.defaults.headers.Cookie = "";
@@ -197,7 +204,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       initialArticles = [initialArticles];
       const initialArticle = await fetcher(`/article/${params?.articleId}`);
       return {
-        props: { initialArticles, initialArticle },
+        props: {
+          initialArticles,
+          initialArticle,
+          ...(await serverSideTranslations(locale as string, ["common"])),
+        },
       };
     }
 );

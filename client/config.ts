@@ -1,6 +1,7 @@
 import { DataResponse } from "@typings/db";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { i18n } from "next-i18next";
 
 // CSS
 export const BLACK_COLOR = "black" as const;
@@ -124,22 +125,6 @@ export const searchOptions = [
   .map((v) => {
     return { value: v };
   });
-
-export const newsPageNavList = [
-  { name: "관광뉴스", value: "관광뉴스" },
-  { name: "트렌드", value: "트렌드" },
-  { name: "쇼핑", value: "쇼핑" },
-  { name: "이색체험", value: "이색체험" },
-  { name: "이벤트", value: "이벤트" },
-];
-
-export const searchPageNavList = [
-  { name: "모멘트", value: "news" },
-  { name: "트렌드", value: "trand" },
-  { name: "쇼핑", value: "shopping" },
-  { name: "이색체험", value: "experience" },
-  { name: "이벤트", value: "event" },
-];
 
 // Toast Message
 

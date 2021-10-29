@@ -8,6 +8,7 @@ import { INotice } from "@typings/db";
 import router from "next/router";
 import { readNoticeAction } from "actions/user";
 import shortid from "shortid";
+import { useTranslation } from "react-i18next";
 const NoticePopUpWrapper = styled.ul`
   ${tw`absolute right-0 bg-white shadow-md rounded-xl overflow-hidden w-80`}
   top:130%;
@@ -44,6 +45,7 @@ const NoticePopUpWrapper = styled.ul`
 interface IProps {}
 
 const NoticePopUp: FC<IProps> = () => {
+  const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
 
@@ -65,7 +67,9 @@ const NoticePopUp: FC<IProps> = () => {
         e.stopPropagation();
       }}
     >
-      <h2>{user && user.notices.length > 0 ? "알림" : "알림이 없습니다."}</h2>
+      <h2>
+        {user && user.notices.length > 0 ? t("popup.notice.notice") : t("popup.notice.noNotice")}
+      </h2>
       {user && user.notices.length > 0 ? (
         <>
           <ul className="notices-wrapper">
@@ -73,19 +77,19 @@ const NoticePopUp: FC<IProps> = () => {
               <ListCard
                 onClickListCard={() => onClickListCard(v)}
                 key={shortid.generate()}
-                title={v.header + " 알림"}
+                title={v.header + ` ${t("popup.notice.notice")}`}
                 content={v.content}
                 noticeId={v.id}
               />
             ))}
           </ul>
           <button onClick={() => router.push(`/me/${user?.id}`)} className="more-notices">
-            <span>더보기</span>
+            <span>{t("main.more")}</span>
           </button>
         </>
       ) : (
         <div className="no-notices">
-          <p>유저님이 모멘트,연대기,코멘트 작성 및 수정등 활동을 하면 저희가 알려줄게요!</p>
+          <p>{t("popup.notice.noNoticeDesc")}</p>
         </div>
       )}
     </NoticePopUpWrapper>

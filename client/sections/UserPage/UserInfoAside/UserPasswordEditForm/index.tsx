@@ -1,4 +1,5 @@
 import React, { FC, memo } from "react";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   prevPassword: string;
@@ -8,16 +9,23 @@ interface IProps {
 }
 
 const UserPasswordEditForm: FC<IProps> = (props) => {
+  const { t } = useTranslation("common");
   return (
     <div>
-      <h4 className="edit-title">이전 비밀번호</h4>
+      <h4 className="edit-title">
+        {t("profile.previous")}
+        {t("profile.password")}
+      </h4>
       <input
         className="edit-input"
         value={props.prevPassword}
         onChange={props.onChangePrevPassword}
         type="password"
       />
-      <h4 className="edit-title">새로운 비밀번호</h4>
+      <h4 className="edit-title">
+        {t("profile.new")}
+        {t("profile.password")}
+      </h4>
       <input
         className="edit-input"
         value={props.newPassword}

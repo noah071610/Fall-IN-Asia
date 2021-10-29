@@ -2,6 +2,7 @@ import { IArticle, IStory } from "@typings/db";
 import { NO_IMAGE_URL } from "config";
 import router from "next/router";
 import React, { FC, memo, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { ArticleImageCardWrapper } from "./styles";
 
 interface IProps {
@@ -9,6 +10,7 @@ interface IProps {
 }
 
 const ArticleImageCard: FC<IProps> = ({ article }) => {
+  const { t } = useTranslation("common");
   const onClickArticleImageCard = useCallback(() => {
     router.push(`/news/${article?.id}`);
   }, []);
@@ -19,7 +21,7 @@ const ArticleImageCard: FC<IProps> = ({ article }) => {
         style={{ backgroundImage: `url(${article?.thumbnail ? article.thumbnail : NO_IMAGE_URL})` }}
       />
       <div className="card-desc">
-        <h3>{article?.type}</h3>
+        <h3>{t(`nav.${article?.type}`)}</h3>
         <h4>{article?.title}</h4>
       </div>
     </ArticleImageCardWrapper>

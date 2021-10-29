@@ -9,11 +9,13 @@ import { IconCropperModalWrapper } from "./styles";
 import { NameSpaceWrapper } from "@components/NameSpace/styles";
 import { changeUserIconAction } from "actions/user";
 import { toastErrorMessage } from "config";
+import { useTranslation } from "react-i18next";
 const { Dragger } = Upload;
 
 interface IProps {}
 
 const IconCropperModalper: FC<IProps> = () => {
+  const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const [blob, setBlob] = useState<Blob | null>(null);
   const [upImg, setUpImg] = useState<ArrayBuffer | string | null>(null);
@@ -94,7 +96,7 @@ const IconCropperModalper: FC<IProps> = () => {
 
   const onClickChangeIcon = useCallback(() => {
     if (!blob) {
-      toastErrorMessage("이미지를 찾을수없습니다. 다시 시도해주세요.");
+      toastErrorMessage(t("message.noImage"));
       return;
     }
     let form = new FormData();
@@ -127,7 +129,7 @@ const IconCropperModalper: FC<IProps> = () => {
               src="https://user-images.githubusercontent.com/74864925/124657825-f38a5500-dedd-11eb-8de9-6ed70a512f24.png"
               alt="drag"
             />
-            <p>이미지 드래그 또는 선택</p>
+            <p>{t("post.imageDrag")}</p>
           </div>
         </Dragger>
       )}
@@ -143,9 +145,9 @@ const IconCropperModalper: FC<IProps> = () => {
             </div>
           </NameSpaceWrapper>
           <div className="btn-wrapper">
-            <button onClick={() => setUpImg(null)}>다시 선택</button>
+            <button onClick={() => setUpImg(null)}>{t("main.back")}</button>
             <button className="btn-point" onClick={onClickChangeIcon}>
-              이미지 올리기
+              {t("post.changeIcon")}
             </button>
           </div>
         </div>

@@ -5,6 +5,7 @@ import router from "next/router";
 import tw from "twin.macro";
 import styled from "@emotion/styled/macro";
 import { FLEX_STYLE } from "config";
+import { useTranslation } from "react-i18next";
 
 const PostProfileWrapper = styled.section`
   ${tw`mt-32 mb-16 w-full`}
@@ -49,6 +50,7 @@ interface IProps {
 }
 
 const PostProfile: FC<IProps> = ({ story }) => {
+  const { t } = useTranslation("common");
   const onClickGotoProfile = useCallback(() => {
     router.push(`/me/${story.user.id}`);
   }, []);
@@ -64,7 +66,7 @@ const PostProfile: FC<IProps> = ({ story }) => {
           <p className="introduce">{story?.user.introduce}</p>
         </div>
         <div className="links">
-          <button onClick={onClickGotoProfile}>프로필 구경가기</button>
+          <button onClick={onClickGotoProfile}>{t("post.goToProfile")}</button>
         </div>
       </div>
     </PostProfileWrapper>
