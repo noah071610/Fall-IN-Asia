@@ -52,9 +52,6 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
       }
     }
   }, [editMoment]);
-  console.log({ prevImageList });
-  console.log({ fileList });
-  console.log({ upImg });
 
   const countryOptions = useMemo(
     () =>
@@ -89,7 +86,6 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
     });
     form.append("content", String(content));
     form.append("type", String(type));
-    console.log(upImg);
 
     let pickCountry = countryOptions?.find((v) => v.value === selectedCountry);
     if (pickCountry) {
