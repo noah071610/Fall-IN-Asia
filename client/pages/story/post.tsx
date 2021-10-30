@@ -124,7 +124,7 @@ const StoryPostingPage: FC<IProps> = () => {
       return;
     }
     if (!content || !content.trim() || content === "<p><br></p>") {
-      toastErrorMessage(t("post.writeContentPlaceHolder"));
+      toastErrorMessage(t("post.Holder"));
       return;
     }
     let form: FormData = new FormData();

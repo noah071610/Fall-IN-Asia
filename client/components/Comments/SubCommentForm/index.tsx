@@ -19,7 +19,7 @@ const SubCommentForm: FC<IProps> = ({ commentId, revalidateComments }) => {
   const { user } = useSelector((state: RootState) => state.user);
   const onSubmitSubComment = useCallback(() => {
     if (content === "" || !content?.trim()) {
-      toastErrorMessage(t("post.writeContentPlaceHolder"));
+      toastErrorMessage(t("post.Holder"));
       return;
     }
     if (!user) {

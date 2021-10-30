@@ -1,11 +1,7 @@
-import { FC, useCallback, useEffect } from "react";
+import { FC } from "react";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "slices";
-import { FLEX_STYLE } from "config";
 import tw from "twin.macro";
 import styled from "@emotion/styled";
-import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
@@ -17,7 +13,6 @@ const LanguageSelectPopUpWrapper = styled.ul`
   white-space: nowrap;
   li {
     ${tw`w-auto block cursor-pointer hover:bg-gray-100 py-3 px-8 text-sm font-bold`}
-    ${FLEX_STYLE("flex-start", "center")};
     img {
       ${tw`w-6 mr-1`}
     }
@@ -26,9 +21,7 @@ const LanguageSelectPopUpWrapper = styled.ul`
     }
   }
 `;
-interface IProps {}
-
-const LanguageSelectPopUp: FC<IProps> = () => {
+const LanguageSelectPopUp: FC = () => {
   const { locale } = useRouter();
   return (
     <LanguageSelectPopUpWrapper>

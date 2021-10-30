@@ -15,9 +15,7 @@ import useSWR from "swr";
 import { ICountry } from "@typings/db";
 import { useTranslation } from "react-i18next";
 
-interface IProps {}
-
-const MobileSlideMenu: FC<IProps> = () => {
+const MobileSlideMenu: FC = () => {
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const [activePath, setActivePath] = useState("");

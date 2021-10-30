@@ -1,9 +1,8 @@
-import React, { FC, SetStateAction, useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback } from "react";
 import { Upload } from "antd";
 import styled from "@emotion/styled";
 import { RGB_BLACK } from "config";
 import { memo } from "react";
-import { IPrevImage } from "@typings/db";
 import { UploadFile } from "antd/lib/upload/interface";
 import { useTranslation } from "react-i18next";
 const { Dragger } = Upload;

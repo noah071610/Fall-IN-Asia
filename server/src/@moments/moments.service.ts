@@ -251,20 +251,27 @@ export class MomentsService {
       moment: <any>editPost.id,
     });
 
-    if (files) {
-      for (let i = 0; i < files.length; i++) {
-        const newImage = new Images();
-        newImage.image_src = files[i].location;
-        newImage.moment = <any>editPost.id;
-        await this.ImagesRepository.save(newImage);
-      }
+    for (let i = 0; i < files.length; i++) {
+      const newImage = new Images();
+      newImage.image_src = files[i].location;
+      newImage.moment = <any>editPost.id;
+      await this.ImagesRepository.save(newImage);
     }
+
     if (form.prevImage) {
-      for (let i = 0; i < form.prevImage.length; i++) {
+      if (typeof form.prevImage === 'string') {
         const newImage = new Images();
-        newImage.image_src = form.prevImage[i];
+        newImage.image_src = form.prevImage;
         newImage.moment = <any>editPost.id;
         await this.ImagesRepository.save(newImage);
+      } else {
+        let arr = Array.from(form.prevImage);
+        for (let i = 0; i < arr.length; i++) {
+          const newImage = new Images();
+          newImage.image_src = arr[i];
+          newImage.moment = <any>editPost.id;
+          await this.ImagesRepository.save(newImage);
+        }
       }
     }
     await this.MomentsRepository.save(editPost);

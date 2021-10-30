@@ -45,13 +45,16 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
       setCountry(editMoment?.country?.name);
       if (editMoment?.images.length > 0) {
         const editMomentImageList: UploadFile[] = editMoment.images.map((v, i) => {
-          return { uid: `${i + 1}`, name: `이미지 ${i + 1}번`, status: "done", url: v.image_src };
+          return { uid: `${i + 1}`, name: `Image ${i + 1}`, status: "done", url: v.image_src };
         });
         setFileList(editMomentImageList);
         setPrevImageList(editMoment?.images.map((v) => v.image_src));
       }
     }
   }, [editMoment]);
+  console.log({ prevImageList });
+  console.log({ fileList });
+  console.log({ upImg });
 
   const countryOptions = useMemo(
     () =>
@@ -74,7 +77,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
       return;
     }
     if (!content) {
-      toastErrorMessage("post.writeContentPlaceHolder");
+      toastErrorMessage(t("post.writeContentPlaceHolder"));
       return;
     }
     let form: FormData = new FormData();
@@ -86,6 +89,7 @@ const MomentPostingForm: FC<IProps> = ({ editMoment }) => {
     });
     form.append("content", String(content));
     form.append("type", String(type));
+    console.log(upImg);
 
     let pickCountry = countryOptions?.find((v) => v.value === selectedCountry);
     if (pickCountry) {
