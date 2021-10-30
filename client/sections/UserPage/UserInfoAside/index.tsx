@@ -161,7 +161,7 @@ const UserInfoAside = () => {
       return;
     }
     if (!userInfo?.id) {
-      toastErrorMessage(t("message.noUser"));
+      toastErrorMessage(t("message.error.noUser"));
       return;
     }
     if (isFollowed) {

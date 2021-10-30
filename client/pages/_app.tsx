@@ -25,22 +25,24 @@ import { appWithTranslation } from "next-i18next";
 
 const App = appWithTranslation(({ Component, pageProps }: AppProps) => {
   const dispatch = useDispatch();
-  const { onProfilePopUp, onNoticePopUp, onSearchPopUp, onSlideMenu } = useSelector(
-    (state: RootState) => state.main
-  );
+  const { onProfilePopUp, onNoticePopUp, onSearchPopUp, onSlideMenu, onLanguageSelectPopUp } =
+    useSelector((state: RootState) => state.main);
   const onClickClosePopup = useCallback(
     (e) => {
+      if (onSearchPopUp && e.target.nodeName !== "HEADER") {
+        dispatch(mainSlice.actions.closeSearchPopUp());
+      }
       if (onProfilePopUp) {
         dispatch(mainSlice.actions.closeProfilePopUp());
       }
       if (onNoticePopUp) {
         dispatch(mainSlice.actions.closeNoticePopUp());
       }
-      if (onSearchPopUp && e.target.nodeName !== "HEADER") {
-        dispatch(mainSlice.actions.closeSearchPopUp());
+      if (onLanguageSelectPopUp) {
+        dispatch(mainSlice.actions.closeLanguageSelectPopUp());
       }
     },
-    [onProfilePopUp, onNoticePopUp, onSearchPopUp]
+    [onProfilePopUp, onNoticePopUp, onSearchPopUp, onLanguageSelectPopUp]
   );
   return (
     <>

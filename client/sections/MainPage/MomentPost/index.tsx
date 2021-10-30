@@ -64,16 +64,16 @@ const MomentPost: FC<IProps> = ({ moment, revalidateMoment }) => {
   const onClickLikeOrDisLike = useCallback(
     (value: string) => {
       if (!user) {
-        toastErrorMessage("로그인이 필요합니다.");
+        toastErrorMessage(t("message.needToLogin"));
         return;
       }
       axios
         .patch(`/moment/${value}/${moment?.id}`)
         .then(() => {
           if (value === "like") {
-            toastSuccessMessage("좋아요!💓");
+            toastSuccessMessage(t("message.like"));
           } else {
-            toastSuccessMessage("좋아요 취소💔");
+            toastSuccessMessage(t("message.dislike"));
           }
           revalidateMoment();
           dispatch(getUserInfoAction());

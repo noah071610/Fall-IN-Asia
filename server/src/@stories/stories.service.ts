@@ -33,10 +33,10 @@ export class StoriesService {
     file: Express.MulterS3.File,
   ) {
     if (!form) {
-      throw new NotFoundException('작성 할 데이터가 없습니다.');
+      throw new NotFoundException('message.error.noDataToPost');
     }
     if (!userId) {
-      throw new UnauthorizedException('유저를 찾지 못했습니다.');
+      throw new UnauthorizedException('message.error.noUser');
     }
     const country = await this.CountriesRepository.findOne({
       where: { code: form.code },
@@ -58,7 +58,7 @@ export class StoriesService {
     }
     const newPost = await this.StoriesRepository.save(newPostCreate);
     await this.NoticesRepository.save({
-      header: `${country.name}/연대기`,
+      header: `${country.name}/Story`,
       code: newPost.code,
       userId: userId,
       storyId: newPost.id,
@@ -69,7 +69,7 @@ export class StoriesService {
 
   async saveImage(file: Express.MulterS3.File) {
     if (!file) {
-      throw new NotFoundException('사용 할 이미지가 없습니다.');
+      throw new NotFoundException('message.error.noImage');
     }
     const newImage = new Images();
     newImage.image_src = file.location;
@@ -126,7 +126,7 @@ export class StoriesService {
       ],
     });
     if (!post) {
-      throw new NotFoundException('가져올 게시물이 없습니다.');
+      throw new NotFoundException('message.error.noPost');
     }
 
     if (post && viewCount) {
@@ -148,7 +148,7 @@ export class StoriesService {
       take: 3,
     });
     if (!latestPosts) {
-      throw new NotFoundException('가져올 게시물이 없습니다.');
+      throw new NotFoundException('message.error.noPost');
     }
     return latestPosts;
   }
@@ -249,7 +249,7 @@ export class StoriesService {
       .take(12)
       .getMany();
     if (!posts) {
-      throw new NotFoundException('모멘트를 찾을 수 없습니다.');
+      throw new NotFoundException('message.error.noPost');
     }
     return posts;
   }
@@ -266,7 +266,7 @@ export class StoriesService {
       where: { id: form.storyId },
     });
     if (!editPost || !country) {
-      throw new NotFoundException('수정 할 게시물이 없습니다.');
+      throw new NotFoundException('message.error.noPostToEdit');
     }
     editPost.code = form.code;
     editPost.title = form.title;
@@ -281,7 +281,7 @@ export class StoriesService {
     await this.StoriesRepository.save(editPost);
 
     await this.NoticesRepository.save({
-      header: `${country.name}/연대기`,
+      header: `${country.name}/Story`,
       code: editPost.code,
       userId,
       storyId: editPost.id,
@@ -292,10 +292,10 @@ export class StoriesService {
 
   async likePost(storyId: number, userId: number) {
     if (!storyId) {
-      throw new NotFoundException('게시물을 찾을 수 없습니다.');
+      throw new NotFoundException('message.error.noPost');
     }
     if (!userId) {
-      throw new UnauthorizedException('유저를 찾지 못했습니다.');
+      throw new UnauthorizedException('message.error.noUser');
     }
     const newPostLike = new StoryLike();
     newPostLike.userId = userId;
@@ -305,17 +305,17 @@ export class StoriesService {
 
   async dislikePost(storyId: number, userId: number) {
     if (!storyId) {
-      throw new NotFoundException('게시물을 찾을 수 없습니다.');
+      throw new NotFoundException('message.error.noPost');
     }
     if (!userId) {
-      throw new UnauthorizedException('유저를 찾지 못했습니다.');
+      throw new UnauthorizedException('message.error.noUser');
     }
     return await this.StoryLikeRepository.delete({ storyId, userId });
   }
 
   async deletePost(storyId: number) {
     if (!storyId) {
-      throw new NotFoundException('게시물을 찾을 수 없습니다.');
+      throw new NotFoundException('message.error.noPost');
     }
     return await this.StoriesRepository.delete({
       id: storyId,

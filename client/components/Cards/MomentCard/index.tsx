@@ -44,17 +44,17 @@ const MomentCard: FC<IProps> = ({ moment, isLast }) => {
   const onClickLikeOrDisLike = useCallback(
     (value: string) => {
       if (!user) {
-        toastErrorMessage("로그인이 필요합니다.");
+        toastErrorMessage(t("message.needToLogin"));
         return;
       }
       axios
         .patch(`/moment/${value}/${moment?.id}`)
         .then(() => {
           if (value === "like") {
-            toastSuccessMessage("좋아요!💓");
+            toastSuccessMessage(t("message.like"));
             setUserLike((prev) => prev + 1);
           } else {
-            toastSuccessMessage("좋아요 취소💔");
+            toastSuccessMessage(t("message.dislike"));
             setUserLike((prev) => prev - 1);
           }
           dispatch(getUserInfoAction());

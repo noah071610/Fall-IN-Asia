@@ -12,6 +12,7 @@ import { getUserInfoAction } from "actions/user";
 import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "slices";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const AboutPageWrapper = styled.div`
   background: white;
@@ -244,9 +245,11 @@ const About = () => {
   );
 };
 
-export const getStaticProps = wrapper.getStaticProps(() => async () => {
+export const getStaticProps = wrapper.getStaticProps(() => async ({ locale }) => {
   return {
-    props: {},
+    props: {
+      ...(await serverSideTranslations(locale as string, ["common"])),
+    },
   };
 });
 

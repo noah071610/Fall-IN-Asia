@@ -4,6 +4,10 @@
     "developer": "Who made it?",
     "terms": "Terms"
   },
+  "notFound": {
+    "title": "The page you are looking for doesn't exist or error occured.",
+    "goback": "Go back previous page"
+  },
   "search": {
     "placeHolder": "Search",
     "results": "Search Results",
@@ -40,10 +44,33 @@
     "logout": "Sign out",
     "needToLogin": "You need to login to access.",
     "removeIt": "Delete it",
-    "invalidEmail": "Invalid email address! Please check it again.",
-    "noUser": "Sorry, We couldn't find user information.",
-    "noImage": "Sorry, We couldn't find image.",
     "withdrawal": "Successfully delete your account. Thank you for using our website.",
+    "error": {
+      "exception": "Unhandled exception has occurred.",
+      "failToGet": "Fail to get data.",
+      "noDataToPost": "Couldn't find data to post.",
+      "notHost": "Admin only.",
+      "invalidEmail": "Invalid email address! Please check it again.",
+      "noUser": "Sorry, We couldn't find user information.",
+      "noImage": "Sorry, We couldn't find image.",
+      "noPost": "Couldn't find post.",
+      "noPostToEdit": "Couldn't find post to edit.",
+      "noComment": "Couldn't find comment.",
+      "noCertification": "Please write Certification Number.",
+      "wrongCertification": "Wrong Certification Number. Please check it again.",
+      "existEmail": "Exist Email address.",
+      "wrongPassword": "Wrong Password. Please check it again.",
+      "noFirstName": "Please write first name down.",
+      "noLastName": "Please write last name down.",
+      "noName": "Please write name down.",
+      "noEmail": "Please write email.",
+      "notEnoughEmail": "Please write email right.",
+      "needCertification": "Please write Certification Number.",
+      "wrongEmail": "Please write email right.",
+      "noPassword": "Please write password.",
+      "notEnoughPassword": "Please write password more than 9",
+      "needToAgreeTerms": "Please agree Terms."
+    },
     "profile": {
       "notOwner": "Unauthorized Account. You can't access to another user profile.",
       "follow": "Follow! :)",
@@ -186,18 +213,7 @@
       "termsMore": "More",
       "certification": "Certification",
       "send": "Send",
-      "sendCertification": ", We send Certification Number to your email. Check it and write number.",
-      "noCertification": "Please write Certification Number.",
-      "noFirstName": "Please write first name down.",
-      "noLastName": "Please write last name down.",
-      "noName": "Please write name down.",
-      "noEmail": "Please write email.",
-      "notEnoughEmail": "Please write email right.",
-      "needCertification": "Please write Certification Number.",
-      "wrongEmail": "Please write email right.",
-      "noPassword": "Please write password.",
-      "notEnoughPassword": "Please write password more than 9",
-      "needToAgreeTerms": "Please agree Terms."
+      "sendCertification": ", We send Certification Number to your email. Check it and write number."
     }
   },
   "popup": {
@@ -205,6 +221,11 @@
       "notice": "Notification",
       "noNotice": "Empty Notification.",
       "noNoticeDesc": "We will let you know when you post Moment, Story, comment. :)"
+    },
+    "sliceMenu": {
+      "easyLogin": "Easy Sign in",
+      "loginPromote": "You can enjoy various service while logging in!",
+      "link": "Direct Link"
     },
     "viewProfile": "View Profile",
     "newStory": "New Story",

@@ -172,24 +172,6 @@ export class MomentsController {
     @Query('filter') filter: string,
     @Query('momentId') momentId: string,
   ) {
-    if (type) {
-      switch (type) {
-        case 'community':
-          type = '한인 커뮤니티';
-          break;
-        case 'trip':
-          type = '여행정보 공유';
-          break;
-        case 'scam alert':
-          type = '사기 경보';
-          break;
-        case 'accompany':
-          type = '동행자 모집';
-          break;
-        default:
-          break;
-      }
-    }
     if (!filter && !type && momentId) {
       return await this.MomentsService.getPostsById(code, page, momentId);
     }

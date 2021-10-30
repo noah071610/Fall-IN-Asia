@@ -31,20 +31,20 @@ const LoginModal: FC<IProps> = () => {
 
   const onFinishSignUp = useCallback((values: any) => {
     if (!values.email || !values.email?.trim()) {
-      toastErrorMessage(t("modal.login.noEmail"));
+      toastErrorMessage(t("message.error.noEmail"));
       return;
     }
     if (!values.authNum || !values.authNum?.trim()) {
-      toastErrorMessage(t("modal.login.noCertification"));
+      toastErrorMessage(t("message.error.noCertification"));
       return;
     }
     if (!values.password || !values.password?.trim()) {
-      toastErrorMessage(t("modal.login.noPassword"));
+      toastErrorMessage(t("message.error.noPassword"));
       return;
     }
     let name = values?.first_name + values?.last_name;
     if (!name || !name?.trim()) {
-      toastErrorMessage(t("modal.login.noName"));
+      toastErrorMessage(t("message.error.noName"));
       return;
     }
     let form: IUserRequestForm = {
@@ -60,11 +60,11 @@ const LoginModal: FC<IProps> = () => {
     (e) => {
       e.preventDefault();
       if (!email || !email?.trim()) {
-        toastErrorMessage(t("modal.login.noEmail"));
+        toastErrorMessage(t("message.error.noEmail"));
         return;
       }
       if (!password || !password?.trim()) {
-        toastErrorMessage(t("modal.login.noPassword"));
+        toastErrorMessage(t("message.error.noPassword"));
         return;
       }
       let form: IUserRequestForm = {

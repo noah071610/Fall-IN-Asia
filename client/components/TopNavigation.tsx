@@ -14,7 +14,7 @@ const TopNavigationWrapper = styled.nav`
     ${tw`mx-2  bg-white`}
   }
   .nav-inner-list {
-    ${tw` mx-auto`}
+    ${tw`mx-auto`}
     width:100%;
     ${FLEX_STYLE("center", "center")};
     li {
@@ -36,12 +36,12 @@ const TopNavigationWrapper = styled.nav`
     .nav-outer-small {
       ${tw`grid bg-white`}
       span {
-        ${tw`py-4 px-0 cursor-pointer`}
+        ${tw`pb-2 pt-3 px-2 cursor-pointer`}
         ${FLEX_STYLE("center", "center")};
       }
       .active-list {
         font-weight: bold;
-        border-bottom: 0.15rem solid ${BLUE_COLOR};
+        border-bottom: 0.3rem solid ${BLUE_COLOR};
       }
     }
   }
@@ -71,7 +71,7 @@ const TopNavigation: FC<IProps> = ({ filter, list, onClickList }) => {
           })}
         </div>
       </div>
-      <Swiper slidesPerView={4.4} freeMode={true} className="nav-outer-small">
+      <Swiper slidesPerView={2.8} freeMode={true} className="nav-outer-small">
         {list?.map((v) => {
           return (
             <SwiperSlide

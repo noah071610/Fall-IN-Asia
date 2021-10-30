@@ -13,6 +13,7 @@ import styled from "@emotion/styled";
 import { FLEX_STYLE, MD_SIZE } from "config";
 import tw from "twin.macro";
 import { useTranslation } from "react-i18next";
+import LanguageSelectPopUp from "@components/Popups/LanguageSelectPopUp";
 
 const HeaderRightWrapper = styled.ul`
   ${FLEX_STYLE("", "center")};
@@ -45,7 +46,7 @@ interface IProps {
 const HeaderRight: FC<IProps> = ({ onClickSearchWord, children }) => {
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
-  const { onProfilePopUp, onNoticePopUp, onSearchPopUp } = useSelector(
+  const { onProfilePopUp, onNoticePopUp, onSearchPopUp, onLanguageSelectPopUp } = useSelector(
     (state: RootState) => state.main
   );
   const { user, readNoticeDone, logoutDone } = useSelector((state: RootState) => state.user);
@@ -64,6 +65,9 @@ const HeaderRight: FC<IProps> = ({ onClickSearchWord, children }) => {
         break;
       case "search":
         dispatch(mainSlice.actions.toggleSearchPopUp());
+        break;
+      case "language":
+        dispatch(mainSlice.actions.toggleLanguageSelectPopUp());
         break;
       default:
         return;
@@ -105,6 +109,16 @@ const HeaderRight: FC<IProps> = ({ onClickSearchWord, children }) => {
         >
           <FontAwesomeIcon className="search-icon" icon={faSearch} />
         </a>
+      </li>
+      <li className="header-list" style={{ padding: "0 0.5rem" }}>
+        <a className="header-list-anchor" onClick={() => onClickMenuPopup("language")}>
+          <img
+            src="https://img.icons8.com/color/48/000000/south-korea.png"
+            alt="country-img-korea"
+            style={{ width: "2rem", height: "2rem" }}
+          />
+        </a>
+        {onLanguageSelectPopUp && <LanguageSelectPopUp />}
       </li>
       {user ? (
         <>

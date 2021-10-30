@@ -7,6 +7,8 @@ import { wrapper } from "configureStore";
 import { getUserInfoAction } from "actions/user";
 import Head from "next/head";
 import { useDispatch } from "react-redux";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 
 export const NotFoundWrapper = styled.main`
   ${tw`pt-16`}
@@ -16,12 +18,16 @@ export const NotFoundWrapper = styled.main`
     font-size: 3rem;
     ${tw`mb-3`}
   }
+  h3 {
+    text-align: center;
+  }
   button {
     ${tw`mt-6 rounded-xl shadow-md py-3 px-8`}
   }
 `;
 
 const NotFound = () => {
+  const { t } = useTranslation("common");
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserInfoAction());
@@ -33,16 +39,18 @@ const NotFound = () => {
       </Head>
       <NotFoundWrapper>
         <h1>NOT FOUND</h1>
-        <h3>페이지를 찾지 못했어요.</h3>
-        <button onClick={() => router.back()}>이전페이지로 돌아가기</button>
+        <h3>{t("notFound.title")}</h3>
+        <button onClick={() => router.back()}>{t("notFound.goback")}</button>
       </NotFoundWrapper>
     </>
   );
 };
 
-export const getStaticProps = wrapper.getStaticProps(() => async () => {
+export const getStaticProps = wrapper.getStaticProps(() => async ({ locale }) => {
   return {
-    props: {},
+    props: {
+      ...(await serverSideTranslations(locale as string, ["common"])),
+    },
   };
 });
 

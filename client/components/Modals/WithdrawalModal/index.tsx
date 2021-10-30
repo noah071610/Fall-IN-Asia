@@ -49,7 +49,7 @@ const WithdrawalModal: FC<IProps> = () => {
         <Option value="관심도 저하">관심도 저하</Option>
         <Option value="개인정보 누출 우려">개인정보 누출 우려</Option>
       </Select>
-      <h3>{t("modal.login.noPassword")}</h3>
+      <h3>{t("message.error.noPassword")}</h3>
       <input
         value={password}
         onChange={onChangePassword}

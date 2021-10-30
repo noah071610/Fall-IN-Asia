@@ -13,10 +13,12 @@ import { mainSlice } from "slices/main";
 import fetcher from "utils/fetcher";
 import useSWR from "swr";
 import { ICountry } from "@typings/db";
+import { useTranslation } from "react-i18next";
 
 interface IProps {}
 
 const MobileSlideMenu: FC<IProps> = () => {
+  const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const [activePath, setActivePath] = useState("");
   const { asPath, query } = useRouter();
@@ -66,7 +68,7 @@ const MobileSlideMenu: FC<IProps> = () => {
               </a>
             </Link>
             <Divider className="slide-menu-divider" orientation="left">
-              <span>{user ? "프로필" : "로그인"}</span>
+              <span>{user ? t("profile.profile") : t("nav.login")}</span>
             </Divider>
             {user ? (
               <>
@@ -75,7 +77,10 @@ const MobileSlideMenu: FC<IProps> = () => {
                     <img src={user?.icon || DEFAULT_ICON_URL} alt="icon-image" />
                   </div>
                   <div className="user-info">
-                    <h2>{user?.name}님</h2>
+                    <h2>
+                      {user?.name}
+                      {t("main.honor")}
+                    </h2>
                     <p>{user?.introduce}</p>
                   </div>
                 </div>
@@ -84,7 +89,7 @@ const MobileSlideMenu: FC<IProps> = () => {
                     <a>
                       <li>
                         <FontAwesomeIcon className="list-icon" icon={faUser} />
-                        <h4>내 프로필</h4>{" "}
+                        <h4>{t("popup.profile")}</h4>{" "}
                       </li>
                     </a>
                   </Link>
@@ -92,23 +97,23 @@ const MobileSlideMenu: FC<IProps> = () => {
                     <a>
                       <li className="middle-list">
                         <FontAwesomeIcon className="list-icon" icon={faEdit} />
-                        <h4>새 연대기</h4>
+                        <h4>{t("popup.newStory")}</h4>
                       </li>
                     </a>
                   </Link>
                   <a onClick={() => dispatch(logoutAction())}>
                     <li>
                       <FontAwesomeIcon className="list-icon" icon={faSignOutAlt} />
-                      <h4>로그아웃</h4>
+                      <h4>{t("popup.logout")}</h4>
                     </li>
                   </a>
                 </ul>
               </>
             ) : (
               <>
-                <h3 className="slide-menu-sub-title">로그인하고 더 많은 서비스를 누리세요!</h3>
+                <h3 className="slide-menu-sub-title">{t("popup.sliceMenu.loginPromote")}</h3>
                 <button onClick={onClickLogin} className="login-btn">
-                  <span>간편로그인</span>
+                  <span>{t("popup.sliceMenu.easyLogin")}</span>
                   <ul className="social-icon-wrapper">
                     <li style={{ background: WHITE_COLOR }}>
                       <img
@@ -133,7 +138,7 @@ const MobileSlideMenu: FC<IProps> = () => {
               </>
             )}
             <Divider className="slide-menu-divider" orientation="left">
-              <span>바로가기</span>
+              <span>{t("popup.sliceMenu.link")}</span>
             </Divider>
             <ul className="link-menu-wrapper">
               <Link href="/">
@@ -142,7 +147,8 @@ const MobileSlideMenu: FC<IProps> = () => {
                     style={activePath === "moment" ? { borderLeft: `3px solid ${BLUE_COLOR}` } : {}}
                     className="link-menu-list"
                   >
-                    모멘트{country && activePath !== "story" && ` > ${country?.name}`}
+                    {t("nav.moment")}
+                    {country && activePath !== "story" && ` > ${country?.name}`}
                   </li>
                 </a>
               </Link>
@@ -155,14 +161,14 @@ const MobileSlideMenu: FC<IProps> = () => {
                 >
                   <a>
                     <li style={query?.type === "community" ? { color: BLUE_COLOR } : {}}>
-                      한인 커뮤니티
+                      {t("nav.community")}
                     </li>
                   </a>
                 </Link>
                 <Link href={country ? `/country/${country.code}?type=trip` : "/?type=trip"}>
                   <a>
                     <li style={query?.type === "trip" ? { color: BLUE_COLOR } : {}}>
-                      여행정보 공유
+                      {t("nav.travelInfo")}
                     </li>
                   </a>
                 </Link>
@@ -171,7 +177,7 @@ const MobileSlideMenu: FC<IProps> = () => {
                 >
                   <a>
                     <li style={query?.type === "scam alert" ? { color: BLUE_COLOR } : {}}>
-                      사기 경보
+                      {t("nav.scam")}
                     </li>
                   </a>
                 </Link>
@@ -180,20 +186,20 @@ const MobileSlideMenu: FC<IProps> = () => {
                 >
                   <a>
                     <li style={query?.type === "accompany" ? { color: BLUE_COLOR } : {}}>
-                      동행자 모집
+                      {t("nav.accompany")}
                     </li>
                   </a>
                 </Link>
                 {country ? (
                   <Link href="/">
                     <a>
-                      <li>아시아 전체</li>
+                      <li>{t("nav.allCountry")}</li>
                     </a>
                   </Link>
                 ) : (
                   <Link href="/country/select">
                     <a>
-                      <li>국가선택</li>
+                      <li>{t("nav.selectCountry")}</li>
                     </a>
                   </Link>
                 )}
@@ -204,7 +210,7 @@ const MobileSlideMenu: FC<IProps> = () => {
                     style={activePath === "story" ? { borderLeft: `3px solid ${BLUE_COLOR}` } : {}}
                     className="link-menu-list"
                   >
-                    연대기
+                    {t("nav.story")}
                   </li>
                 </a>
               </Link>
@@ -214,7 +220,7 @@ const MobileSlideMenu: FC<IProps> = () => {
                     style={activePath === "news" ? { borderLeft: `3px solid ${BLUE_COLOR}` } : {}}
                     className="link-menu-list"
                   >
-                    관광소식
+                    {t("nav.news")}
                   </li>
                 </a>
               </Link>
@@ -227,7 +233,7 @@ const MobileSlideMenu: FC<IProps> = () => {
                 <a>About us</a>
               </Link>
               <Link href="/about#policy">
-                <a>이용약관</a>
+                <a>{t("about.terms")}</a>
               </Link>
             </div>
           </section>

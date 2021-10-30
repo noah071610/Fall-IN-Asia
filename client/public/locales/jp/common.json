@@ -4,6 +4,10 @@
     "developer": "開発者",
     "terms": "利用規約"
   },
+  "notFound": {
+    "title": "お探しのページがありません。",
+    "goback": "以前のページに戻る"
+  },
   "search": {
     "placeHolder": "キーワード入力",
     "results": "検索結果",
@@ -40,10 +44,33 @@
     "logout": "ログアウト致しました。",
     "needToLogin": "ログインが必要です。",
     "removeIt": "削除してください。",
-    "invalidEmail": "正しくないメールアドレスです。",
-    "noUser": "ユーザーがありませんでした。",
-    "noImage": "イメージがありません。もう一度確認してください。",
     "withdrawal": "脱会致しました。どうもありがとうございました。",
+    "error": {
+      "exception": "予想できないエラーが発生しました。申し訳ございません。",
+      "failToGet": "読み込に失敗しました。",
+      "noDataToPost": "書き込むデータがありません。",
+      "notHost": "管理者ではないと接続出来ません。",
+      "invalidEmail": "正しくないメールアドレスです。",
+      "noUser": "ユーザーがありませんでした。",
+      "noImage": "イメージがありません。もう一度確認してください。",
+      "noPost": "ポストを読み込に失敗しました。",
+      "noPostToEdit": "直すポストがありません。",
+      "noComment": "コメントがありません。",
+      "noCertification": "認証コードを書いてください。",
+      "wrongCertification": "認証コードが違います。もう一度確認してください。",
+      "existEmail": "誰かが使っているメールアドレスです。",
+      "wrongPassword": "暗証番号が違います。もう一度確認してください。",
+      "noFirstName": "名字を書いてください。",
+      "noLastName": "名前を書いてください。",
+      "noName": "名前を書いてください。",
+      "noEmail": "メールアドレスを書いてください。",
+      "notEnoughEmail": "メールアドレスを正しく書いてください。",
+      "needCertification": "認証コードが必要です。",
+      "wrongEmail": "メールアドレスを正しく書いてください。",
+      "noPassword": "パスワードを書いてください。",
+      "notEnoughPassword": "9文字以上書いてください。",
+      "needToAgreeTerms": "利用規約の同意が必要です。"
+    },
     "profile": {
       "notOwner": "本人ではないと変更出来ません。",
       "follow": "このユーザーをフォローします！",
@@ -187,19 +214,7 @@
       "termsMore": "もっと見る",
       "certification": "認証コード発送",
       "send": "発送",
-      "sendCertification": "に認証コードを発送しました。確認してコードを書いてください。",
-      "noCertification": "認証コードを書いてください。",
-      "back": "戻るボタン",
-      "noFirstName": "名字を書いてください。",
-      "noLastName": "名前を書いてください。",
-      "noName": "名前を書いてください。",
-      "noEmail": "メールアドレスを書いてください。",
-      "notEnoughEmail": "メールアドレスを正しく書いてください。",
-      "needCertification": "認証コードが必要です。",
-      "wrongEmail": "メールアドレスを正しく書いてください。",
-      "noPassword": "パスワードを書いてください。",
-      "notEnoughPassword": "9文字以上書いてください。",
-      "needToAgreeTerms": "利用規約の同意が必要です。"
+      "sendCertification": "に認証コードを発送しました。確認してコードを書いてください。"
     }
   },
   "popup": {
@@ -207,6 +222,11 @@
       "notice": "お知らせ",
       "noNotice": "お知らせがありません。",
       "noNoticeDesc": "モメント、ストリー、コメントの投稿や直した時私達がお知らせいたします！"
+    },
+    "sliceMenu": {
+      "easyLogin": "簡単ログイン",
+      "loginPromote": "ログインしたら色んなサービスをもっと楽しめますよ！",
+      "link": "メニュー"
     },
     "viewProfile": "プロフィール",
     "newStory": "ストリー投稿",

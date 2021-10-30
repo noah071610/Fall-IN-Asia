@@ -9,6 +9,10 @@
     "results": "검색 결과",
     "searchAgain": "다시 검색하기"
   },
+  "notFound": {
+    "title": "페이지를 찾지 못했어요.",
+    "goback": "이전페이지로 돌아가기"
+  },
   "profile": {
     "follow": "팔로우",
     "following": "팔로잉",
@@ -38,12 +42,35 @@
   },
   "message": {
     "logout": "로그아웃 했습니다.",
-    "needToLogin": "로그인 후 이용 필요합니다.",
+    "needToLogin": "로그인 후 이용 가능합니다.",
     "removeIt": "삭제해주세요.",
-    "invalidEmail": "유효하지 않은 이메일입니다.",
-    "noUser": "유저를 찾을 수 없습니다.",
-    "noImage": "이미지를 찾을수없습니다. 다시 시도해주세요.",
     "withdrawal": "회원탈퇴가 정상적으로 진행되었습니다. 이용해주셔서 감사합니다.",
+    "error": {
+      "exception": "예상치못한 에러가 발생했습니다. 불편을 드려 죄송합니다.",
+      "failToGet": "정보를 불러오는데 실패했습니다.",
+      "noDataToPost": "작성 할 데이터가 없습니다.",
+      "notHost": "운영자만 작성 할 수 있습니다.",
+      "invalidEmail": "유효하지 않은 이메일입니다.",
+      "noUser": "유저를 찾을 수 없습니다.",
+      "noImage": "이미지를 찾을 수 없습니다.",
+      "noPost": "게시물을 찾을 수 없습니다.",
+      "noPostToEdit": "수정 할 게시물이 없습니다.",
+      "noComment": "댓글을 찾을 수 없습니다.",
+      "noCertification": "이메일 인증번호가 필요합니다.",
+      "wrongCertification": "이메일 인증번호가 다릅니다. 다시한번 확인해주세요.",
+      "existEmail": "누군가 사용하고있는 이메일입니다.",
+      "wrongPassword": "비밀번호가 일치하지 않습니다. 다시한번 확인해주세요.",
+      "noFirstName": "성을 적어주세요.",
+      "noLastName": "이름을 적어주세요.",
+      "noName": "이름을 적어주세요.",
+      "noEmail": "이메일을 작성해주세요.",
+      "notEnoughEmail": "이메일을 정확히 적어주세요.",
+      "needCertification": "인증번호가 6자리가 필요합니다.",
+      "wrongEmail": "이메일의 형식을 올바르게 작성해주세요.",
+      "noPassword": "비밀번호를 작성해주세요.",
+      "notEnoughPassword": "비밀번호는 9자 이상이어야 합니다.",
+      "needToAgreeTerms": "약관에 동의해주세요."
+    },
     "profile": {
       "notOwner": "본인프로필만 변경 가능합니다.",
       "follow": "이 유저를 팔로우 합니다.",
@@ -148,7 +175,8 @@
     "noStory": "아직 연대기가 없어요. 😰",
     "noPost": "아직 포스트가 없어요. 😥",
     "yes": "네",
-    "no": "아니오"
+    "no": "아니오",
+    "honor": "님"
   },
   "country": {
     "country": "국가",
@@ -187,18 +215,7 @@
       "termsMore": "약관보기",
       "certification": "인증번호 발송",
       "send": "인증번호 발송",
-      "sendCertification": "로 이메일이 발송되었습니다. 인증번호를 확인해주세요.",
-      "noCertification": "이메일 인증번호가 필요합니다.",
-      "noFirstName": "성을 적어주세요.",
-      "noLastName": "이름을 적어주세요.",
-      "noName": "이름을 적어주세요.",
-      "noEmail": "이메일을 작성해주세요.",
-      "notEnoughEmail": "이메일을 정확히 적어주세요.",
-      "needCertification": "인증번호가 6자리가 필요합니다.",
-      "wrongEmail": "이메일의 형식을 올바르게 작성해주세요.",
-      "noPassword": "비밀번호를 작성해주세요.",
-      "notEnoughPassword": "비밀번호는 9자 이상이어야 합니다.",
-      "needToAgreeTerms": "약관에 동의해주세요."
+      "sendCertification": "로 이메일이 발송되었습니다. 인증번호를 확인해주세요."
     }
   },
   "popup": {
@@ -206,6 +223,11 @@
       "notice": "알림",
       "noNotice": "알림이 없습니다.",
       "noNoticeDesc": "유저님이 모멘트,연대기,코멘트 작성 및 수정등 활동을 하면 저희가 알려줄게요!"
+    },
+    "sliceMenu": {
+      "easyLogin": "간편 로그인",
+      "loginPromote": "로그인하고 더 많은 서비스를 누리세요!",
+      "link": "바로가기"
     },
     "viewProfile": "프로필 보기",
     "newStory": "새 연대기",

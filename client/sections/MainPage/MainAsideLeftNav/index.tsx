@@ -66,17 +66,17 @@ const MainAsideLeftNav: FC<IProps> = () => {
             </li>
           </a>
         </Link>
-        <Link href={country ? `/country/${country.code}?type=trip` : "/?type=trip"}>
+        <Link href={country ? `/country/${country.code}?type=travelInfo` : "/?type=travelInfo"}>
           <a>
-            <li className={query?.type === "trip" ? "menu-active" : ""}>
+            <li className={query?.type === "travelInfo" ? "menu-active" : ""}>
               <FontAwesomeIcon className="icon" icon={faPlaneDeparture} />
               <span>{t("nav.travelInfo")}</span>
             </li>
           </a>
         </Link>
-        <Link href={country ? `/country/${country.code}?type=scam+alert` : "/?type=scam+alert"}>
+        <Link href={country ? `/country/${country.code}?type=scam` : "/?type=scam"}>
           <a>
-            <li className={query?.type === "scam alert" ? "menu-active" : ""}>
+            <li className={query?.type === "scam" ? "menu-active" : ""}>
               <FontAwesomeIcon className="icon" icon={faExclamationCircle} />
               <span>{t("nav.scam")}</span>
             </li>

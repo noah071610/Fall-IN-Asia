@@ -23,17 +23,17 @@ export class AuthService {
       select: ['id', 'icon', 'email', 'password'],
     });
     if (!user) {
-      throw new UnauthorizedException('유효하지 않은 이메일입니다.');
+      throw new UnauthorizedException('message.error.invalidEmail');
     }
     if (!password) {
-      throw new UnauthorizedException('비밀번호를 입력해주세요.');
+      throw new UnauthorizedException('message.error.noPassword');
     }
     const result = await bcrypt.compare(password, user.password);
     if (result) {
       const { password, ...userWithoutPassword } = user;
       return userWithoutPassword;
     } else {
-      throw new UnauthorizedException('비밀번호가 틀렸습니다.');
+      throw new UnauthorizedException('message.error.wrongPassword');
     }
   }
 
@@ -58,11 +58,11 @@ export class AuthService {
 
   async checkPossibleEmail(email: string) {
     if (!email) {
-      throw new BadRequestException('이메일을 작성해주세요.');
+      throw new BadRequestException('message.error.noEmail');
     }
     const user = await this.UserRepository.findOne({ where: { email: email } });
     if (user) {
-      throw new UnauthorizedException('누군가 사용하고있는 이메일입니다.');
+      throw new UnauthorizedException('message.error.existEmail');
     }
     const generateRandom = function (min: number, max: number) {
       const ranNum = Math.floor(Math.random() * (max - min + 1)) + min;
