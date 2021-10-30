@@ -26,7 +26,7 @@ export class CountriesService {
       .leftJoin('country.stories', 'stories')
       .getMany();
     if (!countries) {
-      throw new NotFoundException('예상치못한 에러가 발생했습니다.');
+      throw new NotFoundException('message.error.exception');
     }
     return countries;
   }
@@ -50,7 +50,7 @@ export class CountriesService {
             .splice(0, 10);
         });
     if (!countriesWithPoint) {
-      throw new NotFoundException('예상치못한 에러가 발생했습니다.');
+      throw new NotFoundException('message.error.exception');
     }
     let countriesOrderByPopularity = [];
     for (const i of countriesWithPoint) {
@@ -72,7 +72,7 @@ export class CountriesService {
       .leftJoin('country.stories', 'stories')
       .getOne();
     if (!country) {
-      throw new NotFoundException('예상치못한 에러가 발생했습니다.');
+      throw new NotFoundException('message.error.exception');
     }
     return country;
   }
@@ -91,7 +91,7 @@ export class CountriesService {
         break;
     }
     if (!type2url) {
-      throw new NotFoundException('정보를 불러오는데 실패했습니다.');
+      throw new NotFoundException('message.error.exception');
     }
     const country_info = await axios
       .get(
@@ -110,9 +110,7 @@ export class CountriesService {
         }
       })
       .catch(() => {
-        throw new InternalServerErrorException(
-          '서버에 오류가 발생했습니다. 불편을 드려 죄송합니다.',
-        );
+        throw new InternalServerErrorException('message.error.exception');
       });
     return country_info;
   }

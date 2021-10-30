@@ -131,9 +131,10 @@ export const searchOptions = [
 export const toastErrorMessage = (error: any) => {
   let errorMessage = error;
   if (typeof error !== "string") {
-    errorMessage = error.response?.data?.data;
     if (errorMessage.message) {
-      errorMessage = errorMessage.message;
+      errorMessage = i18n?.t(error.response?.data?.data.message);
+    } else {
+      errorMessage = i18n?.t(error.response?.data?.data);
     }
   }
   toast.error(errorMessage, {

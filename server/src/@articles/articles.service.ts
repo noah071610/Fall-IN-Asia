@@ -29,17 +29,17 @@ export class ArticlesService {
     file: Express.MulterS3.File,
   ) {
     if (!form) {
-      throw new NotFoundException('작성 할 데이터가 없습니다.');
+      throw new NotFoundException('message.error.noDataToPost');
     }
     if (!userId) {
-      throw new UnauthorizedException('운영자만 작성 할 수 있습니다.');
+      throw new UnauthorizedException('message.error.notHost');
     }
     const user = await this.UsersRepository.findOne({
       select: ['id', 'admin'],
       where: { id: userId },
     });
     if (!user.admin) {
-      throw new UnauthorizedException('운영자만 작성 할 수 있습니다.');
+      throw new UnauthorizedException('message.error.notHost');
     }
     const country = await this.CountriesRepository.findOne({
       where: { code: form.code },
@@ -68,7 +68,7 @@ export class ArticlesService {
 
   async saveImage(file: Express.MulterS3.File) {
     if (!file) {
-      throw new NotFoundException('사용 할 이미지가 없습니다.');
+      throw new NotFoundException('message.error.noImage');
     }
     const newImage = new Images();
     newImage.image_src = file.location.replace(/\/original\//, '/thumb/');
@@ -84,7 +84,7 @@ export class ArticlesService {
       relations: ['country', 'images', 'user'],
     });
     if (!post) {
-      throw new NotFoundException('가져올 게시물이 없습니다.');
+      throw new NotFoundException('message.error.noPost');
     }
     return post;
   }
@@ -131,14 +131,14 @@ export class ArticlesService {
     userId: number,
   ) {
     if (!userId) {
-      throw new UnauthorizedException('운영자만 작성 할 수 있습니다.');
+      throw new UnauthorizedException('message.error.notHost');
     }
     const user = await this.UsersRepository.findOne({
       select: ['id', 'admin'],
       where: { id: userId },
     });
     if (!user.admin) {
-      throw new UnauthorizedException('운영자만 작성 할 수 있습니다.');
+      throw new UnauthorizedException('message.error.notHost');
     }
     const country = await this.CountriesRepository.findOne({
       where: { code: form.code },
@@ -147,7 +147,7 @@ export class ArticlesService {
       where: { id: form.articleId },
     });
     if (!editPost || !country) {
-      throw new NotFoundException('수정 할 게시물이 없습니다.');
+      throw new NotFoundException('message.error.noPostToEdit');
     }
     editPost.type = form.type;
     editPost.title = form.title;
@@ -171,17 +171,17 @@ export class ArticlesService {
 
   async deletePost(articleId: number, userId: number) {
     if (!articleId) {
-      throw new NotFoundException('게시물을 찾을 수 없습니다.');
+      throw new NotFoundException('message.error.noPost');
     }
     if (!userId) {
-      throw new UnauthorizedException('운영자만 작성 할 수 있습니다.');
+      throw new UnauthorizedException('message.error.notHost');
     }
     const user = await this.UsersRepository.findOne({
       select: ['id', 'admin'],
       where: { id: userId },
     });
     if (!user.admin) {
-      throw new UnauthorizedException('운영자만 작성 할 수 있습니다.');
+      throw new UnauthorizedException('message.error.notHost');
     }
     return await this.ArticlesRepository.delete({
       id: articleId,

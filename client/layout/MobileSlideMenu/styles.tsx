@@ -104,12 +104,16 @@ export const MobileSlideMenuWrapper = styled.nav`
     }
   }
   .slide-menu-footer {
-    ${tw`pt-16 pb-4 pr-16`}
+    ${tw`pt-16 pb-4 pr-12`}
     h4 {
       ${tw`leading-7 text-xs mb-3`}
     }
-    a {
-      ${tw`mr-4`}
+    div {
+      ${FLEX_STYLE("flex-start", "center")};
+      margin-bottom: 1rem;
+      a {
+        ${tw`pr-4`}
+      }
     }
   }
   @media (max-width: ${MD_SIZE}) {

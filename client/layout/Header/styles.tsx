@@ -26,7 +26,10 @@ export const HeaderWrapper = (headerDownSize: boolean) => css`
     &-anchor {
       transition: 0.3s all;
       ${tw`font-bold`}
-      ${headerDownSize ? tw`text-sm` : "font-size:1.05rem"}
+      ${headerDownSize ? tw`text-sm` : "font-size:1.05rem"};
+      .country-flag-img {
+        ${headerDownSize ? tw`w-6` : tw`w-8`};
+      }
     }
   }
 

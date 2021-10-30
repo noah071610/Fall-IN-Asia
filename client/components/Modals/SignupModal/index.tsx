@@ -47,11 +47,11 @@ const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSig
     (e) => {
       e.preventDefault();
       if (!email || !email?.trim()) {
-        toastErrorMessage(t("modal.login.noEmail"));
+        toastErrorMessage(t("message.error.noEmail"));
         return;
       }
       if (!email.match(/[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/)) {
-        toastErrorMessage(t("modal.login.wrongEmail"));
+        toastErrorMessage(t("message.error.wrongEmail"));
         return;
       }
       axios
@@ -87,11 +87,11 @@ const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSig
             rules={[
               {
                 type: "email",
-                message: t("modal.login.notEnoughEmail"),
+                message: t("message.error.notEnoughEmail"),
               },
               {
                 required: true,
-                message: t("modal.login.noEmail"),
+                message: t("message.error.noEmail"),
               },
             ]}
           >
@@ -111,7 +111,7 @@ const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSig
             rules={[
               {
                 required: true,
-                message: t("modal.login.needCertification"),
+                message: t("message.error.needCertification"),
               },
             ]}
           >
@@ -122,14 +122,14 @@ const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSig
           <Form.Item
             name="first_name"
             label={t("modal.login.firstName")}
-            rules={[{ required: true, message: t("modal.login.noFirstName"), whitespace: true }]}
+            rules={[{ required: true, message: t("message.error.noFirstName"), whitespace: true }]}
           >
             <input type="text" />
           </Form.Item>
           <Form.Item
             name="last_name"
             label={t("modal.login.lastName")}
-            rules={[{ required: true, message: t("modal.login.noLastName"), whitespace: true }]}
+            rules={[{ required: true, message: t("message.error.noLastName"), whitespace: true }]}
           >
             <input type="text" />
           </Form.Item>
@@ -140,11 +140,11 @@ const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSig
           rules={[
             {
               required: true,
-              message: t("modal.login.noPassword"),
+              message: t("message.error.noPassword"),
             },
             {
               min: 9,
-              message: t("modal.login.notEnoughPassword"),
+              message: t("message.error.notEnoughPassword"),
             },
           ]}
           hasFeedback
@@ -160,7 +160,7 @@ const SignupModal: FC<IProps> = ({ onFinishSignUp, onClickSignUpToggle, setOnSig
               validator: (_, value) =>
                 value
                   ? Promise.resolve()
-                  : Promise.reject(new Error(t("modal.login.needCertification"))),
+                  : Promise.reject(new Error(t("message.error.needCertification"))),
             },
           ]}
           {...tailFormItemLayout}

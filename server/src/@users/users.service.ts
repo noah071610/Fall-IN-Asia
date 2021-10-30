@@ -97,25 +97,23 @@ export class UsersService {
 
   async signUp(email: string, name: string, password: string, authNum: string) {
     if (!email) {
-      throw new BadRequestException('이메일을 작성해주세요.');
+      throw new BadRequestException('message.error.noEmail');
     }
     if (!name) {
-      throw new BadRequestException('이름을 입력해주세요.');
+      throw new BadRequestException('message.error.noName');
     }
     if (!password) {
-      throw new BadRequestException('비밀번호를 입력해주세요.');
+      throw new BadRequestException('message.error.noPassword');
     }
     const user = await this.UserRepository.findOne({ where: { email } });
     if (user) {
-      throw new BadRequestException('누군가 사용하고있는 이메일입니다.');
+      throw new BadRequestException('message.error.existEmail');
     }
     const emailAuthNum = await this.AuthNumRepository.findOne({
       where: { email, authNum: parseInt(authNum) },
     });
     if (!emailAuthNum) {
-      throw new BadRequestException(
-        '이메일 인증번호가 다릅니다. 다시한번 확인해주세요.',
-      );
+      throw new BadRequestException('message.error.wrongCertification');
     } else {
       await this.AuthNumRepository.delete(emailAuthNum);
     }
@@ -151,7 +149,7 @@ export class UsersService {
       where: { id: userId },
     });
     if (!user) {
-      throw new NotFoundException('유저를 찾지 못했습니다.');
+      throw new NotFoundException('message.error.noUser');
     }
     user.name = form.userName;
     user.introduce = form.introduce;
@@ -164,15 +162,13 @@ export class UsersService {
       where: { id: userId },
     });
     if (!user) {
-      throw new NotFoundException('유저를 찾지 못했습니다.');
+      throw new NotFoundException('message.error.noUser');
     }
     const result = await bcrypt.compare(password, user.password);
     if (result) {
       return true;
     } else {
-      throw new UnauthorizedException(
-        '비밀번호가 일치하지 않습니다. 다시한번 확인해주세요.',
-      );
+      throw new UnauthorizedException('message.error.wrongPassword');
     }
   }
 
@@ -181,7 +177,7 @@ export class UsersService {
       where: { id: userId },
     });
     if (!user) {
-      throw new NotFoundException('유저를 찾지 못했습니다.');
+      throw new NotFoundException('message.error.noUser');
     }
     const myNewPassword = await bcrypt.hash(newPassword, 12);
     user.password = myNewPassword;
@@ -196,10 +192,10 @@ export class UsersService {
 
   async followUser(followingId: number, userId: number) {
     if (!followingId) {
-      throw new NotFoundException('팔로우 할 유저를 찾지 못했습니다.');
+      throw new NotFoundException('message.error.noUser');
     }
     if (!userId) {
-      throw new UnauthorizedException('유저를 찾지 못했습니다.');
+      throw new UnauthorizedException('message.needToLogin');
     }
     const newFollower = new Follow();
     newFollower.followerId = userId;
@@ -209,10 +205,10 @@ export class UsersService {
 
   async unfollowUser(followingId: number, userId: number) {
     if (!followingId) {
-      throw new NotFoundException('언팔로우를 할 유저를 찾지 못했습니다.');
+      throw new NotFoundException('message.error.noUser');
     }
     if (!userId) {
-      throw new UnauthorizedException('유저를 찾지 못했습니다.');
+      throw new UnauthorizedException('message.needToLogin');
     }
     return await this.FollowRepository.delete({
       followingId,

@@ -8,17 +8,19 @@ import tw from "twin.macro";
 
 const SearchPopUpWrapper = (width: string) => css`
   width: ${width};
-  input,
-  .ant-select-selector {
-    ${tw`bg-transparent h-full px-1`}
-    width:200px;
-    &:hover {
-      border: none !important;
-      box-shadow: none !important;
-    }
-    &:focus {
-      border: none !important;
-      box-shadow: none !important;
+  .ant-select {
+    ${tw`w-full`}
+    input,
+    .ant-select-selector {
+      ${tw`w-full bg-transparent h-full px-1`}
+      &:hover {
+        border: none !important;
+        box-shadow: none !important;
+      }
+      &:focus {
+        border: none !important;
+        box-shadow: none !important;
+      }
     }
   }
 `;

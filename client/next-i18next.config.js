@@ -1,6 +1,6 @@
 module.exports = {
   react: {
-    useSuspense: false,
+    useSuspense: true,
   },
   i18n: {
     defaultLocale: "ko",

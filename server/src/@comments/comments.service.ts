@@ -143,10 +143,10 @@ export class CommentsService {
 
   async likeComment(commentId: number, userId: number) {
     if (!commentId) {
-      throw new NotFoundException('댓글을 찾을 수 없습니다.');
+      throw new NotFoundException('message.error.noComment');
     }
     if (!userId) {
-      throw new UnauthorizedException('유저를 찾지 못했습니다.');
+      throw new UnauthorizedException('message.error.noUser');
     }
     const newCommentLike = new CommentLike();
     newCommentLike.userId = userId;
@@ -156,10 +156,10 @@ export class CommentsService {
 
   async dislikeComment(commentId: number, userId: number) {
     if (!commentId) {
-      throw new NotFoundException('댓글을 찾을 수 없습니다.');
+      throw new NotFoundException('message.error.noComment');
     }
     if (!userId) {
-      throw new UnauthorizedException('유저를 찾지 못했습니다.');
+      throw new UnauthorizedException('message.error.noUser');
     }
     return await this.CommentLikeRepository.delete({ commentId, userId });
   }

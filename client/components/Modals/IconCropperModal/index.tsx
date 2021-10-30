@@ -96,7 +96,7 @@ const IconCropperModalper: FC<IProps> = () => {
 
   const onClickChangeIcon = useCallback(() => {
     if (!blob) {
-      toastErrorMessage(t("message.noImage"));
+      toastErrorMessage(t("message.error.noImage"));
       return;
     }
     let form = new FormData();

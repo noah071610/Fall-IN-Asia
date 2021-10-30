@@ -1,5 +1,5 @@
 import type { AppProps } from "next/app";
-import { useCallback } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { wrapper } from "configureStore";
 import "../styles/font.css";
 import "swiper/css/bundle";
@@ -22,33 +22,45 @@ import Head from "next/head";
 import { Global } from "@emotion/react";
 import { resetStyle } from "../styles/global";
 import { appWithTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 
 const App = appWithTranslation(({ Component, pageProps }: AppProps) => {
+  const { locale } = useRouter();
   const dispatch = useDispatch();
-  const { onProfilePopUp, onNoticePopUp, onSearchPopUp, onSlideMenu } = useSelector(
-    (state: RootState) => state.main
-  );
+  const { onProfilePopUp, onNoticePopUp, onSearchPopUp, onSlideMenu, onLanguageSelectPopUp } =
+    useSelector((state: RootState) => state.main);
   const onClickClosePopup = useCallback(
     (e) => {
+      if (onSearchPopUp && e.target.nodeName !== "HEADER") {
+        dispatch(mainSlice.actions.closeSearchPopUp());
+      }
       if (onProfilePopUp) {
         dispatch(mainSlice.actions.closeProfilePopUp());
       }
       if (onNoticePopUp) {
         dispatch(mainSlice.actions.closeNoticePopUp());
       }
-      if (onSearchPopUp && e.target.nodeName !== "HEADER") {
-        dispatch(mainSlice.actions.closeSearchPopUp());
+      if (onLanguageSelectPopUp) {
+        dispatch(mainSlice.actions.closeLanguageSelectPopUp());
       }
     },
-    [onProfilePopUp, onNoticePopUp, onSearchPopUp]
+    [onProfilePopUp, onNoticePopUp, onSearchPopUp, onLanguageSelectPopUp]
   );
+  const lan = useMemo(() => {
+    return locale === "jp" ? `"Kosugi Maru", sans-serif` : `"Spoqa Han Sans Neo", "sans-serif"`;
+  }, [locale]);
   return (
     <>
       <Head>
         <meta charSet="utf-8" />
+        {locale === "jp" ? (
+          <link href="/font/jp.css" rel="stylesheet" />
+        ) : (
+          <link href="/font/ko.css" rel="stylesheet" />
+        )}
       </Head>
       <Header />
-      <Global styles={resetStyle} />
+      <Global styles={() => resetStyle(lan)} />
       <div onClick={onClickClosePopup}>
         <Component {...pageProps} />
         <Footer />

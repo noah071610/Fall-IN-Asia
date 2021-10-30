@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 
-export const resetStyle = css`
+export const resetStyle = (lan: string) => css`
   *::-webkit-scrollbar {
     width: 7px;
   }
@@ -17,7 +17,7 @@ export const resetStyle = css`
     background: rgb(153, 153, 153);
   }
   body {
-    font-family: "Spoqa Han Sans Neo", "sans-serif";
+    font-family: ${lan};
   }
   a {
     color: black;

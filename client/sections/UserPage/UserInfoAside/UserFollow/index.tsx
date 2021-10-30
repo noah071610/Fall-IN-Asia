@@ -52,7 +52,7 @@ const UserFollow: FC<IProps> = ({ userInfo }) => {
         </div>
         <span>
           {userInfo.followings.length > 0
-            ? `${userInfo?.followings[0].follower?.name}${t("profile.or")} ${
+            ? `${userInfo?.followings[0].following?.name}${t("profile.or")} ${
                 userInfo?.followings?.length - 1
               }${t("profile.people")} ${t("profile.following")}.`
             : t("profile.noFollowing")}

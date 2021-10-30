@@ -40,10 +40,10 @@ export class MomentsService {
     files: Express.MulterS3.File[],
   ) {
     if (!form) {
-      throw new NotFoundException('작성 할 데이터가 없습니다.');
+      throw new NotFoundException('message.error.noDataToPost');
     }
     if (!userId) {
-      throw new UnauthorizedException('유저를 찾지 못했습니다.');
+      throw new UnauthorizedException('message.error.noUser');
     }
     const country = await this.CountriesRepository.findOne({
       where: { code: form.code },
@@ -70,14 +70,14 @@ export class MomentsService {
         .slice(0, 30)
         .replace(/(<([^>]+)>)/gi, '')
         .replace(/&.*;/gi, '')
-        .slice(0, 11)}...을 작성했습니다.`,
+        .slice(0, 15)}...`,
     });
     return { momentId: newPost.id };
   }
 
   async saveImage(file: Express.MulterS3.File) {
     if (!file) {
-      throw new NotFoundException('사용 할 이미지가 없습니다.');
+      throw new NotFoundException('message.error.noImage');
     }
     const newImage = new Images();
     newImage.image_src = file.location.replace(/\/original\//, '/thumb/');
@@ -104,7 +104,7 @@ export class MomentsService {
       .getOne();
 
     if (!post) {
-      throw new NotFoundException('가져올 게시물이 없습니다.');
+      throw new NotFoundException('message.error.noPost');
     }
     if (post && viewCount) {
       await this.MomentsRepository.createQueryBuilder('moments')
@@ -129,7 +129,7 @@ export class MomentsService {
       .take(3)
       .getMany();
     if (!latestPosts) {
-      throw new NotFoundException('가져올 게시물이 없습니다.');
+      throw new NotFoundException('message.error.noPost');
     }
     return latestPosts;
   }
@@ -198,7 +198,7 @@ export class MomentsService {
       .getMany();
 
     if (!posts) {
-      throw new NotFoundException('모멘트를 찾을 수 없습니다.');
+      throw new NotFoundException('message.error.noPost');
     }
     return posts;
   }
@@ -225,7 +225,7 @@ export class MomentsService {
       .take(10)
       .getMany();
     if (!posts) {
-      throw new NotFoundException('모멘트를 찾을 수 없습니다.');
+      throw new NotFoundException('message.error.noPost');
     }
     return posts;
   }
@@ -244,7 +244,7 @@ export class MomentsService {
     editPost.content = form.content;
     editPost.type = form.type;
     if (!editPost) {
-      throw new NotFoundException('수정 할 게시물이 없습니다.');
+      throw new NotFoundException('message.error.noPostToEdit');
     }
 
     await this.ImagesRepository.delete({
@@ -280,10 +280,10 @@ export class MomentsService {
 
   async likePost(momentId: number, userId: number) {
     if (!momentId) {
-      throw new NotFoundException('게시물을 찾을 수 없습니다.');
+      throw new NotFoundException('message.error.noPost');
     }
     if (!userId) {
-      throw new UnauthorizedException('유저를 찾지 못했습니다.');
+      throw new UnauthorizedException('message.error.noUser');
     }
     const newPostLike = new MomentLike();
     newPostLike.userId = userId;
@@ -293,17 +293,17 @@ export class MomentsService {
 
   async dislikePost(momentId: number, userId: number) {
     if (!momentId) {
-      throw new NotFoundException('게시물을 찾을 수 없습니다.');
+      throw new NotFoundException('message.error.noPost');
     }
     if (!userId) {
-      throw new UnauthorizedException('유저를 찾지 못했습니다.');
+      throw new UnauthorizedException('message.error.noUser');
     }
     return await this.MomentLikeRepository.delete({ momentId, userId });
   }
 
   async deletePost(momentId: number) {
     if (!momentId) {
-      throw new NotFoundException('게시물을 찾을 수 없습니다.');
+      throw new NotFoundException('message.error.noPost');
     }
     return await this.MomentsRepository.delete({
       id: momentId,

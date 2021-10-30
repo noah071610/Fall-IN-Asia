@@ -36,11 +36,11 @@ const CountryPreviewSlide: FC<IProps> = ({ slidesPerView, isMain }) => {
       slidesPerView: 5.2,
     },
     480: {
-      slidesPerView: 4.2,
+      slidesPerView: 3.6,
       spaceBetween: 8,
     },
     0: {
-      slidesPerView: 3.6,
+      slidesPerView: 2.8,
       spaceBetween: 4,
     },
   };
