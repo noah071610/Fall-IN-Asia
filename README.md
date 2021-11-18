@@ -1493,7 +1493,70 @@
 
 <br/>
 
-### 19. 협업을 대비해 Swagger를 이용한 API docs 와 git Branch,Trello,Slack등을 사용했습니다.
+### 19. 영어와 일본어 번역 후 다국어 지원 시스템을 구현했습니다.
+- 모든 번역은 직접 담당했고 다국어 시스템은 SSR을 지원합니다.
+
+<br/>
+
+```javascript
+
+  📁locales/jp/common.json
+
+  "message": {
+    "logout": "ログアウト致しました。",
+    "needToLogin": "ログインが必要です。",
+    "removeIt": "削除してください。",
+    "withdrawal": "脱会致しました。どうもありがとうございました。",
+    "error": {
+      "exception": "予想できないエラーが発生しました。申し訳ございません。",
+      "failToGet": "読み込に失敗しました。",
+      "noDataToPost": "書き込むデータがありません。",
+      "notHost": "管理者ではないと接続出来ません。",
+      "invalidEmail": "正しくないメールアドレスです。",
+      "noUser": "ユーザーがありませんでした。",
+      "noImage": "イメージがありません。もう一度確認してください。",
+      
+      ...
+
+    },
+  }
+
+  📁pages/index.tsx
+
+  export const getServerSideProps = wrapper.getServerSideProps(
+    (store) =>
+      async ({ req, locale }: GetServerSidePropsContext) => {
+        
+        ...
+
+        return {
+          props: {
+            initialMoments,
+            ...(await serverSideTranslations(locale as string, ["common"])),
+          },
+        };
+      }
+  );
+
+  📁moments.service.ts
+  
+  async dislikePost(momentId: number, userId: number) {
+    // 서버 Exception에도 다국어 지원 구현 및 적용
+    if (!momentId) {
+      throw new NotFoundException('message.error.noPost');
+    }
+    if (!userId) {
+      throw new UnauthorizedException('message.error.noUser');
+    }
+    return await this.MomentLikeRepository.delete({ momentId, userId });
+  }
+
+
+```
+
+<br/>
+
+### 20. 협업을 대비해 Swagger를 이용한 API docs 와 git Branch,Trello,Slack등을 사용했습니다.
 - 저는 프론트,서버,배포를 혼자서 작업했기때문에 협업을 미리 경험해 대비하는게 옳다고 생각하여 협업툴을 혼자 사용해봤습니다.
 
 <br/>
