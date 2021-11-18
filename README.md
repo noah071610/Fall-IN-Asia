@@ -1579,6 +1579,7 @@ Express가 자유분방한 "나는 자연인이다" 느낌이라면 NestJS는 �
 | ------ | ------ | ------ |
 | 2020/08/13 | v1.0 | Final Update for first deployment through AWS |
 | 2020/10/13 | v1.1 | SEO Optimization |
+| 2020/11/09 | v1.2 | KOR&JPN&ENG Multilingual System |
 
 <br/>
 
@@ -1588,7 +1589,7 @@ Express가 자유분방한 "나는 자연인이다" 느낌이라면 NestJS는 �
 
 피드백은 항상 저를 성장시키게 합니다.
 
-궁금한게 있으시면 noah071610@naver.com 으로 언제든지 편하게 연락주세요.
+궁금한게 있으시면 noah071610@gmail.com 으로 언제든지 편하게 연락주세요.
 
 
 <br/><br/><br/>
