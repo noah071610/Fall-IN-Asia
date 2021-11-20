@@ -34,6 +34,13 @@ export class MomentsService {
     private NoticesRepository: Repository<Notices>,
   ) {}
 
+  async generateNewImage(src: string, id: number) {
+    const newImage = new Images();
+    newImage.image_src = src;
+    newImage.moment = <any>id;
+    await this.ImagesRepository.save(newImage);
+  }
+
   async createPost(
     form: MomentCreateRequestDto,
     userId: number,
@@ -56,10 +63,7 @@ export class MomentsService {
     newPostCreate.user = <any>{ id: userId };
     const newPost = await this.MomentsRepository.save(newPostCreate);
     for (let i = 0; i < files.length; i++) {
-      const newImage = new Images();
-      newImage.image_src = files[i].location;
-      newImage.moment = <any>newPost.id;
-      await this.ImagesRepository.save(newImage);
+      this.generateNewImage(files[i].location, newPost.id);
     }
     await this.NoticesRepository.save({
       header: `${country.name}/모멘트`,
@@ -252,28 +256,20 @@ export class MomentsService {
     });
 
     for (let i = 0; i < files.length; i++) {
-      const newImage = new Images();
-      newImage.image_src = files[i].location;
-      newImage.moment = <any>editPost.id;
-      await this.ImagesRepository.save(newImage);
+      this.generateNewImage(files[i].location, editPost.id);
     }
 
     if (form.prevImage) {
       if (typeof form.prevImage === 'string') {
-        const newImage = new Images();
-        newImage.image_src = form.prevImage;
-        newImage.moment = <any>editPost.id;
-        await this.ImagesRepository.save(newImage);
+        this.generateNewImage(form.prevImage, editPost.id);
       } else {
-        let arr = Array.from(form.prevImage);
-        for (let i = 0; i < arr.length; i++) {
-          const newImage = new Images();
-          newImage.image_src = arr[i];
-          newImage.moment = <any>editPost.id;
-          await this.ImagesRepository.save(newImage);
+        let imageArr = Array.from(form.prevImage);
+        for (let i = 0; i < imageArr.length; i++) {
+          this.generateNewImage(imageArr[i], editPost.id);
         }
       }
     }
+
     await this.MomentsRepository.save(editPost);
     await this.NoticesRepository.save({
       header: `${country.name}/모멘트`,

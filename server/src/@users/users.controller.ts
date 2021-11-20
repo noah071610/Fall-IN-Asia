@@ -16,7 +16,6 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiCookieAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
-import path from 'path';
 import { LocalAuthGuard } from 'src/auth/local/local-auth.guard';
 import { LoggedInGuard } from 'src/auth/logged-in.guard';
 import { NotLoggedInGuard } from 'src/auth/not-logged-in.guard';
@@ -24,9 +23,9 @@ import { User } from 'src/decorators/user.decorator';
 import { UserSignUpDto } from 'src/@users/users.dto';
 import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
 import { UsersService } from './users.service';
-import multerS3 from 'multer-s3';
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
+import { s3MulterConfig } from 'src/config';
 dotenv.config();
 
 AWS.config.update({
@@ -43,7 +42,7 @@ export class UsersController {
 
   @ApiOperation({ summary: 'get the user infomation' })
   @Get()
-  getUserInfo(@Req() req, @User() user) {
+  getUserInfo(@User() user) {
     return user || false;
   }
 
@@ -87,21 +86,7 @@ export class UsersController {
 
   @ApiOperation({ summary: 'change user icon' })
   @UseGuards(new LoggedInGuard())
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: multerS3({
-        s3: new AWS.S3(),
-        bucket: process.env.S3_BUCKET_NAME,
-        key(req, file, cb) {
-          cb(
-            null,
-            `original/${Date.now()}_${path.basename(file.originalname)}`,
-          );
-        },
-      }),
-      limits: { fileSize: 20 * 1024 * 1024 },
-    }),
-  )
+  @UseInterceptors(FileInterceptor('image', s3MulterConfig))
   @Post('icon')
   async addUserIcon(@User() user, @UploadedFile() file: Express.MulterS3.File) {
     const addUserIcon = this.usersService.addUserIcon(user.id, file);

@@ -19,13 +19,11 @@ import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
 import { LoggedInGuard } from 'src/auth/logged-in.guard';
 import { MomentsService } from './moments.service';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import path from 'path';
 import { User } from 'src/decorators/user.decorator';
 import { MomentCreateRequestDto, MomentModifyRequestDto } from './moments.dto';
-import { Request } from 'express';
-import multerS3 from 'multer-s3';
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
+import { s3MulterConfig } from 'src/config';
 dotenv.config();
 
 AWS.config.update({
@@ -43,21 +41,7 @@ export class MomentsController {
 
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Create moment post' })
-  @UseInterceptors(
-    FilesInterceptor('image', 5, {
-      storage: multerS3({
-        s3: new AWS.S3(),
-        bucket: process.env.S3_BUCKET_NAME,
-        key(req, file, cb) {
-          cb(
-            null,
-            `original/${Date.now()}_${path.basename(file.originalname)}`,
-          );
-        },
-      }),
-      limits: { fileSize: 20 * 1024 * 1024 },
-    }),
-  )
+  @UseInterceptors(FilesInterceptor('image', 5, s3MulterConfig))
   @Post()
   async createPost(
     @Body() form: MomentCreateRequestDto,
@@ -69,21 +53,7 @@ export class MomentsController {
 
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Edit post' })
-  @UseInterceptors(
-    FilesInterceptor('image', 5, {
-      storage: multerS3({
-        s3: new AWS.S3(),
-        bucket: process.env.S3_BUCKET_NAME,
-        key(req, file, cb) {
-          cb(
-            null,
-            `original/${Date.now()}_${path.basename(file.originalname)}`,
-          );
-        },
-      }),
-      limits: { fileSize: 20 * 1024 * 1024 },
-    }),
-  )
+  @UseInterceptors(FilesInterceptor('image', 5, s3MulterConfig))
   @Post('edit')
   async editPost(
     @Body() form: MomentModifyRequestDto,
@@ -101,21 +71,7 @@ export class MomentsController {
   }
 
   @ApiOperation({ summary: 'save image for post' })
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: multerS3({
-        s3: new AWS.S3(),
-        bucket: process.env.S3_BUCKET_NAME,
-        key(req, file, cb) {
-          cb(
-            null,
-            `original/${Date.now()}_${path.basename(file.originalname)}`,
-          );
-        },
-      }),
-      limits: { fileSize: 20 * 1024 * 1024 },
-    }),
-  )
+  @UseInterceptors(FileInterceptor('image', s3MulterConfig))
   @Post('image')
   async saveImage(@UploadedFile() file: Express.MulterS3.File) {
     await this.MomentsService.saveImage(file);

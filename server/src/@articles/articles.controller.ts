@@ -16,12 +16,11 @@ import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
 import { LoggedInGuard } from 'src/auth/logged-in.guard';
 import { ArticlesService } from './articles.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import path from 'path';
 import { User } from 'src/decorators/user.decorator';
 import { ArticleCreateDto, ArticleEditDto } from 'src/@articles/articles.dto';
-import multerS3 from 'multer-s3';
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
+import { s3MulterConfig } from 'src/config';
 dotenv.config();
 
 AWS.config.update({
@@ -39,21 +38,7 @@ export class ArticlesController {
 
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Create article post' })
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: multerS3({
-        s3: new AWS.S3(),
-        bucket: process.env.S3_BUCKET_NAME,
-        key(req, file, cb) {
-          cb(
-            null,
-            `original/${Date.now()}_${path.basename(file.originalname)}`,
-          );
-        },
-      }),
-      limits: { fileSize: 20 * 1024 * 1024 },
-    }),
-  )
+  @UseInterceptors(FileInterceptor('image', s3MulterConfig))
   @Post()
   async createPost(
     @Body() form: ArticleCreateDto,
@@ -65,21 +50,7 @@ export class ArticlesController {
 
   @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: 'Edit post' })
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: multerS3({
-        s3: new AWS.S3(),
-        bucket: process.env.S3_BUCKET_NAME,
-        key(req, file, cb) {
-          cb(
-            null,
-            `original/${Date.now()}_${path.basename(file.originalname)}`,
-          );
-        },
-      }),
-      limits: { fileSize: 20 * 1024 * 1024 },
-    }),
-  )
+  @UseInterceptors(FileInterceptor('image', s3MulterConfig))
   @Post('edit')
   async editPost(
     @Body() form: ArticleEditDto,
@@ -100,21 +71,7 @@ export class ArticlesController {
   }
 
   @ApiOperation({ summary: 'save image for article' })
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: multerS3({
-        s3: new AWS.S3(),
-        bucket: process.env.S3_BUCKET_NAME,
-        key(req, file, cb) {
-          cb(
-            null,
-            `original/${Date.now()}_${path.basename(file.originalname)}`,
-          );
-        },
-      }),
-      limits: { fileSize: 20 * 1024 * 1024 },
-    }),
-  )
+  @UseInterceptors(FileInterceptor('image', s3MulterConfig))
   @Post('image')
   async saveImage(@UploadedFile() file: Express.MulterS3.File) {
     const image = await this.ArticlesService.saveImage(file);
