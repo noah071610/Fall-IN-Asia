@@ -1,8 +1,6 @@
 import React, { FC, useState } from "react";
 import { wrapper } from "configureStore";
-import axios from "axios";
-import { getUserInfoAction } from "actions/user";
-import { noRevalidate, WORLD_IMAGE } from "config";
+import { getUserCookieWithServerSide, noRevalidate, WORLD_IMAGE } from "config";
 import MomentList from "@sections/MainPage/MomentList";
 import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
 import useSWRInfinite from "swr/infinite";
@@ -60,14 +58,7 @@ const MomentMainPage: FC<IProps> = ({ initialMoments }) => {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, locale }: GetServerSidePropsContext) => {
-      const cookie = req ? req.headers.cookie : "";
-      if (axios.defaults.headers) {
-        axios.defaults.headers.Cookie = "";
-        if (req && cookie) {
-          axios.defaults.headers.Cookie = cookie;
-        }
-      }
-      await store.dispatch(getUserInfoAction());
+      getUserCookieWithServerSide(req, store);
       let initialMoments = await fetcher(`/moment?page=1`);
       initialMoments = [initialMoments];
       return {

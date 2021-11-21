@@ -22,9 +22,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { User } from 'src/decorators/user.decorator';
 import { StoryCreateDto, StoryEditDto } from 'src/@stories/stories.dto';
 import AWS from 'aws-sdk';
-import dotenv from 'dotenv';
 import { s3MulterConfig } from 'src/config';
-dotenv.config();
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -118,8 +116,7 @@ export class StoriesController {
   @ApiOperation({ summary: 'Get latest posts by using ID' })
   @Get('latest')
   async getLatestPosts() {
-    const latestPosts = await this.StoriesService.getLatestPosts();
-    return latestPosts;
+    return await this.StoriesService.getLatestPosts();
   }
 
   @ApiOperation({ summary: 'Get popular 9 posts' })

@@ -22,9 +22,7 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { User } from 'src/decorators/user.decorator';
 import { MomentCreateRequestDto, MomentModifyRequestDto } from './moments.dto';
 import AWS from 'aws-sdk';
-import dotenv from 'dotenv';
 import { s3MulterConfig } from 'src/config';
-dotenv.config();
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -100,8 +98,7 @@ export class MomentsController {
   @ApiOperation({ summary: 'Get latest posts by using ID -' })
   @Get('latest')
   async getLatestPosts() {
-    const latestPosts = await this.MomentsService.getLatestPosts();
-    return latestPosts;
+    return await this.MomentsService.getLatestPosts();
   }
 
   @ApiOperation({ summary: 'Get one post for post page' })
@@ -111,12 +108,7 @@ export class MomentsController {
     @Param('momentId', ParseIntPipe) momentId: number,
     @Query('viewCount') viewCount: string,
   ) {
-    const post = await this.MomentsService.getOnePost(
-      momentId,
-      code,
-      viewCount,
-    );
-    return post;
+    return await this.MomentsService.getOnePost(momentId, code, viewCount);
   }
 
   @ApiOperation({ summary: 'Get posts' })
@@ -134,7 +126,6 @@ export class MomentsController {
     if (filter) {
       return await this.MomentsService.getFilterPosts(filter, code, type, page);
     }
-
     return await this.MomentsService.getPosts(code, page, type);
   }
 }

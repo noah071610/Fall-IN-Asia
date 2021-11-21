@@ -2,6 +2,7 @@ import React, { FC, useCallback, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import {
   FLEX_STYLE,
+  getUserCookieWithServerSide,
   noRevalidate,
   SM_SIZE,
   toastErrorMessage,
@@ -18,7 +19,6 @@ import { IStory } from "@typings/db";
 import { Divider } from "antd";
 import { wrapper } from "configureStore";
 import axios from "axios";
-import { getUserInfoAction } from "actions/user";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { toastConfirmMessage } from "@components/ConfirmToastify";
 import tw from "twin.macro";
@@ -209,14 +209,7 @@ const StoryPostPage: FC<IProps> = ({ initialStories, initialStory }) => {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, params, locale }: GetServerSidePropsContext) => {
-      const cookie = req ? req.headers.cookie : "";
-      if (axios.defaults.headers) {
-        axios.defaults.headers.Cookie = "";
-        if (req && cookie) {
-          axios.defaults.headers.Cookie = cookie;
-        }
-      }
-      await store.dispatch(getUserInfoAction());
+      getUserCookieWithServerSide(req, store);
       const initialStory = await fetcher(
         `/story/${params?.code}/${params?.storyId}?viewCount=true`
       );

@@ -12,12 +12,10 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
-import dotenv from 'dotenv';
 import { NotLoggedInGuard } from './not-logged-in.guard';
 import { GoogleAuthGuard } from './google/google-auth.guard';
 import { KakaoAuthGuard } from './kakao/kakao-auth.guard';
 import { NaverAuthGuard } from './naver/naver-auth.guard';
-dotenv.config();
 
 const client_url =
   process.env.NODE_ENV === 'development'
@@ -50,7 +48,7 @@ export class AuthController {
   @Get('google')
   @ApiOperation({ summary: 'try google login ' })
   @UseGuards(new GoogleAuthGuard())
-  async googleAuth(@Req() req) {}
+  async googleAuth() {}
 
   @Get('google/redirect')
   @ApiOperation({ summary: 'goolge login redirect after auth' })
@@ -62,7 +60,7 @@ export class AuthController {
   @Get('kakao')
   @ApiOperation({ summary: 'try kakao login ' })
   @UseGuards(new KakaoAuthGuard())
-  async kakaoAuth(@Req() req) {}
+  async kakaoAuth() {}
 
   @Get('kakao/redirect')
   @ApiOperation({ summary: 'kakao login redirect after auth' })
@@ -74,7 +72,7 @@ export class AuthController {
   @Get('naver')
   @ApiOperation({ summary: 'try naver login ' })
   @UseGuards(new NaverAuthGuard())
-  async naverAuth(@Req() req) {}
+  async naverAuth() {}
 
   @Get('naver/redirect')
   @ApiOperation({ summary: 'naver login redirect after auth' })

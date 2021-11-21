@@ -52,12 +52,11 @@ export class CommentsController {
   @ApiOperation({ summary: 'Create SubComment' })
   @Post('/subComment')
   async createSubComment(@Body() form: CommentCreateDto, @User() user) {
-    const createdSubComment = await this.CommentService.createSubComment(
+    return await this.CommentService.createSubComment(
       form.content,
       user.id,
       form.commentId,
     );
-    return createdSubComment;
   }
 
   @UseGuards(new LoggedInGuard())

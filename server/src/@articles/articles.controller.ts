@@ -19,9 +19,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { User } from 'src/decorators/user.decorator';
 import { ArticleCreateDto, ArticleEditDto } from 'src/@articles/articles.dto';
 import AWS from 'aws-sdk';
-import dotenv from 'dotenv';
 import { s3MulterConfig } from 'src/config';
-dotenv.config();
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -74,8 +72,7 @@ export class ArticlesController {
   @UseInterceptors(FileInterceptor('image', s3MulterConfig))
   @Post('image')
   async saveImage(@UploadedFile() file: Express.MulterS3.File) {
-    const image = await this.ArticlesService.saveImage(file);
-    return image;
+    return await this.ArticlesService.saveImage(file);
   }
 
   @ApiOperation({ summary: 'Get posts' })
@@ -90,14 +87,12 @@ export class ArticlesController {
   @ApiOperation({ summary: 'Get latest posts by using ID' })
   @Get('popular')
   async getPopularPosts(@Query('code') code: string) {
-    const popularPosts = await this.ArticlesService.getPopularPosts(code);
-    return popularPosts;
+    return await this.ArticlesService.getPopularPosts(code);
   }
 
   @ApiOperation({ summary: 'Get one post for post page' })
   @Get(':articleId')
   async getOnePost(@Param('articleId', ParseIntPipe) articleId: number) {
-    const post = await this.ArticlesService.getOnePost(articleId);
-    return post;
+    return await this.ArticlesService.getOnePost(articleId);
   }
 }

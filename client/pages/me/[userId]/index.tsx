@@ -1,13 +1,11 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { wrapper } from "configureStore";
-import axios from "axios";
-import { getUserInfoAction } from "actions/user";
 import router, { useRouter } from "next/router";
 import UserInfoLayout from "@layout/UserInfoLayout";
 import VisitedCountryList from "@sections/UserPage/VisitedCountryList";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
-import { noRevalidate, NO_POST_URL } from "config";
+import { getUserCookieWithServerSide, noRevalidate, NO_POST_URL } from "config";
 import { INotice, IUserInfo } from "@typings/db";
 import ListCard from "@components/Cards/ListCard";
 import ArticleColumnCard from "@components/Cards/ArticleColumnCard";
@@ -208,14 +206,7 @@ const UserInfoMainPage: FC<IProps> = ({ initialUserInfo }) => {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, params, locale }: GetServerSidePropsContext) => {
-      const cookie = req ? req.headers.cookie : "";
-      if (axios.defaults.headers) {
-        axios.defaults.headers.Cookie = "";
-        if (req && cookie) {
-          axios.defaults.headers.Cookie = cookie;
-        }
-      }
-      await store.dispatch(getUserInfoAction());
+      getUserCookieWithServerSide(req, store);
       const initialUserInfo = await fetcher(`/user/${params?.userId}`);
       return {
         props: { initialUserInfo, ...(await serverSideTranslations(locale as string, ["common"])) },

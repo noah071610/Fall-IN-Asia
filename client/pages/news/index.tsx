@@ -1,6 +1,4 @@
 import React, { FC, useCallback, useMemo, useState } from "react";
-import { getUserInfoAction } from "actions/user";
-import axios from "axios";
 import { wrapper } from "configureStore";
 import PosterCard from "@components/Cards/PosterCard";
 import useSWR from "swr";
@@ -9,6 +7,7 @@ import { IArticle } from "@typings/db";
 import fetcher from "utils/fetcher";
 import {
   FLEX_STYLE,
+  getUserCookieWithServerSide,
   GRID_STYLE,
   LG_SIZE,
   MD_SIZE,
@@ -208,14 +207,7 @@ export default NewsMainPage;
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, locale }: GetServerSidePropsContext) => {
-      const cookie = req ? req.headers.cookie : "";
-      if (axios.defaults.headers) {
-        axios.defaults.headers.Cookie = "";
-        if (req && cookie) {
-          axios.defaults.headers.Cookie = cookie;
-        }
-      }
-      await store.dispatch(getUserInfoAction());
+      getUserCookieWithServerSide(req, store);
       let initialArticles = await fetcher(`/article?page=1`);
       initialArticles = [initialArticles];
       const initialAsideArticle = await fetcher(`/article/popular`);

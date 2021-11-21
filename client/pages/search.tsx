@@ -4,8 +4,6 @@ import XLGLayout from "@layout/XLGLayout";
 import SearchPagePoster from "@sections/SearchPage/SearchPagePoster";
 import SearchPostList from "@sections/SearchPage/SearchPostList";
 import { IMoment, IStory } from "@typings/db";
-import { getUserInfoAction } from "actions/user";
-import axios from "axios";
 import { wrapper } from "configureStore";
 import { useRouter } from "next/router";
 import useSWR from "swr";
@@ -15,6 +13,7 @@ import Head from "next/head";
 import { GetServerSidePropsContext } from "next";
 import { useTranslation } from "react-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { getUserCookieWithServerSide } from "config";
 
 const SearchPageWrapper = styled.div`
   ${tw`bg-white pb-60 pt-16`}
@@ -69,14 +68,7 @@ const SearchPage: FC<IProps> = ({ searchPosts }) => {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, query, locale }: GetServerSidePropsContext) => {
-      const cookie = req ? req.headers.cookie : "";
-      if (axios.defaults.headers) {
-        axios.defaults.headers.Cookie = "";
-        if (req && cookie) {
-          axios.defaults.headers.Cookie = cookie;
-        }
-      }
-      await store.dispatch(getUserInfoAction());
+      getUserCookieWithServerSide(req, store);
       const searchPosts = await fetcher(`/search/${encodeURIComponent(query?.keyword as string)}`);
       return {
         props: { searchPosts, ...(await serverSideTranslations(locale as string, ["common"])) },

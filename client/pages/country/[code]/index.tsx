@@ -1,8 +1,6 @@
 import React, { FC, useState } from "react";
 import { wrapper } from "configureStore";
-import axios from "axios";
-import { getUserInfoAction } from "actions/user";
-import { noRevalidate } from "config";
+import { getUserCookieWithServerSide, noRevalidate } from "config";
 import MomentList from "@sections/MainPage/MomentList";
 import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
 import useSWR from "swr";
@@ -91,14 +89,7 @@ const CountryMomentMainPage: FC<IProps> = ({ initialMoments, initialCountry, ini
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, params, locale }: GetServerSidePropsContext) => {
-      const cookie = req ? req.headers.cookie : "";
-      if (axios.defaults.headers) {
-        axios.defaults.headers.Cookie = "";
-        if (req && cookie) {
-          axios.defaults.headers.Cookie = cookie;
-        }
-      }
-      await store.dispatch(getUserInfoAction());
+      getUserCookieWithServerSide(req, store);
       let initialMoments = await fetcher(`/moment?code=${params?.code}&page=1`);
       initialMoments = [initialMoments];
       const initialCountry = await fetcher(`/country/${params?.code}`);

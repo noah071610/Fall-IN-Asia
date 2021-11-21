@@ -6,6 +6,7 @@ import { RootState } from "slices";
 import {
   BORDER_THIN,
   FLEX_STYLE,
+  getUserCookieWithServerSide,
   noRevalidate,
   toastErrorMessage,
   toastSuccessMessage,
@@ -22,12 +23,9 @@ import tw from "twin.macro";
 import { Select } from "antd";
 import { wrapper } from "configureStore";
 import axios from "axios";
-import { getUserInfoAction } from "actions/user";
 import { UploadFile } from "antd/lib/upload/interface";
 import dynamic from "next/dynamic";
 import { GetServerSidePropsContext } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "react-i18next";
 const { Option } = Select;
 const CountrySelectMap = dynamic(() => import("@components/Maps/CountrySelectMap"));
 const Editor = dynamic(() => import("@components/Editor/Editor"));
@@ -308,18 +306,9 @@ const NewsPostingPage = () => {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, locale }: GetServerSidePropsContext) => {
-      const cookie = req ? req.headers.cookie : "";
-      if (axios.defaults.headers) {
-        axios.defaults.headers.Cookie = "";
-        if (req && cookie) {
-          axios.defaults.headers.Cookie = cookie;
-        }
-      }
-      await store.dispatch(getUserInfoAction());
+      getUserCookieWithServerSide(req, store);
       return {
-        props: {
-          ...(await serverSideTranslations(locale as string, ["common"])),
-        },
+        props: {},
       };
     }
 );

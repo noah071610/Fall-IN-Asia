@@ -4,6 +4,7 @@ import XLGLayout from "@layout/XLGLayout";
 import {
   BORDER_THIN,
   FLEX_STYLE,
+  getUserCookieWithServerSide,
   LG_SIZE,
   noRevalidate,
   NO_POST_URL,
@@ -258,14 +259,7 @@ const StoryMainPage: FC<IProps> = ({ initiaStories, initialPopularStories }) => 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, locale }: GetServerSidePropsContext) => {
-      const cookie = req ? req.headers.cookie : "";
-      if (axios.defaults.headers) {
-        axios.defaults.headers.Cookie = "";
-        if (req && cookie) {
-          axios.defaults.headers.Cookie = cookie;
-        }
-      }
-      await store.dispatch(getUserInfoAction());
+      getUserCookieWithServerSide(req, store);
       let initialStories = await fetcher(`/story?page=1`);
       initialStories = [initialStories];
       let initialPopularStories = await fetcher(`/story/popular`);

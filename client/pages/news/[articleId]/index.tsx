@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import ReactHtmlParser from "react-html-parser";
 import {
   FLEX_STYLE,
+  getUserCookieWithServerSide,
   noRevalidate,
   SM_SIZE,
   toastErrorMessage,
@@ -17,7 +18,6 @@ import { IArticle } from "@typings/db";
 import { Divider } from "antd";
 import { wrapper } from "configureStore";
 import axios from "axios";
-import { getUserInfoAction } from "actions/user";
 import PostLayout from "@layout/PostLayout";
 import NewsArticleList from "@sections/NewsPage/NewsArticleList";
 import PostThubnail from "@components/Post/PostThubnail";
@@ -192,14 +192,7 @@ const NewsPostPage: FC<IProps> = ({ initialArticle, initialArticles }) => {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, params, locale }: GetServerSidePropsContext) => {
-      const cookie = req ? req.headers.cookie : "";
-      if (axios.defaults.headers) {
-        axios.defaults.headers.Cookie = "";
-        if (req && cookie) {
-          axios.defaults.headers.Cookie = cookie;
-        }
-      }
-      await store.dispatch(getUserInfoAction());
+      getUserCookieWithServerSide(req, store);
       let initialArticles = await fetcher(`/article?page=1`);
       initialArticles = [initialArticles];
       const initialArticle = await fetcher(`/article/${params?.articleId}`);

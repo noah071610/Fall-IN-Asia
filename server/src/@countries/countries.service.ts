@@ -7,8 +7,6 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Countries } from 'src/entities/Countries';
 import { Repository } from 'typeorm';
-import dotenv from 'dotenv';
-dotenv.config();
 
 @Injectable()
 export class CountriesService {

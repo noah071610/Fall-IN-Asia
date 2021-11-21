@@ -2,6 +2,7 @@ import { DataResponse } from "@typings/db";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { i18n } from "next-i18next";
+import { getUserInfoAction } from "actions/user";
 
 // CSS
 export const BLACK_COLOR = "black" as const;
@@ -36,6 +37,19 @@ export const NO_POST_URL =
 export const RGB_BLACK = (opacity: number) => `
   rgba(0,0,0,${opacity})
 `;
+
+// next config
+
+export const getUserCookieWithServerSide = async (req: any, store: any) => {
+  const cookie = req ? req.headers.cookie : "";
+  if (axios.defaults.headers) {
+    axios.defaults.headers.Cookie = "";
+    if (req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+  }
+  await store.dispatch(getUserInfoAction());
+};
 
 export const BORDER_THIN = (border: string, px?: number) => `
   ${border}:${px ? px : "1"}px solid rgba(0,0,0,0.15)

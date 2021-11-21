@@ -3,14 +3,12 @@ import AutoCompleteForm from "@components/AutoCompleteForm";
 import CountryList from "@components/CountryPreviewSlide";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
-import { FLEX_STYLE, noRevalidate, toastErrorMessage } from "config";
+import { FLEX_STYLE, getUserCookieWithServerSide, noRevalidate, toastErrorMessage } from "config";
 import { ICountry } from "@typings/db";
 import styled from "@emotion/styled";
 import router from "next/router";
 import LGLayout from "@layout/LGLayout";
 import { wrapper } from "configureStore";
-import axios from "axios";
-import { getUserInfoAction } from "actions/user";
 import MainCountryAllview from "@components/CountryAllview";
 import tw from "twin.macro";
 import { GetServerSidePropsContext } from "next";
@@ -102,14 +100,7 @@ const CountrySelectPage: FC<IProps> = ({ initialCountries }) => {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, locale }: GetServerSidePropsContext) => {
-      const cookie = req ? req.headers.cookie : "";
-      if (axios.defaults.headers) {
-        axios.defaults.headers.Cookie = "";
-        if (req && cookie) {
-          axios.defaults.headers.Cookie = cookie;
-        }
-      }
-      await store.dispatch(getUserInfoAction());
+      getUserCookieWithServerSide(req, store);
       const initialCountries = await fetcher(`/country`);
       return {
         props: {

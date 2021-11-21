@@ -6,6 +6,7 @@ import { RootState } from "slices";
 import {
   BORDER_THIN,
   FLEX_STYLE,
+  getUserCookieWithServerSide,
   noRevalidate,
   toastErrorMessage,
   toastSuccessMessage,
@@ -19,7 +20,6 @@ import ImageDragger from "@components/Editor/ImageDragger";
 import useInput from "@hooks/useInput";
 import { toastConfirmMessage } from "@components/ConfirmToastify";
 import tw from "twin.macro";
-import { getUserInfoAction } from "actions/user";
 import axios from "axios";
 import { wrapper } from "configureStore";
 import { UploadFile } from "antd/lib/upload/interface";
@@ -240,14 +240,7 @@ const StoryPostingPage: FC<IProps> = () => {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, locale }: GetServerSidePropsContext) => {
-      const cookie = req ? req.headers.cookie : "";
-      if (axios.defaults.headers) {
-        axios.defaults.headers.Cookie = "";
-        if (req && cookie) {
-          axios.defaults.headers.Cookie = cookie;
-        }
-      }
-      await store.dispatch(getUserInfoAction());
+      getUserCookieWithServerSide(req, store);
       return {
         props: {
           ...(await serverSideTranslations(locale as string, ["common"])),

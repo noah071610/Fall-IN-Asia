@@ -91,23 +91,19 @@ export const mainSlice = createSlice({
       state.onProfilePopUp = false;
       state.onLanguageSelectPopUp = false;
     },
-    closeProfilePopUp(state) {
-      state.onProfilePopUp = false;
-    },
     openSearchPopUp(state) {
       state.onSearchPopUp = true;
-    },
-    closeNoticePopUp(state) {
-      state.onNoticePopUp = false;
-    },
-    closeSearchPopUp(state) {
-      state.onSearchPopUp = false;
     },
     closeSlideMenu(state) {
       state.onSlideMenu = false;
     },
-    closeLanguageSelectPopUp(state) {
+    closePopup(state) {
+      state.onNoticePopUp = false;
+      state.onProfilePopUp = false;
       state.onLanguageSelectPopUp = false;
+    },
+    closeSearchPopUp(state) {
+      state.onSearchPopUp = false;
     },
     closeModal(state) {
       state.onLoginModal = false;

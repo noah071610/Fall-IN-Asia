@@ -1,18 +1,21 @@
+import cookieParser from 'cookie-parser';
+import passport from 'passport';
+import session from 'express-session';
+import helmet from 'helmet';
+import hpp from 'hpp';
+import dotenv from 'dotenv';
+
 import { HttpExceptionFilter } from './http-exception.filter';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import cookieParser from 'cookie-parser';
-import passport from 'passport';
-import session from 'express-session';
 import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import helmet from 'helmet';
-import hpp from 'hpp';
 
 declare const module: any;
 
 async function bootstrap() {
+  dotenv.config();
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   if (module.hot) {
     module.hot.accept();
@@ -57,7 +60,13 @@ async function bootstrap() {
       credentials: true,
     });
     setTimeout(() => {
-      console.log('====== FALL IN ASIA production ON ======');
+      for (let i = 0; i < 2; i++) {
+        console.log('=====================================');
+      }
+      console.log('====== FALL IN ASIA PRODUCTION ======');
+      for (let i = 0; i < 2; i++) {
+        console.log('=====================================');
+      }
     }, 3000);
   } else {
     app.enableCors({
@@ -65,13 +74,25 @@ async function bootstrap() {
       credentials: true,
     });
     setTimeout(() => {
-      console.log('====== FALL IN ASIA production OFF ======');
+      for (let i = 0; i < 2; i++) {
+        console.log('======================================');
+      }
+      console.log('====== FALL IN ASIA DEVELOPMENT ======');
+      for (let i = 0; i < 2; i++) {
+        console.log('======================================');
+      }
     }, 3000);
   }
 
   app.use(passport.initialize());
   app.use(passport.session());
   await app.listen(port);
-  console.log(`====== Port number : ${port} ======`);
+  for (let i = 0; i < 2; i++) {
+    console.log('===================================');
+  }
+  console.log(`======= PORT NUMBER : ${port} ========`);
+  for (let i = 0; i < 2; i++) {
+    console.log('===================================');
+  }
 }
 bootstrap();

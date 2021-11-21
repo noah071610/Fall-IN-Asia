@@ -24,9 +24,7 @@ import { UserSignUpDto } from 'src/@users/users.dto';
 import { JsonResponeGenerator } from 'src/intersepter/json.respone.middleware';
 import { UsersService } from './users.service';
 import AWS from 'aws-sdk';
-import dotenv from 'dotenv';
 import { s3MulterConfig } from 'src/config';
-dotenv.config();
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -68,10 +66,7 @@ export class UsersController {
   @ApiOperation({ summary: 'Login' })
   @Post('logIn')
   async logIn(@User() user) {
-    const fullUserInfo = await this.usersService.findUserInfoByEmail(
-      user.email,
-    );
-    return fullUserInfo;
+    return await this.usersService.findUserInfoByEmail(user.email);
   }
 
   @ApiCookieAuth('connect.sid')
@@ -89,16 +84,14 @@ export class UsersController {
   @UseInterceptors(FileInterceptor('image', s3MulterConfig))
   @Post('icon')
   async addUserIcon(@User() user, @UploadedFile() file: Express.MulterS3.File) {
-    const addUserIcon = this.usersService.addUserIcon(user.id, file);
-    return addUserIcon;
+    return this.usersService.addUserIcon(user.id, file);
   }
 
   @ApiOperation({ summary: 'delete user icon' })
   @UseGuards(new LoggedInGuard())
   @Delete('icon')
   async deleteUserIcon(@User() user) {
-    const deleteUserIcon = this.usersService.deleteUserIcon(user.id);
-    return deleteUserIcon;
+    return this.usersService.deleteUserIcon(user.id);
   }
 
   @ApiOperation({ summary: 'change user information' })

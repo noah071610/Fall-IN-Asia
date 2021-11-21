@@ -1,13 +1,11 @@
 import React, { FC, useEffect } from "react";
-import { noRevalidate } from "config";
+import { getUserCookieWithServerSide, noRevalidate } from "config";
 import router, { useRouter } from "next/router";
 import LGLayout from "@layout/LGLayout";
 import MomentPostingForm from "@sections/MainPage/MomentPostingForm";
 import { useSelector } from "react-redux";
 import { RootState } from "slices";
 import { wrapper } from "configureStore";
-import axios from "axios";
-import { getUserInfoAction } from "actions/user";
 import fetcher from "utils/fetcher";
 import { IMoment } from "@typings/db";
 import useSWR from "swr";
@@ -50,14 +48,7 @@ const MomentEditPage: FC<IProps> = ({ initialMoment }) => {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, query, locale }: GetServerSidePropsContext) => {
-      const cookie = req ? req.headers.cookie : "";
-      if (axios.defaults.headers) {
-        axios.defaults.headers.Cookie = "";
-        if (req && cookie) {
-          axios.defaults.headers.Cookie = cookie;
-        }
-      }
-      await store.dispatch(getUserInfoAction());
+      getUserCookieWithServerSide(req, store);
       const initialMoment = await fetcher(
         query && `/moment/${query?.code}/${query?.momentId}?uuid=0`
       );

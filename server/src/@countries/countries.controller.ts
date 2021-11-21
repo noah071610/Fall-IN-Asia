@@ -11,15 +11,13 @@ export class CountriesController {
   @ApiOperation({ summary: 'get Countries' })
   @Get()
   async getCountries() {
-    const countries = await this.CountriesService.getCountries();
-    return countries;
+    return await this.CountriesService.getCountries();
   }
 
   @ApiOperation({ summary: 'get Countries order by popular' })
   @Get('popular')
   async getPopularCountries() {
-    const popularCountries = await this.CountriesService.getPopularCountries();
-    return popularCountries;
+    return await this.CountriesService.getPopularCountries();
   }
 
   @ApiOperation({ summary: 'get information about country ' })
@@ -28,14 +26,12 @@ export class CountriesController {
     @Param('code') code: string,
     @Param('type') type: string,
   ) {
-    const countryInfo = await this.CountriesService.getCountryInfo(code, type);
-    return countryInfo;
+    return await this.CountriesService.getCountryInfo(code, type);
   }
 
   @ApiOperation({ summary: 'get one country' })
   @Get('/:code')
   async getCountry(@Param('code') code: string) {
-    const country = await this.CountriesService.getCountry(code);
-    return country;
+    return await this.CountriesService.getCountry(code);
   }
 }
